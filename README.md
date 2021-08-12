@@ -31,6 +31,7 @@ To create a new Proxmox 6 Home Assistant Container, run the following from Proxm
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_ha_container.sh)"
 ```
 <h3 align="center" id="heading">:zap: Default Settings:  4GB RAM - 32GB Storage - 2vCPU :zap:</h3>
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
 For Home Assistant interface http:// (LXC IP) :8123
 
@@ -58,6 +59,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7
 ```
  
 <h3 align="center" id="heading">:zap: Default Settings:  4GB RAM - 32GB Storage - 2vCPU :zap:</h3>
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
 For Home Assistant interface http:// (LXC IP) :8123
 
