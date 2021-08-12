@@ -251,7 +251,8 @@ To create a new Proxmox 6 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Contain
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_zigbee2mqtt_container.sh)"
 ```
-
+<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
+ 
 Determine the location of your adapter (Run in the zigbee2mqtt console)
 ```
 ls -l /dev/serial/by-id
@@ -304,7 +305,8 @@ To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Contain
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_zigbee2mqtt_container.sh)"
 ```
-
+<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
+ 
 Determine the location of your adapter (Run in the zigbee2mqtt console)
 ```
 ls -l /dev/serial/by-id
