@@ -67,7 +67,7 @@ sudo systemctl restart mosquitto
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/proxmox_nr_lxc/raw/master/create_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_container.sh)"
 ```
 
  
