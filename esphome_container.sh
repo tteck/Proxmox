@@ -65,7 +65,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://github.com/tteck/Proxmox/raw/master/esphome_setup.sh
+wget -qL https://github.com/tteck/Proxmox/raw/master/setup1.sh
 
 # Detect modules and automatically load at boot
 load_module overlay
@@ -151,8 +151,8 @@ pct unmount $CTID && unset MOUNT
 # Setup container
 msg "Starting LXC container..."
 pct start $CTID
-pct push $CTID esphome_setup.sh /esphome_setup.sh -perms 755
-pct exec $CTID /esphome_setup.sh
+pct push $CTID setup1.sh /setup1.sh -perms 755
+pct exec $CTID /setup1.sh
 
 # Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
