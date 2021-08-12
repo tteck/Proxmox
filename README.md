@@ -188,7 +188,60 @@ Change your recorder: db_url: in the HA configuration.yaml ```mysql://admin:pass
 To create a new Proxmox 6 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/proxmox6_z2m_lxc/raw/master/create_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_zigbee2mqtt_container.sh)"
+```
+
+Determine the location of your adapter (Run in the zigbee2mqtt console)
+```
+ls -l /dev/serial/by-id
+```
+Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if00-port0 -> ../../ttyUSB0```
+
+:warning: **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/information/configuration.html)**
+```
+nano /opt/zigbee2mqtt/data/configuration.yaml
+```
+
+Example:
+```
+frontend:
+  port: 9442
+homeassistant: true
+permit_join: false
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://192.168.86.224:1883'
+  user: usr
+  password: pwd
+  keepalive: 60
+  reject_unauthorized: true
+  version: 4
+serial:
+  port: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+advanced:
+  pan_id: GENERATE
+  network_key: GENERATE
+  channel: 20
+  ```
+Zigbee2mqtt can be started after completing the configuration by running
+```
+sudo systemctl start zigbee2mqtt
+```
+ 
+</details>
+
+</details>
+
+
+<details>
+<summary>PVE7 Zigbee2MQTT LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox PVE7 Zigbee2MQTT LXC Container </h1>
+
+To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_zigbee2mqtt_container.sh)"
 ```
 
 Determine the location of your adapter (Run in the zigbee2mqtt console)
