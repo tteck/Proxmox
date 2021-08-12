@@ -354,7 +354,7 @@ sudo systemctl start zigbee2mqtt
 
 <h1 align="center" id="heading"> Proxmox Debian 10 LXC Container </h1>
 
-To create a new Proxmox Debian 10 LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox Debian 10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian10_container.sh)"
