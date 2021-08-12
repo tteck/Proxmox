@@ -21,6 +21,40 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
+<summary>PVE6 Home Assistant Container LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox 6 Home Assistant LXC Container </h1>
+
+To create a new Proxmox 6 Home Assistant Container, run the following from Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_ha_container.sh)"
+```
+
+ 
+</details>
+
+</details>
+
+
+<details>
+<summary>PVE7 Home Assistant Container LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox 7 Home Assistant LXC Container </h1>
+
+To create a new Proxmox 7 Home Assistant Container, run the following from Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_ha_container.sh)"
+```
+
+ 
+</details>
+
+</details>
+
+
+<details>
 <summary>ESPHome LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox ESPHome LXC Container </h1>
