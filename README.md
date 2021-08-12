@@ -147,7 +147,7 @@ To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_container.sh)"
 ```
-
+<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 1vCPU :zap:</h3>
  
 </details>
 
