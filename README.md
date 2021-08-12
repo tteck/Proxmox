@@ -106,6 +106,7 @@ To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mqtt_container.sh)"
 ```
+<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
 ### The commands below are entered through the newly created mqtt lxc console.
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
 ```
