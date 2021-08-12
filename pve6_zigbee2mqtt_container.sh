@@ -129,7 +129,7 @@ ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
 # Create LXC
 msg "Creating LXC container..."
-DISK_SIZE=2G
+DISK_SIZE=4G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
@@ -140,7 +140,7 @@ ARCH=$(dpkg --print-architecture)
 HOSTNAME=zigbee2mqtt
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
-  -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 \
+  -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 2 -memory 1024 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
 
 # Modify LXC permissions to support Zigbee Sticks
