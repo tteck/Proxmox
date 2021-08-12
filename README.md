@@ -108,7 +108,6 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mqtt
 ```
 <h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
  
-### The commands below are entered through the newly created mqtt lxc console.
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
 ```
 sudo mosquitto_passwd -c /etc/mosquitto/passwd <usr>
