@@ -30,7 +30,6 @@ To create a new Proxmox 6 Home Assistant Container, run the following from Proxm
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_ha_container.sh)"
 ```
- 
 ## Defaults
 
 32GB storage and 512 MiB memory, 
@@ -44,8 +43,8 @@ For Portainer interface http:// (LXC IP) :9000
 Path to HA configuration.yaml
 ```
 /var/lib/docker/volumes/hass_config/_data
- 
- 
+ ```
+
 </details>
 
 </details>
@@ -75,7 +74,7 @@ For Portainer interface http:// (LXC IP) :9000
 Path to HA configuration.yaml
 ```
 /var/lib/docker/volumes/hass_config/_data
- 
+ ```
  
 </details>
 
