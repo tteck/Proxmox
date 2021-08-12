@@ -1,5 +1,23 @@
 </details>
 
+<details>
+<summary>Home Assistant OS VM</summary>
+ 
+<h1 align="center" id="heading"> Proxmox VM with Home Assistant OS </h1>
+
+To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/proxmox_haos_vm/raw/master/install.sh)"
+```
+### <h3 align="center" id="heading">:zap: Default Settings:  4GB RAM - 32GB Storage - 2vCPU :zap:</h3>
+After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the **_Memory_** and **_Processors_** settings to what you desire. Once all changes have been made, **_Start_** the VM.
+
+ 
+</details>
+
+</details>
+
 
 <details>
 <summary>ESPHome LXC</summary>
