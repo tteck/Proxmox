@@ -45,6 +45,7 @@ Path to HA configuration.yaml
 ```
 /var/lib/docker/volumes/hass_config/_data
  
+ 
 </details>
 
 </details>
@@ -74,6 +75,7 @@ For Portainer interface http:// (LXC IP) :9000
 Path to HA configuration.yaml
 ```
 /var/lib/docker/volumes/hass_config/_data
+ 
  
 </details>
 
