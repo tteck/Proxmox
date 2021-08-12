@@ -164,6 +164,8 @@ To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mariadb_container.sh)"
 ```
+<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 1vCPU :zap:</h3>
+ 
 To enable MariaDB to listen to remote connections, you need to edit your defaults file. To do this, open the console in your MariaDB lxc:
 ```
 nano /etc/mysql/mariadb.conf.d/50-server.cnf
