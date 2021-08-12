@@ -91,3 +91,20 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node
 
  
 </details>
+
+ </details>
+
+
+<details>
+<summary>Mariadb LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox Mariadb LXC Container </h1>
+
+To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mariadb_container.sh)"
+```
+
+ 
+</details>
