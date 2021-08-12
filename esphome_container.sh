@@ -65,7 +65,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://github.com/tteck/Proxmox/raw/master/setup1.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup1.sh
 
 # Detect modules and automatically load at boot
 load_module overlay
