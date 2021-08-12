@@ -81,4 +81,4 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
 # Cleanup container
 msg "Cleanup..."
-rm -rf /setup1.sh /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /esphome_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
