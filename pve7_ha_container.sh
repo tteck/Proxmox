@@ -68,7 +68,6 @@ pushd $TEMP_DIR >/dev/null
 wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_ha_setup.sh
 
 # Detect modules and automatically load at boot
-load_module aufs
 load_module overlay
 
 # Select storage location
