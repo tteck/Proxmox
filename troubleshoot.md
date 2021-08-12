@@ -6,6 +6,6 @@ If Proxmox sees your device, you can try setting autodev by running the below sc
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 100
 ```
-:warning: change 100 to your LXC ID.
+:warning: change `100` to your LXC ID.
 
 Note: The changes will apply after a reboot of the LXC.
