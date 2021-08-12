@@ -27,7 +27,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esph
 To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/proxmox_mqtt_lxc/raw/master/create_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mqtt_container.sh)"
 ```
 ### The commands below are entered through the newly created mqtt lxc console.
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
