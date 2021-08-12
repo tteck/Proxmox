@@ -345,3 +345,22 @@ sudo systemctl start zigbee2mqtt
 ```
  
 </details>
+
+</details>
+
+
+<details>
+<summary>Base Debian 10 LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox Debian 10 LXC Container </h1>
+
+To create a new Proxmox Debian 10 LXC Container, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian10_container.sh)"
+```
+<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+</details>
