@@ -9,7 +9,7 @@
 To create a new Proxmox ESPHome LXC Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/blob/main/esphome_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esphome_container.sh)"
 ```
 
  
