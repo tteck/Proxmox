@@ -8,4 +8,5 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/auto
 ```
 :warning: change `100` to your LXC ID.
 
-Note: The changes will apply after a reboot of the LXC.
+Note: The changes will apply after a reboot of the LXC
+________________________________________________________________________________________________________________________________________
