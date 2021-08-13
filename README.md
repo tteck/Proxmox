@@ -343,6 +343,11 @@ Zigbee2mqtt can be started after completing the configuration by running
 ```
 sudo systemctl start zigbee2mqtt
 ```
+To start Zigbee2MQTT automatically on boot
+ ```
+ sudo systemctl enable zigbee2mqtt.service
+ ```
+ 
  
 </details>
 
