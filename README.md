@@ -233,7 +233,7 @@ Checking status.
 ```
 sudo systemctl status mariadb
 ``` 
-Change your recorder: db_url: in the HA configuration.yaml ```mysql://admin:password@lxc-ip:3306/homeassistant?charset=utf8mb4```
+Change the recorder: `db_url:` in your HA configuration.yaml ```mysql://admin:password@lxc-ip:3306/homeassistant?charset=utf8mb4```
  
 Example: `mysql://admin:password@192.168.1.26:3306/homeassistant?charset=utf8mb4`
  
