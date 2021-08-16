@@ -32,7 +32,7 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating Container OS..."
-apt-get update >/dev/null
+apt-get --allow-releaseinfo-change update >/dev/null
 apt-get upgrade &>/dev/null
 
 # Install prerequisites
