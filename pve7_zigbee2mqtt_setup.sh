@@ -32,8 +32,8 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating Container OS..."
-apt-get update >/dev/null
-apt-get -qqy upgrade &>/dev/null
+apt update >/dev/null
+apt -qqy upgrade &>/dev/null
 
 # Install prerequisites
 msg "Installing Prerequisites..."
