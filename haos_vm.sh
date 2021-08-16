@@ -113,8 +113,8 @@ if [[ $FILE == *.zip ]]; then
   echo -e "\e[1;33m Checking for unzip command... \e[0m"
   if ! command -v unzip &> /dev/null; then
     echo -e "\e[1;33m Installing Unzip... \e[0m"
-    apt update >/dev/null
-    apt install unzip -y
+    apt-get --allow-releaseinfo-change update >/dev/null
+    apt-get -qqy install unzip &>/dev/null
   fi
 fi
 
@@ -167,7 +167,7 @@ set +o errtrace
   ' ERR
   if [ "$(command -v kpartx)" = "" ]; then
     echo -e "\e[1;33m Installing kpartx... \e[0m"
-    apt-get update >/dev/null
+    apt-get --allow-releaseinfo-change update >/dev/null
     apt-get -qqy install kpartx &>/dev/null
   fi
   DISK1_PATH="$(pvesm path $DISK1_REF)"
