@@ -32,7 +32,7 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating container OS..."
-apt-get update >/dev/null
+apt-get --allow-releaseinfo-change update >/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
@@ -43,7 +43,7 @@ apt-get -qqy install \
 
 # Installing MariaDB
 msg "Installing MariaDB..."
-sudo apt-get update >/dev/null
+sudo apt-get --allow-releaseinfo-change update >/dev/null
 sudo apt-get install -y mariadb-server &>/dev/null
 
 # Customize container
