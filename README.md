@@ -89,6 +89,7 @@ To create a new Proxmox ESPHome LXC Container, run the following from Proxmox we
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esphome_container.sh)"
 ```
 
+<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
  
 </details>
 
