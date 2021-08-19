@@ -52,7 +52,7 @@ apt-get -qqy install \
     # Install zigbee2mqtt
     msg "Installing Zigbee2MQTT..."
     cd /opt/zigbee2mqtt &>/dev/null
-    npm ci --production &>/dev/null
+    npm ci &>/dev/null
 
 echo "Creating service file zigbee2mqtt.service"
 service_path="/etc/systemd/system/zigbee2mqtt.service"
