@@ -102,12 +102,12 @@ info "Using '$STORAGE' for storage location."
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
 
-# Download latest Debian 10 LXC template
+# Download latest Debian 11 LXC template
 msg "Updating LXC template list..."
 pveam update >/dev/null
 msg "Downloading LXC template..."
 OSTYPE=debian
-OSVERSION=${OSTYPE}-10
+OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
 TEMPLATE="${TEMPLATES[-1]}"
 pveam download local $TEMPLATE >/dev/null ||
