@@ -32,7 +32,7 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating container OS..."
-apt-get --allow-releaseinfo-change update >/dev/null
+apt-get update >/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
@@ -64,7 +64,7 @@ docker run -d \
   --restart=always \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
-  portainer/portainer &>/dev/null
+  portainer/portainer-ce:latest &>/dev/null
   
 # Install Home Assistant
 msg "Installing Home Assistant..."
