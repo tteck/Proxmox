@@ -64,7 +64,7 @@ docker run -d \
   --restart=always \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
-  portainer/portainer &>/dev/null
+  portainer/portainer-ce:latest &>/dev/null
   
 # Install Home Assistant
 msg "Installing Home Assistant..."
