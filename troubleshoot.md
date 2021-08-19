@@ -1,3 +1,5 @@
+## Zigbee2MQTT Device Troubleshooting ##
+
 If no device is found after running `ls -l /dev/serial/by-id` reboot the zigbee2mqtt lxc and try again.
 
 Make sure Proxmox sees the device by running `ls -l /dev/serial/by-id` from the Proxmox web shell.
