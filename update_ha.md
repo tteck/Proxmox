@@ -1,9 +1,9 @@
 ## Home Assistant Container Update ##
 
 In the homeassistant lxc console run `nano upha.sh`
-it will open a new file, copy and paste the Stable Branch.
+it will open a new file, copy and paste the Stable Branch (change TZ)
 Save and exit the text editor with "Ctrl+O", "Enter" and "Ctrl+X"
-To update HA go to the root prompt and run `bash upha.sh`
+To update HA, run `bash upha.sh` from the console
 
 Stable Branch
 ```
