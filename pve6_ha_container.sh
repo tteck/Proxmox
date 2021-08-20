@@ -130,7 +130,7 @@ ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
 # Create LXC
 msg "Creating LXC container..."
-DISK_SIZE=32G
+DISK_SIZE=16G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
