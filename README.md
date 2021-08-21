@@ -125,7 +125,6 @@ allow_anonymous false
 persistence true
 password_file /etc/mosquitto/passwd
 listener 1883
-# ...
 ```
 Save and exit the text editor with "Ctrl+O", "Enter" and "Ctrl+X".
 
