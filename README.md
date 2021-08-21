@@ -123,6 +123,8 @@ This will open an empty file. Paste the following into it.
 ```
 allow_anonymous false
 password_file /etc/mosquitto/passwd
+listener 1883
+# ...
 ```
 Save and exit the text editor with "Ctrl+O", "Enter" and "Ctrl+X".
 
