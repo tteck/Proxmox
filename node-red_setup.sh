@@ -74,4 +74,4 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
 # Cleanup container
 msg "Cleanup..."
-rm -rf /node-red2_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /node-red_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
