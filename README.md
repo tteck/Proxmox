@@ -208,18 +208,18 @@ sudo mysql
 ``` 
 Prompt will change to ```MariaDB [(none)]>```
 
-Now, we'll create a new local admin
+Create a new local admin
 ```
-CREATE USER 'admin'@'localhost' IDENTIFIED BY 'twt';
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
 ```
 Give local admin root privileges
 ```
-GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'twt' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
 
-Now, we'll create the user admin with root privileges and password-based access that can connect from anywhere on my local area network (LAN), which has addresses in the subnet 192.168.100.0/24. This is an improvement because opening a MariaDB server up to the Internet and granting access to all hosts is bad practice.. Change the username, password and subnet to match your preferences:
+Now, we'll give the user admin root privileges and password-based access that can connect from anywhere on my local area network (LAN), which has addresses in the subnet 192.168.100.0/24. This is an improvement because opening a MariaDB server up to the Internet and granting access to all hosts is bad practice.. Change the username, password and subnet to match your preferences:
 ```
-GRANT ALL ON *.* TO 'admin'@'192.168.86.%' IDENTIFIED BY 'twt' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'admin'@'192.168.100.%' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
 Flush the privileges to ensure that they are saved and available in the current session:
 ```
