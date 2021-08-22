@@ -1,14 +1,24 @@
 ## Zigbee2MQTT Device Troubleshooting ##
 
-If no device is found after running `ls -l /dev/serial/by-id` reboot the zigbee2mqtt lxc and try again.
 
-Make sure Proxmox sees the device by running `ls -l /dev/serial/by-id` from the Proxmox web shell.
-
-If Proxmox sees your device, you can try setting autodev by running the below script from the Proxmox web shell.
+If all else fails, try this:
+In the Proxmox web shell run (replace `105` with your lxc Id)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 100
+nano /etc/pve/lxc/105.conf
 ```
-:warning: change `100` to your LXC ID.
-
-Note: The changes will apply after a reboot of the LXC
+replace the last 4 lines
+```
+lxc.cgroup2.devices.allow: c 188:* rwm
+lxc.mount.entry: /dev/serial/by-id               dev/serial/by-id         none bind,optional,create=dir
+lxc.mount.entry: /dev/ttyUSB0                    dev/ttyUSB0             none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM0                    dev/ttyACM0             none bind,optional,create=file
+```
+with these 4 lines
+```
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop: 
+lxc.autodev: 1
+lxc.hook.autodev: bash -c 'for char_dev in $(find /sys/dev/char -regextype sed  -regex ".*/1:1" -o -regex ".*/4:\([3-9]\|[1-5][0-9]\|6[0-3]\)" -o -regex ".*/4:\(6[4-9]\|[7-9][0-9]\|1[0-9][0-9]\|2[0-4][0-9]\|25[0-5]\)" -o -regex ".*/10:200" -o -regex ".*/116:.*" -o -regex ".*/166:.*" -o -regex ".*/180:\([0-9]\|1[0-5]\)" -o -regex ".*/188:.*" -o -regex ".*/189:.*" -o -regex ".*/24[0-2]:.*"); do  dev="/dev/$(sed -n "/DEVNAME/ s/^.*=\(.*\)$/\1/p" ${char_dev}/uevent)";  mkdir -p $(dirname ${LXC_ROOTFS_MOUNT}${dev});  for link in $(udevadm info --query=property $dev | sed -n "s/DEVLINKS=//p"); do    mkdir -p ${LXC_ROOTFS_MOUNT}$(dirname $link);    cp -dpR $link ${LXC_ROOTFS_MOUNT}${link};  done;  cp -dpR $dev ${LXC_ROOTFS_MOUNT}${dev};done;'
+```
+Reboot the LXC
 ________________________________________________________________________________________________________________________________________
