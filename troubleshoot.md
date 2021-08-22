@@ -10,7 +10,7 @@ nano /etc/pve/lxc/105.conf
 replace the last 4 lines
 ```
 lxc.cgroup2.devices.allow: c 188:* rwm
-lxc.mount.entry: /dev/serial/by-id               dev/serial/by-id         none bind,optional,create=dir
+lxc.mount.entry: /dev/serial/by-id               dev/serial/by-id        none bind,optional,create=dir
 lxc.mount.entry: /dev/ttyUSB0                    dev/ttyUSB0             none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM0                    dev/ttyACM0             none bind,optional,create=file
 ```
