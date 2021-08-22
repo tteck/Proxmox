@@ -14,7 +14,7 @@ lxc.mount.entry: /dev/serial/by-id               dev/serial/by-id         none b
 lxc.mount.entry: /dev/ttyUSB0                    dev/ttyUSB0             none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM0                    dev/ttyACM0             none bind,optional,create=file
 ```
-with these 4 lines
+with these 4 lines (change `cgroup2` with `cgroup` for PVE6)
 ```
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop: 
