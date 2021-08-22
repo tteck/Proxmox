@@ -1,7 +1,7 @@
 ## Zigbee2MQTT Device Troubleshooting ##
 
 
-If all else fails, try this:
+**Alternative method:**
 
 In the Proxmox web shell run (replace `105` with your lxc Id)
 ```
