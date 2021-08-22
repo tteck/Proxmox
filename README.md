@@ -158,7 +158,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node
 
 
 <details>
-<summary>Mariadb LXC</summary>
+<summary>Mariadb 10.5 LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Mariadb 10.5 LXC Container </h1>
 
