@@ -208,11 +208,11 @@ sudo mysql
 ``` 
 Prompt will change to ```MariaDB [(none)]>```
 
-Create a new local admin
+Create a new local admin (Change the username and password to match your preferences)
 ```
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
 ```
-Give local admin root privileges
+Give local admin root privileges (Change the username and password to match from above)
 ```
 GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
