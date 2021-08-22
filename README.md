@@ -160,7 +160,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node
 <details>
 <summary>Mariadb LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox Mariadb LXC Container Under Construction </h1>
+<h1 align="center" id="heading"> Proxmox Mariadb 10.5 LXC Container </h1>
 
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
 
@@ -171,23 +171,16 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mari
  
 To enable MariaDB to listen to remote connections, you need to edit your defaults file. To do this, open the console in your MariaDB lxc:
 ```
+nano /etc/mysql/my.cnf
+```
+Un-comment `port =3306`
+Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
+
+```
 nano /etc/mysql/mariadb.conf.d/50-server.cnf
 ```
-Un-comment port, and comment skip-networking and bind-address. (match below)
-```user                    = mysql
-pid-file                = /run/mysqld/mysqld.pid
-socket                  = /run/mysqld/mysqld.sock
-port                    = 3306
-basedir                 = /usr
-datadir                 = /var/lib/mysql
-tmpdir                  = /tmp
-lc-messages-dir         = /usr/share/mysql
-# skip-external-locking
-# skip-networking
-# Instead of skip-networking the default is now to listen only on
-# localhost which is more compatible and is not less secure.
-# bind-address            = 127.0.0.1
-```
+Comment `bind-address  = 127.0.0.1`
+Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
 
 For new MariaDB installations, the next step is to run the included security script. This script changes some of the less secure default options. We will use it to block remote root logins and to remove unused database users.
 
@@ -195,26 +188,32 @@ Run the security script:
 ```
 sudo mysql_secure_installation
 ```
-This will take you through a series of prompts where you can make some changes to your MariaDB installation’s security options. The first prompt will ask you to enter the current database root password. Since we have not set one up yet, press ENTER to indicate “none”.
+Enter current password for root (enter for none): enter
+Switch to unix_socket authentication [Y/n] y 
+Change the root password? [Y/n] n 
+Remove anonymous users? [Y/n] y 
+Disallow root login remotely? [Y/n] y 
+Remove test database and access to it? [Y/n] y 
+Reload privilege tables now? [Y/n] y 
 
-The next prompt asks you whether you’d like to set up a database root password. Type N and then press ENTER. In Debian, the root account for MariaDB is tied closely to automated system maintenance, so we should not change the configured authentication methods for that account. Doing so would make it possible for a package update to break the database system by removing access to the administrative account. Later, we will cover how to optionally set up an additional administrative account for password access if socket authentication is not appropriate for your use case.
-
-From there, you can press Y and then ENTER to accept the defaults for all the subsequent questions. This will remove some anonymous users and the test database, disable remote root logins, and load these new rules so that MariaDB immediately respects the changes you have made.
-
-
-The root MariaDB user is set to authenticate using the unix_socket plugin by default rather than with a password. This allows for some greater security and usability in many cases, but it can also complicate things when you need to allow an external program (e.g., phpMyAdmin) administrative rights.
-
-Because the server uses the root account for tasks like log rotation and starting and stopping the server, it is best not to change the root account’s authentication details. Changing credentials in the /etc/mysql/debian.cnf configuration file may work initially, but package updates could potentially overwrite those changes. Instead of modifying the root account, the package maintainers recommend creating a separate administrative account for password-based access.
-
-To do so, we will create a new account called admin with the same capabilities as the root account, but configured for password authentication. 
+We will create a new account called admin with the same capabilities as the root account, but configured for password authentication. 
 ```
 sudo mysql
 ``` 
 Prompt will change to ```MariaDB [(none)]>```
 
-Now, we will create the user admin with root privileges and password-based access that can connect from anywhere on my local area network (LAN), which has addresses in the subnet 192.168.100.0/24. This is an improvement because opening a MariaDB server up to the Internet and granting access to all hosts is bad practice.. Change the username, password and subnet to match your preferences:
+Now, we'll create a new local admin
 ```
-GRANT ALL ON *.* TO 'admin'@'192.168.100.%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'twt';
+```
+Give local admin root privileges
+```
+GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'twt' WITH GRANT OPTION;
+```
+
+Now, we'll create the user admin with root privileges and password-based access that can connect from anywhere on my local area network (LAN), which has addresses in the subnet 192.168.100.0/24. This is an improvement because opening a MariaDB server up to the Internet and granting access to all hosts is bad practice.. Change the username, password and subnet to match your preferences:
+```
+GRANT ALL ON *.* TO 'admin'@'192.168.86.%' IDENTIFIED BY 'twt' WITH GRANT OPTION;
 ```
 Flush the privileges to ensure that they are saved and available in the current session:
 ```
@@ -232,6 +231,12 @@ Create a new database:
 ```
 CREATE DATABASE homeassistant;
 ```
+Following this, exit the MariaDB shell:
+```
+exit
+```
+:warning: Reboot the lxc 
+
 Checking status.
 ```
 sudo systemctl status mariadb
