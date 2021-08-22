@@ -65,7 +65,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/node-red2_setup.sh
 
 # Detect modules and automatically load at boot
 load_module overlay
@@ -152,8 +152,8 @@ pct unmount $CTID && unset MOUNT
 # Setup container
 msg "Starting LXC container..."
 pct start $CTID
-pct push $CTID node-red_setup.sh /node-red_setup.sh -perms 755
-pct exec $CTID /node-red_setup.sh
+pct push $CTID node-red2_setup.sh /node-red2_setup.sh -perms 755
+pct exec $CTID /node-red2_setup.sh
 
 # Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
