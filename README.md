@@ -212,7 +212,7 @@ Create a new local admin (Change the username and password to match your prefere
 ```
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
 ```
-Give local admin root privileges (Change the username and password to match from above)
+Give local admin root privileges (Change the username and password to match above)
 ```
 GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
