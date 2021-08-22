@@ -158,4 +158,4 @@ pct exec $CTID /mariadb_setup.sh
 
 # Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a MariaDB LXC Container to $CTID at IP Address ${IP}"
+info "Successfully created a MariaDB 10.5 LXC Container to $CTID at IP Address ${IP}"
