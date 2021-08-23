@@ -1,4 +1,4 @@
-## Zigbee2MQTT Device Troubleshooting ##
+## Zigbee2MQTT Device Pass Through ##
 
 
 **Alternative method to pass devices to LXC:**
