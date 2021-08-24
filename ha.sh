@@ -72,19 +72,19 @@ if [ "$STORAGE_TYPE" == "zfspool" ]; then
 fi
 
 # Download setup script
-REPO="https://github.com/tteck/Proxmox"
-wget -qO - ${REPO}/tarball/master | tar -xz --strip-components=1
+#REPO="https://github.com/tteck/Proxmox"
+#wget -qO - ${REPO}/tarball/master | tar -xz --strip-components=1
 
 # Modify LXC permissions to support Docker
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
-lxc.cgroup.devices.allow: a
+lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
 
 # Load modules for Docker before starting LXC
 cat << 'EOF' >> $LXC_CONFIG
-lxc.hook.pre-start: sh -ec 'for module in aufs overlay; do modinfo $module; $(lsmod | grep -Fq $module) || modprobe $module; done;'
+lxc.hook.pre-start: sh -ec 'do modinfo $module; $(lsmod | grep -Fq $module) || modprobe $module; done;'
 EOF
 
 # Set autodev hook to enable access to devices in container
