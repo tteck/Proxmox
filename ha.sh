@@ -50,6 +50,18 @@ function cleanup() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
+function load_module() {
+  if ! $(lsmod | grep -Fq $1); then
+    modprobe $1 &>/dev/null || \
+      die "Failed to load '$1' module."
+  fi
+  MODULES_PATH=/etc/modules
+  if ! $(grep -Fxq "$1" $MODULES_PATH); then
+    echo "$1" >> $MODULES_PATH || \
+      die "Failed to add '$1' module to load at boot."
+  fi
+}
+
 # Create LXC
 export CTID=$(pvesh get /cluster/nextid)
 export PCT_OSTYPE=debian
@@ -71,10 +83,6 @@ if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
 
-# Download setup script
-#REPO="https://github.com/tteck/Proxmox"
-#wget -qO - ${REPO}/tarball/master | tar -xz --strip-components=1
-
 # Modify LXC permissions to support Docker
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
@@ -82,13 +90,7 @@ lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
 
-# Load modules for Docker before starting LXC
-cat << 'EOF' >> $LXC_CONFIG
-lxc.hook.pre-start: sh -ec 'do modinfo $module; $(lsmod | grep -Fq $module) || modprobe $module; done;'
-EOF
-
-# Set autodev hook to enable access to devices in container
-#bash ./set_autodev_hook.sh $CTID
+load_module overlay
 
 # Set container timezone to match host
 cat << 'EOF' >> $LXC_CONFIG
