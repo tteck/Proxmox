@@ -88,7 +88,7 @@ lxc.hook.pre-start: sh -ec 'do modinfo $module; $(lsmod | grep -Fq $module) || m
 EOF
 
 # Set autodev hook to enable access to devices in container
-bash ./set_autodev_hook.sh $CTID
+#bash ./set_autodev_hook.sh $CTID
 
 # Set container timezone to match host
 cat << 'EOF' >> $LXC_CONFIG
