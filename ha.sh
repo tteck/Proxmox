@@ -132,7 +132,7 @@ EOF
 
 # Install Docker
 msg "Installing Docker..."
-lxc-cmd sh <(curl -sSL https://get.docker.com) &>/dev/null
+sh <(curl -sSL https://get.docker.com) &>/dev/null
 
 # Install Portainer
 msg "Installing Portainer..."
