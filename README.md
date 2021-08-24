@@ -190,19 +190,19 @@ Run the security script:
 ```
 sudo mysql_secure_installation
 ```
-Enter current password for root (enter for none): enter
+Enter current password for root (enter for none): `enter`
  
-Switch to unix_socket authentication [Y/n] y 
+Switch to unix_socket authentication [Y/n] `y` 
  
-Change the root password? [Y/n] n 
+Change the root password? [Y/n] `n` 
  
-Remove anonymous users? [Y/n] y 
+Remove anonymous users? [Y/n] `y` 
  
-Disallow root login remotely? [Y/n] y 
+Disallow root login remotely? [Y/n] `y` 
  
-Remove test database and access to it? [Y/n] y 
+Remove test database and access to it? [Y/n] `y` 
  
-Reload privilege tables now? [Y/n] y 
+Reload privilege tables now? [Y/n] `y` 
 
 We will create a new account called admin with the same capabilities as the root account, but configured for password authentication. 
 ```
