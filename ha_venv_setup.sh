@@ -39,27 +39,16 @@ apt-get -qqy install \
 
 msg "Installing Dependencies..."
 sudo apt-get -qqy install \
-msg "1..."
     python3 \
-msg "2..."
     python3-dev \
-msg "3..."
     python3-venv \
-msg "4..."
     python3-pip \
-msg "5..."
     libffi-dev \
-msg "6..."
     libssl-dev \
-msg "7..."
     libjpeg-dev \
-msg "8..."
     zlib1g-dev \
-msg "9..."
     autoconf build-essential \
-msg "1..."
     libopenjp2-7 \
-msg "10..."
     libtiff5 tzdata &>/dev/null
 
 sudo useradd -rm homeassistant &>/dev/null
