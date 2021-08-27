@@ -58,3 +58,21 @@ echo -e "\e[1;33m Removing Old Image... \e[0m"
 docker image prune -f
 echo -e "\e[1;33m Finished Update! \e[0m"
 ```
+
+Portainer-CE
+```
+### upportainer.sh ###
+#!/bin/bash
+
+echo -e "\e[1;33m Pulling New Portainer-Ce Version... \e[0m"
+docker pull portainer/portainer-ce:latest
+echo -e "\e[1;33m Stopping Portainer... \e[0m"
+docker stop portainer
+echo -e "\e[1;33m Removing Portainer... \e[0m"
+docker rm portainer
+echo -e "\e[1;33m Starting Portainer... \e[0m"
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+echo -e "\e[1;33m Removing Old Image... \e[0m"
+docker image prune -f
+echo -e "\e[1;33m Finished Update! \e[0m"
+```
