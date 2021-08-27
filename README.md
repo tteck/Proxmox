@@ -255,6 +255,21 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
  
 </details>
 
+<details>
+<summary>Nginx Proxy Manager LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
+
+To create a new Proxmox Nginx Proxy Manager LXC Container, go to the following URL.
+
+
+https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md
+
+
+ 
+</details>
+
+
 </details>
 
 
