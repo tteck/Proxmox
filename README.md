@@ -24,7 +24,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 <details>
 <summary>PVE6 Home Assistant Container LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox 6 Home Assistant LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox 6 Home Assistant Container LXC </h1>
 
 To create a new Proxmox 6 Home Assistant Container, run the following from Proxmox web shell.
 
@@ -53,7 +53,7 @@ Path to HA configuration.yaml
 <details>
 <summary>PVE7 Home Assistant Container LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox 7 Home Assistant LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox 7 Home Assistant Container LXC </h1>
 
 To create a new Proxmox 7 Home Assistant Container, run the following from Proxmox web shell.
 
