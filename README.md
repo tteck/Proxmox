@@ -120,7 +120,7 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  ```
  changeme
  ```
-Add to your `configuration.yaml`
+Add the following to your `configuration.yaml` in Home Assistant.
 ```
  http:
   use_x_forwarded_for: true
