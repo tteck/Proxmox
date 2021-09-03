@@ -112,10 +112,12 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  
 Initial Login
 
-username ```
+username 
+ ```
  admin@example.com
  ```
- password ```
+ password 
+ ```
  changeme
  ```
  
