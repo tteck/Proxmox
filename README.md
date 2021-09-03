@@ -120,7 +120,13 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  ```
  changeme
  ```
- 
+Add to your `configuration.yaml`
+```
+ http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.86.103 #(Nginx Proxy Manager LXC IP)
+```
  
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
 
