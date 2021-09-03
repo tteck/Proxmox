@@ -122,7 +122,7 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  ```
  
  
-Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md)
+Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
 
  
 </details>
