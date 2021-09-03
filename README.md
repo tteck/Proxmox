@@ -95,6 +95,23 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esph
  
 </details>
 
+</details>
+
+
+<details>
+<summary>Nginx Proxy Manager LXC</summary>
+
+<h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
+
+To create a new Proxmox Nginx Proxy Manager LXC Container, run the following from Proxmox web shell.
+
+```
+ curl -sL https://raw.githubusercontent.com/ej52/proxmox/main/lxc/nginx-proxy-manager/create.sh | bash -s
+```
+Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md)
+
+ 
+</details>
 
 </details>
 
