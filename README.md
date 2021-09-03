@@ -125,7 +125,7 @@ Add to your `configuration.yaml`
  http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)
+    - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)###
 ```
  
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
