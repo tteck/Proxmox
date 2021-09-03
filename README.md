@@ -110,6 +110,16 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
 ```
 <h3 align="center" id="heading">:zap: Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
  
+Initial Login
+
+username ```
+ admin@example.com
+ ```
+ password ```
+ changeme
+ ```
+ 
+ 
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md)
 
  
