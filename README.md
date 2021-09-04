@@ -109,6 +109,8 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  curl -sL https://raw.githubusercontent.com/ej52/proxmox/main/lxc/nginx-proxy-manager/create.sh | bash -s
 ```
 <h3 align="center" id="heading">:zap: Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+
+____________________________________________________________________________________
  
 Forward port `80` and `443` from your router to your Nginx Proxy Manager LXC IP.
 
