@@ -110,6 +110,16 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
 ```
 <h3 align="center" id="heading">:zap: Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
  
+Forward port `80` and `443` from your router to your Nginx Proxy Manager LXC IP.
+
+Add the following to your `configuration.yaml` in Home Assistant.
+```
+ http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)###
+```
+
 **Initial Login**
 
 **username** 
@@ -120,14 +130,6 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
  ```
  changeme
  ```
-Add the following to your `configuration.yaml` in Home Assistant.
-```
- http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)###
-```
-Forward port `80` and `443` from your router to your Nginx Proxy Manager LXC IP.
  
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
 
