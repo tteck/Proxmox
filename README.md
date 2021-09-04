@@ -127,6 +127,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
   trusted_proxies:
     - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)###
 ```
+Forward port `80` and `443` from your router to your Nginx Proxy Manager LXC IP.
  
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
 
