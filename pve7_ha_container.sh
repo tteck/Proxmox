@@ -155,7 +155,7 @@ pct set $CTID -description "Access Portainer interface using the following URL.
 
 http://<IP_ADDRESS>:9000"
 
-bash wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh $CTID
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh $CTID
 
 # Set container timezone to match host
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
