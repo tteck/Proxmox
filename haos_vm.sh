@@ -81,7 +81,7 @@ info "Container ID is $VMID."
 
 # Get latest Home Assistant disk image archive URL
 echo -e "\e[1;33m Getting URL for latest Home Assistant disk image... \e[0m"
-RELEASE_TYPE=vmdk
+RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
 url = "https://api.github.com/repos/home-assistant/operating-system/releases"
