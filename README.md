@@ -93,6 +93,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esph
 
 <h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
  
+For ESPHome interface http:// (LXC IP) :6052
+ 
 </details>
 
 </details>
