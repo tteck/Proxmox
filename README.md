@@ -475,9 +475,9 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>Proxmox PVE7 Post Install</summary>
+<summary>Proxmox VE 7 Post Install</summary>
 
-<h1 align="center" id="heading"> Proxmox PVE7 Post Install </h1>
+<h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
 This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
 and attempt the *No-Nag* fix. 
