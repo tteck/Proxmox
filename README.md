@@ -488,6 +488,6 @@ Run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
 ```
 
-I recommend updating Proxmox after running this script, before adding any VM/CT.
+It's recommended to update Proxmox after running this script, before adding any VM/CT.
 
 </details>
