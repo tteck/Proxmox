@@ -480,7 +480,9 @@ After the script completes, If you're dissatisfied with the default settings, cl
 <h1 align="center" id="heading"> Proxmox PVE7 Post Install </h1>
 
 This script will Disable the Enterprise Repo, Enable the No Subscription Repo, Add (Disabled) Test Repo (repo's can be enabled/disabled via the UI in Repositories) and 
-attempt the *No-Nag* fix, run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
+attempt the *No-Nag* fix. 
+ 
+Run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
