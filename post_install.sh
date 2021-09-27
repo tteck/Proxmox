@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo -e "\e[1;33m This script will Disable the Enterprise Repo, Enable the No Subscription Repo,
-Add (Disabled) Test Repo (repo's can be enabled/disabled via the UI in Repositories) and attempt 
-the No Nag fix *PVE7 ONLY*\e[0m"
+echo -e "\e[1;33m This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, 
+Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
+and attempt the No-Nag fix. PVE7 ONLY \e[0m"
 
 read -p "Press [Enter] to start the PVE7 Post Install Script"
 
