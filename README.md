@@ -469,3 +469,23 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debi
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
 </details>
+
+
+</details>
+
+
+<details>
+<summary>PVE7 Post Install</summary>
+
+<h1 align="center" id="heading"> Proxmox PVE7 Post Install </h1>
+
+This script disables the Enterprise Repo and Enables the No Subscription Repo, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
+```
+<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+
+I recommend updating Proxmox before adding any VM/CT.
+
+</details>
