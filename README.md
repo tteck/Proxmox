@@ -475,7 +475,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>PVE7 Post Install</summary>
+<summary>Proxmox PVE7 Post Install</summary>
 
 <h1 align="center" id="heading"> Proxmox PVE7 Post Install </h1>
 
