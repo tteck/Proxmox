@@ -484,7 +484,6 @@ This script disables the Enterprise Repo and Enables the No Subscription Repo, r
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
 
 I recommend updating Proxmox before adding any VM/CT.
 
