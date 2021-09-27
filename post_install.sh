@@ -4,10 +4,10 @@ echo -e "\e[1;33m This script will Disable the Enterprise Repo and Enable the No
 
 read -p "Press [Enter] to start the PVE7 Post Install Script"
 
-read -t 2 -p "Disabling Enterprise Repo ..."
+read -t 2 -p "Disabling Enterprise Repo..."
 sed -i "s/^deb/#deb/g" /etc/apt/sources.list.d/pve-enterprise.list
 
-read -t 2 -p "Enabling No Subscription Repo ..."
+read -t 2 -p "Enabling No Subscription Repo..."
 cat <<EOF > /etc/apt/sources.list
 deb http://ftp.us.debian.org/debian bullseye main contrib
 deb http://ftp.us.debian.org/debian bullseye-updates main contrib
@@ -19,6 +19,6 @@ EOF
 # read -t 2 -p "Enabling No Nag ..."
 # sed -i.backup -z "s/res === null || res === undefined || \!res || res\n\t\t\t.data.status.toLowerCase() \!== 'active'/false/g" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js && systemctl restart pveproxy.service
 
-echo -e "\e[1;33m Finished....Please Update Proxmox \e[0m"
+echo -e "\e[1;33m Finished, Please Update Proxmox \e[0m"
 
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
