@@ -485,6 +485,6 @@ This script disables the Enterprise Repo and Enables the No Subscription Repo, r
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
 ```
 
-I recommend updating Proxmox before adding any VM/CT.
+I recommend updating Proxmox after running this script, before adding any VM/CT.
 
 </details>
