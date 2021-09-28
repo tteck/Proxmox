@@ -308,7 +308,7 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 <details>
 <summary>PVE6 Zigbee2MQTT LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox PVE6 Zigbee2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox 6 Zigbee2MQTT LXC Container </h1>
 
 To create a new Proxmox 6 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
@@ -373,7 +373,7 @@ To update Zigbee2Mqtt
 <details>
 <summary>PVE7 Zigbee2MQTT LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox PVE7 Zigbee2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox 7 Zigbee2MQTT LXC Container </h1>
 
 To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
@@ -436,7 +436,7 @@ To start Zigbee2MQTT automatically on boot
 
 
 <details>
-<summary>Base Debian 10 LXC</summary>
+<summary>Base Debian 10+ LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Debian 10 LXC Container </h1>
 
@@ -455,7 +455,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>Base Debian 11 LXC</summary>
+<summary>Base Debian 11+ LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Debian 11 LXC Container </h1>
 
