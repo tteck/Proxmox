@@ -4,7 +4,14 @@ echo -e "\e[1;33m This script will Disable the Enterprise Repo, Add & Enable the
 Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
 and attempt the No-Nag fix. PVE7 ONLY \e[0m"
 
-read -p "Press [Enter] to start the PVE7 Post Install Script"
+while true; do
+    read -p "Start the PVE7 Post Install Script (y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
 
 sed -i "s/^deb/#deb/g" /etc/apt/sources.list.d/pve-enterprise.list
 
