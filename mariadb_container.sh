@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+while true; do
+    read -p "This will create a New Mariadb LXC Container. Proceed(y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 # Setup script environment
 set -o errexit  #Exit immediately if a pipeline returns a non-zero status
 set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
