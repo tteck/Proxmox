@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 while true; do
-    read -p "This will create a New Proxmox ESPHome LXC Container. Proceed(y/n)?" yn
+    read -p "This will create a New ESPHome LXC Container. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
