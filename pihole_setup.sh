@@ -29,7 +29,7 @@ apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
 msg "Updating LXC OS..."
-apt-get update >/dev/null
+apt-get dist-upgrade >/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 msg "Installing Prerequisites..."
@@ -42,7 +42,7 @@ curl -sSL https://install.pi-hole.net | bash
 
 msg "Customizing LXC..."
 rm /etc/motd 
-rm /etc/update-motd.d/11-uname 
+rm /etc/update-motd.d/10-uname 
 touch ~/.hushlogin 
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
