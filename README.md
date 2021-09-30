@@ -1,4 +1,26 @@
 <h1 align="center" id="heading"> Select a Proxmox Helper Below </h1>
+
+</details>
+
+
+<details>
+<summary>Proxmox VE 7 Post Install</summary>
+
+<h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
+
+This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
+and attempt the *No-Nag* fix. 
+ 
+Run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
+```
+
+It's recommended to update Proxmox after running this script, before adding any VM/CT.
+
+</details>
+
 </details>
 
 <details>
@@ -470,24 +492,26 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 </details>
 
-
 </details>
 
 
 <details>
-<summary>Proxmox VE 7 Post Install</summary>
+<summary>Pi-hole LXC</summary>
 
-<h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
+<h1 align="center" id="heading"> Pi-hole LXC </h1>
 
-This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
-and attempt the *No-Nag* fix. 
+To create a new Proxmox Pi-hole LXC, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pihole_container.sh)"
+```
+<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
  
-Run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
+To set your password (Run in the pi-hole console)
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
+pihole -a -p
 ```
-
-It's recommended to update Proxmox after running this script, before adding any VM/CT.
 
 </details>
+
