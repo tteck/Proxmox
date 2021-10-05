@@ -30,7 +30,7 @@ apt-get autoremove >/dev/null
 
 msg "Updating LXC OS..."
 apt-get update >/dev/null
-apt-get dist-upgrade &>/dev/null
+apt-get upgrade &>/dev/null
 
 msg "Installing Prerequisites..."
 apt-get -qqy install \
@@ -42,7 +42,7 @@ deb https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.l
 curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add - &>/dev/null
 apt-get update &>/dev/null
 apt-get install plexmediaserver &>/dev/null
-apt-get dist-upgrade &>/dev/null
+apt-get upgrade &>/dev/null
 
 msg "Customizing LXC..."
 rm /etc/motd 
