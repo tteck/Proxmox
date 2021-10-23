@@ -32,7 +32,7 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating container OS..."
-#apt-get --allow-releaseinfo-change update >/dev/null
+apt-get update >/dev/null
 apt-get upgrade &>/dev/null
 
 # Install prerequisites
@@ -68,4 +68,4 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
 # Cleanup container
 msg "Cleanup..."
-rm -rf /debian11_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /debian11_setup.sh /var/{cache,log}/* #/var/lib/apt/lists/*
