@@ -29,7 +29,7 @@ apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
 msg "Updating LXC OS..."
-apt-get update >/dev/null
+#apt-get update >/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 msg "Installing Prerequisites..."
