@@ -32,7 +32,7 @@ apt-get autoremove >/dev/null
 
 # Update container OS
 msg "Updating container OS..."
-apt-get qqy update --allow-releaseinfo-change && apt-get qqy full-upgrade &>/dev/null
+apt-get update --allow-releaseinfo-change && apt-get qqy full-upgrade &>/dev/null
 #apt-get upgrade &>/dev/null
 
 # Install prerequisites
