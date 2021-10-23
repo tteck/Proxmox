@@ -13,7 +13,7 @@ done
 set -o errexit  #Exit immediately if a pipeline returns a non-zero status
 set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
 set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+#set -o pipefail #Pipe will exit with last non-zero status if applicable
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
@@ -110,7 +110,7 @@ info "Using '$STORAGE' for storage location."
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
 
-# Download latest Debian 10 LXC template
+# Download latest Debian 11 LXC template
 msg "Updating LXC template list..."
 pveam update >/dev/null
 msg "Downloading LXC template..."
@@ -153,9 +153,9 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
 
 # Set container timezone to match host
-#MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
-#ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
-#pct unmount $CTID && unset MOUNT
+MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
+ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
+pct unmount $CTID && unset MOUNT
 
 # Setup container
 msg "Starting LXC container..."
