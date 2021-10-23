@@ -153,9 +153,9 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
 
 # Set container timezone to match host
-MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
-ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
-pct unmount $CTID && unset MOUNT
+#MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
+#ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
+#pct unmount $CTID && unset MOUNT
 
 # Setup container
 msg "Starting LXC container..."
