@@ -41,16 +41,6 @@ apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
-# Customize Docker configuration
-# msg "Customizing Docker..."
-#DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
-#mkdir -p $(dirname $DOCKER_CONFIG_PATH)
-#cat >$DOCKER_CONFIG_PATH <<'EOF'
-#{
-#  "log-driver": "journald"
-#}
-#EOF
-
 # Customize container
 msg "Customizing container..."
 rm /etc/motd # Remove message of the day after login
@@ -65,11 +55,6 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-
-# Update container OS
-msg "Updating container OS..."
-apt-get update >/dev/null
-apt-get upgrade &>/dev/null
 
 # Cleanup container
 msg "Cleanup..."
