@@ -28,8 +28,9 @@ locale-gen >/dev/null
 apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
-msg "Updating LXC OS..."
-#apt-get update >/dev/null
+# Update container OS
+msg "Updating container OS..."
+apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 msg "Installing Prerequisites..."
