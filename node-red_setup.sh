@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-# Setup script environment
-set -o errexit  #Exit immediately if a pipeline returns a non-zero status
-set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
-set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+set -o errexit  
+set -o errtrace 
+set -o nounset  
+set -o pipefail 
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
@@ -23,41 +22,38 @@ function msg() {
   echo -e "$TEXT"
 }
 
-# Prepare container OS
 msg "Setting up container OS..."
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
-# Update container OS
 msg "Updating container OS..."
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-# Install prerequisites
 msg "Installing prerequisites..."
 apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
-msg "Installing Node..."
-sudo apt -y install nodejs npm &>/dev/null
+msg "Installing Node-Red..."
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi
 
-msg "Installing PM2..."
-npm install -g pm2 &>/dev/null 
+#msg "Installing Node..."
+#sudo apt -y install nodejs npm &>/dev/null
 
-# Install Node Red
-msg "Installing Node-RED..."
-npm install -g --unsafe-perm node-red &>/dev/null
+#msg "Installing PM2..."
+#npm install -g pm2 &>/dev/null 
 
-# Set up PM2 to manage startup of Node Red
-msg "Setting up PM2..."
-/usr/local/bin/pm2 start /usr/local/bin/node-red  &>/dev/null
-/usr/local/bin/pm2 save &>/dev/null
-/usr/local/bin/pm2 startup &>/dev/null
+#msg "Installing Node-RED..."
+#npm install -g --unsafe-perm node-red &>/dev/null
 
-# Customize container
+#msg "Setting up PM2..."
+#/usr/local/bin/pm2 start /usr/local/bin/node-red  &>/dev/null
+#/usr/local/bin/pm2 save &>/dev/null
+#/usr/local/bin/pm2 startup &>/dev/null
+
 msg "Customizing container..."
 rm /etc/motd # Remove message of the day after login
 rm /etc/update-motd.d/10-uname # Remove kernel information after login
@@ -72,6 +68,5 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-# Cleanup container
 msg "Cleanup..."
 rm -rf /node-red_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
