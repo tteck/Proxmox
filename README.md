@@ -220,6 +220,18 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node
 ```
 <h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 1vCPU :zap:</h3>
  
+From your nodered LXC console, the following commands can be run
+ 
+`node-red-start`  to start Node-Red
+
+`sudo systemctl enable nodered.service`  to autostart Node-RED at every boot
+
+`node-red-restart`  to restart Node-Red
+
+`sudo systemctl disable nodered.service` to disable autostart on boot
+ 
+`sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-start` required after update)
+
 </details>
 
  </details>
