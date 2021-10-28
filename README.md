@@ -133,7 +133,7 @@ For ESPHome interface http:// (LXC IP) :6052
 <details>
 <summary markdown="span">Nginx Proxy Manager LXC</summary>
  
-<p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero "height="100"/></p>
+<p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
 
 <h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
@@ -179,7 +179,7 @@ Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-pro
 <details>
 <summary markdown="span">MQTT LXC</summary>
  
-<p align="center"><img src="https://mqtt.org/assets/img/mqtt-logo-transp.svg" height="75"</p>
+<p align="center"><img src="https://mqtt.org/assets/img/mqtt-logo-transp.svg" height="75"/></p>
 
 
 <h1 align="center" id="heading"> Proxmox MQTT LXC Container </h1>
