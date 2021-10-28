@@ -47,7 +47,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary markdown="span">PVE6 Home Assistant Container LXC</summary>
+<summary markdown="span">Home Assistant Container LXC (PVE6)</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
 
@@ -78,7 +78,7 @@ Path to HA configuration.yaml
 
 
 <details>
-<summary markdown="span">PVE7 Home Assistant Container LXC</summary>
+<summary markdown="span">Home Assistant Container LXC (PVE7)</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
 
@@ -359,7 +359,7 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 
 
 <details>
-<summary markdown="span">PVE6 Zigbee2MQTT LXC</summary>
+<summary markdown="span">Zigbee2MQTT LXC (PVE6)</summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
@@ -426,7 +426,7 @@ bash update.sh
 
 
 <details>
-<summary markdown="span">PVE7 Zigbee2MQTT LXC</summary>
+<summary markdown="span">Zigbee2MQTT LXC (PVE7)</summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
@@ -494,7 +494,7 @@ bash update.sh
 
 
 <details>
-<summary markdown="span">Base Debian 10+ LXC</summary>
+<summary markdown="span">Debian 10+ LXC</summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -515,7 +515,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary markdown="span">Base Debian 11+ LXC</summary>
+<summary markdown="span">Debian 11+ LXC</summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
