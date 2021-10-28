@@ -559,3 +559,20 @@ pihole -a -p
 
 </details>
 
+<details>
+<summary markdown="span">AdGuard Home LXC</summary>
+ 
+<p align="center"><img src="https://dashboard.snapcraft.io/site_media/appmedia/2020/04/256.png" width="100" height="100"/></p>
+
+<h1 align="center" id="heading"> AdGuard Home LXC </h1>
+
+To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/adguard_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+ 
+For AdGuard Home interface http:// (LXC IP) :3000
+
+</details>
