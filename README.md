@@ -49,7 +49,8 @@ After the script completes, If you're dissatisfied with the default settings, cl
 <details>
 <summary markdown="span">Home Assistant Container LXC (PVE6)</summary>
  
-<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
+<p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
+<img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox 6 Home Assistant Container LXC </h1>
 
@@ -80,7 +81,8 @@ Path to HA configuration.yaml
 <details>
 <summary markdown="span">Home Assistant Container LXC (PVE7)</summary>
  
-<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
+<p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
+<img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox 7 Home Assistant Container LXC </h1>
 
