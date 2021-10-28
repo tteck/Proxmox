@@ -1,6 +1,6 @@
 <h1 align="center" id="heading"> Select a Proxmox Helper Below </h1>
 
-</details>
+
 
 
 <details>
@@ -21,7 +21,7 @@ It's recommended to update Proxmox after running this script, before adding any 
 
 </details>
 
-</details>
+
 
 <details>
 <summary>Home Assistant OS VM</summary>
@@ -40,7 +40,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  
 </details>
 
-</details>
+
 
 
 <details>
@@ -69,7 +69,7 @@ Path to HA configuration.yaml
 
 </details>
 
-</details>
+
 
 
 <details>
@@ -99,7 +99,7 @@ Path to HA configuration.yaml
  
 </details>
 
-</details>
+
 
 
 <details>
@@ -119,7 +119,6 @@ For ESPHome interface http:// (LXC IP) :6052
  
 </details>
 
-</details>
 
 
 <details>
@@ -162,7 +161,7 @@ Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-pro
  
 </details>
 
-</details>
+
 
 
 <details>
@@ -205,7 +204,7 @@ sudo systemctl restart mosquitto
 </details>
 
 
-</details>
+
 
 
 <details>
@@ -234,7 +233,6 @@ From your nodered LXC console, the following commands can be run
 
 </details>
 
- </details>
 
 
 <details>
@@ -336,7 +334,7 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 
 
 
-</details>
+
 
 
 <details>
@@ -401,7 +399,7 @@ To update Zigbee2Mqtt
 
 </details>
 
-</details>
+
 
 
 <details>
@@ -466,7 +464,7 @@ To start Zigbee2MQTT automatically on boot
 
 </details>
 
-</details>
+
 
 
 <details>
@@ -485,7 +483,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 </details>
 
-</details>
+
 
 
 <details>
@@ -504,7 +502,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 </details>
 
-</details>
+
 
 
 <details>
