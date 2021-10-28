@@ -5,7 +5,7 @@
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
  
-<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions" height="65"/></p>
+<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions" height="55"/></p>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
@@ -112,7 +112,7 @@ Path to HA configuration.yaml
 <details>
 <summary markdown="span">ESPHome LXC</summary>
  
-<p align="center"><img src="https://esphome.io/_static/logo-text.svg" alt="Logo" height="100"/></p>
+<p align="center"><img src="https://esphome.io/_static/logo-text.svg" alt="Logo" height="90"/></p>
 
 <h1 align="center" id="heading"> Proxmox ESPHome LXC Container </h1>
 
