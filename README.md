@@ -2,9 +2,10 @@
 
 
 
-
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
+ 
+<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions"/></p>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
@@ -26,6 +27,8 @@ It's recommended to update Proxmox after running this script, before adding any 
 <details>
 <summary markdown="span">Home Assistant OS VM</summary>
  
+<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
+ 
 <h1 align="center" id="heading"> Proxmox VM with Home Assistant OS </h1>
 
 To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
@@ -45,6 +48,8 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 <details>
 <summary markdown="span">PVE6 Home Assistant Container LXC</summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox 6 Home Assistant Container LXC </h1>
 
@@ -74,6 +79,8 @@ Path to HA configuration.yaml
 
 <details>
 <summary markdown="span">PVE7 Home Assistant Container LXC</summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox 7 Home Assistant Container LXC </h1>
 
@@ -104,6 +111,8 @@ Path to HA configuration.yaml
 
 <details>
 <summary markdown="span">ESPHome LXC</summary>
+ 
+<p align="center"><img src="https://esphome.io/_static/logo-text.svg" alt="Logo" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox ESPHome LXC Container </h1>
 
@@ -123,6 +132,9 @@ For ESPHome interface http:// (LXC IP) :6052
 
 <details>
 <summary markdown="span">Nginx Proxy Manager LXC</summary>
+ 
+<p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero "height="100"/></p>
+
 
 <h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
 
@@ -166,6 +178,9 @@ Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-pro
 
 <details>
 <summary markdown="span">MQTT LXC</summary>
+ 
+<p align="center"><img src="https://mqtt.org/assets/img/mqtt-logo-transp.svg" height="75"</p>
+
 
 <h1 align="center" id="heading"> Proxmox MQTT LXC Container </h1>
 
@@ -209,8 +224,11 @@ sudo systemctl restart mosquitto
 
 <details>
 <summary markdown="span">Node-Red LXC</summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/5375661?s=200&amp;v=4" alt="@node-red" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox Node-Red LXC Container </h1>
+ 
 
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
 
@@ -237,6 +255,9 @@ From your nodered LXC console, the following commands can be run
 
 <details>
 <summary markdown="span">Mariadb 10.5 LXC</summary>
+ 
+<p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/></p>
+
 
 <h1 align="center" id="heading"> Proxmox Mariadb 10.5 LXC Container </h1>
 
@@ -339,6 +360,8 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 
 <details>
 <summary markdown="span">PVE6 Zigbee2MQTT LXC</summary>
+ 
+<p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox 6 Zigbee2MQTT LXC Container </h1>
 
@@ -404,6 +427,9 @@ bash update.sh
 
 <details>
 <summary markdown="span">PVE7 Zigbee2MQTT LXC</summary>
+ 
+<p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
+
 
 <h1 align="center" id="heading"> Proxmox 7 Zigbee2MQTT LXC Container </h1>
 
@@ -469,6 +495,8 @@ bash update.sh
 
 <details>
 <summary markdown="span">Base Debian 10+ LXC</summary>
+ 
+<p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox Debian 10 LXC Container </h1>
 
@@ -488,6 +516,8 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 <details>
 <summary markdown="span">Base Debian 11+ LXC</summary>
+ 
+<p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox Debian 11 LXC Container </h1>
 
@@ -507,6 +537,8 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 <details>
 <summary markdown="span">Pi-hole LXC</summary>
+ 
+<p align="center"><img src="https://camo.githubusercontent.com/9426a93d32aa9f5ad757b2befcdb762a270d344efd6b8d287a2cea2c4c2233b8/68747470733a2f2f70692d686f6c652e6769746875622e696f2f67726170686963732f566f727465782f566f727465785f776974685f576f72646d61726b2e737667" alt="Pi-hole" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
