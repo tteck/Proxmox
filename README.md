@@ -389,12 +389,12 @@ sudo systemctl start zigbee2mqtt
 ```
 To start Zigbee2MQTT automatically on boot
  ```
- sudo systemctl enable zigbee2mqtt.service
+sudo systemctl enable zigbee2mqtt.service
  ```
 To update Zigbee2Mqtt
  ```
- cd /opt/zigbee2mqtt
- bash update.sh
+cd /opt/zigbee2mqtt
+bash update.sh
  ```
 
 </details>
@@ -454,12 +454,12 @@ sudo systemctl start zigbee2mqtt
 ```
 To start Zigbee2MQTT automatically on boot
  ```
- sudo systemctl enable zigbee2mqtt.service
+sudo systemctl enable zigbee2mqtt.service
  ```
- To update Zigbee2Mqtt
+To update Zigbee2Mqtt
  ```
- cd /opt/zigbee2mqtt
- bash update.sh
+cd /opt/zigbee2mqtt
+bash update.sh
  ```
 
 </details>
