@@ -5,7 +5,7 @@
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
  
-<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions" height="75"/></p>
+<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions" height="65"/></p>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
