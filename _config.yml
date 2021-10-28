@@ -1,4 +1,5 @@
 theme: jekyll-theme-hacker
+description: Proxmox Home Automation Helper Scripts
 markdown: kramdown
 kramdown:
   parse_block_html: true
