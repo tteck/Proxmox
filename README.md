@@ -247,7 +247,7 @@ From your nodered LXC console, the following commands can be run
 
 `sudo systemctl disable nodered.service` to disable autostart on boot
  
-`sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-start` required after update)
+`sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-restart` after update)
 
 </details>
 
