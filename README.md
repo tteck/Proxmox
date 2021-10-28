@@ -4,7 +4,7 @@
 
 
 <details>
-<summary>Proxmox VE 7 Post Install</summary>
+<summary markdown="span">Proxmox VE 7 Post Install</summary>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
@@ -24,7 +24,7 @@ It's recommended to update Proxmox after running this script, before adding any 
 
 
 <details>
-<summary>Home Assistant OS VM</summary>
+<summary markdown="span">Home Assistant OS VM</summary>
  
 <h1 align="center" id="heading"> Proxmox VM with Home Assistant OS </h1>
 
@@ -44,7 +44,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>PVE6 Home Assistant Container LXC</summary>
+<summary markdown="span">PVE6 Home Assistant Container LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox 6 Home Assistant Container LXC </h1>
 
@@ -53,7 +53,7 @@ To create a new Proxmox 6 Home Assistant Container, run the following from Proxm
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_ha_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  4GB RAM - 16GB Storage - 2vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
@@ -73,7 +73,7 @@ Path to HA configuration.yaml
 
 
 <details>
-<summary>PVE7 Home Assistant Container LXC</summary>
+<summary markdown="span">PVE7 Home Assistant Container LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox 7 Home Assistant Container LXC </h1>
 
@@ -83,7 +83,7 @@ To create a new Proxmox 7 Home Assistant Container, run the following from Proxm
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_ha_container.sh)"
 ```
  
-<h3 align="center" id="heading">:zap: Default Settings:  4GB RAM - 16GB Storage - 2vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
@@ -103,7 +103,7 @@ Path to HA configuration.yaml
 
 
 <details>
-<summary>ESPHome LXC</summary>
+<summary markdown="span">ESPHome LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox ESPHome LXC Container </h1>
 
@@ -113,7 +113,7 @@ To create a new Proxmox ESPHome LXC Container, run the following from Proxmox we
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esphome_container.sh)"
 ```
 
-<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 For ESPHome interface http:// (LXC IP) :6052
  
@@ -122,7 +122,7 @@ For ESPHome interface http:// (LXC IP) :6052
 
 
 <details>
-<summary>Nginx Proxy Manager LXC</summary>
+<summary markdown="span">Nginx Proxy Manager LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
 
@@ -131,7 +131,7 @@ To create a new Proxmox Nginx Proxy Manager LXC Container, run the following fro
 ```
  curl -sL https://raw.githubusercontent.com/ej52/proxmox/main/lxc/nginx-proxy-manager/create.sh | bash -s
 ```
-<h3 align="center" id="heading">:zap: Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 ____________________________________________________________________________________
  
@@ -165,7 +165,7 @@ Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-pro
 
 
 <details>
-<summary>MQTT LXC</summary>
+<summary markdown="span">MQTT LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox MQTT LXC Container </h1>
 
@@ -174,7 +174,7 @@ To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mqtt_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
 ```
@@ -208,7 +208,7 @@ sudo systemctl restart mosquitto
 
 
 <details>
-<summary>Node-Red LXC</summary>
+<summary markdown="span">Node-Red LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Node-Red LXC Container </h1>
 
@@ -217,7 +217,7 @@ To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
 From your nodered LXC console, the following commands can be run
  
@@ -236,7 +236,7 @@ From your nodered LXC console, the following commands can be run
 
 
 <details>
-<summary>Mariadb 10.5 LXC</summary>
+<summary markdown="span">Mariadb 10.5 LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Mariadb 10.5 LXC Container </h1>
 
@@ -245,7 +245,7 @@ To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mariadb_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
 To enable MariaDB to listen to remote connections, you need to edit your defaults file. To do this, open the console in your MariaDB lxc:
 ```
@@ -319,7 +319,7 @@ Following this, exit the MariaDB shell:
 ```
 exit
 ```
-:warning: Reboot the lxc 
+⚠️ Reboot the lxc 
 
 Checking status.
 ```
@@ -338,7 +338,7 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 
 
 <details>
-<summary>PVE6 Zigbee2MQTT LXC</summary>
+<summary markdown="span">PVE6 Zigbee2MQTT LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox 6 Zigbee2MQTT LXC Container </h1>
 
@@ -347,7 +347,7 @@ To create a new Proxmox 6 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Contain
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_zigbee2mqtt_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 Determine the location of your adapter (Run in the zigbee2mqtt console)
 ```
@@ -403,7 +403,7 @@ To update Zigbee2Mqtt
 
 
 <details>
-<summary>PVE7 Zigbee2MQTT LXC</summary>
+<summary markdown="span">PVE7 Zigbee2MQTT LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox 7 Zigbee2MQTT LXC Container </h1>
 
@@ -412,7 +412,7 @@ To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Contain
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_zigbee2mqtt_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  1GB RAM - 4GB Storage - 2vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 Determine the location of your adapter (Run in the zigbee2mqtt console)
 ```
@@ -468,7 +468,7 @@ To start Zigbee2MQTT automatically on boot
 
 
 <details>
-<summary>Base Debian 10+ LXC</summary>
+<summary markdown="span">Base Debian 10+ LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Debian 10 LXC Container </h1>
 
@@ -477,7 +477,7 @@ To create a new Proxmox Debian 10 (curl. sudo, auto login) LXC Container, run th
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian10_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
@@ -487,7 +487,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>Base Debian 11+ LXC</summary>
+<summary markdown="span">Base Debian 11+ LXC</summary>
 
 <h1 align="center" id="heading"> Proxmox Debian 11 LXC Container </h1>
 
@@ -496,7 +496,7 @@ To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run th
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian11_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
@@ -506,7 +506,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 <details>
-<summary>Pi-hole LXC</summary>
+<summary markdown="span">Pi-hole LXC</summary>
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
@@ -515,7 +515,7 @@ To create a new Proxmox Pi-hole LXC, run the following in the Proxmox web shell.
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pihole_container.sh)"
 ```
-<h3 align="center" id="heading">:zap: Default Settings:  512MiB RAM - 2GB Storage - 1vCPU :zap:</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 To set your password (Run in the pi-hole console)
 
