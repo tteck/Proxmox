@@ -357,7 +357,7 @@ Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if
  
  If you are having diffucuilty with device pass through or starting check the [Alternative method](https://github.com/tteck/Proxmox/blob/main/Alternative.md)
 
-:warning: **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/information/configuration.html)**
+⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/information/configuration.html)**
 ```
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
@@ -422,7 +422,7 @@ Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if
 
  If you are having diffucuilty with device pass through or starting check the [Alternative method](https://github.com/tteck/Proxmox/blob/main/Alternative.md)
 
- :warning: **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/information/configuration.html)**
+ ⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/information/configuration.html)**
 ```
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
