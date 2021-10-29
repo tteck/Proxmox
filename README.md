@@ -37,11 +37,10 @@ To create a new Proxmox VM with the latest version of Home Assistant OS, run the
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/haos_vm.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU ⚡</h3>
-
-Home Assistant Interface http:// (VM IP) :8123
  
 After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the **_Memory_** and **_Processors_** settings to what you desire. Once all changes have been made, **_Start_** the VM.
 
+Home Assistant Interface http:// (VM IP) :8123
  
 </details>
 
