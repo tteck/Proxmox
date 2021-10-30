@@ -40,7 +40,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/haos
  
 After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the **_Memory_** and **_Processors_** settings to what you desire. Once all changes have been made, **_Start_** the VM.
 
-Home Assistant Interface http:// (VM IP) :8123
+Home Assistant Interface - IP:8123
  
 </details>
 
@@ -64,9 +64,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
-Home Assistant Interface http:// (LXC IP) :8123
+Home Assistant Interface - IP:8123
 
-Portainer Interface http:// (LXC IP) :9000
+Portainer Interface - IP:9000
 
 Path to HA configuration.yaml
 ```
@@ -97,9 +97,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
-Home Assistant Interface http:// (LXC IP) :8123
+Home Assistant Interface - IP:8123
 
-Portainer Interface http:// (LXC IP) :9000
+Portainer Interface - IP:9000
 
 Path to HA configuration.yaml
 ```
@@ -127,7 +127,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esph
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
-ESPHome Interface http:// (LXC IP) :6052
+ESPHome Interface - IP:6052
  
 </details>
 
@@ -160,7 +160,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
     - 192.168.100.27 ###(Nginx Proxy Manager LXC IP)###
 ```
 
-Nginx Proxy Manager Interface http:// (LXC IP) :81
+Nginx Proxy Manager Interface - IP:81
  
 **Initial Login**
 
@@ -254,7 +254,7 @@ From your nodered LXC console, the following commands can be run
  
 `sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-restart` after update)
 
-Node-Red Interface http:// (LXC IP) :1880
+Node-Red Interface - IP:1880
  
 </details>
 
@@ -578,6 +578,6 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/adgu
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
-AdGuard Home Interface http:// (LXC IP) :3000
+AdGuard Home Interface - IP:3000
 
 </details>
