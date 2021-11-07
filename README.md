@@ -29,7 +29,7 @@ It's recommended to update Proxmox after running this script, before adding any 
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
  
-<h1 align="center" id="heading"> Proxmox VM with Home Assistant OS </h1>
+<h1 align="center" id="heading"> Proxmox Home Assistant OS VM </h1>
 
 To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
 
