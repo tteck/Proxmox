@@ -80,12 +80,12 @@ Path to HA configuration.yaml
 
 
 <details>
-<summary markdown="span">Home Assistant Container LXC (PVE7)</summary>
+<summary markdown="span">Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox 7 Home Assistant Container LXC </h1>
+<h1 align="center" id="heading"> Proxmox Home Assistant Container LXC </h1>
 
 To create a new Proxmox 7 Home Assistant Container, run the following from Proxmox web shell.
 
@@ -433,12 +433,12 @@ bash update.sh
 
 
 <details>
-<summary markdown="span">Zigbee2MQTT LXC (PVE7)</summary>
+<summary markdown="span">Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox 7 Zigbee2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox Zigbee2MQTT LXC Container </h1>
 
 To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
