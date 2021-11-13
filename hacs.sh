@@ -15,4 +15,5 @@ apt install unzip &>/dev/null
 cd /var/lib/docker/volumes/hass_config/_data
 wget -O - https://get.hacs.xyz | bash -
 
+# To install HACS run the following from the container (LXC) console
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
