@@ -72,7 +72,7 @@ Path to HA /config
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
-To edit the HA configuration.yaml (run from the LXC console)
+To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
 ```
 nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
@@ -113,7 +113,7 @@ Path to HA /config
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
-To edit the HA configuration.yaml (run from the LXC console)
+To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
 ```
 nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
