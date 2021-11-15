@@ -2,7 +2,7 @@
 
 **This script is for installing HACS on Home Assistant Container LXC ONLY**
 
-Run the following from the Home Assistant container (LXC) console
+Run the following from the Home Assistant Container LXC console
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
 ```
