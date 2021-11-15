@@ -68,10 +68,16 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Portainer Interface - IP:9000**
 
-Path to HA configuration.yaml
+Path to HA /config
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
+Edit HA configuration.yaml (run from the LXC console)
+```
+nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
+```
+Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
+
 [To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
  
 [Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
@@ -103,10 +109,16 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Portainer Interface - IP:9000**
 
-Path to HA configuration.yaml
+Path to HA /config
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
+Edit HA configuration.yaml (run from the LXC console)
+```
+nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
+```
+Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
+
 [To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
 
 [Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
