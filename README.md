@@ -73,6 +73,7 @@ Path to HA configuration.yaml
 /var/lib/docker/volumes/hass_config/_data
  ```
 [To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
+ 
 [Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
 
 </details>
@@ -107,6 +108,8 @@ Path to HA configuration.yaml
 /var/lib/docker/volumes/hass_config/_data
  ```
 [To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
+
+[Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
  
 </details>
 
