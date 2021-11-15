@@ -6,4 +6,4 @@ Run the following from the Home Assistant container (LXC) console
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
 ```
-After install, reboot Home Assistant and **clear browser cache** and Add HACS integration.
+After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
