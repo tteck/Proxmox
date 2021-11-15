@@ -1,6 +1,6 @@
 ## Home Assistant Community Store ##
 
-This script is for installong HACS on Home Assistant Container LXC ONLY
+This script is for installing HACS on Home Assistant Container LXC ONLY
 
 Run the following from the Home Assistant container (LXC) console
 ```
