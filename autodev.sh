@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 while true; do
-    read -p "To allow device passthrough to the predefined LXC container. Proceed(y/n)?" yn
+    read -p "Allow device passthrough to the predefined LXC container. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -75,3 +75,7 @@ cat <<EOF >> $CTID_CONFIG_PATH
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
+
+# In the Proxmox web shell run (replace 106 with your LXC ID)
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+# Reboot the LXC to apply the changes
