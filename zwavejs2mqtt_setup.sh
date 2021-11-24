@@ -48,7 +48,7 @@ curl -s https://api.github.com/repos/zwave-js/zwavejs2mqtt/releases/latest  \
 | tr -d \" \
 | wget -i - &>/dev/null
 unzip zwavejs2mqtt-v*.zip &>/dev/null
-./zwavejs2mqtt
+#./zwavejs2mqtt
 
 msg "Customizing container..."
 rm /etc/motd 
