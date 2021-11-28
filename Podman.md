@@ -8,4 +8,4 @@ Podman seeks to be a drop-in replacement for Docker as far as the CLI is concern
 
 Another key difference is that, it handles running containers, but not building them (non-monolithic). The goal here is to have a set of container standards that any application can be developed to support, rather than relying on a single monolithic application such as Docker to perform all duties.
 
-https://www.liquidweb.com/kb/podman-vs-docker/ ________________________________________________ https://podman.io/
+https://www.liquidweb.com/kb/podman-vs-docker/ ___ https://github.com/containers/podman-compose ___ https://podman.io/
