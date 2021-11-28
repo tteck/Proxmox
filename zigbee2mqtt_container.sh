@@ -74,7 +74,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_zigbee2mqtt_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/zigbee2mqtt_setup.sh
 
 # Detect modules and automatically load at boot
 load_module overlay
@@ -169,8 +169,8 @@ pct unmount $CTID && unset MOUNT
 # Setup container
 msg "Starting LXC container..."
 pct start $CTID
-pct push $CTID pve7_zigbee2mqtt_setup.sh /pve7_zigbee2mqtt_setup.sh -perms 755
-pct exec $CTID /pve7_zigbee2mqtt_setup.sh
+pct push $CTID zigbee2mqtt_setup.sh /zigbee2mqtt_setup.sh -perms 755
+pct exec $CTID /zigbee2mqtt_setup.sh
 
 # Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
