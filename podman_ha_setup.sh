@@ -39,8 +39,11 @@ apt-get -qqy install \
 msg "Installing Podman..."
 apt-get -y install podman &>/dev/null
 
-msg "Installing Home Assistant..."
+msg "Pulling Home Assistant Image..."
 podman volume create hass_config >/dev/null
+podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+
+msg "Installing Home Assistant..."
 podman run -d \
   --name homeassistant \
   --restart=always \
