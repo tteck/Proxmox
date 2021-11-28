@@ -564,7 +564,7 @@ bash update.sh
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Zwave2js2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox Zwavejs2MQTT LXC Container </h1>
 
 To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
 
