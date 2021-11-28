@@ -85,6 +85,51 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 </details>
 
 
+<details>
+<summary markdown="span">Home Assistant Container LXC (Podman)</summary>
+ 
+<p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
+<img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/></p>
+
+<h1 align="center" id="heading"> Proxmox Podman Home Assistant Container LXC </h1>
+
+To create a new Proxmox Podman Home Assistant Container, run the following from Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_ha_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+**Home Assistant Interface - IP:8123**
+
+
+Path to HA /config
+```
+/var/lib/containers/storage/volumes/hass_config/_data
+ ```
+To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
+```
+nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
+```
+Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
+
+To autostart Home Assistant at every boot (run from the LXC console)
+```
+podman generate systemd \
+    --new --name homeassistant \
+    > /etc/systemd/system/homeassistant.service
+systemctl enable homeassistant
+```
+Check the status of homeassistant service (run from the LXC console)
+```
+systemctl status homeassistant
+```
+
+
+
+</details>
 
 
 <details>
