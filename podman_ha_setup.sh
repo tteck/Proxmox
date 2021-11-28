@@ -53,14 +53,6 @@ podman run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-podman generate systemd \
-    --new --name homeassistant \
-    > /etc/systemd/system/homeassistant.service &>/dev/null
-
-#systemctl enable homeassistant
-#systemctl start homeassistant
-
-
 msg "Customizing container..."
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
