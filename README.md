@@ -491,7 +491,6 @@ bash update.sh
 
 
 
-
 <details>
 <summary markdown="span">Zigbee2MQTT LXC </summary>
  
@@ -558,6 +557,28 @@ bash update.sh
 </details>
 
 
+<details>
+<summary markdown="span">Zwavejs2MQTT LXC </summary>
+ 
+<p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> Proxmox Zwave2js2MQTT LXC Container </h1>
+
+To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwavejs2mqtt_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+To start Zwavejs2Mqtt (run from the LXC console)
+ ```
+cd zwavejs2mqtt
+./zwavejs2mqtt
+ ```
+**Zwavejs2MQTT Interface - IP:8091**
+ 
+</details>
 
 
 <details>
