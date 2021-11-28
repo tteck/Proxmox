@@ -142,7 +142,7 @@ systemctl status homeassistant
 To create a new Proxmox 7 Home Assistant Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve7_ha_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ha_container.sh)"
 ```
  
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
