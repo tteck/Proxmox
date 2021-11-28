@@ -53,20 +53,13 @@ podman run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-echo "Creating service file podman@.service"
-service_path="/etc/systemd/system/podman@.service"
+podman generate systemd \
+    --new --name homeassistant \
+    > /etc/systemd/system/homeassistant.service &>/dev/null
 
-echo "[Unit]
-Description=podman %I container
+systemctl enable homeassistant
+systemctl start homeassistant
 
-[Service]
-Restart=always
-ExecStart=/usr/bin/podman start -a %i
-ExecStop=/usr/bin/podman stop -t 2 %i
-
-[Install]
-WantedBy=local.target" > $service_path
-systemctl enable --now podman@homeassistant &>/dev/null
 
 msg "Customizing container..."
 rm /etc/motd
