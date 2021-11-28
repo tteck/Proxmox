@@ -104,7 +104,6 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Home Assistant Interface - IP:8123**
 
-
 Path to HA /config
 ```
 /var/lib/containers/storage/volumes/hass_config/_data
@@ -126,7 +125,7 @@ Check the status of homeassistant service (run from the LXC console)
 ```
 systemctl status homeassistant
 ```
-
+[Install HACS](https://github.com/tteck/Proxmox/blob/main/Podman_HACS.md)
 
 
 </details>
