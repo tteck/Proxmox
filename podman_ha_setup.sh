@@ -66,7 +66,7 @@ ExecStop=/usr/bin/podman stop -t 2 %i
 
 [Install]
 WantedBy=local.target" > $service_path
-systemctl enable --now podman@container_homeassistant &>/dev/null
+systemctl enable --now podman@homeassistant &>/dev/null
 
 msg "Customizing container..."
 rm /etc/motd
