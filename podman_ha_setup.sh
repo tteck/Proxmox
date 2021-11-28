@@ -57,8 +57,8 @@ podman generate systemd \
     --new --name homeassistant \
     > /etc/systemd/system/homeassistant.service &>/dev/null
 
-systemctl enable homeassistant
-systemctl start homeassistant
+#systemctl enable homeassistant
+#systemctl start homeassistant
 
 
 msg "Customizing container..."
