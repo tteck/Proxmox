@@ -607,7 +607,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/piho
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
-To set your password (Run in the pi-hole console)
+⚙️ **To set your password:**
+ 
+Run in the LXC console
 
 ```
 pihole -a -p
