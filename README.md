@@ -19,6 +19,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post
 ```
 
 It's recommended to update Proxmox after running this script, before adding any VM/CT.
+____________________________________________________________________________________________ 
 
 </details>
 
@@ -41,6 +42,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/haos
 After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the **_Memory_** and **_Processors_** settings to what you desire. Once all changes have been made, **_Start_** the VM.
 
 **Home Assistant Interface - IP:8123**
+____________________________________________________________________________________________ 
  
 </details>
 
@@ -90,7 +92,7 @@ systemctl status homeassistant
 ```
 [Install HACS](https://github.com/tteck/Proxmox/blob/main/Podman_HACS.md)
 
-
+____________________________________________________________________________________________ 
 </details>
 
 
@@ -137,7 +139,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/auto
 Reboot the LXC to apply the changes
 
 
-**To install HACS**
+**To install HACS:**
 
 Run the following from the Home Assistant Container LXC console
 ```
@@ -167,6 +169,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esph
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 **ESPHome Interface - IP:6052**
+
+____________________________________________________________________________________________ 
  
 </details>
 
@@ -214,7 +218,8 @@ Add the following to your `configuration.yaml` in Home Assistant.
  
 Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
 
- 
+ ____________________________________________________________________________________________ 
+
 </details>
 
 
@@ -259,6 +264,7 @@ Now restart Mosquitto server.
 sudo systemctl restart mosquitto
 ```
 
+____________________________________________________________________________________________ 
  
 </details>
 
@@ -294,6 +300,8 @@ From your nodered LXC console, the following commands can be run
 `sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-restart` after update)
 
 **Node-Red Interface - IP:1880**
+
+____________________________________________________________________________________________ 
  
 </details>
 
@@ -396,6 +404,7 @@ Change the recorder: `db_url:` in your HA configuration.yaml
  
 Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8mb4`
  
+____________________________________________________________________________________________ 
 
 </details>
 
@@ -466,6 +475,8 @@ cd /opt/zigbee2mqtt
 bash update.sh
  ```
 
+____________________________________________________________________________________________ 
+
 </details>
 
 
@@ -489,7 +500,9 @@ cd zwavejs2mqtt
 ./zwavejs2mqtt
  ```
 **Zwavejs2MQTT Interface - IP:8091**
- 
+
+____________________________________________________________________________________________ 
+
 </details>
 
 
@@ -508,6 +521,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debi
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+____________________________________________________________________________________________ 
 
 </details>
 
@@ -529,6 +544,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debi
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+____________________________________________________________________________________________ 
 
 </details>
 
@@ -555,8 +572,12 @@ To set your password (Run in the pi-hole console)
 pihole -a -p
 ```
 
+____________________________________________________________________________________________ 
+
 </details>
 
+ 
+ 
 <details>
 <summary markdown="span">AdGuard Home LXC</summary>
  
@@ -572,5 +593,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/adgu
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 **AdGuard Home Interface - IP:3000**
+
+____________________________________________________________________________________________ 
 
 </details>
