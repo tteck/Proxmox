@@ -12,7 +12,7 @@
 This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
 and attempt the *No-Nag* fix. 
  
-Run the following in the Proxmox Web Shell. ⚠️ *_PVE7 ONLY_*
+Run the following in the Proxmox Web Shell. ⚠️ **PVE7 ONLY**
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
@@ -71,31 +71,37 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Home Assistant Interface - IP:8123**
 
-Path to HA /config
+⚙️ **Path to HA /config**
 ```
 /var/lib/containers/storage/volumes/hass_config/_data
  ```
-To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
+⚙️ **To edit the HA configuration.yaml**
+ 
+Run from the LXC console
 ```
 nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-To autostart Home Assistant at every boot (run from the LXC console)
+⚙️ **To autostart Home Assistant at every boot:**
+ 
+Run from the LXC console
 ```
 podman generate systemd \
     --new --name homeassistant \
     > /etc/systemd/system/homeassistant.service
 systemctl enable homeassistant
 ```
-Check the status of homeassistant service (run from the LXC console)
+⚙️ **Check the status of homeassistant service:**
+ 
+Run from the LXC console
 ```
 systemctl status homeassistant
 ```
 
- **To install HACS:**
+⚙️ **To install HACS:**
 
-Run the following from the Home Assistant Container LXC console
+Run the from the LXC console
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_hacs.sh)"
 ```
@@ -128,20 +134,22 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Portainer Interface - IP:9000**
 
-Path to HA /config
+⚙️ **Path to HA /config**
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
-To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
+⚙️ **To edit the HA configuration.yaml**
+ 
+Run from the LXC console
 ```
 nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 
-**To allow device passthrough:**
+⚙️ **To allow device passthrough:**
  
-In the Proxmox web shell run (replace 106 with your LXC ID)
+In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
@@ -149,9 +157,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/auto
 Reboot the LXC to apply the changes
 
 
-**To install HACS:**
+⚙️ **To install HACS:**
 
-Run the following from the Home Assistant Container LXC console
+Run the from the LXC console
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
 ```
@@ -438,9 +446,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zigb
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 
-**To allow device passthrough:**
+⚙️ **To allow device passthrough:**
  
-In the Proxmox web shell run (replace 106 with your LXC ID)
+In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
@@ -448,7 +456,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/auto
 Reboot the LXC to apply the changes
 
  
-Determine the location of your adapter (Run in the zigbee2mqtt console)
+⚙️ **Determine the location of your adapter**
+ 
+Run in the zigbee2mqtt console
 ```
 ls -l /dev/serial/by-id
 ```
@@ -481,15 +491,15 @@ advanced:
   network_key: GENERATE
   channel: 20
   ```
-Zigbee2mqtt can be started after completing the configuration by running
+⚙️ **Zigbee2mqtt can be started after completing the configuration**
 ```
 sudo systemctl start zigbee2mqtt
 ```
-To start Zigbee2MQTT automatically on boot
+⚙️ **To start Zigbee2MQTT automatically on boot**
  ```
 sudo systemctl enable zigbee2mqtt.service
  ```
-To update Zigbee2Mqtt
+⚙️ **To update Zigbee2Mqtt**
  ```
 cd /opt/zigbee2mqtt
 bash update.sh
@@ -514,16 +524,18 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwav
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-To start Zwavejs2Mqtt (run from the LXC console)
+⚙️ **To start Zwavejs2Mqtt**
+ 
+Run from the LXC console
  ```
 cd zwavejs2mqtt
 ./zwavejs2mqtt
  ```
 **Zwavejs2MQTT Interface - IP:8091**
 
-**To allow device passthrough:**
+⚙️ **To allow device passthrough:**
  
-In the Proxmox web shell run (replace 106 with your LXC ID)
+In the Proxmox web shell run (**replace `106` with your LXC ID)**
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
