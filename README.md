@@ -19,6 +19,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post
 ```
 
 It's recommended to update Proxmox after running this script, before adding any VM/CT.
+
 ____________________________________________________________________________________________ 
 
 </details>
@@ -42,6 +43,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/haos
 After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the **_Memory_** and **_Processors_** settings to what you desire. Once all changes have been made, **_Start_** the VM.
 
 **Home Assistant Interface - IP:8123**
+
 ____________________________________________________________________________________________ 
  
 </details>
