@@ -609,7 +609,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/piho
  
 ⚙️ **To set your password:**
  
-Run in the LXC console
+Run from the LXC console
 
 ```
 pihole -a -p
