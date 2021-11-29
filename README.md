@@ -438,7 +438,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Proxmox Zigbee2MQTT LXC Container </h1>
 
-To create a new Proxmox 7 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zigbee2mqtt_container.sh)"
