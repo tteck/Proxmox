@@ -92,7 +92,15 @@ Check the status of homeassistant service (run from the LXC console)
 ```
 systemctl status homeassistant
 ```
-[Install HACS](https://github.com/tteck/Proxmox/blob/main/Podman_HACS.md)
+
+ **To install HACS:**
+
+Run the following from the Home Assistant Container LXC console
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_hacs.sh)"
+```
+After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
+
 
 ____________________________________________________________________________________________ 
 </details>
