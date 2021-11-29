@@ -521,6 +521,15 @@ cd zwavejs2mqtt
  ```
 **Zwavejs2MQTT Interface - IP:8091**
 
+**To allow device passthrough:**
+ 
+In the Proxmox web shell run (replace 106 with your LXC ID)
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+```
+ 
+Reboot the LXC to apply the changes
+
 ____________________________________________________________________________________________ 
 
 </details>
