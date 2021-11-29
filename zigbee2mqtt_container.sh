@@ -155,10 +155,8 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
 # Modify LXC permissions to support Zigbee Sticks
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
-lxc.cgroup2.devices.allow: c 188:* rwm
-lxc.mount.entry: /dev/serial/by-id               dev/serial/by-id         none bind,optional,create=dir
-lxc.mount.entry: /dev/ttyUSB0                    dev/ttyUSB0             none bind,optional,create=file
-lxc.mount.entry: /dev/ttyACM0                    dev/ttyACM0             none bind,optional,create=file
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop: 
 EOF
 
 # Set container timezone to match host
