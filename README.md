@@ -437,6 +437,17 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zigb
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
+
+**To allow device passthrough:**
+ 
+In the Proxmox web shell run (replace 106 with your LXC ID)
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+```
+ 
+Reboot the LXC to apply the changes
+
+ 
 Determine the location of your adapter (Run in the zigbee2mqtt console)
 ```
 ls -l /dev/serial/by-id
