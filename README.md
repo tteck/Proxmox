@@ -46,45 +46,6 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 
 
-
-<details>
-<summary markdown="span">Home Assistant Container LXC (PVE6)</summary>
- 
-<p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
-<img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
-
-<h1 align="center" id="heading"> Proxmox 6 Home Assistant Container LXC </h1>
-
-To create a new Proxmox 6 Home Assistant Container, run the following from Proxmox web shell.
-
-```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_ha_container.sh)"
-```
-<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
- 
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
-
-**Home Assistant Interface - IP:8123**
-
-**Portainer Interface - IP:9000**
-
-Path to HA /config
-```
-/var/lib/docker/volumes/hass_config/_data
- ```
-To edit the HA configuration.yaml (run from the Home Assistant container LXC console)
-```
-nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
-```
-Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
-
-[To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
- 
-[Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
-
-</details>
-
-
 <details>
 <summary markdown="span">Home Assistant Container LXC (Podman)</summary>
  
@@ -141,7 +102,7 @@ systemctl status homeassistant
 
 <h1 align="center" id="heading"> Proxmox Home Assistant Container LXC </h1>
 
-To create a new Proxmox 7 Home Assistant Container, run the following from Proxmox web shell.
+To create a new Proxmox Home Assistant Container, run the following from Proxmox web shell.
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ha_container.sh)"
@@ -165,10 +126,26 @@ nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-[To pass through a device for ZHA](https://github.com/tteck/Proxmox/blob/main/Alternative.md#zha-device-pass-through)
 
-[Install HACS](https://github.com/tteck/Proxmox/blob/main/HACS.md)
+**To allow device passthrough:**
  
+In the Proxmox web shell run (replace 106 with your LXC ID)
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+```
+ 
+Reboot the LXC to apply the changes
+
+
+**To install HACS**
+
+Run the following from the Home Assistant Container LXC console
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
+```
+After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
+
+____________________________________________________________________________________________ 
 </details>
 
 
@@ -423,73 +400,6 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
 </details>
 
 
-
-
-
-
-<details>
-<summary markdown="span">Zigbee2MQTT LXC (PVE6)</summary>
- 
-<p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
-
-<h1 align="center" id="heading"> Proxmox 6 Zigbee2MQTT LXC Container </h1>
-
-To create a new Proxmox 6 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
-
-```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pve6_zigbee2mqtt_container.sh)"
-```
-<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
- 
-Determine the location of your adapter (Run in the zigbee2mqtt console)
-```
-ls -l /dev/serial/by-id
-```
-Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if00-port0 -> ../../ttyUSB0```
- 
- If you are having diffucuilty with device pass through or starting check the [Alternative method](https://github.com/tteck/Proxmox/blob/main/Alternative.md)
-
-⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/)**
-```
-nano /opt/zigbee2mqtt/data/configuration.yaml
-```
-
-Example:
-```
-frontend:
-  port: 9442
-homeassistant: true
-permit_join: false
-mqtt:
-  base_topic: zigbee2mqtt
-  server: 'mqtt://192.168.86.224:1883'
-  user: usr
-  password: pwd
-  keepalive: 60
-  reject_unauthorized: true
-  version: 4
-serial:
-  port: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
-advanced:
-  pan_id: GENERATE
-  network_key: GENERATE
-  channel: 20
-  ```
-Zigbee2mqtt can be started after completing the configuration by running
-```
-sudo systemctl start zigbee2mqtt
-```
-To start Zigbee2MQTT automatically on boot
- ```
-sudo systemctl enable zigbee2mqtt.service
- ```
-To update Zigbee2Mqtt
- ```
-cd /opt/zigbee2mqtt
-bash update.sh
- ```
-
-</details>
 
 
 
