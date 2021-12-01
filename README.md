@@ -15,7 +15,7 @@ and attempt the *No-Nag* fix.
 Run the following in the Proxmox Web Shell. ⚠️ **PVE7 ONLY**
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/post_install.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
 ```
 
 It's recommended to update Proxmox after running this script, before adding any VM/CT.
@@ -36,7 +36,7 @@ ________________________________________________________________________________
 To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/haos_vm.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/haos_vm.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU ⚡</h3>
  
@@ -60,10 +60,10 @@ ________________________________________________________________________________
 
 To create a new Proxmox Podman Home Assistant Container, run the following from Proxmox web shell. 
 
- ([What is Podman?](https://github.com/tteck/Proxmox2/blob/main/Podman.md))
+ ([What is Podman?](https://github.com/tteck/Proxmox/blob/main/Podman.md))
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/podman_ha_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_ha_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
  
@@ -103,7 +103,7 @@ systemctl status homeassistant
 
 Run the from the LXC console
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/podman_hacs.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
@@ -123,7 +123,7 @@ ________________________________________________________________________________
 To create a new Proxmox Home Assistant Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/ha_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ha_container.sh)"
 ```
  
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
@@ -151,7 +151,7 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -161,7 +161,7 @@ Reboot the LXC to apply the changes
 
 Run the from the LXC console
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/hacs.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
@@ -181,7 +181,7 @@ ________________________________________________________________________________
 To create a new Proxmox ESPHome LXC Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/esphome_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/esphome_container.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
@@ -254,7 +254,7 @@ Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-pro
 To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/mqtt_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
@@ -301,7 +301,7 @@ ________________________________________________________________________________
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/node-red_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
@@ -336,7 +336,7 @@ ________________________________________________________________________________
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/mariadb_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/mariadb_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
@@ -441,7 +441,7 @@ ________________________________________________________________________________
 To create a new Proxmox [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/zigbee2mqtt_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zigbee2mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
@@ -450,7 +450,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/zig
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -520,7 +520,7 @@ ________________________________________________________________________________
 To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/zwavejs2mqtt_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwavejs2mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
@@ -537,7 +537,7 @@ cd zwavejs2mqtt
  
 In the Proxmox web shell run (**replace `106` with your LXC ID)**
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -557,7 +557,7 @@ ________________________________________________________________________________
 To create a new Proxmox Debian 10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/debian10_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian10_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
@@ -580,7 +580,7 @@ ________________________________________________________________________________
 To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/debian11_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian11_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
@@ -603,7 +603,7 @@ ________________________________________________________________________________
 To create a new Proxmox Pi-hole LXC, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/pihole_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/pihole_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
@@ -631,7 +631,7 @@ ________________________________________________________________________________
 To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox2/main/adguard_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/adguard_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
