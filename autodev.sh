@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 while true; do
-    read -p "Allow device passthrough to the predefined LXC container. Proceed(y/n)?" yn
+    read -p "Did you replace 106 with your LXC ID? Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
