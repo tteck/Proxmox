@@ -326,12 +326,12 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Mariadb 10.5 LXC</summary>
+<summary markdown="span">Mariadb LXC</summary>
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox Mariadb 10.5 LXC Container </h1>
+<h1 align="center" id="heading"> Proxmox Mariadb LXC Container </h1>
 
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
 
