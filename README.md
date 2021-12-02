@@ -30,7 +30,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://camo.githubusercontent.com/f6f33a09f8c1207dfb3dc1cbd754c2f3393562c11b1c999751ad9a91a656834a/68747470733a2f2f692e696d6775722e636f6d2f536e6c437948462e706e67" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Dark Theme </h1>
+<h1 align="center" id="heading"> Proxmox Discord Dark Theme </h1>
 
 A dark theme for the Proxmox Web UI by [Weilbyte](https://github.com/Weilbyte/PVEDiscordDark)
  
