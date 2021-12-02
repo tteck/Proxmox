@@ -126,7 +126,7 @@ To create a new Proxmox Home Assistant Container, run the following from Proxmox
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ha_container.sh)"
 ```
  
-<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 16GB Storage - 2vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
