@@ -8,17 +8,15 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-
-# Setup script environment
-set -o errexit  #Exit immediately if a pipeline returns a non-zero status
-set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
-set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
-
 function error_exit() {
   trap - ERR
   local DEFAULT='Unknown failure occured.'
@@ -56,8 +54,6 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-
-# Select storage location
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -83,12 +79,8 @@ else
   done
 fi
 info "Using '$STORAGE' for storage location."
-
-# Get the next guest VM/LXC ID
 VMID=$(pvesh get /cluster/nextid)
 info "Container ID is $VMID."
-
-# Get latest Home Assistant disk image archive URL
 echo -e "\e[1;33m Getting URL for latest Home Assistant disk image... \e[0m"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
@@ -110,33 +102,25 @@ EOF
 if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
-
-# Download Home Assistant disk image archive
-echo -e "\e[1;33m Downloading disk image... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Downloading disk image... \e[0m"
 wget -q --show-progress $URL
-echo -en "\e[1A\e[0K" #Overwrite output from wget
+echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-
-# Check for and Install unzip (if needed)
 if [[ $FILE == *.zip ]]; then
-  echo -e "\e[1;33m Checking for unzip command... \e[0m"
+  echo -e "${CHECKMARK} \e[1;92m Checking for unzip command... \e[0m"
   if ! command -v unzip &> /dev/null; then
-    echo -e "\e[1;33m Installing Unzip... \e[0m"
+    echo -e "${CHECKMARK} \e[1;92m Installing Unzip... \e[0m"
     apt-get update >/dev/null
     apt-get -qqy install unzip &>/dev/null
   fi
 fi
-
-# Extract Home Assistant disk image
-echo -e "\e[1;33m Extracting disk image... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Extracting disk image... \e[0m"
 case $FILE in
   *"gz") gunzip -f $FILE;;
   *"zip") unzip -o $FILE;;
   *"xz") xz -d $FILE;;
   *) die "Unable to handle file extension '${FILE##*.}'.";;
 esac
-
-# Create variables for container disk
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   nfs|dir)
@@ -149,9 +133,7 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-
-# Create VM
-echo -e "\e[1;33m Creating VM... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Creating VM... \e[0m"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
 qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -162,11 +144,9 @@ qm set $VMID \
   -sata0 ${DISK1_REF},size=32G > /dev/null
 qm set $VMID \
   -boot order=sata0 > /dev/null
-
-# Add serial port and enable console output
 set +o errtrace
 (
-  echo -e "\e[1;33m Adding serial port and configuring console... \e[0m"
+  echo -e "${CHECKMARK} \e[1;92m Adding serial port and configuring console... \e[0m"
   trap '
     warn "Unable to configure serial port. VM is still functional."
     if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
@@ -175,7 +155,7 @@ set +o errtrace
     exit
   ' ERR
   if [ "$(command -v kpartx)" = "" ]; then
-    echo -e "\e[1;33m Installing kpartx... \e[0m"
+    echo -e "${CHECKMARK} \e[1;92m Installing kpartx... \e[0m"
     apt-get update >/dev/null
     apt-get -qqy install kpartx &>/dev/null
   fi
