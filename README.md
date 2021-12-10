@@ -659,6 +659,17 @@ If you prefer to manage all aspects of your Linux LXC from a graphical interface
 
 **Webmin Interface - https:// IP:10000 (https)**
 
+⚙️ **Initial Login**
+
+**username** 
+ ```
+ root
+ ```
+ **password** 
+ ```
+ root
+ ```
+ 
 ____________________________________________________________________________________________ 
 
 </details>
