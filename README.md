@@ -662,13 +662,10 @@ If you prefer to manage all aspects of your Linux LXC from a graphical interface
 ⚙️ **Initial Login**
 
 **username** 
- ```
- root
- ```
+ `root`
+ 
  **password** 
- ```
- root
- ```
+ `root`
  
 ____________________________________________________________________________________________ 
 
