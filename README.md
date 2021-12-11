@@ -656,6 +656,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/webm
 
 If you prefer to manage all aspects of your Linux LXC from a graphical interface instead of the command line interface, Webmin might be right for you.
 
+Benefits include automatic daily security updates, backup and restore, file manager with editor, web control panel, and preconfigured system monitoring with optional email alerts.
+
+
 
 **Webmin Interface - https:// IP:10000 (https)**
 
