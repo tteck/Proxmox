@@ -644,7 +644,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span">Webmin System Administration</summary>
  
-<p align="center"><img src="https://github.com/webmin/webmin/blob/master/images/webmin-blue.png" height="100"/></p>
+<p align="center"><img src="https://github.com/webmin/webmin/blob/master/images/webmin-blue.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Webmin System Administration </h1>
 
