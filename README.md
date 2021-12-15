@@ -113,11 +113,11 @@ podman generate systemd \
     > /etc/systemd/system/homeassistant.service
 systemctl enable homeassistant
 ```
-⚙️ **Check the status of homeassistant service:**
+⚙️ **Start the homeassistant service:**
  
 Run from the LXC console
 ```
-systemctl status homeassistant
+systemctl start homeassistant
 ```
 
 ⚙️ **To install HACS:**
