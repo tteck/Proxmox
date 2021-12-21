@@ -1,4 +1,4 @@
-theme: jekyll-theme-hacker
+theme: jekyll-theme-modernist
 title: Proxmox Helper Scripts
 description: Proxmox Scripts For Home Automation
 markdown: kramdown
