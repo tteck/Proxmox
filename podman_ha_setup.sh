@@ -34,7 +34,8 @@ apt-get -qqy upgrade &>/dev/null
 
 msg "Installing prerequisites..."
 apt-get -qqy install \
-    curl &>/dev/null
+    curl \
+    runc &>/dev/null
 
 msg "Installing Podman..."
 apt-get -y install podman &>/dev/null
