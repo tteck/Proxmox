@@ -31,11 +31,27 @@ function msg() {
 CTID=$1
 CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $CTID_CONFIG_PATH
+### Intel iGPU: ###
 lxc.cgroup2.devices.allow: c 226:0 rwm
 lxc.cgroup2.devices.allow: c 226:128 rwm
 lxc.cgroup2.devices.allow: c 29:0 rwm
-lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
-lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
+#lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file 0, 0
+#lxc.mount.entry: /dev/dri/card0 dev/dri/card0 none bind,optional,create=file 0, 0
+lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir 0, 0
+lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file 0, 0
+
+### NVidia GPU: ###
+#lxc.cgroup2.devices.allow: c 195:* rwm
+#lxc.cgroup2.devices.allow: c 243:* rwm
+#lxc.mount.entry: /dev/nvidia0 dev/nvidia0 none bind,optional,create=file
+#lxc.mount.entry: /dev/nvidiactl dev/nvidiactl none bind,optional,create=file
+#lxc.mount.entry: /dev/nvidia-uvm dev/nvidia-uvm none bind,optional,create=file
+#lxc.mount.entry: /dev/nvidia-modeset dev/nvidia-modeset none bind,optional,create=file
+#lxc.mount.entry: /dev/nvidia-uvm-tools dev/nvidia-uvm-tools none bind,optional,create=file
+#lxc.cgroup2.devices.allow: c 226:0 rwm
+#lxc.cgroup2.devices.allow: c 226:128 rwm
+#lxc.cgroup2.devices.allow: c 29:0 rwm
+#lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file 0, 0
 EOF
 echo -e "\e[1;33m Finished....Please Reboot the LXC to apply the changes \e[0m"
 
@@ -45,3 +61,5 @@ echo -e "\e[1;33m Finished....Please Reboot the LXC to apply the changes \e[0m"
 # following in the Proxmox web shell (replace 106 with your LXC ID)
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/plex_hardware_acceleration.sh)" -s 106
 # Reboot the LXC to apply the changes
+
+
