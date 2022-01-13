@@ -37,16 +37,8 @@ function cleanup() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-CHAR_DEVS+=("1:1")
-CHAR_DEVS+=("4:\([3-9]\|[1-5][0-9]\|6[0-3]\)")
-CHAR_DEVS+=("4:\(6[4-9]\|[7-9][0-9]\|1[0-9][0-9]\|2[0-4][0-9]\|25[0-5]\)")
-CHAR_DEVS+=("10:200")
-CHAR_DEVS+=("116:.*")
-CHAR_DEVS+=("166:.*")
-CHAR_DEVS+=("180:\([0-9]\|1[0-5]\)")
 CHAR_DEVS+=("188:.*")
 CHAR_DEVS+=("189:.*")
-CHAR_DEVS+=("24[0-2]:.*")
 
 for char_dev in ${CHAR_DEVS[@]}; do
   [ ! -z "${CHAR_DEV_STRING-}" ] && CHAR_DEV_STRING+=" -o"
