@@ -141,9 +141,9 @@ pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},size=128K \
-  -scsi0 ${DISK1_REF},size=32G > /dev/null
+  -sata0 ${DISK1_REF},size=32G > /dev/null
 qm set $VMID \
-  -boot order=scsi0 > /dev/null
+  -boot order=sata0 > /dev/null
 set +o errtrace
 (
   echo -e "${CHECKMARK} \e[1;92m Adding serial port and configuring console... \e[0m"
