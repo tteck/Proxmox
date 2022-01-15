@@ -6,6 +6,7 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -22,35 +23,54 @@ function msg() {
   echo -e "$TEXT"
 }
 
-msg "Setting up container OS..."
+echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
-msg "Updating container OS..."
+echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-msg "Installing prerequisites..."
+echo -e "${CHECKMARK} \e[1;92m Installing Prerequisites... \e[0m"
 apt-get -qqy install \
     curl \
     sudo \
     unzip &>/dev/null
+    
+    echo -e "${CHECKMARK} \e[1;92m Setting up Node.js Repository... \e[0m"
+    sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
+    
+    echo -e "${CHECKMARK} \e[1;92m Installing Node.js... \e[0m"
+    sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
+    
+    echo -e "${CHECKMARK} \e[1;92m Installing yarn... \e[0m"
+    npm install --global yarn &>/dev/null
+    
+    echo -e "${CHECKMARK} \e[1;92m Build/Install Zwavejs2MQTT (5-6 min)... \e[0m"
+    sudo git clone https://github.com/zwave-js/zwavejs2mqtt /opt/zwavejs2mqtt &>/dev/null
+    cd /opt/zwavejs2mqtt &>/dev/null
+    yarn install &>/dev/null
+    yarn run build &>/dev/null
 
-msg "Installing zwavejs2mqtt..."
-cd ~
-mkdir zwavejs2mqtt
-cd zwavejs2mqtt
-curl -s https://api.github.com/repos/zwave-js/zwavejs2mqtt/releases/latest  \
-| grep "browser_download_url.*zip" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -i - &>/dev/null
-unzip zwavejs2mqtt-v*.zip &>/dev/null
-#./zwavejs2mqtt
+echo -e "${CHECKMARK} \e[1;92m Creating Service file zwavejs2mqtt.service... \e[0m"
+service_path="/etc/systemd/system/zwavejs2mqtt.service"
 
-msg "Customizing container..."
+echo "[Unit]
+Description=zwavejs2mqtt
+After=network.target
+[Service]
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/opt/zwavejs2mqtt
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+[Install]
+WantedBy=multi-user.target" > $service_path
+
+echo -e "${CHECKMARK} \e[1;92m Customizing container... \e[0m"
 rm /etc/motd 
 rm /etc/update-motd.d/10-uname 
 touch ~/.hushlogin 
@@ -64,5 +84,7 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-msg "Cleanup..."
+echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /zwavejs2mqtt_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
+systemctl start zwavejs2mqtt
+systemctl enable zwavejs2mqtt &>/dev/null
