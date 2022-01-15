@@ -545,7 +545,6 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwav
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
- ```
 **Zwavejs2MQTT Interface - IP:8091**
 
 ⚙️ **To allow device passthrough:**
