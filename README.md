@@ -545,12 +545,6 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwav
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-⚙️ **To start Zwavejs2Mqtt**
- 
-Run from the LXC console
- ```
-cd zwavejs2mqtt
-./zwavejs2mqtt
  ```
 **Zwavejs2MQTT Interface - IP:8091**
 
