@@ -226,9 +226,9 @@ ________________________________________________________________________________
 To create a new Proxmox Nginx Proxy Manager LXC Container, run the following from Proxmox web shell.
 
 ```
- curl -sL https://raw.githubusercontent.com/ej52/proxmox/main/lxc/nginx-proxy-manager/create.sh | bash -s
+ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/npm_container.sh)"
 ```
-<h3 align="center" id="heading">⚡ Alpine  Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 1vCPU ⚡</h3>
 
 ____________________________________________________________________________________
  
@@ -244,7 +244,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
 
 **Nginx Proxy Manager Interface - IP:81**
  
-**Initial Login**
+⚙️ **Initial Login**
 
 **username** 
  ```
@@ -254,9 +254,6 @@ Add the following to your `configuration.yaml` in Home Assistant.
  ```
  changeme
  ```
- 
-Thanks to [ej52](https://github.com/ej52/proxmox-scripts/blob/main/lxc/nginx-proxy-manager/README.md) for his hard work.
-
  ____________________________________________________________________________________________ 
 
 </details>
