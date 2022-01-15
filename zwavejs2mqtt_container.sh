@@ -15,6 +15,7 @@ set -o nounset
 set -o pipefail 
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
 
@@ -72,7 +73,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/zwavejs2mqtt_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/wip/zwavejs2mqtt_setup.sh
 
 load_module overlay
 
@@ -100,14 +101,14 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using '$STORAGE' for storage location."
+info "Using '$STORAGE' for Storage Location."
 
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
 
-msg "Updating LXC template list..."
+echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
 pveam update >/dev/null
-msg "Downloading LXC template..."
+echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -129,7 +130,7 @@ esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
-msg "Creating LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
 DISK_SIZE=4G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -154,10 +155,10 @@ MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
 
-msg "Starting LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
 pct start $CTID
 pct push $CTID zwavejs2mqtt_setup.sh /zwavejs2mqtt_setup.sh -perms 755
 pct exec $CTID /zwavejs2mqtt_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a Zwavejs2MQTT LXC Container to $CTID at IP Address ${IP}"
+info "Successfully created a Zwavejs2MQTT LXC Container to $CTID at IP Address ${IP}:8091"
