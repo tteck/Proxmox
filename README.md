@@ -1,6 +1,6 @@
 <h1 align="center" id="heading"> Select a Proxmox Helper Below </h1>
 
-🔸 updated in the past 7 days
+🔸<sub> updated in the past 7 days</sub>
 
 
 <details>
