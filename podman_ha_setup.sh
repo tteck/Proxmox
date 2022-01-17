@@ -6,6 +6,7 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -22,29 +23,29 @@ function msg() {
   echo -e "$TEXT"
 }
 
-msg "Setting up container OS..."
+echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
-msg "Updating container OS..."
+echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-msg "Installing prerequisites..."
+echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get -qqy install \
     curl \
     runc &>/dev/null
 
-msg "Installing Podman..."
+echo -e "${CHECKMARK} \e[1;92m Installing Podman... \e[0m"
 apt-get -y install podman &>/dev/null
 
-msg "Pulling Home Assistant Image..."
-podman volume create hass_config >/dev/null
+echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
 
-msg "Installing Home Assistant..."
+echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
+podman volume create hass_config >/dev/null
 podman run -d \
   --name homeassistant \
   --restart=always \
@@ -54,7 +55,7 @@ podman run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-msg "Customizing container..."
+echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
 touch ~/.hushlogin
@@ -68,5 +69,5 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-msg "Cleanup..."
+echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /podman_ha_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
