@@ -15,6 +15,7 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
 
@@ -72,7 +73,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/podman_ha_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/wip/podman_ha_setup.sh
 
 load_module overlay
 
@@ -104,10 +105,9 @@ info "Using '$STORAGE' for storage location."
 
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
-
-msg "Updating LXC template list..."
+echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
 pveam update >/dev/null
-msg "Downloading LXC template..."
+echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -128,28 +128,43 @@ case $STORAGE_TYPE in
 esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
-
-msg "Creating LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
 DISK_SIZE=8G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
+  wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8/fuse-overlayfs-x86_64
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
 else
   mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
 fi
-ARCH=$(dpkg --print-architecture)
+  ARCH=$(dpkg --print-architecture)
 HOSTNAME=homeassistant
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
+if [ "$STORAGE_TYPE" == "zfspool" ]; then  
+pct create $CTID $TEMPLATE_STRING -arch $ARCH -features fuse=1,keyctl=1,mknod=1,nesting=1 \
+  -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 2 -memory 2048 \
+  -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
+else
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 2 -memory 2048 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
+fi
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >> $LXC_CONFIG
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
+EOF
 
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
 
-msg "Starting LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
 pct start $CTID
+if [ "$STORAGE_TYPE" == "zfspool" ]; then
+pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
+info "Using fuse-overlayfs."
+fi
 pct push $CTID podman_ha_setup.sh /podman_ha_setup.sh -perms 755
 pct exec $CTID /podman_ha_setup.sh
 
@@ -157,7 +172,8 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 info "Successfully created Home Assistant Container LXC to $CTID."
 msg "
 
-Home Assistant is reachable by going to the following URLs.
+Home Assistant should be reachable by going to the following URL.
+
 
       http://${IP}:8123
 "
