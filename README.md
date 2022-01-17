@@ -105,21 +105,14 @@ nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-⚙️ **To autostart Home Assistant at every boot:**
+⚙️ **To allow device passthrough:**
  
-Run from the LXC console
+In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-podman generate systemd \
-    --new --name homeassistant \
-    > /etc/systemd/system/homeassistant.service
-systemctl enable homeassistant
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
 ```
-⚙️ **Start the homeassistant service:**
  
-Run from the LXC console
-```
-systemctl start homeassistant
-```
+Reboot the LXC to apply the changes
 
 ⚙️ **To install HACS:**
 
