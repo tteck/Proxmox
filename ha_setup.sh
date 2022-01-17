@@ -37,7 +37,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get -qqy install \
     curl \
     wget &>/dev/null
- 
+    
 echo -e "${CHECKMARK} \e[1;92m Customizing Docker... \e[0m"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
@@ -47,8 +47,11 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
 }
 EOF
 
-echo -e "${CHECKMARK} \e[1;92m Installing Docker.io... \e[0m"
-apt-get install -y docker.io &>/dev/null
+echo -e "${CHECKMARK} \e[1;92m Installing Docker... \e[0m"
+sh <(curl -sSL https://get.docker.com) &>/dev/null
+
+echo -e "${CHECKMARK} \e[1;92m Pulling Portainer Image...\e[0m"
+docker pull docker.io/homeassistant/home-assistant:stable &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Portainer... \e[0m"
 docker volume create portainer_data >/dev/null
@@ -60,7 +63,10 @@ docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
   portainer/portainer-ce:latest &>/dev/null
-  
+
+echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
+docker pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 docker volume create hass_config >/dev/null
 docker run -d \
@@ -74,7 +80,7 @@ docker run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 rm /etc/motd 
 rm /etc/update-motd.d/10-uname 
 touch ~/.hushlogin 
