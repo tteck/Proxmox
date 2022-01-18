@@ -74,7 +74,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/node-red_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/node-red_setup.sh
 
 # Detect modules and automatically load at boot
 load_module overlay
