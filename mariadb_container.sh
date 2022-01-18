@@ -74,7 +74,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/mariadb_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/mariadb_setup.sh
 
 # Detect modules and automatically load at boot
 #load_module aufs
