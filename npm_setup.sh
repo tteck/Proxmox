@@ -23,13 +23,17 @@ function msg() {
   echo -e "$TEXT"
 }
 
-LASTCMD=""
-WGETOPT="-t 1 -T 15 -q"
+# Prepare container OS
+msg "Setting up container OS..."
+sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+locale-gen >/dev/null
+apt-get -y purge openssh-{client,server} >/dev/null
+apt-get autoremove >/dev/null
 
-  # Cleanup
-  apt-get remove --purge -y build-essential python3-dev git -qq &>/dev/null
-  apt-get autoremove -y -qq &>/dev/null
-  apt-get clean
+# Update container OS
+msg "Updating container OS..."
+apt update &>/dev/null
+apt-get -qqy upgrade &>/dev/null
 
   # Install dependencies
   echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
