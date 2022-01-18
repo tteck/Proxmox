@@ -74,7 +74,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/wip/npm_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/npm_setup.sh
 
 load_module overlay
 
