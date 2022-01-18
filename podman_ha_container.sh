@@ -132,7 +132,7 @@ echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
 DISK_SIZE=8G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8/fuse-overlayfs-x86_64
+  wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8.1/fuse-overlayfs-x86_64
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
 else
   mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
