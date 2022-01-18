@@ -554,7 +554,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Debian 11+ LXC</summary>
+<summary markdown="span">Debian 11 LXC</summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -564,6 +564,27 @@ To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run th
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/debian11_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+____________________________________________________________________________________________ 
+
+</details>
+
+
+<details>
+<summary markdown="span">🔸Ubuntu 21.10 LXC</summary>
+ 
+<p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
+
+<h1 align="center" id="heading"> Proxmox Ubuntu 21.10 LXC Container </h1>
+
+To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ubuntu_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
