@@ -70,9 +70,9 @@ echo -e "${CHECKMARK} \e[1;92m Installing Yarn... \e[0m"
 npm install --global yarn &>/dev/null
 
 # Download nginx-proxy-manager source
-echo -e "${CHECKMARK} \e[1;92m Downloading NPM v2.9.14... \e[0m"
-wget https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.14 -O - | tar -xz &>/dev/null
-cd ./nginx-proxy-manager-2.9.14
+echo -e "${CHECKMARK} \e[1;92m Downloading NPM v2.9.15... \e[0m"
+wget https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.15 -O - | tar -xz &>/dev/null
+cd ./nginx-proxy-manager-2.9.15
 
 # Crate required symbolic links
 echo -e "${CHECKMARK} \e[1;92m Setting up Enviroment... \e[0m"
@@ -82,8 +82,8 @@ ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
 # Update NPM version in package.json files
-sed -i "s+0.0.0+#v2.9.14+g" backend/package.json
-sed -i "s+0.0.0+#v2.9.14+g" frontend/package.json
+sed -i "s+0.0.0+#v2.9.15+g" backend/package.json
+sed -i "s+0.0.0+#v2.9.15+g" frontend/package.json
 
 # Fix nginx config files for use with openresty defaults
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
