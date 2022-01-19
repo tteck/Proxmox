@@ -73,6 +73,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/ha_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/misc/update.sh
 
 load_module overlay
 
@@ -165,6 +166,7 @@ pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
 info "Using fuse-overlayfs."
 fi
 pct push $CTID ha_setup.sh /ha_setup.sh -perms 755
+pct push $CTID update.sh /root/update.sh -perms 755
 pct exec $CTID /ha_setup.sh
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 info "Successfully Created Home Assistant Container LXC to $CTID."
