@@ -17,7 +17,7 @@ docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/timezone:/etc/timezone:ro\
   --net=host \
-  homeassistant/home-assistant:stable &>/dev/null
+  homeassistant/home-assistant:stable
 echo -e "\e[1;33m Removing Old Image... \e[0m"
 docker image prune -f
 echo -e "\e[1;33m Finished Update! \e[0m"
