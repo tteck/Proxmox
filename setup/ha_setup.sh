@@ -77,6 +77,7 @@ docker run -d \
   -v /dev:/dev \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro\
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
