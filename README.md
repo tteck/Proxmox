@@ -153,7 +153,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
-⚙️ **To edit the HA configuration.yaml** (Recommend Installing Webmin System Administration)
+⚙️ **To edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
  
 Run from the LXC console
 ```
