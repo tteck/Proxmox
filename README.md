@@ -16,7 +16,7 @@ and attempt the *No-Nag* fix.
 Run the following in the Proxmox Web Shell. ⚠️ **PVE7 ONLY**
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/post_install.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/post_install.sh)"
 ```
 
 It's recommended to update Proxmox after running this script, before adding any VM/CT.
@@ -109,7 +109,7 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -118,7 +118,7 @@ Reboot the LXC to apply the changes
 
 Run the from the LXC console
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/podman_hacs.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/podman_hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
@@ -166,7 +166,7 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -176,7 +176,7 @@ Reboot the LXC to apply the changes
 
 Run the from the LXC console
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/hacs.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
@@ -462,7 +462,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zigb
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -542,7 +542,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/zwav
  
 In the Proxmox web shell run (**replace `106` with your LXC ID)**
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
