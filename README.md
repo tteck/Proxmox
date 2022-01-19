@@ -678,7 +678,7 @@ ________________________________________________________________________________
 To Install [Webmin System Administration](https://www.webmin.com/index.html), run the following in a LXC console.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/webmin.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
 ```
 
 If you prefer to manage all aspects of your Proxmox LXC from a graphical interface instead of the command line interface, Webmin might be right for you.
