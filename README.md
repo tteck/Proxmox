@@ -180,6 +180,14 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
+
+⚙️ **To update Home Assistant:**
+
+Run the from the LXC console
+```
+./update.sh
+```
+ 
 ____________________________________________________________________________________________ 
 </details>
 
