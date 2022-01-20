@@ -174,7 +174,7 @@ Reboot the LXC to apply the changes
 
 ⚙️ **To Install HACS:**
 
-Run the from the LXC console
+Run from the LXC console
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/hacs.sh)"
 ```
