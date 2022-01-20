@@ -153,7 +153,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 ```
 /var/lib/docker/volumes/hass_config/_data
  ```
-⚙️ **To edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
+⚙️ **To Edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
  
 Run from the LXC console
 ```
@@ -162,7 +162,7 @@ nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 
-⚙️ **To allow device passthrough:**
+⚙️ **To Allow Device Passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```
@@ -172,7 +172,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 Reboot the LXC to apply the changes
 
 
-⚙️ **To install HACS:**
+⚙️ **To Install HACS:**
 
 Run the from the LXC console
 ```
@@ -181,9 +181,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
 
-⚙️ **To update Home Assistant:**
+⚙️ **To Update Home Assistant:**
 
-Run the from the LXC console
+Run from the LXC console
 ```
 ./update.sh
 ```
