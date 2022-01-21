@@ -531,7 +531,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">🔸Zwavejs2MQTT LXC </summary>
+<summary markdown="span">Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
