@@ -15,7 +15,7 @@ and attempt the *No-Nag* fix.
  
 Run the following in the Proxmox Web Shell. ⚠️ **PVE7 ONLY**
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/post_install.sh)"
 ```
 
@@ -37,7 +37,7 @@ A dark theme for the Proxmox Web UI by [Weilbyte](https://github.com/Weilbyte/PV
  
 Run the following in the Proxmox Web Shell.
 
-```
+```yaml
 bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
 ```
 
@@ -57,7 +57,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/vm/haos_vm.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU ⚡</h3>
@@ -84,7 +84,7 @@ To create a new Proxmox Podman Home Assistant Container, run the following from 
 
  ([What is Podman?](https://youtu.be/lkg5QJsoCCQ))
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/podman_ha_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
@@ -94,13 +94,13 @@ After the script completes, If you're dissatisfied with the default settings, cl
 **Home Assistant Interface - IP:8123**
 
 ⚙️ **Path to HA /config**
-```
+```yaml
 /var/lib/containers/storage/volumes/hass_config/_data
  ```
 ⚙️ **To edit the HA configuration.yaml**
  
 Run from the LXC console
-```
+```yaml
 nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
@@ -108,7 +108,7 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 ⚙️ **To allow device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
@@ -117,7 +117,7 @@ Reboot the LXC to apply the changes
 ⚙️ **To install HACS:**
 
 Run the from the LXC console
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/podman_hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
@@ -137,7 +137,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Home Assistant Container, run the following from Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ha_container.sh)"
 ```
  
@@ -150,13 +150,13 @@ After the script completes, If you're dissatisfied with the default settings, cl
 **Portainer Interface - IP:9000**
 
 ⚙️ **Path to HA /config**
-```
+```yaml
 /var/lib/docker/volumes/hass_config/_data
  ```
 ⚙️ **To Edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
  
 Run from the LXC console
-```
+```yaml
 nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
@@ -165,7 +165,7 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 ⚙️ **To Allow Device Passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
@@ -175,7 +175,7 @@ Reboot the LXC to apply the changes
 ⚙️ **To Install HACS:**
 
 Run from the LXC console
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/hacs.sh)"
 ```
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
@@ -184,7 +184,7 @@ After install, reboot Home Assistant and **clear browser cache** then Add HACS i
 ⚙️ **To Update Home Assistant:**
 
 Run from the LXC console
-```
+```yaml
 ./update.sh
 ```
  
@@ -203,7 +203,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox ESPHome LXC Container, run the following from Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome_container.sh)"
 ```
 
@@ -227,7 +227,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Nginx Proxy Manager LXC Container, run the following from Proxmox web shell.
 
-```
+```yaml
  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/npm_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 1vCPU ⚡</h3>
@@ -237,7 +237,7 @@ ________________________________________________________________________________
 Forward port `80` and `443` from your router to your Nginx Proxy Manager LXC IP.
 
 Add the following to your `configuration.yaml` in Home Assistant.
-```
+```yaml
  http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -249,11 +249,11 @@ Add the following to your `configuration.yaml` in Home Assistant.
 ⚙️ **Initial Login**
 
 **username** 
- ```
+ ```yaml
  admin@example.com
  ```
  **password** 
- ```
+ ```yaml
  changeme
  ```
  ____________________________________________________________________________________________ 
@@ -273,23 +273,23 @@ Add the following to your `configuration.yaml` in Home Assistant.
 
 To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
-```
+```yaml
 sudo mosquitto_passwd -c /etc/mosquitto/passwd <usr>
 ```
 Password: < password >
 
 Create a configuration file for Mosquitto pointing to the password file we have just created.
-```
+```yaml
 sudo nano /etc/mosquitto/conf.d/default.conf
 ```
 This will open an empty file. Paste the following into it.
-```
+```yaml
 allow_anonymous false
 persistence true
 password_file /etc/mosquitto/passwd
@@ -298,7 +298,7 @@ listener 1883
 Save and exit the text editor with "Ctrl+O", "Enter" and "Ctrl+X".
 
 Now restart Mosquitto server.
-```
+```yaml
 sudo systemctl restart mosquitto
 ```
 
@@ -320,7 +320,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -355,19 +355,19 @@ ________________________________________________________________________________
 
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
 To enable MariaDB to listen to remote connections, you need to edit your defaults file. To do this, open the console in your MariaDB lxc:
-```
+```yaml
 nano /etc/mysql/my.cnf
 ```
 Un-comment `port =3306`
 Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
 
-```
+```yaml
 nano /etc/mysql/mariadb.conf.d/50-server.cnf
 ```
 Comment `bind-address  = 127.0.0.1`
@@ -376,7 +376,7 @@ Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
 For new MariaDB installations, the next step is to run the included security script. This script changes some of the less secure default options. We will use it to block remote root logins and to remove unused database users.
 
 Run the security script:
-```
+```yaml
 sudo mysql_secure_installation
 ```
 Enter current password for root (enter for none): `enter`
@@ -394,48 +394,48 @@ Remove test database and access to it? [Y/n] `y`
 Reload privilege tables now? [Y/n] `y` 
 
 We will create a new account called admin with the same capabilities as the root account, but configured for password authentication. 
-```
+```yaml
 sudo mysql
 ``` 
 Prompt will change to ```MariaDB [(none)]>```
 
 Create a new local admin (Change the username and password to match your preferences)
-```
+```yaml
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'password';
 ```
 Give local admin root privileges (Change the username and password to match above)
-```
+```yaml
 GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
 
 Now, we'll give the user admin root privileges and password-based access that can connect from anywhere on your local area network (LAN), which has addresses in the subnet 192.168.100.0/24. This is an improvement because opening a MariaDB server up to the Internet and granting access to all hosts is bad practice.. Change the **_username_**, **_password_** and **_subnet_** to match your preferences:
-```
+```yaml
 GRANT ALL ON *.* TO 'admin'@'192.168.100.%' IDENTIFIED BY 'password' WITH GRANT OPTION;
 ```
 Flush the privileges to ensure that they are saved and available in the current session:
-```
+```yaml
 FLUSH PRIVILEGES;
 ```
 Following this, exit the MariaDB shell:
-```
+```yaml
 exit
 ```
 Log in as the new database user you just created:
-```
+```yaml
 mysql -u admin -p
 ```
 Create a new database:
-```
+```yaml
 CREATE DATABASE homeassistant;
 ```
 Following this, exit the MariaDB shell:
-```
+```yaml
 exit
 ```
 ⚠️ Reboot the lxc 
 
 Checking status.
-```
+```yaml
 sudo systemctl status mariadb
 ``` 
 Change the recorder: `db_url:` in your HA configuration.yaml
@@ -460,7 +460,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
@@ -469,7 +469,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 ⚙️ **To allow device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
@@ -479,19 +479,19 @@ Reboot the LXC to apply the changes
 ⚙️ **Determine the location of your adapter**
  
 Run in the zigbee2mqtt console
-```
+```yaml
 ls -l /dev/serial/by-id
 ```
 Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if00-port0 -> ../../ttyUSB0```
 
 
 ⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/)**
-```
+```yaml
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
 
 Example:
-```
+```yaml
 frontend:
   port: 9442
 homeassistant: true
@@ -510,17 +510,17 @@ advanced:
   pan_id: GENERATE
   network_key: GENERATE
   channel: 20
-  ```
-⚙️ **Zigbee2mqtt can be started after completing the configuration**
 ```
+⚙️ **Zigbee2mqtt can be started after completing the configuration**
+```yaml
 sudo systemctl start zigbee2mqtt
 ```
 ⚙️ **To start Zigbee2MQTT automatically on boot**
- ```
+ ```yaml
 sudo systemctl enable zigbee2mqtt.service
  ```
 ⚙️ **To update Zigbee2Mqtt**
- ```
+ ```yaml
 cd /opt/zigbee2mqtt
 bash update.sh
  ```
@@ -539,7 +539,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zwavejs2mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
@@ -549,7 +549,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 ⚙️ **To allow device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID)**
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
  
@@ -570,7 +570,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian11_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -591,7 +591,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -612,7 +612,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Plex Media Server LXC, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/plex_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
@@ -636,7 +636,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Pi-hole LXC, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/pihole_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -645,7 +645,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/p
  
 Run from the LXC console
 
-```
+```yaml
 pihole -a -p
 ```
 
@@ -664,7 +664,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox web shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/adguard_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -685,7 +685,7 @@ ________________________________________________________________________________
 
 To Install [Webmin System Administration](https://www.webmin.com/index.html), run the following in a LXC console.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
 ```
 
