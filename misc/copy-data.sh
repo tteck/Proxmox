@@ -71,7 +71,7 @@ done
 whiptail --defaultno --title "$TITLE" --yesno \
 "**Experimental** Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
-Version: Alpha 01"13 50 || exit
+Version: Alpha 01" 13 50 || exit
 info "Home Assistant Data from '$CTID_FROM' to '$CTID_TO'"
 
 msg "Mounting Container Disks..."
@@ -102,3 +102,5 @@ rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DOCKER_PATH} ${CTID_TO_PATH}${DOCKE
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
+
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/copy-data.sh)"
