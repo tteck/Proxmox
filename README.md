@@ -705,6 +705,10 @@ Benefits include automatic daily security updates, backup and restore, file mana
  **password** 
  `root`
  
-____________________________________________________________________________________________ 
+⚙️ **To Uninstall Webmin**
+ ```yaml
+bash /etc/webmin/uninstall.sh
+```
+___________________________________________________________________________________________ 
 
 </details>
