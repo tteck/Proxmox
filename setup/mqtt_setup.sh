@@ -24,14 +24,14 @@ function msg() {
 }
 
 # Prepare container OS
-msg "Setting up container OS..."
+msg "Setting up Container OS..."
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
 # Update container OS
-msg "Updating container OS..."
+msg "Updating Container OS..."
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
@@ -39,16 +39,21 @@ apt-get -qqy upgrade &>/dev/null
 msg "Installing Prerequisites..."
 apt-get -qqy install \
     curl \
+    gnupg \
     sudo &>/dev/null
 
 # Installing Mosquitto MQTT broker
 msg "Installing Mosquitto MQTT broker.."
-sudo apt-get update >/dev/null
-sudo apt-get -y install mosquitto &>/dev/null
-sudo apt-get -y install mosquitto-clients &>/dev/null
+wget http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key &>/dev/null
+apt-key add mosquitto-repo.gpg.key &>/dev/null
+cd /etc/apt/sources.list.d/
+wget http://repo.mosquitto.org/debian/mosquitto-bullseye.list &>/dev/null
+apt-get update >/dev/null
+apt-get -y install mosquitto &>/dev/null
+apt-get -y install mosquitto-clients &>/dev/null
 
 # Customize container
-msg "Customizing container..."
+msg "Customizing LXC..."
 rm /etc/motd # Remove message of the day after login
 rm /etc/update-motd.d/10-uname # Remove kernel information after login
 touch ~/.hushlogin # Remove 'Last login: ' and mail notification after login
