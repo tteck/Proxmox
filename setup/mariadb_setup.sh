@@ -43,9 +43,9 @@ apt-get -qqy install \
 
 # Installing MariaDB
 msg "Installing MariaDB..."
-#sudo apt-get update >/dev/null
-#sudo apt-get install -y mariadb-server &>/dev/null
 curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash &>/dev/null
+apt-get update >/dev/null
+apt-get install -y mariadb-server &>/dev/null
 # Customize container
 msg "Customizing container..."
 rm /etc/motd # Remove message of the day after login
