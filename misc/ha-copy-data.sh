@@ -103,5 +103,6 @@ echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
 
+# Use to copy all data from one Home Assistant LXC to another
 # run from the Proxmox Shell
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
