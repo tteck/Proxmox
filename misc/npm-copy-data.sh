@@ -93,8 +93,8 @@ CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") || \
 [ -d "${CTID_TO_PATH}${DATA_PATH}" ] || \
   die "Nginx Proxy Manager directories in '$CTID_TO' not found."
 
-#rm -rf ${CTID_TO_PATH}${DATA_PATH}
-#mkdir ${CTID_TO_PATH}${DATA_PATH}
+rm -rf ${CTID_TO_PATH}${DATA_PATH}
+mkdir ${CTID_TO_PATH}${DATA_PATH}
 
 msg "Copying Data Between Containers..."
 RSYNC_OPTIONS=(
