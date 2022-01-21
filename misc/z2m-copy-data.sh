@@ -102,5 +102,7 @@ rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DATA_PATH} ${CTID_TO_PATH}${DATA_PA
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
+
+# Use to copy all data from one Zigbee2MQTT LXC to another
 # run from the Proxmox Shell
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/z2m-copy-data.sh)"
