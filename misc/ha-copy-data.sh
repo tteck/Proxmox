@@ -7,7 +7,6 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-#**Experimental**
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -77,7 +76,7 @@ for i in ${!CTID_MENU[@]}; do
     CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i+1]})
 done
 whiptail --defaultno --title "$TITLE" --yesno \
-"**Experimental** Are you sure you want to copy data between the following LXCs?
+"Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: Alpha 01" 13 50 || exit
 info "Home Assistant Data from '$CTID_FROM' to '$CTID_TO'"
