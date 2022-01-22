@@ -106,19 +106,11 @@ echo -e "${CHECKMARK} \e[1;92m Downloading disk image... \e[0m"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-if [[ $FILE == *.zip ]]; then
-  echo -e "${CHECKMARK} \e[1;92m Checking for unzip command... \e[0m"
-  if ! command -v unzip &> /dev/null; then
-    echo -e "${CHECKMARK} \e[1;92m Installing Unzip... \e[0m"
-    apt-get update >/dev/null
-    apt-get -qqy install unzip &>/dev/null
-  fi
-fi
 echo -e "${CHECKMARK} \e[1;92m Extracting disk image... \e[0m"
 case $FILE in
-  *"gz") gunzip -f $FILE;;
-  *"zip") unzip -o $FILE;;
-  *"xz") xz -d $FILE;;
+  *"gz") gunzip -f $FILE ;;
+  *"zip") gunzip -f -S .zip $FILE ;;
+  *"xz") xz -d $FILE ;;
   *) die "Unable to handle file extension '${FILE##*.}'.";;
 esac
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
