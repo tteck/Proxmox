@@ -266,7 +266,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
 <details>
 <summary markdown="span">MQTT LXC</summary>
  
-<p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/img/mosquitto.png" height="75"/></p>
+<p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
 
 <h1 align="center" id="heading"> Proxmox MQTT LXC Container </h1>
