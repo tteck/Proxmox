@@ -40,27 +40,4 @@ wget https://github.com/intel/compute-runtime/releases/download/22.03.22192/inte
 
 sudo dpkg -i *.deb
 
-
-
-
-
-
 echo -e "\e[1;33m Finished....Please Reboot the LXC to apply the changes \e[0m"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
