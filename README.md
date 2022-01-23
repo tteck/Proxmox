@@ -542,8 +542,7 @@ sudo systemctl enable zigbee2mqtt.service
  ```
 ⚙️ **To update Zigbee2Mqtt**
  ```yaml
-cd /opt/zigbee2mqtt
-bash update.sh
+bash /opt/zigbee2mqtt/update.sh
  ```
 
 ____________________________________________________________________________________________ 
