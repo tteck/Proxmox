@@ -336,16 +336,21 @@ From your nodered LXC console, the following commands can be run
  
 `node-red-start`  to start Node-Red
 
-`sudo systemctl enable nodered.service`  to autostart Node-RED at every boot
+`systemctl enable nodered.service`  to autostart Node-RED at every boot
 
 `node-red-restart`  to restart Node-Red
 
-`sudo systemctl disable nodered.service` to disable autostart on boot
- 
-`sudo npm install -g --unsafe-perm node-red` to update Node-Red (`node-red-restart` after update)
+`systemctl disable nodered.service` to disable autostart on boot
 
 **Node-Red Interface - IP:1880**
 
+⚙️ **To Update Node-Red:**
+
+Run from the LXC console
+```yaml
+npm install -g --unsafe-perm node-red
+```
+(`node-red-restart` after update)
 ____________________________________________________________________________________________ 
  
 </details>
