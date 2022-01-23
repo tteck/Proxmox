@@ -38,6 +38,11 @@ apt-get -qqy install \
     curl \
     sudo \
     gnupg &>/dev/null
+    
+/bin/chgrp video /dev/dri
+/bin/chmod 755 /dev/dri
+/bin/chmod 660 /dev/dri/*
+
 echo -e "${CHECKMARK} \e[1;92m Downloading Plex Media Server... \e[0m"
 wget https://downloads.plex.tv/plex-media-server-new/1.25.3.5409-f11334058/debian/plexmediaserver_1.25.3.5409-f11334058_amd64.deb &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Plex Media Server... \e[0m"
