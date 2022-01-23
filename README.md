@@ -302,6 +302,13 @@ Now restart Mosquitto server.
 sudo systemctl restart mosquitto
 ```
 
+⚙️ **To Update MQTT:**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
 ____________________________________________________________________________________________ 
  
 </details>
@@ -442,6 +449,12 @@ Change the recorder: `db_url:` in your HA configuration.yaml
  
 Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8mb4`
  
+⚙️ **To Update Mariadb:**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
 ____________________________________________________________________________________________ 
 
 </details>
