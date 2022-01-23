@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Use to copy all data from one Home Assistant LXC to another
+# run from the Proxmox Shell
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
 while true; do
     read -p "Use to copy all data from one Home Assistant LXC to another. Proceed(y/n)?" yn
     case $yn in
@@ -78,7 +81,7 @@ done
 whiptail --defaultno --title "$TITLE" --yesno \
 "Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
-Version: Alpha 01" 13 50 || exit
+Version: 2022.01.23" 13 50 || exit
 info "Home Assistant Data from '$CTID_FROM' to '$CTID_TO'"
 
 msg "Mounting Container Disks..."
