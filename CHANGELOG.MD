@@ -19,11 +19,11 @@ All notable changes to this project will be documented in this file.
   - added Eclipse Mosquitto Repository
 - **Home Assistant Container LXC** 
   - added if the script detects ZFS filesystem it's an automatic installation of static fuse-overlayfs.  
-  - Added script for easy update of HA
+  - added script for easy Home Assistant update
 - **Home Assistant Container LXC (Podman)** 
   - added if the script detects ZFS filesystem it's an automatic installation of static fuse-overlayfs.
 - **Home Assistant OS VM** 
   - changed disk type from SATA to SCSI to follow Proxmox official recommendations of choosing VirtIO-SCSI with SCSI disk
-  - Cleaned up script
+  - cleaned up script
 - **Proxmox VE 7 Post Install** 
   - new *No-Nag* method
