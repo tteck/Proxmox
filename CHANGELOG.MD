@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - **Mariadb LXC** 
   - added MariaDB Package Repository
 - **MQTT LXC** 
-  - added Eclipse Mosquitto Repository
+  - added Eclipse Mosquitto Package Repository
 - **Home Assistant Container LXC** 
   - added if the script detects ZFS filesystem it's an automatic installation of static fuse-overlayfs.  
   - added script for easy Home Assistant update
