@@ -351,6 +351,7 @@ Run from the LXC console
 npm install -g --unsafe-perm node-red
 ```
 (`node-red-restart` after update)
+ 
 ____________________________________________________________________________________________ 
  
 </details>
