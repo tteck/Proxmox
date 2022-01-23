@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
  
 ### Changed
 
+- **Plex Media Server LXC**
+  - added Hardware Acceleration Support
+  - added script to install Intel Drivers
 - **Zwavejs2MQTT LXC**
   - created new script to solve no auto start at boot
 - **Nginx Proxy Manager LXC** 
