@@ -39,9 +39,9 @@ apt-get -qqy install \
     sudo \
     gnupg &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Downloading Plex Media Server... \e[0m"
-wget https://downloads.plex.tv/plex-media-server-new/1.25.2.5319-c43dc0277/debian/plexmediaserver_1.25.2.5319-c43dc0277_amd64.deb &>/dev/null
+wget https://downloads.plex.tv/plex-media-server-new/1.25.3.5409-f11334058/debian/plexmediaserver_1.25.3.5409-f11334058_amd64.deb &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Plex Media Server... \e[0m"
-sudo dpkg -i plexmediaserver_1.25.2.5319-c43dc0277_amd64.deb &>/dev/null
+sudo dpkg -i plexmediaserver_1.25.3.5409-f11334058_amd64.deb &>/dev/null
 
 cat <<EOF > /etc/apt/sources.list.d/plexmediaserver.list
 deb https://downloads.plex.tv/repo/deb/ public main
