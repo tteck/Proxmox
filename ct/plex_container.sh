@@ -73,7 +73,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/plex_setup.sh
-
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/misc/intel-drivers.sh
 load_module overlay
 
 while read -r line; do
@@ -160,6 +160,7 @@ pct unmount $CTID && unset MOUNT
 echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
 pct start $CTID
 pct push $CTID plex_setup.sh /plex_setup.sh -perms 755
+pct push $CTID intel-drivers.sh /root/intel-drivers.sh -perms 755
 pct exec $CTID /plex_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
