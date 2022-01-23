@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
  
 ### Changed
 
+- **misc**
+  - created GUI script to copy data from a Home Assistant LXC to another Home Assistant LXC (info inside script)
+  - created GUI script to copy data from a Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
 - **Plex Media Server LXC**
   - added Hardware Acceleration Support
   - added script to install Intel Drivers
