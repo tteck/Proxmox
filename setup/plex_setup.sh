@@ -54,8 +54,7 @@ EOF
 
 wget -q https://downloads.plex.tv/plex-keys/PlexSign.key -O - | sudo apt-key add - &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
-rm /etc/motd 
-rm /etc/update-motd.d/10-uname 
+chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin 
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
