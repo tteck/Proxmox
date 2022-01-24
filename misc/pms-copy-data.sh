@@ -80,8 +80,12 @@ whiptail --defaultno --title "$TITLE" --yesno \
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: 2022.01.24" 13 50 || exit
 info "Plex Media Server Data from '$CTID_FROM' to '$CTID_TO'"
+if [ $(pct status $CTID_TO | sed 's/.* //') == 'running' ]; then
+  msg "Stopping '$CTID_TO'..."
+  pct stop $CTID_TO
+fi
 msg "Mounting Container Disks..."
-DATA_PATH=var/lib/plexmediaserver/Library/Application Support/Plex Media Server/
+DATA_PATH="/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/"
 CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") || \
   die "There was a problem mounting the root disk of LXC '${CTID_FROM}'."
 [ -d "${CTID_FROM_PATH}${DATA_PATH}" ] || \
