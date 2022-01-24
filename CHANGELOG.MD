@@ -10,7 +10,8 @@ All notable changes to this project will be documented in this file.
   - better Hardware Acceleration Support
   - `va-driver-all` is preinstalled
   - now using Ubuntu 21.10
-
+- **misc**
+  - new GUI script (pms-copy-data.sh) to copy data from one Plex Media Server LXC to another Plex Media Server LXC (info inside script)
 
 
 ## Initial Catch up - 2022-01-23
