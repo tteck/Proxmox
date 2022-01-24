@@ -21,10 +21,10 @@ All notable changes to this project will be documented in this file.
 - **MQTT LXC** 
   - add Eclipse Mosquitto Package Repository
 - **Home Assistant Container LXC** 
-  - change if ZFS filesystem is detected, automatic installation of static fuse-overlayfs is executed.  
+  - change if ZFS filesystem is detected, execute automatic installation of static fuse-overlayfs
   - add script for easy Home Assistant update
 - **Home Assistant Container LXC (Podman)** 
-  - change if ZFS filesystem is detected, automatic installation of static fuse-overlayfs is executed. 
+  - change if ZFS filesystem is detected, execute automatic installation of static fuse-overlayfs
 - **Home Assistant OS VM** 
   - change disk type from SATA to SCSI to follow Proxmox official recommendations of choosing VirtIO-SCSI with SCSI disk
   - clean up
