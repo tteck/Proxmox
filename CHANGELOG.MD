@@ -31,5 +31,5 @@ All notable changes to this project will be documented in this file.
 - **Proxmox VE 7 Post Install** 
   - new *No-Nag* method
 - **misc**
-  - new GUI script (ha-copy-data.sh) to copy data from a Home Assistant LXC to another Home Assistant LXC (info inside script)
-  - new GUI script (z2m-copy-data.sh) to copy data from a Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
+  - new GUI script (ha-copy-data.sh) to copy data from one Home Assistant LXC to another Home Assistant LXC (info inside script)
+  - new GUI script (z2m-copy-data.sh) to copy data from one Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
