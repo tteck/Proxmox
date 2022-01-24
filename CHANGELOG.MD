@@ -2,7 +2,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
  
- 
+## 2022-01-24
+
+### Changed
+
+- **Plex Media Server LXC**
+  - better Hardware Acceleration Support
+  - `va-driver-all` is preinstalled
+  - now using Ubuntu 21.10
+
+
+
 ## Initial Catch up - 2022-01-23
  
 ### Changed
