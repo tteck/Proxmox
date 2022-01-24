@@ -27,7 +27,7 @@ All notable changes to this project will be documented in this file.
   - if the script detects ZFS filesystem it's an automatic installation of static fuse-overlayfs.
 - **Home Assistant OS VM** 
   - change disk type from SATA to SCSI to follow Proxmox official recommendations of choosing VirtIO-SCSI with SCSI disk
-  - clean up script
+  - clean up
 - **Proxmox VE 7 Post Install** 
   - new *No-Nag* method
 - **misc**
