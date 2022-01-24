@@ -37,7 +37,8 @@ echo -e "${CHECKMARK} \e[1;92m Installing Prerequisites... \e[0m"
 apt-get -qqy install \
     curl \
     sudo \
-    gnupg &>/dev/null
+    gnupg \
+    va-driver-all &>/dev/null
     
 /bin/chgrp video /dev/dri
 /bin/chmod 755 /dev/dri
