@@ -641,12 +641,6 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Plex Media Server Interface - IP:32400/web**
 
-⚙️ **To Install Intel Drivers:**
- 
-Run from the LXC console
-```yaml
-./intel-drivers.sh
-```
 
 ____________________________________________________________________________________________ 
 
