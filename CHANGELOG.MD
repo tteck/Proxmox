@@ -11,11 +11,11 @@ All notable changes to this project will be documented in this file.
   - add Hardware Acceleration Support
   - add script to install Intel Drivers
 - **Zwavejs2MQTT LXC**
-  - create new script to solve no auto start at boot
+  - new script to solve no auto start at boot
 - **Nginx Proxy Manager LXC** 
-  - create new script to use Debian 11
+  - new script to use Debian 11
 - **Ubuntu 21.10 LXC** 
-  - create new script
+  - new script
 - **Mariadb LXC** 
   - add MariaDB Package Repository
 - **MQTT LXC** 
@@ -31,5 +31,5 @@ All notable changes to this project will be documented in this file.
 - **Proxmox VE 7 Post Install** 
   - new *No-Nag* method
 - **misc**
-  - create GUI script (ha-copy-data.sh) to copy data from a Home Assistant LXC to another Home Assistant LXC (info inside script)
-  - create GUI script (z2m-copy-data.sh) to copy data from a Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
+  - GUI script (ha-copy-data.sh) to copy data from a Home Assistant LXC to another Home Assistant LXC (info inside script)
+  - GUI script (z2m-copy-data.sh) to copy data from a Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
