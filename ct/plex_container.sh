@@ -72,7 +72,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/plex_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/plex_setup.sh
 #wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/misc/intel-drivers.sh
 load_module overlay
 
