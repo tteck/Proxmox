@@ -69,4 +69,4 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
-rm -rf /plex_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /plex_setup.sh /plexmediaserver_1.25.3.5409-f11334058_amd64.deb /var/{cache,log}/* /var/lib/apt/lists/*
