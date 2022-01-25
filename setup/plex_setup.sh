@@ -38,7 +38,9 @@ apt-get -qqy install \
     curl \
     sudo \
     gnupg \
-    va-driver-all &>/dev/null
+    va-driver-all \
+    ocl-icd-libopencl1 \
+    beignet-opencl-icd &>/dev/null
     
 /bin/chgrp video /dev/dri
 /bin/chmod 755 /dev/dri
