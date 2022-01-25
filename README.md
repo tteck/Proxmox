@@ -625,11 +625,11 @@ ________________________________________________________________________________
 
 <details>
 <summary markdown="span">🔸Plex Media Server LXC</summary>
- 
+
 <p align="center"><img src="https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg" height="80"/></p>
 
 <h1 align="center" id="heading"> Plex Media Server LXC </h1>
-
+<h3 align="center" id="heading"> With Hardware Acceleration Support </h3> 
 To create a new Proxmox Plex Media Server LXC, run the following in the Proxmox web shell.
 
 ```yaml
@@ -641,6 +641,12 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Plex Media Server Interface - IP:32400/web**
 
+⚙️ **To Update Plex Media Server:**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
 
 ____________________________________________________________________________________________ 
 
