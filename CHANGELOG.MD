@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
   - `va-driver-all` is preinstalled
   - now using Ubuntu 21.10
 - **misc**
-  - new GUI script (pms-copy-data.sh) to copy data from one Plex Media Server LXC to another Plex Media Server LXC (info inside script)
+  - new GUI script [(Screenshot)](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/file-manager.png) to copy data from one Plex Media Server LXC to another Plex Media Server LXC 
 
 
 ## Initial Catch up - 2022-01-23
