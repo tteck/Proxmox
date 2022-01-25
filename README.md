@@ -710,7 +710,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Webmin System Administration </h1>
 
-To Install Webmin System Administration, run the following in a LXC console.
+To Install Webmin System Administration [(Screenshot)](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/file-manager.png), run the following in a LXC console.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
