@@ -725,6 +725,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/a
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 **AdGuard Home Interface - IP:3000**
+ 
+(For the Home Assistant Integration, use port `80` not `3000`)
 
 ____________________________________________________________________________________________ 
 
