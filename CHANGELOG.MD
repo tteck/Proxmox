@@ -1,7 +1,14 @@
 
 # Change Log
 All notable changes to this project will be documented in this file.
- 
+
+## 2022-01-25
+
+### Changed
+
+- **Jellyfin Media Server LXC**
+  - new script
+
 ## 2022-01-24
 
 ### Changed
