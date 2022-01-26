@@ -50,7 +50,7 @@ apt-get -qqy install \
 /bin/chmod 660 /dev/dri/*
 
 echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
-wget -Oq - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
+wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
 echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/debian bullseye main" | tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 apt update &>/dev/null
