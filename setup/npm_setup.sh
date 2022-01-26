@@ -54,7 +54,7 @@ apt-get -qqy upgrade &>/dev/null
 #fi  
   # Install openresty
 echo -e "${CHECKMARK} \e[1;92m Installing Openresty... \e[0m"
-wget -O - https://openresty.org/package/pubkey.gpg | apt-key add - &>/dev/null
+wget -q -O - https://openresty.org/package/pubkey.gpg | apt-key add - &>/dev/null
 codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release` &>/dev/null
 echo "deb http://openresty.org/package/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list &>/dev/null
 apt-get -y update &>/dev/null
