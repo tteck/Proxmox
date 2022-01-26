@@ -130,7 +130,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">🔸Home Assistant Container LXC </summary>
+<summary markdown="span">Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
