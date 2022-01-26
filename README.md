@@ -726,7 +726,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/a
  
 **AdGuard Home Interface - IP:3000**
  
-(For the Home Assistant Integration, use port `80` not `3000`)
+ <sub>(For the Home Assistant Integration, use port `80` not `3000`)</sub>
 
 ____________________________________________________________________________________________ 
 
