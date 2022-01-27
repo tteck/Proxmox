@@ -33,11 +33,14 @@ echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Installing Prerequisites... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get -qqy install \
     curl \
     sudo \
-    gnupg \
+    gnupg &>/dev/null
+    
+echo -e "${CHECKMARK} \e[1;92m Setting Up Hardware Acceleration... \e[0m"  
+apt-get -y install \
     va-driver-all \
     ocl-icd-libopencl1 \
     beignet-opencl-icd &>/dev/null
