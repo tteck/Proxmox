@@ -38,13 +38,16 @@ apt-get -qqy install \
     curl \
     sudo \
     gnupg2 \
-    va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd \
     apt-transport-https \
     ca-certificates \
     git &>/dev/null
-    
+ 
+echo -e "${CHECKMARK} \e[1;92m Setting Up Hardware Acceleration... \e[0m"  
+apt-get -y install \
+    va-driver-all \
+    ocl-icd-libopencl1 \
+    beignet-opencl-icd &>/dev/null
+
 /bin/chgrp video /dev/dri
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
