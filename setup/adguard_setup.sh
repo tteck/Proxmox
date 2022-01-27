@@ -25,8 +25,6 @@ function msg() {
 msg "Setting up Container OS..."
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-apt-get -y purge openssh-{client,server} >/dev/null
-apt-get autoremove >/dev/null
 
 msg "Updating Container OS..."
 apt update &>/dev/null
