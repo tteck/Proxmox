@@ -26,8 +26,6 @@ function msg() {
 echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-apt-get -y purge openssh-{client,server} >/dev/null
-apt-get autoremove >/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
@@ -49,16 +47,13 @@ apt-get -y install \
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
 
-echo -e "${CHECKMARK} \e[1;92m Downloading Plex Media Server... \e[0m"
-wget https://downloads.plex.tv/plex-media-server-new/1.25.3.5409-f11334058/debian/plexmediaserver_1.25.3.5409-f11334058_amd64.deb &>/dev/null
-echo -e "${CHECKMARK} \e[1;92m Installing Plex Media Server... \e[0m"
-sudo dpkg -i plexmediaserver_1.25.3.5409-f11334058_amd64.deb &>/dev/null
-
-cat <<EOF > /etc/apt/sources.list.d/plexmediaserver.list
-deb https://downloads.plex.tv/repo/deb/ public main
-EOF
-
+echo -e "${CHECKMARK} \e[1;92m Setting Up Plex Media Server Repository... \e[0m"
 wget -q https://downloads.plex.tv/plex-keys/PlexSign.key -O - | sudo apt-key add - &>/dev/null
+echo "deb [arch=$( dpkg --print-architecture )] https://downloads.plex.tv/repo/deb/ public main" | tee /etc/apt/sources.list.d/plexmediaserver.list &>/dev/null
+echo -e "${CHECKMARK} \e[1;92m Installing Plex Media Server... \e[0m"
+apt-get update &>/dev/null
+apt-get -o Dpkg::Options::="--force-confold" install -y plexmediaserver &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin 
@@ -72,4 +67,4 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
-rm -rf /plex_setup.sh /plexmediaserver_1.25.3.5409-f11334058_amd64.deb /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /plex_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
