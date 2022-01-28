@@ -55,7 +55,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
  
-<h1 align="center" id="heading"> Proxmox Home Assistant OS VM </h1>
+<h1 align="center" id="heading"> Home Assistant OS VM </h1>
 
 To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
 
@@ -80,7 +80,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/></p>
 
-<h1 align="center" id="heading"> Proxmox Podman Home Assistant Container LXC </h1>
+<h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
 <h3 align="center" id="heading"> With ZFS Filesystem Support </h3>
 To create a new Proxmox Podman Home Assistant Container, run the following from Proxmox web shell. 
 
@@ -135,7 +135,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Home Assistant Container LXC </h1>
+<h1 align="center" id="heading"> Home Assistant Container LXC </h1>
 <h3 align="center" id="heading"> With ZFS Filesystem Support </h3> 
 To create a new Proxmox Home Assistant Container, run the following from Proxmox web shell.
 
@@ -201,7 +201,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://esphome.io/_static/logo-text.svg" alt="Logo" height="90"/></p>
 
-<h1 align="center" id="heading"> Proxmox ESPHome LXC Container </h1>
+<h1 align="center" id="heading"> ESPHome LXC Container </h1>
 
 To create a new Proxmox ESPHome LXC Container, run the following from Proxmox web shell.
 
@@ -225,7 +225,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox Nginx Proxy Manager LXC Container </h1>
+<h1 align="center" id="heading"> Nginx Proxy Manager LXC Container </h1>
 
 To create a new Proxmox Nginx Proxy Manager LXC Container, run the following from Proxmox web shell.
 
@@ -271,7 +271,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox MQTT LXC Container </h1>
+<h1 align="center" id="heading"> MQTT LXC Container </h1>
 
 To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web shell.
 
@@ -324,7 +324,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/5375661?s=200&amp;v=4" alt="@node-red" width="100" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Node-Red LXC Container </h1>
+<h1 align="center" id="heading"> Node-Red LXC Container </h1>
  
 
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
@@ -366,7 +366,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox Mariadb LXC Container </h1>
+<h1 align="center" id="heading"> Mariadb LXC Container </h1>
 
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
 
@@ -477,7 +477,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
 
-<h1 align="center" id="heading"> Proxmox Zigbee2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Zigbee2MQTT LXC Container </h1>
 
 To create a new Proxmox [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
 
@@ -555,7 +555,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Zwavejs2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Zwavejs2MQTT LXC Container </h1>
 
 To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
 
@@ -586,7 +586,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Debian 11 LXC Container </h1>
+<h1 align="center" id="heading"> Debian 11 LXC Container </h1>
 
 To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
@@ -607,7 +607,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
-<h1 align="center" id="heading"> Proxmox Ubuntu 21.10 LXC Container </h1>
+<h1 align="center" id="heading"> Ubuntu 21.10 LXC Container </h1>
 
 To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
 
