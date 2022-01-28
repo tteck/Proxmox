@@ -32,7 +32,7 @@ apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 msg "Installing Prerequisites..."
-apt-get -y install \
+apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
