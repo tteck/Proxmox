@@ -23,14 +23,10 @@ function msg() {
   echo -e "$TEXT"
 }
 
-msg "Setting up container OS..."
 echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-apt-get -y purge openssh-{client,server} >/dev/null
-apt-get autoremove >/dev/null
 
-msg "Updating container OS..."
 echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
