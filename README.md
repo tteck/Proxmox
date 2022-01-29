@@ -334,17 +334,12 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/n
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
-From your nodered LXC console, the following commands can be run
- 
-`node-red-start`  to start Node-Red
+⚙️ **To Restart Node-Red:**
 
-`systemctl enable nodered.service`  to autostart Node-RED at every boot
-
-`node-red-restart`  to restart Node-Red
-
-`systemctl disable nodered.service` to disable autostart on boot
-
-**Node-Red Interface - IP:1880**
+Run from the LXC console
+```yaml
+node-red-restart
+```
 
 ⚙️ **To Update Node-Red:**
 
@@ -352,7 +347,7 @@ Run from the LXC console
 ```yaml
 npm install -g --unsafe-perm node-red
 ```
-(`node-red-restart` after update)
+(Restart after update)
  
 ____________________________________________________________________________________________ 
  
