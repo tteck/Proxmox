@@ -345,11 +345,10 @@ node-red-restart
 
 ⚙️ **To Update Node-Red:**
 
-Run from the LXC console
+Run from the LXC console (Restart after update)
 ```yaml
 npm install -g --unsafe-perm node-red
 ```
-(Restart after update)
  
 ____________________________________________________________________________________________ 
  
