@@ -334,6 +334,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/n
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
  
+**Node-Red Interface - IP:1880**
+ 
 ⚙️ **To Restart Node-Red:**
 
 Run from the LXC console
