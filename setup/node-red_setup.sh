@@ -40,9 +40,9 @@ echo -e "${CHECKMARK} \e[1;92m Installing Node-Red... \e[0m"
 bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi
 
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
-rm /etc/motd # Remove message of the day after login
-rm /etc/update-motd.d/10-uname # Remove kernel information after login
-touch ~/.hushlogin # Remove 'Last login: ' and mail notification after login
+rm /etc/motd 
+rm /etc/update-motd.d/10-uname
+touch ~/.hushlogin
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
 cat << EOF > $GETTY_OVERRIDE
