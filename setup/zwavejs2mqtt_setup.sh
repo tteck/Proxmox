@@ -32,6 +32,7 @@ apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Prerequisites... \e[0m"
+apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
     sudo \
