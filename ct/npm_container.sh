@@ -156,4 +156,7 @@ pct push $CTID npm_setup.sh /npm_setup.sh -perms 755
 pct exec $CTID /npm_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a NPM LXC to $CTID at IP Address ${IP}:81"
+info "Successfully Created Nginx Proxy Manager LXC to $CTID."
+echo -e "\e[1;92m Nginx Proxy Manager should be reachable by going to the following URL.
+             http://${IP}:81
+\e[0m"
