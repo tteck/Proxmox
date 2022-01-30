@@ -468,12 +468,12 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Zigbee2MQTT LXC </summary>
+<summary markdown="span">🔸Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
 
-<h1 align="center" id="heading"> Zigbee2MQTT LXC Container </h1>
+<h1 align="center" id="heading">Zigbee2MQTT LXC Container</h1>
 
 To create a new Proxmox Zigbee2MQTT LXC Container, run the following from Proxmox web shell.
 
@@ -495,7 +495,7 @@ Reboot the LXC to apply the changes
  
 ⚙️ **Determine the location of your adapter**
  
-Run in the zigbee2mqtt console
+Run in the Zigbee2MQTT console
 ```yaml
 ls -l /dev/serial/by-id
 ```
@@ -528,12 +528,12 @@ advanced:
   network_key: GENERATE
   channel: 20
 ```
-⚙️ **Zigbee2mqtt can be started after completing the configuration**
+⚙️ **Zigbee2MQTT can be started after completing the configuration**
 ```yaml
 cd /opt/zigbee2mqtt
 npm start
 ```
-⚙️ **To update Zigbee2Mqtt**
+⚙️ **To update Zigbee2MQTT**
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
  ```
