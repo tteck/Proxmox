@@ -150,7 +150,7 @@ MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
 
-echo -e "${CHECKMARK} \e[1;92m Starting LXC...... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Starting LXC... \e[0m"
 pct start $CTID
 pct push $CTID npm_setup.sh /npm_setup.sh -perms 755
 pct exec $CTID /npm_setup.sh
