@@ -485,7 +485,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 
 ⚙️ **To allow device passthrough:**
  
-In the Proxmox web shell run (**replace `106` with your LXC ID**)
+In the **Proxmox Shell** run (**replace `106` with your LXC ID**)
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
 ```
@@ -495,17 +495,19 @@ Reboot the LXC to apply the changes
  
 ⚙️ **Determine the location of your adapter**
  
-Run in the Zigbee2MQTT console
+Run from the LXC console
 ```yaml
 ls -l /dev/serial/by-id
 ```
 Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if00-port0 -> ../../ttyUSB0```
 
 
-⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/)**
+⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/), Run from the LXC console**
 ```yaml
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
+
+Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 Example:
 ```yaml
@@ -528,12 +530,12 @@ advanced:
   network_key: GENERATE
   channel: 20
 ```
-⚙️ **Zigbee2MQTT can be started after completing the configuration**
+⚙️ **Zigbee2MQTT can be started after completing the configuration, Run from the LXC console**
 ```yaml
 cd /opt/zigbee2mqtt
 npm start
 ```
-⚙️ **To update Zigbee2MQTT**
+⚙️ **To update Zigbee2MQTT, Run from the LXC console**
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
  ```
