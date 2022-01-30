@@ -530,7 +530,8 @@ advanced:
 ```
 ⚙️ **Zigbee2mqtt can be started after completing the configuration**
 ```yaml
-systemctl start zigbee2mqtt
+cd /opt/zigbee2mqtt
+npm start
 ```
 ⚙️ **To update Zigbee2Mqtt**
  ```yaml
