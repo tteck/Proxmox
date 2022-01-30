@@ -64,7 +64,8 @@ User=root
 WantedBy=multi-user.target" > $service_path
 
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
-chmod -x /etc/update-motd.d/*
+rm /etc/motd 
+rm /etc/update-motd.d/10-uname 
 touch ~/.hushlogin
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
