@@ -502,7 +502,7 @@ ls -l /dev/serial/by-id
 Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if00-port0 -> ../../ttyUSB0```
 
 
-⚠️ **Before you can start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/), Run from the LXC console**
+⚠️ **Before you start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/), Run from the LXC console**
 ```yaml
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
