@@ -155,4 +155,7 @@ pct push $CTID node-red_setup.sh /node-red_setup.sh -perms 755
 pct exec $CTID /node-red_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully Created Node-RED LXC Container to $CTID at IP Address ${IP}:1880"
+info "Successfully Created Node-Red LXC to $CTID."
+echo -e "\e[1;92m Node-Red should be reachable by going to the following URL.
+       http://${IP}:1880
+\e[0m"
