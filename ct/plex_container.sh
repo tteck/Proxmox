@@ -163,4 +163,7 @@ pct push $CTID plex_setup.sh /plex_setup.sh -perms 755
 pct exec $CTID /plex_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a Plex Media Server LXC Container to $CTID at IP Address ${IP}:32400/web"
+info "Successfully Created Plex Media Server LXC to $CTID."
+echo -e "\e[1;92m Plex Media Server should be reachable by going to the following URL.
+             http://${IP}:32400/web
+\e[0m"
