@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# Setup script environment
-set -o errexit  #Exit immediately if a pipeline returns a non-zero status
-set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
-set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -23,38 +23,33 @@ function msg() {
   echo -e "$TEXT"
 }
 
-# Prepare container OS
-msg "Setting up Container OS..."
+echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 
-# Update container OS
-msg "Updating container OS..."
+echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-# Install prerequisites
-msg "Installing Prerequisites..."
+echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get -qqy install \
     curl \
     sudo &>/dev/null
-    # Setup Node.js repository
-    msg "Setting up Node.js Repository..."
-    sudo curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &>/dev/null
-    # Install Node.js;
-    msg "Installing Node.js..."
-    sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
-    # Clone Zigbee2MQTT repository
-    msg "Setting up Zigbee2MQTT Repository..."
-    sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
-    # Install zigbee2mqtt
-    msg "Installing Zigbee2MQTT..."
-    cd /opt/zigbee2mqtt &>/dev/null
-    npm ci &>/dev/null
+    
+echo -e "${CHECKMARK} \e[1;92m Setting up Node.js Repository... \e[0m"
+sudo curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &>/dev/null
+    
+echo -e "${CHECKMARK} \e[1;92m Installing Node.js... \e[0m"
+sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
+    
+echo -e "${CHECKMARK} \e[1;92m Setting up Zigbee2MQTT Repository... \e[0m"
+sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
+    
+echo -e "${CHECKMARK} \e[1;92m Installing Zigbee2MQTT... \e[0m"
+cd /opt/zigbee2mqtt &>/dev/null
+npm ci &>/dev/null
 
-echo "Creating service file zigbee2mqtt.service"
 service_path="/etc/systemd/system/zigbee2mqtt.service"
-
 echo "[Unit]
 Description=zigbee2mqtt
 After=network.target
@@ -68,11 +63,9 @@ User=root
 [Install]
 WantedBy=multi-user.target" > $service_path
 
-# Customize container
-msg "Customizing Container..."
-rm /etc/motd # Remove message of the day after login
-rm /etc/update-motd.d/10-uname # Remove kernel information after login
-touch ~/.hushlogin # Remove 'Last login: ' and mail notification after login
+echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
+chmod -x /etc/update-motd.d/*
+touch ~/.hushlogin
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
 cat << EOF > $GETTY_OVERRIDE
@@ -82,7 +75,6 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-
-# Cleanup container
-msg "Cleanup..."
+systemctl enable zigbee2mqtt.service &>/dev/null
+echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /zigbee2mqtt_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
