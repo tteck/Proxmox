@@ -475,7 +475,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Zigbee2MQTT LXC Container </h1>
 
-To create a new Proxmox [Zigbee2MQTT](https://www.zigbee2mqtt.io/) LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox Zigbee2MQTT LXC Container, run the following from Proxmox web shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt_container.sh)"
@@ -530,12 +530,8 @@ advanced:
 ```
 ⚙️ **Zigbee2mqtt can be started after completing the configuration**
 ```yaml
-sudo systemctl start zigbee2mqtt
+systemctl start zigbee2mqtt
 ```
-⚙️ **To start Zigbee2MQTT automatically on boot**
- ```yaml
-sudo systemctl enable zigbee2mqtt.service
- ```
 ⚙️ **To update Zigbee2Mqtt**
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
