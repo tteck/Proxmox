@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **Zigbee2MQTT LXC**
   - Clean up / Improve script
+  - Improve documentation
 
 ## 2022-01-29
 
@@ -15,6 +16,7 @@ All notable changes to this project will be documented in this file.
 
 - **Node-Red LXC**
   - Clean up / Improve script
+  - Improve documentation
 
 ## 2022-01-25
 
