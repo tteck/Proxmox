@@ -35,6 +35,7 @@ apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
 msg "Installing Prerequisites..."
+apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
     gnupg \
