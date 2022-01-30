@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-01-30
+
+### Changed
+
+- **Zigbee2MQTT LXC**
+  - Clean up / Improve script
+
 ## 2022-01-29
 
 ### Changed
