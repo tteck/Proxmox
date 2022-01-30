@@ -9,13 +9,13 @@ while true; do
     esac
 done
 
-# Setup script environment
-set -o errexit  #Exit immediately if a pipeline returns a non-zero status
-set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
-set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
 
@@ -73,13 +73,10 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-# Download setup script
 wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/zigbee2mqtt_setup.sh
 
-# Detect modules and automatically load at boot
 load_module overlay
 
-# Select storage location
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -106,22 +103,19 @@ else
 fi
 info "Using '$STORAGE' for storage location."
 
-# Get the next guest VM/LXC ID
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
 
-# Download latest Debian 11 LXC template
-msg "Updating LXC template list..."
+echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
 pveam update >/dev/null
-msg "Downloading LXC template..."
+echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
 TEMPLATE="${TEMPLATES[-1]}"
 pveam download local $TEMPLATE >/dev/null ||
-  die "A problem occured while downloading the LXC template."
+  die "A problem occured while downloading the LXC Template."
 
-# Create variables for container disk
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   dir|nfs)
@@ -136,8 +130,7 @@ esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
-# Create LXC
-msg "Creating LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
 DISK_SIZE=4G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -152,29 +145,25 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 2 -memory 1024 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
 
-# Modify LXC permissions to support Zigbee Sticks
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop: 
 EOF
 
-# Set container timezone to match host
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
 
-# Setup container
-msg "Starting LXC container..."
+echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
 pct start $CTID
 pct push $CTID zigbee2mqtt_setup.sh /zigbee2mqtt_setup.sh -perms 755
 pct exec $CTID /zigbee2mqtt_setup.sh
 
-# Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 info "Successfully created zigbee2mqtt LXC Container to $CTID at IP Address ${IP}"
 echo
-echo -e "\e[1;31m Update of configuration.yaml is required and found at /opt/zigbee2mqtt/data/ \e[0m"
+echo -e "\e[1;31m Updating the configuration.yaml is required and found at /opt/zigbee2mqtt/data/ \e[0m"
 echo
-echo -e "Z2M can be started after completing the configuration buy running \e[1;33m sudo systemctl start zigbee2mqtt \e[0m"
+echo -e "Z2M can be started after completing the configuration buy running \e[1;33m systemctl start zigbee2mqtt \e[0m"
 echo
