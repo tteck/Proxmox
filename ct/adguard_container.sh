@@ -140,9 +140,9 @@ fi
 ARCH=$(dpkg --print-architecture)
 HOSTNAME=adguard
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
-pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 -unprivileged\
+pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 1 -memory 512 \
-  -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
+  -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE -unprivileged >/dev/null
 
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
