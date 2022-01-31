@@ -164,10 +164,6 @@ msg "Starting LXC container..."
 pct start $CTID
 pct push $CTID mqtt_setup.sh /mqtt_setup.sh -perms 755
 pct exec $CTID /mqtt_setup.sh
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >> $LXC_CONFIG
-unprivileged: 1
-EOF
 # Get network details and show completion message
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 info "Successfully created a MQTT LXC Container to $CTID at IP Address ${IP}"
