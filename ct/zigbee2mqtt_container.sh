@@ -165,5 +165,4 @@ info "Successfully created zigbee2mqtt LXC Container to $CTID at IP Address ${IP
 echo
 echo -e "\e[1;31m Updating the configuration.yaml is required and found at /opt/zigbee2mqtt/data/ \e[0m"
 echo
-echo -e "Z2M can be started after completing the configuration buy running \e[1;33m systemctl start zigbee2mqtt \e[0m"
 echo
