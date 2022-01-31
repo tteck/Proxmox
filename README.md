@@ -625,7 +625,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">🔸Plex Media Server LXC</summary>
+<summary markdown="span">Plex Media Server LXC</summary>
 
 <p align="center"><img src="https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg" height="80"/></p>
 
