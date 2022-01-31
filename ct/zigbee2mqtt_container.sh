@@ -159,7 +159,10 @@ echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
 pct start $CTID
 pct push $CTID zigbee2mqtt_setup.sh /zigbee2mqtt_setup.sh -perms 755
 pct exec $CTID /zigbee2mqtt_setup.sh
-
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >> $LXC_CONFIG
+unprivileged: 1
+EOF
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 info "Successfully created zigbee2mqtt LXC Container to $CTID at IP Address ${IP}"
 echo
