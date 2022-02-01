@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+echo -e "\e[1;33m This script will allow USB passthrough to a LXC Container \e[0m"
 while true; do
     read -p "Did you replace 106 with your LXC ID? Proceed(y/n)?" yn
     case $yn in
@@ -67,6 +67,7 @@ cat <<EOF >> $CTID_CONFIG_PATH
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
+echo -e "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
 
 # In the Proxmox web shell run (replace 106 with your LXC ID)
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
