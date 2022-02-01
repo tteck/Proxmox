@@ -67,6 +67,8 @@ sed '/autodev/d' $CTID_CONFIG_PATH >CTID.conf
 cat CTID.conf >$CTID_CONFIG_PATH
 
 cat <<EOF >> $CTID_CONFIG_PATH
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
