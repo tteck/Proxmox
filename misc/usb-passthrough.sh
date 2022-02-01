@@ -68,7 +68,3 @@ lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
 echo -e "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
-
-# In the Proxmox web shell run (replace 106 with your LXC ID)
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
-# Reboot the LXC to apply the changes
