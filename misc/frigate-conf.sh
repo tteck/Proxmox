@@ -66,7 +66,7 @@ CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
 sed '/autodev/d' $CTID_CONFIG_PATH >CTID.conf
 cat CTID.conf >$CTID_CONFIG_PATH
 
-if [[ $CTID_CONFIG_PATH =~ [testing] ]];then
+if $CTID_CONFIG_PATH =~ [testing];then
 cat <<EOF >> $CTID_CONFIG_PATH
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
