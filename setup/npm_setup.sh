@@ -34,7 +34,7 @@ apt-get -qqy upgrade &>/dev/null
   echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
   echo "fs.file-max = 65535" > /etc/sysctl.conf
   apt-get update &>/dev/null
-  apt-get -y install \
+  apt-get -qqy install \
       sudo \
       curl \
       wget \
