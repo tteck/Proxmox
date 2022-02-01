@@ -63,7 +63,7 @@ HOOK_SCRIPT=${HOOK_SCRIPT//$'\n'/}
 
 CTID=$1
 CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
-sed '/autodev/d', '/devices/d', '/cap/d' $CTID_CONFIG_PATH >CTID.conf
+sed '/autodev/d' '/devices/d' '/cap/d' $CTID_CONFIG_PATH >CTID.conf
 cat CTID.conf >$CTID_CONFIG_PATH
 
 cat <<EOF >> $CTID_CONFIG_PATH
