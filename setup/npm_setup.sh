@@ -34,7 +34,19 @@ apt-get -qqy upgrade &>/dev/null
   echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
   echo "fs.file-max = 65535" > /etc/sysctl.conf
   apt-get update &>/dev/null
-  apt-get -y install --no-install-recommends sudo curl wget gnupg openssl ca-certificates apache2-utils logrotate build-essential python3-dev git lsb-release &>/dev/null
+  apt-get -y install \
+      sudo \
+      curl \
+      wget \
+      gnupg \
+      openssl \
+      ca-certificates \
+      apache2-utils \
+      logrotate \
+      build-essential \
+      python3-dev \
+      git \
+      lsb-release &>/dev/null
 
   echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
   apt-get install -y -q --no-install-recommends python3 python3-pip python3-venv &>/dev/null
