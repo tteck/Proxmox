@@ -654,7 +654,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">🔸Jellyfin Media Server LXC</summary>
+<summary markdown="span">Jellyfin Media Server LXC</summary>
 
 <p align="center"><img src="https://jellyfin.org/images/banner-dark.svg" height="80"/></p>
 
