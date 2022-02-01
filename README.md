@@ -107,11 +107,11 @@ nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-⚙️ **To allow device passthrough:**
+⚙️ **To allow USB device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -164,11 +164,11 @@ nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 
-⚙️ **To Allow Device Passthrough:**
+⚙️ **To Allow USB Device Passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -483,11 +483,11 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
  
 
-⚙️ **To allow device passthrough:**
+⚙️ **To allow USB device passthrough:**
  
 In the **Proxmox Shell** run (**replace `106` with your LXC ID**)
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
@@ -567,11 +567,11 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 
 **Zwavejs2MQTT Interface - IP:8091**
 
-⚙️ **To allow device passthrough:**
+⚙️ **To allow USB device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID)**
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/autodev.sh)" -s 106
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
  
 Reboot the LXC to apply the changes
