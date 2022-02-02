@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-01
+
+### Changed
+
+- **All Scripts**
+  - Fix issue where some networks were slow to assign a IP address to the container causing scripts to fail.
+
 ## 2022-01-30
 
 ### Changed
