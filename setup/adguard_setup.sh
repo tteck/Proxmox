@@ -27,11 +27,11 @@ function msg() {
   echo -e "$TEXT"
 }
 
-msg "Setting up Container OS..."
+echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
-  1>&2 echo -e "${CROSS} \e[1;31m No Network: \e[0m $(date)"
+  1>&2 echo -e "${CROSS} \e[1;31m No Network \e[0m $(date)"
   sleep $RETRY_EVERY
   ((NUM--))
   if [ $NUM -eq 0 ]
@@ -40,22 +40,22 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-  echo -e "${CHECKMARK} \e[1;92m Network Connected: \e[0m $(hostname -I)"
+  echo -e "${CHECKMARK} \e[1;92m Network Connected \e[0m $(hostname -I)"
 
-msg "Updating Container OS..."
+echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-msg "Installing Prerequisites..."
+echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get update &>/dev/null
 apt-get -y install \
     curl \
     sudo &>/dev/null
 
-msg "Installing AdGuard Home.."
+echo -e "${CHECKMARK} \e[1;92m Installing AdGuard Home... \e[0m"
 curl -sSL https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh &>/dev/null
 
-msg "Customizing LXC..."
+echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 rm /etc/motd 
 rm /etc/update-motd.d/10-uname 
 touch ~/.hushlogin 
@@ -69,5 +69,5 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-msg "Cleanup..."
+echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /adguard_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
