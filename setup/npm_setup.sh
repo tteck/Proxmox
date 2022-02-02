@@ -33,7 +33,7 @@ apt-get -qqy upgrade &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 echo "fs.file-max = 65535" > /etc/sysctl.conf
-apt-get update &>/dev/null
+apt update &>/dev/null
 sleep 3
 apt-get -qqy install \
     sudo \
