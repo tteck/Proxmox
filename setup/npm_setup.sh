@@ -23,6 +23,13 @@ function msg() {
   echo -e "$TEXT"
 }
 
+while [ "$(hostname -I)" = "" ]; do
+  echo -e "No network: $(date)"
+  sleep 1
+done
+
+echo -e "Network connected: ($(hostname -I)) \e[0m"
+
 echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
@@ -33,8 +40,7 @@ apt-get -qqy upgrade &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 echo "fs.file-max = 65535" > /etc/sysctl.conf
-apt update &>/dev/null
-sleep 3
+apt-get update &>/dev/null
 apt-get -qqy install \
     sudo \
     curl \
