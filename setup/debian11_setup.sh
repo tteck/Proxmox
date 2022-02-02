@@ -35,7 +35,6 @@ while [ "$(hostname -I)" = "" ]; do
 done
   echo -e "${CHECKMARK} \e[1;92m Network connected: \e[0m $(hostname -I)"
 
-echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 msg "Updating container OS..."
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
