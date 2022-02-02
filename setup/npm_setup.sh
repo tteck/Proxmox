@@ -23,17 +23,15 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
+echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
+sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+locale-gen >/dev/null
+sleep 3
 while [ "$(hostname -I)" = "" ]; do
   echo -e "${CROSS} \e[1;31m No network: \e[0m $(date)"
   sleep 3
 done
-
-  echo -e "${CHECKMARK} \e[1;92m Network connected: \e[0m ($(hostname -I))"
-
-echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
-sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
-locale-gen >/dev/null
-
+  echo -e "${CHECKMARK} \e[1;92m Network connected: \e[0m $(hostname -I)"
 echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
