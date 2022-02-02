@@ -31,22 +31,23 @@ echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
-  echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
-  echo "fs.file-max = 65535" > /etc/sysctl.conf
-  apt-get update &>/dev/null
-  apt-get -qqy install \
-      sudo \
-      curl \
-      wget \
-      gnupg \
-      openssl \
-      ca-certificates \
-      apache2-utils \
-      logrotate \
-      build-essential \
-      python3-dev \
-      git \
-      lsb-release &>/dev/null
+echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
+echo "fs.file-max = 65535" > /etc/sysctl.conf
+apt-get update &>/dev/null
+sleep 3
+apt-get -qqy install \
+    sudo \
+    curl \
+    wget \
+    gnupg \
+    openssl \
+    ca-certificates \
+    apache2-utils \
+    logrotate \
+    build-essential \
+    python3-dev \
+    git \
+    lsb-release &>/dev/null
 
   echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
   apt-get install -y -q --no-install-recommends python3 python3-pip python3-venv &>/dev/null
