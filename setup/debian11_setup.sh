@@ -7,6 +7,8 @@ set -o nounset  #Treat unset variables as an error
 set -o pipefail #Pipe will exit with last non-zero status if applicable
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -23,12 +25,17 @@ function msg() {
   echo -e "$TEXT"
 }
 
-# Prepare container OS
 msg "Setting up container OS..."
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
+sleep 3
+while [ "$(hostname -I)" = "" ]; do
+  echo -e "${CROSS} \e[1;31m No network: \e[0m $(date)"
+  sleep 3
+done
+  echo -e "${CHECKMARK} \e[1;92m Network connected: \e[0m $(hostname -I)"
 
-# Update container OS
+echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
 msg "Updating container OS..."
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
