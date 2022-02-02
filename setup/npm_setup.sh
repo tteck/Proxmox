@@ -7,6 +7,7 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -22,13 +23,12 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-
 while [ "$(hostname -I)" = "" ]; do
-  echo -e "No network: $(date)"
-  sleep 1
+  echo -e "${CROSS} \e[1;31m No network: \e[0m $(date)"
+  sleep 3
 done
 
-echo -e "Network connected: ($(hostname -I)) \e[0m"
+  echo -e "${CHECKMARK} \e[1;92m Network connected: \e[0m ($(hostname -I))"
 
 echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
