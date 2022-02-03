@@ -46,7 +46,7 @@ done
 
 # Update container OS
 msg "Updating container OS..."
-apt update &>/dev/null
+apt-get update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
