@@ -45,8 +45,8 @@ done
   echo -e "${CHECKMARK} \e[1;92m Network Connected: \e[0m $(hostname -I)"
 
 # Update container OS
-msg "Updating container OS..."
-apt update &>/dev/null
+msg "Updating Container OS..."
+apt-get update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 # Install prerequisites
