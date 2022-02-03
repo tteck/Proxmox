@@ -42,7 +42,7 @@ done
   echo -e "${CHECKMARK} \e[1;92m Network Connected: \e[0m $(hostname -I)"
 
 echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
-apt update &>/dev/null
+apt-get update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
