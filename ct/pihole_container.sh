@@ -15,6 +15,7 @@ set -o nounset
 set -o pipefail 
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
 
@@ -105,9 +106,10 @@ info "Using '$STORAGE' for storage location."
 CTID=$(pvesh get /cluster/nextid)
 info "LXC ID is $CTID."
 
-msg "Updating LXC template list..."
+echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
 pveam update >/dev/null
-msg "Downloading LXC template..."
+
+echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -129,7 +131,7 @@ esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
-msg "Creating LXC..."
+echo -e "${CHECKMARK} \e[1;92m Creating LXC... \e[0m"
 DISK_SIZE=2G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -148,10 +150,13 @@ MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
 
-msg "Starting LXC..."
+echo -e "${CHECKMARK} \e[1;92m Starting LXC... \e[0m"
 pct start $CTID
 pct push $CTID pihole_setup.sh /pihole_setup.sh -perms 755
 pct exec $CTID /pihole_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a Pi-hole LXC to $CTID at IP Address ${IP}"
+info "Successfully created a Pi-hole LXC to $CTID"
+echo -e "\e[1;92m Pi-hole should be reachable by going to the following URL.
+                  http://${IP}
+\e[0m"
