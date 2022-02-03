@@ -15,6 +15,7 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
 
@@ -23,7 +24,6 @@ function error_exit() {
   local DEFAULT='Unknown failure occured.'
   local REASON="\e[97m${1:-$DEFAULT}\e[39m"
   local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
   msg "$FLAG $REASON"
   [ ! -z ${CTID-} ] && cleanup_ctid
   exit $EXIT
