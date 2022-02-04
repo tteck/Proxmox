@@ -63,7 +63,7 @@ apt-get -qqy install \
 
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
 apt-get update &>/dev/null
-curl -sSf https://sh.rustup.rs | sh -y &>/dev/null
+wget -qO - https://sh.rustup.rs | sh -s &>/dev/null
 echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc \
 export PATH=~/.cargo/bin:$PATH \
 which rustc &>/dev/null
