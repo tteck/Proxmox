@@ -62,7 +62,8 @@ apt-get -qqy install \
     build-essential &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s &>/dev/null
+apt-get update &>/dev/null
+curl -sSf https://sh.rustup.rs | sh -y &>/dev/null
 echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
 export PATH=~/.cargo/bin:$PATH &>/dev/null
 which rustc &>/dev/null
