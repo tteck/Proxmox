@@ -64,8 +64,8 @@ apt-get -qqy install \
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
 apt-get update &>/dev/null
 curl -sSf https://sh.rustup.rs | sh -y &>/dev/null
-echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
-export PATH=~/.cargo/bin:$PATH &>/dev/null
+echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc \
+export PATH=~/.cargo/bin:$PATH \
 which rustc &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Node.js... \e[0m"
