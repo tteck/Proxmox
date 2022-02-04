@@ -64,7 +64,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Build Essentials... \e[0m"
 apt-get install -y build-essential &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
-curl https://sh.rustup.rs -sSf | sh -s
+curl https://sh.rustup.rs -sSf | sh 
 echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc 
 export PATH=~/.cargo/bin:$PATH 
 which rustc &>/dev/null
@@ -77,21 +77,21 @@ which npm &>/dev/null
 npm i npm@latest -g &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Building Vaultwarden... \e[0m"
-git clone https://github.com/dani-garcia/vaultwarden && pushd vaultwarden &>/dev/null
-cargo clean && cargo build --features sqlite --release &>/dev/null
-file target/release/vaultwarden &>/dev/null
+git clone https://github.com/dani-garcia/vaultwarden && pushd vaultwarden 
+cargo clean && cargo build --features sqlite --release 
+file target/release/vaultwarden 
 
 echo -e "${CHECKMARK} \e[1;92m Building Web-Vault... \e[0m"
-pushd target/release/ &>/dev/null
-git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git && cd web-vault.git &>/dev/null
-git checkout v2.25.1 &>/dev/null
-git submodule update --init --recursive &>/dev/null
-wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch &>/dev/null
-git apply v2.25.0.patch &>/dev/null
-npm ci --legacy-peer-deps && npm audit fix --legacy-peer-deps || true && npm run dist:oss:selfhost &>/dev/null
-cp -a build ../web-vault &>/dev/null
+pushd target/release/ 
+git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git && cd web-vault.git
+git checkout v2.25.1 
+git submodule update --init --recursive 
+wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch
+git apply v2.25.0.patch 
+npm ci --legacy-peer-deps && npm audit fix --legacy-peer-deps || true && npm run dist:oss:selfhost
+cp -a build ../web-vault 
 cd ..
-mkdir data &>/dev/null
+mkdir data 
 
 echo -e "${CHECKMARK} \e[1;92m Create Systemd Service... \e[0m"
 cp ../../.env.template /etc/vaultwarden.env &>/dev/null
