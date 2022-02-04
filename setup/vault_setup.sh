@@ -64,7 +64,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Build Essentials... \e[0m"
 apt-get install -y build-essential &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
-curl https://sh.rustup.rs -sSf | sh -y 
+curl https://sh.rustup.rs -sSf | sh -s
 echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc 
 export PATH=~/.cargo/bin:$PATH 
 which rustc &>/dev/null
