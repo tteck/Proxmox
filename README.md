@@ -772,7 +772,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">Vaultwarden LXC</summary>
+<summary markdown="span">🔸Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://avatars1.githubusercontent.com/u/15990069?s=200&v=4" width="100" height="100"/></p>
 
