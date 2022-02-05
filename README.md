@@ -320,7 +320,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">🔸Node-Red LXC</summary>
+<summary markdown="span">Node-Red LXC</summary>
  
 <p align="center"><img src="https://nodered.org/about/resources/media/node-red-icon.png" alt="@node-red" width="100" height="100"/></p>
 
