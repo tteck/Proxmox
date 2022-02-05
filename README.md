@@ -781,7 +781,7 @@ ________________________________________________________________________________
 To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox web shell.
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/ct/vault_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/vault_container.sh)"
 ```
 It builds from source, which takes time and resources. After the installation, resources can be set to Normal Settings. I've left most of the installation process viewable since the rust install needs user input (requires a "enter" key press), and the lengthy time to complete the full installation.
  <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 8GB Storage - 1vCPU ⚡</h3>
