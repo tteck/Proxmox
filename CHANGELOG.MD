@@ -2,12 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2022-02-04
+## 2022-02-05
 
 ### Changed
 
-- **Scripts that Need Testing**
-  - Added a couple of scripts that need testing. (https://github.com/tteck/Proxmox/issues/22)
+- **Vaultwarden LXC**
+  - New script
 
 ## 2022-02-01
 
