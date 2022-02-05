@@ -770,3 +770,28 @@ bash /etc/webmin/uninstall.sh
 ___________________________________________________________________________________________ 
 
 </details>
+
+<details>
+<summary markdown="span">Vaultwarden LXC</summary>
+ 
+<p align="center"><img src="https://avatars1.githubusercontent.com/u/15990069?s=200&v=4" width="100" height="100"/></p>
+
+<h1 align="center" id="heading"> Vaultwarden LXC </h1>
+
+To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/vault_container.sh)"
+```
+It builds from source, which takes time and resources. After the installation, resources can be set to Normal Settings. I've left most of the installation process viewable since the rust install needs user input (requires a "enter" key press), and the lengthy time to complete the full installation.
+ <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 8GB Storage - 1vCPU ⚡</h3>
+ 
+Be Patient, let the script do it's work. Hopefully, you'll eventually see "Successfully created a Vaultwarden LXC Container"
+
+
+ 
+**Vaultwarden Interface - IP:8000**
+
+____________________________________________________________________________________________ 
+
+</details>
