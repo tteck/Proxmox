@@ -52,6 +52,14 @@ apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
+DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
+mkdir -p $(dirname $DOCKER_CONFIG_PATH)
+cat >$DOCKER_CONFIG_PATH <<'EOF'
+{
+  "log-driver": "journald"
+}
+EOF
+
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
