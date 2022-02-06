@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
   - Add Docker Support
 - **Ubuntu 21.10 LXC**
   - Add Docker Support
+- **New Test Script**
+  - [GamUntu](https://github.com/tteck/Proxmox/issues/22#issuecomment-1030707954)
 
 ## 2022-02-05
 
