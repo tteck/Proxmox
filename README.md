@@ -583,7 +583,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Debian 11 LXC</summary>
+<summary markdown="span">🔸Debian 11 LXC</summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -604,7 +604,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Ubuntu 21.10 LXC</summary>
+<summary markdown="span">🔸Ubuntu 21.10 LXC</summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
