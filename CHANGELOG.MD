@@ -2,6 +2,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-06
+
+### Changed
+
+- **Debian 11 LXC**
+  - Add Docker Support
+- **Ubuntu 21.10 LXC**
+  - Add Docker Support
+
 ## 2022-02-05
 
 ### Changed
