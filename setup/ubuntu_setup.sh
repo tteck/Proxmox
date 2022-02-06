@@ -51,6 +51,14 @@ apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
+DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
+mkdir -p $(dirname $DOCKER_CONFIG_PATH)
+cat >$DOCKER_CONFIG_PATH <<'EOF'
+{
+  "log-driver": "journald"
+}
+EOF
+
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin
