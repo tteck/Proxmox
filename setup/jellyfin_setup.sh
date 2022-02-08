@@ -51,11 +51,6 @@ apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
     sudo &>/dev/null
-    #gnupg \
-    #apt-transport-https \
-    #ca-certificates \
-    #git &>/dev/null
-#apt install apt-transport-https gnupg lsb-release &>/dev/null
  
 echo -e "${CHECKMARK} \e[1;92m Setting Up Hardware Acceleration... \e[0m"  
 apt-get -y install \
@@ -67,14 +62,9 @@ apt-get -y install \
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
 
-echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
-sudo apt install extrepo
-sudo extrepo enable jellyfin
-#wget -q -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
-#echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/debian $( lsb_release -c -s ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
-#echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
-#echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/debian bullseye main" | tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
+sudo apt install -y extrepo
+sudo extrepo enable jellyfin
 apt-get update &>/dev/null
 apt-get install jellyfin -y &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
