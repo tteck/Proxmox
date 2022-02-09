@@ -50,7 +50,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
-    wget &>/dev/null
+    sudo &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Docker... \e[0m"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
