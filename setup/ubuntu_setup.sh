@@ -10,6 +10,7 @@ CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 RETRY_NUM=5
 RETRY_EVERY=3
+NUM=$RETRY_NUM
 trap die ERR
 trap 'die "Script interrupted."' INT
 
