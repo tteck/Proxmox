@@ -56,7 +56,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Podman... \e[0m"
 apt-get -y install podman &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
-podman pull homeassistant/home-assistant:stable &>/dev/null
+podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 podman volume create hass_config >/dev/null
@@ -75,7 +75,7 @@ echo -e "${CHECKMARK} \e[1;92m Creating Update Script... \e[0m"
 file_path="/root/update.sh"
 echo "#!/bin/bash
 echo -e '\e[1;33m Pulling New Stable Version... \e[0m'
-podman pull homeassistant/home-assistant:stable
+podman pull docker.io/homeassistant/home-assistant:stable
 echo -e '\e[1;33m Stopping Home Assistant... \e[0m'
 podman stop homeassistant
 echo -e '\e[1;33m Removing Home Assistant... \e[0m'
