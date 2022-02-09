@@ -65,12 +65,17 @@ apt-get -y install \
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 sudo mkdir /opt/jellyfin
 cd /opt/jellyfin
-sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz
+sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz 
 sudo tar xvzf jellyfin_10.7.7_amd64.tar.gz 
 sudo ln -s jellyfin_10.7.7 jellyfin
 sudo mkdir data cache config log
-mkfile jellyfin.sh
-cat >jellyfin.sh <<'EOF'
+
+echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
+sudo wget https://repo.jellyfin.org/releases/server/debian/versions/jellyfin-ffmpeg/4.4.1-1/jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
+sudo dpkg --install jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb 
+echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
+FILE_PATH="/opt/jellyfin/jellyfin.sh"
+cat >&FILE_PATH <<'EOF'
 #!/bin/bash
 JELLYFINDIR="/opt/jellyfin"
 FFMPEGDIR="/usr/share/jellyfin-ffmpeg"
@@ -84,10 +89,6 @@ $JELLYFINDIR/jellyfin/jellyfin \
 EOF
 sudo chmod +x jellyfin.sh
 
-echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
-sudo wget https://repo.jellyfin.org/releases/server/debian/versions/jellyfin-ffmpeg/4.4.1-1/jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
-sudo dpkg --install jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
-echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
 service_path="/etc/systemd/system/jellyfin.service"
 echo "[Unit]
 Description=Jellyfin
