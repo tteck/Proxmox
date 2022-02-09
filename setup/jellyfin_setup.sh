@@ -65,7 +65,7 @@ apt-get -y install \
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 sudo mkdir /opt/jellyfin
 cd /opt/jellyfin
-sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz &>/dev/null
+sudo wget https://repo.jellyfin.org/releases/server/linux/stable/server/jellyfin_10.7.7_amd64.tar.gz &>/dev/null
 sudo tar xvzf jellyfin_10.7.7_amd64.tar.gz &>/dev/null
 sudo ln -s jellyfin_10.7.7 jellyfin
 sudo mkdir data cache config log
