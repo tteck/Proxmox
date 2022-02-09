@@ -63,10 +63,46 @@ apt-get -y install \
 /bin/chmod 660 /dev/dri/*
 
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
-sudo apt install -y extrepo
-sudo extrepo enable jellyfin
-apt-get update &>/dev/null
-apt-get install jellyfin -y &>/dev/null
+sudo mkdir /opt/jellyfin
+cd /opt/jellyfin
+sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz
+sudo tar xvzf jellyfin_10.7.7_amd64.tar.gz 
+sudo ln -s jellyfin_10.7.7 jellyfin
+sudo mkdir data cache config log
+mkfile jellyfin.sh
+cat >jellyfin.sh <<'EOF'
+#!/bin/bash
+JELLYFINDIR="/opt/jellyfin"
+FFMPEGDIR="/usr/share/jellyfin-ffmpeg"
+
+$JELLYFINDIR/jellyfin/jellyfin \
+ -d $JELLYFINDIR/data \
+ -C $JELLYFINDIR/cache \
+ -c $JELLYFINDIR/config \
+ -l $JELLYFINDIR/log \
+ --ffmpeg $FFMPEGDIR/ffmpeg
+EOF
+sudo chmod +x jellyfin.sh
+
+echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
+sudo wget https://repo.jellyfin.org/releases/server/debian/versions/jellyfin-ffmpeg/4.4.1-1/jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
+sudo dpkg --install jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
+echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
+service_path="/etc/systemd/system/jellyfin.service"
+echo "[Unit]
+Description=Jellyfin
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Restart=always
+ExecStart=/opt/jellyfin/jellyfin.sh
+
+[Install]
+WantedBy=multi-user.target > $service_path
+sudo chmod 644 /etc/systemd/system/jellyfin.service
+
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin 
@@ -79,8 +115,8 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-#usermod -a -G input jellyfin
-#usermod -a -G render jellyfin
-#systemctl enable jellyfin &>/dev/null
+sudo systemctl enable jellyfin.service &>/dev/null
+sudo systemctl start jellyfin.service &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /jellyfin_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
