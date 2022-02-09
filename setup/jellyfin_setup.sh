@@ -65,16 +65,17 @@ apt-get -y install \
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 sudo mkdir /opt/jellyfin
 cd /opt/jellyfin
-sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz 
-sudo tar xvzf jellyfin_10.7.7_amd64.tar.gz 
+sudo wget https://repo.jellyfin.org/releases/server/linux/stable/combined/jellyfin_10.7.7_amd64.tar.gz &>/dev/null
+sudo tar xvzf jellyfin_10.7.7_amd64.tar.gz &>/dev/null
 sudo ln -s jellyfin_10.7.7 jellyfin
 sudo mkdir data cache config log
 
 echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
-apt-get update
-apt-get -y install ffmpeg
+apt-get update &>/dev/null
+apt-get -y install ffmpeg &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
 FILE_PATH="/opt/jellyfin/jellyfin.sh"
+mkdir -p $(dirname $FILE_PATH)
 cat >&FILE_PATH <<'EOF'
 #!/bin/bash
 JELLYFINDIR="/opt/jellyfin"
