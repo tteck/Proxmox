@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-09
+
+### Changed
+
+- **Jellyfin Media Server LXC**
+  - Moved to [testing](https://github.com/tteck/Proxmox/issues/22#issuecomment-1033567284) due to issues. Changed install method.
+
 ## 2022-02-06
 
 ### Changed
