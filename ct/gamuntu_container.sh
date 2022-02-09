@@ -73,7 +73,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/gamuntu_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/gamuntu_setup.sh
 
 load_module overlay
 
