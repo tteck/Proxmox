@@ -74,21 +74,18 @@ echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
 apt-get update &>/dev/null
 apt-get -y install ffmpeg &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
-FILE_PATH="/opt/jellyfin/jellyfin.sh"
-mkdir -p $(dirname $FILE_PATH)
-cat >&FILE_PATH <<'EOF'
-#!/bin/bash
+file_path="/opt/jellyfin/jellyfin.sh"
+echo "#!/bin/bash
 JELLYFINDIR="/opt/jellyfin"
 FFMPEGDIR="/usr/share/jellyfin-ffmpeg"
 
-$JELLYFINDIR/jellyfin/jellyfin \
- -d $JELLYFINDIR/data \
+$JELLYFINDIR/jellyfin/jellyfin 
+ -d $JELLYFINDIR/data \ 
  -C $JELLYFINDIR/cache \
  -c $JELLYFINDIR/config \
  -l $JELLYFINDIR/log \
- --ffmpeg $FFMPEGDIR/ffmpeg
-EOF
-sudo chmod +x jellyfin.sh
+ --ffmpeg $FFMPEGDIR/ffmpeg" > $file_path
+sudo chmod +x /opt/jellyfin/jellyfin.sh
 
 service_path="/etc/systemd/system/jellyfin.service"
 echo "[Unit]
