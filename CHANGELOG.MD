@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Jellyfin Media Server LXC**
-  - Moved to [testing](https://github.com/tteck/Proxmox/issues/22#issuecomment-1033567284) due to issues. Changed install method.
+  - Moved to [testing](https://github.com/tteck/Proxmox/issues/22#issuecomment-1033567284) due to issues. 
+  - Changed install method.
 - **Home Assistant Container LXC (Podman)** 
   - add script for easy Home Assistant update
 
