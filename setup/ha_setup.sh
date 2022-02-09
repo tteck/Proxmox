@@ -51,8 +51,8 @@ apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
     wget &>/dev/null
-    
-echo -e "${CHECKMARK} \e[1;92m Customizing Docker... \e[0m"
+
+echo -e "${CHECKMARK} \e[1;92m Installing Docker... \e[0m"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 cat >$DOCKER_CONFIG_PATH <<'EOF'
@@ -60,12 +60,10 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
   "log-driver": "journald"
 }
 EOF
-
-echo -e "${CHECKMARK} \e[1;92m Installing Docker... \e[0m"
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Portainer Image...\e[0m"
-docker pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+docker pull portainer/portainer-ce:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Portainer... \e[0m"
 docker volume create portainer_data >/dev/null
@@ -79,7 +77,7 @@ docker run -d \
   portainer/portainer-ce:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
-docker pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+docker pull homeassistant/home-assistant:stable &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 docker volume create hass_config >/dev/null
@@ -96,13 +94,9 @@ docker run -d \
   homeassistant/home-assistant:stable &>/dev/null
 file_path="/root/update.sh"
 echo "#!/bin/bash
-echo -e "\e[1;33m Pulling New Stable Version... \e[0m"
 docker pull homeassistant/home-assistant:stable
-echo -e "\e[1;33m Stopping Home Assistant... \e[0m"
 docker stop homeassistant
-echo -e "\e[1;33m Removing Home Assistant... \e[0m"
 docker rm homeassistant
-echo -e "\e[1;33m Starting Home Assistant... \e[0m"
 docker run -d \
   --name homeassistant \
   --privileged \
@@ -114,9 +108,7 @@ docker run -d \
   -v /etc/timezone:/etc/timezone:ro\
   --net=host \
   homeassistant/home-assistant:stable
-echo -e "\e[1;33m Removing Old Image... \e[0m"
-docker image prune -f
-echo -e "\e[1;33m Finished Update! \e[0m"" > $file_path
+docker image prune -f" > $file_path
 sudo chmod +x /root/update.sh
 
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
