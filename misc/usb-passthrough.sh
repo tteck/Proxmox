@@ -36,7 +36,7 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-
+CHAR_DEVS+=("166:.*")
 CHAR_DEVS+=("188:.*")
 CHAR_DEVS+=("189:.*")
 
