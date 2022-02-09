@@ -96,7 +96,7 @@ Restart=always
 ExecStart=/opt/jellyfin/jellyfin.sh
 
 [Install]
-WantedBy=multi-user.target > $service_path
+WantedBy=multi-user.target" > $service_path
 sudo chmod 644 /etc/systemd/system/jellyfin.service
 
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
