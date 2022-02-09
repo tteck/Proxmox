@@ -62,7 +62,6 @@ echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 podman volume create hass_config >/dev/null
 podman run -d \
   --name homeassistant \
-  --privileged \
   --restart unless-stopped \
   -v /dev:/dev \
   -v hass_config:/config \
@@ -83,9 +82,7 @@ podman rm homeassistant
 echo -e '\e[1;33m Starting Home Assistant... \e[0m'
 podman run -d \
   --name homeassistant \
-  --privileged \
   --restart unless-stopped \
-  -v /var/run/docker.sock:/var/run/docker.sock \
   -v /dev:/dev \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
