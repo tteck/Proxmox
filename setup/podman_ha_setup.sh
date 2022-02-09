@@ -49,24 +49,53 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 apt-get update &>/dev/null
 apt-get -qqy install \
     curl \
+    sudo \
     runc &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Podman... \e[0m"
 apt-get -y install podman &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
-podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+podman pull homeassistant/home-assistant:stable &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 podman volume create hass_config >/dev/null
 podman run -d \
   --name homeassistant \
-  --restart=always \
+  --privileged \
+  --restart unless-stopped \
   -v /dev:/dev \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
+
+echo -e "${CHECKMARK} \e[1;92m Creating Update Script... \e[0m"
+file_path="/root/update.sh"
+echo "#!/bin/bash
+echo -e '\e[1;33m Pulling New Stable Version... \e[0m'
+podman pull homeassistant/home-assistant:stable
+echo -e '\e[1;33m Stopping Home Assistant... \e[0m'
+podman stop homeassistant
+echo -e '\e[1;33m Removing Home Assistant... \e[0m'
+podman rm homeassistant
+echo -e '\e[1;33m Starting Home Assistant... \e[0m'
+podman run -d \
+  --name homeassistant \
+  --privileged \
+  --restart unless-stopped \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /dev:/dev \
+  -v hass_config:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  --net=host \
+  homeassistant/home-assistant:stable
+echo -e '\e[1;33m Removing Old Image... \e[0m'
+podman image prune -f
+echo -e '\e[1;33m Finished Update! \e[0m'" > $file_path
+sudo chmod +x /root/update.sh
 
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 rm /etc/motd
