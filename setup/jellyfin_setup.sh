@@ -71,8 +71,8 @@ sudo ln -s jellyfin_10.7.7 jellyfin
 sudo mkdir data cache config log
 
 echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
-sudo wget https://repo.jellyfin.org/releases/server/debian/versions/jellyfin-ffmpeg/4.4.1-1/jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb &>/dev/null
-sudo dpkg --install jellyfin-ffmpeg_4.4.1-1-bullseye_amd64.deb 
+apt-get update
+apt-get -y install ffmpeg
 echo -e "${CHECKMARK} \e[1;92m Creating Service file jellyfin.service... \e[0m"
 FILE_PATH="/opt/jellyfin/jellyfin.sh"
 cat >&FILE_PATH <<'EOF'
