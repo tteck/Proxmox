@@ -71,7 +71,7 @@ wget -q -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | sudo apt-key add 
 echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 apt-get update &>/dev/null
-apt-get -y install jellyfin &>/dev/null
+apt-get install jellyfin -y &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin 
