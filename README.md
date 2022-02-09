@@ -654,6 +654,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span">Jellyfin Media Server LXC</summary>
+
+<p align="center"><img src="https://jellyfin.org/images/banner-dark.svg" height="80"/></p>
+
+<h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
+<h3 align="center" id="heading"> With Hardware Acceleration Support </h3> 
+To create a new Proxmox Jellyfin Media Server LXC, run the following in the Proxmox web shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/jellyfin_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_**, **_Cores_** and **_Root Disk_** (Resize disk) settings to what you desire. Changes are immediate.
+
+**Jellyfin Media Server Interface - IP:8096**
+
+⚙️ **To Update Jellyfin Media Server:**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span">Pi-hole LXC</summary>
  
 <p align="center"><img src="https://camo.githubusercontent.com/9426a93d32aa9f5ad757b2befcdb762a270d344efd6b8d287a2cea2c4c2233b8/68747470733a2f2f70692d686f6c652e6769746875622e696f2f67726170686963732f566f727465782f566f727465785f776974685f576f72646d61726b2e737667" alt="Pi-hole" width="100" height="100"/></p>
