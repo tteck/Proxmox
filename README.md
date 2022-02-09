@@ -671,12 +671,6 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 **Jellyfin Media Server Interface - IP:8096**
 
-⚙️ **To Update Jellyfin Media Server:**
-
-Run from the LXC console
-```yaml
-apt update && apt upgrade -y
-```
 
 ____________________________________________________________________________________________ 
 
