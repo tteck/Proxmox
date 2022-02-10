@@ -51,10 +51,8 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
  apt-get -qqy install \
      curl \
      sudo &>/dev/null
-    
-echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
  sudo apt install extrepo -y &>/dev/null
- sudo extrepo enable jellyfin
+ sudo extrepo enable jellyfin &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
  apt-get update &>/dev/null
@@ -64,13 +62,13 @@ echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
  touch ~/.hushlogin 
  GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
  mkdir -p $(dirname $GETTY_OVERRIDE)
- cat << EOF > $GETTY_OVERRIDE
- [Service]
- ExecStart=
- ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
- EOF
+cat << EOF > $GETTY_OVERRIDE
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
+EOF
  systemctl daemon-reload
  systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
  systemctl enable jellyfin.service &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
- rm -rf /jellyfin_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /jellyfin_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
