@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Jellyfin Media Server LXC**
+  - new script to fix [start issue](https://github.com/tteck/Proxmox/issues/29#issue-1127457380)
 - **MotionEye NVR LXC**
   - New script
 
