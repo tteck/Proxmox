@@ -692,6 +692,43 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span">🔸MotionEye NVR LXC</summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/motioneye-256x256.png" width="100" height="100"/></p>
+
+<h1 align="center" id="heading"> MotionEye NVR LXC </h1>
+
+To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox web shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/motioneye_container.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_**, **_Cores_** and **_Root Disk_** (Resize disk) settings to what you desire. Changes are immediate.
+
+**MotionEye Interface - IP:8765**
+
+⚙️ **Initial Login**
+
+**username** 
+ `admin`
+ 
+ **password** 
+ `   `
+ 
+⚙️ **To Update MotionEye**
+ 
+Run from the LXC console
+ ```yaml
+pip install motioneye --upgrade
+```
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span">Webmin System Administration</summary>
