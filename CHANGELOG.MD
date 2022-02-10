@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Zigbee2MQTT LXC**
+  - added USB passthrough during installation (no extra script)
+- **Zwavejs2MQTT LXC**
+  - added USB passthrough during installation (no extra script)
 - **Jellyfin Media Server LXC**
   - Moved to [testing](https://github.com/tteck/Proxmox/issues/22#issuecomment-1033567284) due to issues. 
   - Changed install method.
