@@ -564,14 +564,6 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 
 **Zwavejs2MQTT Interface - IP:8091**
 
-⚙️ **To allow USB device passthrough:**
- 
-In the Proxmox web shell run (**replace `106` with your LXC ID)**
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
-```
- 
-Reboot the LXC to apply the changes
 
 ____________________________________________________________________________________________ 
 
