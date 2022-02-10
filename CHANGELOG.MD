@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **Zigbee2MQTT LXC**
   - added USB passthrough during installation (no extra script)
+  - Improve documentation
 - **Zwavejs2MQTT LXC**
   - added USB passthrough during installation (no extra script)
 - **Jellyfin Media Server LXC**
