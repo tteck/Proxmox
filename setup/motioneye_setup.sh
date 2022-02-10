@@ -70,7 +70,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
  apt-get install python2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev -y
 echo -e "${CHECKMARK} \e[1;92m Installing MotionEye... \e[0m"
  apt-get update &>/dev/null
- pip2 install motioneye
+ sudo pip install motioneye
  mkdir -p /etc/motioneye
  cp /usr/local/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf
  mkdir -p /var/lib/motioneye
