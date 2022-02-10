@@ -90,8 +90,8 @@ echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 EOF
  systemctl daemon-reload
  systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
- systemctl enable motioneye
- systemctl start motioneye
+ systemctl enable motioneye &>/dev/null
+ systemctl start motioneye 
 
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
  rm -rf /motioneye_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
