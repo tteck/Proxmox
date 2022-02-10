@@ -55,14 +55,14 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
  sudo apt-get install software-properties-common -y &>/dev/null
  
 echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
-# sudo apt install extrepo -y &>/dev/null
-# sudo extrepo enable jellyfin
-sudo add-apt-repository universe 
-wget -O -q - https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
+sudo add-apt-repository universe &>/dev/null
+wget -O - https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
 echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/ubuntu $( lsb_release -c -s ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 apt-get update &>/dev/null
 sudo apt install jellyfin -y &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin 
