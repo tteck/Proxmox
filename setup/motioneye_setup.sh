@@ -64,18 +64,19 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
 echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
  apt-get install ffmpeg v4l-utils -y &>/dev/null
 
+echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
+ apt-get install python2 curl -y &>/dev/null
+ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py &>/dev/null
+ python2 get-pip.py &>/dev/null
+ apt-get install python-pillow &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Installing Motion... \e[0m"
  apt-get install motion -y &>/dev/null
  systemctl stop motion &>/dev/null
  systemctl disable motion &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
- apt-get install python2 curl -y &>/dev/null
- curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py &>/dev/null
- python2 get-pip.py &>/dev/null
-
 echo -e "${CHECKMARK} \e[1;92m Installing MotionEye... \e[0m"
- pip2 install motioneye
+ pip install motioneye
  mkdir -p /etc/motioneye
  cp /usr/local/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf
  mkdir -p /var/lib/motioneye
