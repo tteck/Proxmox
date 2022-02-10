@@ -55,13 +55,32 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
  sudo apt-get install software-properties-common -y &>/dev/null
  
 echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
-sudo add-apt-repository universe -y &>/dev/null
+sudo add-apt-repository universe &>/dev/null
 wget -q -O - https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
 echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/ubuntu $( lsb_release -c -s ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
-
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
 apt-get update &>/dev/null
 sudo apt install jellyfin-server -y &>/dev/null
+
+echo -e "${CHECKMARK} \e[1;92m Creating Jellyfin Service... \e[0m"
+cat << 'EOF' > /lib/systemd/system/jellyfin.service
+[Unit]
+Description = Jellyfin Media Server
+After = network.target
+
+[Service]
+Type = simple
+EnvironmentFile = /etc/default/jellyfin
+User = root
+ExecStart = /usr/bin/jellyfin ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELL>
+Restart = on-failure
+TimeoutSec = 15
+
+[Install]
+WantedBy = multi-user.target
+EOF
+
+ln -s /usr/share/jellyfin/web/ /usr/lib/jellyfin/bin/jellyfin-web
 
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 chmod -x /etc/update-motd.d/*
