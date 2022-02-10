@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 while true; do
-    read -p "This will create a New MotionEye LXC Container. Proceed(y/n)?" yn
+    read -p "This will create a New MotionEye NVR LXC Container. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -132,7 +132,7 @@ DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
 echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
-DISK_SIZE=2G
+DISK_SIZE=8G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
@@ -163,6 +163,6 @@ pct exec $CTID /motioneye_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 info "Successfully Created MotionEye LXC to $CTID."
-echo -e "\e[1;92m MotionEye should be reachable by going to the following URL.
+echo -e "\e[1;92m MotionEye NVR should be reachable by going to the following URL.
              http://${IP}:8765
 \e[0m"
