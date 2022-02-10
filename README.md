@@ -487,16 +487,6 @@ To create a new Proxmox Zigbee2MQTT LXC Container, run the following from Proxmo
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt_container.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
- 
-
-⚙️ **To allow USB device passthrough:**
- 
-In the **Proxmox Shell** run (**replace `106` with your LXC ID**)
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
-```
- 
-Reboot the LXC to apply the changes
 
  
 ⚙️ **Determine the location of your adapter**
@@ -533,6 +523,7 @@ mqtt:
   version: 4
 serial:
   port: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+  #adapter: deconz ### uncomment adapter: deconz for ConBee II ###
 advanced:
   pan_id: GENERATE
   network_key: GENERATE
