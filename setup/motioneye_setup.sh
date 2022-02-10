@@ -59,7 +59,6 @@ echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
  apt-get install python-dev-is-python2 python-setuptools libssl-dev libcurl4-openssl-dev libjpeg-dev zlib1g-dev libffi-dev libzbar-dev libzbar0 -y &>/dev/null
  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py &>/dev/null
  python2 get-pip.py &>/dev/null
- apt-get install python-pillow &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Motion... \e[0m"
  apt-get install motion -y &>/dev/null
