@@ -61,13 +61,16 @@ echo -e "${CHECKMARK} \e[1;92m Installing FFmpeg... \e[0m"
  apt-get install ffmpeg v4l-utils -y &>/dev/null
  
 echo -e "${CHECKMARK} \e[1;92m Installing Python... \e[0m"
+ apt-get update &>/dev/null
  apt-get install python2 -y &>/dev/null
  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py &>/dev/null
  python2 get-pip.py &>/dev/null
- apt-get install python-dev-is-python2 python-setuptools libssl-dev libcurl4-openssl-dev libjpeg-dev zlib1g-dev libffi-dev libzbar-dev libzbar0 -y &>/dev/null
- 
+ #apt-get install python-dev-is-python2 python-setuptools libssl-dev libcurl4-openssl-dev libjpeg-dev zlib1g-dev libffi-dev libzbar-dev libzbar0 -y &>/dev/null
+ apt-get install libffi-dev libzbar-dev libzbar0 -y
+ apt-get install python2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev -y
 echo -e "${CHECKMARK} \e[1;92m Installing MotionEye... \e[0m"
- pip2 install motioneye &>/dev/null
+ apt-get update &>/dev/null
+ pip2 install motioneye
  mkdir -p /etc/motioneye
  cp /usr/local/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf
  mkdir -p /var/lib/motioneye
