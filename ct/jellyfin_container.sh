@@ -146,6 +146,8 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
 
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
 lxc.cgroup2.devices.allow: c 226:0 rwm
 lxc.cgroup2.devices.allow: c 226:128 rwm
 lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
@@ -163,4 +165,7 @@ pct push $CTID jellyfin_setup.sh /jellyfin_setup.sh -perms 755
 pct exec $CTID /jellyfin_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a Jellyfin Server LXC Container to $CTID at IP Address ${IP}:8096"
+info "Successfully Created Jellyfin Media Server LXC to $CTID."
+echo -e "\e[1;92m Jellyfin Media Server should be reachable by going to the following URL.
+             http://${IP}:8096
+\e[0m"
