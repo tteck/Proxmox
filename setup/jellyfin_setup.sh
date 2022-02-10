@@ -67,8 +67,7 @@ cat << EOF > $GETTY_OVERRIDE
 ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
- systemctl daemon-reload
- systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
- systemctl enable jellyfin.service &>/dev/null
+systemctl daemon-reload
+systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /jellyfin_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
