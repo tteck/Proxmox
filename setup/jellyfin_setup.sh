@@ -55,8 +55,8 @@ echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
  sudo extrepo enable jellyfin &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
- apt-get update &>/dev/null
- apt-get install jellyfin -y &>/dev/null
+ sudo apt-get update &>/dev/null
+ sudo apt-get install jellyfin -y &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
  chmod -x /etc/update-motd.d/*
  touch ~/.hushlogin 
