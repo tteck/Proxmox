@@ -28,9 +28,9 @@ function msg() {
 }
 
 echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
- sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
- locale-gen >/dev/null
- while [ "$(hostname -I)" = "" ]; do
+sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+locale-gen >/dev/null
+while [ "$(hostname -I)" = "" ]; do
   1>&2 echo -e "${CROSS} \e[1;31m No Network: \e[0m $(date)"
   sleep $RETRY_EVERY
   ((NUM--))
@@ -39,29 +39,35 @@ echo -e "${CHECKMARK} \e[1;92m Setting up Container OS... \e[0m"
     1>&2 echo -e "${CROSS} \e[1;31m No Network After $RETRY_NUM Tries \e[0m"
     exit 1
   fi
- done
-echo -e "${CHECKMARK} \e[1;92m Network Connected: \e[0m $(hostname -I)"
+done
+  echo -e "${CHECKMARK} \e[1;92m Network Connected: \e[0m $(hostname -I)"
 
 echo -e "${CHECKMARK} \e[1;92m Updating Container OS... \e[0m"
- apt-get update &>/dev/null
- apt-get -qqy upgrade &>/dev/null
+apt-get update &>/dev/null
+apt-get -qqy upgrade &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
  apt-get update &>/dev/null
  apt-get -qqy install \
      curl \
      sudo &>/dev/null
- sudo apt install extrepo -y &>/dev/null
- sudo extrepo enable jellyfin &>/dev/null
-
+ sudo apt install apt-transport-https -y &>/dev/null
+ sudo apt-get install software-properties-common -y &>/dev/null
+ 
+echo -e "${CHECKMARK} \e[1;92m Setting Up Jellyfin Repository... \e[0m"
+# sudo apt install extrepo -y &>/dev/null
+# sudo extrepo enable jellyfin
+sudo add-apt-repository universe 
+wget -O -q - https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key | sudo apt-key add - &>/dev/null
+echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/ubuntu $( lsb_release -c -s ) main" | sudo tee /etc/apt/sources.list.d/jellyfin.list &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Installing Jellyfin... \e[0m"
- sudo apt-get update &>/dev/null
- sudo apt install jellyfin -y &>/dev/null
+apt-get update &>/dev/null
+sudo apt install jellyfin -y &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
- chmod -x /etc/update-motd.d/*
- touch ~/.hushlogin 
- GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
- mkdir -p $(dirname $GETTY_OVERRIDE)
+chmod -x /etc/update-motd.d/*
+touch ~/.hushlogin 
+GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
+mkdir -p $(dirname $GETTY_OVERRIDE)
 cat << EOF > $GETTY_OVERRIDE
 [Service]
 ExecStart=
