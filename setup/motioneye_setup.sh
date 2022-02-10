@@ -66,8 +66,9 @@ echo -e "${CHECKMARK} \e[1;92m Installing Motion... \e[0m"
  systemctl disable motion &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing MotionEye... \e[0m"
- pip install motioneye &>/dev/null
+ apt-get update &>/dev/null
  mkdir -p /etc/motioneye
+ pip install motioneye &>/dev/null
  cp /usr/local/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf
  mkdir -p /var/lib/motioneye
  
