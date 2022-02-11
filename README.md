@@ -614,7 +614,7 @@ ________________________________________________________________________________
 
 <details>
 <summary markdown="span"> 🔸GamUntu LXC</summary>
- <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/</p>
+ <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/></p>
 <h1 align="center" id="heading"> GamUntu LXC Container </h1>
 
 GamUntu is Ubuntu 21.10, Docker, Docker Compose, ZFS Support, USB Passthrough, Webmin System Administration and Hardware Acceleration all baked in!
