@@ -612,6 +612,25 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸GamUntu LXC</summary>
+ <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/</p>
+<h1 align="center" id="heading"> GamUntu LXC Container </h1>
+
+GamUntu is Ubuntu 21.10, Docker, Docker Compose, ZFS Support, USB Passthrough, Webmin System Administration and Hardware Acceleration all baked in!
+
+To create a new Proxmox GamUntuLXC Container, run the following in the Proxmox web shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/gamuntu_container.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span">Plex Media Server LXC</summary>
