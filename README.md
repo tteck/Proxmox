@@ -321,10 +321,6 @@ ________________________________________________________________________________
  
 </details>
 
-
-
-
-
 <details>
 <summary markdown="span">Node-Red LXC</summary>
  
@@ -468,10 +464,6 @@ apt update && apt upgrade -y
 ____________________________________________________________________________________________ 
 
 </details>
-
-
-
-
 
 <details>
 <summary markdown="span"> 🔸Zigbee2MQTT LXC </summary>
@@ -708,6 +700,11 @@ Run from the LXC console
 ```yaml
 pihole -a -p
 ```
+⚙️ **To Update Pi-hole:**
+
+```yaml
+Updates from the Pi-hole UI
+```
 
 ____________________________________________________________________________________________ 
 
@@ -733,7 +730,12 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/a
  
  <sub>(For the Home Assistant Integration, use port `80` not `3000`)</sub>
 
-____________________________________________________________________________________________ 
+⚙️ **To Update Adguard**
+
+```yaml
+Updates from the Adguard UI
+```
+__________________________________________________________________________________________ 
 
 </details>
 
@@ -762,7 +764,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  `admin`
  
  **password** 
- `   `
+ `Leave Blank`
  
 ⚙️ **To Update MotionEye**
  
@@ -804,8 +806,13 @@ Benefits include automatic daily security updates, backup and restore, file mana
  **password** 
  `root`
  
+⚙️ **To Update Webmin**
+
+```yaml
+Updates from the Webmin UI
+```
 ⚙️ **To Uninstall Webmin**
- ```yaml
+```yaml
 bash /etc/webmin/uninstall.sh
 ```
 ___________________________________________________________________________________________ 
