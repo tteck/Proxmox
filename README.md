@@ -815,7 +815,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span">🔸Vaultwarden LXC</summary>
  
-<p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/08f0de7b46d36a4e974d8e7b25a9786168cd38a5/resources/vaultwarden-icon.svg" width="100" height="100"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Vaultwarden LXC </h1>
 
