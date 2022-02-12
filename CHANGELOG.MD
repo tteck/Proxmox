@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - **Home Assistant Container LXC (Podman)**
   - Add Yacht web interface for managing Podman containers
+  - new GUI script (ha-copy-data-podman.sh) to copy data from a **Home Assistant LXC** to a **Podman Home Assistant LXC**
 
 ## 2022-02-10
 
