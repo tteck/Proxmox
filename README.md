@@ -201,7 +201,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 
 ⚙️ **To Allow USB Device Passthrough:**
  
-Run the in the Proxmox Shell. (**replace `106` with your LXC ID**)
+Run in the Proxmox Shell. (**replace `106` with your LXC ID**)
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
