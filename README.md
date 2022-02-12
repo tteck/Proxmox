@@ -132,6 +132,20 @@ Run from the LXC console
 ```yaml
 ./update.sh
 ```
+⚙️ **Initial Yacht Login**
+
+**username** 
+ ```yaml
+ admin@yacht.local
+ ```
+ **password** 
+ ```yaml
+ pass
+ ```
+⚙️ **Add Template**
+```yaml
+https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/yacht/Template/template.json
+```
 
 ____________________________________________________________________________________________ 
 </details>
