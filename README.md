@@ -15,7 +15,7 @@
 This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
 and attempt the *No-Nag* fix. 
  
-Run the following in the Proxmox Web Shell. ⚠️ **PVE7 ONLY**
+Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/post_install.sh)"
@@ -37,7 +37,7 @@ ________________________________________________________________________________
 
 A dark theme for the Proxmox Web UI by [Weilbyte](https://github.com/Weilbyte/PVEDiscordDark)
  
-Run the following in the Proxmox Web Shell.
+Run the following in the Proxmox Shell.
 
 ```yaml
 bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
@@ -57,7 +57,7 @@ ________________________________________________________________________________
  
 <h1 align="center" id="heading"> Home Assistant OS VM </h1>
 
-To create a new Proxmox VM with the latest version of Home Assistant OS, run the following from Proxmox web shell
+To create a new Proxmox VM with the latest version of Home Assistant OS, run the following in the Proxmox Shell
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/vm/haos_vm.sh)"
@@ -82,7 +82,7 @@ ________________________________________________________________________________
  
 <h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
 <h3 align="center" id="heading"> With ZFS Filesystem Support </h3>
-To create a new Proxmox Podman Home Assistant Container, run the following from Proxmox web shell. 
+To create a new Proxmox Podman Home Assistant Container, run the following in the Proxmox Shell. 
 
  ([What is Podman?](https://youtu.be/lkg5QJsoCCQ))
 
@@ -103,7 +103,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  ```
 ⚙️ **To edit the HA configuration.yaml**
  
-Run from the LXC console
+Run in the LXC console
 ```yaml
 nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
@@ -111,14 +111,14 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 ⚙️ **Import Data From a Existing Home Assistant LXC to a Podman Home Assistant LXC**
 
-Run From The Proxmox Web Shell
+Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data-podman.sh)"
  ```
 
 ⚙️ **To allow USB device passthrough:**
  
-In the Proxmox web shell run (**replace `106` with your LXC ID**)
+Run in the Proxmox Shell. (**replace `106` with your LXC ID**)
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
@@ -127,7 +127,7 @@ Reboot the LXC to apply the changes
 
 ⚙️ **To Install HACS:**
 
-Run the from the LXC console
+Run in the LXC console
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/podman_hacs.sh)"
 ```
@@ -135,7 +135,7 @@ After install, reboot Home Assistant and **clear browser cache** then Add HACS i
 
 ⚙️ **To Update Home Assistant:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 ./update.sh
 ```
@@ -166,7 +166,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Home Assistant Container LXC </h1>
 <h3 align="center" id="heading"> With ZFS Filesystem Support </h3> 
-To create a new Proxmox Home Assistant Container, run the following from Proxmox web shell.
+To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ha_container.sh)"
@@ -186,7 +186,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  ```
 ⚙️ **To Edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
  
-Run from the LXC console
+Run in the LXC console
 ```yaml
 nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
@@ -194,14 +194,14 @@ Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
 ⚙️ **Import Data From a Existing Home Assistant LXC to another Home Assistant LXC**
 
-Run From The Proxmox Web Shell
+Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
  ```
 
 ⚙️ **To Allow USB Device Passthrough:**
  
-In the Proxmox web shell run (**replace `106` with your LXC ID**)
+Run the in the Proxmox Shell. (**replace `106` with your LXC ID**)
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/usb-passthrough.sh)" -s 106
 ```
@@ -211,7 +211,7 @@ Reboot the LXC to apply the changes
 
 ⚙️ **To Install HACS:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/hacs.sh)"
 ```
@@ -220,7 +220,7 @@ After install, reboot Home Assistant and **clear browser cache** then Add HACS i
 
 ⚙️ **To Update Home Assistant:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 ./update.sh
 ```
@@ -238,7 +238,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> ESPHome LXC Container </h1>
 
-To create a new Proxmox ESPHome LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox ESPHome LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome_container.sh)"
@@ -262,7 +262,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Nginx Proxy Manager LXC Container </h1>
 
-To create a new Proxmox Nginx Proxy Manager LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/npm_container.sh)"
@@ -297,9 +297,6 @@ Add the following to your `configuration.yaml` in Home Assistant.
 
 </details>
 
-
-
-
 <details>
 <summary markdown="span">MQTT LXC</summary>
  
@@ -308,7 +305,7 @@ Add the following to your `configuration.yaml` in Home Assistant.
 
 <h1 align="center" id="heading"> MQTT LXC Container </h1>
 
-To create a new Proxmox MQTT LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt_container.sh)"
@@ -341,7 +338,7 @@ sudo systemctl restart mosquitto
 
 ⚙️ **To Update MQTT:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -358,7 +355,7 @@ ________________________________________________________________________________
 <h1 align="center" id="heading"> Node-Red LXC Container </h1>
  
 
-To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red_container.sh)"
@@ -369,14 +366,14 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/n
  
 ⚙️ **To Restart Node-Red:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 node-red-restart
 ```
 
 ⚙️ **To Update Node-Red:**
 
-Run from the LXC console (Restart after update)
+Run in the LXC console (Restart after update)
 ```yaml
 npm install -g --unsafe-perm node-red
 ```
@@ -384,8 +381,6 @@ npm install -g --unsafe-perm node-red
 ____________________________________________________________________________________________ 
  
 </details>
-
-
 
 <details>
 <summary markdown="span">Mariadb LXC</summary>
@@ -395,7 +390,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Mariadb LXC Container </h1>
 
-To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb_container.sh)"
@@ -486,7 +481,7 @@ Example: `mysql://admin:password@192.168.100.26:3306/homeassistant?charset=utf8m
  
 ⚙️ **To Update Mariadb:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -502,7 +497,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC Container</h1>
 
-To create a new Proxmox Zigbee2MQTT LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox Zigbee2MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt_container.sh)"
@@ -512,7 +507,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
  
 ⚙️ **Determine the location of your adapter**
  
-Run from the LXC console
+Run in the LXC console
 ```yaml
 ls -l /dev/serial/by-id
 ```
@@ -521,7 +516,7 @@ Example Output: ```lrwxrwxrwx 1 root root 13 Jun 19 17:30 usb-1a86_USB_Serial-if
 
 ⚙️ ⚠️ **Before you start Zigbee2MQTT you need to edit the [configuration.yaml](https://www.zigbee2mqtt.io/guide/configuration/)**
  
-Run from the LXC console
+Run in the LXC console
 ```yaml
 nano /opt/zigbee2mqtt/data/configuration.yaml
 ```
@@ -552,20 +547,20 @@ advanced:
 ```
 ⚙️ **Zigbee2MQTT can be started after completing the configuration**
  
-Run from the LXC console
+Run in the LXC console
 ```yaml
 cd /opt/zigbee2mqtt
 npm start
 ```
 ⚙️ **To update Zigbee2MQTT**
  
-Run from the LXC console
+Run in the LXC console
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
  ```
 ⚙️ **Import Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
 
-Run From The Proxmox Web Shell
+Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/z2m-copy-data.sh)"
  ```
@@ -574,7 +569,6 @@ ________________________________________________________________________________
 
 </details>
 
-
 <details>
 <summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
  
@@ -582,7 +576,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC Container </h1>
 
-To create a new Proxmox Zwavejs2MQTT LXC Container, run the following from Proxmox web shell.
+To create a new Proxmox Zwavejs2MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zwavejs2mqtt_container.sh)"
@@ -596,8 +590,6 @@ ________________________________________________________________________________
 
 </details>
 
-
-
 <details>
 <summary markdown="span">🔸Debian 11 LXC</summary>
  
@@ -605,7 +597,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Debian 11 LXC Container </h1>
 
-To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian11_container.sh)"
@@ -616,7 +608,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 ⚙️ **To Update Debian 11**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -633,7 +625,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Ubuntu 21.10 LXC Container </h1>
 
-To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu_container.sh)"
@@ -644,7 +636,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 ⚙️ **To Update Ubuntu 21.10**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -660,7 +652,7 @@ ________________________________________________________________________________
 
 GamUntu is Ubuntu 21.10, Docker, Docker Compose, ZFS Support, USB Passthrough, Webmin System Administration and Hardware Acceleration all baked in!
 
-To create a new Proxmox GamUntuLXC Container, run the following in the Proxmox web shell.
+To create a new Proxmox GamUntuLXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/gamuntu_container.sh)"
@@ -671,7 +663,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 ⚙️ **To Update GamUntu**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -687,7 +679,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Plex Media Server LXC </h1>
 <h3 align="center" id="heading"> With Hardware Acceleration Support </h3> 
-To create a new Proxmox Plex Media Server LXC, run the following in the Proxmox web shell.
+To create a new Proxmox Plex Media Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/plex_container.sh)"
@@ -700,13 +692,13 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 ⚙️ **To Update Plex Media Server:**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
 ⚙️ **Import Data From a Existing Plex Media Server LXC to another Plex Media Server LXC**
 
-Run From The Proxmox Web Shell
+Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/pms-copy-data.sh)"
  ```
@@ -720,7 +712,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://jellyfin.org/images/banner-dark.svg" height="80"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
 
-To create a new Proxmox Jellyfin Media Server LXC, run the following in the Proxmox web shell.
+To create a new Proxmox Jellyfin Media Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/jellyfin_container.sh)"
@@ -733,7 +725,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
 
 ⚙️ **To Update Jellyfin Media Server**
 
-Run from the LXC console
+Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
@@ -748,7 +740,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
-To create a new Proxmox Pi-hole LXC, run the following in the Proxmox web shell.
+To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/pihole_container.sh)"
@@ -757,7 +749,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/p
  
 ⚙️ **To set your password:**
  
-Run from the LXC console
+Run in the LXC console
 
 ```yaml
 pihole -a -p
@@ -765,7 +757,7 @@ pihole -a -p
 ⚙️ **To Update Pi-hole:**
 
 ```yaml
-Updates from the Pi-hole UI
+Update from the Pi-hole UI
 ```
 
 ____________________________________________________________________________________________ 
@@ -781,7 +773,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> AdGuard Home LXC </h1>
 
-To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox web shell.
+To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/adguard_container.sh)"
@@ -795,7 +787,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/a
 ⚙️ **To Update Adguard**
 
 ```yaml
-Updates from the Adguard UI
+Update from the Adguard UI
 ```
 __________________________________________________________________________________________ 
 
@@ -808,7 +800,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> MotionEye NVR LXC </h1>
 
-To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox web shell.
+To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox Shell.
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/motioneye_container.sh)"
@@ -830,7 +822,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  
 ⚙️ **To Update MotionEye**
  
-Run from the LXC console
+Run in the LXC console
  ```yaml
 pip install motioneye --upgrade
 ```
@@ -846,7 +838,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Webmin System Administration </h1>
 
-To Install Webmin System Administration [(Screenshot)](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/file-manager.png), run the following in a LXC console.
+To Install Webmin System Administration [(Screenshot)](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/file-manager.png), ⚠️ run the following in the LXC console.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
@@ -871,7 +863,7 @@ Benefits include automatic daily security updates, backup and restore, file mana
 ⚙️ **To Update Webmin**
 
 ```yaml
-Updates from the Webmin UI
+Update from the Webmin UI
 ```
 ⚙️ **To Uninstall Webmin**
 ```yaml
@@ -888,7 +880,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Vaultwarden LXC </h1>
 
-To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox web shell.
+To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox Shell.
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/vault_container.sh)"
