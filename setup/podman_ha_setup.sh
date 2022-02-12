@@ -56,6 +56,20 @@ apt-get -qqy install \
 echo -e "${CHECKMARK} \e[1;92m Installing Podman... \e[0m"
 apt-get -y install podman &>/dev/null
 
+echo -e "${CHECKMARK} \e[1;92m Pulling Yacht Image...\e[0m"
+podman pull ghcr.io/selfhostedpro/yacht:latest &>/dev/null
+
+echo -e "${CHECKMARK} \e[1;92m Installing Yacht... \e[0m"
+podman volume create yacht >/dev/null
+podman run -d \
+  --name yacht \
+  -v /var/run/podman/podman.sock:/var/run/docker.sock \
+  -v yacht:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  -p 8000:8000 \
+  selfhostedpro/yacht:latest &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
 
