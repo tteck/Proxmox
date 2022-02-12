@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Use to copy all data from one Home Assistant LXC to another
+# Use to copy all data from a Home Assistant LXC to a Podman Home Assistant LXC.
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data_podman.sh)"
 while true; do
-    read -p "Use to copy all data from one Home Assistant LXC to another. Proceed(y/n)?" yn
+    read -p "Use to copy all data from a Home Assistant LXC to a Podman Home Assistant LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -112,7 +112,7 @@ RSYNC_OPTIONS=(
   --info=progress2
 )
 msg "<======== Docker Data ========>"
-rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DOCKER_PATH} ${CTID_TO_PATH}${DOCKER_PATH}
+rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DOCKER_PATH} ${CTID_TO_PATH}${PODMAN_PATH}
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
