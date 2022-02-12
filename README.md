@@ -109,6 +109,13 @@ nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
+⚙️ **Import Data From a Existing Home Assistant LXC to a Podman Home Assistant LXC**
+
+Run From The Proxmox Web Shell
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data-podman.sh)"
+ ```
+
 ⚙️ **To allow USB device passthrough:**
  
 In the Proxmox web shell run (**replace `106` with your LXC ID**)
@@ -185,6 +192,12 @@ nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
+⚙️ **Import Data From a Existing Home Assistant LXC to another Home Assistant LXC**
+
+Run From The Proxmox Web Shell
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
+ ```
 
 ⚙️ **To Allow USB Device Passthrough:**
  
@@ -550,6 +563,12 @@ Run from the LXC console
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
  ```
+⚙️ **Import Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
+
+Run From The Proxmox Web Shell
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/z2m-copy-data.sh)"
+ ```
 
 ____________________________________________________________________________________________ 
 
@@ -662,7 +681,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">Plex Media Server LXC</summary>
+<summary markdown="span"> Plex Media Server LXC </summary>
 
 <p align="center"><img src="https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg" height="80"/></p>
 
@@ -685,6 +704,12 @@ Run from the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
+⚙️ **Import Data From a Existing Plex Media Server LXC to another Plex Media Server LXC**
+
+Run From The Proxmox Web Shell
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/pms-copy-data.sh)"
+ ```
 
 ____________________________________________________________________________________________ 
 
