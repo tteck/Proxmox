@@ -579,6 +579,13 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/d
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
+⚙️ **To Update Debian 11**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
@@ -600,6 +607,13 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/u
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
 
+⚙️ **To Update Ubuntu 21.10**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
@@ -619,6 +633,13 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/g
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the **_Memory_** and **_Cores_** settings to what you desire. Changes are immediate.
+
+⚙️ **To Update GamUntu**
+
+Run from the LXC console
+```yaml
+apt update && apt upgrade -y
+```
 
 ____________________________________________________________________________________________ 
 
