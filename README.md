@@ -118,7 +118,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
  
 Reboot the LXC to apply the changes
 
-⚙️ **To install HACS:**
+⚙️ **To Install HACS:**
 
 Run the from the LXC console
 ```yaml
