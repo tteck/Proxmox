@@ -57,7 +57,7 @@ ________________________________________________________________________________
  
 <h1 align="center" id="heading"> Home Assistant OS VM </h1>
 
-To create a new Proxmox VM with the latest version of Home Assistant OS, run the following in the Proxmox Shell
+To create a new Proxmox Home Assistant OS VM, run the following in the Proxmox Shell
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/vm/haos_vm.sh)"
