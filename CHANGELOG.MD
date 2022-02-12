@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-12
+
+### Changed
+
+- **Home Assistant Container LXC (Podman)**
+  - Add Yacht web interface for managing Podman containers
+
 ## 2022-02-10
 
 ### Changed
