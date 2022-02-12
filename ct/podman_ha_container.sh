@@ -168,11 +168,9 @@ pct push $CTID podman_ha_setup.sh /podman_ha_setup.sh -perms 755
 pct exec $CTID /podman_ha_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created Podman Home Assistant Container LXC to $CTID."
-msg "
-
-Home Assistant should be reachable by going to the following URL.
-
-
-      http://${IP}:8123
-"
+info "Successfully Created Podman Home Assistant Container LXC to $CTID."
+echo -e "\e[1;92m Home Assistant Container should be reachable by going to the following URL.
+                  http://${IP}:8123
+Yacht should be reachable by going to the following URL.
+                  http://${IP}:8000
+\e[0m"
