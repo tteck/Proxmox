@@ -8,7 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Home Assistant Container LXC (Podman)**
   - Add Yacht web interface for managing Podman containers
-  - new GUI script (ha-copy-data-podman.sh) to copy data from a **Home Assistant LXC** to a **Podman Home Assistant LXC**
+  - new GUI script to copy data from a **Home Assistant LXC** to a **Podman Home Assistant LXC**
+  - Improve documentation for several LXC's
 
 ## 2022-02-10
 
@@ -122,5 +123,5 @@ All notable changes to this project will be documented in this file.
 - **Proxmox VE 7 Post Install** 
   - new *No-Nag* method
 - **misc**
-  - new GUI script (ha-copy-data.sh) to copy data from one Home Assistant LXC to another Home Assistant LXC (info inside script)
-  - new GUI script (z2m-copy-data.sh) to copy data from one Zigbee2MQTT LXC to another Zigbee2MQTT LXC (info inside script)
+  - new GUI script to copy data from one Home Assistant LXC to another Home Assistant LXC
+  - new GUI script to copy data from one Zigbee2MQTT LXC to another Zigbee2MQTT LXC
