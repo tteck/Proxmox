@@ -68,8 +68,7 @@ podman run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/timezone:/etc/timezone:ro \
   -p 8000:8000 \
-  --net=host \
-  selfhostedpro/yacht:latest
+  selfhostedpro/yacht:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
 podman pull ghcr.io/homeassistant/home-assistant:stable &>/dev/null
