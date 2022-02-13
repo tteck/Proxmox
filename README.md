@@ -149,10 +149,6 @@ Run in the LXC console
  ```yaml
  pass
  ```
-⚙️ **Add Yacht Template**
-```yaml
-https://raw.githubusercontent.com/SelfhostedPro/selfhosted_templates/yacht/Template/template.json
-```
 
 ____________________________________________________________________________________________ 
 </details>
