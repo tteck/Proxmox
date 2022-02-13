@@ -483,7 +483,7 @@ apt update && apt upgrade -y
 ```
 ⚙️ **Adminer** (formerly phpMinAdmin) is a full-featured database management tool
  
- `http://your-server-ip/adminer/`
+ `http://your-mariadb-lxc-ip/adminer/`
 
 ____________________________________________________________________________________________ 
 
