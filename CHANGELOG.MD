@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-13
+
+### Changed
+
+- **Mariadb LXC**
+  - Add Adminer (formerly phpMinAdmin), a full-featured database management tool
+
 ## 2022-02-12
 
 ### Changed
