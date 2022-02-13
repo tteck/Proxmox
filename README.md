@@ -481,6 +481,9 @@ Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
+⚙️ **Adminer** (formerly phpMinAdmin) is a full-featured database management tool
+ 
+ `http://your-server-ip/adminer/`
 ____________________________________________________________________________________________ 
 
 </details>
