@@ -57,6 +57,11 @@ curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash &>/dev/
 apt-get update >/dev/null
 apt-get install -y mariadb-server &>/dev/null
 
+echo -e "${CHECKMARK} \e[1;92m Installing Adminer... \e[0m"
+sudo apt install adminer -y &>/dev/null
+sudo a2enconf adminer &>/dev/null
+sudo systemctl reload apache2 &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
