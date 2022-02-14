@@ -96,10 +96,8 @@ docker run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Installing runlike... \e[0m"
-pip3 install runlike &>/dev/null
-
 echo -e "${CHECKMARK} \e[1;92m Creating Update-Containers Script... \e[0m"
+pip3 install runlike &>/dev/null
 UPDATE_CONTAINERS_PATH='/root/update-containers.sh'
 cat >$UPDATE_CONTAINERS_PATH <<'EOF'
 #!/bin/bash
