@@ -96,9 +96,92 @@ docker run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Creating Update-Containers Script... \e[0m"
+echo -e "${CHECKMARK} \e[1;92m Creating Update Menu Script... \e[0m"
 pip3 install runlike &>/dev/null
+UPDATE_PATH='/root/update'
 UPDATE_CONTAINERS_PATH='/root/update-containers.sh'
+cat >$UPDATE_PATH <<'EOF'
+#!/bin/sh
+set -o errexit
+show_menu(){
+    normal=`echo "\033[m"`
+    safe=`echo "\033[32m"`
+    menu=`echo "\033[36m"`
+    number=`echo "\033[33m"`
+    bgred=`echo "\033[41m"`
+    fgred=`echo "\033[31m"`
+    printf "\n${menu}*********************************************${normal}\n"
+    printf "${menu}**${number} 1)${safe} Switch to Stable Branch ${normal}\n"
+    printf "${menu}**${number} 2)${number} Switch to Beta Branch ${normal}\n"
+    printf "${menu}**${number} 3)${fgred} Switch to Dev Branch ${normal}\n"
+    printf "${menu}**${number} 4)${safe} Just Update Containers ${normal}\n"
+    printf "${menu}*********************************************${normal}\n"
+    printf "Please choose an option from the menu and enter or ${fgred}x to exit. ${normal}"
+    read opt
+}
+
+option_picked(){
+    msgcolor=`echo "\033[01;31m"`
+    normal=`echo "\033[00;00m"`
+    message=${@:-"${normal}Error: No message passed"}
+    printf "${msgcolor}${message}${normal}\n"
+}
+
+clear
+show_menu
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            option_picked "Switching to Stable Branch";
+            TAG=stable
+            break;
+        ;;
+        2) clear;
+            option_picked "Switching to Beta Branch";
+            TAG=beta
+            break;
+        ;;
+        3) clear;
+            option_picked "Switching to Dev Branch";
+            TAG=dev
+            break;
+        ;;
+        4) clear;
+            option_picked "Just Updating Containers";
+            ./update-containers.sh;
+            exit;
+        ;;
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose an option from the menu";
+            show_menu;
+        ;;
+      esac
+    fi
+  done
+docker pull homeassistant/home-assistant:$TAG
+docker rm --force homeassistant
+docker run -d \
+  --name homeassistant \
+  --privileged \
+  --restart unless-stopped \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /dev:/dev \
+  -v hass_config:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  --net=host \
+  homeassistant/home-assistant:$TAG
+  docker image prune -af
+EOF
+sudo chmod +x /root/update
 cat >$UPDATE_CONTAINERS_PATH <<'EOF'
 #!/bin/bash
 set -o errexit
