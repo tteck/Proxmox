@@ -114,6 +114,7 @@ for container in ${CONTAINER_LIST}; do
     docker rm --force "${container}"
     eval ${DOCKER_COMMAND}
   fi
+docker image prune -f  
 done
 EOF
 sudo chmod +x /root/update-containers.sh
