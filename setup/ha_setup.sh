@@ -52,6 +52,9 @@ apt-get -qqy install \
     curl \
     sudo &>/dev/null
 
+echo -e "${CHECKMARK} \e[1;92m Installing pip3... \e[0m"
+apt-get install -y python3-pip &>/dev/null
+
 echo -e "${CHECKMARK} \e[1;92m Installing Docker... \e[0m"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
@@ -93,31 +96,29 @@ docker run -d \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Creating Update Script... \e[0m"
-file_path="/root/update.sh"
-echo "#!/bin/bash
-echo -e '\e[1;33m Pulling New Stable Version... \e[0m'
-docker pull homeassistant/home-assistant:stable
-echo -e '\e[1;33m Stopping Home Assistant... \e[0m'
-docker stop homeassistant
-echo -e '\e[1;33m Removing Home Assistant... \e[0m'
-docker rm homeassistant
-echo -e '\e[1;33m Starting Home Assistant... \e[0m'
-docker run -d \
-  --name homeassistant \
-  --privileged \
-  --restart unless-stopped \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /dev:/dev \
-  -v hass_config:/config \
-  -v /etc/localtime:/etc/localtime:ro \
-  -v /etc/timezone:/etc/timezone:ro \
-  --net=host \
-  homeassistant/home-assistant:stable
-echo -e '\e[1;33m Removing Old Image... \e[0m'
-docker image prune -f
-echo -e '\e[1;33m Finished Update! \e[0m'" > $file_path
-sudo chmod +x /root/update.sh
+echo -e "${CHECKMARK} \e[1;92m Installing runlike... \e[0m"
+pip3 install runlike &>/dev/null
+
+echo -e "${CHECKMARK} \e[1;92m Creating Update-Containers Script... \e[0m"
+UPDATE_CONTAINERS_PATH='/root/update-containers.sh'
+cat >$UPDATE_CONTAINERS_PATH <<'EOF'
+#!/bin/bash
+set -o errexit
+CONTAINER_LIST="${1:-$(docker ps -q)}"
+for container in ${CONTAINER_LIST}; do
+  CONTAINER_IMAGE="$(docker inspect --format "{{.Config.Image}}" --type container ${container})"
+  RUNNING_IMAGE="$(docker inspect --format "{{.Image}}" --type container "${container}")"
+  docker pull "${CONTAINER_IMAGE}"
+  LATEST_IMAGE="$(docker inspect --format "{{.Id}}" --type image "${CONTAINER_IMAGE}")"
+  if [[ "${RUNNING_IMAGE}" != "${LATEST_IMAGE}" ]]; then
+    echo "Updating ${container} image ${CONTAINER_IMAGE}"
+    DOCKER_COMMAND="$(runlike "${container}")"
+    docker rm --force "${container}"
+    eval ${DOCKER_COMMAND}
+  fi
+done
+EOF
+sudo chmod +x /root/update-containers.sh
 
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
 rm /etc/motd 
