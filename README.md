@@ -75,7 +75,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Home Assistant Container LXC (Podman)</summary>
+<summary markdown="span"> 🔸Home Assistant Container LXC (Podman) </summary>
  
 <p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
@@ -155,7 +155,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Home Assistant Container LXC </summary>
+<summary markdown="span"> 🔸Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
@@ -214,11 +214,11 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
 
-⚙️ **To Update All Containers:**
+⚙️ **Update Menu**
 
 Run in the LXC console
 ```yaml
-./update-containers.sh
+./update
 ```
  
 ____________________________________________________________________________________________ 
