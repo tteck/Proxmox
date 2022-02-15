@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Mariadb LXC**
-  - Add Adminer (formerly phpMinAdmin), a full-featured database management tool
+  - Add [Adminer](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer.png) (formerly phpMinAdmin), a full-featured database management tool
 
 ## 2022-02-12
 
