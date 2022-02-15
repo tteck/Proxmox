@@ -214,7 +214,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
 
 
-⚙️ **Update Menu**
+⚙️ [**Update Menu**](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/update-menu.png)
 
 Run in the LXC console
 ```yaml
@@ -481,7 +481,7 @@ Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
-⚙️ **Adminer** (formerly phpMinAdmin) is a full-featured database management tool
+⚙️ [**Adminer**](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer.png) (formerly phpMinAdmin) is a full-featured database management tool
  
  `http://your-mariadb-lxc-ip/adminer/`
 
