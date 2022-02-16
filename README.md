@@ -490,7 +490,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Zigbee2MQTT LXC </summary>
+<summary markdown="span"> Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
@@ -570,7 +570,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
