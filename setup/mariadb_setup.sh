@@ -59,11 +59,11 @@ apt-get install -y mariadb-server &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Adminer... \e[0m"
 sudo apt install adminer -y &>/dev/null
+sudo service apache2 stop
+mkdir /var/log/apache2
+chmod 750 /var/log/apache2
+chown root:adm /var/log/apache2
 sudo a2enconf adminer &>/dev/null
-mkdir /root/var/log/apache2
-chmod 750 /root/var/log/apache2
-chown root:adm /root/var/log/apache2
-
 sudo systemctl reload apache2 &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
