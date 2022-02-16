@@ -244,6 +244,13 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/e
  
 **ESPHome Interface - IP:6052**
 
+⚙️ **To Update ESPHome**
+
+Run in the LXC console
+```yaml
+pip3 install esphome --upgrade
+```
+
 ____________________________________________________________________________________________ 
  
 </details>
