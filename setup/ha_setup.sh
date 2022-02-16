@@ -110,6 +110,7 @@ show_menu(){
     number=`echo "\033[33m"`
     bgred=`echo "\033[41m"`
     fgred=`echo "\033[31m"`
+    hostname -I
     printf "\n${menu}*********************************************${normal}\n"
     printf "${menu}**${number} 1)${safe} Switch to Stable Branch ${normal}\n"
     printf "${menu}**${number} 2)${number} Switch to Beta Branch ${normal}\n"
