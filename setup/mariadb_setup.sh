@@ -61,10 +61,6 @@ echo -e "${CHECKMARK} \e[1;92m Installing Adminer... \e[0m"
 sudo apt install adminer -y &>/dev/null
 sudo a2enconf adminer &>/dev/null
 sudo systemctl reload apache2 &>/dev/null
-mkdir -p /var/log/apache2
-chmod 750 /var/log/apache2
-chown root:adm /var/log/apache2
-service apache2 start
 
 echo -e "${CHECKMARK} \e[1;92m Customizing Container... \e[0m"
 rm /etc/motd
@@ -79,6 +75,11 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
+service apache2 stop
+mkdir  /var/log/apache2
+chmod 750 /var/log/apache2
+chown root:adm /var/log/apache2
+service apache2 start
 
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /mariadb_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
