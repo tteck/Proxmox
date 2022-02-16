@@ -114,9 +114,10 @@ show_menu(){
     printf "${menu}**${number} 1)${safe} Switch to Stable Branch ${normal}\n"
     printf "${menu}**${number} 2)${number} Switch to Beta Branch ${normal}\n"
     printf "${menu}**${number} 3)${fgred} Switch to Dev Branch ${normal}\n"
-    printf "${menu}**${number} 4)${safe} Just Update Containers ${normal}\n"
-    printf "${menu}**${number} 5)${number} Remove Unused Images ${normal}\n"
-    printf "${menu}**${number} 6)${safe} Update Host OS ${normal}\n"
+    printf "${menu}**${number} 4)${fgred} Edit Home Assistant Configuration ${normal}\n"
+    printf "${menu}**${number} 5)${safe} Just Update Containers ${normal}\n"
+    printf "${menu}**${number} 6)${number} Remove Unused Images ${normal}\n"
+    printf "${menu}**${number} 7)${safe} Update Host OS ${normal}\n"
     printf "${menu}*********************************************${normal}\n"
     printf "Please choose an option from the menu and enter or ${fgred}x to exit. ${normal}"
     read opt
@@ -153,16 +154,21 @@ while [ $opt != '' ]
             break;
         ;;
         4) clear;
+            option_picked "Editing Home Assistant Configuration";
+            nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml;
+            exit;
+        ;;
+        5) clear;
             option_picked "Just Updating Containers";
             ./update-containers.sh;
             exit;
         ;;
-        5) clear;
+        6) clear;
             option_picked "Removing Unused Images";
             docker image prune -af;
             exit;
         ;;
-        6) clear;
+        7) clear;
             option_picked "Updating Host OS";
             apt update && apt upgrade -y;
             exit;
