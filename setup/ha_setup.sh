@@ -239,8 +239,10 @@ docker pull homeassistant/home-assistant:$TAG
 docker rm --force homeassistant
 docker run -d \
   --name homeassistant \
+  --privileged \
   --restart unless-stopped \
   -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /dev:/dev \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/timezone:/etc/timezone:ro \
