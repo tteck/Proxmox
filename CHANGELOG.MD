@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-16
+
+### Changed
+
+- **Home Assistant Container LXC**
+  - Add Options to [Update Menu](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/update-menu.png)
+
 ## 2022-02-14
 
 ### Changed
