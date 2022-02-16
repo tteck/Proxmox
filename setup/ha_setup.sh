@@ -115,7 +115,7 @@ show_menu(){
     printf "${menu}**${number} 2)${number} Switch to Beta Branch ${normal}\n"
     printf "${menu}**${number} 3)${fgred} Switch to Dev Branch ${normal}\n"
     printf "${menu}**${number} 4)${safe} Just Update Containers ${normal}\n"
-    printf "${menu}**${number} 5)${safe} Remove Unused Images ${normal}\n"
+    printf "${menu}**${number} 5)${number} Remove Unused Images ${normal}\n"
     printf "${menu}**${number} 6)${safe} Update Host OS ${normal}\n"
     printf "${menu}*********************************************${normal}\n"
     printf "Please choose an option from the menu and enter or ${fgred}x to exit. ${normal}"
