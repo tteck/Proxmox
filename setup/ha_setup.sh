@@ -115,6 +115,8 @@ show_menu(){
     printf "${menu}**${number} 2)${number} Switch to Beta Branch ${normal}\n"
     printf "${menu}**${number} 3)${fgred} Switch to Dev Branch ${normal}\n"
     printf "${menu}**${number} 4)${safe} Just Update Containers ${normal}\n"
+    printf "${menu}**${number} 5)${safe} Remove Unused Images ${normal}\n"
+    printf "${menu}**${number} 6)${safe} Update Host OS ${normal}\n"
     printf "${menu}*********************************************${normal}\n"
     printf "Please choose an option from the menu and enter or ${fgred}x to exit. ${normal}"
     read opt
@@ -155,6 +157,17 @@ while [ $opt != '' ]
             ./update-containers.sh;
             exit;
         ;;
+        5) clear;
+            option_picked "Removing Unused Images";
+            docker image prune -af;
+            exit;
+        ;;
+        6) clear;
+            option_picked "Updating Host OS";
+            apt update && apt upgrade -y;
+            exit;
+        ;;
+
         x)exit;
         ;;
         \n)exit;
@@ -170,16 +183,13 @@ docker pull homeassistant/home-assistant:$TAG
 docker rm --force homeassistant
 docker run -d \
   --name homeassistant \
-  --privileged \
   --restart unless-stopped \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /dev:/dev \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/timezone:/etc/timezone:ro \
   --net=host \
   homeassistant/home-assistant:$TAG
-  docker image prune -af
 EOF
 sudo chmod +x /root/update
 cat >$UPDATE_CONTAINERS_PATH <<'EOF'
@@ -198,7 +208,6 @@ for container in ${CONTAINER_LIST}; do
     eval ${DOCKER_COMMAND}
   fi 
 done
-docker image prune -af 
 EOF
 sudo chmod +x /root/update-containers.sh
 
