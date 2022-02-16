@@ -76,7 +76,7 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 service apache2 stop
-mkdir  /var/log/apache2
+mkdir /var/log/apache2
 chmod 750 /var/log/apache2
 chown root:adm /var/log/apache2
 service apache2 start
