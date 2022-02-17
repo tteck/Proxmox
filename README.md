@@ -653,7 +653,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸GamUntu LXC</summary>
+<summary markdown="span"> GamUntu LXC</summary>
  <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/></p>
 <h1 align="center" id="heading"> GamUntu LXC Container </h1>
 
@@ -715,7 +715,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Jellyfin Media Server LXC</summary>
+<summary markdown="span"> Jellyfin Media Server LXC </summary>
 <p align="center"><img src="https://jellyfin.org/images/banner-dark.svg" height="80"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
 
@@ -801,7 +801,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">🔸MotionEye NVR LXC</summary>
+<summary markdown="span"> MotionEye NVR LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/motioneye-256x256.png" width="100" height="100"/></p>
 
