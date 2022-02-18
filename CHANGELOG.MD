@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-18
+
+### Changed
+
+- **Node-Red LXC**
+  - Add Install [Theme](https://github.com/node-red-contrib-themes/midnight-red) Script
+
 ## 2022-02-16
 
 ### Changed
