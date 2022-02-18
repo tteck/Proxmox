@@ -381,7 +381,7 @@ Run in the LXC console (Restart after update)
 npm install -g --unsafe-perm node-red
 ```
 
-⚙️ **To Install Midnight-Red Theme** ⚠️ **Backup your flows before running this script!!**
+⚙️ **To Install [Midnight-Red Theme](https://github.com/node-red-contrib-themes/midnight-red)** ⚠️ **Backup your flows before running this script!!**
 
 Run in the LXC console
 ```yaml
