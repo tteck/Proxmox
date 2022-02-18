@@ -109,7 +109,7 @@ sleep 2
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-echo -e "\e[1;92m Downloaded .qcow2 Disk Image... ${CHECKMARK} \e[0m \r"
+echo -e "\e[1;92m Downloaded ${RELEASE_TYPE} Disk Image... ${CHECKMARK} \e[0m \r"
 echo -en "\e[1;92m Extracting Disk Image... \e[0m"
 case $FILE in
   *"gz") gunzip -f $FILE ;;
