@@ -57,7 +57,7 @@ module.exports = { uiPort: process.env.PORT || 1880,
     },
         projects: {
             // To enable the Projects feature, set this value to true
-            enabled: true
+            enabled: false
     }
 }
 EOF
