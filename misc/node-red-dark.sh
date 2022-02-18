@@ -6,6 +6,7 @@ BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+clear
 echo -e "${RD}Backup your Node-Red flows before running this script!!${CL} \n "
 while true; do
     read -p "This will Install midnight-red theme. Proceed(y/n)?" yn
@@ -27,7 +28,29 @@ npm install @node-red-contrib-themes/midnight-red &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Writing Settings... "
-cat <<EOF >> /root/.node-red/settings.js
+cat <<EOF > /root/.node-red/settings.js
+module.exports = { uiPort: process.env.PORT || 1880,
+
+    mqttReconnectTime: 15000,
+
+    serialReconnectTime: 15000,
+
+    debugMaxLength: 1000,
+
+    functionGlobalContext: {
+    },
+    exportGlobalContextKeys: false,
+
+
+    // Configure the logging output
+    logging: {
+        console: {
+            level: "info",
+            metrics: false,
+            audit: false
+        }
+    },
+
     // Customising the editor
     editorTheme: {
         theme: "midnight-red"
