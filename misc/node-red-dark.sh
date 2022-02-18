@@ -46,7 +46,7 @@ npm install @node-red-contrib-themes/midnight-red &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Writing Settings... "
-cat <<EOF > /root/.node-red/settings.js
+cat <<EOF >> /root/.node-red/settings.js
 module.exports = { uiPort: process.env.PORT || 1880,
 
     mqttReconnectTime: 15000,
