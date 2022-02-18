@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/node-red-dark.sh)"
+while true; do
+    read -p "This will install midnight-red theme. Proceed(y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -74,9 +83,8 @@ EOF
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Restarting Node-Red... "
-node-red-restart
 echo -e "${CM}${CL} \r"
-
+node-red-restart
 echo -en "${GN} Finished... ${CL} \n"
 exit
 
