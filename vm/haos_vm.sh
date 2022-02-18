@@ -8,6 +8,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+clear;;
 set -o errexit
 set -o errtrace
 set -o nounset
