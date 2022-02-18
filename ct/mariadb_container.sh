@@ -8,14 +8,17 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-
+clear
 set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 trap die ERR
 trap cleanup EXIT
 
@@ -73,7 +76,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/mariadb_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/mariadb_setup.sh
 
 load_module overlay
 
@@ -101,15 +104,16 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using '$STORAGE' for storage location."
+info "Using ${BL}${STORAGE}${CL} for Storage Location."
 
 CTID=$(pvesh get /cluster/nextid)
-info "Container ID is $CTID."
+info "Container ID is ${BL}${CTID}${CL}."
 
-echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
+echo -en "${GN} Updating LXC Template List... "
 pveam update >/dev/null
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
+echo -en "${GN} Downloading LXC Template... "
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -130,8 +134,9 @@ case $STORAGE_TYPE in
 esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
+echo -en "${GN} Creating LXC Container... "
 DISK_SIZE=4G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -149,11 +154,15 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
+echo -en "${GN} Starting LXC Container... "
 pct start $CTID
 pct push $CTID mariadb_setup.sh /mariadb_setup.sh -perms 755
+echo -e "${CM}${CL} \r"
 pct exec $CTID /mariadb_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created a MariaDB LXC Container to $CTID at IP Address ${IP}"
+info "${GN} Successfully created a MariaDB LXC Container to ${BL}${CTID}${CL}"
+echo -e "${CL} Adminer should be reachable by going to the following URL.
+             ${BL} http://${IP}/adminer/ ${CL}"
