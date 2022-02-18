@@ -13,7 +13,7 @@ GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 trap die ERR
 trap 'die "Script interrupted."' INT
-echo -en "${RD} Backup your Node-Red flows before running this script!!${CL} \n "
+echo -e "${RD} Backup your Node-Red flows before running this script!!${CL} \n "
 while true; do
     read -p "This will install midnight-red theme. Proceed(y/n)?" yn
     case $yn in
@@ -127,7 +127,7 @@ module.exports = {
     //    type: "credentials",
     //    users: [{
     //        username: "admin",
-    //        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
+    //        password: "",
     //        permissions: "*"
     //    }]
     //},
@@ -172,8 +172,8 @@ module.exports = {
      * The `pass` field is a bcrypt hash of the password.
      * See http://nodered.org/docs/security.html#generating-the-password-hash
      */
-    //httpNodeAuth: {user:"user",pass:"$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN."},
-    //httpStaticAuth: {user:"user",pass:"$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN."},
+    //httpNodeAuth: {user:"user",pass:""},
+    //httpStaticAuth: {user:"user",pass:""},
 
 /*******************************************************************************
  * Server Settings
