@@ -45,7 +45,7 @@ while [ "$(hostname -I)" = "" ]; do
   fi
 done
 echo -e "${CM}${CL} \r"
-echo -en "${GN} Network Connected: ${BL}$(hostname -I) "
+echo -en "${GN} Network Connected: ${BL}$(hostname -I)${CL} "
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Updating Container OS... "
