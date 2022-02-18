@@ -13,7 +13,7 @@ GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 trap die ERR
 trap 'die "Script interrupted."' INT
-echo -en "${RD} Backup your Node-Red flows before running this script!! "
+echo -en "${RD} Backup your Node-Red flows before running this script!!${CL} \n "
 while true; do
     read -p "This will install midnight-red theme. Proceed(y/n)?" yn
     case $yn in
