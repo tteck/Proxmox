@@ -81,7 +81,7 @@ fi
 info "Using '$STORAGE' for storage location."
 VMID=$(pvesh get /cluster/nextid)
 info "Container ID is $VMID."
-echo -e "\e[1;33m Getting URL for latest Home Assistant disk image... \e[0m"
+echo -en "\e[1;92m Getting URL for Latest Home Assistant Disk Image... \e[0m"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
@@ -102,11 +102,14 @@ EOF
 if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
-echo -e "${CHECKMARK} \e[1;92m Downloading disk image... \e[0m"
+echo -e "${CHECKMARK} \r"
+echo -en "\e[1;92m Downloading Disk Image... \e[0m"
+sleep 2
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-echo -e "${CHECKMARK} \e[1;92m Extracting disk image... \e[0m"
+echo -e "\e[1;92m Downloaded .qcow2 Disk Image... ${CHECKMARK} \e[0m \r"
+echo -en "\e[1;92m Extracting Disk Image... \e[0m"
 case $FILE in
   *"gz") gunzip -f $FILE ;;
   *"zip") gunzip -f -S .zip $FILE ;;
@@ -125,7 +128,8 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-echo -e "${CHECKMARK} \e[1;92m Creating VM... \e[0m"
+echo -e "${CHECKMARK} \r"
+echo -en "\e[1;92m Creating VM... \e[0m"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
 qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -138,7 +142,8 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
-  echo -e "${CHECKMARK} \e[1;92m Adding serial port and configuring console... \e[0m"
+echo -e "${CHECKMARK} \r"
+  echo -en "\e[1;92m Adding Serial Port and Configuring Console... \e[0m"
   trap '
     warn "Unable to configure serial port. VM is still functional."
     if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
@@ -146,10 +151,12 @@ set +o errtrace
     fi
     exit
   ' ERR
+  echo -e "${CHECKMARK} \r"
   if [ "$(command -v kpartx)" = "" ]; then
-    echo -e "${CHECKMARK} \e[1;92m Installing kpartx... \e[0m"
+    echo -en "\e[1;92m Installing kpartx... \e[0m"
     apt-get update >/dev/null
     apt-get -qqy install kpartx &>/dev/null
+    echo -e "${CHECKMARK} \r"
   fi
   DISK1_PATH="$(pvesm path $DISK1_REF)"
   DISK1_PART1="$(kpartx -al $DISK1_PATH | awk 'NR==1 {print $1}')"
