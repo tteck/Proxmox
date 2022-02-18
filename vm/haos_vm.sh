@@ -15,7 +15,10 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 trap die ERR
 trap cleanup EXIT
 function error_exit() {
@@ -79,10 +82,10 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using '$STORAGE' for storage location."
+info "Using ${BL}$STORAGE${CL} for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
-info "Container ID is $VMID."
-echo -en "\e[1;92m Getting URL for Latest Home Assistant Disk Image... \e[0m"
+info "Container ID is ${BL}$VMID${CL}."
+echo -en "${GN} Getting URL for Latest Home Assistant Disk Image... "
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
@@ -103,14 +106,14 @@ EOF
 if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
-echo -e "${CHECKMARK} \r"
-echo -en "\e[1;92m Downloading Disk Image... \e[0m"
+echo -e "${CM} ${CL} \r"
+echo -en "${BL}${URL}${CL}"
 sleep 2
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-echo -e "\e[1;92m Downloaded ${RELEASE_TYPE} Disk Image... ${CHECKMARK} \e[0m \r"
-echo -en "\e[1;92m Extracting Disk Image... \e[0m"
+echo -e "${GN} Downloaded ${RELEASE_TYPE} Disk Image... ${CM} \r"
+echo -en "${GN} Extracting Disk Image... "
 case $FILE in
   *"gz") gunzip -f $FILE ;;
   *"zip") gunzip -f -S .zip $FILE ;;
@@ -129,8 +132,8 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-echo -e "${CHECKMARK} \r"
-echo -en "\e[1;92m Creating VM... \e[0m"
+echo -e "${CM} ${CL} \r"
+echo -en "${GN} Creating HAOS VM... "
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
 qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -143,8 +146,8 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
-echo -e "${CHECKMARK} \r"
-  echo -en "\e[1;92m Adding Serial Port and Configuring Console... \e[0m"
+echo -e "${CM} ${CL} \r"
+  echo -en "${GN} Adding Serial Port and Configuring Console... "
   trap '
     warn "Unable to configure serial port. VM is still functional."
     if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
@@ -152,12 +155,12 @@ echo -e "${CHECKMARK} \r"
     fi
     exit
   ' ERR
-  echo -e "${CHECKMARK} \r"
+  echo -e "${CM} ${CL} \r"
   if [ "$(command -v kpartx)" = "" ]; then
-    echo -en "\e[1;92m Installing kpartx... \e[0m"
+    echo -en "${GN} Installing kpartx... "
     apt-get update >/dev/null
     apt-get -qqy install kpartx &>/dev/null
-    echo -e "${CHECKMARK} \r"
+    echo -e "${CM} ${CL} \r"
   fi
   DISK1_PATH="$(pvesm path $DISK1_REF)"
   DISK1_PART1="$(kpartx -al $DISK1_PATH | awk 'NR==1 {print $1}')"
@@ -174,4 +177,4 @@ echo -e "${CHECKMARK} \r"
   qm set $VMID -serial0 socket >/dev/null
 )
 
-info "Completed Successfully! New VM ID is \e[1m$VMID\e[0m."
+info "${GN} Completed Successfully!${CL} HAOS VM ID is ${BL}${VMID}${CL}"
