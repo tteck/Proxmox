@@ -258,7 +258,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Nginx Proxy Manager LXC</summary>
+<summary markdown="span"> 🔸Nginx Proxy Manager LXC </summary>
  
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
@@ -296,6 +296,13 @@ Add the following to your `configuration.yaml` in Home Assistant.
  ```yaml
  changeme
  ```
+⚙️ **To Update Nginx Proxy Manager**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/npm_update.sh)"
+```
+
  ____________________________________________________________________________________________ 
 
 </details>
