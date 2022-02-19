@@ -155,7 +155,7 @@ echo -e "${CM}${CL} \r"
 T="$(($(date +%s)-T))"
 
 IP=$(hostname -I | cut -f1 -d ' ')
-echo -e    "${GN}Successfully Updated Nginx Proxy Manager, and it only took ${RD}${T} seconds,${CL}
-                  ${BL}Then Go To https://${IP}:81 ${CL}
+echo -e    "${GN}Successfully Updated Nginx Proxy Manager, and it took ${RD}${T} seconds.${CL}
+                  ${BL}NPM should be reachable at https://${IP}:81 ${CL}
                   
                   "
