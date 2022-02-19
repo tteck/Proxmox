@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+IP=hostname -I
+YW=`echo "\033[33m"`
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 while true; do
     read -p "This will Install Webmin, Proceed(y/n)?" yn
     case $yn in
@@ -7,19 +14,27 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
-echo -e "Loading Script..."
-echo -e "${CHECKMARK} \e[1;92m Installing Prerequisites... \e[0m"
+clear
+
+echo -en "${GN} Installing Prerequisites... "
 apt update &>/dev/null
 apt-get -y install libnet-ssleay-perl libauthen-pam-perl libio-pty-perl unzip shared-mime-info &>/dev/null
-echo -e "${CHECKMARK} \e[1;92m Downloading Webmin... \e[0m"
+echo -e "${CM}${CL} \r"
+
+echo -en "${GN} Downloading Webmin... "
 wget http://prdownloads.sourceforge.net/webadmin/webmin_1.984_all.deb &>/dev/null
-echo -e "${CHECKMARK} \e[1;92m Installing Webmin... \e[0m"
+echo -e "${CM}${CL} \r"
+
+echo -e "${GN} Installing Webmin... "
 dpkg --install webmin_1.984_all.deb &>/dev/null
-echo -e "${CHECKMARK} \e[1;92m Setting Default Webmin usermame & password to root... \e[0m"
+echo -e "${CM}${CL} \r"
+
+echo -e "${GN} Setting Default Webmin usermame & password to root... "
 /usr/share/webmin/changepass.pl /etc/webmin root root &>/dev/null
 rm -rf /root/webmin_1.984_all.deb
-echo -e    "Install Complete, Now Go To https:// IP:10000"
+echo -e "${CM}${CL} \r"
+
+echo -e    "${BL} Successfully Installed Webmin, Now Go To https:// ${IP):10000 ${CL}"
 
 
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
