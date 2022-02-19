@@ -20,12 +20,12 @@ done
 clear
 echo -e "${RD} Backup your Node-Red flows before installing any theme!!${CL} \n "
     printf "\n${BL}*********************************************${CL}\n"
-    printf "${BL}**${number} 1)${RD} Dark Theme ${CL}\n"
-    printf "${BL}**${number} 2)${RD} Dracula Theme ${CL}\n"
-    printf "${BL}**${number} 3)${RD} Midnight-Red Theme ${CL}\n"
-    printf "${BL}**${number} 4)${RD} Oled Theme ${CL}\n"
-    printf "${BL}**${number} 5)${RD} Solarized-Dark Theme ${CL}\n"
-    printf "${BL}**${number} 6)${RD} Solarized-Light Theme ${CL}\n"
+    printf "${BL}**${YW} 1)${GN} Dark Theme ${CL}\n"
+    printf "${BL}**${YW} 2)${GN} Dracula Theme ${CL}\n"
+    printf "${BL}**${YW} 3)${GN} Midnight-Red Theme ${CL}\n"
+    printf "${BL}**${YW} 4)${GN} Oled Theme ${CL}\n"
+    printf "${BL}**${YW} 5)${GN} Solarized-Dark Theme ${CL}\n"
+    printf "${BL}**${YW} 6)${GN} Solarized-Light Theme ${CL}\n"
     printf "${BL}*********************************************${CL}\n"
     printf "Please choose a theme from the menu and enter or ${RD}x to exit. ${CL}"
     read opt
