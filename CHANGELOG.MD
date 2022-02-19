@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Node-Red LXC**
-  - Add Install [Theme](https://github.com/node-red-contrib-themes/midnight-red) Script
+  - Add Install Themes Script
 
 ## 2022-02-16
 
