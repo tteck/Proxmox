@@ -22,7 +22,7 @@ apt-get -y install libnet-ssleay-perl libauthen-pam-perl libio-pty-perl unzip sh
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Downloading Webmin... "
-wget http://prdownloads.sourceforge.net/webadmin/webmin_1.984_all.deb &>/dev/null
+wget --show-progress http://prdownloads.sourceforge.net/webadmin/webmin_1.984_all.deb &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Webmin... "
