@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-IP=[hostname -I]
+
 YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
@@ -34,7 +34,7 @@ echo -e "${GN} Setting Default Webmin usermame & password to root... "
 rm -rf /root/webmin_1.984_all.deb
 echo -e "${CM}${CL} \r"
 
-echo -e    "${BL} Successfully Installed Webmin, Now Go To https:// ${IP):10000 ${CL}"
+echo -e    "${BL} Successfully Installed Webmin, Now Go To https://IP:10000 ${CL}"
 
 
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
