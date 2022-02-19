@@ -381,11 +381,11 @@ Run in the LXC console (Restart after update)
 npm install -g --unsafe-perm node-red
 ```
 
-⚙️ **To Install [Midnight-Red Theme](https://github.com/node-red-contrib-themes/midnight-red)** ⚠️ **Backup your flows before running this script!!**
+⚙️ **To Install Node-Red Themes** ⚠️ **Backup your flows before running this script!!**
 
 Run in the LXC console
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/node-red-dark.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/node-red-themes.sh)"
 ```
 
 ____________________________________________________________________________________________ 
