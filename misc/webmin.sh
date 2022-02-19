@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-IP=hostname -I
+IP=`hostname -I`
 YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
