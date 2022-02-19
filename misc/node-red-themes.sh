@@ -20,12 +20,13 @@ done
 clear
 echo -e "${RD} Backup your Node-Red flows before installing any theme!!${CL} \n "
     printf "\n${BL}*********************************************${CL}\n"
-    printf "${BL}**${YW} 1)${GN} Dark Theme ${CL}\n"
-    printf "${BL}**${YW} 2)${GN} Dracula Theme ${CL}\n"
-    printf "${BL}**${YW} 3)${GN} Midnight-Red Theme ${CL}\n"
-    printf "${BL}**${YW} 4)${GN} Oled Theme ${CL}\n"
-    printf "${BL}**${YW} 5)${GN} Solarized-Dark Theme ${CL}\n"
-    printf "${BL}**${YW} 6)${GN} Solarized-Light Theme ${CL}\n"
+    printf "${BL}**${YW} 1)${GN} Default Theme ${CL}\n"
+    printf "${BL}**${YW} 2)${GN} Dark Theme ${CL}\n"
+    printf "${BL}**${YW} 3)${GN} Dracula Theme ${CL}\n"
+    printf "${BL}**${YW} 4)${GN} Midnight-Red Theme ${CL}\n"
+    printf "${BL}**${YW} 5)${GN} Oled Theme ${CL}\n"
+    printf "${BL}**${YW} 6)${GN} Solarized-Dark Theme ${CL}\n"
+    printf "${BL}**${YW} 7)${GN} Solarized-Light Theme ${CL}\n"
     printf "${BL}*********************************************${CL}\n"
     printf "Please choose a theme from the menu and enter or ${RD}x to exit. ${CL}"
     read opt
@@ -47,31 +48,37 @@ while [ $opt != '' ]
     else
       case $opt in
         1) clear;
+            option_picked "Installing Default Theme";
+            THEME=
+            JS=//
+            break;
+        ;;
+        2) clear;
             option_picked "Installing Dark Theme";
             THEME=dark
             break;
         ;;
-        2) clear;
+        3) clear;
             option_picked "Installing Dracula Theme";
             THEME=dracula
             break;
         ;;
-        3) clear;
+        4) clear;
             option_picked "Installing Midnight-Red Theme";
             THEME=midnight-red
             break;
         ;;
-        4) clear;
+        5) clear;
             option_picked "Installing Oled Theme";
             THEME=oled
             break;
         ;;
-        5) clear;
+        6) clear;
             option_picked "Installing Solarized-Dark Theme";
             THEME=solarized-dark
             break;
         ;;
-        6) clear;
+        7) clear;
             option_picked "Installing Solarized-Light Theme";
             THEME=solarized-light
             break;
@@ -95,9 +102,12 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing ${THEME} Theme... "
 cd /root/.node-red
+if [ "${THEME}" = "" ]; then
+  echo -e "${CM}${CL} \r"
+  else
 npm install @node-red-contrib-themes/${THEME} &>/dev/null
 echo -e "${CM}${CL} \r"
-
+fi
 echo -en "${GN} Writing Settings... "
 cat <<EOF > /root/.node-red/settings.js
 module.exports = { uiPort: process.env.PORT || 1880,
@@ -119,7 +129,7 @@ module.exports = { uiPort: process.env.PORT || 1880,
 
     // Customising the editor
     editorTheme: {
-        theme: "${THEME}"
+    ${JS}theme: "${THEME}"
     },
         projects: {
             // To enable the Projects feature, set this value to true
