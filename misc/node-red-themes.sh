@@ -71,7 +71,7 @@ while [ $opt != '' ]
             THEME=solarized-dark
             break;
         ;;
-        5) clear;
+        6) clear;
             option_picked "Installing Solarized-Light Theme";
             THEME=solarized-light
             break;
