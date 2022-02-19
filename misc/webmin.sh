@@ -25,11 +25,11 @@ echo -en "${GN} Downloading Webmin... "
 wget http://prdownloads.sourceforge.net/webadmin/webmin_1.984_all.deb &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -e "${GN} Installing Webmin... "
+echo -en "${GN} Installing Webmin... "
 dpkg --install webmin_1.984_all.deb &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -e "${GN} Setting Default Webmin usermame & password to root... "
+echo -en "${GN} Setting Default Webmin usermame & password to root... "
 /usr/share/webmin/changepass.pl /etc/webmin root root &>/dev/null
 rm -rf /root/webmin_1.984_all.deb
 echo -e "${CM}${CL} \r"
