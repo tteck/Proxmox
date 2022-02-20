@@ -81,7 +81,7 @@ pushd $TEMP_DIR >/dev/null
 wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/vault_setup.sh
 
 load_module overlay
-echo -e "${RD} Patience is required while Building Vaultwarden ${CL} \n"
+echo -e "${RD} Expect 30+ minute install time. ${CL} \n"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
