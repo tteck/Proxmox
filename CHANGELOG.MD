@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Nginx Proxy Manager LXC**
   - Add Update Script
+- **Vaultwarden LXC**
+  - Make unattended install & Cleanup Script
 
 ## 2022-02-18
 
