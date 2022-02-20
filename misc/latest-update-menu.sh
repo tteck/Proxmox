@@ -10,7 +10,7 @@ while true; do
 done
 clear
 set -o errexit
-rm -rf /root/update.sh update
+rm -rf /root/update.sh update update-containers.sh
 echo -e "\e[1;92m Creating New Update Menu Script... \e[0m"
 if [ -f /usr/local/lib/python3.9/dist-packages/runlike/runlike.py ]; then
 echo -e "\e[1;92m pip3/runlike Already Installed! \e[0m"
