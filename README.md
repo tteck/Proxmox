@@ -905,10 +905,12 @@ To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox Shell.
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/vault_container.sh)"
 ```
+Vaultwarden needs to be behind a proxy (Nginx Proxy Manager) to obtain HTTPS and to allow clients to connect.
+
 It builds from source, which takes time and resources. After the installation, resources can be set to Normal Settings. 
 
- Expect 30+ minute install time.
- <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 8GB Storage - 1vCPU ⚡</h3>
+Expect 30+ minute install time.
+<h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 8GB Storage - 1vCPU ⚡</h3>
 
 [Clients](https://bitwarden.com/download/)
  
