@@ -8,7 +8,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-
+clear
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -16,6 +16,11 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 trap die ERR
 trap cleanup EXIT
 
@@ -73,10 +78,10 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/vault_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/vault_setup.sh
 
 load_module overlay
-
+echo -e "${RD} Patience is required while Building Vaultwarden ${CL} \n"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
