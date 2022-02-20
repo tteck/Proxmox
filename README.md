@@ -220,6 +220,12 @@ Run in the LXC console
 ```yaml
 ./update
 ```
+⚙️ Migrate to the latest [**Update Menu**](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/update-menu.png)
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/latest-update-menu.sh)"
+```
  
 ____________________________________________________________________________________________ 
 </details>
