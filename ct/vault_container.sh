@@ -78,7 +78,7 @@ function load_module() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
-wget -qL https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/vault_setup.sh
+wget -qL https://raw.githubusercontent.com/tteck/Proxmox/main/setup/vault_setup.sh
 
 load_module overlay
 echo -e "${RD} Patience is required while Building Vaultwarden ${CL} \n"
