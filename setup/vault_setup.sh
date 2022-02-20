@@ -8,6 +8,11 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 RETRY_NUM=5
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -64,9 +69,9 @@ echo -e "${CHECKMARK} \e[1;92m Installing Build Essentials... \e[0m"
 apt-get install -y build-essential &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Rust... \e[0m"
-curl https://sh.rustup.rs -sSf | sh 
-echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc 
-export PATH=~/.cargo/bin:$PATH 
+curl https://sh.rustup.rs -sSf | sh -s -- -y &>/dev/null
+echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
+export PATH=~/.cargo/bin:$PATH &>/dev/null
 which rustc &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Node.js... \e[0m"
@@ -76,20 +81,25 @@ npm -g install npm@7 &>/dev/null
 which npm &>/dev/null
 npm i npm@latest -g &>/dev/null
 
-echo -e "${CHECKMARK} \e[1;92m Building Vaultwarden... \e[0m"
-git clone https://github.com/dani-garcia/vaultwarden && pushd vaultwarden 
-cargo clean && cargo build --features sqlite --release 
-file target/release/vaultwarden 
+echo -e "${CHECKMARK} \e[1;92m Building Vaultwarden (Patience)... \e[0m"
+git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
+pushd vaultwarden &>/dev/null
+cargo clean &>/dev/null 
+cargo build --features sqlite --release &>/dev/null
+file target/release/vaultwarden &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Building Web-Vault... \e[0m"
-pushd target/release/ 
-git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git && cd web-vault.git
-git checkout v2.25.1 
-git submodule update --init --recursive 
-wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch
-git apply v2.25.0.patch 
-npm ci --legacy-peer-deps && npm audit fix --legacy-peer-deps || true && npm run dist:oss:selfhost
-cp -a build ../web-vault 
+pushd target/release/ &>/dev/null
+git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git &>/dev/null
+cd web-vault.git &>/dev/null
+git checkout v2.25.1 &>/dev/null
+git submodule update --init --recursive &>/dev/null
+wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch &>/dev/null
+git apply v2.25.0.patch &>/dev/null
+npm ci --silent --legacy-peer-deps &>/dev/null
+npm audit fix --silent --legacy-peer-deps || true &>/dev/null
+npm run --silent dist:oss:selfhost &>/dev/null
+cp -a build ../web-vault &>/dev/null
 cd ..
 mkdir data 
 
