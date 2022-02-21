@@ -64,7 +64,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/vm/h
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU ⚡</h3>
  
-After the script completes, If you're dissatisfied with the default settings, click on the VM, then on the **_Hardware_** tab and change the settings to what you desire. Once all changes have been made, **_Start_** the VM.
+After the script completes, click on the VM, then on the **_Summary_** tab to find the VM IP.
 
 **Home Assistant Interface - IP:8123**
 
