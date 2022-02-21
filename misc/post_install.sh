@@ -23,7 +23,6 @@ deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
 # deb http://download.proxmox.com/debian/pve bullseye pvetest
 EOF
 echo -e "\e[1;33m Disable Subscription Nag...  \e[0m"
-sleep 1
 echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxlib\.js$'; if [ \$? -eq 1 ]; then { echo 'Removing subscription nag from UI...'; sed -i '/data.status/{s/\!//;s/Active/NoMoreNagging/}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; }; fi\"; };" > /etc/apt/apt.conf.d/no-nag-script
 apt --reinstall install proxmox-widget-toolkit &>/dev/null
 echo -e "\e[1;33m Finished....Please Update Proxmox \e[0m"
