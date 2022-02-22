@@ -14,6 +14,8 @@ All notable changes to this project will be documented in this file.
   - Add NEW Unprivileged Install Script
 - **MQTT LXC**
   - Add NEW Unprivileged Install Script
+- **Debian 11 LXC**
+  - Add NEW Unprivileged Install Script
 
 ## 2022-02-20
 
