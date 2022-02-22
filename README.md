@@ -319,7 +319,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 </details>
 
 <details>
-<summary markdown="span">MQTT LXC</summary>
+<summary markdown="span"> 🔸MQTT LXC</summary>
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
@@ -331,6 +331,12 @@ To create a new Proxmox MQTT LXC Container, run the following in the Proxmox She
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt_container.sh)"
 ```
+To create a new Proxmox Unprivileged MQTT LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-mqtt.sh)"
+```
+
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 Mosquitto comes with a password file generating utility called mosquitto_passwd.
