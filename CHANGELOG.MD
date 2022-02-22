@@ -2,6 +2,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-22
+
+### Changed
+
+- **Home Assistant Container LXC**
+  - Add NEW Unprivileged Install Script
+- **Node-Red LXC**
+  - Add NEW Unprivileged Install Script
+- **Mariadb LXC**
+  - Add NEW Unprivileged Install Script
+
 ## 2022-02-20
 
 ### Changed
