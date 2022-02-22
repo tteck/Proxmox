@@ -640,7 +640,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Debian 11 LXC </summary>
+<summary markdown="span"> 🔸Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -651,6 +651,12 @@ To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run th
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian11_container.sh)"
 ```
+To create a new Proxmox Unprivileged Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-debian.sh)"
+```
+
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
