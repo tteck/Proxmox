@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
@@ -15,7 +15,7 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${RD}
+echo -e "${YW}
 
 
 
