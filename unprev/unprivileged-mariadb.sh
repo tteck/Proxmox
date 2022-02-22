@@ -96,7 +96,7 @@ export PCT_OPTIONS="
   -memory 1024
   -unprivileged 1
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/unprev/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unprev/create_lxc.sh)" || exit
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -109,7 +109,7 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/unprev/mariadb-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unprev/mariadb-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
