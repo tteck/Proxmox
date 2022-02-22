@@ -654,7 +654,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/d
 To create a new Proxmox Unprivileged Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-debian.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-debian.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
