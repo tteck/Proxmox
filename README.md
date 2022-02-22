@@ -167,6 +167,11 @@ To create a new Proxmox Home Assistant Container, run the following in the Proxm
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ha_container.sh)"
 ```
+To create a new Proxmox Unprivileged Home Assistant Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unprev/unprivileged-homeassistant.sh)"
+```
  
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
  
