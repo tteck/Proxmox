@@ -674,7 +674,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Ubuntu 21.10 LXC </summary>
+<summary markdown="span"> 🔸Ubuntu 21.10 LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
@@ -685,6 +685,12 @@ To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu_container.sh)"
 ```
+To create a new Proxmox Unprivileged Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-ubuntu.sh)"
+```
+
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
