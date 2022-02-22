@@ -192,4 +192,4 @@ echo -en "${GN} Starting Home Assistant OS VM... "
 qm start $VMID
 echo -e "${CM} ${CL} \n"
 
-echo -e "${GN}  Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} \n"
+echo -e "${GN} Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} \n"
