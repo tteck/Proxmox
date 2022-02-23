@@ -154,6 +154,7 @@ lxc.cgroup2.devices.allow: c 189:* rwm
 lxc.mount.entry: /dev/serial/by-id  dev/serial/by-id  none bind,optional,create=dir
 lxc.mount.entry: /dev/ttyUSB0       dev/ttyUSB0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
 
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
