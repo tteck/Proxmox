@@ -22,7 +22,7 @@ echo -e "\e[1;92m Installing runlike... \e[0m"
 pip3 install runlike &>/dev/null 
 fi
 echo -e "\e[1;92m Creating Update Script... \e[0m"
-if [ -d /root/hass_config/ ]; then
+if [ -d /root/hass_config ]; then
 echo -e "\e[1;92m There's Already (hass_config) Folder! \e[0m"
 else
 mkdir /root/hass_config
