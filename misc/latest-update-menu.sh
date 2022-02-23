@@ -196,4 +196,3 @@ done
 EOF
 sudo chmod +x /root/update-containers.sh
 echo -e "\e[1;92m Finished. Type ./update in the LXC console\e[0m"
-exit
