@@ -279,7 +279,7 @@ done
 EOF
 sudo chmod +x /root/update-containers.sh
 echo -e "${CM}${CL} \r"
-
+mkdir /root/hass_config
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
