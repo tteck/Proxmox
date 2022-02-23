@@ -66,7 +66,7 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
-lxc-cmd apt-get autoremove >/dev/null
-lxc-cmd apt-get autoclean >/dev/null
-lxc-cmd rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+apt-get autoremove >/dev/null
+apt-get autoclean >/dev/null
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 echo -e "${CM}${CL} \n"
