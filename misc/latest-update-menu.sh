@@ -97,7 +97,9 @@ while [ $opt != '' ]
             option_picked "Backing up Home Assistant Data to root (hass_config)";
             rm -r hass_config;
             cp -pR /var/lib/docker/volumes/hass_config/ /root/;
-            exit;
+            sleep 2;
+            clear;
+            show_menu;
         ;;
         5) while true; do
             read -p "Are you sure you want to Restore Home Assistant Data? Proceed(y/n)?" yn
@@ -111,7 +113,9 @@ while [ $opt != '' ]
             option_picked "Restoring Home Assistant Data from root (hass_config)";
             rm -r /var/lib/docker/volumes/hass_config/_data;
             cp -pR /root/hass_config/_data /var/lib/docker/volumes/hass_config/;
-            exit;
+            sleep 2;
+            clear;
+            show_menu;
         ;;
         6) while true; do
             read -p "Are you sure you want to Edit Home Assistant Configuration? Proceed(y/n)?" yn
@@ -124,7 +128,8 @@ while [ $opt != '' ]
            clear;
             option_picked "Editing Home Assistant Configuration";
             nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml;
-            exit;
+            clear;
+            show_menu;
         ;;
         7) clear;
             option_picked "Restarting Home Assistant";
@@ -134,17 +139,23 @@ while [ $opt != '' ]
         8) clear;
             option_picked "Just Updating Containers";
             ./update-containers.sh;
-            exit;
+            sleep 2;
+            clear;
+            show_menu;
         ;;
         9) clear;
             option_picked "Removing Unused Images";
             docker image prune -af;
-            exit;
+            sleep 2;
+            clear;
+            show_menu;
         ;;
         10) clear;
             option_picked "Updating Host OS";
             apt update && apt upgrade -y;
-            exit;
+            sleep 2;
+            clear;
+            show_menu;
         ;;
         11) clear;
             option_picked "Reboot Host OS";
