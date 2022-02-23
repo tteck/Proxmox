@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
-set -e
+
+set -o errexit 
+set -o errtrace 
+set -o nounset 
+set -o pipefail 
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+trap 'die "Script interrupted."' INT
+
+function error_exit() {
+  trap - ERR
+  local DEFAULT='Unknown failure occured.'
+  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
+  local FLAG="\e[91m[ERROR:LXC] \e[93m$EXIT@$LINE"
+  msg "$FLAG $REASON"
+  exit $EXIT
+}
+function msg() {
+  local TEXT="$1"
+  echo -e "$TEXT"
+}
+
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
