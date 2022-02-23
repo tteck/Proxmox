@@ -110,7 +110,7 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created Node-Red LXC to${CL} ${BL}$CTID${CL}."
+echo -e "${GN}Successfully created Node-Red LXC to${CL} ${BL}$CTID${CL}.
 ${RD}Node-Red${CL} is reachable by going to the following URL.
 
          ${BL}http://${IP}:1880${CL} \n"
