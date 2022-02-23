@@ -165,12 +165,7 @@ ________________________________________________________________________________
 To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell.
  
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ha_container.sh)"
-```
-To create a new Proxmox **Unprivileged** Home Assistant Container, run the following in the Proxmox Shell.
- 
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-homeassistant.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/homeassistant.sh)"
 ```
  
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
@@ -329,12 +324,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 To create a new Proxmox MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt_container.sh)"
-```
-To create a new Proxmox **Unprivileged** MQTT LXC Container, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-mqtt.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -385,12 +375,7 @@ ________________________________________________________________________________
 To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red_container.sh)"
-```
-To create a new Proxmox **Unprivileged** Node-RED LXC Container, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-node-red.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -432,12 +417,7 @@ ________________________________________________________________________________
 To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox Shell.
  
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb_container.sh)"
-```
-To create a new Proxmox **Unprivileged** Mariadb LXC Container, run the following in the Proxmox Shell.
- 
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-mariadb.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -649,12 +629,7 @@ ________________________________________________________________________________
 To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian11_container.sh)"
-```
-To create a new Proxmox **Unprivileged** Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-debian.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -683,12 +658,7 @@ ________________________________________________________________________________
 To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu_container.sh)"
-```
-To create a new Proxmox **Unprivileged** Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-ubuntu.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
