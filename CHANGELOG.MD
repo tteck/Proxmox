@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-23
+
+### Changed
+
+- **Adguard Home LXC**
+  - Add NEW Unprivileged Install Script
+
 ## 2022-02-22
 
 ### Changed
