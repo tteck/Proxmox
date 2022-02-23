@@ -121,6 +121,12 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
+ if [ "$IM" == "1" ]; then 
+ FEATURES="nesting=1,keyctl=1,mknod=1"
+ else
+ FEATURES="nesting=1"
+ fi
+
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
@@ -129,7 +135,7 @@ export PCT_OSTYPE=debian
 export PCT_OSVERSION=11
 export PCT_DISK_SIZE=4
 export PCT_OPTIONS="
-  -features nesting=1,keyctl=1,mknod=1
+  -features $FEATURES
   -hostname zigbee2mqtt
   -net0 name=eth0,bridge=vmbr0,ip=dhcp
   -onboot 1
