@@ -151,7 +151,7 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/setup/adguard-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/adguard-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
