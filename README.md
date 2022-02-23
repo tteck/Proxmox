@@ -828,7 +828,7 @@ ________________________________________________________________________________
  
  
 <details>
-<summary markdown="span">AdGuard Home LXC</summary>
+<summary markdown="span"> 🔸AdGuard Home LXC</summary>
  
 <p align="center"><img src="https://dashboard.snapcraft.io/site_media/appmedia/2020/04/256.png" width="100" height="100"/></p>
 
@@ -839,6 +839,12 @@ To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/adguard_container.sh)"
 ```
+To create a new Proxmox **Unprivileged** AdGuard Home LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-adguard.sh)"
+```
+
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
 **AdGuard Home Setup Interface - IP:3000  (After Setup use only IP)**
