@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
