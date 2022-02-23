@@ -95,11 +95,6 @@ while [ $opt != '' ]
       esac
     fi
   done
-echo -en "${GN} Updating Container OS... "
-apt-get update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
-echo -e "${CM}${CL} \r"
-
 echo -en "${GN} Installing ${THEME} Theme... "
 cd /root/.node-red
 if [ "${THEME}" = "" ]; then
