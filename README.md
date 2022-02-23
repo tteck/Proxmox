@@ -529,7 +529,7 @@ ________________________________________________________________________________
 To create a new Proxmox Zigbee2MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
