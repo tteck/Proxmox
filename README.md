@@ -519,7 +519,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Zigbee2MQTT LXC </summary>
+<summary markdown="span"> 🔸Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
 
