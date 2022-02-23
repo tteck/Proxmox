@@ -137,7 +137,7 @@ export PCT_OPTIONS="
   -memory 2048
   -unprivileged ${IM}
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
