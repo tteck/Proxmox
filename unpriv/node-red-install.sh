@@ -1,36 +1,4 @@
 #!/usr/bin/env bash
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
-
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  [ ! -z ${CTID-} ] && cleanup_ctid
-  exit $EXIT
-}
-function warn() {
-  local REASON="\e[97m$1\e[39m"
-  local FLAG="\e[93m[WARNING]\e[39m"
-  msg "$FLAG $REASON"
-}
-function info() {
-  local REASON="$1"
-  local FLAG="\e[36m[INFO]\e[39m"
-  msg "$FLAG $REASON"
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
 
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
