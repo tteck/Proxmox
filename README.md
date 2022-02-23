@@ -167,7 +167,7 @@ To create a new Proxmox Home Assistant Container, run the following in the Proxm
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ha_container.sh)"
 ```
-To create a new Proxmox Unprivileged Home Assistant Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** Home Assistant Container, run the following in the Proxmox Shell.
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-homeassistant.sh)"
@@ -331,7 +331,7 @@ To create a new Proxmox MQTT LXC Container, run the following in the Proxmox She
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt_container.sh)"
 ```
-To create a new Proxmox Unprivileged MQTT LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** MQTT LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-mqtt.sh)"
@@ -387,7 +387,7 @@ To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red_container.sh)"
 ```
-To create a new Proxmox Unprivileged Node-RED LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** Node-RED LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-node-red.sh)"
@@ -434,7 +434,7 @@ To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb_container.sh)"
 ```
-To create a new Proxmox Unprivileged Mariadb LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** Mariadb LXC Container, run the following in the Proxmox Shell.
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-mariadb.sh)"
@@ -651,7 +651,7 @@ To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run th
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian11_container.sh)"
 ```
-To create a new Proxmox Unprivileged Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-debian.sh)"
@@ -685,7 +685,7 @@ To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu_container.sh)"
 ```
-To create a new Proxmox Unprivileged Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox **Unprivileged** Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/unpriv/unprivileged-ubuntu.sh)"
