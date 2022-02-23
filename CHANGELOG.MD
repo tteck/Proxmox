@@ -7,24 +7,24 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Adguard Home LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 
 ## 2022-02-22
 
 ### Changed
 
 - **Home Assistant Container LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 - **Node-Red LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 - **Mariadb LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 - **MQTT LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 - **Debian 11 LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 - **Ubuntu 21.10 LXC**
-  - Add NEW Unprivileged Install Script
+  - Add NEW Privileged/Unprivileged Install Script
 
 ## 2022-02-20
 
