@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
   - Using NEW Privileged/Unprivileged Install Script
 - **Zigbee2MQTT LXC**
   - Using NEW Privileged Install Script
+- **Home Assistant Container LXC**
+  - Update Menu usability improvements
 
 ## 2022-02-22
 
