@@ -31,20 +31,7 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-function cleanup_ctid() {
-  if $(pct status $CTID &>/dev/null); then
-    if [ "$(pct status $CTID | awk '{print $2}')" == "running" ]; then
-      pct stop $CTID
-    fi
-    pct destroy $CTID
-  elif [ "$(pvesm list $STORAGE --vmid $CTID)" != "" ]; then
-    pvesm free $ROOTFS
-  fi
-}
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
+
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
