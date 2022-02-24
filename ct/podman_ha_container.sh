@@ -121,10 +121,10 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using '$STORAGE' for storage location."
+info "Using ${BL}$STORAGE${CL} for storage location."
 
 CTID=$(pvesh get /cluster/nextid)
-info "Container ID is $CTID."
+info "Container ID is ${BL}$CTID${CL}"
 echo -en "${GN} Updating LXC Template List... "
 pveam update >/dev/null
 echo -e "${CM}${CL} \r"
