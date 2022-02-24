@@ -57,7 +57,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Podman... \e[0m"
 apt-get -y install podman &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Yacht Image...\e[0m"
-podman pull selfhostedpro/yacht:latest &>/dev/null
+podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Yacht... \e[0m"
 podman volume create yacht >/dev/null
@@ -72,7 +72,7 @@ podman run -d \
   selfhostedpro/yacht:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
-podman pull home-assistant/home-assistant:stable &>/dev/null
+podman pull docker.lo/home-assistant/home-assistant:stable &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 podman volume create hass_config >/dev/null
