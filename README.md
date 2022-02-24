@@ -81,7 +81,6 @@ ________________________________________________________________________________
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
  
 <h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
-<h3 align="center" id="heading"> With ZFS Filesystem Support </h3>
 To create a new Proxmox Podman Home Assistant Container, run the following in the Proxmox Shell. 
 
  ([What is Podman?](https://youtu.be/lkg5QJsoCCQ))
