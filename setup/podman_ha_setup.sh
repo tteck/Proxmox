@@ -72,7 +72,7 @@ podman run -d \
   selfhostedpro/yacht:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Pulling Home Assistant Image...\e[0m"
-podman pull docker.lo/home-assistant/home-assistant:stable &>/dev/null
+podman pull docker.lo/home-assistant/home-assistant:latest &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Installing Home Assistant... \e[0m"
 podman volume create hass_config >/dev/null
