@@ -123,10 +123,16 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
+
 podman generate systemd \
     --new --name homeassistant \
     > /etc/systemd/system/homeassistant.service 
 systemctl enable homeassistant &>/dev/null
+
+podman generate systemd \
+    --new --name yacht \
+    > /etc/systemd/system/yacht.service 
+systemctl enable yacht &>/dev/null
 
 echo -e "${CHECKMARK} \e[1;92m Cleanup... \e[0m"
 rm -rf /podman_ha_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
