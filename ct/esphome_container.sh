@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+YW=`echo "\033[33m"`
+BL=`echo "\033[36m"`
+RD=`echo "\033[01;31m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
+
 while true; do
     read -p "This will create a New ESPHome LXC Container. Proceed(y/n)?" yn
     case $yn in
@@ -8,6 +15,20 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+clear
+function header_info {
+echo -e "${CL}
+  ______  _____ _____  _    _  ____  __  __ ______ 
+ |  ____|/ ____|  __ \| |  | |/ __ \|  \/  |  ____|
+ | |__  | (___ | |__) | |__| | |  | | \  / | |__   
+ |  __|  \___ \|  ___/|  __  | |  | | |\/| |  __|  
+ | |____ ____) | |    | |  | | |__| | |  | | |____ 
+ |______|_____/|_|    |_|  |_|\____/|_|  |_|______|
+                                                                                                                                                                           
+${CL}"
+}
+
+header_info
 
 set -o errexit
 set -o errtrace
@@ -101,15 +122,16 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using '$STORAGE' for storage location."
+info "Using ${BL}$STORAGE${CL} for storage location."
 
 CTID=$(pvesh get /cluster/nextid)
-info "Container ID is $CTID."
+info "Container ID is ${BL}$CTID.${CL}"
 
-echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
+echo -en "${GN} Updating LXC Template List... "
 pveam update >/dev/null
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
+echo -en "${GN} Downloading LXC Template... "
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -130,8 +152,9 @@ case $STORAGE_TYPE in
 esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
+echo -en "${GN} Creating LXC Container... "
 DISK_SIZE=4G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -149,14 +172,17 @@ pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
+echo -e "${CM}${CL} \r"
 
-echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
+echo -en "${GN} Starting LXC Container... "
 pct start $CTID
 pct push $CTID esphome_setup.sh /esphome_setup.sh -perms 755
+echo -e "${CM}${CL} \r"
 pct exec $CTID /esphome_setup.sh
 
+
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully created ESPHome LXC Container to $CTID"
-echo -e "\e[1;92m ESPHome should be reachable by going to the following URL.
-                  http://${IP}:6052
-\e[0m"
+info "Successfully created ESPHome LXC Container to ${BL}$CTID${CL}"
+echo -e "${CL} ESPHome should be reachable by going to the following URL.
+                  ${BL}http://${IP}:6052${CL}
+\n"
