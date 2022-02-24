@@ -63,6 +63,7 @@ echo -e "${CHECKMARK} \e[1;92m Installing Yacht... \e[0m"
 podman volume create yacht >/dev/null
 podman run -d \
   --name yacht \
+  --restart always \
   -v /var/run/podman/podman.sock:/var/run/docker.sock \
   -v yacht:/config \
   -v /etc/localtime:/etc/localtime:ro \
