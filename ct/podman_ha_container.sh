@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-
+YW=`echo "\033[33m"`
+BL=`echo "\033[36m"`
+RD=`echo "\033[01;31m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 while true; do
     read -p "This will create a New Podman Home Assistant Container LXC. Proceed(y/n)?" yn
     case $yn in
@@ -9,16 +14,31 @@ while true; do
     esac
 done
 clear
+function header_info {
+echo -e "${BL}
+  _____          _                                                  
+ |  __ \        | |                                                 
+ | |__) |__   __| |_ __ ___   __ _ _ __                             
+ |  ___/ _ \ / _  |  _   _ \ / _  |  _ \                            
+ | |  | (_) | (_| | | | | | | (_| | | | |                           
+ |_|   \___/ \__,_|_| |_| |_|\__,_|_| |_|  _     _              _   
+ | |                                      (_)   | |            | |  
+ | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_ 
+ |  _ \ / _ \|  _   _ \ / _ \/ _  / __/ __| / __| __/ _  |  _ \| __|
+ | | | | (_) | | | | | |  __/ (_| \__ \__ \ \__ \ || (_| | | | | |_ 
+ |_| |_|\___/|_| |_| |_|\___|\__,_|___/___/_|___/\__\__,_|_| |_|\__|
+                                                                                                                        
+${CL}"
+}
+header_info
 set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
 trap die ERR
 trap cleanup EXIT
-
 function error_exit() {
   trap - ERR
   local DEFAULT='Unknown failure occured.'
@@ -105,9 +125,11 @@ info "Using '$STORAGE' for storage location."
 
 CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
-echo -e "${CHECKMARK} \e[1;92m Updating LXC Template List... \e[0m"
+echo -en "${GN} Updating LXC Template List... "
 pveam update >/dev/null
-echo -e "${CHECKMARK} \e[1;92m Downloading LXC Template... \e[0m"
+echo -e "${CM}${CL} \r"
+
+echo -en "${GN} Downloading LXC Template... "
 OSTYPE=debian
 OSVERSION=${OSTYPE}-11
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($OSVERSION.*\)/\1/p" | sort -t - -k 2 -V)
@@ -128,24 +150,20 @@ case $STORAGE_TYPE in
 esac
 DISK=${DISK_PREFIX:-vm}-${CTID}-disk-0${DISK_EXT-}
 ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
-echo -e "${CHECKMARK} \e[1;92m Creating LXC Container... \e[0m"
+echo -e "${CM}${CL} \r"
+
+echo -en "${GN} Creating LXC Container... "
 DISK_SIZE=8G
 pvesm alloc $STORAGE $CTID $DISK $DISK_SIZE --format ${DISK_FORMAT:-raw} >/dev/null
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8.2/fuse-overlayfs-x86_64
   warn "Some containers may not work properly due to ZFS not supporting 'fallocate'."
 else
   mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
 fi
   ARCH=$(dpkg --print-architecture)
-HOSTNAME=homeassistant
+HOSTNAME=p-homeassistant
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
-if [ "$STORAGE_TYPE" == "zfspool" ]; then  
-  CT_FEATURES="fuse=1,keyctl=1,mknod=1,nesting=1"
-else
-  CT_FEATURES="nesting=1"
-fi
-pct create $CTID $TEMPLATE_STRING -arch $ARCH -features $CT_FEATURES \
+pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -cores 2 -memory 2048 \
   -ostype $OSTYPE -rootfs $ROOTFS,size=$DISK_SIZE -storage $STORAGE >/dev/null
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
@@ -153,24 +171,19 @@ cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
-
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
 ln -fs $(readlink /etc/localtime) ${MOUNT}/etc/localtime
 pct unmount $CTID && unset MOUNT
-
-echo -e "${CHECKMARK} \e[1;92m Starting LXC Container... \e[0m"
+echo -e "${CM}${CL} \r"
+echo -en "${GN} Starting LXC Container... "
 pct start $CTID
-if [ "$STORAGE_TYPE" == "zfspool" ]; then
-pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
-info "Using fuse-overlayfs."
-fi
 pct push $CTID podman_ha_setup.sh /podman_ha_setup.sh -perms 755
+echo -e "${CM}${CL} \r"
 pct exec $CTID /podman_ha_setup.sh
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-info "Successfully Created Podman Home Assistant Container LXC to $CTID."
-echo -e "\e[1;92m Home Assistant Container should be reachable by going to the following URL.
-                  http://${IP}:8123
+info "Successfully Created Podman Home Assistant Container LXC to ${BL}$CTID${CL}."
+echo -e "${CL} Home Assistant Container should be reachable by going to the following URL.
+                  ${BL}http://${IP}:8123${CL}
 Yacht should be reachable by going to the following URL.
-                  http://${IP}:8000
-\e[0m"
+                  ${BL}http://${IP}:8000${CL} \n"
