@@ -827,7 +827,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> MotionEye NVR LXC </summary>
  
-<p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/motioneye-256x256.png" width="100" height="100"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> MotionEye NVR LXC </h1>
 
