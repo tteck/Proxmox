@@ -366,7 +366,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸Node-Red LXC </summary>
  
-<p align="center"><img src="https://nodered.org/about/resources/media/node-red-icon.png" alt="@node-red" width="100" height="100"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Node-Red LXC Container </h1>
  
