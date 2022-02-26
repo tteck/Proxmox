@@ -8,7 +8,7 @@
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
  
-<p align="center"><img src="https://www.proxmox.com/images/proxmox/Proxmox_logo_standard_hex_400px.png" alt="Proxmox Server Solutions" height="55"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
@@ -235,7 +235,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span">ESPHome LXC</summary>
  
-<p align="center"><img src="https://esphome.io/_static/logo-text.svg" alt="Logo" height="90"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> ESPHome LXC Container </h1>
 
@@ -600,7 +600,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> Zwavejs2MQTT LXC </summary>
  
-<p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/zwave/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC Container </h1>
 
@@ -705,7 +705,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> Plex Media Server LXC </summary>
 
-<p align="center"><img src="https://www.plex.tv/wp-content/themes/plex/assets/img/plex-logo.svg" height="80"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/plex/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Plex Media Server LXC </h1>
 <h3 align="center" id="heading"> With Hardware Acceleration Support </h3> 
@@ -739,7 +739,7 @@ ________________________________________________________________________________
 
 <details>
 <summary markdown="span"> Jellyfin Media Server LXC </summary>
-<p align="center"><img src="https://jellyfin.org/images/banner-dark.svg" height="80"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/jellyfin/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
 
 To create a new Proxmox Jellyfin Media Server LXC, run the following in the Proxmox Shell.
@@ -766,7 +766,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span">Pi-hole LXC</summary>
  
-<p align="center"><img src="https://camo.githubusercontent.com/9426a93d32aa9f5ad757b2befcdb762a270d344efd6b8d287a2cea2c4c2233b8/68747470733a2f2f70692d686f6c652e6769746875622e696f2f67726170686963732f566f727465782f566f727465785f776974685f576f72646d61726b2e737667" alt="Pi-hole" width="100" height="100"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/pi_hole/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
@@ -799,7 +799,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸AdGuard Home LXC</summary>
  
-<p align="center"><img src="https://dashboard.snapcraft.io/site_media/appmedia/2020/04/256.png" width="100" height="100"/></p>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/adguard/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> AdGuard Home LXC </h1>
 
