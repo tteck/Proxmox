@@ -849,7 +849,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  `admin`
  
  **password** 
- `Leave Blank`
+ 
  
 ⚙️ **To Update MotionEye**
  
