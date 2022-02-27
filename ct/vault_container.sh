@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-
+CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 while true; do
     read -p "This will create a New Vaultwarden LXC Container. Proceed(y/n)?" yn
     case $yn in
@@ -9,18 +14,25 @@ while true; do
     esac
 done
 clear
+function header_info {
+echo -e "${BL}
+ __      __         _ _                         _            
+ \ \    / /        | | |                       | |           
+  \ \  / /_ _ _   _| | |___      ____ _ _ __ __| | ___ _ __  
+   \ \/ / _  | | | | | __\ \ /\ / / _  |  __/ _  |/ _ \  _ \ 
+    \  / (_| | |_| | | |_ \ V  V / (_| | | | (_| |  __/ | | |
+     \/ \__,_|\__,_|_|\__| \_/\_/ \__,_|_|  \__,_|\___|_| |_|
+                                                                                                                        
+${CL}"
+}
+
+header_info
 set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
-RD=`echo "\033[01;31m"`
-BL=`echo "\033[36m"`
-CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
 trap die ERR
 trap cleanup EXIT
 
