@@ -31,6 +31,8 @@ while true; do
 done
 clear
 update_info
+echo -e "${GN} Stopping Vaultwarden... ${CL}"
+systemctl stop vaultwarden.service
 
 echo -e "${GN} Updating to ${VWRELEASE}... ${CL}"
 wget https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
@@ -40,13 +42,8 @@ cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
 echo -e "${GN} Cleanup... ${CL}"
 rm -r bw_web_$VWRELEASE.tar.gz web-vault
 sleep 2
-echo -e "${GN} Finished Update, Please Reboot Vaultwarden ${CL}"
-while true; do
-    read -p "Reboot Now? (y/n)" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-reboot
+
+echo -e "${GN} Starting Vaultwarden... ${CL}"
+systemctl start vaultwarden.service
+sleep 1
+echo -e "${GN} Finished Update ${CL}"
