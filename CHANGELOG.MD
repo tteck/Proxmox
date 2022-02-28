@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-02-28
+
+### Changed
+
+- **Vaultwarden LXC**
+  - Add Update Script
+
 ## 2022-02-24
 
 ### Changed
