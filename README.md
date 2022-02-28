@@ -927,6 +927,13 @@ Expect 30+ minute install time.
  
 **Vaultwarden Interface - IP:8000**
 
+⚙️ **To Update Vaultwarden**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/vaultwarden-update.sh)"
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
