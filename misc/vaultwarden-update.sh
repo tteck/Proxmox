@@ -33,6 +33,7 @@ clear
 update_info
 echo -e "${GN} Stopping Vaultwarden... ${CL}"
 systemctl stop vaultwarden.service
+sleep 1
 
 echo -e "${GN} Updating to ${VWRELEASE}... ${CL}"
 wget https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
