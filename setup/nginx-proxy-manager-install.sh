@@ -102,9 +102,13 @@ echo -en "${GN} Installing Yarn... "
 npm install --global yarn &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Downloading NPM v2.9.16... "
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.16 -O - | tar -xz &>/dev/null
-cd ./nginx-proxy-manager-2.9.16
+RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 3, length($2)-4) }') \
+
+echo -en "${GN} Downloading NPM v${RELEASE}... "
+wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz &>/dev/null
+cd ./nginx-proxy-manager-${RELEASE}
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Setting up Enviroment... "
@@ -113,8 +117,8 @@ ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
-sed -i "s+0.0.0+#v2.9.16+g" backend/package.json
-sed -i "s+0.0.0+#v2.9.16+g" frontend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
 
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
