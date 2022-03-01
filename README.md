@@ -842,10 +842,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/d
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 8GB Storage - 1vCPU ⚡</h3>
  
 **Daemon Sync Server Interface - IP:8084**
- 
-[Android App](https://play.google.com/store/apps/details?id=com.discsoft.daemonsync)
- 
-[iPhone App](https://itunes.apple.com/us/app/daemon-sync/id992411172) 
+
 __________________________________________________________________________________________ 
 
 </details>
