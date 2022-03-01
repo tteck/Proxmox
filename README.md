@@ -313,7 +313,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 </details>
 
 <details>
-<summary markdown="span"> 🔸MQTT LXC</summary>
+<summary markdown="span"> MQTT LXC</summary>
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
@@ -364,7 +364,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Node-Red LXC </summary>
+<summary markdown="span"> Node-Red LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
@@ -407,7 +407,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Mariadb LXC </summary>
+<summary markdown="span"> Mariadb LXC </summary>
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
 
@@ -619,7 +619,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Debian 11 LXC </summary>
+<summary markdown="span"> Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -648,7 +648,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Ubuntu 21.10 LXC </summary>
+<summary markdown="span"> Ubuntu 21.10 LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
