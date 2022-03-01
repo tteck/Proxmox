@@ -1,6 +1,30 @@
 #!/usr/bin/env bash
+RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 3, length($2)-4) }') \
+
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
+
+function update_info {
+echo -e "${RD}
+  _   _   _____    __  __ 
+ | \ | | |  __ \  |  \/  |
+ |  \| | | |__) | | \  / |
+ |     | |  ___/  | |\/| |
+ | |\  | | |      | |  | |
+ |_| \_| |_|      |_|  |_|
+      UPDATE  v${RELEASE}                                                                                                                      
+${CL}"
+}
+
+update_info
+
 while true; do
-    read -p "This will update Nginx Proxy Manager LXC Container. Proceed(y/n)?" yn
+    read -p "This will update Nginx Proxy Manager to v${RELEASE}. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -8,17 +32,13 @@ while true; do
     esac
 done
 clear
+update_info
 set -o errexit  
 set -o errtrace 
 set -o nounset  
 set -o pipefail 
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-RD=`echo "\033[01;31m"`
-BL=`echo "\033[36m"`
-CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
 trap die ERR
 trap 'die "Script interrupted."' INT
 
@@ -34,11 +54,7 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-T="$(date +%s)"
-echo -en "${GN} Updating Container OS... "
-apt-get update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
-echo -e "${CM}${CL} \r"
+T="$(date +%M)"
 
 if [ -f /lib/systemd/system/npm.service ]; then
 echo -en "${GN} Prep For Update... "
@@ -62,9 +78,9 @@ echo -en "${GN} Cleaning Old Files... "
   exit
 fi
 
-echo -en "${GN} Downloading NPM v2.9.16... "
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.16 -O - | tar -xz &>/dev/null
-cd ./nginx-proxy-manager-2.9.16
+echo -en "${GN} Downloading NPM v${RELEASE}... "
+wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz &>/dev/null
+cd ./nginx-proxy-manager-${RELEASE}
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Setting up Enviroment... "
@@ -72,8 +88,8 @@ ln -sf /usr/bin/python3 /usr/bin/python
 ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
-sed -i "s+0.0.0+#v2.9.16+g" backend/package.json
-sed -i "s+0.0.0+#v2.9.16+g" frontend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
 for NGINX_CONF in $NGINX_CONFS; do
@@ -152,10 +168,10 @@ systemctl enable npm &>/dev/null
 systemctl start openresty
 systemctl start npm
 echo -e "${CM}${CL} \r"
-T="$(($(date +%s)-T))"
+TS="$(($(date +%M)-T))"
 
 IP=$(hostname -I | cut -f1 -d ' ')
-echo -e    "${GN}Successfully Updated Nginx Proxy Manager, and it took ${RD}${T} seconds.${CL}
-                  ${BL}NPM should be reachable at https://${IP}:81 ${CL}
+echo -e "${GN}Successfully Updated Nginx Proxy Manager to ${RD}${RELEASE}${CL} and it took ${RD}${TS} minutes.${CL}
+               NPM should be reachable at ${BL}http://${IP}:81 ${CL}
                   
                   "
