@@ -825,6 +825,32 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Daemon Sync Server LXC</summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.informer.com%2Ficons_mac%2Fpng%2F128%2F350%2F350335.png&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading"> Daemon Sync Server LXC </h1>
+
+Sync files from app to server, share photos & videos, back up your data and stay secure inside local network.
+
+To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/daemonsync.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 8GB Storage - 1vCPU ⚡</h3>
+ 
+**Daemon Sync Server Interface - IP:8084**
+ 
+[Android App](https://play.google.com/store/apps/details?id=com.discsoft.daemonsync)
+ 
+[iPhone App](https://itunes.apple.com/us/app/daemon-sync/id992411172) 
+__________________________________________________________________________________________ 
+
+</details>
+ 
+<details>
 <summary markdown="span"> MotionEye NVR LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
