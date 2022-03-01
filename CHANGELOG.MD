@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-03-01
+
+### Changed
+
+- **Daemon Sync Server LXC**
+  - New Script
+
 ## 2022-02-28
 
 ### Changed
@@ -102,7 +109,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **GamUntu LXC**
-  - New script
+  - New Script
 - **Jellyfin Media Server LXC**
   - new script to fix [start issue](https://github.com/tteck/Proxmox/issues/29#issue-1127457380)
 - **MotionEye NVR LXC**
