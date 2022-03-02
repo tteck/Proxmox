@@ -27,6 +27,23 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸Proxmox LXC Updater</summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Felpuig.xeill.net%2FMembers%2Fvcarceler%2Farticulos%2Fcontenedores-con-lxd-lxc%2Fcontainers.png&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading">Proxmox LXC Updater </h1>
+
+Updates All LXC's Fast & Easy
+ 
+Run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/update-lxcs.sh)"
+```
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span">Proxmox Dark Theme</summary>
