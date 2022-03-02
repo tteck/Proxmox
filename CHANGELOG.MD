@@ -65,7 +65,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Home Assistant Container LXC**
-  - Add Script to migrate to the latest Update Menu
+  - New Script to migrate to the latest Update Menu
 
 ## 2022-02-19
 
