@@ -15,7 +15,7 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${RD}
+echo -e "${BL}
   _____                                      _____                  
  |  __ \                                    / ____|                 
  | |  | | __ _  ___ _ __ ___   ___  _ __   | (___  _   _ _ __   ___ 
