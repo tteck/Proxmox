@@ -6,7 +6,7 @@ CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 while true; do
-    read -p "This will create a New Debian Bulleyes LXC. Proceed(y/n)?" yn
+    read -p "This will create a New Debian Bulleye LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -156,4 +156,4 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created Debian Bulleyes LXC to${CL} ${BL}$CTID${CL}. \n"
+echo -e "${GN}Successfully created Debian Bulleye LXC to${CL} ${BL}$CTID${CL}. \n"
