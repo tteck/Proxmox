@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Proxmox LXC Updater**
   - New Script
+- **Dashy LXC**
+  - New Script
 
 ## 2022-03-01
 
