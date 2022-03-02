@@ -33,7 +33,6 @@ containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 function update_container() {
   container=$1
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
-  # to chain commands within one exec we will need to wrap them in bash
   pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
 
