@@ -75,7 +75,7 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Dashy... "
 git clone https://github.com/Lissy93/dashy.git &>/dev/null
 cd /dashy
-yarn
+yarn &>/dev/null
 export NODE_OPTIONS=--max-old-space-size=1000 &>/dev/null
 yarn build &>/dev/null
 echo -e "${CM}${CL} \r"
