@@ -72,7 +72,7 @@ echo -en "${GN} Installing Yarn... "
 npm install --global yarn &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Dashy... "
+echo -en "${GN} Installing Dashy (Patience)... "
 git clone https://github.com/Lissy93/dashy.git &>/dev/null
 cd /dashy
 yarn &>/dev/null
