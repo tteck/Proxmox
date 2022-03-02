@@ -520,7 +520,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> Zigbee2MQTT LXC </summary>
  
-<p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo.png?raw=true" alt="logo.png" width="100" height="100"/></p>
+<p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo_bee_only.png?raw=true" height="100"/></p>
 
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC Container</h1>
