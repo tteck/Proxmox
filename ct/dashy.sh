@@ -138,7 +138,7 @@ export PCT_OPTIONS="
   -net0 name=eth0,bridge=vmbr0,ip=dhcp
   -onboot 1
   -cores 2
-  -memory 1024
+  -memory 2048
   -unprivileged ${IM}
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
