@@ -280,7 +280,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Nginx Proxy Manager LXC </summary>
+<summary markdown="span"> Nginx Proxy Manager LXC </summary>
  
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
