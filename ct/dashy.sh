@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+clear
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
