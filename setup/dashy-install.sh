@@ -74,7 +74,7 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Dashy... "
 git clone https://github.com/Lissy93/dashy.git &>/dev/null
-cd dashy/
+cd /dashy
 yarn
 export NODE_OPTIONS=--max-old-space-size=1000 &>/dev/null
 yarn build &>/dev/null
@@ -87,7 +87,7 @@ Description=dashy
 
 [Service]
 Type=simple
-WorkingDirectory=/root/dashy
+WorkingDirectory=/dashy
 ExecStart=/usr/bin/yarn start
 [Install]
 WantedBy=multi-user.target
