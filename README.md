@@ -841,6 +841,29 @@ ________________________________________________________________________________
 
 </details>
 
+
+<details>
+<summary markdown="span"> 🔸Dashy LXC</summary>
+ 
+<p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
+
+<h1 align="center" id="heading"> Dashy LXC </h1>
+
+Dashy helps you organize your self-hosted services by making them accessible from a single place
+
+To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/dashy.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 3GB Storage - 2vCPU ⚡</h3>
+ 
+**Dashy Interface - IP:4000**
+
+__________________________________________________________________________________________ 
+
+</details>
+
 <details>
 <summary markdown="span"> 🔸Daemon Sync Server LXC</summary>
  
