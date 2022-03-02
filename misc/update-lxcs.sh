@@ -32,7 +32,7 @@ containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 
 function update_container() {
   container=$1
-  echo -e "${BL}[Info]${GN} Updating${BL} $container... ${CL}"
+  echo -e "${BL}[Info]${GN} Updating${BL} $container... ${CL} \n"
   # to chain commands within one exec we will need to wrap them in bash
   pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
@@ -41,14 +41,15 @@ for container in $containers
 do
   status=`pct status $container`
   if [ "$status" == "status: stopped" ]; then
-    echo -e "${BL}[Info]${GN} Starting${BL} $container... ${CL}"
+    echo -e "${BL}[Info]${GN} Starting${BL} $container... ${CL} \n"
     pct start $container
-    echo -e "${BL}[Info]${GN} Waiting For${BL} $container To Start... ${CL}"
+    echo -e "${BL}[Info]${GN} Waiting For${BL} $container To Start... ${CL} \n"
     sleep 5
     update_container $container
-    echo -e "${BL}[Info]${GN} Shutting down${BL} $container ${CL}"
+    echo -e "${BL}[Info]${GN} Shutting down${BL} $container ${CL} \n"
     pct shutdown $container &
   elif [ "$status" == "status: running" ]; then
     update_container $container
   fi
 done; wait
+echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
