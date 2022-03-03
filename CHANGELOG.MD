@@ -11,9 +11,9 @@ All notable changes to this project will be documented in this file.
 - **Dashy LXC**
   - New Script
 - **Grafana LXC**
-  - [New Test Script](https://github.com/tteck/Proxmox/issues/45#issuecomment-1057602944)
+  - New Script
 - **InfluxDB LXC**
-  - [New Test Script](https://github.com/tteck/Proxmox/issues/45#issuecomment-1057602944)
+  - New Script
 
 ## 2022-03-01
 
