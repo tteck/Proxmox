@@ -1060,6 +1060,45 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸WireGuard LXC </summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2699%2FPNG%2F512%2Fwireguard_logo_icon_168760.png&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading"> WireGuard LXC </h1>
+
+To create a new Proxmox WireGuard LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/wireguard.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+⚙️ **Host Configuration**
+ 
+Run in the LXC console
+ ```yaml
+ nano /etc/pivpn/wireguard/setupVars.conf
+ ```
+ ⚙️**Add Clients** 
+ 
+ Run in the LXC console
+ ```yaml
+ pivpn add
+ ```
+⚙️ **To Update WireGuard**
+ 
+Run in the LXC console
+ ```yaml
+apt update && apt upgrade -y
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> 🔸Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
