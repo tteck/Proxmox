@@ -636,6 +636,73 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸InfluxDB LXC </summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
+
+<h1 align="center" id="heading"> InfluxDB LXC Container </h1>
+
+To create a new Proxmox InfluxDB LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/influxdb.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+⚙️ **To Update InfluxDB**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
+<summary markdown="span"> 🔸Grafana LXC </summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdocs.checkmk.com%2Flatest%2Fimages%2Fgrafana_logo.png&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading"> Grafana LXC Container </h1>
+
+To create a new Proxmox Grafana LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/grafana.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ admin
+ ```
+
+⚙️ **To Update Grafana**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
@@ -911,9 +978,13 @@ After the script completes, If you're dissatisfied with the default settings, cl
 ⚙️ **Initial Login**
 
 **username** 
- `admin`
- 
+ ```yaml
+ admin
+ ```
  **password** 
+ ```yaml
+ 
+ ```
  
  
 ⚙️ **To Update MotionEye**
@@ -951,10 +1022,13 @@ Benefits include automatic daily security updates, backup and restore, file mana
 ⚙️ **Initial Login**
 
 **username** 
- `root`
- 
+ ```yaml
+ root
+ ```
  **password** 
- `root`
+ ```yaml
+ root
+ ```
  
 ⚙️ **To Update Webmin**
 
