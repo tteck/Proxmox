@@ -71,7 +71,11 @@ echo -en "${GN} Installing InfluxDB... "
 apt-get update &>/dev/null
 apt-get install -y influxdb &>/dev/null
 echo -e "${CM}${CL} \r"
- 
+
+echo -en "${GN} Installing Telegraf... "
+apt-get install -y telegraf &>/dev/null
+echo -e "${CM}${CL} \r"
+
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
