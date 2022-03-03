@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
+BL=`echo "\033[94m"`
 RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
