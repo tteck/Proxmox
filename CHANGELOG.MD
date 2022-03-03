@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
   - New Script
 - **Grafana LXC**
   - New Script
-- **InfluxDB LXC**
+- **InfluxDB/Telegraf LXC**
   - New Script
 
 ## 2022-03-01
