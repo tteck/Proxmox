@@ -636,11 +636,11 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸InfluxDB LXC </summary>
+<summary markdown="span"> 🔸InfluxDB/Telegraf LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
 
-<h1 align="center" id="heading"> InfluxDB LXC Container </h1>
+<h1 align="center" id="heading"> InfluxDB/Telegraf LXC Container </h1>
 
 To create a new Proxmox InfluxDB LXC Container, run the following in the Proxmox Shell.
 
@@ -652,7 +652,21 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/i
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
-⚙️ **To Update InfluxDB**
+⚙️ **InfluxDB Configuration**
+
+Run in the LXC console
+```yaml
+nano /etc/influxdb/influxdb.conf
+```
+
+⚙️ **Telegraf Configuration**
+
+Run in the LXC console
+```yaml
+nano /etc/telegraf/telegraf.conf
+```
+
+⚙️ **To Update InfluxDB/Telegraf**
 
 Run in the LXC console
 ```yaml
