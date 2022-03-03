@@ -84,6 +84,8 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
 systemctl daemon-reload
+systemctl start grafana-server
+systemctl enable grafana-server.service &>/dev/null
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
 
