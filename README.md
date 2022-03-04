@@ -28,6 +28,24 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Proxmox Kernel Clean</summary>
+ 
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading">Proxmox Kernel Clean </h1>
+
+Cleaning unused kernel images is not only good because of a reduced grub menu, but also gains some disk space.
+ 
+Run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/kernel-clean.sh)"
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> 🔸Proxmox LXC Updater</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Felpuig.xeill.net%2FMembers%2Fvcarceler%2Farticulos%2Fcontenedores-con-lxd-lxc%2Fcontainers.png&f=1&nofb=1" height="100"/></p>
