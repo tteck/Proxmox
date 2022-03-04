@@ -5,7 +5,15 @@ RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
-# Current kernel
+while true; do
+    read -p "This will Clean unused Kernel images. Proceed(y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+clear
 current_kernel=$(uname -r)
 function check_root {
         if [[ $EUID -ne 0 ]]; then
@@ -13,7 +21,6 @@ function check_root {
                 exit 1
         fi
 }
-clear
 function header_info {
 echo -e "${RD}
   _  __                    _    _____ _                  
