@@ -52,7 +52,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading">Proxmox LXC Updater </h1>
 
-Updates All LXC's Fast & Easy
+Update All LXC's Fast & Easy
  
 Run the following in the Proxmox Shell.
 
