@@ -60,7 +60,7 @@ pivpnMTU=1420
 pivpnPORT=51820
 pivpnDNS1=1.1.1.1
 pivpnDNS2=8.8.8.8
-pivpnHOST=pivpn.example.com
+pivpnHOST=
 pivpnPERSISTENTKEEPALIVE=25
 UNATTUPG=1
 EOF
