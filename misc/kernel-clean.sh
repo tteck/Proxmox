@@ -62,7 +62,7 @@ function kernel_clean {
         if [[ "$kernels_to_remove" != *"pve"* ]]; then
                 printf "It appears there are no old Kernels on your system \n"
         else
-                        read -p "[!] Would you like to remove the $(echo $kernels_to_remove | awk '{print NF}') selected Kernels listed above? [y/N]: " -n 1 -r
+                        read -p "[!] Would you like to remove the $(echo $kernels_to_remove | awk '{print NF}') selected Kernels listed above? [y/n]: " -n 1 -r
                         printf "\n"
         fi
                 if [[ $REPLY =~ ^[Yy]$ ]]; then
