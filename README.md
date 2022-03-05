@@ -862,6 +862,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/g
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
+**Webmin Interface - https:// IP:10000 (https)**
+
 ⚙️ **To Update GamUntu**
 
 Run in the LXC console
