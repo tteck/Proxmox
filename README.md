@@ -265,6 +265,59 @@ ________________________________________________________________________________
 </details>
 
 
+<details>
+<summary markdown="span"> 🔸Homebridge LXC</summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading"> Homebridge LXC </h1>
+
+To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/homebridge.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+ 
+**Homebridge Interface - IP:8581**
+
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ admin
+ ```
+Config File Path	`/var/lib/homebridge/config.json`
+ 
+Storage Path	`/var/lib/homebridge`
+ 
+Restart Command	`sudo hb-service restart`
+ 
+Stop Command	`sudo hb-service stop`
+ 
+Start Command	`sudo hb-service start`
+ 
+View Logs Command	`sudo hb-service logs`
+ 
+Systemd Service File	`/etc/systemd/system/homebridge.service`
+ 
+Systemd Env File	`/etc/default/homebridge`
+
+⚙️ **To Update Homebridge**
+
+```yaml
+Update from the Homebridge UI
+```
+
+ ___________________________________________________________________________________________ 
+ 
+</details>
+
 
 
 <details>
@@ -272,7 +325,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> ESPHome LXC Container </h1>
+<h1 align="center" id="heading"> ESPHome LXC </h1>
 
 To create a new Proxmox ESPHome LXC Container, run the following in the Proxmox Shell.
 
