@@ -128,14 +128,14 @@ pushd $TEMP_DIR >/dev/null
 export CTID=$(pvesh get /cluster/nextid)
 export PCT_OSTYPE=debian
 export PCT_OSVERSION=11
-export PCT_DISK_SIZE=8
+export PCT_DISK_SIZE=4
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname homebridge
   -net0 name=eth0,bridge=vmbr0,ip=dhcp
   -onboot 1
-  -cores 2
-  -memory 2048
+  -cores 1
+  -memory 1024
   -unprivileged ${IM}
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
