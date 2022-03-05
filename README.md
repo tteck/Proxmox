@@ -271,6 +271,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> Homebridge LXC </h1>
+Homebridge allows you to integrate with smart home devices that do not natively support HomeKit
 
 To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
 
