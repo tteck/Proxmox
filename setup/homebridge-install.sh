@@ -72,7 +72,7 @@ sudo npm install -g --unsafe-perm homebridge homebridge-config-ui-x &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Homebridge Service... "
-sudo hb-service install --user root &>/dev/null
+sudo hb-service install --user homebridge &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Customizing Container... "
