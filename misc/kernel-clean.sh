@@ -69,7 +69,7 @@ function kernel_clean {
                         printf "Removing $(echo $kernels_to_remove | awk '{print NF}') old Kernels..."
                         /usr/bin/apt purge -y $kernels_to_remove > /dev/null 2>&1
                         printf "Finished!\n"
-                        printf "Updating GRUB..."
+                        printf "Updating GRUB... \n"
                         /usr/sbin/update-grub > /dev/null 2>&1
                         printf "Finished!\n"
                 else
