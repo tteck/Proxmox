@@ -328,7 +328,7 @@ Update from the Homebridge UI
 
 <h1 align="center" id="heading"> ESPHome LXC </h1>
 
-To create a new Proxmox ESPHome LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome_container.sh)"
@@ -357,7 +357,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
 
-<h1 align="center" id="heading"> Nginx Proxy Manager LXC Container </h1>
+<h1 align="center" id="heading"> Nginx Proxy Manager LXC </h1>
 
 To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
 
@@ -407,9 +407,9 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
 
-<h1 align="center" id="heading"> MQTT LXC Container </h1>
+<h1 align="center" id="heading"> MQTT LXC </h1>
 
-To create a new Proxmox MQTT LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt.sh)"
@@ -457,10 +457,10 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> Node-Red LXC Container </h1>
+<h1 align="center" id="heading"> Node-Red LXC </h1>
  
 
-To create a new Proxmox Node-RED LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red.sh)"
@@ -500,9 +500,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
 
-<h1 align="center" id="heading"> Mariadb LXC Container </h1>
+<h1 align="center" id="heading"> Mariadb LXC </h1>
 
-To create a new Proxmox Mariadb LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell.
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb.sh)"
@@ -612,9 +612,9 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo_bee_only.png?raw=true" height="100"/></p>
 
 
-<h1 align="center" id="heading">Zigbee2MQTT LXC Container</h1>
+<h1 align="center" id="heading">Zigbee2MQTT LXC </h1>
 
-To create a new Proxmox Zigbee2MQTT LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt.sh)"
@@ -691,9 +691,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/zwave/icon.png?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> Zwavejs2MQTT LXC Container </h1>
+<h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
 
-To create a new Proxmox Zwavejs2MQTT LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zwavejs2mqtt_container.sh)"
@@ -712,9 +712,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
 
-<h1 align="center" id="heading"> InfluxDB/Telegraf LXC Container </h1>
+<h1 align="center" id="heading"> InfluxDB/Telegraf LXC </h1>
 
-To create a new Proxmox InfluxDB LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/influxdb.sh)"
@@ -754,9 +754,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdocs.checkmk.com%2Flatest%2Fimages%2Fgrafana_logo.png&f=1&nofb=1" height="100"/></p>
 
-<h1 align="center" id="heading"> Grafana LXC Container </h1>
+<h1 align="center" id="heading"> Grafana LXC </h1>
 
-To create a new Proxmox Grafana LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/grafana.sh)"
@@ -795,9 +795,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
-<h1 align="center" id="heading"> Debian 11 LXC Container </h1>
+<h1 align="center" id="heading"> Debian 11 LXC </h1>
 
-To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian.sh)"
@@ -824,9 +824,9 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
-<h1 align="center" id="heading"> Ubuntu 21.10 LXC Container </h1>
+<h1 align="center" id="heading"> Ubuntu 21.10 LXC </h1>
 
-To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu.sh)"
@@ -850,11 +850,11 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> GamUntu LXC</summary>
  <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/></p>
-<h1 align="center" id="heading"> GamUntu LXC Container </h1>
+<h1 align="center" id="heading"> GamUntu LXC </h1>
 
 GamUntu is Ubuntu 21.10, Docker, Docker Compose, ZFS Support, USB Passthrough, Webmin System Administration and Hardware Acceleration all baked in!
 
-To create a new Proxmox GamUntuLXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox GamUntu LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/gamuntu_container.sh)"
