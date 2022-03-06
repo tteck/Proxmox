@@ -82,7 +82,7 @@ done
 whiptail --defaultno --title "$TITLE" --yesno \
 "Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
-Version: 2022.01.23" 13 50 || exit
+Version: 2022.03.06" 13 50 || exit
 info "Zwavejs2MQTT Data from '$CTID_FROM' to '$CTID_TO'"
 if [ $(pct status $CTID_TO | sed 's/.* //') == 'running' ]; then
   msg "Stopping '$CTID_TO'..."
