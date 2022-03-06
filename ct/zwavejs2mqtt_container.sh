@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+YW=`echo "\033[33m"`
+BL=`echo "\033[36m"`
+RD=`echo "\033[01;31m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 
 while true; do
     read -p "This will create a New Zwavejs2MQTT LXC Container. Proceed(y/n)?" yn
@@ -8,6 +14,20 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+function header_info {
+echo -e "${RD}
+  ______                       _     ___  __  __  ____ _______ _______ 
+ |___  /                      (_)   |__ \|  \/  |/ __ \__   __|__   __|
+    / /_      ____ ___   _____ _ ___   ) | \  / | |  | | | |     | |   
+   / /\ \ /\ / / _  \ \ / / _ \ / __| / /| |\/| | |  | | | |     | |   
+  / /__\ V  V / (_| |\ V /  __/ \__ \/ /_| |  | | |__| | | |     | |   
+ /_____|\_/\_/ \__,_| \_/ \___| |___/____|_|  |_|\___\_\ |_|     |_|   
+                             _/ |                                      
+                            |__/                                       
+${CL}"
+}
+
+header_info
 
 set -o errexit 
 set -o errtrace 
