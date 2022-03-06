@@ -14,6 +14,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+clear
 function header_info {
 echo -e "${RD}
   ______                       _     ___  __  __  ____ _______ _______ 
