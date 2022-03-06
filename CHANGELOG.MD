@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Zwavejs2MQTT LXC**
-  - new GUI script to copy data from one Zwavejs2MQTT LXC to another Zwavejs2MQTT LXC
+  - New GUI script to copy data from one Zwavejs2MQTT LXC to another Zwavejs2MQTT LXC
 
 ## 2022-03-05
 
