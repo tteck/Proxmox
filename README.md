@@ -143,7 +143,7 @@ nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-⚙️ **Import Data From a Existing Home Assistant LXC to a Podman Home Assistant LXC**
+⚙️ **Copy Data From a Existing Home Assistant LXC to a Podman Home Assistant LXC**
 
 Run in the Proxmox Shell
 ```yaml
@@ -222,7 +222,7 @@ nano /var/lib/docker/volumes/hass_config/_data/configuration.yaml
 ```
 Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
 
-⚙️ **Import Data From a Existing Home Assistant LXC to another Home Assistant LXC**
+⚙️ **Copy Data From a Existing Home Assistant LXC to another Home Assistant LXC**
 
 Run in the Proxmox Shell
 ```yaml
@@ -675,7 +675,7 @@ Run in the LXC console
  ```yaml
 bash /opt/zigbee2mqtt/update.sh
  ```
-⚙️ **Import Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
+⚙️ **Copy Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
 
 Run in the Proxmox Shell
 ```yaml
@@ -702,6 +702,12 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/z
 
 **Zwavejs2MQTT Interface - IP:8091**
 
+⚙️ **Copy Data From a Existing Zwavejs2MQTT LXC to another Zwavejs2MQTT LXC**
+
+Run in the Proxmox Shell
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/zwave-copy-data.sh)"
+ ```
 
 ____________________________________________________________________________________________ 
 
@@ -900,7 +906,7 @@ Run in the LXC console
 ```yaml
 apt update && apt upgrade -y
 ```
-⚙️ **Import Data From a Existing Plex Media Server LXC to another Plex Media Server LXC**
+⚙️ **Copy Data From a Existing Plex Media Server LXC to another Plex Media Server LXC**
 
 Run in the Proxmox Shell
 ```yaml
