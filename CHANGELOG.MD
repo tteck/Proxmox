@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-03-06
+
+### Changed
+
+- **Zwavejs2MQTT LXC**
+  - new GUI script to copy data from one Zwavejs2MQTT LXC to another Zwavejs2MQTT LXC
+
 ## 2022-03-05
 
 ### Changed
