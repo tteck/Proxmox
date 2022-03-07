@@ -147,6 +147,11 @@ STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F "
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >> $LXC_CONFIG
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
+EOF
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
