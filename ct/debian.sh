@@ -5,8 +5,10 @@ RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+APP="Debian"
+HN=$(echo ${APP,,} | tr -d ' ')
 while true; do
-    read -p "This will create a New Debian Bulleye LXC. Proceed(y/n)?" yn
+    read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -132,7 +134,7 @@ export PCT_OSVERSION=11
 export PCT_DISK_SIZE=2
 export PCT_OPTIONS="
   -features $FEATURES
-  -hostname debian
+  -hostname $HN
   -net0 name=eth0,bridge=vmbr0,ip=dhcp
   -onboot 1
   -cores 1
@@ -152,8 +154,8 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/debian-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$HN-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created Debian Bulleye LXC to${CL} ${BL}$CTID${CL}. \n"
+echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}. \n"
