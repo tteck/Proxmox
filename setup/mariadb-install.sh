@@ -71,6 +71,8 @@ sudo a2enconf adminer &>/dev/null
 sudo systemctl reload apache2 &>/dev/null
 echo -e "${CM}${CL} \r"
 
+PASS=$(grep -w "root" /etc/shadow | cut -b6);
+  if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
@@ -83,8 +85,9 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
 systemctl daemon-reload
-systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//') 
+systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
+  fi
 
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
