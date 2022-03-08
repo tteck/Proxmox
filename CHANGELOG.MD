@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
   - New V2 Install Script
 - **Zwavejs2MQTT LXC**
   - New V2 Install Script
+- **Motioneye LXC**
+  - New V2 Install Script
 
 ## 2022-03-06
 
