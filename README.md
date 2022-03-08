@@ -1053,16 +1053,16 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> MotionEye NVR LXC </summary>
+<summary markdown="span"> 🔸MotionEye NVR LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> MotionEye NVR LXC </h1>
 
-To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox Shell.
+To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox Shell (V2).
 
 ```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/motioneye_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/motioneye.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
