@@ -322,7 +322,7 @@ Update from the Homebridge UI
 
 
 <details>
-<summary markdown="span">ESPHome LXC</summary>
+<summary markdown="span"> 🔸ESPHome LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
@@ -331,7 +331,7 @@ Update from the Homebridge UI
 To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
