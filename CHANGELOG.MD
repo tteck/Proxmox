@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-03-08
+
+### Changed
+
+- **Some Scripts** (eventually all)
+  - Choose between Automatic or Password Login 
+
 ## 2022-03-06
 
 ### Changed
