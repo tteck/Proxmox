@@ -35,8 +35,8 @@ show_menu(){
 }
 
 option_picked(){
-    message=${@:-"${CL}Error: No message passed"}
-    printf " ${YW}${message}${CL}\n"
+    message1=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
 }
 show_menu
 while [ $opt != '' ]
@@ -65,6 +65,50 @@ while [ $opt != '' ]
         *)clear;
             option_picked "Please choose a Install Method from the menu";
             show_menu;
+        ;;
+      esac
+    fi
+  done
+show_menu2(){
+    printf "    ${YW} 1)${GN} Use Automatic Login ${CL}\n"
+    printf "    ${YW} 2)${GN} Use Password (changeme) ${CL}\n"
+
+    printf "Please choose a Password Type and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+    printf " ${YW}${message}${CL}\n"
+}
+show_menu2
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using Automatic Login";
+            PW=" "
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using Password (changeme)";
+            PW="-password changeme"
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a Password Type from the menu";
+            show_menu2;
         ;;
       esac
     fi
@@ -137,6 +181,7 @@ export PCT_OPTIONS="
   -cores 1
   -memory 512
   -unprivileged ${IM}
+  ${PW}
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
