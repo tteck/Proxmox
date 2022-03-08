@@ -27,6 +27,18 @@ ${CL}"
 }
 
 header_info
+show_menu(){
+    printf "    ${YW} 1)${YW} Privileged ${CL}\n"
+    printf "    ${YW} 2)${GN} Unprivileged ${CL}\n"
+
+    printf "Please choose a Install Method and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message1=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+}
 show_menu
 while [ $opt != '' ]
     do
