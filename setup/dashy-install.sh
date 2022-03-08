@@ -96,6 +96,8 @@ sudo systemctl start dashy &>/dev/null
 sudo systemctl enable dashy &>/dev/null
 echo -e "${CM}${CL} \r"
 
+PASS=$(grep -w "root" /etc/shadow | cut -b6);
+  if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
@@ -110,6 +112,7 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
+  fi
 
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
