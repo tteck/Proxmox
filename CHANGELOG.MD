@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
   - Choose between Automatic or Password Login 
 - **ESPHome LXC**
   - New V2 Install Script
+- **Zwavejs2MQTT LXC**
+  - New V2 Install Script
 
 ## 2022-03-06
 
