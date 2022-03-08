@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Some Scripts** (eventually all)
   - Choose between Automatic or Password Login 
+- **ESPHome LXC**
+  - New V2 Install Script
 
 ## 2022-03-06
 
