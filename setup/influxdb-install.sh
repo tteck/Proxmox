@@ -76,6 +76,8 @@ echo -en "${GN} Installing Telegraf... "
 apt-get install -y telegraf &>/dev/null
 echo -e "${CM}${CL} \r"
 
+PASS=$(grep -w "root" /etc/shadow | cut -b6);
+  if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
@@ -89,8 +91,8 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-systemctl enable --now influxdb 
 echo -e "${CM}${CL} \r"
+  fi
 
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
