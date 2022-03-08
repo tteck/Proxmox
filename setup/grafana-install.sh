@@ -72,6 +72,8 @@ apt-get update &>/dev/null
 apt-get install -y grafana &>/dev/null
 echo -e "${CM}${CL} \r"
  
+PASS=$(grep -w "root" /etc/shadow | cut -b6);
+  if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
@@ -84,10 +86,9 @@ ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
 systemctl daemon-reload
-systemctl start grafana-server
-systemctl enable grafana-server.service &>/dev/null
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
+  fi
 
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
