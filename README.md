@@ -196,7 +196,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Home Assistant Container LXC </h1>
 <h3 align="center" id="heading"> With ZFS Filesystem Support </h3> 
-To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell.
+To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell (V2).
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/homeassistant.sh)"
@@ -273,7 +273,7 @@ ________________________________________________________________________________
 <h1 align="center" id="heading"> Homebridge LXC </h1>
 Homebridge allows you to integrate with smart home devices that do not natively support HomeKit
 
-To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/homebridge.sh)"
@@ -328,7 +328,7 @@ Update from the Homebridge UI
 
 <h1 align="center" id="heading"> ESPHome LXC </h1>
 
-To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell.
+To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/esphome.sh)"
@@ -359,7 +359,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Nginx Proxy Manager LXC </h1>
 
-To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell (V2).
 
 ```yaml
  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/nginx-proxy-manager.sh)"
@@ -409,7 +409,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc
 
 <h1 align="center" id="heading"> MQTT LXC </h1>
 
-To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell.
+To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mqtt.sh)"
@@ -460,7 +460,7 @@ ________________________________________________________________________________
 <h1 align="center" id="heading"> Node-Red LXC </h1>
  
 
-To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/node-red.sh)"
@@ -502,7 +502,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Mariadb LXC </h1>
 
-To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell (V2).
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/mariadb.sh)"
@@ -614,7 +614,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC </h1>
 
-To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zigbee2mqtt.sh)"
@@ -720,7 +720,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> InfluxDB/Telegraf LXC </h1>
 
-To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell.
+To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/influxdb.sh)"
@@ -762,7 +762,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Grafana LXC </h1>
 
-To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/grafana.sh)"
@@ -803,7 +803,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Debian 11 LXC </h1>
 
-To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/debian.sh)"
@@ -832,7 +832,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Ubuntu 21.10 LXC </h1>
 
-To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/ubuntu.sh)"
@@ -983,7 +983,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> AdGuard Home LXC </h1>
 
-To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell.
+To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/adguard.sh)"
@@ -1014,7 +1014,7 @@ ________________________________________________________________________________
 
 Dashy helps you organize your self-hosted services by making them accessible from a single place
 
-To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/dashy.sh)"
@@ -1036,7 +1036,7 @@ ________________________________________________________________________________
 
 Sync files from app to server, share photos & videos, back up your data and stay secure inside local network.
 
-To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/daemonsync.sh)"
@@ -1146,7 +1146,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> WireGuard LXC </h1>
 
-To create a new Proxmox WireGuard LXC, run the following in the Proxmox Shell.
+To create a new Proxmox WireGuard LXC, run the following in the Proxmox Shell (V2).
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/wireguard.sh)"
