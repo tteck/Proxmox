@@ -687,16 +687,16 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/zwave/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
 
-To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zwavejs2mqtt_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/zwavejs2mqtt.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
