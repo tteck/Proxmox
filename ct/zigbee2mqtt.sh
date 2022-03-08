@@ -30,8 +30,8 @@ ${CL}"
 
 header_info
 show_menu(){
-    printf "    ${YW} 1)${YW} Privileged ${CL}\n"
-    printf "    ${YW} 2)${GN} Unprivileged ${CL}\n"
+    printf "    ${YW} 1)${GN} Privileged ${CL}\n"
+    printf "    ${YW} 2)${RD} Unprivileged (no device passthrough) ${CL}\n"
 
     printf "Please choose a Install Method and hit enter or ${RD}x${CL} to exit."
     read opt
