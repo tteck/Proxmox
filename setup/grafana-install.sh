@@ -89,7 +89,8 @@ systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 echo -e "${CM}${CL} \r"
   fi
-
+systemctl start grafana-server
+systemctl enable grafana-server.service &>/dev/null
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
