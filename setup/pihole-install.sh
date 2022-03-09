@@ -57,7 +57,7 @@ apt-get -qqy install \
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Pi-hole... "
-curl -sSL https://install.pi-hole.net | bash
+curl -sSL https://install.pi-hole.net | bash --unattended
 echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
