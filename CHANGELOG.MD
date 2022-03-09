@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Homebridge LXC**
-  - New Script
+  - New Script V2
 
 ## 2022-03-04
 
@@ -43,7 +43,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **WireGuard LXC**
-  - New Script
+  - New Script V2
 
 ## 2022-03-02
 
@@ -52,18 +52,18 @@ All notable changes to this project will be documented in this file.
 - **Proxmox LXC Updater**
   - New Script
 - **Dashy LXC**
-  - New Script
+  - New Script V2
 - **Grafana LXC**
-  - New Script
+  - New Script V2
 - **InfluxDB/Telegraf LXC**
-  - New Script
+  - New Script V2
 
 ## 2022-03-01
 
 ### Changed
 
 - **Daemon Sync Server LXC**
-  - New Script
+  - New Script V2
 
 ## 2022-02-28
 
@@ -77,16 +77,16 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Nginx Proxy Manager LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 
 ## 2022-02-23
 
 ### Changed
 
 - **Adguard Home LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **Zigbee2MQTT LXC**
-  - Using NEW Privileged Install Script
+  - New V2 Install Script
 - **Home Assistant Container LXC**
   - Update Menu usability improvements
 
@@ -95,17 +95,17 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Home Assistant Container LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **Node-Red LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **Mariadb LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **MQTT LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **Debian 11 LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 - **Ubuntu 21.10 LXC**
-  - Using NEW Privileged/Unprivileged Install Script
+  - New V2 Install Script
 
 ## 2022-02-20
 
