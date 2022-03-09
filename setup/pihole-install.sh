@@ -49,6 +49,11 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Network Connected: ${BL}$(hostname -I)${CL} "
 echo -e "${CM}${CL} \r"
 
+echo -en "${GN} Updating Container OS... "
+apt-get update &>/dev/null
+apt-get -qqy upgrade &>/dev/null
+echo -e "${CM}${CL} \r"
+
 echo -en "${GN} Installing Dependencies... "
 apt-get update &>/dev/null
 apt-get -qqy install \
