@@ -221,4 +221,4 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 
 echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}.
 ${BL}Webmin${CL} should be reachable by going to the following URL.
-         ${BL}http://${IP}:10000${CL} \n"
+         ${BL}https://${IP}:10000${CL} \n"
