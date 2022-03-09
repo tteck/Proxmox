@@ -46,7 +46,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox LXC Updater</summary>
+<summary markdown="span"> Proxmox LXC Updater</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Felpuig.xeill.net%2FMembers%2Fvcarceler%2Farticulos%2Fcontenedores-con-lxd-lxc%2Fcontainers.png&f=1&nofb=1" height="100"/></p>
 
@@ -714,7 +714,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸InfluxDB/Telegraf LXC </summary>
+<summary markdown="span"> InfluxDB/Telegraf LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
 
@@ -756,7 +756,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Grafana LXC </summary>
+<summary markdown="span"> Grafana LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdocs.checkmk.com%2Flatest%2Fimages%2Fgrafana_logo.png&f=1&nofb=1" height="100"/></p>
 
@@ -1006,7 +1006,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Dashy LXC</summary>
+<summary markdown="span"> Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
