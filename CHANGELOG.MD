@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
   - New V2 Install Script
 - **Pihole LXC**
   - New V2 Install Script
+- **GamUntu LXC**
+  - New V2 Install Script
 
 ## 2022-03-06
 
