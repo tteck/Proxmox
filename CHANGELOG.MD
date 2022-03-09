@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Some Scripts** (eventually all V2)
+- **Scripts** (V2)
   - Choose between Automatic or Password Login 
 - **ESPHome LXC**
   - New V2 Install Script
