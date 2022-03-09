@@ -944,16 +944,16 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">Pi-hole LXC</summary>
+<summary markdown="span"> 🔸Pi-hole LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/pi_hole/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
-To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/pihole_container.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/pihole.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
