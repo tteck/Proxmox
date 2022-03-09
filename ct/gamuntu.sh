@@ -172,8 +172,8 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 export CTID=$(pvesh get /cluster/nextid)
-export PCT_OSTYPE=debian
-export PCT_OSVERSION=11
+export PCT_OSTYPE=ubuntu
+export PCT_OSVERSION=21.10
 export PCT_DISK_SIZE=8
 export PCT_OPTIONS="
   -features $FEATURES
