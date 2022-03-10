@@ -28,8 +28,8 @@ BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
-RETRY_NUM=5
-RETRY_EVERY=3
+RETRY_NUM=15
+RETRY_EVERY=5
 NUM=$RETRY_NUM
 
 echo -en "${GN} Setting up Container OS... "
