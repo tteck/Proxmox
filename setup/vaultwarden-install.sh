@@ -100,9 +100,19 @@ file target/release/vaultwarden &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Building Web-Vault... "
-wget https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
-tar -xzf bw_web_$VWRELEASE.tar.gz &>/dev/null
-cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
+pushd target/release/ &>/dev/null
+git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git &>/dev/null
+cd web-vault.git &>/dev/null
+git checkout v2.25.1 &>/dev/null
+git submodule update --init --recursive &>/dev/null
+wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch &>/dev/null
+git apply v2.25.0.patch &>/dev/null
+npm ci --silent --legacy-peer-deps &>/dev/null
+npm audit fix --silent --legacy-peer-deps || true &>/dev/null
+npm run --silent dist:oss:selfhost &>/dev/null
+cp -a build ../web-vault &>/dev/null
+cd ..
+mkdir data 
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Create Systemd Service... "
