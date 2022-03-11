@@ -195,14 +195,14 @@ ________________________________________________________________________________
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Home Assistant Container LXC </h1>
-<h3 align="center" id="heading"> With ZFS Filesystem Support </h3> 
+
 To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell (V2).
  
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/homeassistant.sh)"
 ```
  
-<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 16GB Storage - 2vCPU ⚡</h3>
  
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
