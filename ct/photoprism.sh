@@ -5,6 +5,7 @@ RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+PP=`echo "\e[1;35m"`
 APP="PhotoPrism"
 HN=$(echo ${APP,,} | tr -d ' ')
 while true; do
@@ -17,7 +18,7 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${RD}
+echo -e "${PP}
   _____  _           _        _____      _               
  |  __ \| |         | |      |  __ \    (_)              
  | |__) | |__   ___ | |_ ___ | |__) | __ _ ___ _ __ ___  
