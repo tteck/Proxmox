@@ -91,13 +91,13 @@ sudo mkdir -p /opt/photoprism/bin
 sudo mkdir /var/lib/photoprism
 sudo chown photoprism:photoprism /var/lib/photoprism &>/dev/null
 
-echo -en "${GN} Downloading ${APP}... "
+echo -en "${GN} Downloading PhotoPrism... "
 git clone https://github.com/photoprism/photoprism.git &>/dev/null
 cd photoprism
 git checkout release &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing ${APP}... "
+echo -en "${GN} Installing PhotoPrism... "
 sudo make all &>/dev/null
 sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
 sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
