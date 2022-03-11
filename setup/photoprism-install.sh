@@ -104,28 +104,28 @@ sudo cp -a assets/ /opt/photoprism/assets/
 sudo chown -R photoprism:photoprism /opt/photoprism 
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Creating Service file photoprism.service... "
-service_path="/etc/systemd/system/photoprism.service"
+#echo -en "${GN} Creating Service file photoprism.service... "
+#service_path="/etc/systemd/system/photoprism.service"
 
-echo "[Unit]
-Description=PhotoPrism service
-After=network.target
+#echo "[Unit]
+#Description=PhotoPrism service
+#After=network.target
 
-[Service]
-Type=forking
-User=photoprism
-Group=photoprism
-WorkingDirectory=/opt/photoprism
-EnvironmentFile=/var/lib/photoprism/.env
-ExecStart=/opt/photoprism/bin/photoprism up -d
-ExecStop=/opt/photoprism/bin/photoprism down
+#[Service]
+#Type=forking
+#User=photoprism
+#Group=photoprism
+#WorkingDirectory=/opt/photoprism
+#EnvironmentFile=/var/lib/photoprism/.env
+#ExecStart=/opt/photoprism/bin/photoprism up -d
+#ExecStop=/opt/photoprism/bin/photoprism down
 
-[Install]
-WantedBy=multi-user.target" > $service_path
-sudo systemctl daemon-reload
-sudo systemctl start photoprism
-sudo systemctl enable photoprism &>/dev/null
-echo -e "${CM}${CL} \r"
+#[Install]
+#WantedBy=multi-user.target" > $service_path
+#sudo systemctl daemon-reload
+#sudo systemctl start photoprism
+#sudo systemctl enable photoprism &>/dev/null
+#echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
