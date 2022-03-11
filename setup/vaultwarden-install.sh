@@ -167,7 +167,6 @@ echo -e "${CM}${CL} \r"
   fi
   
 echo -en "${GN} Cleanup... "
-rm -r bw_web_$VWRELEASE.tar.gz web-vault
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
