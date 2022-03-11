@@ -98,10 +98,12 @@ git checkout release &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing PhotoPrism... "
-sudo make all &>/dev/null
-sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
-sudo chown -R photoprism:photoprism /opt/photoprism &>/dev/null
+sudo make all 
+sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism 
+sudo cp -a assets/ /opt/photoprism/assets/ 
+sudo chown -R photoprism:photoprism /opt/photoprism 
+cd /var/lib/photoprism
+sudo chmod 640 .env
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Service file photoprism.service... "
