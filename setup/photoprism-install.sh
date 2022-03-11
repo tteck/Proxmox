@@ -105,20 +105,18 @@ sudo chown -R photoprism:photoprism /opt/photoprism
 echo -e "${CM}${CL} \r"
 
 env_path="/var/lib/photoprism/.env"
-echo " # Initial password for the admin user
+echo " 
 PHOTOPRISM_ADMIN_PASSWORD='photoprism'
-
-# PhotoPrism storage directories
 PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism'
-PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals"
+PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
 PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
-
 # Uncomment below if using MariaDB/MySQL instead of SQLite (the default)
 # PHOTOPRISM_DATABASE_DRIVER='mysql'
 # PHOTOPRISM_DATABASE_SERVER='MYSQL_IP_HERE'
 # PHOTOPRISM_DATABASE_NAME='DB_NAME'
 # PHOTOPRISM_DATABASE_USER='USER_NAME'
-# PHOTOPRISM_DATABASE_PASSWORD='PASSWORD' " > $env_path
+# PHOTOPRISM_DATABASE_PASSWORD='PASSWORD'
+" > $env_path
 
 echo -en "${GN} Creating Service file photoprism.service... "
 service_path="/etc/systemd/system/photoprism.service"
