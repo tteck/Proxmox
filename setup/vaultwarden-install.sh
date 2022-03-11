@@ -94,6 +94,15 @@ pushd vaultwarden &>/dev/null
 cargo clean &>/dev/null 
 cargo build --features sqlite --release &>/dev/null
 file target/release/vaultwarden &>/dev/null
+cd ..
+mkdir data 
+#cp ../../.env.template /etc/vaultwarden.env &>/dev/null
+cp vaultwarden /usr/bin/vaultwarden &>/dev/null
+chmod +x /usr/bin/vaultwarden &>/dev/null
+useradd -m -d /var/lib/vaultwarden vaultwarden &>/dev/null
+sudo cp -R data /var/lib/vaultwarden/ &>/dev/null
+#cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
+chown -R vaultwarden:vaultwarden /var/lib/vaultwarden &>/dev/null
 echo -e "${CM}${CL} \r"
 
 VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
@@ -107,15 +116,6 @@ cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Create Systemd Service... "
-cd ..
-mkdir data 
-cp ../../.env.template /etc/vaultwarden.env &>/dev/null
-cp vaultwarden /usr/bin/vaultwarden &>/dev/null
-chmod +x /usr/bin/vaultwarden &>/dev/null
-useradd -m -d /var/lib/vaultwarden vaultwarden &>/dev/null
-sudo cp -R data /var/lib/vaultwarden/ &>/dev/null
-cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
-chown -R vaultwarden:vaultwarden /var/lib/vaultwarden &>/dev/null
 
 service_path="/etc/systemd/system/vaultwarden.service" &>/dev/null
 
