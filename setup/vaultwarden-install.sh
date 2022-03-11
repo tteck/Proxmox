@@ -107,6 +107,8 @@ cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Create Systemd Service... "
+cd ..
+mkdir data 
 cp ../../.env.template /etc/vaultwarden.env &>/dev/null
 cp vaultwarden /usr/bin/vaultwarden &>/dev/null
 chmod +x /usr/bin/vaultwarden &>/dev/null
