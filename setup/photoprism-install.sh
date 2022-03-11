@@ -102,8 +102,6 @@ sudo make all
 sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism 
 sudo cp -a assets/ /opt/photoprism/assets/ 
 sudo chown -R photoprism:photoprism /opt/photoprism 
-cd /var/lib/photoprism
-sudo chmod 640 .env
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Service file photoprism.service... "
