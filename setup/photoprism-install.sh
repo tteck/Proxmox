@@ -97,7 +97,7 @@ cd photoprism
 git checkout release &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing PhotoPrism... "
+echo -en "${GN} Building PhotoPrism... "
 sudo make all 
 sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism 
 sudo cp -a assets/ /opt/photoprism/assets/ 
