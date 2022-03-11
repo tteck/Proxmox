@@ -104,28 +104,44 @@ sudo cp -a assets/ /opt/photoprism/assets/
 sudo chown -R photoprism:photoprism /opt/photoprism 
 echo -e "${CM}${CL} \r"
 
-#echo -en "${GN} Creating Service file photoprism.service... "
-#service_path="/etc/systemd/system/photoprism.service"
+env_path="/var/lib/photoprism/.env"
+echo " # Initial password for the admin user
+PHOTOPRISM_ADMIN_PASSWORD='photoprism'
 
-#echo "[Unit]
-#Description=PhotoPrism service
-#After=network.target
+# PhotoPrism storage directories
+PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism'
+PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals"
+PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
 
-#[Service]
-#Type=forking
-#User=photoprism
-#Group=photoprism
-#WorkingDirectory=/opt/photoprism
-#EnvironmentFile=/var/lib/photoprism/.env
-#ExecStart=/opt/photoprism/bin/photoprism up -d
-#ExecStop=/opt/photoprism/bin/photoprism down
+# Uncomment below if using MariaDB/MySQL instead of SQLite (the default)
+# PHOTOPRISM_DATABASE_DRIVER='mysql'
+# PHOTOPRISM_DATABASE_SERVER='MYSQL_IP_HERE'
+# PHOTOPRISM_DATABASE_NAME='DB_NAME'
+# PHOTOPRISM_DATABASE_USER='USER_NAME'
+# PHOTOPRISM_DATABASE_PASSWORD='PASSWORD' " > $env_path
 
-#[Install]
-#WantedBy=multi-user.target" > $service_path
-#sudo systemctl daemon-reload
-#sudo systemctl start photoprism
-#sudo systemctl enable photoprism &>/dev/null
-#echo -e "${CM}${CL} \r"
+echo -en "${GN} Creating Service file photoprism.service... "
+service_path="/etc/systemd/system/photoprism.service"
+
+echo "[Unit]
+Description=PhotoPrism service
+After=network.target
+
+[Service]
+Type=forking
+User=photoprism
+Group=photoprism
+WorkingDirectory=/opt/photoprism
+EnvironmentFile=/var/lib/photoprism/.env
+ExecStart=/opt/photoprism/bin/photoprism up -d
+ExecStop=/opt/photoprism/bin/photoprism down
+
+[Install]
+WantedBy=multi-user.target" > $service_path
+sudo systemctl daemon-reload
+sudo systemctl start photoprism
+sudo systemctl enable photoprism &>/dev/null
+echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
