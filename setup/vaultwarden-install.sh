@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
 
 set -o errexit 
 set -o errtrace 
@@ -99,20 +96,14 @@ cargo build --features sqlite --release &>/dev/null
 file target/release/vaultwarden &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Building Web-Vault... "
-pushd target/release/ &>/dev/null
-git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git &>/dev/null
-cd web-vault.git &>/dev/null
-git checkout v2.25.1 &>/dev/null
-git submodule update --init --recursive &>/dev/null
-wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch &>/dev/null
-git apply v2.25.0.patch &>/dev/null
-npm ci --silent --legacy-peer-deps &>/dev/null
-npm audit fix --silent --legacy-peer-deps || true &>/dev/null
-npm run --silent dist:oss:selfhost &>/dev/null
-cp -a build ../web-vault &>/dev/null
-cd ..
-mkdir data 
+VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 2, length($2)-3) }') \
+
+echo -en "${GN} Downloading Web-Vault ${VWRELEASE}... "
+wget https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
+tar -xzf bw_web_$VWRELEASE.tar.gz &>/dev/null
+cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Create Systemd Service... "
@@ -170,6 +161,7 @@ echo -e "${CM}${CL} \r"
   fi
   
 echo -en "${GN} Cleanup... "
+rm -r bw_web_$VWRELEASE.tar.gz web-vault
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
