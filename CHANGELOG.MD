@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Scripts** (V2)
-  - Choose between Automatic or Password Login 
+  - Choose between Privileged or Unprivileged CT and Automatic or Password Login 
 - **ESPHome LXC**
   - New V2 Install Script
 - **Zwavejs2MQTT LXC**
