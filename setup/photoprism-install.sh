@@ -122,9 +122,9 @@ ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
 WantedBy=multi-user.target" > $service_path
-$ sudo systemctl daemon-reload
-$ sudo systemctl start photoprism
-$ sudo systemctl enable photoprism &>/dev/null
+sudo systemctl daemon-reload
+sudo systemctl start photoprism
+sudo systemctl enable photoprism &>/dev/null
 echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
