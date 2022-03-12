@@ -1031,7 +1031,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸PhotoPrism LXC </summary>
  
-<p align="center"><img src="https://github.com/photoprism/photoprism/blob/develop/assets/static/icons/logo.svg" height="100"/></p>
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/photoprism.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> PhotoPrism LXC </h1>
  
