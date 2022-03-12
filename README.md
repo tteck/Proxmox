@@ -28,7 +28,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox Kernel Clean</summary>
+<summary markdown="span"> Proxmox Kernel Clean</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
@@ -64,7 +64,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span">Proxmox Dark Theme</summary>
+<summary markdown="span"> Proxmox Dark Theme</summary>
  
 <p align="center"><img src="https://camo.githubusercontent.com/f6f33a09f8c1207dfb3dc1cbd754c2f3393562c11b1c999751ad9a91a656834a/68747470733a2f2f692e696d6775722e636f6d2f536e6c437948462e706e67" height="100"/></p>
 
@@ -86,7 +86,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span">Home Assistant OS VM</summary>
+<summary markdown="span"> Home Assistant OS VM</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
  
@@ -266,7 +266,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Homebridge LXC</summary>
+<summary markdown="span"> Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
