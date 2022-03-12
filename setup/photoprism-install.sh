@@ -99,8 +99,8 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Building PhotoPrism... "
 sudo make all 
-sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism 
-sudo cp -a assets/ /opt/photoprism/assets/ 
+sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
+sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 sudo chown -R photoprism:photoprism /opt/photoprism 
 echo -e "${CM}${CL} \r"
 
