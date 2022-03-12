@@ -91,7 +91,7 @@ sudo mkdir -p /opt/photoprism/bin
 sudo mkdir /var/lib/photoprism
 sudo chown photoprism:photoprism /var/lib/photoprism &>/dev/null
 
-echo -en "${GN} Downloading PhotoPrism... "
+echo -en "${GN} Cloning PhotoPrism... "
 git clone https://github.com/photoprism/photoprism.git &>/dev/null
 cd photoprism
 git checkout release &>/dev/null
