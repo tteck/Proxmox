@@ -60,24 +60,23 @@ apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Build Essential... "
-sudo apt-get install -y build-essential 
+sudo apt-get install -y build-essential &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Python3... "
-sudo apt-get install -y python3 
-sudo apt-get install -y python3-dev 
-sudo apt-get install -y python3-venv 
-sudo apt-get install -y python3-pip 
-sudo apt-get install -y libffi-dev 
-sudo apt-get install -y libssl-dev 
-sudo apt-get install -y libjpeg-dev 
-sudo apt-get install -y zlib1g-dev 
-sudo apt-get install -y autoconf 
-#sudo apt-get install -y build-essential 
-sudo apt-get install -y libopenjp2-7 
-sudo apt-get install -y libtiff5 
-sudo apt-get install -y libturbojpeg0-dev 
-sudo apt-get install -y tzdata
+sudo apt-get install -y python3 &>/dev/null
+sudo apt-get install -y python3-dev &>/dev/null
+sudo apt-get install -y python3-venv &>/dev/null
+sudo apt-get install -y python3-pip &>/dev/null
+sudo apt-get install -y libffi-dev &>/dev/null
+sudo apt-get install -y libssl-dev &>/dev/null
+sudo apt-get install -y libjpeg-dev &>/dev/null
+sudo apt-get install -y zlib1g-dev &>/dev/null
+sudo apt-get install -y autoconf &>/dev/null
+sudo apt-get install -y libopenjp2-7 &>/dev/null
+sudo apt-get install -y libtiff5 &>/dev/null
+sudo apt-get install -y libturbojpeg0-dev &>/dev/null
+sudo apt-get install -y tzdata &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Setting Virtual Environment... "
@@ -87,14 +86,16 @@ sudo chown homeassistant:homeassistant /srv/homeassistant
 sudo -u homeassistant -H -s
 cd /srv/homeassistant
 python3.9 -m venv .
+while:
 source bin/activate
-
+do
 echo -en "${GN} Installing Home Assistant Core... "
 python3 -m pip install wheel
 pip3 install homeassistant
 hass
 echo -e "${CM}${CL} \r"
-
+break 
+done
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
