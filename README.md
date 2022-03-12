@@ -1060,6 +1060,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  photoprism
  ```
 [PhotoSync](https://www.photosync-app.com/home.html)
+
 ____________________________________________________________________________________________ 
 
 </details>
