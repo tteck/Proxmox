@@ -98,7 +98,7 @@ git checkout release &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Building PhotoPrism... "
-sudo make all 
+sudo make all &>/dev/null
 sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
 sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 sudo chown -R photoprism:photoprism /opt/photoprism 
