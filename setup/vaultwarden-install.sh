@@ -133,7 +133,6 @@ Group=vaultwarden
 EnvironmentFile=/etc/vaultwarden.env
 ExecStart=/usr/bin/vaultwarden
 LimitNOFILE=1048576
-LimitNPROC=64
 PrivateTmp=true
 PrivateDevices=true
 ProtectHome=true
