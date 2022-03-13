@@ -32,11 +32,11 @@ containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 
 function update_container() {
   container=$1
+  clear
+  header_info
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
   pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
-clear
-header_info
 for container in $containers
 do
   status=`pct status $container`
