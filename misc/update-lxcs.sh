@@ -35,14 +35,15 @@ function update_container() {
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
   pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
-
+clear
+header_info
 for container in $containers
 do
   status=`pct status $container`
   if [ "$status" == "status: stopped" ]; then
     echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
     pct start $container
-    echo -e "${BL}[Info]${GN} Waiting For${BL} $container To Start ${CL} \n"
+    echo -e "${BL}[Info]${GN} Waiting For${BL} $container${CL}${GN} To Start ${CL} \n"
     sleep 5
     update_container $container
     echo -e "${BL}[Info]${GN} Shutting down${BL} $container ${CL} \n"
