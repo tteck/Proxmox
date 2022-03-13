@@ -1091,13 +1091,13 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> 🔸MotionEye NVR LXC </summary>
+<summary markdown="span"> 🔸MotionEye VMS LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> MotionEye NVR LXC </h1>
+<h1 align="center" id="heading"> MotionEye VMS LXC </h1>
 
-To create a new Proxmox MotionEye NVR LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox MotionEye VMS LXC, run the following in the Proxmox Shell (V2).
 
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/motioneye.sh)"
