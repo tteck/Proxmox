@@ -322,7 +322,7 @@ Update from the Homebridge UI
 
 
 <details>
-<summary markdown="span"> 🔸ESPHome LXC</summary>
+<summary markdown="span"> ESPHome LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
@@ -860,7 +860,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸GamUntu LXC</summary>
+<summary markdown="span"> GamUntu LXC</summary>
  <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/gamuntu1.png" alt="GamUntu" height="100"/></p>
 <h1 align="center" id="heading"> GamUntu LXC </h1>
 
@@ -950,7 +950,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Pi-hole LXC</summary>
+<summary markdown="span"> Pi-hole LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/pi_hole/icon.png?raw=true" height="100"/></p>
 
@@ -1012,7 +1012,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Dashy LXC</summary>
+<summary markdown="span"> 🔸Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
@@ -1106,7 +1106,7 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> 🔸MotionEye VMS LXC </summary>
+<summary markdown="span"> MotionEye VMS LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
