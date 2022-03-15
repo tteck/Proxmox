@@ -15,6 +15,7 @@ cp -R /dashy/public public-backup
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Updating Dashy... "
+cd /dashy
 git merge
 git pull origin master
 yarn
