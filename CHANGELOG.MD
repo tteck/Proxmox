@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-03-14
+
+### Changed
+
+- **Zwavejs2MQTT LXC**
+  - New Update Script
+
 ## 2022-03-12
 
 ### Changed
