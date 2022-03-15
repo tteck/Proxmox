@@ -81,7 +81,7 @@ User=root
 WorkingDirectory=/opt/zwavejs2mqtt
 ExecStart=/opt/zwavejs2mqtt/zwavejs2mqtt
 [Install]
-WantedBy=multi-user.target > $service_path
+WantedBy=multi-user.target" > $service_path
 systemctl start zwavejs2mqtt
 systemctl enable zwavejs2mqtt &>/dev/null
 echo -e "${CM}${CL} \r"
