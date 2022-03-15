@@ -1031,6 +1031,13 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/d
  
 After getting everything setup the way you want in interactive mode and saved to disk, you have to go into update configuration and rebuild application.
 
+⚙️ **To Update Dashy**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/dashy-update.sh)"
+```
+
 __________________________________________________________________________________________ 
 
 </details>
