@@ -163,7 +163,7 @@ function cleanup() {
   rm -rf $TEMP_DIR
 }
  if [ "$IM" == "1" ]; then 
- FEATURES="nesting=1,keyctl=1,mknod=1"
+ FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
  fi
