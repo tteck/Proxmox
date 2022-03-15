@@ -8,30 +8,36 @@ CL=`echo "\033[m"`
 clear
 echo -en "${GN} Stopping Dashy... "
 systemctl stop dashy
+sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Backup Data... "
 cp -R /dashy/public public-backup
+sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Updating Dashy... "
 cd /dashy
-git merge
-git pull origin master
-yarn
-yarn build
+git merge &>/dev/null
+git pull origin master &>/dev/null
+yarn &>/dev/null
+yarn build &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Restoring Data... "
-cp -R public-backup/* /dashy/public
+cd ~
+cp -R public-backup /dashy/public
+sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleaning... "
 rm -rf public-backup
+sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Starting Dashy... "
 systemctl start dashy
+sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -e "${GN} Finished ${CL}\n"
