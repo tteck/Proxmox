@@ -11,8 +11,8 @@ systemctl stop dashy
 sleep 1
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Backup Data... "
-cp -R /dashy/public public-backup
+echo -en "${GN} Backup conf.yml... "
+cp -R /dashy/public/conf.yml conf.yml
 sleep 1
 echo -e "${CM}${CL} \r"
 
@@ -24,14 +24,14 @@ yarn &>/dev/null
 yarn build &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Restoring Data... "
+echo -en "${GN} Restoring conf.yml... "
 cd ~
-cp -R public-backup /dashy/public
+cp -R conf.yml /dashy/public
 sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleaning... "
-rm -rf public-backup
+rm -rf conf.yml
 sleep 1
 echo -e "${CM}${CL} \r"
 
