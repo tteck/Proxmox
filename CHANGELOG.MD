@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
+
+## 2022-03-15
+
+### Changed
+
+- **Dashy LXC**
+  - New Update Script
+
 ## 2022-03-14
 
 ### Changed
