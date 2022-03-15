@@ -708,6 +708,12 @@ Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/zwave-copy-data.sh)"
  ```
+⚙️ **To Update Zwavejs2MQTT**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/zwavejs2mqtt-update.sh)"
+```
 
 ____________________________________________________________________________________________ 
 
