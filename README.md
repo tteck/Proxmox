@@ -1028,6 +1028,8 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/d
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 3GB Storage - 2vCPU ⚡</h3>
  
 **Dashy Interface - IP:4000**
+ 
+After getting everything setup the way you want in interactive mode and saved to disk, you have to go into update configuration and rebuild application.
 
 __________________________________________________________________________________________ 
 
