@@ -41,7 +41,7 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Updating Dashy... "
 cd /dashy
-git stash &>/dev/null
+git merge &>/dev/null
 git pull origin master &>/dev/null
 yarn &>/dev/null
 yarn build &>/dev/null
