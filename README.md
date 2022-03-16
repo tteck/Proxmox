@@ -1076,6 +1076,14 @@ After the script completes, If you're dissatisfied with the default settings, cl
  ```
 [PhotoSync](https://www.photosync-app.com/home.html)
 
+⚙️ **To Update PhotoPrism**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/photoprism-update.sh)"
+```
+
+
 ____________________________________________________________________________________________ 
 
 </details>
