@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 clear
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
