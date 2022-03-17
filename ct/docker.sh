@@ -115,9 +115,9 @@ while [ $opt != '' ]
   done
 show_menu3(){
     printf "    ${RD} If Using ZFS, You Have Storage Driver Options${CL}\n"
-    printf "    ${RD} Non ZFS, Select Standard overlay2fs Storage Driver${CL}\n"
+    printf "    ${RD} Non ZFS, Select Standard overlay2 Storage Driver${CL}\n"
     printf "    ${YW} 1)${GN} Use fuse-overlayfs Storage Driver${CL}\n"
-    printf "    ${YW} 2)${GN} Use Standard overlay2fs Storage Driver${CL}\n"
+    printf "    ${YW} 2)${GN} Use Standard overlay2 Storage Driver${CL}\n"
 
     printf "Please choose a Storage Driver and hit enter or ${RD}x${CL} to exit."
     read opt
@@ -144,7 +144,7 @@ while [ $opt != '' ]
         ;;
         2) clear;
             header_info;
-            option_picked "Using overlay2fs Storage Driver";
+            option_picked "Using overlay2 Storage Driver";
             STORAGE_DRIVER=" "
             break;
         ;;
@@ -253,7 +253,9 @@ echo -en "${GN} Starting LXC Container... "
 pct start $CTID
  if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
    pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
-   info "${BL}Using fuse-overlayfs.${CL}"
+   info "${BL}Using fuse-overlayfs Storage Driver.${CL}"
+   else
+   info "${BL}Using overlay2 Storage Driver.${CL}"
  fi
 echo -e "${CM}${CL} \r"
 
