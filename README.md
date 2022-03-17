@@ -803,6 +803,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Docker LXC </summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
+
+<h1 align="center" id="heading"> Docker LXC </h1>
+<h3 align="center"> With Selectable Storage Drivers </h3>
+
+To create a new Proxmox Docker LXC, run the following in the Proxmox Shell (V2).
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/docker.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+⚙️ **To Update**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
@@ -1242,7 +1271,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Vaultwarden LXC</summary>
+<summary markdown="span"> Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
