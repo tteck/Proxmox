@@ -928,6 +928,8 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/jellyfin/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
 
+[TurnKey has a LXC CT for Jellyfin](https://www.turnkeylinux.org/mediaserver)
+
 To create a new Proxmox Jellyfin Media Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
