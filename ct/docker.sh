@@ -251,13 +251,14 @@ EOF
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
+echo -e "${CM}${CL} \r"
+
  if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
    pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
    info "${BL}Using fuse-overlayfs Storage Driver.${CL}"
    else
    info "${BL}Using overlay2 Storage Driver.${CL}"
  fi
-echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
