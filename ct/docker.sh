@@ -255,9 +255,9 @@ echo -e "${CM}${CL} \r"
 
  if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
    pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
-   info "${BL}Using fuse-overlayfs Storage Driver.${CL}"
+   info "Using ${BL}fuse-overlayfs${CL} Storage Driver."
    else
-   info "${BL}Using overlay2 Storage Driver.${CL}"
+   info "Using ${BL}overlay2${CL} Storage Driver."
  fi
 
 alias lxc-cmd="lxc-attach -n $CTID --"
