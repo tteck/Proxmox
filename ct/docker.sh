@@ -143,7 +143,7 @@ while [ $opt != '' ]
         2) clear;
             header_info;
             option_picked "Using overlay2fs Storage Driver";
-            SD="#"
+            SD="###"
             break;
         ;;
 
@@ -243,11 +243,11 @@ EOF
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
-${SD}if [ "$STORAGE_TYPE" == "zfspool" ]; 
-${SD}then
-${SD}pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
-${SD}info "${BL}Using fuse-overlayfs.${CL}"
-${SD}fi
+${SD} if [ "$STORAGE_TYPE" == "zfspool" ]; 
+${SD} then
+${SD} pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
+${SD} info "${BL}Using fuse-overlayfs.${CL}"
+${SD} fi
 echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
