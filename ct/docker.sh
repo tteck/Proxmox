@@ -243,7 +243,8 @@ EOF
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
-${SD}if [ "$STORAGE_TYPE" == "zfspool" ]; then
+${SD}if [ "$STORAGE_TYPE" == "zfspool" ]; 
+${SD}then
 ${SD}pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
 ${SD}info "${BL}Using fuse-overlayfs.${CL}"
 ${SD}fi
