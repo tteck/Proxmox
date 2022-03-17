@@ -114,8 +114,8 @@ while [ $opt != '' ]
     fi
   done
 show_menu3(){
-    printf "    ${YW} If ZFS, You Have Storage Driver Options${CL}\n"
-    printf "    ${YW} Non ZFS, Select Standard overlay2fs Storage Driver${CL}\n"
+    printf "    ${RD} If ZFS, You Have Storage Driver Options${CL}\n"
+    printf "    ${RD} Non ZFS, Select Standard overlay2fs Storage Driver${CL}\n"
     printf "    ${YW} 1)${GN} Use fuse-overlayfs Storage Driver${CL}\n"
     printf "    ${YW} 2)${GN} Use Standard overlay2fs Storage Driver${CL}\n"
 
