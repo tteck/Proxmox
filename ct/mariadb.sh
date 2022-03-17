@@ -201,4 +201,6 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created Mariadb LXC to${CL} ${BL}$CTID${CL}. \n"
+echo -e "${GN}Successfully created Mariadb LXC to${CL} ${BL}$CTID${CL}. 
+${BL}Adminer${CL} should be reachable by going to the following URL.
+         ${BL}http://${IP}/adminer/${CL} \n"
