@@ -114,7 +114,8 @@ while [ $opt != '' ]
     fi
   done
 show_menu3(){
-    printf "    ${YW} 1)${GN} If ZFS, Use fuse-overlayfs Storage Driver${CL}\n"
+    printf "    ${YW} If ZFS, You Have Storage Driver Options${CL}\n"
+    printf "    ${YW} 1)${GN} Use fuse-overlayfs Storage Driver${CL}\n"
     printf "    ${YW} 2)${GN} Use Standard overlay2fs Storage Driver${CL}\n"
 
     printf "Please choose a Storage Driver and hit enter or ${RD}x${CL} to exit."
@@ -246,6 +247,7 @@ pct start $CTID
  if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
    pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
    info "${BL}Using fuse-overlayfs.${CL}"
+   info "${BL}Select FUSE in Options >> Features.${CL}"
  fi
 echo -e "${CM}${CL} \r"
 
