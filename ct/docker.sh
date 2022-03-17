@@ -117,7 +117,7 @@ show_menu3(){
     printf "    ${YW} 1)${GN} If ZFS, Use fuse-overlayfs Storage Driver${CL}\n"
     printf "    ${YW} 2)${GN} Use Standard overlay2fs Storage Driver${CL}\n"
 
-    printf "Please choose a Password Type and hit enter or ${RD}x${CL} to exit."
+    printf "Please choose a Storage Driver and hit enter or ${RD}x${CL} to exit."
     read opt
 }
 
@@ -152,7 +152,7 @@ while [ $opt != '' ]
         \n)exit;
         ;;
         *)clear;
-            option_picked "Please choose a Storage Driver Type from the menu";
+            option_picked "Please choose a Storage Driver from the menu";
             show_menu3;
         ;;
       esac
