@@ -68,8 +68,6 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Adminer... "
 sudo apt install adminer -y &>/dev/null
 sudo a2enconf adminer &>/dev/null
-mkdir /var/log/apache2
-chmod 750 /var/log/apache2
 sudo systemctl reload apache2 &>/dev/null
 echo -e "${CM}${CL} \r"
 
@@ -95,4 +93,6 @@ echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+mkdir /var/log/apache2
+chmod 750 /var/log/apache2
 echo -e "${CM}${CL} \n"
