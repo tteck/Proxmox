@@ -127,7 +127,7 @@ option_picked(){
     printf " ${YW}${message2}${CL}\n"
     printf " ${YW}${message3}${CL}\n"
 }
-show_menu2
+show_menu3
 while [ $opt != '' ]
     do
     if [ $opt = '' ]; then
@@ -153,7 +153,7 @@ while [ $opt != '' ]
         ;;
         *)clear;
             option_picked "Please choose a Storage Driver Type from the menu";
-            show_menu2;
+            show_menu3;
         ;;
       esac
     fi
