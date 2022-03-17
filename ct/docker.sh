@@ -137,13 +137,13 @@ while [ $opt != '' ]
         1) clear;
             header_info;
             option_picked "Using fuse-overlayfs Storage Driver";
-            SD=" "
+            STORAGE_DRIVER="fuse"
             break;
         ;;
         2) clear;
             header_info;
             option_picked "Using overlay2fs Storage Driver";
-            SD="# "
+            STORAGE_DRIVER=" "
             break;
         ;;
 
@@ -206,7 +206,7 @@ function cleanup() {
   rm -rf $TEMP_DIR
 }
  if [ "$IM" == "1" ]; then 
- FEATURES="nesting=1,keyctl=1,mknod=1"
+ FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
  fi
@@ -231,8 +231,8 @@ export PCT_OPTIONS="
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
-if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  ${SD}wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8.2/fuse-overlayfs-x86_64
+if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
+  wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8.2/fuse-overlayfs-x86_64
   warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
@@ -243,9 +243,9 @@ EOF
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
- if [ "$STORAGE_TYPE" == "zfspool" ]; then
-${SD}pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
-${SD}info "${BL}Using fuse-overlayfs.${CL}"
+ if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
+   pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
+   info "${BL}Using fuse-overlayfs.${CL}"
  fi
 echo -e "${CM}${CL} \r"
 
