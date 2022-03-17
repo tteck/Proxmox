@@ -214,7 +214,7 @@ function cleanup() {
  FEATURES="nesting=1,keyctl=1,fuse=1"
  elif
  [ "$IM" == "0" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
- FEATURES="nesting=1,keyctl=1,fuse=1"
+ FEATURES="nesting=1,fuse=1"
  else
  FEATURES="nesting=1"
  fi
