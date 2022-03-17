@@ -206,8 +206,14 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == " " ]; then 
  FEATURES="nesting=1,keyctl=1"
+ elif
+ [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ FEATURES="nesting=1,keyctl=1,fuse=1"
+ elif
+ [ "$IM" == "0" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ FEATURES="nesting=1,keyctl=1,fuse=1"
  else
  FEATURES="nesting=1"
  fi
@@ -247,7 +253,6 @@ pct start $CTID
  if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
    pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
    info "${BL}Using fuse-overlayfs.${CL}"
-   info "${BL}Select FUSE in Options >> Features.${CL}"
  fi
 echo -e "${CM}${CL} \r"
 
