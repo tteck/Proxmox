@@ -91,7 +91,11 @@ pip install icmplib &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing WGDashboard... "
-git clone -b v3.0.5 https://github.com/donaldzou/WGDashboard.git /ect/wgdashboard &>/dev/null
+WGDREL=$(curl -s https://api.github.com/repos/donaldzou/WGDashboard/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 2, length($2)-3) }') \
+
+git clone -b ${WGDREL} https://github.com/donaldzou/WGDashboard.git /ect/wgdashboard &>/dev/null
 cd /ect/wgdashboard/src
 sudo chmod u+x wgd.sh
 sudo ./wgd.sh install &>/dev/null
