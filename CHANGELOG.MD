@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 
 - **Technitium DNS LXC**
   - New Script V2
+- **WireGuard LXC**
+  - Add WGDashboard
 
 ## 2022-03-17
 
