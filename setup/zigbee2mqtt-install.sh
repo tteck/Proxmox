@@ -89,7 +89,7 @@ Restart=always
 User=root
 [Install]
 WantedBy=multi-user.target" > $service_path
-
+systemctl enable zigbee2mqtt.service &>/dev/null
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
