@@ -73,6 +73,7 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Dependencies... "
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
+apt-get install -y gunicorn &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing WireGuard (using pivpn.io)... "
@@ -80,7 +81,42 @@ curl -s -L https://install.pivpn.io > install.sh
 chmod +x install.sh
 ./install.sh --unattended options.conf &>/dev/null
 echo -e "${CM}${CL} \r"
- 
+
+echo -en "${GN} Installing pip3... "
+apt-get install python3-pip -y &>/dev/null
+pip install flask &>/dev/null
+pip install ifcfg &>/dev/null
+pip install flask_qrcode &>/dev/null
+pip install icmplib &>/dev/null
+echo -e "${CM}${CL} \r"
+
+echo -en "${GN} Installing WGDashboard... "
+git clone -b v3.0.5 https://github.com/donaldzou/WGDashboard.git /ect/wgdashboard &>/dev/null
+cd /ect/wgdashboard/src
+sudo chmod u+x wgd.sh
+sudo ./wgd.sh install &>/dev/null
+sudo chmod -R 755 /etc/wireguard
+echo -e "${CM}${CL} \r"
+
+echo -en "${GN} Creating wg-dashboard.service... "
+service_path="/etc/systemd/system/wg-dashboard.service"
+echo "[Unit]
+After=netword.service
+
+[Service]
+WorkingDirectory=/ect/wgdashboard/src
+ExecStart=/usr/bin/python3 /ect/wgdashboard/src/dashboard.py
+Restart=always
+
+
+[Install]
+WantedBy=default.target" > $service_path
+sudo chmod 664 /etc/systemd/system/wg-dashboard.service
+sudo systemctl daemon-reload
+sudo systemctl enable wg-dashboard.service &>/dev/null
+sudo systemctl start wg-dashboard.service
+echo -e "${CM}${CL} \r"
+
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
