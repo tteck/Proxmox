@@ -6,7 +6,7 @@ CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 while true; do
-    read -p "This will create a New WireGuard LXC (using pivpn.io). Proceed(y/n)?" yn
+    read -p "This will create a New WireGuard LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
