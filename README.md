@@ -1011,6 +1011,32 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸Technitium DNS LXC</summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/12230362?s=100&v=4" height="100"/></p>
+
+<h1 align="center" id="heading"> Technitium DNS LXC </h1>
+An open source authoritative as well as recursive DNS server
+
+To create a new Proxmox Technitium DNS LXC, run the following in the Proxmox Shell (V2).
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/technitiumdns.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+ 
+**Technitium DNS Interface - IP:5380**
+
+⚙️ **To Update**
+
+```yaml
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/technitiumdns-update.sh)"
+```
+__________________________________________________________________________________________ 
+
+</details>
  
  
 <details>
