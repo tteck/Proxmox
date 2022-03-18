@@ -22,6 +22,7 @@ echo -e "${RD}
    \ \/  \/ / | |  __/ _ \ | |_ | | | |/ _  |  __/ _  |
     \  /\  /  | | | |  __/ |__| | |_| | (_| | | | (_| |
      \/  \/   |_|_|  \___|\_____|\__,_|\__,_|_|  \__,_|
+                   ${YW}With WGDashboard
 ${CL}"
 }
 
@@ -201,4 +202,5 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 echo -e "${GN}Successfully created WireGuard LXC to${CL} ${BL}$CTID${CL}.
- \n"
+${BL}WGDashboard${CL} should be reachable by going to the following URL.
+         ${BL}http://${IP}:10086${CL} \n"
