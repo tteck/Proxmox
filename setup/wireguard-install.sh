@@ -48,6 +48,10 @@ done
 echo -e "${CM}${CL} \r"
 echo -en "${GN} Network Connected: ${BL}$(hostname -I)${CL} "
 echo -e "${CM}${CL} \r"
+MAC=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address)
+echo -en "${GN} MAC Address: ${BL}${MAC}${CL} "
+echo -e "${CM}${CL} \r"
+
 OPTIONS_PATH='/options.conf'
 cat >$OPTIONS_PATH <<'EOF'
 IPv4dev=eth0
