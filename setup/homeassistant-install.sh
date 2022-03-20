@@ -21,13 +21,6 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-get_latest_release() {
-   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
-}
-
-DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
-CORE_LATEST_VERSION=$(get_latest_release "home-assistant/core")
-PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
@@ -69,6 +62,14 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing pip3... "
 apt-get install -y python3-pip &>/dev/null
 echo -e "${CM}${CL} \r"
+
+get_latest_release() {
+   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
+}
+
+DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
+CORE_LATEST_VERSION=$(get_latest_release "home-assistant/core")
+PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 
 echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
