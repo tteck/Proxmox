@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Scripts** (V2)
-  - ADD choose between Automatic or Manual DHCP reservation  
+  - ADD choose between Automatic or Manual DHCP  
 
 ## 2022-03-18
 
