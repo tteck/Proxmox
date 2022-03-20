@@ -82,7 +82,7 @@ EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Portainer Image $PORTAINER_LATEST_VERSION... "
+echo -en "${GN} Pulling Portainer $PORTAINER_LATEST_VERSION Image... "
 docker pull portainer/portainer-ce:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
@@ -98,7 +98,7 @@ docker run -d \
   portainer/portainer-ce:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Home Assistant Image $CORE_LATEST_VERSION... "
+echo -en "${GN} Pulling Home Assistant $CORE_LATEST_VERSION Image... "
 docker pull homeassistant/home-assistant:stable &>/dev/null
 echo -e "${CM}${CL} \r"
 
