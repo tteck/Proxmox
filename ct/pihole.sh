@@ -80,9 +80,9 @@ show_menu2(){
 }
 
 option_picked(){
-    message=${@:-"${CL}Error: No message passed"}
+    message2=${@:-"${CL}Error: No message passed"}
     printf " ${YW}${message1}${CL}\n"
-    printf " ${YW}${message}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
 }
 show_menu2
 while [ $opt != '' ]
@@ -111,6 +111,51 @@ while [ $opt != '' ]
         *)clear;
             option_picked "Please choose a Password Type from the menu";
             show_menu2;
+        ;;
+      esac
+    fi
+  done
+show_menu3(){
+    printf "    ${YW} 1)${GN} Automatic DHCP ${CL}\n"
+    printf "    ${YW} 2)${GN} Manual DHCP ${CL}\n"
+
+    printf "Please choose a DHCP Type and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message3=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
+    printf " ${YW}${message3}${CL}\n"
+}
+show_menu3
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using Automatic DHCP";
+            DHCP=" "
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using Manual DHCP";
+            DHCP="1"
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a DHCP Type from the menu";
+            show_menu3;
         ;;
       esac
     fi
@@ -196,6 +241,19 @@ cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
+if [ "$DHCP" == "1" ]; then
+MAC=$(pct config $CTID \
+| grep -i hwaddr \
+| awk '{print substr($2, 31, length($3) 17 ) }') \
+
+echo -e "MAC Address ${BL}$MAC${CL}"
+
+dhcp_reservation(){
+    printf "Please set DHCP reservation and press Enter."
+    read
+}
+dhcp_reservation
+fi
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
