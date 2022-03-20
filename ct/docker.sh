@@ -160,6 +160,52 @@ while [ $opt != '' ]
       esac
     fi
   done
+show_menu4(){
+    printf "    ${YW} 1)${GN} Automatic DHCP ${CL}\n"
+    printf "    ${YW} 2)${GN} Manual DHCP ${CL}\n"
+
+    printf "Please choose a DHCP Type and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message4=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
+    printf " ${YW}${message3}${CL}\n"
+    printf " ${YW}${message4}${CL}\n"
+}
+show_menu4
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using Automatic DHCP";
+            DHCP=" "
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using Manual DHCP";
+            DHCP="1"
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a DHCP Type from the menu";
+            show_menu4;
+        ;;
+      esac
+    fi
+  done
   
 set -o errexit
 set -o errtrace
@@ -248,6 +294,19 @@ cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
+if [ "$DHCP" == "1" ]; then
+MAC=$(pct config $CTID \
+| grep -i hwaddr \
+| awk '{print substr($2, 31, length($3) 17 ) }') \
+
+echo -e "MAC Address ${BL}$MAC${CL}"
+
+dhcp_reservation(){
+    printf "Please set DHCP reservation and press Enter."
+    read
+}
+dhcp_reservation
+fi
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
