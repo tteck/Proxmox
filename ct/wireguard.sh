@@ -236,9 +236,14 @@ if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
 if [ "$DHCP" == "1" ]; then
-pct config $CTID | grep -i hwaddr
+MAC=$(pct config $CTID \
+| grep -i hwaddr \
+| awk '{print substr($2, 31, length($3) 17 ) }') \
+
+echo -e "MAC Address ${BL}$MAC${CL}"
+
 dhcp_reservation(){
-    printf "Please set DHCP Reservation and press Enter."
+    printf "Please set DHCP reservation and press Enter."
     read
 }
 dhcp_reservation
