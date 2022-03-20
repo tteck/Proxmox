@@ -79,9 +79,9 @@ show_menu2(){
 }
 
 option_picked(){
-    message=${@:-"${CL}Error: No message passed"}
+    message2=${@:-"${CL}Error: No message passed"}
     printf " ${YW}${message1}${CL}\n"
-    printf " ${YW}${message}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
 }
 show_menu2
 while [ $opt != '' ]
@@ -114,7 +114,100 @@ while [ $opt != '' ]
       esac
     fi
   done
-  
+show_menu3(){
+    printf "    ${RD} If Using ZFS, You Have Storage Driver Options${CL}\n"
+    printf "    ${RD} Non ZFS, Select Standard overlay2 Storage Driver${CL}\n"
+    printf "    ${YW} 1)${GN} Use fuse-overlayfs Storage Driver${CL}\n"
+    printf "    ${YW} 2)${GN} Use Standard overlay2 Storage Driver${CL}\n"
+
+    printf "Please choose a Storage Driver and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message3=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
+    printf " ${YW}${message3}${CL}\n"
+}
+show_menu3
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using fuse-overlayfs Storage Driver";
+            STORAGE_DRIVER="fuse"
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using overlay2 Storage Driver";
+            STORAGE_DRIVER=" "
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a Storage Driver from the menu";
+            show_menu3;
+        ;;
+      esac
+    fi
+  done
+show_menu4(){
+    printf "    ${YW} 1)${GN} Automatic DHCP ${CL}\n"
+    printf "    ${YW} 2)${GN} Manual DHCP ${CL}\n"
+
+    printf "Please choose a DHCP Type and hit enter or ${RD}x${CL} to exit."
+    read opt
+}
+
+option_picked(){
+    message4=${@:-"${CL}Error: No message passed"}
+    printf " ${YW}${message1}${CL}\n"
+    printf " ${YW}${message2}${CL}\n"
+    printf " ${YW}${message3}${CL}\n"
+    printf " ${YW}${message4}${CL}\n"
+}
+show_menu4
+while [ $opt != '' ]
+    do
+    if [ $opt = '' ]; then
+      exit;
+    else
+      case $opt in
+        1) clear;
+            header_info;
+            option_picked "Using Automatic DHCP";
+            DHCP=" "
+            break;
+        ;;
+        2) clear;
+            header_info;
+            option_picked "Using Manual DHCP";
+            DHCP="1"
+            break;
+        ;;
+
+        x)exit;
+        ;;
+        \n)exit;
+        ;;
+        *)clear;
+            option_picked "Please choose a DHCP Type from the menu";
+            show_menu4;
+        ;;
+      esac
+    fi
+  done
+   
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -161,8 +254,14 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == " " ]; then 
  FEATURES="nesting=1,keyctl=1"
+ elif
+ [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ FEATURES="nesting=1,keyctl=1,fuse=1"
+ elif
+ [ "$IM" == "0" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ FEATURES="nesting=1,fuse=1"
  else
  FEATURES="nesting=1"
  fi
@@ -195,10 +294,30 @@ cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
+if [ "$DHCP" == "1" ]; then
+MAC=$(pct config $CTID \
+| grep -i hwaddr \
+| awk '{print substr($2, 31, length($3) 17 ) }') \
+
+echo -e "MAC Address ${BL}$MAC${CL}"
+
+dhcp_reservation(){
+    printf "Please set DHCP reservation and press Enter."
+    read
+}
+dhcp_reservation
+fi
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
 echo -e "${CM}${CL} \r"
+
+ if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
+   pct push $CTID fuse-overlayfs /usr/local/bin/fuse-overlayfs -perms 755
+   info "Using ${BL}fuse-overlayfs${CL} Storage Driver."
+   else
+   info "Using ${BL}overlay2${CL} Storage Driver."
+ fi
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
