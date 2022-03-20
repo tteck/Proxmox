@@ -59,7 +59,13 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Docker... "
+get_latest_release() {
+   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
+}
+
+DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
+
+echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 cat >$DOCKER_CONFIG_PATH <<'EOF'
