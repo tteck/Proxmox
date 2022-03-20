@@ -21,6 +21,13 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
+get_latest_release() {
+   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
+}
+
+DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
+CORE_LATEST_VERSION=$(get_latest_release "home-assistant/core")
+PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
@@ -63,7 +70,7 @@ echo -en "${GN} Installing pip3... "
 apt-get install -y python3-pip &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Docker... "
+echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 cat >$DOCKER_CONFIG_PATH <<'EOF'
@@ -74,11 +81,11 @@ EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Portainer Image... "
+echo -en "${GN} Pulling Portainer Image $PORTAINER_LATEST_VERSION... "
 docker pull portainer/portainer-ce:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Portainer Image... "
+echo -en "${GN} Installing Portainer $PORTAINER_LATEST_VERSION... "
 docker volume create portainer_data >/dev/null
 docker run -d \
   -p 8000:8000 \
@@ -90,11 +97,11 @@ docker run -d \
   portainer/portainer-ce:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Home Assistant Image... "
+echo -en "${GN} Pulling Home Assistant Image $CORE_LATEST_VERSION... "
 docker pull homeassistant/home-assistant:stable &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Home Assistant Image... "
+echo -en "${GN} Installing Home Assistant $CORE_LATEST_VERSION... "
 docker volume create hass_config >/dev/null
 docker run -d \
   --name homeassistant \
