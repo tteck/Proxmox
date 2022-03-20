@@ -286,7 +286,7 @@ export PCT_OPTIONS="
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
-if [ "$STORAGE_TYPE" == "zfspool" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
+if [ "$STORAGE_TYPE" == "zfspool" ]; then
   wget -qL -O fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/v1.8.2/fuse-overlayfs-x86_64
   warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
