@@ -688,7 +688,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/zwave/icon.png?raw=true" height="100"/></p>
 
