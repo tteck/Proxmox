@@ -1291,7 +1291,7 @@ ________________________________________________________________________________
 
 To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox Shell.
 
-```
+```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/vaultwarden.sh)"
 ```
 ⚠️ Vaultwarden needs to be behind a proxy (Nginx Proxy Manager) to obtain HTTPS and to allow clients to connect.
