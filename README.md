@@ -1041,7 +1041,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Dashy LXC</summary>
+<summary markdown="span"> Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
