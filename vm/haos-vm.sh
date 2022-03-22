@@ -188,11 +188,8 @@ echo -e "${CM} ${CL} \r"
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
   qm set $VMID -serial0 socket >/dev/null
 )
-echo -en "${GN} Starting Home Assistant OS VM... "
-qm start $VMID
-sleep 15
-echo -e "${CM} ${CL} \n"
-CURRENT_IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
-echo -e "${CURRENT_IP}"
+#echo -en "${GN} Starting Home Assistant OS VM... "
+#qm start $VMID
+#echo -e "${CM} ${CL} \n"
 
-echo -e "${GN} Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} IP is ${BL}${CURRENT_IP}${CL}\n"
+echo -e "${GN} Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} \n"
