@@ -1039,6 +1039,28 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸Heimdall Dashboard LXC</summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Heimdall Dashboard LXC </h1>
+
+Heimdall Application Dashboard is a dashboard for all your web applications. It doesn't need to be limited to applications though, you can add links to anything you like.
+
+To create a new Proxmox Heimdall Dashboard LXC, run the following in the Proxmox Shell (V2).
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldashboard.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+ 
+**Heimdall Dashboard Interface - IP:7990**
+
+__________________________________________________________________________________________ 
+
+</details>
+
 
 <details>
 <summary markdown="span"> Dashy LXC</summary>
