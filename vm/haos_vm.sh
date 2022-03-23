@@ -134,7 +134,7 @@ case $FILE in
 esac
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
-  nfs|dir)
+  btrfs|nfs|dir)
         DISK_EXT=".qcow2"
         DISK_REF="$VMID/"
         IMPORT_OPT="-format qcow2"
