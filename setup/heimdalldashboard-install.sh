@@ -65,11 +65,12 @@ apt-get install -y php-sqlite3 &>/dev/null
 apt-get install -y php-zip &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Heimdall Dashboard... "
-RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]'); echo $RELEASE &&\
-curl --silent -o /opt/${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz" 
+RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
+echo -en "${GN} Installing Heimdall Dashboard ${RELEASE}... "
+curl --silent -o /opt/${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz" &>/dev/null
 cd /opt
-tar xvzf ${RELEASE}.tar.gz
+tar xvzf ${RELEASE}.tar.gz &>/dev/null
+echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Service... "
 service_path="/etc/systemd/system/heimdall.service"
