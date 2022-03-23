@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-03-23
+
+### Changed
+
+- **Heimdall Dashboard LXC**
+  - New Script V2
+
 ## 2022-03-20
 
 ### Changed
