@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-03-24
+
+### Changed
+
+- **Plex Media Server LXC**
+  - Switched to Ubuntu 20.04 for HDR tone mapping
+
 ## 2022-03-23
 
 ### Changed
