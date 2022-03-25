@@ -1341,3 +1341,24 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/vaultwarde
 ____________________________________________________________________________________________ 
 
 </details>
+
+<details>
+<summary markdown="span"> Omada SDN Controller LXC</summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/omada.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Omada SDN Controller LXC </h1>
+
+Omada is TP-Link's alternative to Ubiquiti's Unifi products. With it, you can manage all of your Omada devices through a single pane of glass. They sell a device dedicated to running the Omada Controller software, but it's unnecessary if you already have the spare resources to run the controller software on your Proxmox server.
+
+To create a new Proxmox Omada SDN Controller LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Normal Settings:  2048Mib RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+____________________________________________________________________________________________ 
+
+</details>
