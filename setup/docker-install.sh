@@ -76,6 +76,28 @@ EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 echo -e "${CM}${CL} \r"
 
+read -r -p "Add Portainer? <Y/n> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+PORTAINER="Y"
+else
+PORTAINER="N"
+fi
+
+if [[ $PORTAINER == "Y" ]]; then
+echo -en "${GN} Installing Portainer $PORTAINER_LATEST_VERSION... "
+docker volume create portainer_data >/dev/null
+docker run -d \
+  -p 8000:8000 \
+  -p 9000:9000 \
+  --name=portainer \
+  --restart=always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  portainer/portainer-ce:latest &>/dev/null
+echo -e "${CM}${CL} \r"
+fi
+
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 echo -en "${GN} Customizing Container... "
