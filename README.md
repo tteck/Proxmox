@@ -809,7 +809,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
 <h1 align="center" id="heading"> Docker LXC </h1>
-<h3 align="center"> With Selectable Storage Drivers </h3>
+<h3 align="center"> With Selectable Storage Drivers & Portainer Install Option</h3>
 
 To create a new Proxmox Docker LXC, run the following in the Proxmox Shell (V2).
 
@@ -820,6 +820,8 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/docker.sh)"
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
 After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+**Portainer Interface - IP:9000**
 
 ⚙️ **To Update**
 
