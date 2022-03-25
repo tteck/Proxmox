@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 set -e
+while true; do
+    read -p "Change CPU Scaling Governors. Proceed(y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+clear
 show_menu(){
     CL=`echo "\033[m"`
     GN=`echo "\033[32m"`
@@ -24,7 +33,7 @@ show_menu(){
     printf "${BL}**${YW} 5)${GN} Switch to ${BL}performance${CL}${GN} CPU Scaling Governor ${CL}\n"
     printf "${BL}**${YW} 6)${GN} Switch to ${BL}schedutil${CL}${GN} CPU Scaling Governor ${CL}\n"
     printf "\n ${fgred}NOTE: Settings return to default after reboot${CL}\n"
-    printf "\n Please choose an option from the menu and press [ENTER] or ${fgred}x to exit. ${CL}"
+    printf "\n Please choose an option from the menu and press [ENTER] or ${fgred}x${CL} to exit."
     read opt
 }
 clear
