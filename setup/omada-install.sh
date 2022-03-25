@@ -74,12 +74,12 @@ apt-get -qqy install --no-install-recommends \
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Downloading Omada Controller... "
+cd /tmp
 wget "${OMADA_URL}" &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Extracting Omada Controller... "
-cd /tmp
-tar zxvf "${OMADA_TAR}"
+tar zxvf "${OMADA_TAR}" &>/dev/null
 rm -f "${OMADA_TAR}"
 cd Omada_SDN_Controller_*
 echo -e "${CM}${CL} \r"
