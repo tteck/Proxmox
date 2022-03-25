@@ -809,7 +809,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
 <h1 align="center" id="heading"> Docker LXC </h1>
-<h3 align="center"> With Selectable Storage Drivers & Portainer Install Option</h3>
+<h3 align="center"> With Selectable Storage Drivers & Add Portainer Option</h3>
 
 To create a new Proxmox Docker LXC, run the following in the Proxmox Shell (V2).
 
