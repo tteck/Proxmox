@@ -1,11 +1,4 @@
-#    ____                      _          _____            _             _ _           
-#   / __ \                    | |        / ____|          | |           | | |          
-#  | |  | |_ __ ___   __ _  __| | __ _  | |     ___  _ __ | |_ _ __ ___ | | | ___ _ __ 
-#  | |  | | '_ ` _ \ / _` |/ _` |/ _` | | |    / _ \| '_ \| __| '__/ _ \| | |/ _ \ '__|
-#  | |__| | | | | | | (_| | (_| | (_| | | |___| (_) | | | | |_| | | (_) | | |  __/ |   
-#   \____/|_| |_| |_|\__,_|\__,_|\__,_|  \_____\___/|_| |_|\__|_|  \___/|_|_|\___|_|   
-                                                                                     
-                                                                                     #!/usr/bin/env bash
+#!/usr/bin/env bash
 clear
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
@@ -38,7 +31,7 @@ show_menu(){
     printf "    ${YW} 1)${YW} Privileged ${CL}\n"
     printf "    ${YW} 2)${GN} Unprivileged ${CL}\n"
 
-    printf "Please choose a Install Method and hit enter or ${RD}x${CL} to exit."
+    printf "Please choose an Install Method and hit enter or ${RD}x${CL} to exit."
     read opt
 }
 
@@ -262,7 +255,7 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/JimiHFord/Proxmox/omada/setup/omada-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/omada-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
