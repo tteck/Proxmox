@@ -10,16 +10,34 @@ while true; do
     esac
 done
 clear
+function header_info {
+echo -e "
+   _____ _____  _    _ 
+  / ____|  __ \| |  | |
+ | |    | |__) | |  | |
+ | |    |  ___/| |  | |
+ | |____| |    | |__| |
+  \_____|_|     \____/ 
+    Scaling Governors
+"
+}
 show_menu(){
     CL=`echo "\033[m"`
     GN=`echo "\033[32m"`
     BL=`echo "\033[36m"`
     YW=`echo "\033[33m"`
     fgred=`echo "\033[31m"`
+header_info
+    CK=$(uname -r)
     IP=$(hostname -I)
+    MAC=$(cat /sys/class/net/eno1/address)
     ACSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
     CCSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
     echo -e "${YW}Proxmox IP ${BL}${IP}${CL}"
+
+    echo -e "${YW}MAC Address ${BL}${MAC}${CL}"
+
+    echo -e "${YW}Current Kernel ${BL}${CK}${CL}"
 
     echo -e "\n${YW}Available CPU Scaling Governors
     ${BL}${ACSG}${CL}"
