@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-set -e
 clear
+set -e
 while true; do
     read -p "Change CPU Scaling Governors. Proceed(y/n)?" yn
     case $yn in
@@ -26,7 +26,7 @@ show_menu(){
     
     echo -e "\n${YW}Current CPU Scaling Governor
     ${BL}${CCSG}${CL}"
-    printf "\n${BL}********** ${YW}CPU Scaling Governor Selector${CL} ${BL}********${CL}\n"
+    printf "\n$ {fgred}Only Select Available CPU Scaling Governors From Above${CL}\n \n"
     printf "${BL}**${YW} 1)${GN} Switch to ${BL}conservative${CL}${GN} CPU Scaling Governor ${CL}\n"
     printf "${BL}**${YW} 2)${GN} Switch to ${BL}ondemand${CL}${GN} CPU Scaling Governor ${CL}\n"
     printf "${BL}**${YW} 3)${GN} Switch to ${BL}userspace${CL}${GN} CPU Scaling Governor ${CL}\n"
