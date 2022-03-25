@@ -9,7 +9,9 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Plex Media Server LXC**
-  - Switched to Ubuntu 20.04 for HDR tone mapping
+  - Switch to Ubuntu 20.04 for HDR tone mapping
+- **Docker LXC**
+  - ADD Option to Install Portainer
 
 ## 2022-03-23
 
