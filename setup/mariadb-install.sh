@@ -65,21 +65,11 @@ apt-get update >/dev/null
 apt-get install -y mariadb-server &>/dev/null
 echo -e "${CM}${CL} \r"
 
-read -r -p "Add Adminer? <Y/n> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
-then
-ADMINER="Y"
-else
-ADMINER="N"
-fi
-
-if [[ $ADMINER == "Y" ]]; then
 echo -en "${GN} Installing Adminer... "
 sudo apt install adminer -y &>/dev/null
 sudo a2enconf adminer &>/dev/null
 sudo systemctl reload apache2 &>/dev/null
 echo -e "${CM}${CL} \r"
-fi
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
