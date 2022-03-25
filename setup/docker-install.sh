@@ -77,7 +77,7 @@ EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 echo -e "${CM}${CL} \r"
 
-read -r -p "Add Portainer? <Y/n> " prompt
+read -r -p "Would you like to add Portainer? <Y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 PORTAINER="Y"
