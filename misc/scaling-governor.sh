@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+clear
 while true; do
     read -p "Change CPU Scaling Governors. Proceed(y/n)?" yn
     case $yn in
