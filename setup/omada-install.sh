@@ -79,8 +79,8 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Extracting Omada Controller... "
 cd /tmp
-tar zxvf "${OMADA_TAR}" &>/dev/null
-rm -f "${OMADA_TAR}" &>/dev/null
+tar zxvf "${OMADA_TAR}"
+rm -f "${OMADA_TAR}"
 cd Omada_SDN_Controller_*
 echo -e "${CM}${CL} \r"
  
