@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-03-25
+
+### Changed
+
+- **Proxmox CPU Scaling Governor**
+  - New Script
+
+
 ## 2022-03-24
 
 ### Changed
