@@ -64,6 +64,7 @@ get_latest_release() {
 }
 
 DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
+PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 
 echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
