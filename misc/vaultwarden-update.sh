@@ -29,8 +29,6 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-#clear
-#update_info
 sleep 2
 echo -e "${GN} Stopping Vaultwarden... ${CL}"
 systemctl stop vaultwarden.service
