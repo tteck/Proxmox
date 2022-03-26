@@ -60,7 +60,7 @@ apt-get install -y sudo &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing UniFi Network Application... "
-wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh && bash unifi-latest.sh --skip
+wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh && bash unifi-latest.sh --skip &>/dev/null
 echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
