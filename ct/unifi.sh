@@ -17,7 +17,7 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${RD}
+echo -e "${BL}
   _    _       _ ______ _ 
  | |  | |     (_)  ____(_)
  | |  | |_ __  _| |__   _ 
@@ -267,4 +267,4 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 
 echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}. 
 ${BL}${APP}${CL} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8443${CL} \n"
+         ${BL}https://${IP}:8443${CL} \n"
