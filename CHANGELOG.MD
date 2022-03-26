@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-03-26
+
+### Changed
+
+- **UniFi Network Application LXC**
+  - New Script V2
+- **Omada Controller LXC**
+  - New Script V2
+
 ## 2022-03-25
 
 ### Changed
