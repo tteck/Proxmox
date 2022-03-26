@@ -959,6 +959,12 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada.sh)"
 
 **Omada Interface - https:// IP:8043**
 
+`tpeap status` show the status of Controller
+
+`tpeap start` start the Omada Controller
+
+`tpeap stop` stop running the Omada Controller
+ 
 ⚙️ **To Update Omada**
 
 Run in the LXC console
