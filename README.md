@@ -912,6 +912,64 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸UniFi Network Application LXC</summary>
+ 
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.ui.com%2Fwp-content%2Fuploads%2F2016%2F10%2Funifi-app-logo-300x108.png&f=1&nofb=1" height="100"/></p>
+
+<h1 align="center" id="heading"> UniFi Network Application LXC </h1>
+
+An application designed to optimize UniFi home and business networks with ease.
+
+To create a new Proxmox UniFi Network Application LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/unifi.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**UniFi Interface - https:// IP:8443**
+
+⚙️ **To Update UniFi**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/unifi-update.sh)"
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
+<summary markdown="span"> 🔸Omada Controller LXC</summary>
+ 
+<p align="center"><img src="https://www.enterpriseitpro.net/wp-content/uploads/2020/12/logo-omada.png" height="100"/></p>
+
+<h1 align="center" id="heading"> Omada Controller LXC </h1>
+
+Omada Controller is software which is used to manage the EAP
+
+To create a new Proxmox Omada Controller LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**Omada Interface - https:// IP:8043**
+
+⚙️ **To Update Omada**
+
+Run in the LXC console
+```yaml
+Working On
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> 🔸Plex Media Server LXC </summary>
 
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/plex/icon.png?raw=true" height="100"/></p>
