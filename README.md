@@ -963,7 +963,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada.sh)"
 
 `tpeap start` start the Omada Controller
 
-`tpeap stop` stop running the Omada Controller
+`tpeap stop` stop the Omada Controller
  
 ⚙️ **To Update Omada**
 
