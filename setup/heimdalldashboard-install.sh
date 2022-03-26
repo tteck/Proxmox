@@ -72,6 +72,10 @@ cd /opt
 tar xvzf ${RELEASE}.tar.gz &>/dev/null
 echo -e "${CM}${CL} \r"
 
+SER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 3, length($2)-4) }')
+
 echo -en "${GN} Creating Service... "
 service_path="/etc/systemd/system/heimdall.service"
 echo "[Unit]
@@ -83,7 +87,7 @@ Restart=always
 RestartSec=5
 Type=simple
 User=root
-WorkingDirectory=/opt/Heimdall-2.4.6
+WorkingDirectory=/opt/Heimdall-${SER}
 ExecStart="/usr/bin/php" artisan serve --port 7990 --host 0.0.0.0
 TimeoutStopSec=30
 
