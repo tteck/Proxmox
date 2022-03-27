@@ -48,7 +48,7 @@ VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest 
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
 
-mv Heimdall-${VER}/* /opt/Heimdall
+mv Heimdall-${VER} /opt/Heimdall
 echo -e "${CM}${CL} \r"
 
 service_path="/etc/systemd/system/heimdall.service"
