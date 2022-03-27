@@ -6,7 +6,7 @@ CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 while true; do
-    read -p "This will Update Heimdall Dashboard V2.4.6 to Current. Proceed(y/n)?" yn
+    read -p "This will Update Heimdall Dashboard weird to Current. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -22,7 +22,7 @@ echo -e "${PP}
  |  __  |/ _ \ |  _   _ \ / _  |/ _  | | | | |  | |/ _  / __|  _ \|  _ \ / _ \ / _  |  __/ _  |
  | |  | |  __/ | | | | | | (_| | (_| | | | | |__| | (_| \__ \ | | | |_) | (_) | (_| | | | (_| |
  |_|  |_|\___|_|_| |_| |_|\__,_|\__,_|_|_| |_____/ \__,_|___/_| |_|_.__/ \___/ \__,_|_|  \__,_|
-                  ${RD}UPDATE FROM V2.4.6 ONLY!
+                  ${RD}UPDATE FROM WEIRD ONLY!
 ${CL}"
 }
 
