@@ -78,6 +78,8 @@ echo -en "${GN} Cleanup... "
 rm -rf ${RELEASE}.tar.gz
 rm -rf public-backup
 rm -rf database-backup
+rm -rf /opt/Heimdall-2.4.8
+rm -rf /opt/v2.4.8.tar.gz
 sleep 1
 echo -e "${CM}${CL} \r"
 
