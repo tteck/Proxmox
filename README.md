@@ -1143,12 +1143,19 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldash
  
 **Heimdall Dashboard Interface - IP:7990**
 
-⚙️ **To Update Heimdall Dashboard**
+⚙️ **To Update Heimdall Dashboard (V2.4.6 Only!)**
 
 Run in the LXC console
 ```yaml
-Working On
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/heimdalldashboard2.4.6-update.sh)"
 ```
+⚙️ **To Update Heimdall Dashboard (V2.4.8 & Above)**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/heimdalldashboard-update.sh)"
+```
+
 __________________________________________________________________________________________ 
 
 </details>
