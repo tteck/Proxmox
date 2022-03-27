@@ -30,7 +30,7 @@ show_menu(){
 header_info
     CK=$(uname -r)
     IP=$(hostname -I)
-    MAC=$(cat /sys/class/net/eno1/address)
+#    MAC=$(cat /sys/class/net/eno1/address)
     ACSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
     CCSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
     echo -e "${YW}Proxmox IP ${BL}${IP}${CL}"
