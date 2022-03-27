@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+PP=`echo "\e[1;35m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
