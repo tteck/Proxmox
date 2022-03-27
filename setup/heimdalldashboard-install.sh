@@ -67,14 +67,14 @@ echo -e "${CM}${CL} \r"
 
 RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
 echo -en "${GN} Installing Heimdall Dashboard ${RELEASE}... "
-curl --silent -o /opt/${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz" &>/dev/null
-cd /opt
+curl --silent -o ${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz" &>/dev/null
 tar xvzf ${RELEASE}.tar.gz &>/dev/null
-echo -e "${CM}${CL} \r"
-
-SER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest \
+VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
+rm -rf ${RELEASE}.tar.gz
+mv Heimdall-${VER} /opt/Heimdall
+echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Service... "
 service_path="/etc/systemd/system/heimdall.service"
@@ -87,7 +87,7 @@ Restart=always
 RestartSec=5
 Type=simple
 User=root
-WorkingDirectory=/opt/Heimdall-${SER}
+WorkingDirectory=/opt/Heimdall
 ExecStart="/usr/bin/php" artisan serve --port 7990 --host 0.0.0.0
 TimeoutStopSec=30
 
