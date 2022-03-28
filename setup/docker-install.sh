@@ -112,9 +112,8 @@ if [[ $DOCKER_COMPOSE == "Y" ]]; then
 echo -en "${GN} Installing Docker Compose $DOCKER_COMPOSE_LATEST_VERSION... "
   DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
   mkdir -p $DOCKER_CONFIG/cli-plugins
-  curl -sSL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_LATEST_VERSION/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose  &>/dev/null
+  curl -sSL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_LATEST_VERSION/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose  
   chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-#  docker compose version
 echo -e "${CM}${CL} \r"
 fi
 
