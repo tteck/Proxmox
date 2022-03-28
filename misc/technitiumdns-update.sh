@@ -14,7 +14,7 @@ echo "==============================="
 echo "Technitium DNS Server Update"
 echo "==============================="
 
-if dotnet --list-runtimes 2> /dev/null | grep -q "Microsoft.NETCore.App 5.0."; 
+if dotnet --list-runtimes 2> /dev/null | grep -q "Microsoft.NETCore.App 6.0."; 
 then
 	dotnetFound="yes"
 else
@@ -24,24 +24,24 @@ fi
 	if [ -d $dotnetDir ]
 	then
 	    dotnetUpdate="yes"
-		echo "Updating .NET 5 Runtime..."
+		echo "Updating .NET 6 Runtime..."
 	fi
 
-	curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -c 5.0 --runtime dotnet --no-path --install-dir $dotnetDir --verbose >> $installLog 2>&1
+	curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -c 6.0 --runtime dotnet --no-path --install-dir $dotnetDir --verbose >> $installLog 2>&1
 
 	if [ ! -f "/usr/bin/dotnet" ]
 	then
 		ln -s $dotnetDir/dotnet /usr/bin >> $installLog 2>&1
 	fi
 
-	if dotnet --list-runtimes 2> /dev/null | grep -q "Microsoft.NETCore.App 5.0."; 
+	if dotnet --list-runtimes 2> /dev/null | grep -q "Microsoft.NETCore.App 6.0."; 
 	then
 		if [ "$dotnetUpdate" = "yes" ]
 		then
-			echo ".NET 5 Runtime was updated successfully!"
+			echo ".NET 6 Runtime was updated successfully!"
 		fi
 	else
-		echo "Failed to update .NET 5 Runtime. Please try again."
+		echo "Failed to update .NET 6 Runtime. Please try again."
 		exit 1
 	fi
 
