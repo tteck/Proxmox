@@ -65,6 +65,7 @@ get_latest_release() {
 
 DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
+DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
 
 echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
@@ -96,6 +97,24 @@ docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
   portainer/portainer-ce:latest &>/dev/null
+echo -e "${CM}${CL} \r"
+fi
+
+read -r -p "Would you like to add Docker Compose? <Y/n> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+DOCKER_COMPOSE="Y"
+else
+DOCKER_COMPOSE="N"
+fi
+
+if [[ $DOCKER_COMPOSE == "Y" ]]; then
+echo -en "${GN} Installing Docker Compose $DOCKER_COMPOSE_LATEST_VERSION... "
+  DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+  mkdir -p $DOCKER_CONFIG/cli-plugins
+  curl -sSL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_LATEST_VERSION/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+  chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+  docker compose version
 echo -e "${CM}${CL} \r"
 fi
 
