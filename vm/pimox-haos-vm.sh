@@ -61,7 +61,7 @@ xz -d $FILE
 echo -e "Creating new HAOS VM \n" 
 qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -bootdisk scsi0 \
         -efidisk0 local:vm-${VMID}-disk-0,size=128K \
-        -name test -net0 virtio,bridge=vmbr0 \
+        -name haos -net0 virtio,bridge=vmbr0 \
         -onboot 1 -ostype l26 -scsi0 local:vm-${VMID}-disk-1,size=32G \
         -scsihw virtio-scsi-pci && \
 pvesm alloc local $VMID vm-${VMID}-disk-0 128 1>&/dev/null && \
