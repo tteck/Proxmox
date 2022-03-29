@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# inspired by https://github.com/IndrekHaav/photoprism-debian
 set -o errexit 
 set -o errtrace 
 set -o nounset 
@@ -110,12 +110,6 @@ PHOTOPRISM_ADMIN_PASSWORD='photoprism'
 PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism'
 PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
 PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
-# Uncomment below if using MariaDB/MySQL instead of SQLite (the default)
-# PHOTOPRISM_DATABASE_DRIVER='mysql'
-# PHOTOPRISM_DATABASE_SERVER='MYSQL_IP_HERE'
-# PHOTOPRISM_DATABASE_NAME='DB_NAME'
-# PHOTOPRISM_DATABASE_USER='USER_NAME'
-# PHOTOPRISM_DATABASE_PASSWORD='PASSWORD'
 " > $env_path
 
 echo -en "${GN} Creating Service file photoprism.service... "
