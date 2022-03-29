@@ -9,8 +9,11 @@ while true; do
     esac
 done
 clear
-CL=`echo "\033[m"`
+RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
+CM='\xE2\x9C\x94\033'
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
 function header_info {
 echo -e "${BL}
         _    _          ____   _____ 
