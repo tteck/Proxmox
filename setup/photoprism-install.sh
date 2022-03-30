@@ -71,42 +71,38 @@ sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Node.js... "
-sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
+apt-get install -y nodejs git make g++ gcc &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Golang... "
-wget https://golang.org/dl/go1.17.8.linux-amd64.tar.gz &>/dev/null
-sudo tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz &>/dev/null
-sudo ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
+wget https://golang.org/dl/go1.18.linux-amd64.tar.gz &>/dev/null
+tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz &>/dev/null
+ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Tensorflow... "
 wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-sudo tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-sudo ldconfig &>/dev/null
+tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
+ldconfig &>/dev/null
 echo -e "${CM}${CL} \r"
 
-sudo useradd --system photoprism &>/dev/null
-sudo mkdir -p /opt/photoprism/bin
-sudo mkdir /var/lib/photoprism
-sudo chown photoprism:photoprism /var/lib/photoprism &>/dev/null
-
 echo -en "${GN} Cloning PhotoPrism... "
+mkdir -p /opt/photoprism/bin
+mkdir /var/lib/photoprism
 git clone https://github.com/photoprism/photoprism.git &>/dev/null
 cd photoprism
 git checkout release &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Building PhotoPrism... "
-sudo make all &>/dev/null
-sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
-sudo chown -R photoprism:photoprism /opt/photoprism 
+make all &>/dev/null
+./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
+cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 echo -e "${CM}${CL} \r"
 
 env_path="/var/lib/photoprism/.env"
 echo " 
-PHOTOPRISM_ADMIN_PASSWORD='photoprism'
+PHOTOPRISM_ADMIN_PASSWORD='admin'
 PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism'
 PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
 PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
@@ -121,8 +117,7 @@ After=network.target
 
 [Service]
 Type=forking
-User=photoprism
-Group=photoprism
+User=root
 WorkingDirectory=/opt/photoprism
 EnvironmentFile=/var/lib/photoprism/.env
 ExecStart=/opt/photoprism/bin/photoprism up -d
@@ -130,9 +125,7 @@ ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
 WantedBy=multi-user.target" > $service_path
-sudo systemctl daemon-reload
-sudo systemctl start photoprism
-sudo systemctl enable photoprism &>/dev/null
+systemctl enable --now photoprism &>/dev/null
 echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -156,5 +149,5 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Cleanup... "
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/go
 echo -e "${CM}${CL} \n"
