@@ -71,7 +71,7 @@ sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Node.js... "
-apt-get install -y nodejs git make g++ gcc &>/dev/null
+apt-get install -y nodejs &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Golang... "
