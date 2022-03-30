@@ -1216,7 +1216,7 @@ After the script completes, If you're dissatisfied with the default settings, cl
  ```
  **password** 
  ```yaml
- photoprism
+ admin
  ```
 [PhotoSync](https://www.photosync-app.com/home.html)
 
