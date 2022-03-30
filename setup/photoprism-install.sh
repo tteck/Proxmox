@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# inspired by https://github.com/IndrekHaav/photoprism-debian
+
 set -o errexit 
 set -o errtrace 
 set -o nounset 
