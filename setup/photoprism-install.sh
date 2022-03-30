@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -o errexit 
 set -o errtrace 
 set -o nounset 
@@ -81,9 +80,20 @@ ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Tensorflow... "
-wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-ldconfig &>/dev/null
+AVX=$(grep -o -m1 'avx[^ ]*' /proc/cpuinfo)
+if [[ "$AVX" == "avx2" ]]; then
+  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
+  tar -C /usr/local -xzf libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
+  ldconfig &>/dev/null
+  elif [[ "$AVX" == "avx" ]]; then
+  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
+  tar -C /usr/local -xzf libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
+  ldconfig &>/dev/null
+  else
+  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
+  tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
+  ldconfig &>/dev/null
+fi
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cloning PhotoPrism... "
