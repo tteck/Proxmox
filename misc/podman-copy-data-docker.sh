@@ -99,8 +99,8 @@ CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") || \
 [ -d "${CTID_TO_PATH}${DOCKER_PATH}" ] || \
   die "Home Assistant directories in '$CTID_TO' not found."
 
-#rm -rf ${CTID_TO_PATH}${DOCKER_PATH}
-#mkdir ${CTID_TO_PATH}${DOCKER_PATH}
+rm -rf ${CTID_TO_PATH}${DOCKER_PATH}
+mkdir ${CTID_TO_PATH}${DOCKER_PATH}
 
 msg "Copying Data Between Containers..."
 RSYNC_OPTIONS=(
