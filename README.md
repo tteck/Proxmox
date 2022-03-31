@@ -43,7 +43,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox CPU Scaling Governor</summary>
+<summary markdown="span"> Proxmox CPU Scaling Governor</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/cpu.png?raw=true" height="100"/></p>
 
