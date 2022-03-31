@@ -1,5 +1,6 @@
 
 # Change Log
+<p><img src="https://badgen.net/github/commits/tteck/Proxmox/main"/>  <img src="https://badgen.net/github/last-commit/tteck/Proxmox/main"/></p>
 All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
