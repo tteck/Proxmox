@@ -1,9 +1,6 @@
 <h1 align="center" id="heading"> Select a Proxmox Helper Below </h1>
 
-<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://camo.githubusercontent.com/1b16d94c46fa2b58bb46897827e77aa0a778272c2d80592f1f3228772590a182/68747470733a2f2f62616467656e2e6e65742f6769746875622f6c6963656e73652f747465636b2f50726f786d6f78" alt="license" data-canonical-src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://camo.githubusercontent.com/7d91c434f4c2067fc3e5d0f2e0a21a763a1a80f1060856878c6434b005796879/68747470733a2f2f62616467656e2e6e65742f6769746875622f636865636b732f747465636b2f50726f786d6f782f6d61696e2f" alt="checks" data-canonical-src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a>
-
-🔸<sub> updated in the past 7 days</sub> <sub> [Changelog](https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD) </sub>
-
+<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://camo.githubusercontent.com/1b16d94c46fa2b58bb46897827e77aa0a778272c2d80592f1f3228772590a182/68747470733a2f2f62616467656e2e6e65742f6769746875622f6c6963656e73652f747465636b2f50726f786d6f78" alt="license" data-canonical-src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://camo.githubusercontent.com/7d91c434f4c2067fc3e5d0f2e0a21a763a1a80f1060856878c6434b005796879/68747470733a2f2f62616467656e2e6e65742f6769746875622f636865636b732f747465636b2f50726f786d6f782f6d61696e2f" alt="checks" data-canonical-src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
 
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
