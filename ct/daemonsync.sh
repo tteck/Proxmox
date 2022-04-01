@@ -41,11 +41,8 @@ option_picked(){
     printf " ${YW}${message1}${CL}\n"
 }
 show_menu
-while [ $opt != '' ]
+while [ "$opt" != " " ]
     do
-    if [ $opt = '' ]; then
-      exit;
-    else
       case $opt in
         1) clear;
             header_info;
@@ -69,7 +66,6 @@ while [ $opt != '' ]
             show_menu;
         ;;
       esac
-    fi
   done
 show_menu2(){
     printf "    ${YW} 1)${GN} Use Automatic Login ${CL}\n"
@@ -85,11 +81,8 @@ option_picked(){
     printf " ${YW}${message2}${CL}\n"
 }
 show_menu2
-while [ $opt != '' ]
+while [ "$opt" != " " ]
     do
-    if [ $opt = '' ]; then
-      exit;
-    else
       case $opt in
         1) clear;
             header_info;
@@ -113,7 +106,6 @@ while [ $opt != '' ]
             show_menu2;
         ;;
       esac
-    fi
   done
 show_menu3(){
     printf "    ${YW} 1)${GN} Automatic DHCP ${CL}\n"
@@ -130,11 +122,8 @@ option_picked(){
     printf " ${YW}${message3}${CL}\n"
 }
 show_menu3
-while [ $opt != '' ]
+while [ "$opt" != " " ]
     do
-    if [ $opt = '' ]; then
-      exit;
-    else
       case $opt in
         1) clear;
             header_info;
@@ -158,7 +147,6 @@ while [ $opt != '' ]
             show_menu3;
         ;;
       esac
-    fi
   done
 
 set -o errexit
