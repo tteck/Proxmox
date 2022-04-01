@@ -910,7 +910,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸UniFi Network Application LXC</summary>
+<summary markdown="span"> UniFi Network Application LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.ui.com%2Fwp-content%2Fuploads%2F2016%2F10%2Funifi-app-logo-300x108.png&f=1&nofb=1" height="100"/></p>
 
@@ -939,7 +939,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Omada Controller LXC</summary>
+<summary markdown="span"> Omada Controller LXC</summary>
  
 <p align="center"><img src="https://www.enterpriseitpro.net/wp-content/uploads/2020/12/logo-omada.png" height="100"/></p>
 
