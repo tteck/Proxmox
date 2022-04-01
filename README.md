@@ -691,7 +691,7 @@ npm start
  
 Run in the LXC console
  ```yaml
-cd /opt/zigbee2mqtt/
+cd /opt/zigbee2mqtt
 bash update.sh
  ```
 ⚙️ **Copy Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
