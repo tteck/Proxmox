@@ -1124,7 +1124,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Heimdall Dashboard LXC</summary>
+<summary markdown="span"> Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
 
