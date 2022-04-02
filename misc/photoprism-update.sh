@@ -47,11 +47,8 @@ option_picked(){
     printf " ${YW}${message1}${CL}\n"
 }
 show_menu
-while [ $opt != '' ]
+while [ "$opt" != " " ]
     do
-    if [ $opt = '' ]; then
-      exit;
-    else
       case $opt in
         1) clear;
             header_info;
@@ -75,7 +72,6 @@ while [ $opt != '' ]
             show_menu;
         ;;
       esac
-    fi
   done
 
 echo -en "${GN} Stopping PhotoPrism... "
