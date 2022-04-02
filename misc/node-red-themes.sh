@@ -41,11 +41,8 @@ option_picked(){
 
 clear
 show_menu
-while [ $opt != '' ]
+while [ "$opt" != " " ]
     do
-    if [ $opt = '' ]; then
-      exit;
-    else
       case $opt in
         1) clear;
             option_picked "Installing Default Theme";
@@ -93,7 +90,6 @@ while [ $opt != '' ]
             show_menu;
         ;;
       esac
-    fi
   done
 echo -en "${GN} Installing ${THEME} Theme... "
 cd /root/.node-red
