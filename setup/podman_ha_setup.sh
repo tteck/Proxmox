@@ -64,22 +64,29 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Podman... "
 apt-get -y install podman &>/dev/null
+REG=/etc/containers/registries.conf
+cat << EOF > $REG
+[registries.insecure]
+registries = [ ]
+[registries.block]
+registries = [ ]
+EOF
 echo -e "${CM}${CL} \r"
 
-#echo -en "${GN} Pulling Yacht Image... "
-#podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
-#echo -e "${CM}${CL} \r"
+echo -en "${GN} Pulling Yacht Image... "
+podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
+echo -e "${CM}${CL} \r"
 
-#echo -en "${GN} Installing Yacht... "
-#podman volume create yacht >/dev/null
-#podman run \
-#  --name yacht \
-#  --restart always \
-#  -v /var/run/podman/podman.sock:/var/run/docker.sock \
-#  -v yacht:/config \
-#  -p 8000:8000 \
-#  selfhostedpro/yacht:latest &>/dev/null
-#echo -e "${CM}${CL} \r"
+echo -en "${GN} Installing Yacht... "
+podman volume create yacht >/dev/null
+podman run -d \
+  --name yacht \
+  --restart always \
+  -v /var/run/podman/podman.sock:/var/run/docker.sock \
+  -v yacht:/config \
+  -p 8000:8000 \
+  selfhostedpro/yacht:latest &>/dev/null
+echo -e "${CM}${CL} \r"
 
 #echo -en "${GN} Pulling Home Assistant Image... "
 #podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
@@ -142,11 +149,11 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 #    > /etc/systemd/system/homeassistant.service 
 #systemctl enable homeassistant &>/dev/null
 
-#podman generate systemd \
-#    --new --name yacht \
-#    > /etc/systemd/system/yacht.service 
-#systemctl enable yacht &>/dev/null
-#echo -e "${CM}${CL} \r"
+podman generate systemd \
+    --new --name yacht \
+    > /etc/systemd/system/yacht.service 
+systemctl enable yacht &>/dev/null
+echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
 rm -rf /podman_ha_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
