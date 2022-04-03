@@ -77,8 +77,6 @@ podman run -d \
   --restart always \
   -v /var/run/podman/podman.sock:/var/run/docker.sock \
   -v yacht:/config \
-  -v /etc/localtime:/etc/localtime:ro \
-  -v /etc/timezone:/etc/timezone:ro \
   -p 8000:8000 \
   selfhostedpro/yacht:latest &>/dev/null
 echo -e "${CM}${CL} \r"
