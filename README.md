@@ -125,86 +125,6 @@ ________________________________________________________________________________
 </details>
 
 
-
-<details>
-<summary markdown="span"> Home Assistant Container LXC (Podman) </summary>
- 
-<p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
-<img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
- 
-<h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
-To create a new Proxmox Podman Home Assistant Container, run the following in the Proxmox Shell. 
-
- ([What is Podman?](https://youtu.be/lkg5QJsoCCQ))
-
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/podman_ha_container.sh)"
-```
-<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 16GB Storage - 2vCPU ⚡</h3>
- 
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
-
-**Home Assistant Interface - IP:8123**
- 
-**Yacht Interface - IP:8000**
-
-⚙️ **Path to HA /config**
-```yaml
-/var/lib/containers/storage/volumes/hass_config/_data
- ```
-⚙️ **To edit the HA configuration.yaml**
- 
-Run in the LXC console
-```yaml
-nano /var/lib/containers/storage/volumes/hass_config/_data/configuration.yaml
-```
-Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”
-
-⚙️ **Copy Data From a Existing Home Assistant LXC to a Podman Home Assistant LXC**
-
-Run in the Proxmox Shell
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/ha-copy-data-podman.sh)"
- ```
-
-⚙️ **To allow USB device passthrough:**
- 
-Run in the Proxmox Shell. (**replace `106` with your LXC ID**)
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/usb-passthrough.sh)" -s 106
-```
- 
-Reboot the LXC to apply the changes
-
-⚙️ **To Install HACS:**
-
-Run in the LXC console
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/podman_hacs.sh)"
-```
-After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.
-
-⚙️ **To Update Home Assistant:**
-
-Run in the LXC console
-```yaml
-./update.sh
-```
-⚙️ **Initial Yacht Login**
-
-**username** 
- ```yaml
- admin@yacht.local
- ```
- **password** 
- ```yaml
- pass
- ```
-
-____________________________________________________________________________________________ 
-</details>
-
-
 <details>
 <summary markdown="span"> Home Assistant Container LXC </summary>
  
@@ -822,7 +742,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Docker LXC </summary>
+<summary markdown="span"> Docker LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
