@@ -81,22 +81,22 @@ echo -e "${CM}${CL} \r"
 #  selfhostedpro/yacht:latest &>/dev/null
 #echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Home Assistant Image... "
-podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
-echo -e "${CM}${CL} \r"
+#echo -en "${GN} Pulling Home Assistant Image... "
+#podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+#echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Home Assistant... "
-podman volume create hass_config >/dev/null
-podman run -d \
-  --name homeassistant \
-  --restart unless-stopped \
-  -v /dev:/dev \
-  -v hass_config:/config \
-  -v /etc/localtime:/etc/localtime:ro \
-  -v /etc/timezone:/etc/timezone:ro \
-  --net=host \
-  homeassistant/home-assistant:stable &>/dev/null
-echo -e "${CM}${CL} \r"
+#echo -en "${GN} Installing Home Assistant... "
+#podman volume create hass_config >/dev/null
+#podman run -d \
+#  --name homeassistant \
+#  --restart unless-stopped \
+#  -v /dev:/dev \
+#  -v hass_config:/config \
+#  -v /etc/localtime:/etc/localtime:ro \
+#  -v /etc/timezone:/etc/timezone:ro \
+#  --net=host \
+#  homeassistant/home-assistant:stable &>/dev/null
+#echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Update Script... "
 file_path="/root/update.sh"
@@ -137,16 +137,16 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-podman generate systemd \
-    --new --name homeassistant \
-    > /etc/systemd/system/homeassistant.service 
-systemctl enable homeassistant &>/dev/null
+#podman generate systemd \
+#    --new --name homeassistant \
+#    > /etc/systemd/system/homeassistant.service 
+#systemctl enable homeassistant &>/dev/null
 
-podman generate systemd \
-    --new --name yacht \
-    > /etc/systemd/system/yacht.service 
-systemctl enable yacht &>/dev/null
-echo -e "${CM}${CL} \r"
+#podman generate systemd \
+#    --new --name yacht \
+#    > /etc/systemd/system/yacht.service 
+#systemctl enable yacht &>/dev/null
+#echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
 rm -rf /podman_ha_setup.sh /var/{cache,log}/* /var/lib/apt/lists/*
