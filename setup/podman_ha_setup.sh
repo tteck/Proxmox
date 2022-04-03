@@ -67,7 +67,7 @@ apt-get -y install podman &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Pulling Yacht Image... "
-podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
+podman pull ghcr.io/selfhostedpro/yacht:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Yacht... "
