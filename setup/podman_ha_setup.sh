@@ -66,20 +66,20 @@ echo -en "${GN} Installing Podman... "
 apt-get -y install podman &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Pulling Yacht Image... "
-podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
-echo -e "${CM}${CL} \r"
+#echo -en "${GN} Pulling Yacht Image... "
+#podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
+#echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Yacht... "
-podman volume create yacht >/dev/null
-podman run \
-  --name yacht \
-  --restart always \
-  -v /var/run/podman/podman.sock:/var/run/docker.sock \
-  -v yacht:/config \
-  -p 8000:8000 \
-  selfhostedpro/yacht:latest &>/dev/null
-echo -e "${CM}${CL} \r"
+#echo -en "${GN} Installing Yacht... "
+#podman volume create yacht >/dev/null
+#podman run \
+#  --name yacht \
+#  --restart always \
+#  -v /var/run/podman/podman.sock:/var/run/docker.sock \
+#  -v yacht:/config \
+#  -p 8000:8000 \
+#  selfhostedpro/yacht:latest &>/dev/null
+#echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Pulling Home Assistant Image... "
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
