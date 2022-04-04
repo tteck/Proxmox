@@ -73,7 +73,7 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Yacht... "
 podman volume create yacht >/dev/null
 podman run -d \
-  --privileged
+  --privileged \
   --name yacht \
   --restart always \
   -v /var/run/podman/podman.sock:/var/run/docker.sock \
@@ -91,7 +91,7 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Home Assistant... "
 podman volume create hass_config >/dev/null
 podman run -d \
-  --privileged
+  --privileged \
   --name homeassistant \
   --restart unless-stopped \
   -v /dev:/dev \
