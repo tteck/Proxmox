@@ -64,13 +64,6 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Podman... "
 apt-get -y install podman &>/dev/null
-REG=/etc/containers/registries.conf
-cat << EOF > $REG
-[registries.insecure]
-registries = [ ]
-[registries.block]
-registries = [ ]
-EOF
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Pulling Yacht Image... "
@@ -80,30 +73,34 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Installing Yacht... "
 podman volume create yacht >/dev/null
 podman run -d \
+  --privileged
   --name yacht \
   --restart always \
   -v /var/run/podman/podman.sock:/var/run/docker.sock \
   -v yacht:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
   -p 8000:8000 \
   selfhostedpro/yacht:latest &>/dev/null
 echo -e "${CM}${CL} \r"
 
-#echo -en "${GN} Pulling Home Assistant Image... "
-#podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
-#echo -e "${CM}${CL} \r"
+echo -en "${GN} Pulling Home Assistant Image... "
+podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
+echo -e "${CM}${CL} \r"
 
-#echo -en "${GN} Installing Home Assistant... "
-#podman volume create hass_config >/dev/null
-#podman run -d \
-#  --name homeassistant \
-#  --restart unless-stopped \
-#  -v /dev:/dev \
-#  -v hass_config:/config \
-#  -v /etc/localtime:/etc/localtime:ro \
-#  -v /etc/timezone:/etc/timezone:ro \
-#  --net=host \
-#  homeassistant/home-assistant:stable &>/dev/null
-#echo -e "${CM}${CL} \r"
+echo -en "${GN} Installing Home Assistant... "
+podman volume create hass_config >/dev/null
+podman run -d \
+  --privileged
+  --name homeassistant \
+  --restart unless-stopped \
+  -v /dev:/dev \
+  -v hass_config:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  --net=host \
+  homeassistant/home-assistant:stable &>/dev/null
+echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Creating Update Script... "
 file_path="/root/update.sh"
@@ -144,10 +141,10 @@ EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
-#podman generate systemd \
-#    --new --name homeassistant \
-#    > /etc/systemd/system/homeassistant.service 
-#systemctl enable homeassistant &>/dev/null
+podman generate systemd \
+    --new --name homeassistant \
+    > /etc/systemd/system/homeassistant.service 
+systemctl enable homeassistant &>/dev/null
 
 podman generate systemd \
     --new --name yacht \
