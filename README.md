@@ -972,7 +972,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸MeshCentral LXC</summary>
  
-<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png" height="100"/></p>
+<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> MeshCentral LXC </h1>
 
