@@ -5,7 +5,7 @@ RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
-APP="Mesh Central"
+APP="MeshCentral"
 HN=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
