@@ -67,7 +67,7 @@ echo -en "${GN} Installing Node.js... "
 apt-get install -y nodejs &>/dev/null
 echo -e "${CM}${CL} \r"
 
-echo -en "${GN} Installing Mesh Central... "
+echo -en "${GN} Installing MeshCentral... "
 mkdir /opt/meshcentral
 cd /opt/meshcentral
 npm install meshcentral &>/dev/null
