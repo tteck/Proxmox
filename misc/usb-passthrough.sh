@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo -e "\e[1;33m This script will allow USB passthrough to a privileged LXC Container \e[0m"
+echo -e "\e[1;33m This script will allow USB passthrough to a PRIVILEGED LXC Container ONLY\e[0m"
 while true; do
     read -p "Did you replace 106 with your LXC ID? Proceed(y/n)?" yn
     case $yn in
