@@ -30,6 +30,15 @@ ${CL}"
 }
 
 header_info
+function pve_7() {
+if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
+        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
+        echo -e "Exiting..."
+        sleep 2
+        exit
+fi
+}
+
 function default_settings() {
         clear
         header_info
