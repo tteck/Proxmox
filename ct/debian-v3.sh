@@ -44,7 +44,7 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${GN}Using CT Type Unprivileged${CL}"
+        echo -e "${GN}Using CT Type ${BGN}Unprivileged${CL}"
         CT_TYPE="1"
 		echo -e "${GN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
