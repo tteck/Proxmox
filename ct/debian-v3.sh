@@ -71,7 +71,7 @@ function advanced_settings() {
                 clear
                 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${YW}Enter the CT Type (Privileged/Unprivileged), or Press [ENTER] for Default: Unprivileged "
+                echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged "
                 read CT_TYPE1
                 if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
                 echo -en "${GN}Set CT Type ${BL}$CT_TYPE1${CL}"
@@ -130,9 +130,9 @@ header_info
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
-                echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 8Gb "
+                echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 2Gb "
                 read SIZEDISK
-                if [ -z $SIZEDISK ]; then SIZEDISK="8"; fi;
+                if [ -z $SIZEDISK ]; then SIZEDISK="2"; fi;
                 if ! [[ $SIZEDISK =~ $INTEGER ]] ; then echo "ERROR! SIZEDISK MUST HAVE INTEGER NUMBER!"; exit; fi;
                 echo -en "${GN}Set Disk Size To ${BL}$SIZEDISK${CL}"
 echo -e " ${CM}${CL} \r"
@@ -167,9 +167,9 @@ header_info
                 echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 4 "
+                echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
                 read CORE_COUNT
-                if [ -z $CORE_COUNT ]; then CORE_COUNT="4"; fi;
+                if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
                 echo -en "${GN}Set Cores To ${BL}$CORE_COUNT${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -183,9 +183,9 @@ header_info
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
+                echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 512 "
                 read RAM_SIZE
-                if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
+                if [ -z $RAM_SIZE ]; then RAM_SIZE="512"; fi;
                 echo -en "${GN}Set RAM To ${BL}$RAM_SIZE${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
