@@ -116,7 +116,8 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${YW}Enter CT Name, or Press [ENTER] for Default: $APP "
                 read CT_NAME
-                if [ -z $CT_NAME ]; then HN=$(echo ${APP,,} | tr -d ' '); 
+                if [ -z $CT_NAME ]; then HN=$(echo ${APP,,} | tr -d ' ')
+		CT_NAME=$APP
                 else 
                 HN=$(echo ${CT_NAME,,} | tr -d ' ') 
                 fi;
