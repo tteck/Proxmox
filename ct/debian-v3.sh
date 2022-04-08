@@ -59,7 +59,7 @@ function default_settings() {
 		STORAGETYPE="local-lvm"
 		echo -e "${GN}Using ${BGN}1vCPU${CL}"
 		CORE_COUNT="1"
-		echo -e "${GN}Using ${BGN}512MiB RAM${CL}"
+		echo -e "${GN}Using ${BGN}512MiB${GN} RAM${CL}"
 		RAM_SIZE="512"
 		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
@@ -199,7 +199,7 @@ header_info
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${GN} RAM${CL}"
                 echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
                 read NET
                 if [ -z $NET ]; then NET="dhcp"; fi;
@@ -216,7 +216,7 @@ header_info
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${GN} RAM${CL}"
                 echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
                 echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
                 read VLAN1
@@ -238,7 +238,7 @@ header_info
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${GN} RAM${CL}"
                 echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
                 echo -e "${GN}Using VLAN Tag ${BGN}$VLAN1${CL}"
 
