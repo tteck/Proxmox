@@ -5,7 +5,8 @@ YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
 CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
+BGN=`echo "\033[4;92m"`
+GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Debian"
 
@@ -25,7 +26,7 @@ echo -e "${RD}
  | |  | | ___| |__  _  __ _ _ __  
  | |  | |/ _ \  _ \| |/ _  |  _ \ 
  | |__| |  __/ |_) | | (_| | | | |
- |_v3__/ \___|_.__/|_|\__,_|_| |_|
+ |_${YW}v3${RD}__/ \___|_.__/|_|\__,_|_| |_|
 ${CL}"
 }
 
@@ -45,23 +46,23 @@ function default_settings() {
         echo -e "${BL}Using Default Settings${CL}"
         echo -e "${GN}Using CT Type Unprivileged${CL}"
         CT_TYPE="1"
-		echo -e "${GN}Using CT Password Automatic Login${CL}"
+		echo -e "${GN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
-		echo -e "${GN}Using ID $NEXTID${CL}"
+		echo -e "${GN}Using ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
-		echo -e "${GN}Using CT Name $APP${CL}"
+		echo -e "${GN}Using CT Name ${BGN}$APP${CL}"
 		HN=$(echo ${APP,,} | tr -d ' ')
-		echo -e "${GN}Using Disk Size 2GB${CL}"
+		echo -e "${GN}Using Disk Size ${BGN}2GB${CL}"
 		SIZEDISK="2"
-		echo -e "${GN}Using Storage local-lvm${CL}"
+		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
 		STORAGETYPE="local-lvm"
-		echo -e "${GN}Using 1vCPU${CL}"
+		echo -e "${GN}Using ${BGN}1vCPU${CL}"
 		CORE_COUNT="1"
-		echo -e "${GN}Using 512MiB RAM${CL}"
+		echo -e "${GN}Using ${BGN}512MiB RAM${CL}"
 		RAM_SIZE="512"
-		echo -e "${GN}Using IP Address DHCP${CL}"
+		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
-		echo -e "${GN}Using VLAN Tag NONE${CL}"
+		echo -e "${GN}Using VLAN Tag ${BGN}NONE${CL}"
         VLAN=" "
 }
 
@@ -82,7 +83,7 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${YW}Set Password, or Press [ENTER] for Default: Automatic Login "
                 read PW1
                 if [ -z $PW1 ]; then PW1="Automatic Login" PW=" "; 
@@ -97,8 +98,8 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
                 read CT_ID
                 if [ -z $CT_ID ]; then CT_ID=$NEXTID; fi;
@@ -108,9 +109,9 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${YW}Enter CT Name, or Press [ENTER] for Default: $APP "
                 read CT_NAME
                 if [ -z $CT_NAME ]; then HN=$(echo ${APP,,} | tr -d ' '); 
@@ -123,10 +124,10 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
                 echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 8Gb "
                 read SIZEDISK
                 if [ -z $SIZEDISK ]; then SIZEDISK="8"; fi;
@@ -137,11 +138,11 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${YW}Storages Available:${CL}"
                 echo " "
                 for stg in `pvesh get storage --noborder --noheader`
@@ -158,12 +159,12 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
-                echo -e "${GN}Using Storage $STORAGETYPE${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 4 "
                 read CORE_COUNT
                 if [ -z $CORE_COUNT ]; then CORE_COUNT="4"; fi;
@@ -173,13 +174,13 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
-                echo -e "${GN}Using Storage $STORAGETYPE${CL}"
-                echo -e "${GN}Using ${CORE_COUNT}vCPU${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
                 echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
                 read RAM_SIZE
                 if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
@@ -189,14 +190,14 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
-                echo -e "${GN}Using Storage $STORAGETYPE${CL}"
-                echo -e "${GN}Using ${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
                 echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
                 read NET
                 if [ -z $NET ]; then NET="dhcp"; fi;
@@ -206,15 +207,15 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
-                echo -e "${GN}Using Storage $STORAGETYPE${CL}"
-                echo -e "${GN}Using ${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${RAM_SIZE}MiB RAM${CL}"
-                echo -e "${GN}Using IP Address $NET${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
                 echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
                 read VLAN1
                 if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
@@ -228,16 +229,16 @@ sleep 1
 clear
 header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type $CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password $PW1${CL}"
-                echo -e "${GN}Using ID $CT_ID${CL}"
-                echo -e "${GN}Using CT Name $CT_NAME${CL}"
-                echo -e "${GN}Using Disk Size $SIZEDISK${CL}"
-                echo -e "${GN}Using Storage $STORAGETYPE${CL}"
-                echo -e "${GN}Using ${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${RAM_SIZE}MiB RAM${CL}"
-                echo -e "${GN}Using IP Address $NET${CL}"
-                echo -e "${GN}Using VLAN Tag $VLAN1${CL}"
+                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB RAM${CL}"
+                echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
+                echo -e "${GN}Using VLAN Tag ${BGN}$VLAN1${CL}"
 
 }
 function start_script() {
