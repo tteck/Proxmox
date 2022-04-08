@@ -31,6 +31,7 @@ ${CL}"
 }
 
 header_info
+
 function pve_7() {
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
         echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
@@ -41,11 +42,11 @@ fi
 }
 
 function default_settings() {
-        clear
-        header_info
-        echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${GN}Using CT Type ${BGN}Unprivileged${CL}"
-        CT_TYPE="1"
+                clear
+                header_info
+                echo -e "${BL}Using Default Settings${CL}"
+                echo -e "${GN}Using CT Type ${BGN}Unprivileged${CL}"
+                CT_TYPE="1"
 		echo -e "${GN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
 		echo -e "${GN}Using ID ${BGN}$NEXTID${CL}"
@@ -63,7 +64,7 @@ function default_settings() {
 		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${GN}Using VLAN Tag ${BGN}NONE${CL}"
-        VLAN=" "
+                VLAN=" "
 }
 
 function advanced_settings() {
@@ -75,7 +76,8 @@ function advanced_settings() {
                 if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
                 echo -en "${GN}Set CT Type ${BL}$CT_TYPE1${CL}"
                 else
-                  CT_TYPE="0"
+                CT_TYPE1="Privileged"
+                CT_TYPE="0"
                 echo -en "${GN}Set CT Type ${BL}Privileged${CL}"  
                 fi;
 echo -e " ${CM}${CL} \r"
@@ -270,20 +272,24 @@ function error_exit() {
   [ ! -z ${CTID-} ] && cleanup_ctid
   exit $EXIT
 }
+
 function warn() {
   local REASON="\e[97m$1\e[39m"
   local FLAG="\e[93m[WARNING]\e[39m"
   msg "$FLAG $REASON"
 }
+
 function info() {
   local REASON="$1"
   local FLAG="\e[36m[INFO]\e[39m"
   msg "$FLAG $REASON"
 }
+
 function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
+
 function cleanup_ctid() {
   if $(pct status $CTID &>/dev/null); then
     if [ "$(pct status $CTID | awk '{print $2}')" == "running" ]; then
@@ -294,11 +300,13 @@ function cleanup_ctid() {
     pvesm free $ROOTFS
   fi
 }
+
 function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$CT_TYPE" == "1" ]; then 
+
+if [ "$CT_TYPE" == "1" ]; then 
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
