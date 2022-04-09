@@ -207,14 +207,14 @@ pushd $TEMP_DIR >/dev/null
 export CTID=$(pvesh get /cluster/nextid)
 export PCT_OSTYPE=debian
 export PCT_OSVERSION=11
-export PCT_DISK_SIZE=2
+export PCT_DISK_SIZE=4
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
   -net0 name=eth0,bridge=vmbr0,ip=dhcp
   -onboot 1
   -cores 1
-  -memory 512
+  -memory 1024
   -unprivileged ${IM}
   ${PW}
 "
