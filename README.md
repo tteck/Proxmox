@@ -742,7 +742,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> NocoDB LXC </h1>
 
-Turns any MySQL, PostgreSQL, SQL Server, SQLite & MariaDB into a smart-spreadsheet.
+NocoDB is an open source #NoCode platform that turns any database into a smart spreadsheet. Airtable Alternative.
 
 To create a new Proxmox NocoDB LXC, run the following in the Proxmox Shell (V2).
 
