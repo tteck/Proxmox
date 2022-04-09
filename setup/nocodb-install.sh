@@ -88,7 +88,7 @@ WorkingDirectory=/opt/nocodb
 ExecStart=/usr/bin/npm start
 
 [Install]
-WantedBy=multi-user.target" > $service_path &>/dev/null
+WantedBy=multi-user.target" > $service_path
 systemctl enable --now nocodb.service &>/dev/null
 echo -e "${CM}${CL} \r"
 
