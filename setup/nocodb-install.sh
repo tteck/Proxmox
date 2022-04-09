@@ -88,8 +88,9 @@ WorkingDirectory=/opt/nocodb
 ExecStart=/usr/bin/npm start
 
 [Install]
-WantedBy=multi-user.target" > $service_path
-systemctl enable --now nocodb.service
+WantedBy=multi-user.target" > $service_path &>/dev/null
+systemctl enable --now nocodb.service &>/dev/null
+echo -e "${CM}${CL} \r"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
