@@ -736,6 +736,38 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸NocoDB LXC </summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/nocodb.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> NocoDB LXC </h1>
+
+Turns any MySQL, PostgreSQL, SQL Server, SQLite & MariaDB into a smart-spreadsheet.
+
+To create a new Proxmox NocoDB LXC, run the following in the Proxmox Shell (V2).
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nocodb.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+
+After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
+
+**NocoDB Interface - IP:8080/dashboard**
+
+⚙️ **To Update**
+
+
+```yaml
+Working on
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> InfluxDB/Telegraf LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
