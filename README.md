@@ -882,7 +882,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Debian 11 LXC </summary>
+<summary markdown="span"> 🔸Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
