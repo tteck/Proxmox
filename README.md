@@ -856,7 +856,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
 <h1 align="center" id="heading"> Docker LXC </h1>
-<h3 align="center"> With Selectable Storage Drivers & Add Portainer/Docker Compose Options</h3>
+<h3 align="center"> With Selectable ZFS Storage Drivers & Option to Add Portainer and/or Docker Compose</h3>
 
 To create a new Proxmox Docker LXC, run the following in the Proxmox Shell (V2).
 
@@ -888,10 +888,15 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Debian 11 LXC </h1>
 
-To create a new Proxmox Debian 11 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Debian 11 (curl. sudo) LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/debian.sh)"
+```
+An early look at the v3 install script, run the following in the Proxmox Shell (V3).
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/debian-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -917,7 +922,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Ubuntu 21.10 LXC </h1>
 
-To create a new Proxmox Ubuntu 21.10 (curl. sudo, auto login) LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Ubuntu 21.10 (curl. sudo) LXC, run the following in the Proxmox Shell (V2).
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu.sh)"
