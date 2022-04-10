@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-10
+
+### Changed
+
+- **Debian 11 LXC**
+  - ADD An early look at the v3 install script
+
 ## 2022-04-09
 
 ### Changed
