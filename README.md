@@ -1,6 +1,6 @@
 <h1 align="center" id="heading"> Select a Proxmox Helper Below </h1>
 
-<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
+<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/discussions.png?raw=true" height="21" /></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
 
 <details>
 <summary markdown="span">Proxmox VE 7 Post Install</summary>
