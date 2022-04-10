@@ -245,7 +245,7 @@ header_info
 
 }
 function start_script() {
-		echo -e "${YW}Type Advanced Settings, or Press [ENTER] for Default Settings "
+		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
 		read SETTINGS
 		if [ -z $SETTINGS ]; then default_settings; 
 		else
