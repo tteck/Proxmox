@@ -37,9 +37,19 @@ function update_container() {
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
   pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
+read -p "Skip stopped containers? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    skip=no
+else
+    skip=yes
+fi
+
 for container in $containers
 do
   status=`pct status $container`
+ if [ "$skip" == "no" ]; then 
   if [ "$status" == "status: stopped" ]; then
     echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
     pct start $container
@@ -51,5 +61,12 @@ do
   elif [ "$status" == "status: running" ]; then
     update_container $container
   fi
+ fi 
+ if [ "$skip" == "yes" ]; then
+  if [ "$status" == "status: running" ]; then
+    update_container $container
+  fi
+ fi 
 done; wait
+
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
