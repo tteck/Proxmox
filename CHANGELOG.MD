@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **Proxmox LXC Updater**
   - ADD option to skip stopped containers
+- **Proxmox VE 7 Post Install**
+  - ADD PVE 7 check
 
 ## 2022-04-10
 
