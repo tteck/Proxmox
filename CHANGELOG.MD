@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Proxmox LXC Updater**
+  - ADD option to skip stopped containers
+
+## 2022-04-10
+
+### Changed
+
 - **Debian 11 LXC**
   - ADD An early look at the v3 install script
 
