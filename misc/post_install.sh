@@ -10,7 +10,7 @@ while true; do
     esac
 done
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
-        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
+        echo -e "This script requires Proxmox Virtual Environment 7.0 or greater"
         echo -e "Exiting..."
         sleep 2
         exit
