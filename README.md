@@ -63,7 +63,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Proxmox LXC Updater</summary>
+<summary markdown="span"> 🔸Proxmox LXC Updater</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Felpuig.xeill.net%2FMembers%2Fvcarceler%2Farticulos%2Fcontenedores-con-lxd-lxc%2Fcontainers.png&f=1&nofb=1" height="100"/></p>
 
