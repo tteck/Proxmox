@@ -9,6 +9,12 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
+        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
+        echo -e "Exiting..."
+        sleep 2
+        exit
+fi
 clear
 echo -e "\e[1;33m Disable Enterprise Repository...  \e[0m"
 sleep 1
