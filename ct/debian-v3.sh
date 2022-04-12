@@ -239,15 +239,15 @@ header_info
                 echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
                 echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
                 echo -e "${GN}Using VLAN Tag ${BGN}$VLAN1${CL}"
-while true; do
-    read -p "Are these settings correct(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) clear; header_info; start_script;;
-        * ) echo "Please answer yes or no";;
-    esac
-done
+
+read -p "Are these settings correct(y/n)? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    advanced_settings
+fi
 }
+
 function start_script() {
 		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
 		read SETTINGS
