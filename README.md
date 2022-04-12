@@ -1007,7 +1007,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸MeshCentral LXC</summary>
+<summary markdown="span"> MeshCentral LXC</summary>
  
 <p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
 
