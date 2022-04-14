@@ -10,7 +10,7 @@ GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Debian"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
-
+PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -33,9 +33,9 @@ ${CL}"
 
 header_info
 
-function pve_7() {
-if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
-        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
+function PVE_CHECK() {
+if [[ $PVE != 1 ]]; then
+        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
         echo -e "Exiting..."
         sleep 2
         exit
