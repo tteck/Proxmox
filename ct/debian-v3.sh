@@ -115,10 +115,15 @@ header_info
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${YW}Enter CT Name (no spaces), or Press [ENTER] for Default: $APP "
-                read CT_NAME
-                if [ -z $CT_NAME ]; then CT_NAME=$APP; HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
-                if [ $CT_NAME ]; then HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
-		echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
+                read CT_NAME1
+                if [ -z $CT_NAME1 ]; then
+                   CT_NAME=$NSAPP;
+                   HN=$NSAPP
+                else
+                   CT_NAME=$CT_NAME1;
+		   HN=$(echo ${CT_NAME,,} | tr -d ' ') 
+                fi
+                echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
