@@ -33,12 +33,14 @@ ${CL}"
 
 header_info
 
+function PVE_CHECK() {
 if [[ $PVE != 1 ]]; then
         echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
         echo -e "Exiting..."
         sleep 2
         exit
 fi
+}
 
 function default_settings() {
                 clear
@@ -259,6 +261,7 @@ function start_script() {
 		fi;
 }
 
+PVE_CHECK
 start_script
 
 set -o errexit
