@@ -115,7 +115,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $APP "
+                echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $NSAPP "
                 read CT_NAME
                 if [ -z $CT_NAME ]; then
                    HN=$NSAPP
