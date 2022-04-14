@@ -121,8 +121,9 @@ header_info
                    HN=$NSAPP
                 else
                    HN=$(echo ${CT_NAME,,} | tr -d ' ') 
-                fi
                 echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
+                fi
+#                echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
