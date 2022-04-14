@@ -9,7 +9,7 @@ BGN=`echo "\033[4;92m"`
 GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Home Assistant"
-
+NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -20,7 +20,7 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${RD}
+echo -e "${BL}
   _                                        _     _              _   
  | |                                      (_)   | |            | |  
  | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_ 
@@ -51,7 +51,7 @@ function default_settings() {
 		PW=" "
 		echo -e "${GN}Using ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
-		echo -e "${GN}Using CT Name ${BGN}$APP${CL}"
+		echo -e "${GN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$(echo ${APP,,} | tr -d ' ')
 		echo -e "${GN}Using Disk Size ${BGN}16GB${CL}"
 		SIZEDISK="2"
@@ -116,7 +116,7 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${YW}Enter CT Name (no spaces), or Press [ENTER] for Default: $APP "
                 read CT_NAME
-                if [ -z $CT_NAME ]; then CT_NAME=$APP; HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
+                if [ -z $CT_NAME ]; then CT_NAME=$NSAPP; HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
                 if [ $CT_NAME ]; then HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
                 echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
 echo -e " ${CM}${CL} \r"
