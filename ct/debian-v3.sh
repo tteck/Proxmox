@@ -9,6 +9,7 @@ BGN=`echo "\033[4;92m"`
 GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Debian"
+NSAPP=$(echo ${APP,,} | tr -d ' ')
 
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
