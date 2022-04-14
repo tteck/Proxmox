@@ -116,8 +116,12 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${YW}Enter CT Name (no spaces), or Press [ENTER] for Default: $APP "
                 read CT_NAME
-                if [ -z $CT_NAME ]; then CT_NAME=$NSAPP; HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
-                if [ $CT_NAME ]; then HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
+                if [ -z $CT_NAME ]; then
+                   CT_NAME=$NSAPP;
+                   HN=$NSAPP
+                else
+                   HN=$(echo ${CT_NAME,,} | tr -d ' ') 
+                fi
                 echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -131,7 +135,7 @@ header_info
                 echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 16Gb "
                 read SIZEDISK
                 if [ -z $SIZEDISK ]; then SIZEDISK="16"; fi;
-                if ! [[ $SIZEDISK =~ $INTEGER ]] ; then echo "ERROR! SIZEDISK MUST HAVE INTEGER NUMBER!"; exit; fi;
+                if ! [[ $SIZEDISK =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
                 echo -en "${GN}Set Disk Size To ${BL}$SIZEDISK${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
