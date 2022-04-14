@@ -52,8 +52,8 @@ function default_settings() {
 		PW=" "
 		echo -e "${GN}Using ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
-		echo -e "${GN}Using CT Name ${BGN}$APP${CL}"
-		HN=$(echo ${APP,,} | tr -d ' ')
+		echo -e "${GN}Using CT Name ${BGN}$NSAPP${CL}"
+		HN=$NSAPP
 		echo -e "${GN}Using Disk Size ${BGN}2GB${CL}"
 		SIZEDISK="2"
 		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
@@ -115,11 +115,14 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${YW}Enter CT Name (no spaces), or Press [ENTER] for Default: $APP "
+                echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $APP "
                 read CT_NAME
-                if [ -z $CT_NAME ]; then CT_NAME=$APP; HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
-                if [ $CT_NAME ]; then HN=$(echo ${CT_NAME,,} | tr -d ' '); fi
-		echo -en "${GN}Set CT Name To ${BL}$CT_NAME${CL}"
+                if [ -z $CT_NAME ]; then
+                   HN=$NSAPP
+                else
+                   HN=$(echo ${CT_NAME,,} | tr -d ' ')
+                fi
+                echo -en "${GN}Set CT Name To ${BL}$HN${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
@@ -128,7 +131,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 2Gb "
                 read SIZEDISK
                 if [ -z $SIZEDISK ]; then SIZEDISK="2"; fi;
@@ -142,7 +145,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${YW}Storages Available:${CL}"
                 echo " "
@@ -163,7 +166,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
@@ -178,7 +181,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -194,7 +197,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -211,7 +214,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -233,7 +236,7 @@ header_info
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$CT_NAME${CL}"
+                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
