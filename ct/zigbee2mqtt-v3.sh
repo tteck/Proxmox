@@ -263,7 +263,7 @@ function start_script() {
 		advanced_settings 
 		fi;
 }
-#pve_check
+pve_check
 start_script
 
 set -o errexit
