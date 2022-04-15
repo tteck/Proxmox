@@ -76,12 +76,13 @@ function advanced_settings() {
                 echo -e "${RD}Using Advanced Settings${CL}"
                 echo -e "${YW}Type Unprivileged, or Press [ENTER] for Default: Privileged "
                 read CT_TYPE1
-                if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0"; 
+                if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" 
+		CT_TYPE="0"
                 echo -en "${GN}Set CT Type ${BL}$CT_TYPE1${CL}"
                 else
                 CT_TYPE1="Unprivileged"
                 CT_TYPE="1"
-                echo -en "${GN}Set CT Type ${BL}Unprivileged${CL}"  
+                echo -en "${GN}Set CT Type ${BL}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"  
                 fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
