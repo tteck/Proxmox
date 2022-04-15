@@ -10,7 +10,7 @@ GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Home Assistant"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
-PVE=$(pveversion | grep "pve-manager/7" | wc -l)
+
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -34,6 +34,7 @@ ${CL}"
 header_info
 
 function PVE_CHECK() {
+PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 if [[ $PVE != 1 ]]; then
         echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
         echo -e "Exiting..."
