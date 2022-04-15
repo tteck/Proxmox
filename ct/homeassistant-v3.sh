@@ -55,13 +55,13 @@ function default_settings() {
 		echo -e "${GN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$NSAPP
 		echo -e "${GN}Using Disk Size ${BGN}16GB${CL}"
-		SIZEDISK="2"
+		SIZEDISK="16"
 		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
 		STORAGETYPE="local-lvm"
 		echo -e "${GN}Using ${BGN}2vCPU${CL}"
-		CORE_COUNT="1"
+		CORE_COUNT="2"
 		echo -e "${GN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
-		RAM_SIZE="512"
+		RAM_SIZE="4096"
 		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${GN}Using VLAN Tag ${BGN}NONE${CL}"
