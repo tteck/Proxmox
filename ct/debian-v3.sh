@@ -56,8 +56,8 @@ function default_settings() {
 		HN=$NSAPP
 		echo -e "${GN}Using Disk Size ${BGN}2GB${CL}"
 		SIZEDISK="2"
-		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
-		STORAGETYPE="local-lvm"
+#		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
+#		STORAGETYPE="local-lvm"
 		echo -e "${GN}Using ${BGN}1vCPU${CL}"
 		CORE_COUNT="1"
 		echo -e "${GN}Using ${BGN}512MiB${CL}${GN} RAM${CL}"
@@ -141,34 +141,34 @@ echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
+#                echo -e "${RD}Using Advanced Settings${CL}"
+#                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+#                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
+#                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
+#                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
+#                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
+#                echo -e "${YW}Storages Available:${CL}"
+#                echo " "
+#                for stg in `pvesh get storage --noborder --noheader`
+#                do
+#                        echo -e "${BL}     - ${stg}${CL}"
+#                done
+#                echo " "
+#                echo -e "${YW}Enter which storage to create the CT, or Press [ENTER] for Default: local-lvm "
+#                read STORAGETYPE
+#                if [ -z $STORAGETYPE ]; then STORAGETYPE="local-lvm"; fi;
+#                echo -en "${GN}Set Storage To ${BL}$STORAGETYPE${CL}"
+#echo -e " ${CM}${CL} \r"
+#sleep 1
+#clear
+#header_info
                 echo -e "${RD}Using Advanced Settings${CL}"
                 echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
                 echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${YW}Storages Available:${CL}"
-                echo " "
-                for stg in `pvesh get storage --noborder --noheader`
-                do
-                        echo -e "${BL}     - ${stg}${CL}"
-                done
-                echo " "
-                echo -e "${YW}Enter which storage to create the CT, or Press [ENTER] for Default: local-lvm "
-                read STORAGETYPE
-                if [ -z $STORAGETYPE ]; then STORAGETYPE="local-lvm"; fi;
-                echo -en "${GN}Set Storage To ${BL}$STORAGETYPE${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+#                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
                 read CORE_COUNT
                 if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
@@ -183,7 +183,7 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+#                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
                 echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 512 "
                 read RAM_SIZE
@@ -199,7 +199,7 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+#                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
                 echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
                 echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
@@ -216,7 +216,7 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+#                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
                 echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
                 echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
@@ -238,7 +238,7 @@ header_info
                 echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
                 echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
+#                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
                 echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
                 echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
