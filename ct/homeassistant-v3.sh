@@ -60,8 +60,8 @@ function default_settings() {
 		STORAGETYPE="local-lvm"
 		echo -e "${GN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
-		echo -e "${GN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
-		RAM_SIZE="4096"
+		echo -e "${GN}Using ${BGN}2048MiB${CL}${GN} RAM${CL}"
+		RAM_SIZE="2048"
 		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${GN}Using VLAN Tag ${BGN}NONE${CL}"
@@ -185,9 +185,9 @@ header_info
                 echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
                 echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
                 echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
+                echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
                 read RAM_SIZE
-                if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
+                if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
                 echo -en "${GN}Set RAM To ${BL}$RAM_SIZE${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
