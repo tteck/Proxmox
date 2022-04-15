@@ -10,7 +10,7 @@ GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 APP="Zigbee2MQTT"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
-PVE=$(pveversion | grep "pve-manager/7" | wc -l)
+
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -35,6 +35,7 @@ ${CL}"
 
 header_info
 function pve_check() {
+PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 if [[ $PVE != 1 ]]; then
         echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater"
         echo -e "Exiting..."
@@ -261,7 +262,7 @@ function start_script() {
 		advanced_settings 
 		fi;
 }
-pve_check
+#pve_check
 start_script
 
 set -o errexit
