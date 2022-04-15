@@ -1,29 +1,33 @@
 #!/bin/bash
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-WHITE=$(tput setaf 7)
-NORMAL=$(tput sgr0)
+RD=$(tput setaf 1)
+GN=$(tput setaf 2)
+LYW=$(tput setaf 190)
+WH=$(tput setaf 7)
+BRT=$(tput bold)
+CL=$(tput sgr0)
+UL=$(tput smul)
+current_kernel=$(uname -r)
+pve=$(pveversion)
+
 while true; do
-    read -p "${YELLOW}This will Clean unused Kernel images. Proceed(y/n)?${NORMAL}" yn
+    read -p "${WH}This will Clean unused Kernel images. Proceed(y/n)?${CL}" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
-        * ) echo -e "${RED}Please answer y/n${NORMAL}";;
+        * ) echo -e "${RD}Please answer y/n${CL}";;
     esac
 done
 clear
-current_kernel=$(uname -r)
-pve=$(pveversion)
+
 function check_root {
         if [[ $EUID -ne 0 ]]; then
-                echo -e "${RED}Error: This script must be ran as the root user.\n${NORMAL}" 
+                echo -e "${RD}Error: This script must be ran as the root user.\n${CL}" 
                 exit 1
         fi
 }
+
 function header_info {
-echo -e "${RED}
+echo -e "${RD}
   _  __                    _    _____ _                  
  | |/ /                   | |  / ____| |                 
  |   / ___ _ __ _ __   ___| | | |    | | ___  __ _ _ __  
@@ -31,18 +35,18 @@ echo -e "${RED}
  |   \  __/ |  | | | |  __/ | | |____| |  __/ (_| | | | |
  |_|\_\___|_|  |_| |_|\___|_|  \_____|_|\___|\__,_|_| |_|
 
-${NORMAL}"
+${CL}"
 }
+
 function kernel_info() {
     latest_kernel=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | tac | head -n 1)
-    echo -e "${YELLOW}OS: ${GREEN}$(cat /etc/os-release | grep "PRETTY_NAME" | sed 's/PRETTY_NAME=//g' | sed 's/["]//g' | awk '{print $0}')\r${NORMAL}"
-    echo -e "${YELLOW}PVE Version: ${GREEN}$pve\n${NORMAL}"
+    echo -e "${LYW}PVE Version: ${UL}${WH}$pve\n${CL}"
     if [[ "$current_kernel" == *"pve"* ]]; then
       if [[ "$latest_kernel" != *"$current_kernel"* ]]; then
-        echo -e "${GREEN}Latest Kernel: $latest_kernel\n${NORMAL}"
+        echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
       fi
     else
-        echo -e "\n${RED}ERROR: No PVE Kernel found\n${NORMAL}"
+        echo -e "\n${RD}ERROR: No PVE Kernel found\n${CL}"
         exit 1
     fi
 }
@@ -55,26 +59,26 @@ function kernel_clean() {
         if [ "$(echo $kernel | grep $current_kernel)" ]; then
             break
         else
-            echo -e "${RED}'$kernel' ${NORMAL}${YELLOW}has been added to the Kernel remove list\n${NORMAL}"
+            echo -e "${RD}'$kernel' ${CL}${LYW}has been added to the Kernel remove list\n${CL}"
                     kernels_to_remove+=" $kernel"
         fi
     done
-echo -e "${YELLOW}Kernel Search Complete!\n${NORMAL}"
+echo -e "${LYW}Kernel Search Complete!\n${CL}"
     if [[ "$kernels_to_remove" != *"pve"* ]]; then
-        echo -e "${GREEN}It appears there are no old Kernels on your system \n${NORMAL}"
+        echo -e "${BRT}${GN}It appears there are no old Kernels on your system. \n${CL}"
     else
-    read -p "${YELLOW}Would you like to remove the${RED} $(echo $kernels_to_remove | awk '{print NF}') ${NORMAL}${YELLOW}selected Kernels listed above? [y/n]: ${NORMAL}" -n 1 -r
+    read -p "${LYW}Would you like to remove the${RD} $(echo $kernels_to_remove | awk '{print NF}') ${CL}${LYW}selected Kernels listed above? [y/n]: ${CL}" -n 1 -r
     fi
       if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo -e "${YELLOW}\nRemoving ${NORMAL}${RED}$(echo $kernels_to_remove | awk '{print NF}') ${NORMAL}${YELLOW}old Kernels...${NORMAL}"
+        echo -e "${LYW}\nRemoving ${CL}${RD}$(echo $kernels_to_remove | awk '{print NF}') ${CL}${LYW}old Kernels...${CL}"
         /usr/bin/apt purge -y $kernels_to_remove > /dev/null 2>&1
-        echo -e "${YELLOW}Finished!\n${NORMAL}"
-        echo -e "${YELLOW}Updating GRUB... \n${NORMAL}"
+        echo -e "${LYW}Finished!\n${CL}"
+        echo -e "${LYW}Updating GRUB... \n${CL}"
         /usr/sbin/update-grub > /dev/null 2>&1
-        echo -e "${YELLOW}Finished!\n${NORMAL}"
+        echo -e "${LYW}Finished!\n${CL}"
       else
-        echo -e "${YELLOW}Exiting...\n${NORMAL}"
-        sleep 1
+        echo -e "${LYW}Exiting...\n${CL}"
+        sleep 2
       fi
 }
 
