@@ -46,32 +46,32 @@ function kernel_info() {
         echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
       fi
     else
-        echo -e "\n${RD}ERROR: No PVE Kernel found\n${CL}"
+        echo -e "\n${RD}ERROR: No PVE Kernel Found\n${CL}"
         exit 1
     fi
 }
 
 function kernel_clean() {
     kernels=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | sort -V)
-    kernels_to_remove=""
+    remove_kernels=""
     for kernel in $kernels
       do
         if [ "$(echo $kernel | grep $current_kernel)" ]; then
             break
         else
-            echo -e "${RD}'$kernel' ${CL}${LYW}has been added to the Kernel remove list\n${CL}"
-                    kernels_to_remove+=" $kernel"
+            echo -e "${RD}'$kernel' ${CL}${LYW}has been added to the remove Kernel list\n${CL}"
+                    remove_kernels+=" $kernel"
         fi
     done
 echo -e "${LYW}Kernel Search Complete!\n${CL}"
-    if [[ "$kernels_to_remove" != *"pve"* ]]; then
+    if [[ "$remove_kernels" != *"pve"* ]]; then
         echo -e "${BRT}${GN}It appears there are no old Kernels on your system. \n${CL}"
     else
-    read -p "${LYW}Would you like to remove the${RD} $(echo $kernels_to_remove | awk '{print NF}') ${CL}${LYW}selected Kernels listed above? [y/n]: ${CL}" -n 1 -r
+    read -p "${LYW}Would you like to remove the${RD} $(echo $remove_kernels | awk '{print NF}') ${CL}${LYW}selected Kernels listed above? [y/n]: ${CL}" -n 1 -r
     fi
       if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo -e "${LYW}\nRemoving ${CL}${RD}$(echo $kernels_to_remove | awk '{print NF}') ${CL}${LYW}old Kernels...${CL}"
-        /usr/bin/apt purge -y $kernels_to_remove > /dev/null 2>&1
+        echo -e "${LYW}\nRemoving ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${LYW}old Kernels...${CL}"
+        /usr/bin/apt purge -y $remove_kernels > /dev/null 2>&1
         echo -e "${LYW}Finished!\n${CL}"
         echo -e "${LYW}Updating GRUB... \n${CL}"
         /usr/sbin/update-grub > /dev/null 2>&1
