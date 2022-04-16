@@ -47,8 +47,6 @@ set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
 trap die ERR
 trap cleanup EXIT
 function error_exit() {
@@ -112,7 +110,7 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-msg_ok "Using ${BL}$STORAGE${CL} for Storage Location."
+msg_ok "Using ${BL}$STORAGE${CL} ${GN}for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
 msg_ok "Container ID is ${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
@@ -124,7 +122,7 @@ r = requests.get(url).json()
 if "message" in r:
     exit()
 for release in r:
-    if release["prerelease"]:
+    if release["release"]:
         continue
     for asset in release["assets"]:
         if asset["name"].find("$RELEASE_TYPE") != -1:
@@ -137,8 +135,6 @@ if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
 msg_ok "Found URL for Latest Home Assistant Disk Image"
-msg_info "${BL}${URL}${CL}"
-sleep 2
 msg_ok "${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
@@ -180,15 +176,15 @@ set +o errtrace
 (
 msg_info "Created HAOS VM"
 
-  msg_info "Adding Serial Port and Configuring Console"
-  trap '
-    warn "Unable to configure serial port. VM is still functional."
-    if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
-      qm set $VMID --delete serial0 >/dev/null
-    fi
-    exit
+msg_info "Adding Serial Port and Configuring Console"
+trap '
+  warn "Unable to configure serial port. VM is still functional."
+  if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
+    qm set $VMID --delete serial0 >/dev/null
+  fi
+  exit
   ' ERR
-   msg_ok "Added Serial Port and Configured Console"
+msg_ok "Added Serial Port and Configured Console"
   if [ "$(command -v kpartx)" = "" ]; then
     msg_info "Installing kpartx"
     apt-get update >/dev/null
@@ -213,4 +209,4 @@ msg_info "Starting Home Assistant OS (${VM_NAME}) VM"
 qm start $VMID
 msg_ok "Started Home Assistant OS (${VM_NAME}) VM"
 
-echo -e "${GN} Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} \n"
+msg_ok "Completed Successfully!\n"
