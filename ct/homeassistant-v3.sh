@@ -4,13 +4,15 @@ INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
-CM='\xE2\x9C\x94\033'
 BGN=`echo "\033[4;92m"`
-GN=`echo "\033[32m"`
+GN=`echo "\033[1;92m"`
+DGN=`echo "\033[32m"`
 CL=`echo "\033[m"`
+BFR="\\r\\033[K"
+HOLD="-"
+CM="${GN}✓${CL}"
 APP="Home Assistant"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
-
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -33,217 +35,199 @@ ${CL}"
 
 header_info
 
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
 function PVE_CHECK() {
-PVE=$(pveversion | grep "pve-manager/7" | wc -l)
-if [[ $PVE != 1 ]]; then
+    PVE=$(pveversion | grep "pve-manager/7" | wc -l)
+
+    if [[ $PVE != 1 ]]; then
         echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
         echo -e "Exiting..."
         sleep 2
         exit
-fi
+    fi
 }
 
 function default_settings() {
-                clear
-                header_info
-                echo -e "${BL}Using Default Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-                CT_TYPE="1"
-		echo -e "${GN}Using CT Password ${BGN}Automatic Login${CL}"
+        clear
+        header_info
+        echo -e "${BL}Using Default Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+        CT_TYPE="1"
+	    echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
-		echo -e "${GN}Using ID ${BGN}$NEXTID${CL}"
+		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
-		echo -e "${GN}Using CT Name ${BGN}$NSAPP${CL}"
+		echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$NSAPP
-		echo -e "${GN}Using Disk Size ${BGN}16GB${CL}"
-		SIZEDISK="16"
-		echo -e "${GN}Using Storage ${BGN}local-lvm${CL}"
-		STORAGETYPE="local-lvm"
-		echo -e "${GN}Using ${BGN}2vCPU${CL}"
+		echo -e "${DGN}Using Disk Size ${BGN}16GB${CL}"
+		DISK_SIZE="16"
+		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
-		echo -e "${GN}Using ${BGN}2048MiB${CL}${GN} RAM${CL}"
+		echo -e "${DGN}Using ${BGN}2048MiB${CL}${GN} RAM${CL}"
 		RAM_SIZE="2048"
-		echo -e "${GN}Using IP Address ${BGN}DHCP${CL}"
+		echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
-		echo -e "${GN}Using VLAN Tag ${BGN}NONE${CL}"
-                VLAN=" "
+		echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
+        VLAN=" "
 }
 
 function advanced_settings() {
-                clear
-                header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
-                read CT_TYPE1
-                if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
-                echo -en "${GN}Set CT Type ${BL}$CT_TYPE1${CL}"
-                else
-                CT_TYPE1="Privileged"
-                CT_TYPE="0"
-                echo -en "${GN}Set CT Type ${BL}Privileged${CL}"  
-                fi;
+        clear
+        header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        read CT_TYPE1
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
+        echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
+        else
+        CT_TYPE1="Privileged"
+        CT_TYPE="0"
+        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"  
+        fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${YW}Set Password, or Press [ENTER] for Default: Automatic Login "
-                read PW1
-                if [ -z $PW1 ]; then PW1="Automatic Login" PW=" "; 
-                echo -en "${GN}Set CT ${BL}$PW1${CL}"
-                else
-                  PW="-password $PW1"
-                echo -en "${GN}Set CT Password ${BL}$PW1${CL}"
-
-                fi;
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${YW}Set Password, or Press [ENTER] for Default: Automatic Login "
+        read PW1
+        if [ -z $PW1 ]; then PW1="Automatic Login" PW=" "; 
+        echo -en "${DGN}Set CT ${BL}$PW1${CL}"
+        else
+          PW="-password $PW1"
+        echo -en "${DGN}Set CT Password ${BL}$PW1${CL}"
+        fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
-                read CT_ID
-                if [ -z $CT_ID ]; then CT_ID=$NEXTID; fi;
-                echo -en "${GN}Set CT ID To ${BL}$CT_ID${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
+        read CT_ID
+        if [ -z $CT_ID ]; then CT_ID=$NEXTID; fi;
+        echo -en "${DGN}Set CT ID To ${BL}$CT_ID${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $NSAPP "
-                read CT_NAME
-                if [ -z $CT_NAME ]; then
-                   HN=$NSAPP
-                else
-                   HN=$(echo ${CT_NAME,,} | tr -d ' ')
-                fi
-                echo -en "${GN}Set CT Name To ${BL}$HN${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $NSAPP "
+        read CT_NAME
+        if [ -z $CT_NAME ]; then
+           HN=$NSAPP
+        else
+           HN=$(echo ${CT_NAME,,} | tr -d ' ')
+        fi
+        echo -en "${DGN}Set CT Name To ${BL}$HN${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 16Gb "
-                read SIZEDISK
-                if [ -z $SIZEDISK ]; then SIZEDISK="16"; fi;
-                if ! [[ $SIZEDISK =~ $INTEGER ]] ; then echo "ERROR! SIZEDISK MUST HAVE INTEGER NUMBER!"; exit; fi;
-                echo -en "${GN}Set Disk Size To ${BL}$SIZEDISK${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 16Gb "
+        read DISK_SIZE
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="16"; fi;
+        if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
+        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${YW}Storages Available:${CL}"
-                echo " "
-                for stg in `pvesh get storage --noborder --noheader`
-                do
-                        echo -e "${BL}     - ${stg}${CL}"
-                done
-                echo " "
-                echo -e "${YW}Enter which storage to create the CT, or Press [ENTER] for Default: local-lvm "
-                read STORAGETYPE
-                if [ -z $STORAGETYPE ]; then STORAGETYPE="local-lvm"; fi;
-                echo -en "${GN}Set Storage To ${BL}$STORAGETYPE${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
+        read CORE_COUNT
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
+        echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
-                read CORE_COUNT
-                if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
-                echo -en "${GN}Set Cores To ${BL}$CORE_COUNT${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
-                read RAM_SIZE
-                if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
-                echo -en "${GN}Set RAM To ${BL}$RAM_SIZE${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
+        read RAM_SIZE
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
+        echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
-                echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
-                read NET
-                if [ -z $NET ]; then NET="dhcp"; fi;
-                echo -en "${GN}Set IP Address To ${BL}$NET${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
+        echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
+        read NET
+        if [ -z $NET ]; then NET="dhcp"; fi;
+        echo -en "${DGN}Set IP Address To ${BL}$NET${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
-                echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
-                echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
-                read VLAN1
-                if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
-                echo -en "${GN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-                else
-                  VLAN="-tag $VLAN1"
-                echo -en "${GN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-                fi;
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
+        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
+        read VLAN1
+        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
+        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
+        else
+          VLAN="-tag $VLAN1"
+        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
+        fi;
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
 header_info
-                echo -e "${RD}Using Advanced Settings${CL}"
-                echo -e "${GN}Using CT Type ${BGN}$CT_TYPE1${CL}"
-                echo -e "${GN}Using CT Password ${BGN}$PW1${CL}"
-                echo -e "${GN}Using ID ${BGN}$CT_ID${CL}"
-                echo -e "${GN}Using CT Name ${BGN}$HN${CL}"
-                echo -e "${GN}Using Disk Size ${BGN}$SIZEDISK${CL}"
-                echo -e "${GN}Using Storage ${BGN}$STORAGETYPE${CL}"
-                echo -e "${GN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-                echo -e "${GN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
-                echo -e "${GN}Using IP Address ${BGN}$NET${CL}"
-                echo -e "${GN}Using VLAN Tag ${BGN}$VLAN1${CL}"
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
+        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
 
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
@@ -262,7 +246,6 @@ function start_script() {
 		fi;
 }
 
-PVE_CHECK
 start_script
 
 set -o errexit
@@ -329,7 +312,7 @@ pushd $TEMP_DIR >/dev/null
 export CTID=$CT_ID
 export PCT_OSTYPE=debian
 export PCT_OSVERSION=11
-export PCT_DISK_SIZE=$SIZEDISK
+export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
@@ -353,9 +336,9 @@ lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 EOF
 
-echo -en "${GN} Starting LXC Container... "
+msg_info "Starting LXC Container"
 pct start $CTID
-echo -e "${CM}${CL} \r"
+msg_ok "Starting LXC Container"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
