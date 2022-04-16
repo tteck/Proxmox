@@ -11,7 +11,19 @@ RD=`echo "\033[01;31m"`
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 CM="${GN}✓${CL}"
+BFR="\\r\\033[K"
+HOLD="[-]"
 trap die ERR
+
+msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
 
 function error_exit() {
   trap - ERR
@@ -92,9 +104,9 @@ info "Using ${BL}$TEMPLATE_STORAGE${CL} for Template Storage."
 CONTAINER_STORAGE=$(select_storage container) || exit
 info "Using ${BL}$CONTAINER_STORAGE${CL} for Container Storage."
 
-echo -en "${GN} Updating LXC Template List... "
+msg_info "Updating LXC Template List"
 pveam update >/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Updating LXC Template List"
 
 TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
@@ -102,8 +114,8 @@ mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLA
 TEMPLATE="${TEMPLATES[-1]}"
 
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
-  echo -en "${GN} Downloading LXC Template... "
-  echo -e "${CM}${CL} \r"
+  msg_info "Downloading LXC Template"
+  msg_ok "Downloading LXC Template"
   pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
     die "A problem occured while downloading the LXC template."
 fi
