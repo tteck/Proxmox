@@ -107,7 +107,7 @@ msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
 
 msg_info "Updating LXC Template List"
 pveam update >/dev/null
-msg_ok "Updating LXC Template List"
+msg_ok "Updated LXC Template List"
 
 TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
