@@ -22,17 +22,30 @@ function msg() {
   echo -e "$TEXT"
 }
 
+YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
-CM="${GN}✓${CL}"
-CROSS="${RD}✗${CL}"
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
+CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
+BFR="\\r\\033[K"
+HOLD="-"
 
-echo -en "${GN} Setting up Container OS... "
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
+msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
@@ -45,23 +58,22 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-echo -e "${CM}${CL} \r"
-echo -en "${GN} Network Connected: ${BL}$(hostname -I)${CL} "
-echo -e "${CM}${CL} \r"
+msg_ok "Setting up Container OS"
+msg_ok "Network Connected: ${BL}$(hostname -I)"
 
-echo -en "${GN} Updating Container OS... "
+msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Updating Container OS"
 
-echo -en "${GN} Installing Dependencies... "
+msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installing Dependencies"
 
-echo -en "${GN} Installing pip3... "
+msg_info "Installing pip3"
 apt-get install -y python3-pip &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installing pip3"
 
 get_latest_release() {
    curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
@@ -71,7 +83,7 @@ DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 CORE_LATEST_VERSION=$(get_latest_release "home-assistant/core")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 
-echo -en "${GN} Installing Docker $DOCKER_LATEST_VERSION... "
+msg_info "Installing Docker $DOCKER_LATEST_VERSION"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 cat >$DOCKER_CONFIG_PATH <<'EOF'
@@ -80,13 +92,13 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
 }
 EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installing Docker $DOCKER_LATEST_VERSION"
 
-echo -en "${GN} Pulling Portainer $PORTAINER_LATEST_VERSION Image... "
+msg_info "Pulling Portainer $PORTAINER_LATEST_VERSION Image"
 docker pull portainer/portainer-ce:latest &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Pulling Portainer $PORTAINER_LATEST_VERSION Image"
 
-echo -en "${GN} Installing Portainer $PORTAINER_LATEST_VERSION... "
+msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
 docker volume create portainer_data >/dev/null
 docker run -d \
   -p 8000:8000 \
@@ -96,13 +108,13 @@ docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
   portainer/portainer-ce:latest &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installing Portainer $PORTAINER_LATEST_VERSION"
 
-echo -en "${GN} Pulling Home Assistant $CORE_LATEST_VERSION Image... "
+msg_info "Pulling Home Assistant $CORE_LATEST_VERSION Image"
 docker pull homeassistant/home-assistant:stable &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Pulling Home Assistant $CORE_LATEST_VERSION Image"
 
-echo -en "${GN} Installing Home Assistant $CORE_LATEST_VERSION... "
+msg_info "Installing Home Assistant $CORE_LATEST_VERSION"
 docker volume create hass_config >/dev/null
 docker run -d \
   --name homeassistant \
@@ -114,9 +126,9 @@ docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installing Home Assistant $CORE_LATEST_VERSION"
 
-echo -en "${GN} Creating Update Menu Script... "
+msg_info "Creating Update Menu Script"
 pip3 install runlike &>/dev/null
 UPDATE_PATH='/root/update'
 UPDATE_CONTAINERS_PATH='/root/update-containers.sh'
@@ -297,11 +309,11 @@ for container in ${CONTAINER_LIST}; do
 done
 EOF
 sudo chmod +x /root/update-containers.sh
-echo -e "${CM}${CL} \r"
+msg_ok "Creating Update Menu Script"
 mkdir /root/hass_config
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
-echo -en "${GN} Customizing Container... "
+msg_info "Customizing Container"
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
 touch ~/.hushlogin
@@ -314,11 +326,11 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-echo -e "${CM}${CL} \r"
+msg_ok "Customizing Container"
   fi
 
-echo -en "${GN} Cleanup... "
+msg_info "Cleanup"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-echo -e "${CM}${CL} \n"
+msg_info "Cleanup"
