@@ -110,9 +110,9 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-msg_ok "Using ${BL}$STORAGE${CL} ${GN}for Storage Location."
+msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
-msg_ok "Container ID is ${BL}$VMID${CL}."
+msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
@@ -135,7 +135,7 @@ if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
 msg_ok "Found URL for Latest Home Assistant Disk Image"
-msg_ok "${BL}${URL}${CL}"
+msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
@@ -174,7 +174,7 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
-msg_info "Created HAOS VM"
+msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 msg_info "Adding Serial Port and Configuring Console"
 trap '
@@ -205,8 +205,8 @@ msg_ok "Added Serial Port and Configured Console"
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
   qm set $VMID -serial0 socket >/dev/null
 )
-msg_info "Starting Home Assistant OS (${VM_NAME}) VM"
+msg_info "Starting Home Assistant OS VM"
 qm start $VMID
-msg_ok "Started Home Assistant OS (${VM_NAME}) VM"
+msg_ok "Started Home Assistant OS VM"
 
 msg_ok "Completed Successfully!\n"
