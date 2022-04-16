@@ -51,7 +51,7 @@ function default_settings() {
 		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
 		VM_ID=$NEXTID
 		echo -e "${DGN}Using Disk Size ${BGN}32GB${CL}"
-		DISK_SIZE="32G"
+		DISK_SIZE="32"
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
@@ -75,7 +75,7 @@ header_info
         read DISK_SIZE
         if [ -z $DISK_SIZE ]; then DISK_SIZE="32"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
-        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
+        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZEGB${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
@@ -142,7 +142,7 @@ function error_exit() {
   local REASON="\e[97m${1:-$DEFAULT}\e[39m"
   local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
   msg "$FLAG $REASON"
-  [ ! -z ${VMID-} ] && cleanup_vmid
+  [ ! -z ${VM_ID-} ] && cleanup_vm_id
   exit $EXIT
 }
 function warn() {
@@ -159,12 +159,12 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
+function cleanup_vm_id() {
+  if $(qm status $VM_ID &>/dev/null); then
+    if [ "$(qm status $VM_ID | awk '{print $2}')" == "running" ]; then
+      qm stop $VM_ID
     fi
-    qm destroy $VMID
+    qm destroy $VM_ID
   fi
 }
 function cleanup() {
@@ -289,7 +289,7 @@ msg_ok "Added Serial Port and Configured Console"
   mkdir $TEMP_MOUNT
   mount $DISK1_PART1_PATH $TEMP_MOUNT
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
-  qm set $VMID -serial0 socket >/dev/null
+  qm set $VM_ID -serial0 socket >/dev/null
 )
 msg_info "Starting Home Assistant OS VM"
 qm start $VM_ID
