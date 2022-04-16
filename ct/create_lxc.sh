@@ -130,5 +130,5 @@ PCT_OPTIONS=( ${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}} )
 msg_info "Creating LXC Container"
 pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
   die "A problem occured while trying to create container."
-msg_ok "Creating LXC Container"
-info "LXC Container ${BL}$CTID${CL} was successfully created."
+msg_ok "LXC Container ${BL}$CTID${CL} was successfully created."
+
