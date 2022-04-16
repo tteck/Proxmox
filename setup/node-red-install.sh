@@ -22,15 +22,16 @@ function msg() {
   echo -e "$TEXT"
 }
 
-CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
-CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
+
 echo -en "${GN} Setting up Container OS... "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
