@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
   - New "Limited" V3 Install Script 
 - **Home Assistant Container LXC**
   - New V3 Install Script
-- **Debian LXC**
+- **Debian 11 LXC**
   - New V3 Install Script
 
 ## 2022-04-13
