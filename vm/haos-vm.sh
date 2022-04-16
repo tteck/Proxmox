@@ -251,12 +251,12 @@ msg_info "Creating HAOS VM"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
 qm create $VM_ID -agent 1 -bios ovmf -cores ${CORE_COUNT} -memory ${RAM_SIZE} -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
-qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
-qm set $VMID \
+pvesm alloc $STORAGE $VM_ID $DISK0 128 1>&/dev/null
+qm importdisk $VM_ID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
+qm set $VM_ID \
   -efidisk0 ${DISK0_REF},size=128K \
   -scsi0 ${DISK1_REF},size=${DISK_SIZE}G >/dev/null
-qm set $VMID \
+qm set $VM_ID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
@@ -265,8 +265,8 @@ msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 msg_info "Adding Serial Port and Configuring Console"
 trap '
   warn "Unable to configure serial port. VM is still functional."
-  if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
-    qm set $VMID --delete serial0 >/dev/null
+  if [ "$(qm config $VM_ID | sed -n ''/serial0/p'')" != "" ]; then
+    qm set $VM_ID --delete serial0 >/dev/null
   fi
   exit
   ' ERR
@@ -292,7 +292,7 @@ msg_ok "Added Serial Port and Configured Console"
   qm set $VMID -serial0 socket >/dev/null
 )
 msg_info "Starting Home Assistant OS VM"
-qm start $VMID
+qm start $VM_ID
 msg_ok "Started Home Assistant OS VM"
 
 msg_ok "Completed Successfully!\n"
