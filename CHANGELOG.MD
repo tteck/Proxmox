@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-16
+
+### Changed
+
+- **Home Assistant OS VM**
+  - New "Limited" V3 Install Script 
+- **Home Assistant Container LXC**
+  - New V3 Install Script
+- **Debian LXC**
+  - New V3 Install Script
+
 ## 2022-04-13
 
 ### Changed
