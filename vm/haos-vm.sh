@@ -122,16 +122,13 @@ r = requests.get(url).json()
 if "message" in r:
     exit()
 for release in r:
-  if not release['prerelease']:
-    continue
-  for asset in release['assets']:
-    if asset['name'].endswith('$RELEASE_TYPE'):
-      global image_url
-      image_url = asset['browser_download_url']
-      break
-  if 'image_url' in globals():
-    print(image_url)
-    break
+    if release["prerelease"]:
+        continue
+    for asset in release["assets"]:
+        if asset["name"].find("$RELEASE_TYPE") != -1:
+            image_url = asset["browser_download_url"]
+            print(image_url)
+            exit()
 EOF
 )
 if [ -z "$URL" ]; then
