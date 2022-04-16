@@ -346,8 +346,8 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}. 
-${BL}${APP}${CL} should be reachable by going to the following URL.
+msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8123${CL}
-${BL}Portainer${CL} should be reachable by going to the following URL.
+Portainer should be reachable by going to the following URL.
          ${BL}http://${IP}:9000${CL}\n"
