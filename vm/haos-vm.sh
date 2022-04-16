@@ -75,25 +75,25 @@ header_info
         read DISK_SIZE
         if [ -z $DISK_SIZE ]; then DISK_SIZE="32"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
-        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZEGB${CL}"
+        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
         read CORE_COUNT
         if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
-        echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}"
+        echo -en "${DGN}Set Cores To ${BL}${CORE_COUNT}${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
         read RAM_SIZE
@@ -105,7 +105,7 @@ clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
 
