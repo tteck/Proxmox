@@ -36,12 +36,12 @@ CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="[-]"
 
-msg_info() {
+function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
-msg_ok() {
+function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
