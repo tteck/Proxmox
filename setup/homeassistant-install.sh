@@ -58,22 +58,22 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-msg_ok "Setting up Container OS"
+msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
-msg_ok "Updating Container OS"
+msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-msg_ok "Installing Dependencies"
+msg_ok "Installed Dependencies"
 
 msg_info "Installing pip3"
 apt-get install -y python3-pip &>/dev/null
-msg_ok "Installing pip3"
+msg_ok "Installed pip3"
 
 get_latest_release() {
    curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
@@ -92,11 +92,11 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
 }
 EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
-msg_ok "Installing Docker $DOCKER_LATEST_VERSION"
+msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
 msg_info "Pulling Portainer $PORTAINER_LATEST_VERSION Image"
 docker pull portainer/portainer-ce:latest &>/dev/null
-msg_ok "Pulling Portainer $PORTAINER_LATEST_VERSION Image"
+msg_ok "Pulled Portainer $PORTAINER_LATEST_VERSION Image"
 
 msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
 docker volume create portainer_data >/dev/null
@@ -108,11 +108,11 @@ docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v portainer_data:/data \
   portainer/portainer-ce:latest &>/dev/null
-msg_ok "Installing Portainer $PORTAINER_LATEST_VERSION"
+msg_ok "Installed Portainer $PORTAINER_LATEST_VERSION"
 
 msg_info "Pulling Home Assistant $CORE_LATEST_VERSION Image"
 docker pull homeassistant/home-assistant:stable &>/dev/null
-msg_ok "Pulling Home Assistant $CORE_LATEST_VERSION Image"
+msg_ok "Pulled Home Assistant $CORE_LATEST_VERSION Image"
 
 msg_info "Installing Home Assistant $CORE_LATEST_VERSION"
 docker volume create hass_config >/dev/null
@@ -126,7 +126,7 @@ docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
-msg_ok "Installing Home Assistant $CORE_LATEST_VERSION"
+msg_ok "Installed Home Assistant $CORE_LATEST_VERSION"
 
 msg_info "Creating Update Menu Script"
 pip3 install runlike &>/dev/null
@@ -309,7 +309,7 @@ for container in ${CONTAINER_LIST}; do
 done
 EOF
 sudo chmod +x /root/update-containers.sh
-msg_ok "Creating Update Menu Script"
+msg_ok "Created Update Menu Script"
 mkdir /root/hass_config
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
@@ -326,11 +326,11 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-msg_ok "Customizing Container"
+msg_ok "Customized Container"
   fi
 
-msg_info "Cleanup"
+msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-msg_info "Cleanup"
+msg_ok "Cleaned"
