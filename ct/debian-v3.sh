@@ -7,6 +7,8 @@ RD=`echo "\033[01;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
+BFR="\\r\\033[K"
+HOLD="[-]"
 CM="${GN}✓${CL}"
 APP="Debian"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
@@ -31,6 +33,16 @@ ${CL}"
 }
 
 header_info
+
+msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
 
 function PVE_CHECK() {
     PVE=$(pveversion | grep "pve-manager/7" | wc -l)
@@ -318,9 +330,9 @@ if [ "$STORAGE_TYPE" == "zfspool" ]; then
   warn "Some applications may not work properly due to ZFS not supporting 'fallocate'."
 fi
 
-echo -en "${GN} Starting LXC Container... "
+msg_info "Starting LXC Container"
 pct start $CTID
-echo -e "${CM}${CL} \r"
+msg_ok "Starting LXC Container"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
