@@ -333,7 +333,7 @@ fi
 
 msg_info "Starting LXC Container"
 pct start $CTID
-msg_ok "Starting LXC Container"
+msg_ok "Started LXC Container"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
