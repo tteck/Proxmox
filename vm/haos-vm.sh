@@ -125,7 +125,7 @@ for release in r:
   if not release['prerelease']:
     continue
   for asset in release['assets']:
-    if asset['name'].endswith('$RELEASE_EXT'):
+    if asset['name'].endswith('$RELEASE_TYPE'):
       global image_url
       image_url = asset['browser_download_url']
       break
