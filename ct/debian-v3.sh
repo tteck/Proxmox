@@ -4,10 +4,10 @@ INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
-CM='\xE2\x9C\x94\033'
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[32m"`
 CL=`echo "\033[m"`
+CM="${GN}✓${CL}"
 APP="Debian"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
