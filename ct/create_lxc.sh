@@ -100,10 +100,10 @@ if pct status $CTID &>/dev/null; then
 fi
 
 TEMPLATE_STORAGE=$(select_storage template) || exit
-info "Using ${BL}$TEMPLATE_STORAGE${CL} for Template Storage."
+msg_ok "Using ${BL}$TEMPLATE_STORAGE${CL} ${GN}for Template Storage."
 
 CONTAINER_STORAGE=$(select_storage container) || exit
-info "Using ${BL}$CONTAINER_STORAGE${CL} for Container Storage."
+msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
 
 msg_info "Updating LXC Template List"
 pveam update >/dev/null
