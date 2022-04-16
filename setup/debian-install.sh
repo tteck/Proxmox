@@ -58,18 +58,18 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-msg_ok "Setting up Container OS"
+msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
-msg_ok "Updating Container OS"
+msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-msg_ok "Installing Dependencies"
+msg_ok "Installed Dependencies"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
@@ -86,11 +86,11 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-msg_ok "Customizing Container"
+msg_ok "Customized Container"
   fi
   
-msg_info "Cleanup"
+msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-msg_ok "Cleanup"
+msg_ok "Cleaned"
