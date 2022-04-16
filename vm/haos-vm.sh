@@ -63,8 +63,8 @@ function advanced_settings() {
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
         read VM_ID
-        if [ -z $CT_ID ]; then VM_ID=$NEXTID; fi;
-        echo -en "${DGN}Set CT ID To ${BL}$VM_ID${CL}"
+        if [ -z $VM_ID ]; then VM_ID=$NEXTID; fi;
+        echo -en "${DGN}Set VM ID To ${BL}$VM_ID${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
@@ -73,7 +73,7 @@ header_info
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 32Gb "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="32G"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="32"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
@@ -198,7 +198,7 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
-msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
+msg_ok "Virtual Machine ID is ${CL}${BL}$VM_ID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
@@ -237,12 +237,12 @@ STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   btrfs|nfs|dir)
         DISK_EXT=".qcow2"
-        DISK_REF="$VMID/"
+        DISK_REF="$VM_ID/"
         IMPORT_OPT="-format qcow2"
 esac
 for i in {0,1}; do
   disk="DISK$i"
-  eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
+  eval DISK${i}=vm-${VM_ID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 msg_ok "Extracted Disk Image"
@@ -255,7 +255,7 @@ pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},size=128K \
-  -scsi0 ${DISK1_REF},size=${DISK_SIZE} >/dev/null
+  -scsi0 ${DISK1_REF},size=${DISK_SIZE}G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
