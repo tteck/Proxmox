@@ -117,12 +117,12 @@ msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
-url = "https://api.github.com/repos/home-assistant/operating-system/releases/latest"
+url = "https://api.github.com/repos/home-assistant/operating-system/releases"
 r = requests.get(url).json()
 if "message" in r:
     exit()
 for release in r:
-    if not release["prerelease"]:
+    if release["prerelease"]:
         continue
      if asset in release["assets"]:
         if asset["name"].find("$RELEASE_TYPE") != -1:
