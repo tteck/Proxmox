@@ -51,7 +51,7 @@ function default_settings() {
 		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
 		VM_ID=$NEXTID
 		echo -e "${DGN}Using Disk Size ${BGN}32GB${CL}"
-		DISK_SIZE="32"
+		DISK_SIZE=16
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
@@ -73,7 +73,7 @@ header_info
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 32Gb "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="32"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE=32; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
@@ -107,7 +107,7 @@ header_info
         echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
 
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
