@@ -13,7 +13,7 @@ GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 CM="${GN}✓${CL}"
 BFR="\\r\\033[K"
-HOLD="[-]"
+HOLD="-"
 trap die ERR
 
 function msg_info() {
