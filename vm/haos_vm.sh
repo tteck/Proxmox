@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+YW=`echo "\033[33m"`
+BL=`echo "\033[36m"`
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
+BFR="\\r\\033[K"
+HOLD="-"
+CM="${GN}✓${CL}"
+
 while true; do
     read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
     case $yn in
@@ -9,8 +17,7 @@ while true; do
     esac
 done
 clear
-BL=`echo "\033[36m"`
-CL=`echo "\033[m"`
+
 function header_info {
 echo -e "${BL}
         _    _          ____   _____ 
@@ -23,14 +30,23 @@ echo -e "${BL}
 ${CL}"
 }
 header_info
+
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
 set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
-CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
 trap die ERR
 trap cleanup EXIT
 function error_exit() {
@@ -94,10 +110,10 @@ else
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
-info "Using ${BL}$STORAGE${CL} for Storage Location."
+msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
-info "Container ID is ${BL}$VMID${CL}."
-echo -en "${GN} Getting URL for Latest Home Assistant Disk Image... "
+msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
+msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
@@ -118,14 +134,13 @@ EOF
 if [ -z "$URL" ]; then
   die "Github has returned an error. A rate limit may have been applied to your connection."
 fi
-echo -e "${CM} ${CL} \r"
-echo -en "${BL}${URL}${CL}"
-sleep 2
+msg_ok "Found URL for Latest Home Assistant Disk Image"
+msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-echo -e "${GN} Downloaded ${RELEASE_TYPE} Disk Image... ${CM} \r"
-echo -en "${GN} Extracting Disk Image... "
+msg_ok "Downloaded ${CL}${BL}${RELEASE_TYPE}${CL}${GN} Disk Image"
+msg_info "Extracting Disk Image"
 case $FILE in
   *"gz") gunzip -f $FILE ;;
   *"zip") gunzip -f -S .zip $FILE ;;
@@ -144,8 +159,9 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-echo -e "${CM} ${CL} \r"
-echo -en "${GN} Creating HAOS VM... "
+msg_ok "Extracted Disk Image"
+
+msg_info "Creating HAOS VM"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
 qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -158,21 +174,22 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
-echo -e "${CM} ${CL} \r"
-  echo -en "${GN} Adding Serial Port and Configuring Console... "
-  trap '
-    warn "Unable to configure serial port. VM is still functional."
-    if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
-      qm set $VMID --delete serial0 >/dev/null
-    fi
-    exit
+msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
+
+msg_info "Adding Serial Port and Configuring Console"
+trap '
+  warn "Unable to configure serial port. VM is still functional."
+  if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
+    qm set $VMID --delete serial0 >/dev/null
+  fi
+  exit
   ' ERR
-  echo -e "${CM} ${CL} \r"
+msg_ok "Added Serial Port and Configured Console"
   if [ "$(command -v kpartx)" = "" ]; then
-    echo -en "${GN} Installing kpartx... "
+    msg_info "Installing kpartx"
     apt-get update >/dev/null
     apt-get -qqy install kpartx &>/dev/null
-    echo -e "${CM} ${CL} \r"
+    msg_ok "Installed kpartx"
   fi
   DISK1_PATH="$(pvesm path $DISK1_REF)"
   DISK1_PART1="$(kpartx -al $DISK1_PATH | awk 'NR==1 {print $1}')"
@@ -188,8 +205,8 @@ echo -e "${CM} ${CL} \r"
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
   qm set $VMID -serial0 socket >/dev/null
 )
-echo -en "${GN} Starting Home Assistant OS VM... "
+msg_info "Starting Home Assistant OS VM"
 qm start $VMID
-echo -e "${CM} ${CL} \n"
+msg_ok "Started Home Assistant OS VM"
 
-echo -e "${GN} Completed Successfully!${CL} (${VM_NAME}) VM ID is ${BL}${VMID}${CL} \n"
+msg_ok "Completed Successfully!\n"
