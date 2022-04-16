@@ -34,7 +34,7 @@ NUM=$RETRY_NUM
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
-HOLD="[-]"
+HOLD="-"
 
 function msg_info() {
     local msg="$1"
