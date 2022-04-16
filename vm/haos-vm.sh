@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 NEXTID=$(pvesh get /cluster/nextid)
+INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
+RD=`echo "\033[01;31m"`
+BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
+DGN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
@@ -45,7 +49,7 @@ function default_settings() {
         header_info
         echo -e "${BL}Using Default Settings${CL}"
 		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
-		CT_ID=$NEXTID
+		VM_ID=$NEXTID
 		echo -e "${DGN}Using Disk Size ${BGN}32GB${CL}"
 		DISK_SIZE="32G"
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
@@ -57,16 +61,16 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
-        read CT_ID
-        if [ -z $CT_ID ]; then CT_ID=$NEXTID; fi;
-        echo -en "${DGN}Set CT ID To ${BL}$CT_ID${CL}"
+        echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
+        read VM_ID
+        if [ -z $CT_ID ]; then VM_ID=$NEXTID; fi;
+        echo -en "${DGN}Set CT ID To ${BL}$VM_ID${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 32Gb "
         read DISK_SIZE
         if [ -z $DISK_SIZE ]; then DISK_SIZE="32G"; fi;
@@ -77,7 +81,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
         read CORE_COUNT
@@ -88,7 +92,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
@@ -100,7 +104,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
@@ -245,7 +249,7 @@ msg_ok "Extracted Disk Image"
 
 msg_info "Creating HAOS VM"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
-qm create $CT_ID -agent 1 -bios ovmf -cores ${CORE_COUNT} -memory ${RAM_SIZE} -name $VM_NAME -net0 virtio,bridge=vmbr0 \
+qm create $VM_ID -agent 1 -bios ovmf -cores ${CORE_COUNT} -memory ${RAM_SIZE} -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
