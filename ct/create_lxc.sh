@@ -8,9 +8,9 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
-CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+CM="${GN}✓${CL}"
 trap die ERR
 
 function error_exit() {
