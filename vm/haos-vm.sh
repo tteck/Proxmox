@@ -122,7 +122,7 @@ r = requests.get(url).json()
 if "message" in r:
     exit()
 for release in r:
-    if release["release"]:
+    if not release["prerelease"]:
         continue
     for asset in release["assets"]:
         if asset["name"].find("$RELEASE_TYPE") != -1:
