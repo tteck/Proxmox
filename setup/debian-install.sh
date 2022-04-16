@@ -25,7 +25,6 @@ function msg() {
 YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
-OVER="\\r\\033[K"
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 RETRY_NUM=10
