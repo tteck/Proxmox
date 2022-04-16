@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+NEXTID=$(pvesh get /cluster/nextid)
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
@@ -40,6 +40,89 @@ function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+function default_settings() {
+        clear
+        header_info
+        echo -e "${BL}Using Default Settings${CL}"
+		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
+		CT_ID=$NEXTID
+		echo -e "${DGN}Using Disk Size ${BGN}32GB${CL}"
+		DISK_SIZE="32G"
+		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
+		CORE_COUNT="2"
+		echo -e "${DGN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
+		RAM_SIZE="4096"
+}
+function advanced_settings() {
+        clear
+        header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
+        read CT_ID
+        if [ -z $CT_ID ]; then CT_ID=$NEXTID; fi;
+        echo -en "${DGN}Set CT ID To ${BL}$CT_ID${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 32Gb "
+        read DISK_SIZE
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="32G"; fi;
+        if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
+        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
+        read CORE_COUNT
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
+        echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
+        read RAM_SIZE
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
+        echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${GN} RAM${CL}"
+
+read -p "Are these settings correct(y/n)? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    advanced_settings
+fi
+}
+
+function start_script() {
+		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
+		read SETTINGS
+		if [ -z $SETTINGS ]; then default_settings; 
+		else
+		advanced_settings 
+		fi;
+}
+
+start_script
 
 set -o errexit
 set -o errtrace
@@ -111,7 +194,6 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
-VMID=$(pvesh get /cluster/nextid)
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
@@ -163,13 +245,13 @@ msg_ok "Extracted Disk Image"
 
 msg_info "Creating HAOS VM"
 VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
-qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
+qm create $CT_ID -agent 1 -bios ovmf -cores ${CORE_COUNT} -memory ${RAM_SIZE} -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},size=128K \
-  -scsi0 ${DISK1_REF},size=32G >/dev/null
+  -scsi0 ${DISK1_REF},size=${DISK_SIZE} >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
