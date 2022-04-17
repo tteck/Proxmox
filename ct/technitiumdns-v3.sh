@@ -14,7 +14,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-APP="Debian"
+APP="Technitium DNS"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
