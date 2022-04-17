@@ -58,7 +58,7 @@ msg_ok "Installed Podman"
 
 msg_info "Pulling Yacht Image"
 podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
-msg_ok "Pulled Yacht $YACHT_LATEST_VERSION Image"
+msg_ok "Pulled Yacht Image"
 
 msg_info "Installing Yacht"
 podman volume create yacht >/dev/null
@@ -72,7 +72,7 @@ podman run -d \
   -v /etc/timezone:/etc/timezone:ro \
   -p 8000:8000 \
   selfhostedpro/yacht:latest &>/dev/null
-msg_ok "Installed Yacht $YACHT_LATEST_VERSION"
+msg_ok "Installed Yacht"
 
 msg_info "Pulling Home Assistant Image"
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
@@ -90,7 +90,7 @@ podman run -d \
   -v /etc/timezone:/etc/timezone:ro \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
-msg_ok "Installed Home Assistant $CORE_LATEST_VERSION"
+msg_ok "Installed Home Assistant"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
