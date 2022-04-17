@@ -52,22 +52,15 @@ apt-get install -y sudo &>/dev/null
 apt-get install -y runc &>/dev/null
 msg_ok "Installed Dependencies"
 
-get_latest_release() {
-   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4
-}
-
-CORE_LATEST_VERSION=$(get_latest_release "home-assistant/core")
-YACHT_LATEST_VERSION=$(get_latest_release "selfhostedpro/yacht")
-
 msg_info "Installing Podman"
 apt-get -y install podman &>/dev/null
 msg_ok "Installed Podman"
 
-msg_info "Pulling Yacht $YACHT_LATEST_VERSION Image"
+msg_info "Pulling Yacht Image"
 podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
 msg_ok "Pulled Yacht $YACHT_LATEST_VERSION Image"
 
-msg_info "Installing Yacht $YACHT_LATEST_VERSION"
+msg_info "Installing Yacht"
 podman volume create yacht >/dev/null
 podman run -d \
   --privileged \
@@ -81,11 +74,11 @@ podman run -d \
   selfhostedpro/yacht:latest &>/dev/null
 msg_ok "Installed Yacht $YACHT_LATEST_VERSION"
 
-msg_info "Pulling Home Assistant $CORE_LATEST_VERSION Image"
+msg_info "Pulling Home Assistant Image"
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
-msg_ok "Pulled Home Assistant $CORE_LATEST_VERSION Image"
+msg_ok "Pulled Home Assistant Image"
 
-msg_info "Installing Home Assistant $CORE_LATEST_VERSION"
+msg_info "Installing Home Assistant"
 podman volume create hass_config >/dev/null
 podman run -d \
   --privileged \
