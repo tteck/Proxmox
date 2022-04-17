@@ -53,7 +53,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
 sudo curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &>/dev/null
-msg_ok "Sett up Node.js Repository"
+msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
 sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
@@ -61,7 +61,7 @@ msg_ok "Installed Node.js"
  
 msg_info "Setting up Zigbee2MQTT Repository"
 sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
-msg_ok "Sett up Zigbee2MQTT Repository"
+msg_ok "Set up Zigbee2MQTT Repository"
 
 msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt &>/dev/null
