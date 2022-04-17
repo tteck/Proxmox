@@ -292,19 +292,6 @@ lxc.mount.entry: /dev/ttyUSB0       dev/ttyUSB0       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
-if [ "$DHCP" == "1" ]; then
-MAC=$(pct config $CTID \
-| grep -i hwaddr \
-| awk '{print substr($2, 31, length($3) 17 ) }') \
-
-echo -e "MAC Address ${BL}$MAC${CL}"
-
-dhcp_reservation(){
-    printf "Please set DHCP reservation and press Enter."
-    read
-}
-dhcp_reservation
-fi
 
 echo -en "${GN} Starting LXC Container... "
 pct start $CTID
