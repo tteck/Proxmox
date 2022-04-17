@@ -1,38 +1,31 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -ex
+set -euo pipefail
+shopt -s inherit_errexit nullglob
 
-set -o errexit 
-set -o errtrace 
-set -o nounset 
-set -o pipefail 
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap 'die "Script interrupted."' INT
-
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR:LXC] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  exit $EXIT
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
-
+YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
-CM="${GN}✓${CL}"
-CROSS="${RD}✗${CL}"
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
+CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
+BFR="\\r\\033[K"
+HOLD="-"
 
-echo -en "${GN} Setting up Container OS... "
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
+msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
@@ -45,37 +38,34 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-echo -e "${CM}${CL} \r"
-echo -en "${GN} Network Connected: ${BL}$(hostname -I)${CL} "
-echo -e "${CM}${CL} \r"
+msg_ok "Set up Container OS"
+msg_ok "Network Connected: ${BL}$(hostname -I)"
 
-echo -en "${GN} Updating Container OS... "
+msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Updated Container OS"
 
-echo -en "${GN} Installing Dependencies... "
+msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installed Dependencies"
 
-echo -en "${GN} Setting up Node.js Repository... "
+msg_info "Setting up Node.js Repository"
 sudo curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Sett up Node.js Repository"
 
-echo -en "${GN} Installing Node.js... "
+msg_info "Installing Node.js"
 sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installed Node.js"
  
-echo -en "${GN} Setting up Zigbee2MQTT Repository... "
+msg_info "Setting up Zigbee2MQTT Repository"
 sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Sett up Zigbee2MQTT Repository"
 
-echo -en "${GN} Installing Zigbee2MQTT... "
+msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt &>/dev/null
 npm ci &>/dev/null
-echo -e "${CM}${CL} \r"
-
 service_path="/etc/systemd/system/zigbee2mqtt.service"
 echo "[Unit]
 Description=zigbee2mqtt
@@ -90,9 +80,11 @@ User=root
 [Install]
 WantedBy=multi-user.target" > $service_path
 systemctl enable zigbee2mqtt.service &>/dev/null
+msg_ok "Installed Zigbee2MQTT"
+
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
-echo -en "${GN} Customizing Container... "
+msg_info "Customizing Container"
 rm /etc/motd
 rm /etc/update-motd.d/10-uname
 touch ~/.hushlogin
@@ -105,11 +97,11 @@ ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,3840
 EOF
 systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-echo -e "${CM}${CL} \r"
+msg_ok "Customized Container"
   fi
 
-echo -en "${GN} Cleanup... "
+msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-echo -e "${CM}${CL} \n"
+msg_ok "Cleaned"
