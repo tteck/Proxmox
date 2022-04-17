@@ -110,6 +110,16 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 msg_ok "Customized Container"
   fi
 
+podman generate systemd \
+    --new --name homeassistant \
+    > /etc/systemd/system/homeassistant.service 
+systemctl enable homeassistant &>/dev/null
+
+podman generate systemd \
+    --new --name yacht \
+    > /etc/systemd/system/yacht.service 
+systemctl enable yacht &>/dev/null
+
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
