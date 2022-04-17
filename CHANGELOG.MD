@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
   - New V3 Install Script 
 - **Technitium DNS LXC**
   - New V3 Install Script
+- **Podman Home Assistant LXC**
+  - New V3 Install Script
 
 ## 2022-04-16
 
