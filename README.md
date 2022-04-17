@@ -620,17 +620,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Zigbee2MQTT LXC </summary>
+<summary markdown="span"> 🔸Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo_bee_only.png?raw=true" height="100"/></p>
 
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC </h1>
 
-To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zigbee2mqtt.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zigbee2mqtt-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
@@ -701,16 +701,16 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
  
-<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/zwave/icon.png?raw=true" height="100"/></p>
+<p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
 
-To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zwavejs2mqtt.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zwavejs2mqtt-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
