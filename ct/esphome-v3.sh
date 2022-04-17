@@ -1,6 +1,7 @@
 #!/usr/bin/env bash -ex
 set -euo pipefail
 shopt -s inherit_errexit nullglob
+
 NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
@@ -13,7 +14,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-APP="Home Assistant"
+APP="ESPHome"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
@@ -25,13 +26,14 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${BL}
-  _                                        _     _              _   
- | |   ${YW}v3${CL}${BL}                                 (_)   | |            | |  
- | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_ 
- |  _ \ / _ \|  _   _ \ / _ \/ _  / __/ __| / __| __/ _  |  _ \| __|
- | | | | (_) | | | | | |  __/ (_| \__ \__ \ \__ \ || (_| | | | | |_ 
- |_| |_|\___/|_| |_| |_|\___|\__,_|___/___/_|___/\__\__,_|_| |_|\__|
+echo -e "${RD}
+  ______  _____ _____  _    _  ____  __  __ ______ 
+ |  ____|/ ____|  __ \| |  | |/ __ \|  \/  |  ____|
+ | |__  | (___ | |__) | |__| | |  | | \  / | |__   
+ |  __|  \___ \|  ___/|  __  | |  | | |\/| |  __|  
+ | |____ ____) | |    | |  | | |__| | |  | | |____ 
+ |______|_____/|_| v3 |_|  |_|\____/|_|  |_|______|
+
 ${CL}"
 }
 
@@ -70,12 +72,12 @@ function default_settings() {
 		CT_ID=$NEXTID
 		echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$NSAPP
-		echo -e "${DGN}Using Disk Size ${BGN}16GB${CL}"
-		DISK_SIZE="16"
+		echo -e "${DGN}Using Disk Size ${BGN}4GB${CL}"
+		DISK_SIZE="4"
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
-		echo -e "${DGN}Using ${BGN}2048MiB${CL}${DGN} RAM${CL}"
-		RAM_SIZE="2048"
+		echo -e "${DGN}Using ${BGN}1024MiB${CL}${DGN} RAM${CL}"
+		RAM_SIZE="1024"
 		echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
@@ -145,9 +147,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 16Gb "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 4Gb "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="16"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="4"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
@@ -175,9 +177,9 @@ header_info
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 1024 "
         read RAM_SIZE
-        if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="1024"; fi;
         echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
@@ -278,24 +280,17 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/c
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  warn "Some applications may not work properly due to ZFS not supporting 'fallocate'."
+  warn "Some addons may not work due to ZFS not supporting 'fallocate'."
 fi
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >> $LXC_CONFIG
-lxc.cgroup2.devices.allow: a
-lxc.cap.drop:
-EOF
 
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
 
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/homeassistant-install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/esphome-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8123${CL}
-Portainer should be reachable by going to the following URL.
-         ${BL}http://${IP}:9000${CL}\n"
+         ${BL}http://${IP}:6052${CL} \n"
