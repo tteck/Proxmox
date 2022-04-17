@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -ex
+set -euo pipefail
+shopt -s inherit_errexit nullglob
 NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
@@ -248,58 +250,6 @@ function start_script() {
 
 start_script
 
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
-
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  [ ! -z ${CTID-} ] && cleanup_ctid
-  exit $EXIT
-}
-
-function warn() {
-  local REASON="\e[97m$1\e[39m"
-  local FLAG="\e[93m[WARNING]\e[39m"
-  msg "$FLAG $REASON"
-}
-
-function info() {
-  local REASON="$1"
-  local FLAG="\e[36m[INFO]\e[39m"
-  msg "$FLAG $REASON"
-}
-
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
-
-function cleanup_ctid() {
-  if $(pct status $CTID &>/dev/null); then
-    if [ "$(pct status $CTID | awk '{print $2}')" == "running" ]; then
-      pct stop $CTID
-    fi
-    pct destroy $CTID
-  elif [ "$(pvesm list $STORAGE --vmid $CTID)" != "" ]; then
-    pvesm free $ROOTFS
-  fi
-}
-
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-
 if [ "$CT_TYPE" == "1" ]; then 
  FEATURES="nesting=1,keyctl=1"
  else
@@ -340,9 +290,7 @@ msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
 
-alias lxc-cmd="lxc-attach -n $CTID --"
-
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/homeassistant-install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/homeassistant-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 

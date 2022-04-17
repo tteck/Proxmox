@@ -1,26 +1,6 @@
-#!/usr/bin/env bash
-
-set -o errexit 
-set -o errtrace 
-set -o nounset 
-set -o pipefail 
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap 'die "Script interrupted."' INT
-
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR:LXC] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  exit $EXIT
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
+#!/usr/bin/env bash -ex
+set -euo pipefail
+shopt -s inherit_errexit nullglob
 
 YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
