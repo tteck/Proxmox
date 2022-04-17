@@ -335,16 +335,16 @@ Update from the Homebridge UI
 
 
 <details>
-<summary markdown="span"> ESPHome LXC</summary>
+<summary markdown="span"> 🔸ESPHome LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> ESPHome LXC </h1>
 
-To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/esphome.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/esphome-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
@@ -1120,17 +1120,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Technitium DNS LXC</summary>
+<summary markdown="span"> 🔸Technitium DNS LXC</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/12230362?s=100&v=4" height="100"/></p>
 
 <h1 align="center" id="heading"> Technitium DNS LXC </h1>
 An open source authoritative as well as recursive DNS server
 
-To create a new Proxmox Technitium DNS LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Technitium DNS LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/technitiumdns.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/technitiumdns-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
