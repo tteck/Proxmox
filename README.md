@@ -4,7 +4,7 @@
 <a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/discussions.png?raw=true" height="21" /></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
 
 <details>
-<summary markdown="span"> 🔸Proxmox VE 7 Post Install</summary>
+<summary markdown="span"> Proxmox VE 7 Post Install</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
@@ -64,7 +64,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox LXC Updater</summary>
+<summary markdown="span"> Proxmox LXC Updater</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Felpuig.xeill.net%2FMembers%2Fvcarceler%2Farticulos%2Fcontenedores-con-lxd-lxc%2Fcontainers.png&f=1&nofb=1" height="100"/></p>
 
