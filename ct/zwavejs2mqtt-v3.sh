@@ -310,12 +310,10 @@ echo -en "${GN} Starting LXC Container... "
 pct start $CTID
 echo -e "${CM}${CL} \r"
 
-alias lxc-cmd="lxc-attach -n $CTID --"
-
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$HN-install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/v3/setup/zwavejs2mqtt-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}.
-${BL}${APP}${CL} should be reachable by going to the following URL.
+msg_ok "Completed Successfully!\n"
+${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8091${CL} \n"
