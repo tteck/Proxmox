@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 NEXTID=$(pvesh get /cluster/nextid)
-INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -29,8 +28,7 @@ echo -e "${BL}
        | |__| |  /  \ | |  | | (___  
        |  __  | / /\ \| |  | |\___ \ 
        | |  | |/ ____ \ |__| |____) |
-       |_|  |_/_/    \_\____/|_____/ 
-                               
+       |_|  |_/_/ ${CL}${YW}v3${CL}${BL} \_\____/|_____/ 
 ${CL}"
 }
 header_info
@@ -48,41 +46,47 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
-		VM_ID=$NEXTID
-		echo -e "${DGN}Using Disk Size ${BGN}32GB${CL}"
-		DISK_SIZE=16
+		echo -e "${DGN}Using VM ID ${BGN}$NEXTID${CL}"
+		VMID=$NEXTID
+		echo -e "${DGN}Using VM Name ${BGN}haos${CL}"
+		VM_NAME=haos
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
-		echo -e "${DGN}Using ${BGN}4096MiB${CL}${GN} RAM${CL}"
+		echo -e "${DGN}Using ${BGN}4096MiB${CL}"
 		RAM_SIZE="4096"
+		echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
+		START_VM="yes"
+
 }
 function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
-        read VM_ID
-        if [ -z $VM_ID ]; then VM_ID=$NEXTID; fi;
-        echo -en "${DGN}Set VM ID To ${BL}$VM_ID${CL}"
+        read VMID
+        if [ -z $VMID ]; then VMID=$NEXTID; fi;
+        echo -en "${DGN}Set VM ID To ${BL}$VMID${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 32Gb "
-        read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE=32; fi;
-        if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
-        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: hoas "
+        read VMNAME
+        if [ -z $VMNAME ]; then
+           VM_NAME=haos
+        else
+           VM_NAME=$(echo ${VMNAME,,} | tr -d ' ')
+        fi
+        echo -en "${DGN}Set CT Name To ${BL}$VM_NAME${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
         read CORE_COUNT
         if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
@@ -92,8 +96,8 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
         read RAM_SIZE
@@ -104,10 +108,26 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${DGN}Using ID ${BGN}$VM_ID${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}${DISK_SIZE}GB${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
+        echo -e "${YW}Start VM when completed, or Press [ENTER] for Default: yes "
+        read START_VM
+        if [ -z $START_VM ]; then START_VM="yes"; 
+        else
+          START_VM="no"; fi;
+        echo -en "${DGN}Starting VM when completed ${BL}$START_VM${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
+        echo -e "${DGN}Start VM when completed ${BGN}$START_VM${CL}"
 
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
@@ -142,7 +162,7 @@ function error_exit() {
   local REASON="\e[97m${1:-$DEFAULT}\e[39m"
   local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
   msg "$FLAG $REASON"
-  [ ! -z ${VM_ID-} ] && cleanup_vm_id
+  [ ! -z ${VMID-} ] && cleanup_vmid
   exit $EXIT
 }
 function warn() {
@@ -159,12 +179,12 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-function cleanup_vm_id() {
-  if $(qm status $VM_ID &>/dev/null); then
-    if [ "$(qm status $VM_ID | awk '{print $2}')" == "running" ]; then
-      qm stop $VM_ID
+function cleanup_vmid() {
+  if $(qm status $VMID &>/dev/null); then
+    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
+      qm stop $VMID
     fi
-    qm destroy $VM_ID
+    qm destroy $VMID
   fi
 }
 function cleanup() {
@@ -198,7 +218,7 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
-msg_ok "Virtual Machine ID is ${CL}${BL}$VM_ID${CL}."
+msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
@@ -225,7 +245,7 @@ msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${RELEASE_TYPE} Disk Image"
+msg_ok "Downloaded ${CL}${BL}${RELEASE_TYPE}${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
 case $FILE in
   *"gz") gunzip -f $FILE ;;
@@ -237,26 +257,25 @@ STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   btrfs|nfs|dir)
         DISK_EXT=".qcow2"
-        DISK_REF="$VM_ID/"
+        DISK_REF="$VMID/"
         IMPORT_OPT="-format qcow2"
 esac
 for i in {0,1}; do
   disk="DISK$i"
-  eval DISK${i}=vm-${VM_ID}-disk-${i}${DISK_EXT:-}
+  eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 msg_ok "Extracted Disk Image"
 
 msg_info "Creating HAOS VM"
-VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
-qm create $VM_ID -agent 1 -bios ovmf -cores ${CORE_COUNT} -memory ${RAM_SIZE} -name $VM_NAME -net0 virtio,bridge=vmbr0 \
+qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VM_ID $DISK0 128 1>&/dev/null
-qm importdisk $VM_ID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
-qm set $VM_ID \
+pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
+qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
+qm set $VMID \
   -efidisk0 ${DISK0_REF},size=128K \
-  -scsi0 ${DISK1_REF},size=${DISK_SIZE}G >/dev/null
-qm set $VM_ID \
+  -scsi0 ${DISK1_REF},size=32G >/dev/null
+qm set $VMID \
   -boot order=scsi0 >/dev/null
 set +o errtrace
 (
@@ -265,8 +284,8 @@ msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 msg_info "Adding Serial Port and Configuring Console"
 trap '
   warn "Unable to configure serial port. VM is still functional."
-  if [ "$(qm config $VM_ID | sed -n ''/serial0/p'')" != "" ]; then
-    qm set $VM_ID --delete serial0 >/dev/null
+  if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
+    qm set $VMID --delete serial0 >/dev/null
   fi
   exit
   ' ERR
@@ -289,10 +308,11 @@ msg_ok "Added Serial Port and Configured Console"
   mkdir $TEMP_MOUNT
   mount $DISK1_PART1_PATH $TEMP_MOUNT
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
-  qm set $VM_ID -serial0 socket >/dev/null
+  qm set $VMID -serial0 socket >/dev/null
 )
+if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
-qm start $VM_ID
+qm start $VMID
 msg_ok "Started Home Assistant OS VM"
-
+fi
 msg_ok "Completed Successfully!\n"
