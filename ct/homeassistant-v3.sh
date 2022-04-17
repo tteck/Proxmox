@@ -248,6 +248,7 @@ function start_script() {
 		fi;
 }
 
+PVE_CHECK
 start_script
 
 if [ "$CT_TYPE" == "1" ]; then 
