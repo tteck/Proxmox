@@ -134,7 +134,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Home Assistant Container LXC </h1>
  
-To create a new Proxmox Home Assistant Container, run the following in the Proxmox Shell.
+To create a new Proxmox Home Assistant Container LXC, run the following in the Proxmox Shell.
  
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homeassistant-v3.sh)"
@@ -201,13 +201,13 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Home Assistant Container LXC (Podman) </summary>
+<summary markdown="span"> 🔸Podman Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
  
 <h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
-To create a new Proxmox Podman Home Assistant Container, run the following in the Proxmox Shell. 
+To create a new Proxmox Podman Home Assistant Container LXC, run the following in the Proxmox Shell. 
 
  ([What is Podman?](https://youtu.be/lkg5QJsoCCQ))
 
