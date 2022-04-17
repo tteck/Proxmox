@@ -66,6 +66,9 @@ msg_ok "Set up Zigbee2MQTT Repository"
 msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt &>/dev/null
 npm ci &>/dev/null
+msg_ok "Installed Zigbee2MQTT"
+
+msg_info "Creating Service"
 service_path="/etc/systemd/system/zigbee2mqtt.service"
 echo "[Unit]
 Description=zigbee2mqtt
@@ -80,7 +83,7 @@ User=root
 [Install]
 WantedBy=multi-user.target" > $service_path
 systemctl enable zigbee2mqtt.service &>/dev/null
-msg_ok "Installed Zigbee2MQTT"
+msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
