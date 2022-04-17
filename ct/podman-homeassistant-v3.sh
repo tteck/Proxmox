@@ -13,7 +13,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-APP="Home Assistant"
+APP="P-Home Assistant"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
@@ -26,12 +26,18 @@ done
 clear
 function header_info {
 echo -e "${BL}
-  _                                        _     _              _   
- | |   ${YW}v3${CL}${BL}                                 (_)   | |            | |  
+  _____          _                                                  
+ |  __ \        | |                                                 
+ | |__) |__   __| |_ __ ___   __ _ _ __                             
+ |  ___/ _ \ / _  |  _   _ \ / _  |  _ \                            
+ | |  | (_) | (_| | | | | | | (_| | | | |                           
+ |_|   \___/ \__,_|_| |_| |_|\__,_|_| |_|  _     _              _   
+ | |       v3                             (_)   | |            | |  
  | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_ 
  |  _ \ / _ \|  _   _ \ / _ \/ _  / __/ __| / __| __/ _  |  _ \| __|
  | | | | (_) | | | | | |  __/ (_| \__ \__ \ \__ \ || (_| | | | | |_ 
  |_| |_|\___/|_| |_| |_|\___|\__,_|___/___/_|___/\__\__,_|_| |_|\__|
+                                                                                                                        
 ${CL}"
 }
 
@@ -62,8 +68,8 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
+        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
+        CT_TYPE="0"
 	    echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
 		echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
@@ -86,14 +92,14 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        echo -e "${YW}Type Unprivileged, or Press [ENTER] for Default: Privileged"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0"; 
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
-        CT_TYPE1="Privileged"
-        CT_TYPE="0"
-        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"  
+        CT_TYPE1="Unprivileged"
+        CT_TYPE="1"
+        echo -en "${DGN}Set CT Type ${BL}Unprivileged${CL}"  
         fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -247,7 +253,6 @@ function start_script() {
 		advanced_settings 
 		fi;
 }
-
 PVE_CHECK
 start_script
 
@@ -291,12 +296,12 @@ msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
 
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/homeassistant-install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/podman-homeassistant-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8123${CL}
-Portainer should be reachable by going to the following URL.
-         ${BL}http://${IP}:9000${CL}\n"
+Yacht should be reachable by going to the following URL.
+         ${BL}http://${IP}:8000${CL}\n"
