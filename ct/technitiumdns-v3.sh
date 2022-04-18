@@ -239,7 +239,7 @@ header_info
         if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         else
-          VLAN="-tag $VLAN1"
+          VLAN=",tag $VLAN1"
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
@@ -293,8 +293,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
-  -net0 name=eth0,bridge=vmbr0,ip=$NET$GATE
-  $VLAN
+  -net0 name=eth0,bridge=vmbr0,ip=$NET$GATE$VLAN
   -onboot 1
   -cores $CORE_COUNT
   -memory $RAM_SIZE
