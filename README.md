@@ -271,17 +271,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Homebridge LXC</summary>
+<summary markdown="span"> 🔸Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> Homebridge LXC </h1>
 Homebridge allows you to integrate with smart home devices that do not natively support HomeKit
 
-To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homebridge.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homebridge-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -1138,16 +1138,16 @@ ________________________________________________________________________________
  
  
 <details>
-<summary markdown="span"> AdGuard Home LXC</summary>
+<summary markdown="span"> 🔸AdGuard Home LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/adguard/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> AdGuard Home LXC </h1>
 
-To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/adguard.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/adguard-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
