@@ -357,17 +357,17 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Nginx Proxy Manager LXC </summary>
+<summary markdown="span"> 🔸Nginx Proxy Manager LXC </summary>
  
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
 
 <h1 align="center" id="heading"> Nginx Proxy Manager LXC </h1>
 
-To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
- bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nginx-proxy-manager.sh)"
+ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nginx-proxy-manager-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 1vCPU ⚡</h3>
 
