@@ -407,17 +407,17 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/npm_update
 </details>
 
 <details>
-<summary markdown="span"> MQTT LXC</summary>
+<summary markdown="span"> 🔸MQTT LXC</summary>
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
 
 <h1 align="center" id="heading"> MQTT LXC </h1>
 
-To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mqtt.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mqtt-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
