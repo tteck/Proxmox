@@ -1174,15 +1174,13 @@ ________________________________________________________________________________
 
 Uptime Kuma is a self-hosted, open source, fancy uptime monitoring and alerting system. It can monitor  HTTP(s) / TCP / HTTP(s) Keyword / Ping / DNS Record / Push / Steam Game Server.
 
-To create a new Proxmox Uptime Kuma LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Uptime Kuma LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **Uptime Kuma Interface - IP:3001**
 
