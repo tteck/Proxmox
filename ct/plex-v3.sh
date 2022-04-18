@@ -288,8 +288,8 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 export CTID=$CT_ID
-export PCT_OSTYPE=debian
-export PCT_OSVERSION=11
+export PCT_OSTYPE=ubuntu
+export PCT_OSVERSION=20.04
 export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
