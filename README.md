@@ -726,7 +726,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> NocoDB LXC </summary>
+<summary markdown="span"> 🔸NocoDB LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/nocodb.png?raw=true" height="100"/></p>
 
@@ -734,15 +734,13 @@ ________________________________________________________________________________
 
 NocoDB is an open source #NoCode platform that turns any database into a smart spreadsheet. Airtable Alternative.
 
-To create a new Proxmox NocoDB LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox NocoDB LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nocodb.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nocodb-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **NocoDB Interface - IP:8080/dashboard**
 
@@ -897,21 +895,19 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Ubuntu 21.10 LXC </summary>
+<summary markdown="span"> 🔸Ubuntu 21.10 LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
 <h1 align="center" id="heading"> Ubuntu 21.10 LXC </h1>
 
-To create a new Proxmox Ubuntu 21.10 (curl. sudo) LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Ubuntu 21.10 (curl. sudo) LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 ⚙️ **To Update Ubuntu 21.10**
 
