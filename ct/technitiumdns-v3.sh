@@ -239,7 +239,7 @@ header_info
         if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         else
-          VLAN=",tag $VLAN1"
+          VLAN=",tag=$VLAN1"
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
