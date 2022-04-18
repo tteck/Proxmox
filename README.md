@@ -1326,21 +1326,19 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> MotionEye VMS LXC </summary>
+<summary markdown="span"> 🔸MotionEye VMS LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> MotionEye VMS LXC </h1>
 
-To create a new Proxmox MotionEye VMS LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox MotionEye VMS LXC, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/motioneye.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/motioneye-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **MotionEye Interface - IP:8765**
 
