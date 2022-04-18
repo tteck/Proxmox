@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Zigbee2MQTT LXC**
-  - New V3 Install Script 
+  - New [V3 Install Script](https://github.com/tteck/Proxmox/issues/162) 
 - **Zwavejs2MQTT LXC**
   - New V3 Install Script
 - **ESPHome LXC**
