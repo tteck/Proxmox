@@ -313,3 +313,5 @@ lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 msg_ok "Completed Successfully!\n"
+echo -e "Adguard Setup should be reachable by going to the following URL.
+         ${BL}http://${IP}:3000${CL} \n"
