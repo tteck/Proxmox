@@ -67,7 +67,7 @@ function default_settings() {
         CT_TYPE="0"
        	echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 	PW=" "
-	echo -e "${DGN}Using ID ${BGN}$NEXTID${CL}"
+	echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
 	CT_ID=$NEXTID
 	echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
 	HN=$NSAPP
@@ -77,7 +77,7 @@ function default_settings() {
 	CORE_COUNT="2"
 	echo -e "${DGN}Using ${BGN}1024MiB${CL}${DGN} RAM${CL}"
 	RAM_SIZE="1024"
-	echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
+	echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
 	NET=dhcp
 	echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
 	GATE=" "
@@ -130,7 +130,7 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${YW}Enter CT Name (no-spaces), or Press [ENTER] for Default: $NSAPP "
         read CT_NAME
         if [ -z $CT_NAME ]; then
@@ -146,7 +146,7 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 4Gb "
         read DISK_SIZE
@@ -160,7 +160,7 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
@@ -174,7 +174,7 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -189,15 +189,15 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
+        echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
         read NET
         if [ -z $NET ]; then NET="dhcp"; fi;
-        echo -en "${DGN}Set IP Address To ${BL}$NET${CL}"
+        echo -en "${DGN}Set Static IP Address To ${BL}$NET${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
@@ -205,12 +205,12 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
         read GATE1
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
@@ -227,12 +227,12 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
         read VLAN1
@@ -249,12 +249,12 @@ header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
-        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
 
