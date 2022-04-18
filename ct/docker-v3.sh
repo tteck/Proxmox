@@ -76,7 +76,7 @@ function default_settings() {
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}2048MiB${CL}${DGN} RAM${CL}"
 		RAM_SIZE="2048"
-		echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
+		echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
                 NET=dhcp
 		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
 		GATE=" "
@@ -193,10 +193,10 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${YW}Enter a IP Address, or Press [ENTER] for Default: DHCP "
+        echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
         read NET
         if [ -z $NET ]; then NET="dhcp"; fi;
-        echo -en "${DGN}Set IP Address To ${BL}$NET${CL}"
+        echo -en "${DGN}Set Static IP Address To ${BL}$NET${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
@@ -209,13 +209,13 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
         read GATE1
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
-          GATE="gw=$GATE1"
+          GATE=",gw=$GATE1"
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
@@ -231,7 +231,7 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
         read VLAN1
@@ -253,7 +253,7 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
 
@@ -293,7 +293,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
-  -net0 name=eth0,bridge=vmbr0,ip=$NET
+  -net0 name=eth0,bridge=vmbr0,ip=$NET$GATE
   $VLAN
   -onboot 1
   -cores $CORE_COUNT
