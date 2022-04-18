@@ -271,17 +271,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Homebridge LXC</summary>
+<summary markdown="span"> 🔸Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> Homebridge LXC </h1>
 Homebridge allows you to integrate with smart home devices that do not natively support HomeKit
 
-To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homebridge.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homebridge-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -357,17 +357,17 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Nginx Proxy Manager LXC </summary>
+<summary markdown="span"> 🔸Nginx Proxy Manager LXC </summary>
  
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
 
 <h1 align="center" id="heading"> Nginx Proxy Manager LXC </h1>
 
-To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
 
 ```yaml
- bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nginx-proxy-manager.sh)"
+ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nginx-proxy-manager-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 1vCPU ⚡</h3>
 
@@ -1138,16 +1138,16 @@ ________________________________________________________________________________
  
  
 <details>
-<summary markdown="span"> AdGuard Home LXC</summary>
+<summary markdown="span"> 🔸AdGuard Home LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/adguard/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> AdGuard Home LXC </h1>
 
-To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox AdGuard Home LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/adguard.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/adguard-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -1174,15 +1174,13 @@ ________________________________________________________________________________
 
 Uptime Kuma is a self-hosted, open source, fancy uptime monitoring and alerting system. It can monitor  HTTP(s) / TCP / HTTP(s) Keyword / Ping / DNS Record / Push / Steam Game Server.
 
-To create a new Proxmox Uptime Kuma LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Uptime Kuma LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **Uptime Kuma Interface - IP:3001**
 
@@ -1328,21 +1326,19 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> MotionEye VMS LXC </summary>
+<summary markdown="span"> 🔸MotionEye VMS LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> MotionEye VMS LXC </h1>
 
-To create a new Proxmox MotionEye VMS LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox MotionEye VMS LXC, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/motioneye.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/motioneye-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **MotionEye Interface - IP:8765**
 
@@ -1470,7 +1466,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Vaultwarden LXC</summary>
+<summary markdown="span"> 🔸Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
@@ -1479,7 +1475,7 @@ ________________________________________________________________________________
 To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/vaultwarden.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/vaultwarden-v3.sh)"
 ```
 ⚠️ Vaultwarden needs to be behind a proxy (Nginx Proxy Manager) to obtain HTTPS and to allow clients to connect.
  
