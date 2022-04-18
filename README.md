@@ -1226,7 +1226,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Dashy LXC</summary>
+<summary markdown="span"> 🔸Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
@@ -1234,10 +1234,10 @@ ________________________________________________________________________________
 
 Dashy helps you organize your self-hosted services by making them accessible from a single place
 
-To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/dashy.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/dashy-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 3GB Storage - 2vCPU ⚡</h3>
  
