@@ -407,17 +407,17 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/npm_update
 </details>
 
 <details>
-<summary markdown="span"> MQTT LXC</summary>
+<summary markdown="span"> 🔸MQTT LXC</summary>
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
 
 <h1 align="center" id="heading"> MQTT LXC </h1>
 
-To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mqtt.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mqtt-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -458,17 +458,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Node-Red LXC </summary>
+<summary markdown="span"> 🔸Node-Red LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Node-Red LXC </h1>
  
 
-To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/node-red.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/node-red-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
@@ -501,16 +501,16 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Mariadb LXC </summary>
+<summary markdown="span"> 🔸Mariadb LXC </summary>
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
 
 <h1 align="center" id="heading"> Mariadb LXC </h1>
 
-To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell.
  
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mariadb.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mariadb-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
