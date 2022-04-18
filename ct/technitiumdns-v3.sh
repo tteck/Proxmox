@@ -79,8 +79,10 @@ function default_settings() {
 		RAM_SIZE="512"
 		echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
-		echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
-        VLAN=" "
+		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
+		GATE=" "
+               echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
+               VLAN=" "
 }
 
 function advanced_settings() {
@@ -214,7 +216,7 @@ header_info
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
-          GATE="-gw=$GATE1"
+          GATE="gw=$GATE1"
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
