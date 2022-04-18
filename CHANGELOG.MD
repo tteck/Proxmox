@@ -5,12 +5,23 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-18
+
+### Changed
+
+- **Adguard LXC**
+  - New [V3 Install Script](https://github.com/tteck/Proxmox/issues/162) 
+- **Homebridge LXC**
+  - New V3 Install Script
+- **Uptime Kuma LXC**
+  - New V3 Install Script 
+
 ## 2022-04-17
 
 ### Changed
 
 - **Zigbee2MQTT LXC**
-  - New [V3 Install Script](https://github.com/tteck/Proxmox/issues/162) 
+  - New V3 Install Script
 - **Zwavejs2MQTT LXC**
   - New V3 Install Script
 - **ESPHome LXC**
