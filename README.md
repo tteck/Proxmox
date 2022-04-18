@@ -1196,7 +1196,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Heimdall Dashboard LXC</summary>
+<summary markdown="span"> 🔸Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
 
@@ -1204,10 +1204,10 @@ ________________________________________________________________________________
 
 [Heimdall Application Dashboard](https://camo.githubusercontent.com/bcfd4f74c93b25bea7b14eacbafd649206bf754a3d4b596329968f0ee569cf3c/68747470733a2f2f692e696d6775722e636f6d2f4d72433451704e2e676966) is a dashboard for all your web applications. It doesn't need to be limited to applications though, you can add links to anything you like.
 
-To create a new Proxmox Heimdall Dashboard LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Heimdall Dashboard LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldashboard.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldashboard-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
@@ -1226,7 +1226,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Dashy LXC</summary>
+<summary markdown="span"> 🔸Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
@@ -1234,10 +1234,10 @@ ________________________________________________________________________________
 
 Dashy helps you organize your self-hosted services by making them accessible from a single place
 
-To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Dashy LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/dashy.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/dashy-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 3GB Storage - 2vCPU ⚡</h3>
  
@@ -1301,7 +1301,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Daemon Sync Server LXC</summary>
+<summary markdown="span"> 🔸Daemon Sync Server LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.informer.com%2Ficons_mac%2Fpng%2F128%2F350%2F350335.png&f=1&nofb=1" height="100"/></p>
 
@@ -1309,10 +1309,10 @@ ________________________________________________________________________________
 
 Sync files from app to server, share photos & videos, back up your data and stay secure inside local network.
 
-To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/daemonsync.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/daemonsync-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 8GB Storage - 1vCPU ⚡</h3>
@@ -1413,22 +1413,20 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> WireGuard LXC </summary>
+<summary markdown="span"> 🔸WireGuard LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2699%2FPNG%2F512%2Fwireguard_logo_icon_168760.png&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> WireGuard LXC </h1>
 <h3 align="center"> With WGDashboard </h3>
  
-To create a new Proxmox WireGuard LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox WireGuard LXC, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/wireguard.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/wireguard-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **WGDashboard Interface - http:// IP:10086**
 

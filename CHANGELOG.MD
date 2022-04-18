@@ -21,6 +21,14 @@ All notable changes to this project will be documented in this file.
   - New V3 Install Script 
 - **Nginx Proxy Manager LXC**
   - New V3 Install Script 
+- **Daemon Sync Server LXC**
+  - New V3 Install Script 
+- **Dashy LXC**
+  - New V3 Install Script 
+- **Heimdall Dashboard LXC**
+  - New V3 Install Script 
+- **Wireguard LXC**
+  - New V3 Install Script 
 
 ## 2022-04-17
 
