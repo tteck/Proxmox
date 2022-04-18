@@ -458,17 +458,17 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Node-Red LXC </summary>
+<summary markdown="span"> 🔸Node-Red LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Node-Red LXC </h1>
  
 
-To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/node-red.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/node-red-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
