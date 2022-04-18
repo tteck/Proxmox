@@ -80,8 +80,10 @@ function default_settings() {
 		RAM_SIZE="1024"
 		echo -e "${DGN}Using IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
-		echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
-        VLAN=" "
+		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
+		GATE=" "
+                echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
+                VLAN=" "
 }
 
 function advanced_settings() {
@@ -210,6 +212,29 @@ header_info
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
         echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
+        read GATE1
+        if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
+        echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
+        else
+          GATE="gw=$GATE1"
+        echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
+        fi;
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
         read VLAN1
         if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
@@ -231,8 +256,8 @@ header_info
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
         echo -e "${DGN}Using IP Address ${BGN}$NET${CL}"
+        echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
-
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]
