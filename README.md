@@ -1012,7 +1012,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Plex Media Server LXC </summary>
+<summary markdown="span"> 🔸Plex Media Server LXC </summary>
 
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/plex/icon.png?raw=true" height="100"/></p>
 
@@ -1021,11 +1021,9 @@ ________________________________________________________________________________
 To create a new Proxmox Plex Media Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/plex_container.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/plex-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **Plex Media Server Interface - IP:32400/web**
 
