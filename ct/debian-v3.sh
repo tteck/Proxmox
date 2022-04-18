@@ -216,7 +216,7 @@ header_info
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
-          GATE="gw=$GATE1"
+          GATE=",gw=$GATE1"
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
@@ -293,7 +293,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
-  -net0 name=eth0,bridge=vmbr0,ip=$NET
+  -net0 name=eth0,bridge=vmbr0,ip=$NET$GATE
   $VLAN
   -onboot 1
   -cores $CORE_COUNT
