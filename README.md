@@ -1196,7 +1196,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Heimdall Dashboard LXC</summary>
+<summary markdown="span"> 🔸Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
 
@@ -1204,10 +1204,10 @@ ________________________________________________________________________________
 
 [Heimdall Application Dashboard](https://camo.githubusercontent.com/bcfd4f74c93b25bea7b14eacbafd649206bf754a3d4b596329968f0ee569cf3c/68747470733a2f2f692e696d6775722e636f6d2f4d72433451704e2e676966) is a dashboard for all your web applications. It doesn't need to be limited to applications though, you can add links to anything you like.
 
-To create a new Proxmox Heimdall Dashboard LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Heimdall Dashboard LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldashboard.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/heimdalldashboard-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
