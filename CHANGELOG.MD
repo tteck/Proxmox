@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
   - New V3 Install Script
 - **Docker LXC**
   - New V3 Install Script
+- **PhotoPrism LXC**
+  - New V3 Install Script
 
 ## 2022-04-16
 
