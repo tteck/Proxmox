@@ -216,7 +216,7 @@ header_info
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
-          GATE="-gw=$GATE1"
+          GATE="gw=$GATE1"
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         fi;
 echo -e " ${CM}${CL} \n"
