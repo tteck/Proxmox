@@ -1301,7 +1301,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Daemon Sync Server LXC</summary>
+<summary markdown="span"> 🔸Daemon Sync Server LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.informer.com%2Ficons_mac%2Fpng%2F128%2F350%2F350335.png&f=1&nofb=1" height="100"/></p>
 
@@ -1309,10 +1309,10 @@ ________________________________________________________________________________
 
 Sync files from app to server, share photos & videos, back up your data and stay secure inside local network.
 
-To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Daemon Sync Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/daemonsync.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/daemonsync-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 8GB Storage - 1vCPU ⚡</h3>
