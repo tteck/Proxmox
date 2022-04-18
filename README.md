@@ -1260,7 +1260,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> PhotoPrism LXC </summary>
+<summary markdown="span"> 🔸PhotoPrism LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/photoprism.png?raw=true" height="100"/></p>
 
@@ -1268,15 +1268,13 @@ ________________________________________________________________________________
  
 PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. 
 
-To create a new Proxmox PhotoPrism LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox PhotoPrism LXC, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **PhotoPrism Interface - IP:2342**
 
