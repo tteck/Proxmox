@@ -275,6 +275,7 @@ function start_script() {
 		fi;
 }
 
+PVE_CHECK
 start_script
 
 if [ "$CT_TYPE" == "1" ]; then 
@@ -302,10 +303,6 @@ export PCT_OPTIONS="
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
-STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
-if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  echo -e "${RD}Some applications may not work properly due to ZFS not supporting 'fallocate'.${CL}"
-fi
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
