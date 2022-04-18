@@ -841,22 +841,20 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Docker LXC </summary>
+<summary markdown="span"> 🔸Docker LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
 <h1 align="center" id="heading"> Docker LXC </h1>
-<h3 align="center"> With Selectable ZFS Storage Drivers & Option to Add Portainer and/or Docker Compose</h3>
+<h3 align="center"> Options to Install Portainer and/or Docker Compose</h3>
 
-To create a new Proxmox Docker LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Docker LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/docker.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/docker-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 4GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 **Portainer Interface - IP:9000**
 
