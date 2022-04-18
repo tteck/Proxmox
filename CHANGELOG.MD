@@ -31,6 +31,8 @@ All notable changes to this project will be documented in this file.
   - New V3 Install Script 
 - **Node-Red LXC**
   - New V3 Install Script 
+- **MQTT LXC**
+  - New V3 Install Script 
 
 ## 2022-04-17
 
