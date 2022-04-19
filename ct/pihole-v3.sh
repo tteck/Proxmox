@@ -1,6 +1,7 @@
 #!/usr/bin/env bash -ex
 set -euo pipefail
 shopt -s inherit_errexit nullglob
+
 NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
@@ -13,8 +14,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-CROSS="${RD}✗${CL}"
-APP="Plex"
+APP="Pihole"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
@@ -26,13 +26,13 @@ while true; do
 done
 clear
 function header_info {
-echo -e "${YW}
-      _____  _           
-     |  __ \| |          
-     | |__) | | _____  __
-     |  ___/| |/ _ \ \/ /
-     | |    | |  __/>  < 
-     |_| v3 |_|\___/_/\_\
+echo -e "${RD}
+  _____ _____ _    _  ____  _      ______ 
+ |  __ \_   _| |  | |/ __ \| |    |  ____|
+ | |__) || | | |__| | |  | | |    | |__   
+ |  ___/ | | |  __  | |  | | |    |  __|  
+ | | v3 _| |_| |  | | |__| | |____| |____ 
+ |_|   |_____|_|  |_|\____/|______|______|
 ${CL}"
 }
 
@@ -63,20 +63,20 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
-        CT_TYPE="0"
+        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+        CT_TYPE="1"
 	    echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
 		echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
 		echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$NSAPP
-		echo -e "${DGN}Using Disk Size ${BGN}8GB${CL}"
-		DISK_SIZE="8"
-		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
-		CORE_COUNT="2"
-		echo -e "${DGN}Using ${BGN}2048MiB${CL}${DGN} RAM${CL}"
-		RAM_SIZE="2048"
+		echo -e "${DGN}Using Disk Size ${BGN}2GB${CL}"
+		DISK_SIZE="2"
+		echo -e "${DGN}Using ${BGN}1vCPU${CL}"
+		CORE_COUNT="1"
+		echo -e "${DGN}Using ${BGN}512MiB${CL}${DGN} RAM${CL}"
+		RAM_SIZE="512"
 		echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
@@ -89,14 +89,14 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type ${CROSS}${YW}Unprivileged, or Press [ENTER] for Default: Privileged"
+        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0"; 
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
-        CT_TYPE1="Unprivileged"
-        CT_TYPE="1"
-        echo -en "${DGN}Set CT Type ${BL}Unprivileged${CL}"  
+        CT_TYPE1="Privileged"
+        CT_TYPE="0"
+        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"  
         fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -148,9 +148,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 8Gb "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 2Gb "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="8"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="2"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
 echo -e " ${CM}${CL} \r"
@@ -163,9 +163,9 @@ header_info
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
         read CORE_COUNT
-        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
         echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -178,9 +178,9 @@ header_info
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 512 "
         read RAM_SIZE
-        if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="512"; fi;
         echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
@@ -275,7 +275,6 @@ function start_script() {
 		fi;
 }
 
-PVE_CHECK
 start_script
 
 if [ "$CT_TYPE" == "1" ]; then 
@@ -288,8 +287,8 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 export CTID=$CT_ID
-export PCT_OSTYPE=ubuntu
-export PCT_OSVERSION=20.04
+export PCT_OSTYPE=debian
+export PCT_OSVERSION=11
 export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
@@ -303,24 +302,14 @@ export PCT_OPTIONS="
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >> $LXC_CONFIG
-lxc.cgroup2.devices.allow: c 226:0 rwm
-lxc.cgroup2.devices.allow: c 226:128 rwm
-lxc.cgroup2.devices.allow: c 29:0 rwm
-lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
-lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
-lxc.mount.entry: /dev/dri/renderD128 dev/renderD128 none bind,optional,create=file
-EOF
-
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
 
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/plex-install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/pihole-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
 msg_ok "Completed Successfully!\n"
-echo -e "Plex Media Server should be reachable by going to the following URL.
-             ${BL}http://${IP}:32400/web${CL}\n"
+echo -e "${APP}${CL} should be reachable by going to the following URL.
+         ${BL}http://${IP}${CL} \n"

@@ -5,74 +5,12 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
-## 2022-04-18
+## 2022-04-19
 
 ### Changed
 
-- **Adguard LXC**
+- **ALL LXC's**
   - New [V3 Install Script](https://github.com/tteck/Proxmox/issues/162) 
-- **Homebridge LXC**
-  - New V3 Install Script
-- **Uptime Kuma LXC**
-  - New V3 Install Script 
-- **Vaultwarden LXC**
-  - New V3 Install Script 
-- **Motioneye LXC**
-  - New V3 Install Script 
-- **Nginx Proxy Manager LXC**
-  - New V3 Install Script 
-- **Daemon Sync Server LXC**
-  - New V3 Install Script 
-- **Dashy LXC**
-  - New V3 Install Script 
-- **Heimdall Dashboard LXC**
-  - New V3 Install Script 
-- **Wireguard LXC**
-  - New V3 Install Script 
-- **Node-Red LXC**
-  - New V3 Install Script 
-- **MQTT LXC**
-  - New V3 Install Script 
-- **Mariadb LXC**
-  - New V3 Install Script 
-- **Ubuntu 21.10 LXC**
-  - New V3 Install Script 
-- **NocoDB LXC**
-  - New V3 Install Script 
-- **Plex Media Server LXC**
-  - New V3 Install Script 
-- **Jellyfin Media Server LXC**
-  - New V3 Install Script 
-
-## 2022-04-17
-
-### Changed
-
-- **Zigbee2MQTT LXC**
-  - New V3 Install Script
-- **Zwavejs2MQTT LXC**
-  - New V3 Install Script
-- **ESPHome LXC**
-  - New V3 Install Script 
-- **Technitium DNS LXC**
-  - New V3 Install Script
-- **Podman Home Assistant LXC**
-  - New V3 Install Script
-- **Docker LXC**
-  - New V3 Install Script
-- **PhotoPrism LXC**
-  - New V3 Install Script
-
-## 2022-04-16
-
-### Changed
-
-- **Home Assistant OS VM**
-  - New "Limited" V3 Install Script 
-- **Home Assistant Container LXC**
-  - New V3 Install Script
-- **Debian 11 LXC**
-  - New V3 Install Script
 
 ## 2022-04-13
 

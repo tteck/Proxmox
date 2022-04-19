@@ -104,7 +104,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Home Assistant OS VM</summary>
+<summary markdown="span"> Home Assistant OS VM</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
  
@@ -127,7 +127,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Home Assistant Container LXC </summary>
+<summary markdown="span"> Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://www.docker.com/sites/default/files/d8/2019-07/vertical-logo-monochromatic.png" alt="Docker Logos | Docker" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
@@ -201,7 +201,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Podman Home Assistant Container LXC </summary>
+<summary markdown="span"> Podman Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
@@ -271,7 +271,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Homebridge LXC</summary>
+<summary markdown="span"> Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
@@ -327,7 +327,7 @@ Update from the Homebridge UI
 
 
 <details>
-<summary markdown="span"> 🔸ESPHome LXC</summary>
+<summary markdown="span"> ESPHome LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/esphome/dark_icon@2x.png?raw=true" height="100"/></p>
 
@@ -357,7 +357,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Nginx Proxy Manager LXC </summary>
+<summary markdown="span"> Nginx Proxy Manager LXC </summary>
  
 <p align="center"><img src="https://nginxproxymanager.com/logo.png" alt="hero" height="100"/></p>
 
@@ -407,7 +407,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/npm_update
 </details>
 
 <details>
-<summary markdown="span"> 🔸MQTT LXC</summary>
+<summary markdown="span"> MQTT LXC</summary>
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
@@ -458,7 +458,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Node-Red LXC </summary>
+<summary markdown="span"> Node-Red LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
 
@@ -501,7 +501,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Mariadb LXC </summary>
+<summary markdown="span"> Mariadb LXC </summary>
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
 
@@ -612,7 +612,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Zigbee2MQTT LXC </summary>
+<summary markdown="span"> Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo_bee_only.png?raw=true" height="100"/></p>
 
@@ -693,7 +693,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
@@ -726,7 +726,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸NocoDB LXC </summary>
+<summary markdown="span"> NocoDB LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/nocodb.png?raw=true" height="100"/></p>
 
@@ -762,15 +762,13 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> InfluxDB/Telegraf LXC </h1>
 
-To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/influxdb.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/influxdb-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
 
 ⚙️ **InfluxDB Configuration**
 
@@ -804,16 +802,14 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Grafana LXC </h1>
 
-To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/grafana.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/grafana-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
-After the script completes, If you're dissatisfied with the default settings, click on the LXC, then on the **_Resources_** tab and change the settings to what you desire. Changes are immediate.
-
 **Grafana Interface - IP:3000**
 
 ⚙️ **Initial Login**
@@ -839,7 +835,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Docker LXC </summary>
+<summary markdown="span"> Docker LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/docker.png" height="100"/></p>
 
@@ -868,7 +864,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Debian 11 LXC </summary>
+<summary markdown="span"> Debian 11 LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
@@ -895,7 +891,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Ubuntu 21.10 LXC </summary>
+<summary markdown="span"> Ubuntu 21.10 LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
@@ -932,7 +928,7 @@ An application designed to optimize UniFi home and business networks with ease.
 To create a new Proxmox UniFi Network Application LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/unifi.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/unifi-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
@@ -961,7 +957,7 @@ Omada Controller is software which is used to manage the EAP
 To create a new Proxmox Omada Controller LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
@@ -995,7 +991,7 @@ MeshCentral is a full computer management web site. With MeshCentral, you can ru
 To create a new Proxmox MeshCentral LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral-v3.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
@@ -1012,7 +1008,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Plex Media Server LXC </summary>
+<summary markdown="span"> Plex Media Server LXC </summary>
 
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/plex/icon.png?raw=true" height="100"/></p>
 
@@ -1045,7 +1041,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Jellyfin Media Server LXC </summary>
+<summary markdown="span"> Jellyfin Media Server LXC </summary>
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/jellyfin/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
 
@@ -1077,10 +1073,10 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
-To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell (V2).
+To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/pihole.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/pihole-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
  
@@ -1102,7 +1098,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Technitium DNS LXC</summary>
+<summary markdown="span"> Technitium DNS LXC</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/12230362?s=100&v=4" height="100"/></p>
 
@@ -1130,7 +1126,7 @@ ________________________________________________________________________________
  
  
 <details>
-<summary markdown="span"> 🔸AdGuard Home LXC</summary>
+<summary markdown="span"> AdGuard Home LXC</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/adguard/icon.png?raw=true" height="100"/></p>
 
@@ -1158,7 +1154,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Uptime Kuma LXC </summary>
+<summary markdown="span"> Uptime Kuma LXC </summary>
  
 <p align="center"><img src="https://github.com/louislam/uptime-kuma/blob/master/public/icon.png?raw=true" height="100"/></p>
 
@@ -1188,7 +1184,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Heimdall Dashboard LXC</summary>
+<summary markdown="span"> Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
 
@@ -1218,7 +1214,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Dashy LXC</summary>
+<summary markdown="span"> Dashy LXC</summary>
  
 <p align="center"><img src="https://github.com/Lissy93/dashy/raw/master/public/web-icons/dashy-logo.png" height="100"/></p>
 
@@ -1250,7 +1246,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸PhotoPrism LXC </summary>
+<summary markdown="span"> PhotoPrism LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/photoprism.png?raw=true" height="100"/></p>
 
@@ -1293,7 +1289,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Daemon Sync Server LXC</summary>
+<summary markdown="span"> Daemon Sync Server LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.informer.com%2Ficons_mac%2Fpng%2F128%2F350%2F350335.png&f=1&nofb=1" height="100"/></p>
 
@@ -1318,7 +1314,7 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> 🔸MotionEye VMS LXC </summary>
+<summary markdown="span"> MotionEye VMS LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/motioneye/icon.png?raw=true" height="100"/></p>
 
@@ -1405,7 +1401,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸WireGuard LXC </summary>
+<summary markdown="span"> WireGuard LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2699%2FPNG%2F512%2Fwireguard_logo_icon_168760.png&f=1&nofb=1" height="100"/></p>
 
@@ -1456,7 +1452,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Vaultwarden LXC</summary>
+<summary markdown="span"> Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
