@@ -50,7 +50,7 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing ioBroker"
+msg_info "Installing ioBroker (10 min)"
 curl -sLf https://iobroker.net/install.sh | bash - &>/dev/null
 msg_ok "Installed ioBroker"
 
