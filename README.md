@@ -271,6 +271,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸ioBroker LXC</summary>
+ 
+<p align="center"><img src="https://github.com/ioBroker/ioBroker/blob/master/img/logos/ioBroker_Logo_256px.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> ioBroker LXC </h1>
+ 
+[ioBroker](https://www.iobroker.net/#en/intro) is an open source automation platform.
+ 
+To create a new Proxmox ioBroker LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/iobroker-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+**ioBroker Interface - IP:8081**
+
+⚙️ **To Update ioBroker**
+
+```yaml
+update from the ioBroker UI
+```
+
+____________________________________________________________________________________________ 
+ 
+</details>
+
+<details>
 <summary markdown="span"> Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
