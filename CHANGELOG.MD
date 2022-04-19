@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **ALL LXC's**
   - New [V3 Install Script](https://github.com/tteck/Proxmox/issues/162) 
+- **ioBroker LXC**
+  - New Script V3
 
 ## 2022-04-13
 
