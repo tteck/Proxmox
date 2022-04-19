@@ -80,9 +80,9 @@ function default_settings() {
 		echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
 		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
-		GATE=" "
+		GATE=""
                echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
-               VLAN=" "
+               VLAN=""
 }
 
 function advanced_settings() {
@@ -213,7 +213,7 @@ header_info
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
         read GATE1
-        if [ -z $GATE1 ]; then GATE1="NONE" GATE=" "; 
+        if [ -z $GATE1 ]; then GATE1="NONE" GATE=""; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
           GATE=",gw=$GATE1"
@@ -236,7 +236,7 @@ header_info
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
         read VLAN1
-        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=" "; 
+        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=""; 
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         else
           VLAN=",tag=$VLAN1"
