@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **Ubuntu LXC**
   - ADD option to install version 20.04 or 21.10
+- **v3 Script**
+  - ADD option to set Bridge
 
 ## 2022-04-19
 
