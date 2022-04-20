@@ -119,6 +119,7 @@ if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_ok "Downloaded LXC Template"
   pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
     die "A problem occured while downloading the LXC template."
+  msg_ok "Downloaded LXC Template"
 fi
 
 DEFAULT_PCT_OPTIONS=(
