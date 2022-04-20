@@ -76,6 +76,8 @@ function default_settings() {
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}2048MiB${CL}${DGN} RAM${CL}"
 		RAM_SIZE="2048"
+		echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
+		
 		echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
                 NET=dhcp
 		echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
@@ -195,7 +197,7 @@ header_info
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
         echo -e "${YW}Enter a Bridge, or Press [ENTER] for Default: vmbr0 "
         read BRG
-        if [ -z $BRG ]; then NET="vmbr0"; fi;
+        if [ -z $BRG ]; then BRG="vmbr0"; fi;
         echo -en "${DGN}Set Bridge To ${BL}$BRG${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
