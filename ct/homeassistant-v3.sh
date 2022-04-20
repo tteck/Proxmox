@@ -76,7 +76,7 @@ function default_settings() {
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}2048MiB${CL}${DGN} RAM${CL}"
 		RAM_SIZE="2048"
-		echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
+		echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
 		BRG="vmbr0"
 		echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
 		NET=dhcp
