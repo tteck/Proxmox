@@ -59,12 +59,12 @@ function PVE_CHECK() {
 }
 
 function default_settings() {
-        clear
-        header_info
-        echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
-	    echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
+	        clear
+	        header_info
+	        echo -e "${BL}Using Default Settings${CL}"
+	        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+	        CT_TYPE="1"
+		echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
 		echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
