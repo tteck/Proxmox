@@ -116,7 +116,6 @@ TEMPLATE="${TEMPLATES[-1]}"
 
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_info "Downloading LXC Template"
-  msg_ok "Downloaded LXC Template"
   pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
     die "A problem occured while downloading the LXC template."
   msg_ok "Downloaded LXC Template"
