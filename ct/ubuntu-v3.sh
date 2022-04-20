@@ -60,12 +60,14 @@ function PVE_CHECK() {
 }
 
 function default_settings() {
-        clear
-        header_info
-        echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
-	    echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
+	        clear
+	        header_info
+	        echo -e "${BL}Using Default Settings${CL}"
+		echo -e "${DGN}Using Version ${BGN}21.10${CL}"
+		VER="21.10"
+	        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+	        CT_TYPE="1"
+		echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
 		PW=" "
 		echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
 		CT_ID=$NEXTID
@@ -89,6 +91,19 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${YW}Type 20.04, or Press [ENTER] for Default: 21.10"
+        read VER
+        if [ -z $VER ]; then VER="21.10"; 
+	else
+	VER="20.04"
+	fi
+        echo -en "${DGN}Set Version To ${BL}$VER${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
         read CT_TYPE1
         if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
@@ -103,6 +118,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${YW}Set Password, or Press [ENTER] for Default: Automatic Login "
         read PW1
@@ -117,6 +133,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${YW}Enter the CT ID, or Press [ENTER] to automatically generate (${NEXTID}) "
@@ -128,6 +145,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -144,6 +162,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -158,6 +177,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -172,6 +192,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -187,6 +208,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -203,6 +225,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -225,6 +248,7 @@ clear
 header_info
 
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -247,6 +271,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -288,7 +313,7 @@ pushd $TEMP_DIR >/dev/null
 
 export CTID=$CT_ID
 export PCT_OSTYPE=ubuntu
-export PCT_OSVERSION=21.10
+export PCT_OSVERSION=$VER
 export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
