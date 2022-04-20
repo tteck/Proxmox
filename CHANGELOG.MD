@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-20
+
+### Changed
+
+- **Ubuntu LXC**
+  - ADD option to install version 20.04 or 21.10
+
 ## 2022-04-19
 
 ### Changed
