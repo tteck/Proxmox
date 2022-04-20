@@ -195,10 +195,10 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
-        echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
-        read NET
-        if [ -z $NET ]; then NET="dhcp"; fi;
-        echo -en "${DGN}Set Static IP Address To ${BL}$NET${CL}"
+        echo -e "${YW}Enter a Bridge, or Press [ENTER] for Default: vmbr0 "
+        read BRG
+        if [ -z $BRG ]; then BRG="vmbr0"; fi;
+        echo -en "${DGN}Set Bridge To ${BL}$BRG${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
@@ -211,6 +211,24 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
+        echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
+        read NET
+        if [ -z $NET ]; then NET="dhcp"; fi;
+        echo -en "${DGN}Set Static IP Address To ${BL}$NET${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+	echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
+        echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
+        echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
+        echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
         read GATE1
@@ -233,6 +251,7 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
@@ -255,9 +274,11 @@ header_info
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
+
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -293,7 +314,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
-  -net0 name=eth0,bridge=vmbr0,ip=$NET$GATE$VLAN
+  -net0 name=eth0,bridge=$BRG,ip=$NET$GATE$VLAN
   -onboot 1
   -cores $CORE_COUNT
   -memory $RAM_SIZE
