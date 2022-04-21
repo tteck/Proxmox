@@ -65,8 +65,8 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
+        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
+        CT_TYPE="0"
         echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
         PW=" "
         echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
@@ -93,9 +93,9 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        echo -e "${YW}Type ${CROSS}Unprivileged, or Press [ENTER] for Default: Privileged"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="0"; 
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
         CT_TYPE1="Privileged"
