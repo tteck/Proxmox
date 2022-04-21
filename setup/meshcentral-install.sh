@@ -54,7 +54,7 @@ msg_info "Setting up Node.js Repository"
 sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
-msg_lnfo "Installing Node.js"
+msg_info "Installing Node.js"
 apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
