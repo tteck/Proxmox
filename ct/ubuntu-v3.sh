@@ -210,6 +210,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -226,6 +227,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -243,6 +245,7 @@ sleep 1
 clear
 header_info
 	echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -266,6 +269,7 @@ clear
 header_info
 
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
@@ -289,6 +293,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$VER${CL}"
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
