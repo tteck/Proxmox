@@ -13,6 +13,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 APP="P-Home Assistant"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 while true; do
