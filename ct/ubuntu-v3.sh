@@ -73,11 +73,11 @@ function default_settings() {
 		CT_ID=$NEXTID
 		echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
 		HN=$NSAPP
-		echo -e "${DGN}Using Disk Size ${BGN}2GB${CL}"
+		echo -e "${DGN}Using Disk Size ${BGN}2${CL}${DGN}GB${CL}"
 		DISK_SIZE="2"
-		echo -e "${DGN}Using ${BGN}1vCPU${CL}"
+		echo -e "${DGN}Using ${BGN}1${CL}${DGN}vCPU${CL}"
 		CORE_COUNT="1"
-		echo -e "${DGN}Using ${BGN}512MiB${CL}${DGN} RAM${CL}"
+		echo -e "${DGN}Using ${BGN}512${CL}${DGN}MiB RAM${CL}"
 		RAM_SIZE="512"
 		echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
 		BRG="vmbr0"
@@ -169,11 +169,11 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 2Gb "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 2 "
         read DISK_SIZE
         if [ -z $DISK_SIZE ]; then DISK_SIZE="2"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
-        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}"
+        echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}${DGN}GB${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
@@ -184,11 +184,11 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
         read CORE_COUNT
         if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
-        echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}"
+        echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}${DGN}vCPU${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
@@ -199,8 +199,8 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
         echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 512 "
         read RAM_SIZE
         if [ -z $RAM_SIZE ]; then RAM_SIZE="512"; fi;
@@ -215,9 +215,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
         echo -e "${YW}Enter a Bridge, or Press [ENTER] for Default: vmbr0 "
         read BRG
         if [ -z $BRG ]; then BRG="vmbr0"; fi;
@@ -232,9 +232,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
         read NET
@@ -250,9 +250,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
@@ -274,9 +274,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
@@ -298,9 +298,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}${DGN} RAM${CL}"
+        echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
