@@ -59,8 +59,10 @@ apt-get -y install mongodb-org &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Omada Controller"
-wget -qL https://static.tp-link.com/upload/software/2022/202203/20220322/Omada_SDN_Controller_v5.1.7_Linux_x64.deb
-sudo dpkg -i Omada_SDN_Controller_v5.1.7_linux_x64.deb &>/dev/null
+#wget -qL https://static.tp-link.com/upload/software/2022/202203/20220322/Omada_SDN_Controller_v5.1.7_Linux_x64.deb
+#sudo dpkg -i Omada_SDN_Controller_v5.1.7_linux_x64.deb &>/dev/null
+wget -qL https://static.tp-link.com/upload/software/2022/202201/20220120/Omada_SDN_Controller_v5.0.30_linux_x64.deb
+sudo dpkg -i Omada_SDN_Controller_v5.0.30_linux_x64.deb &>/dev/null
 msg_ok "Installed Omada Controller"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
