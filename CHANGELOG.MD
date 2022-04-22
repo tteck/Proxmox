@@ -9,6 +9,13 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Omada Controller LXC**
+  - Update script to install version 5.1.7
+
+## 2022-04-20
+
+### Changed
+
 - **Ubuntu LXC**
   - ADD option to install version 20.04 or 21.10
 - **v3 Script**
