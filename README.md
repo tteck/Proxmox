@@ -1183,7 +1183,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Uptime Kuma LXC </summary>
+<summary markdown="span"> 🔸Uptime Kuma LXC </summary>
  
 <p align="center"><img src="https://github.com/louislam/uptime-kuma/blob/master/public/icon.png?raw=true" height="100"/></p>
 
@@ -1201,11 +1201,12 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma-v
 
 **Uptime Kuma Interface - IP:3001**
 
-⚙️ **To Update**
+⚙️ **To Update Uptime Kuma**
 
-
+Run in the LXC console
 ```yaml
-Working on
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/uptimekuma-update.sh)"
+```
 ```
 
 ____________________________________________________________________________________________ 
