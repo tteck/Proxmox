@@ -1144,7 +1144,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/technitiumdn
  
 **Technitium DNS Interface - IP:5380**
 
-⚙️ **To Update**
+⚙️ **To Update Technitium DNS**
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/technitiumdns-update.sh)"
