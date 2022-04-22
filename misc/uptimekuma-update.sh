@@ -57,7 +57,7 @@ git checkout master &>/dev/null
 git pull &>/dev/null
 msg_ok "Updated Uptime Kuma"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 npm ci &>/dev/null
 msg_ok "Installed Dependencies"
 
