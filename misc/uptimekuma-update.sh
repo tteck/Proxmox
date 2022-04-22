@@ -51,15 +51,15 @@ msg_ok "Stopped Uptime Kuma"
 
 cd /opt/uptime-kuma
 
-msg_info "Updating Uptime Kuma"
+msg_info "Pulling Uptime Kuma"
 git fetch &>/dev/null
 git checkout master &>/dev/null
 git pull &>/dev/null
-msg_ok "Updated Uptime Kuma"
+msg_ok "Pulled Uptime Kuma"
 
-msg_info "Installing Dependencies (Patience)"
+msg_info "Updating Uptime Kuma (Patience)"
 npm ci &>/dev/null
-msg_ok "Installed Dependencies"
+msg_ok "Updated Uptime Kuma"
 
 msg_info "Starting Uptime Kuma"
 sudo systemctl start uptime-kuma &>/dev/null
