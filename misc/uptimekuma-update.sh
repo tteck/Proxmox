@@ -57,13 +57,13 @@ fi
 
 
 msg_info "Updating"
-git fetch &>/dev/null
-git checkout master &>/dev/null
-git pull &>/dev/null
+git fetch 
+git checkout master 
+git pull 
 msg_ok "Updated"
 
 msg_info "Installing Dependencies"
-npm ci &>/dev/null
+npm ci 
 msg_ok "Installed Dependencies"
 
 if which systemctl 2> /dev/null > /dev/null; then
