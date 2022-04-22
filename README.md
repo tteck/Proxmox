@@ -975,7 +975,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Omada Controller LXC</summary>
+<summary markdown="span"> 🔸Omada Controller LXC</summary>
  
 <p align="center"><img src="https://www.enterpriseitpro.net/wp-content/uploads/2020/12/logo-omada.png" height="100"/></p>
 
