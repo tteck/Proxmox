@@ -53,8 +53,7 @@ msg_ok "Installed Dependencies"
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 msg_info "Customizing Container"
-rm /etc/motd
-rm /etc/update-motd.d/10-uname
+chmod -x /etc/update-motd.d/*
 touch ~/.hushlogin
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
