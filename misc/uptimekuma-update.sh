@@ -52,13 +52,13 @@ msg_ok "Stopped Uptime Kuma"
 cd /opt/uptime-kuma
 
 msg_info "Updating"
-git fetch 
-git checkout master 
-git pull 
+git fetch &>/dev/null
+git checkout master &>/dev/null
+git pull &>/dev/null
 msg_ok "Updated"
 
 msg_info "Installing Dependencies"
-npm ci 
+npm ci &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Starting Uptime Kuma"
