@@ -57,7 +57,6 @@ fi
 
 
 msg_info "Updating"
-git checkout HEAD -- npm-shrinkwrap.json &>/dev/null
 git fetch &>/dev/null
 git checkout master &>/dev/null
 git pull &>/dev/null
