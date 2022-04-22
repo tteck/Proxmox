@@ -40,7 +40,7 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
-msg_info "Updating Container OS"
+msg_info "Updating Container OS (216 packages)"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 msg_ok "Updated Container OS"
@@ -51,18 +51,13 @@ apt-get -y install sudo &>/dev/null
 apt-get -y install gnupg &>/dev/null
 apt-get -y install openjdk-8-jre-headless &>/dev/null
 apt-get -y install jsvc &>/dev/null
-
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add &>/dev/null
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list &>/dev/null
-apt-get update &>/dev/null
-apt-get -y install mongodb-org &>/dev/null
+wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiverse/binary-amd64/mongodb-org-server_3.6.23_amd64.deb
+sudo dpkg -i mongodb-org-server_3.6.23_amd64.deb &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Omada Controller"
-#wget -qL https://static.tp-link.com/upload/software/2022/202203/20220322/Omada_SDN_Controller_v5.1.7_Linux_x64.deb
-#sudo dpkg -i Omada_SDN_Controller_v5.1.7_Linux_x64.deb &>/dev/null
-wget -qL https://static.tp-link.com/upload/software/2022/202201/20220120/Omada_SDN_Controller_v5.0.30_linux_x64.deb
-sudo dpkg -i Omada_SDN_Controller_v5.0.30_linux_x64.deb &>/dev/null
+wget -qL https://static.tp-link.com/upload/software/2022/202203/20220322/Omada_SDN_Controller_v5.1.7_Linux_x64.deb
+sudo dpkg -i Omada_SDN_Controller_v5.1.7_Linux_x64.deb &>/dev/null
 msg_ok "Installed Omada Controller"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
