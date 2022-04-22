@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **Omada Controller LXC**
   - Update script to install version 5.1.7
+- **Uptime Kuma LXC**
+  - ADD Update script
 
 ## 2022-04-20
 
