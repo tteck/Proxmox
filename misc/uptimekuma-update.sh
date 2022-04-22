@@ -1,6 +1,4 @@
 #!/usr/bin/env bash -ex
-set -euo pipefail
-shopt -s inherit_errexit nullglob
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -46,15 +44,12 @@ function msg_ok() {
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-cd /opt/uptime-kuma
-if which systemctl 2> /dev/null > /dev/null; then
-       msg_info "Stopping Uptime Kuma"
-       sudo systemctl stop uptime-kuma &>/dev/null
-       msg_ok "Stopped Uptime Kuma"
-else
-       echo "Skipped stopping Uptime Kuma, no systemctl found"
-fi
 
+msg_info "Stopping Uptime Kuma"
+sudo systemctl stop uptime-kuma &>/dev/null
+msg_ok "Stopped Uptime Kuma"
+
+cd /opt/uptime-kuma
 
 msg_info "Updating"
 git fetch 
@@ -66,12 +61,8 @@ msg_info "Installing Dependencies"
 npm ci 
 msg_ok "Installed Dependencies"
 
-if which systemctl 2> /dev/null > /dev/null; then
-       msg_info "Starting Uptime Kuma"
-       sudo systemctl start uptime-kuma &>/dev/null
-       msg_ok "Started Uptime Kuma"
-else
-       echo "Skipped starting Uptime Kuma, no systemctl found"
-fi
+msg_info "Starting Uptime Kuma"
+sudo systemctl start uptime-kuma &>/dev/null
+msg_ok "Started Uptime Kuma"
 
 msg_ok "Done!"
