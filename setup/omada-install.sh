@@ -40,6 +40,13 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+wget -q --tries=10 --timeout=5 --spider http://google.com
+if [[ $? -eq 0 ]]; then
+        msg_ok "Internet Online"
+else
+        echo -e "{CROSS}${RD} Internet Offline"
+fi
+
 msg_info "Updating Container OS (216 packages)"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
