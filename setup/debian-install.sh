@@ -33,12 +33,19 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
     exit 1
   fi
 done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
+
+wget -q --tries=10 --timeout=5 --spider http://google.com
+if [[ $? -eq 0 ]]; then
+        msg_ok "Internet Online"
+else
+        echo -e "{CROSS}${RD} Internet Offline"
+fi
 
 msg_info "Updating Container OS"
 apt update &>/dev/null
