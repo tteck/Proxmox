@@ -40,6 +40,13 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+wget -q --tries=10 --timeout=5 --spider http://google.com
+if [[ $? -eq 0 ]]; then
+        msg_ok "Internet Online"
+else
+        echo -e "{CROSS}${RD} Internet Offline"
+fi
+
 OPTIONS_PATH='/options.conf'
 cat >$OPTIONS_PATH <<'EOF'
 IPv4dev=eth0
