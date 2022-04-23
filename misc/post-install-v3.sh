@@ -13,7 +13,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 
-echo -e "\e[1;33m This script will Preform Post Install Routines. PVE7 ONLY \e[0m"
+echo -e "\e[1;33m This script will Perform Post Install Routines. PVE7 ONLY \e[0m"
 while true; do
     read -p "Start the PVE7 Post Install Script (y/n)?" yn
     case $yn in
