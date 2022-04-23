@@ -4,14 +4,13 @@
 <a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/discussions.png?raw=true" height="21" /></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
 
 <details>
-<summary markdown="span"> Proxmox VE 7 Post Install</summary>
+<summary markdown="span"> 🔸Proxmox VE 7 Post Install</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
-This script will Disable the Enterprise Repo, Add & Enable the No-Subscription Repo, Add & Disable Test Repo (repo's can be enabled/disabled via the UI in Repositories) 
-and attempt the *No-Nag* fix. 
+This script will give options to Disable the Enterprise Repo, Add/Correct PVE7 Sources, Enable the No-Subscription Repo, Add & Disable Test Repo and Disable Subscription Nag. 
  
 Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 
@@ -26,7 +25,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Proxmox Kernel Clean</summary>
+<summary markdown="span"> 🔸Proxmox Kernel Clean</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
