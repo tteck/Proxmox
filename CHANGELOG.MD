@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **v3 Script**
+  - ADD Internet Connection Check
 - **Proxmox VE 7 Post Install**
   - NEW v3 Script
 - **Proxmox Kernel Clean**
