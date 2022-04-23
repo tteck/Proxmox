@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-23
+
+### Changed
+
+- **Proxmox VE 7 Post Install**
+  - NEW v3 Script
+- **Proxmox Kernel Clean**
+  - NEW v3 Script
+
 ## 2022-04-22
 
 ### Changed
