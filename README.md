@@ -16,7 +16,7 @@ and attempt the *No-Nag* fix.
 Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post_install.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-install-v3.sh)"
 ```
 
 It's recommended to update Proxmox after running this script, before adding any VM/CT.
@@ -37,7 +37,7 @@ Cleaning unused kernel images is not only good because of a reduced grub menu, b
 Run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean-v3.sh)"
 ```
 ____________________________________________________________________________________________ 
 
