@@ -5,3 +5,4 @@ if [[ $? -eq 0 ]]; then
 else
         echo -e "Internet Offline"
 fi
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/internet-check.sh)"
