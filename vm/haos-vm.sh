@@ -220,39 +220,28 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-RELEASE_TYPE=qcow2
 URL=$(cat<<EOF | python3
 import requests
-url = "https://api.github.com/repos/home-assistant/operating-system/releases"
+url = "https://api.github.com/repos/home-assistant/operating-system/releases/latest"
 r = requests.get(url).json()
 if "message" in r:
-    exit()
-for release in r:
-    if release["prerelease"]:
-        continue
-    for asset in release["assets"]:
-        if asset["name"].find("$RELEASE_TYPE") != -1:
-            image_url = asset["browser_download_url"]
-            print(image_url)
-            exit()
+        exit()
+for asset in r["assets"]:
+        if asset["name"].endswith("qcow2.xz"):
+                print(asset["browser_download_url"])
 EOF
 )
 if [ -z "$URL" ]; then
-  die "Github has returned an error. A rate limit may have been applied to your connection."
+  die "Github has returned an error, Please try again later."
 fi
 msg_ok "Found URL for Latest Home Assistant Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}${RELEASE_TYPE}${CL}${GN} Disk Image"
+msg_ok "Downloaded ${CL}${BL}qcow2${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
-case $FILE in
-  *"gz") gunzip -f $FILE ;;
-  *"zip") gunzip -f -S .zip $FILE ;;
-  *"xz") xz -d $FILE ;;
-  *) die "Unable to handle file extension '${FILE##*.}'.";;
-esac
+unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   btrfs|nfs|dir)
