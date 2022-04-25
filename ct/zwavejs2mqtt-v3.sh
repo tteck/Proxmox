@@ -1,6 +1,4 @@
-#!/usr/bin/env bash -ex
-set -euo pipefail
-shopt -s inherit_errexit nullglob
+#!/usr/bin/env bash
 NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
