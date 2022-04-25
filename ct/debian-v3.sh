@@ -28,32 +28,22 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 
 function msg_info() {
-    local msg="$1"
-    echo -ne " ${HOLD} ${YW}${msg}..."
+   local msg="$1"
+   echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
 function msg_ok() {
-    local msg="$1"
-    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+   local msg="$1"
+   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
 function error_exit() {
   trap - ERR
-  local DEFAULT="Unknown failure occured."
-  local REASON="${1:-$DEFAULT}"
-  local FLAG="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$FLAG $REASON" 1>&2
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
   exit $EXIT
-}
-function warn() {
-  local REASON="$1"
-  local FLAG="${YW}⚠ WARNING ${CL}"
-  echo -e "$FLAG $REASON"
-}
-function info() {
-  local REASON="$1"
-  local FLAG="${BL}ℹ INFO ${CL}"
-  echo -e "$FLAG $REASON"
 }
 
 while true; do
