@@ -55,7 +55,7 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
-wget -q --tries=10 --timeout=5 --spider http://google.com
+wget -q --tries=10 --timeout=5 --spider https://google.com
 if [[ $? -eq 0 ]]; then
         msg_ok "Internet Online"
 else
