@@ -1,6 +1,4 @@
-#!/usr/bin/env bash -ex
-set -euo pipefail
-shopt -s inherit_errexit nullglob
+#!/usr/bin/env bash
 APP="Debian"
 var_disk="2"
 var_cpu="1"
@@ -21,6 +19,43 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
+function error_exit() {
+  trap - ERR
+  local DEFAULT="Unknown failure occured."
+  local REASON="${1:-$DEFAULT}"
+  local FLAG="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$FLAG $REASON" 1>&2
+  exit $EXIT
+}
+function warn() {
+  local REASON="$1"
+  local FLAG="${YW}⚠ WARNING ${CL}"
+  echo -e "$FLAG $REASON"
+}
+function info() {
+  local REASON="$1"
+  local FLAG="${BL}ℹ INFO ${CL}"
+  echo -e "$FLAG $REASON"
+}
+
 while true; do
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
@@ -42,16 +77,6 @@ ${CL}"
 }
 
 header_info
-
-function msg_info() {
-    local msg="$1"
-    echo -ne " ${HOLD} ${YW}${msg}..."
-}
-
-function msg_ok() {
-    local msg="$1"
-    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
-}
 
 function PVE_CHECK() {
     PVE=$(pveversion | grep "pve-manager/7" | wc -l)
