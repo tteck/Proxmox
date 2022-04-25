@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -14,40 +7,33 @@ CL=`echo "\033[m"`
 CM="${GN}✓${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-
-function msg_info() {
-    local msg="$1"
-    echo -ne " ${HOLD} ${YW}${msg}..."
-}
-
-function msg_ok() {
-    local msg="$1"
-    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
-}
 
 function error_exit() {
   trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON" 1>&2
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
   exit $EXIT
 }
-function warn() {
-  local REASON="\e[97m$1\e[39m"
-  local FLAG="\e[93m[WARNING]\e[39m"
-  msg "$FLAG $REASON"
+
+function msg_info() {
+   local msg="$1"
+   echo -ne " ${HOLD} ${YW}${msg}..."
 }
-function info() {
-  local REASON="$1"
-  local FLAG="\e[36m[INFO]\e[39m"
-  msg "$FLAG $REASON"
+
+function msg_ok() {
+   local msg="$1"
+   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
+
 function select_storage() {
   local CLASS=$1
   local CONTENT
