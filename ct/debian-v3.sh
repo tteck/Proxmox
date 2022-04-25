@@ -27,6 +27,15 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
+}
+
 function msg_info() {
    local msg="$1"
    echo -ne " ${HOLD} ${YW}${msg}..."
@@ -35,15 +44,6 @@ function msg_info() {
 function msg_ok() {
    local msg="$1"
    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
-}
-
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occured."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  exit $EXIT
 }
 
 while true; do
