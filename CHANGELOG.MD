@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-25
+
+### Changed
+
+- **v3 Script**
+  - Improve Error Handling
+
 ## 2022-04-23
 
 ### Changed
