@@ -108,8 +108,8 @@ WGDREL=$(curl -s https://api.github.com/repos/donaldzou/WGDashboard/releases/lat
 | grep "tag_name" \
 | awk '{print substr($2, 2, length($2)-3) }') \
 
-git clone -b ${WGDREL} https://github.com/donaldzou/WGDashboard.git /ect/wgdashboard &>/dev/null
-cd /ect/wgdashboard/src
+git clone -b ${WGDREL} https://github.com/donaldzou/WGDashboard.git /etc/wgdashboard &>/dev/null
+cd /etc/wgdashboard/src
 sudo chmod u+x wgd.sh
 sudo ./wgd.sh install &>/dev/null
 sudo chmod -R 755 /etc/wireguard
@@ -121,8 +121,8 @@ echo "[Unit]
 After=netword.service
 
 [Service]
-WorkingDirectory=/ect/wgdashboard/src
-ExecStart=/usr/bin/python3 /ect/wgdashboard/src/dashboard.py
+WorkingDirectory=/etc/wgdashboard/src
+ExecStart=/usr/bin/python3 /etc/wgdashboard/src/dashboard.py
 Restart=always
 
 
