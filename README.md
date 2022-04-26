@@ -115,7 +115,7 @@ To create a new Proxmox Home Assistant OS VM, run the following in the Proxmox S
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/vm/haos-vm-v3.sh)"
 ```
-<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU - Stable Image⚡</h3>
  
 After the script completes, click on the VM, then on the **_Summary_** tab to find the VM IP.
 
