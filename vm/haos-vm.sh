@@ -220,23 +220,8 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-RELEASE_TYPE=qcow2
-URL=$(cat<<EOF | python3
-import requests
-url = "https://api.github.com/repos/home-assistant/operating-system/releases"
-r = requests.get(url).json()
-if "message" in r:
-    exit()
-for release in r:
-    if release["prerelease"]:
-        continue
-    for asset in release["assets"]:
-        if asset["name"].find("$RELEASE_TYPE") != -1:
-            image_url = asset["browser_download_url"]
-            print(image_url)
-            exit()
-EOF
-)
+
+URL=https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz
 if [ -z "$URL" ]; then
   die "Github has returned an error, Please try again later."
 fi
