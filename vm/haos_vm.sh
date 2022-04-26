@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 NEXTID=$(pvesh get /cluster/nextid)
-RELEASE="7.6"
+RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
+STABLE="7.6"
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -13,7 +14,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 
 while true; do
-    read -p "This will create a New ${RELEASE} Home Assistant OS VM. Proceed(y/n)?" yn
+    read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -47,10 +48,12 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
+		echo -e "${DGN}Using Version ${BGN}${STABLE}${CL}"
+		BRANCH=${STABLE}
 		echo -e "${DGN}Using VM ID ${BGN}$NEXTID${CL}"
 		VMID=$NEXTID
-		echo -e "${DGN}Using VM Name ${BGN}haos${RELEASE}${CL}"
-		VM_NAME=haos${RELEASE}
+		echo -e "${DGN}Using VM Name ${BGN}haos${STABLE}${CL}"
+		VM_NAME=haos${STABLE}
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}4096MiB${CL}"
@@ -63,20 +66,35 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${YW}Type Latest for Version ${RELEASE}, or Press [ENTER] for Stable Version ${STABLE} "
+        read BRANCH
+        if [ -z $BRANCH ]; then BRANCH=$STABLE; 
+        else
+          BRANCH=$RELEASE; fi;
+	echo -en "${DGN}Set Version To ${BL}$BRANCH${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+	clear
+        header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
         read VMID
         if [ -z $VMID ]; then VMID=$NEXTID; fi;
-        echo -en "${DGN}Set VM ID To ${BL}$VMID${CL}"
+	echo -en "${DGN}Set VM ID To ${BL}$VMID${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: haos${RELEASE} "
+        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: haos${BRANCH} "
         read VMNAME
         if [ -z $VMNAME ]; then
-           VM_NAME=haos${RELEASE}
+           VM_NAME=haos${BRANCH}
         else
            VM_NAME=$(echo ${VMNAME,,} | tr -d ' ')
         fi
@@ -86,6 +104,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
@@ -97,6 +116,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -109,6 +129,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -124,6 +145,7 @@ sleep 1
 clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
@@ -220,14 +242,14 @@ else
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for Stable Branch Home Assistant Disk Image"
-URL=https://github.com/home-assistant/operating-system/releases/download/${RELEASE}/haos_ova-${RELEASE}.qcow2.xz
-msg_ok "Found URL for Latest Home Assistant Disk Image"
+msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
+msg_ok "Found URL for Home Assistant ${BRANCH} Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}${RELEASE}.qcow2${CL}${GN} Disk Image"
+msg_ok "Downloaded ${CL}${BL}${BRANCH}.qcow2${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
 unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
