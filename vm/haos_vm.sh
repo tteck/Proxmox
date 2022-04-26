@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-
+NEXTID=$(pvesh get /cluster/nextid)
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
+RD=`echo "\033[01;31m"`
+BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
+DGN=`echo "\033[32m"`
 CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
@@ -25,8 +28,7 @@ echo -e "${BL}
        | |__| |  /  \ | |  | | (___  
        |  __  | / /\ \| |  | |\___ \ 
        | |  | |/ ____ \ |__| |____) |
-       |_|  |_/_/    \_\____/|_____/ 
-                               
+       |_|  |_/_/ ${CL}${YW}v3${CL}${BL} \_\____/|_____/ 
 ${CL}"
 }
 header_info
@@ -40,6 +42,111 @@ function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+function default_settings() {
+        clear
+        header_info
+        echo -e "${BL}Using Default Settings${CL}"
+		echo -e "${DGN}Using VM ID ${BGN}$NEXTID${CL}"
+		VMID=$NEXTID
+		echo -e "${DGN}Using VM Name ${BGN}haos${CL}"
+		VM_NAME=haos
+		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
+		CORE_COUNT="2"
+		echo -e "${DGN}Using ${BGN}4096MiB${CL}"
+		RAM_SIZE="4096"
+		echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
+		START_VM="yes"
+
+}
+function advanced_settings() {
+        clear
+        header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
+        read VMID
+        if [ -z $VMID ]; then VMID=$NEXTID; fi;
+        echo -en "${DGN}Set VM ID To ${BL}$VMID${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: hoas "
+        read VMNAME
+        if [ -z $VMNAME ]; then
+           VM_NAME=haos
+        else
+           VM_NAME=$(echo ${VMNAME,,} | tr -d ' ')
+        fi
+        echo -en "${DGN}Set CT Name To ${BL}$VM_NAME${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
+        read CORE_COUNT
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
+        echo -en "${DGN}Set Cores To ${BL}${CORE_COUNT}${CL}"
+echo -e " ${CM}${CL} \r"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
+        read RAM_SIZE
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
+        echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
+        echo -e "${YW}Start VM when completed, or Press [ENTER] for Default: yes "
+        read START_VM
+        if [ -z $START_VM ]; then START_VM="yes"; 
+        else
+          START_VM="no"; fi;
+        echo -en "${DGN}Starting VM when completed ${BL}$START_VM${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
+        echo -e "${DGN}Start VM when completed ${BGN}$START_VM${CL}"
+
+read -p "Are these settings correct(y/n)? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    advanced_settings
+fi
+}
+
+function start_script() {
+		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
+		read SETTINGS
+		if [ -z $SETTINGS ]; then default_settings; 
+		else
+		advanced_settings 
+		fi;
+}
+
+start_script
 
 set -o errexit
 set -o errtrace
@@ -111,7 +218,6 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
-VMID=$(pvesh get /cluster/nextid)
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 URL="https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz"
@@ -122,12 +228,7 @@ echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
 msg_ok "Downloaded ${CL}${BL}qcow2${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
-case $FILE in
-  *"gz") gunzip -f $FILE ;;
-  *"zip") gunzip -f -S .zip $FILE ;;
-  *"xz") xz -d $FILE ;;
-  *) die "Unable to handle file extension '${FILE##*.}'.";;
-esac
+unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   btrfs|nfs|dir)
@@ -143,8 +244,7 @@ done
 msg_ok "Extracted Disk Image"
 
 msg_info "Creating HAOS VM"
-VM_NAME=$(sed -e "s/\_//g" -e "s/.${RELEASE_TYPE}.*$//" <<< $FILE)
-qm create $VMID -agent 1 -bios ovmf -cores 2 -memory 4096 -name $VM_NAME -net0 virtio,bridge=vmbr0 \
+qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
@@ -186,8 +286,9 @@ msg_ok "Added Serial Port and Configured Console"
   sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
   qm set $VMID -serial0 socket >/dev/null
 )
+if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
 qm start $VMID
 msg_ok "Started Home Assistant OS VM"
-
+fi
 msg_ok "Completed Successfully!\n"
