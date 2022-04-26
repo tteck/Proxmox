@@ -103,7 +103,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Home Assistant OS VM</summary>
+<summary markdown="span"> 🔸Home Assistant OS VM</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/></p>
  
@@ -270,7 +270,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸ioBroker LXC</summary>
+<summary markdown="span"> ioBroker LXC</summary>
  
 <p align="center"><img src="https://github.com/ioBroker/ioBroker/blob/master/img/logos/ioBroker_Logo_256px.png?raw=true" height="100"/></p>
 
