@@ -114,26 +114,7 @@ msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-RELEASE_TYPE=qcow2
-URL=$(cat<<EOF | python3
-import requests
-url = "https://api.github.com/repos/home-assistant/operating-system/releases"
-r = requests.get(url).json()
-if "message" in r:
-    exit()
-for release in r:
-    if release["prerelease"]:
-        continue
-    for asset in release["assets"]:
-        if asset["name"].find("$RELEASE_TYPE") != -1:
-            image_url = asset["browser_download_url"]
-            print(image_url)
-            exit()
-EOF
-)
-if [ -z "$URL" ]; then
-  die "Github has returned an error. A rate limit may have been applied to your connection."
-fi
+url="https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz"
 msg_ok "Found URL for Latest Home Assistant Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
