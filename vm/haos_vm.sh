@@ -114,7 +114,7 @@ msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 VMID=$(pvesh get /cluster/nextid)
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-url=https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz
+URL="https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz"
 msg_ok "Found URL for Latest Home Assistant Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
