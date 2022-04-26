@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-26
+
+### Changed
+
+- **Home Assistant OS VM**
+  - Fixed bad path
+  - ADD Option to create VM using Latest or Stable image
+
 ## 2022-04-25
 
 ### Changed
