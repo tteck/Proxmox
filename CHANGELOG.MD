@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - **Home Assistant OS VM**
   - Fixed bad path
   - ADD Option to create VM using Latest or Stable image
+- **UniFi Network Application LXC**
+  - ADD Local Controller Option
 
 ## 2022-04-25
 
