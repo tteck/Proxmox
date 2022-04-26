@@ -120,7 +120,7 @@ msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}${RELEASE_TYPE}${CL}${GN} Disk Image"
+msg_ok "Downloaded ${CL}${BL}qcow2${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
 case $FILE in
   *"gz") gunzip -f $FILE ;;
