@@ -220,11 +220,7 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-
 URL=https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz
-if [ -z "$URL" ]; then
-  die "Github has returned an error, Please try again later."
-fi
 msg_ok "Found URL for Latest Home Assistant Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
