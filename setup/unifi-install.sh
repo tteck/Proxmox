@@ -72,8 +72,16 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing UniFi Network Application"
-wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh && bash unifi-latest.sh --skip &>/dev/null
+read -r -p "Local Controller? <Y/n> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+LOCAL="--local-controller"
+else
+LOCAL=""
+fi
+
+msg_info "Installing UniFi Network Application (Patience)"
+wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh && bash unifi-latest.sh --skip --add-repository $LOCAL &>/dev/null
 msg_ok "Installed UniFi Network Application"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
