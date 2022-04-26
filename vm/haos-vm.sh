@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 NEXTID=$(pvesh get /cluster/nextid)
+RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -12,7 +13,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 
 while true; do
-    read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
+    read -p "This will create a New ${RELEASE} Home Assistant OS VM. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -48,8 +49,8 @@ function default_settings() {
         echo -e "${BL}Using Default Settings${CL}"
 		echo -e "${DGN}Using VM ID ${BGN}$NEXTID${CL}"
 		VMID=$NEXTID
-		echo -e "${DGN}Using VM Name ${BGN}haos${CL}"
-		VM_NAME=haos
+		echo -e "${DGN}Using VM Name ${BGN}haos${RELEASE}${CL}"
+		VM_NAME=haos${RELEASE}
 		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
 		CORE_COUNT="2"
 		echo -e "${DGN}Using ${BGN}4096MiB${CL}"
@@ -72,10 +73,10 @@ clear
 header_info
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: hoas "
+        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: haos${RELEASE} "
         read VMNAME
         if [ -z $VMNAME ]; then
-           VM_NAME=haos
+           VM_NAME=haos${RELEASE}
         else
            VM_NAME=$(echo ${VMNAME,,} | tr -d ' ')
         fi
@@ -220,13 +221,13 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
-URL="https://github.com/home-assistant/operating-system/releases/download/7.6/haos_ova-7.6.qcow2.xz"
+URL=https://github.com/home-assistant/operating-system/releases/download/${RELEASE}/haos_ova-${RELEASE}.qcow2.xz
 msg_ok "Found URL for Latest Home Assistant Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}qcow2${CL}${GN} Disk Image"
+msg_ok "Downloaded ${CL}${BL}${RELEASE}.qcow2${CL}${GN} Disk Image"
 msg_info "Extracting Disk Image"
 unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
