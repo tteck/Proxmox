@@ -920,19 +920,20 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Ubuntu 20.04/21.10 LXC </summary>
+<summary markdown="span"> Ubuntu LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
-<h1 align="center" id="heading"> Ubuntu 20.04/21.10 LXC </h1>
+<h1 align="center" id="heading"> Ubuntu LXC </h1>
+<h3 align="center" id="heading"> Option to select 20.04 or 21.10 </h3>
 
-To create a new Proxmox Ubuntu 20.04/21.10 (curl. sudo) LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Ubuntu (curl. sudo) LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu-v3.sh)"
 ```
 
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU - 21.10⚡</h3>
 
 ⚙️ **To Update Ubuntu 20.04/21.10**
 
