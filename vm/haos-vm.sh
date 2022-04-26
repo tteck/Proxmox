@@ -244,7 +244,7 @@ msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Latest Home Assistant Disk Image"
 URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
-msg_ok "Found URL for Latest Home Assistant Disk Image"
+msg_ok "Found URL for Home Assistant ${BRANCH} Disk Image"
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
