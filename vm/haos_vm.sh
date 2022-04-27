@@ -13,6 +13,41 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+trap cleanup EXIT
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  [ ! -z ${VMID-} ] && cleanup_vmid
+  exit $EXIT
+}
+
+function cleanup_vmid() {
+  if $(qm status $VMID &>/dev/null); then
+    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
+      qm stop $VMID
+    fi
+    qm destroy $VMID
+  fi
+}
+
+function cleanup() {
+  popd >/dev/null
+  rm -rf $TEMP_DIR
+}
+
+TEMP_DIR=$(mktemp -d)
+pushd $TEMP_DIR >/dev/null
 
 while true; do
     read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
@@ -217,51 +252,6 @@ function start_script() {
 
 start_script
 
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  [ ! -z ${VMID-} ] && cleanup_vmid
-  exit $EXIT
-}
-function warn() {
-  local REASON="\e[97m$1\e[39m"
-  local FLAG="\e[93m[WARNING]\e[39m"
-  msg "$FLAG $REASON"
-}
-function info() {
-  local REASON="$1"
-  local FLAG="\e[36m[INFO]\e[39m"
-  msg "$FLAG $REASON"
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
-function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
-    fi
-    qm destroy $VMID
-  fi
-}
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
