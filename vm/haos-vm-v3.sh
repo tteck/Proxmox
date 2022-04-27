@@ -12,6 +12,41 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+trap cleanup EXIT
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  [ ! -z ${VMID-} ] && cleanup_vmid
+  exit $EXIT
+}
+
+function cleanup_vmid() {
+  if $(qm status $VMID &>/dev/null); then
+    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
+      qm stop $VMID
+    fi
+    qm destroy $VMID
+  fi
+}
+
+function cleanup() {
+  popd >/dev/null
+  rm -rf $TEMP_DIR
+}
+
+TEMP_DIR=$(mktemp -d)
+pushd $TEMP_DIR >/dev/null
 
 while true; do
     read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
@@ -171,51 +206,6 @@ function start_script() {
 
 start_script
 
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  [ ! -z ${VMID-} ] && cleanup_vmid
-  exit $EXIT
-}
-function warn() {
-  local REASON="\e[97m$1\e[39m"
-  local FLAG="\e[93m[WARNING]\e[39m"
-  msg "$FLAG $REASON"
-}
-function info() {
-  local REASON="$1"
-  local FLAG="\e[36m[INFO]\e[39m"
-  msg "$FLAG $REASON"
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
-function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
-    fi
-    qm destroy $VMID
-  fi
-}
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -228,7 +218,7 @@ while read -r line; do
   STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
 if [ $((${#STORAGE_MENU[@]}/3)) -eq 0 ]; then
-  warn "'Disk image' needs to be selected for at least one storage location."
+  echo -e "'Disk image' needs to be selected for at least one storage location."
   die "Unable to detect valid storage location."
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
@@ -282,7 +272,7 @@ msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 msg_info "Adding Serial Port and Configuring Console"
 trap '
-  warn "Unable to configure serial port. VM is still functional."
+  echo -e "Unable to configure serial port. VM is still functional."
   if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
     qm set $VMID --delete serial0 >/dev/null
   fi
