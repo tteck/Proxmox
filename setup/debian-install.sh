@@ -60,7 +60,7 @@ sleep 2
 if [[ "$INTER" == "0" ]]; then
         msg_ok "Internet Online"
 else
-        echo -e "${CROSS}${RD} Internet Offline"
+        echo -e "${BFR} ${CROSS}${RD} Internet Offline"
 fi
 
 msg_info "Updating Container OS"
