@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
 STABLE="7.6"
@@ -13,41 +12,6 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
-
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occured."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  [ ! -z ${VMID-} ] && cleanup_vmid
-  exit $EXIT
-}
-
-function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
-    fi
-    qm destroy $VMID
-  fi
-}
-
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
 
 while true; do
     read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
@@ -90,15 +54,10 @@ function default_settings() {
 		VMID=$NEXTID
 		echo -e "${DGN}Using VM Name ${BGN}haos${STABLE}${CL}"
 		VM_NAME=haos${STABLE}
-	        echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
-	        CORE_COUNT="2"
- 	        echo -e "${DGN}Using ${BGN}4096${CL}${DGN}MiB RAM${CL}"
-	        RAM_SIZE="4096"
-	        echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
-	        BRG="vmbr0"
-	        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-	        echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
-	        VLAN=""
+		echo -e "${DGN}Using ${BGN}2vCPU${CL}"
+		CORE_COUNT="2"
+		echo -e "${DGN}Using ${BGN}4096MiB${CL}"
+		RAM_SIZE="4096"
 		echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
 		START_VM="yes"
 
@@ -160,7 +119,7 @@ header_info
 	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
         echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
         read RAM_SIZE
         if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
@@ -173,45 +132,8 @@ header_info
 	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
-        echo -e "${YW}Enter a Bridge, or Press [ENTER] for Default: vmbr0 "
-        read BRG
-        if [ -z $BRG ]; then BRG="vmbr0"; fi;
-        echo -en "${DGN}Set Bridge To ${BL}$BRG${CL}"
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
-        read VLAN1
-        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=""; 
-        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-        else
-          VLAN=",tag=$VLAN1"
-        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-        fi;
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-	echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
         echo -e "${YW}Start VM when completed, or Press [ENTER] for Default: yes "
         read START_VM
         if [ -z $START_VM ]; then START_VM="yes"; 
@@ -226,12 +148,9 @@ header_info
 	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
         echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
         echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
-	echo -e "${DGN}Start VM when completed ${BGN}$START_VM${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}MiB${CL}"
+        echo -e "${DGN}Start VM when completed ${BGN}$START_VM${CL}"
 
 read -p "Are these settings correct(y/n)? " -n 1 -r
 echo
@@ -252,6 +171,51 @@ function start_script() {
 
 start_script
 
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+trap cleanup EXIT
+function error_exit() {
+  trap - ERR
+  local DEFAULT='Unknown failure occured.'
+  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
+  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
+  msg "$FLAG $REASON"
+  [ ! -z ${VMID-} ] && cleanup_vmid
+  exit $EXIT
+}
+function warn() {
+  local REASON="\e[97m$1\e[39m"
+  local FLAG="\e[93m[WARNING]\e[39m"
+  msg "$FLAG $REASON"
+}
+function info() {
+  local REASON="$1"
+  local FLAG="\e[36m[INFO]\e[39m"
+  msg "$FLAG $REASON"
+}
+function msg() {
+  local TEXT="$1"
+  echo -e "$TEXT"
+}
+function cleanup_vmid() {
+  if $(qm status $VMID &>/dev/null); then
+    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
+      qm stop $VMID
+    fi
+    qm destroy $VMID
+  fi
+}
+function cleanup() {
+  popd >/dev/null
+  rm -rf $TEMP_DIR
+}
+TEMP_DIR=$(mktemp -d)
+pushd $TEMP_DIR >/dev/null
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -264,7 +228,7 @@ while read -r line; do
   STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
 if [ $((${#STORAGE_MENU[@]}/3)) -eq 0 ]; then
-  echo -e "'Disk image' needs to be selected for at least one storage location."
+  warn "'Disk image' needs to be selected for at least one storage location."
   die "Unable to detect valid storage location."
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
@@ -303,7 +267,7 @@ done
 msg_ok "Extracted Disk Image"
 
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
+qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=vmbr0 \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${IMPORT_OPT:-} 1>&/dev/null
@@ -318,7 +282,7 @@ msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 msg_info "Adding Serial Port and Configuring Console"
 trap '
-  echo -e "Unable to configure serial port. VM is still functional."
+  warn "Unable to configure serial port. VM is still functional."
   if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
     qm set $VMID --delete serial0 >/dev/null
   fi
