@@ -54,6 +54,15 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+msg_info "Checking Internet Status"
+INTER=$(wget -q --tries=10 --timeout=5 --spider https://google.com)
+sleep 2
+if [[ $INTER -eq 0 ]]; then
+        msg_ok "Internet Online"
+else
+        echo -e "${CROSS}${RD} Internet Offline"
+fi
+
 msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
