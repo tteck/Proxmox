@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **Home Assistant OS VM**
   - ADD Option to set Bridge, VLAN and MAC Address
+- **v3 Script**
+  - Improve Internet Check (prevent ‼ ERROR 4@57)
 
 ## 2022-04-26
 
