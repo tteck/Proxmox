@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-04-27
+
+### Changed
+
+- **Home Assistant OS VM**
+  - ADD Option to set Bridge, VLAN and MAC Address
+
 ## 2022-04-26
 
 ### Changed
