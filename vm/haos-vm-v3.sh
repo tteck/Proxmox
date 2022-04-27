@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
+GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
 STABLE="7.6"
@@ -96,7 +96,8 @@ function default_settings() {
 	        RAM_SIZE="4096"
 	        echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
 	        BRG="vmbr0"
-	        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
+	        echo -e "${DGN}Using MAC Address ${BGN}$GEN_MAC${CL}"
+		MAC=$GEN_MAC
 	        echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
 	        VLAN=""
 		echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
@@ -179,6 +180,21 @@ header_info
         read BRG
         if [ -z $BRG ]; then BRG="vmbr0"; fi;
         echo -en "${DGN}Set Bridge To ${BL}$BRG${CL}"
+echo -e " ${CM}${CL} \n"
+sleep 1
+clear
+header_info
+        echo -e "${RD}Using Advanced Settings${CL}"
+	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
+        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
+        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
+        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
+	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
+        echo -e "${YW}Enter a Valid MAC Address, or Press [ENTER] for Generated MAC: $GEN_MAC "
+        read MAC
+        if [ -z $MAC ]; then MAC=$GEN_MAC; fi;
+        echo -en "${DGN}Set MAC Address To ${BL}$MAC${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
 clear
