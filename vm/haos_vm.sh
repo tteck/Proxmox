@@ -264,7 +264,7 @@ while read -r line; do
   STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
 if [ $((${#STORAGE_MENU[@]}/3)) -eq 0 ]; then
-  warn "'Disk image' needs to be selected for at least one storage location."
+  echo -e "'Disk image' needs to be selected for at least one storage location."
   die "Unable to detect valid storage location."
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
@@ -318,7 +318,7 @@ msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 msg_info "Adding Serial Port and Configuring Console"
 trap '
-  warn "Unable to configure serial port. VM is still functional."
+  echo -e "Unable to configure serial port. VM is still functional."
   if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
     qm set $VMID --delete serial0 >/dev/null
   fi
