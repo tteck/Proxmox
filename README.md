@@ -10,7 +10,7 @@
 
 <h1 align="center" id="heading"> Proxmox VE 7 Post Install </h1>
 
-This script will give options to Disable the Enterprise Repo, Add/Correct PVE7 Sources, Enable the No-Subscription Repo, Add & Disable Test Repo and Disable Subscription Nag. 
+This script will give options to Disable the Enterprise Repo, Add/Correct PVE7 Sources, Enable the No-Subscription Repo, Add Test Repo and Disable Subscription Nag. 
  
 Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 
