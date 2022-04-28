@@ -976,7 +976,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Omada Controller LXC</summary>
+<summary markdown="span"> Omada Controller LXC</summary>
  
 <p align="center"><img src="https://www.enterpriseitpro.net/wp-content/uploads/2020/12/logo-omada.png" height="100"/></p>
 
@@ -1184,7 +1184,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Uptime Kuma LXC </summary>
+<summary markdown="span"> Uptime Kuma LXC </summary>
  
 <p align="center"><img src="https://github.com/louislam/uptime-kuma/blob/master/public/icon.png?raw=true" height="100"/></p>
 
