@@ -250,7 +250,7 @@ header_info
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${YW}Enter a Static IP Address, or Press [ENTER] for Default: DHCP "
+        echo -e "${YW}Enter a Static IPv4 CIDR Address, or Press [ENTER] for Default: DHCP "
         read NET
         if [ -z $NET ]; then NET="dhcp"; fi;
         echo -en "${DGN}Set Static IP Address To ${BL}$NET${CL}"
@@ -269,7 +269,7 @@ header_info
         echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
 	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
-        echo -e "${YW}Enter a Gateway IP, or Press [ENTER] for Default: NONE "
+        echo -e "${YW}Enter a Gateway IP (mandatory if static IP is used), or Press [ENTER] for Default: NONE "
         read GATE1
         if [ -z $GATE1 ]; then GATE1="NONE" GATE=""; 
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
