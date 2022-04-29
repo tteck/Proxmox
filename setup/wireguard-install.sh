@@ -54,15 +54,6 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
-msg_info "Checking Internet Status"
-INTER=$(wget -q --tries=10 --timeout=5 --spider https://google.com)
-sleep 2
-if [[ "$INTER" != "0" ]]; then
-        msg_ok "Internet Online"
-else
-        echo -e "${BFR} ${CROSS}${RD} Internet Offline${CL}"
-fi
-
 OPTIONS_PATH='/options.conf'
 cat >$OPTIONS_PATH <<'EOF'
 IPv4dev=eth0
