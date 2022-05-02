@@ -36,6 +36,7 @@ sleep 1
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Backup conf.yml... "
+cd ~
 cp -R /dashy/public/conf.yml conf.yml
 sleep 1
 echo -e "${CM}${CL} \r"
