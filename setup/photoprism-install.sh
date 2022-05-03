@@ -86,22 +86,9 @@ ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 msg_ok "Installed Golang"
 
 msg_info "Installing Tensorflow"
-AVX=$(grep -o -m1 'avx[^ ]*' /proc/cpuinfo)
-if [[ "$AVX" == "avx2" ]]; then
-  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
-  tar -C /usr/local -xzf libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
-  ldconfig &>/dev/null
-fi
-if [[ "$AVX" == "avx" ]]; then
-  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
-  tar -C /usr/local -xzf libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
-  ldconfig &>/dev/null
-fi
-if [[ "$AVX" == "" ]]; then
   wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
   tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
   ldconfig &>/dev/null
-fi
 msg_ok "Installed Tensorflow"
 
 msg_info "Cloning PhotoPrism"
