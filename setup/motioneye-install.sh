@@ -64,11 +64,11 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-echo -en "${GN} Installing Motion... "
+msg_info "Installing Motion"
  apt-get install motion -y &>/dev/null
  systemctl stop motion &>/dev/null
  systemctl disable motion &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installed Motion"
 
 msg_info "Installing FFmpeg"
  apt-get install ffmpeg v4l-utils -y &>/dev/null
