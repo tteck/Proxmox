@@ -91,11 +91,13 @@ if [[ "$AVX" == "avx2" ]]; then
   wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
   tar -C /usr/local -xzf libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
   ldconfig &>/dev/null
-  elif [[ "$AVX" == "avx" ]]; then
+fi
+if [[ "$AVX" == "avx" ]]; then
   wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
   tar -C /usr/local -xzf libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
   ldconfig &>/dev/null
-  else
+fi
+if [[ "$AVX" == "" ]]; then
   wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
   tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
   ldconfig &>/dev/null
