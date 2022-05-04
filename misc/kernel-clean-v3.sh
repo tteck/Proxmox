@@ -91,7 +91,7 @@ msg_ok "Kernel Search Completed\n"
         sleep 2
         msg_ok "Done"
     else
-    read -p "${YW}Would you like to remove the${BL} $(echo $remove_kernels | awk '{print NF}') ${CL}${YW}selected Kernels listed above? [y/n]: ${CL}" -n 1 -r
+    read -p "Would you like to remove the $(echo $remove_kernels | awk '{print NF}') selected Kernels listed above? [y/n]: " -n 1 -r
         echo
       if [[ $REPLY =~ ^[Yy]$ ]]; then
         msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels...${CL}"
