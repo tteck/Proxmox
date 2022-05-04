@@ -94,7 +94,7 @@ msg_ok "Kernel Search Completed\n"
     read -p "Would you like to remove the $(echo $remove_kernels | awk '{print NF}') selected Kernels listed above? [y/n]: " -n 1 -r
         echo
       if [[ $REPLY =~ ^[Yy]$ ]]; then
-        msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels...${CL}"
+        msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels${CL}"
         /usr/bin/apt purge -y $remove_kernels > /dev/null 2>&1
         msg_ok "Successfully Removed Kernels"
         msg_info "Updating GRUB"
