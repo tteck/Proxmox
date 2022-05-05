@@ -77,8 +77,8 @@ function default_settings() {
 	        clear
 	        header_info
 	        echo -e "${BL}Using Default Settings${CL}"
-		echo -e "${DGN}Using Version ${BGN}21.10${CL}"
-		VER="21.10"
+		echo -e "${DGN}Using Version ${BGN}22.04${CL}"
+		VER="22.04"
 	        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
 	        CT_TYPE="1"
 		echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
@@ -107,9 +107,9 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type 18.04 20.04 21.10 22.04 or Press [ENTER] for Default: 21.10"
+        echo -e "${YW}Type 18.04, 20.04, 21.10 or Press [ENTER] for Default: 22.04"
         read VER
-        if [ -z $VER ]; then VER="21.10"; fi;
+        if [ -z $VER ]; then VER="22.04"; fi;
         echo -en "${DGN}Set Version To ${BL}$VER${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
