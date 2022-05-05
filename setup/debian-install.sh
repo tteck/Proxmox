@@ -28,6 +28,37 @@ function error_exit() {
   exit $EXIT
 }
 
+function internet() {
+  test_urls="\
+  https://www.google.com/ \
+  https://www.microsoft.com/ \
+  https://www.cloudflare.com/ \
+  "
+  processes="0"
+  pids=""
+  for test_url in $test_urls; do
+    curl --silent --head "$test_url" > /dev/null &
+    pids="$pids $!"
+    processes=$(($processes + 1))
+  done
+  while [ $processes -gt 0 ]; do
+    for pid in $pids; do
+      if ! ps | grep "^[[:blank:]]*$pid[[:blank:]]" > /dev/null; then
+        processes=$(($processes - 1))
+        pids=$(echo "$pids" | sed --regexp-extended "s/(^| )$pid($| )/ /g")
+
+        if wait $pid; then
+          kill -TERM $pids > /dev/null 2>&1 || true
+          wait $pids
+          return 0
+        fi
+      fi
+    done
+    sleep 0.1
+  done
+  return 1
+}
+
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
@@ -53,6 +84,12 @@ while [ "$(hostname -I)" = "" ]; do
 done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
+
+if internet; then
+  msg_ok "Internet Online"
+else
+  echo -e "${BFR} {CROSS}${RD} Internet Offline"
+fi
 
 msg_info "Updating Container OS"
 apt update &>/dev/null
