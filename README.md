@@ -933,7 +933,7 @@ To create a new Proxmox Ubuntu (curl. sudo) LXC, run the following in the Proxmo
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu-v3.sh)"
 ```
 
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU - 21.10⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU - 22.04⚡</h3>
 
 ⚙️ **To Update Ubuntu 20.04/21.10**
 
