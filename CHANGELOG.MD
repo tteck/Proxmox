@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-05-05
+
+### Changed
+
+- **Ubuntu LXC**
+  - ADD option to define version (18.04 20.04 21.10 22.04).
+
 ## 2022-04-28
 
 ### Changed
