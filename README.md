@@ -953,6 +953,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> UniFi Network Application LXC </h1>
 
+<h3 align="center"> With Local Controller Option </h3>
+
 An application designed to optimize UniFi home and business networks with ease.
 
 To create a new Proxmox UniFi Network Application LXC, run the following in the Proxmox Shell.
