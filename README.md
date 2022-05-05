@@ -920,12 +920,12 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> Ubuntu LXC </summary>
+<summary markdown="span"> 🔸Ubuntu LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
 <h1 align="center" id="heading"> Ubuntu LXC </h1>
-<h3 align="center" id="heading"> Option to select 20.04 or 21.10 </h3>
+<h3 align="center" id="heading"> Option to define version 18.04, 20.04, 21.10 or 22.04</h3>
 
 To create a new Proxmox Ubuntu (curl. sudo) LXC, run the following in the Proxmox Shell.
 
