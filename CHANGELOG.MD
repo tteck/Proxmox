@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Photoprism LXC**
+- **PhotoPrism LXC**
   - ADD GO Dependencies for full functionality.
 
 ## 2022-05-05
