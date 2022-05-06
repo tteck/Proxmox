@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-05-06
+
+### Changed
+
+- **Photoprism LXC**
+  - ADD GO Dependencies for full functionality.
+
 ## 2022-05-05
 
 ### Changed
