@@ -54,6 +54,12 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+if : >/dev/tcp/8.8.8.8/53; then
+  msg_ok "Internet Online"
+else
+  echo -e "${BFR} ${CROSS}${RD} Internet Offline"
+fi
+
 msg_info "Updating Container OS"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
