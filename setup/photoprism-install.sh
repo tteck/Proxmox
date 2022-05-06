@@ -42,12 +42,12 @@ msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
-  1>&2 echo -en "${CROSS}${RD}  No Network! "
+  1>&2 echo -en "${CROSS}${RD} No Network! "
   sleep $RETRY_EVERY
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
     exit 1
   fi
 done
@@ -89,6 +89,14 @@ msg_info "Installing Golang"
 wget https://golang.org/dl/go1.18.linux-amd64.tar.gz &>/dev/null
 tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
+go install github.com/tianon/gosu@latest &>/dev/null
+go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
+go install github.com/psampaz/go-mod-outdated@latest &>/dev/null
+go install github.com/dsoprea/go-exif/v3/command/exif-read-tool@latest &>/dev/null
+go install github.com/mikefarah/yq/v4@latest &>/dev/null
+go install github.com/kyoh86/richgo@latest &>/dev/null
+cp /root/go/bin/* /usr/local/go/bin/
+cp /root/go/bin/* /usr/local/bin/
 msg_ok "Installed Golang"
 
 msg_info "Installing Tensorflow"
@@ -99,7 +107,7 @@ msg_ok "Installed Tensorflow"
 
 msg_info "Cloning PhotoPrism"
 mkdir -p /opt/photoprism/bin
-mkdir /var/lib/photoprism
+mkdir -p /var/lib/photoprism/storage
 git clone https://github.com/photoprism/photoprism.git &>/dev/null
 cd photoprism
 git checkout release &>/dev/null
@@ -114,7 +122,9 @@ msg_ok "Built PhotoPrism"
 env_path="/var/lib/photoprism/.env"
 echo " 
 PHOTOPRISM_ADMIN_PASSWORD='admin'
-PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism'
+PHOTOPRISM_HTTP_HOST='0.0.0.0'
+PHOTOPRISM_HTTP_PORT=2342
+PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
 PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
 PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
 " > $env_path
@@ -160,5 +170,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/go
 msg_ok "Cleaned"
