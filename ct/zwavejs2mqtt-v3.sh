@@ -336,9 +336,9 @@ lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
 
-echo -en "${GN} Starting LXC Container... "
+msg_info "Starting LXC Container"
 pct start $CTID
-echo -e "${CM}${CL} \r"
+msg_ok "Started LXC Container"
 
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/zwavejs2mqtt-install.sh)" || exit
 
