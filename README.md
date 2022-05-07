@@ -755,7 +755,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> NocoDB LXC </summary>
+<summary markdown="span"> 🔸NocoDB LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/nocodb.png?raw=true" height="100"/></p>
 
@@ -773,11 +773,11 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nocodb-v3.sh
 
 **NocoDB Interface - IP:8080/dashboard**
 
-⚙️ **To Update**
+⚙️ **To Update NocoDB**
 
-
+Run in the LXC console
 ```yaml
-Working on
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/nocodb-update.sh)"
 ```
 
 ____________________________________________________________________________________________ 
