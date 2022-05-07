@@ -123,7 +123,7 @@ git checkout release &>/dev/null
 msg_ok "Cloned PhotoPrism"
 
 msg_info "Building PhotoPrism"
-make all &>/dev/null
+NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
 cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 msg_ok "Built PhotoPrism"
