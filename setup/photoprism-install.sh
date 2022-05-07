@@ -87,8 +87,8 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Golang"
-wget https://golang.org/dl/go1.18.linux-amd64.tar.gz &>/dev/null
-tar -C /usr/local -xzf go1.18.linux-amd64.tar.gz &>/dev/null
+wget https://golang.org/dl/go1.18.1.linux-amd64.tar.gz &>/dev/null
+tar -xzf go1.18.1.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 go install github.com/tianon/gosu@latest &>/dev/null
 go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
@@ -97,7 +97,10 @@ go install github.com/dsoprea/go-exif/v3/command/exif-read-tool@latest &>/dev/nu
 go install github.com/mikefarah/yq/v4@latest &>/dev/null
 go install github.com/kyoh86/richgo@latest &>/dev/null
 cp /root/go/bin/* /usr/local/go/bin/
-cp /root/go/bin/* /usr/local/bin/
+cp /usr/local/go/bin/richgo /usr/local/bin/richgo
+cp /usr/local/go/bin/gosu /usr/local/sbin/gosu
+chown root:root /usr/local/sbin/gosu
+chmod 755 /usr/local/sbin/gosu
 msg_ok "Installed Golang"
 
 read -p "Check For Advanced Vector Extensions? " -n 1 -r
@@ -194,5 +197,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/go
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 msg_ok "Cleaned"
