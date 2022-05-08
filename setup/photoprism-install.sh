@@ -103,29 +103,14 @@ chown root:root /usr/local/sbin/gosu
 chmod 755 /usr/local/sbin/gosu
 msg_ok "Installed Golang"
 
-read -p "Check For Advanced Vector Extensions? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    check=yes
-else
-    check=no
-fi
-
 msg_info "Installing Tensorflow"
-if [ "$check" == "yes" ]; then 
-  if [[ "$AVX" == "avx2" ]]; then
-    wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
-    tar -C /usr/local -xzf libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
-    elif [[ "$AVX" == "avx" ]]; then
-    wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
-    tar -C /usr/local -xzf libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
-    elif [[ "$AVX" == " " ]]; then
-    wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-    tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
-  fi
-fi
-if [ "$check" == "no" ]; then 
+if [[ "$AVX" =~ avx2 ]]; then
+  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
+  tar -C /usr/local -xzf libtensorflow-linux-avx2-1.15.2.tar.gz &>/dev/null
+  elif [[ "$AVX" =~ avx ]]; then
+  wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
+  tar -C /usr/local -xzf libtensorflow-linux-avx-1.15.2.tar.gz &>/dev/null
+  else
   wget https://dl.photoprism.org/tensorflow/linux/libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
   tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
 fi
