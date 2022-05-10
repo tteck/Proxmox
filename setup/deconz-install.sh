@@ -72,13 +72,13 @@ apt-get install -y gnupg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting Phoscon Repository"
-wget -q http://phoscon.de/apt/deconz.pub.key -O - | sudo apt-key add -
-sh -c "echo 'deb [arch=amd64] http://phoscon.de/apt/deconz $(lsb_release -cs) main' > /etc/apt/sources.list.d/deconz.list"
+wget -q http://phoscon.de/apt/deconz.pub.key -O - | sudo apt-key add - &>/dev/null
+sh -c "echo 'deb [arch=amd64] http://phoscon.de/apt/deconz $(lsb_release -cs) main' > /etc/apt/sources.list.d/deconz.list" &>/dev/null
 msg_ok "Setup Phoscon Repository"
 
 msg_info "Installing deConz"
-apt-get update
-apt install deconz
+apt-get update &>/dev/null
+apt-get install -y deconz &>/dev/null
 msg_ok "Installed deConz"
 
 msg_info "Creating Service"
