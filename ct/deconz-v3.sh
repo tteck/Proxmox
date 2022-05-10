@@ -111,7 +111,7 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Privileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        echo -e "${YW}Type Unprivileged, or Press [ENTER] for Default: Privileged"
         read CT_TYPE1
         if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0"; 
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
