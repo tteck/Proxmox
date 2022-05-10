@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-APP="deConz"
+APP="deCONZ"
 var_disk="4"
 var_cpu="2"
 var_ram="1024"
