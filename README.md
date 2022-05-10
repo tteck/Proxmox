@@ -722,22 +722,22 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸deConz LXC </summary>
+<summary markdown="span"> 🔸deCONZ LXC </summary>
  
 <p align="center"><img src="https://phoscon.de/img/phoscon-logo128x.svg" height="100"/></p>
 
-<h1 align="center" id="heading"> deConz LXC </h1>
+<h1 align="center" id="heading"> deCONZ LXC </h1>
 
-To create a new Proxmox deConz LXC, run the following in the Proxmox Shell.
+To create a new Proxmox deCONZ LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/deconz-v3.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-**deConz Interface - IP:80**
+**deCONZ Interface - IP:80**
 
-⚙️ **To Update deConz**
+⚙️ **To Update deCONZ**
 
 Run in the LXC Console
 ```yaml
