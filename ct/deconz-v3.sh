@@ -83,8 +83,8 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-        CT_TYPE="1"
+        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
+        CT_TYPE="0"
         echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
         PW=" "
         echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
@@ -111,14 +111,14 @@ function advanced_settings() {
         clear
         header_info
         echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
+        echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Privileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Privileged" CT_TYPE="0"; 
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
-        CT_TYPE1="Privileged"
-        CT_TYPE="0"
-        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"  
+        CT_TYPE1="Unprivileged"
+        CT_TYPE="1"
+        echo -en "${DGN}Set CT Type ${BL}Unprivileged${CL}"  
         fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -340,6 +340,18 @@ export PCT_OPTIONS="
   $PW
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >> $LXC_CONFIG
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
+lxc.cgroup2.devices.allow: c 188:* rwm
+lxc.cgroup2.devices.allow: c 189:* rwm
+lxc.mount.entry: /dev/serial/by-id  dev/serial/by-id  none bind,optional,create=dir
+lxc.mount.entry: /dev/ttyUSB0       dev/ttyUSB0       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
+lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
+EOF
 
 msg_info "Starting LXC Container"
 pct start $CTID
