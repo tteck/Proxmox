@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 APP="deConz"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+var_disk="4"
+var_cpu="2"
+var_ram="1024"
 var_os="ubuntu"
 var_version="20.04"
 NEXTID=$(pvesh get /cluster/nextid)
