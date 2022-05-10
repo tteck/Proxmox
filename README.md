@@ -722,6 +722,33 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸deConz LXC </summary>
+ 
+<p align="center"><img src="https://phoscon.de/img/phoscon-logo128x.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> deConz LXC </h1>
+
+To create a new Proxmox deConz LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/deconz-v3.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+**deConz Interface - IP:80**
+
+⚙️ **To Update deConz**
+
+Run in the LXC Console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Zwavejs2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
