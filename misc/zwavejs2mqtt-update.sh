@@ -26,7 +26,7 @@ echo -en "${GN} Updating Zwavejs2MQTT... "
 systemctl stop zwavejs2mqtt.service
 cd /opt/zwavejs2mqtt
 curl -s https://api.github.com/repos/zwave-js/zwavejs2mqtt/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
-unzip -u zwavejs2mqtt-v*.zip zwavejs2mqtt &>/dev/null
+unzip -o zwavejs2mqtt-v*.zip zwavejs2mqtt &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Checking Service... "
