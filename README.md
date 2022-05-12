@@ -947,7 +947,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Ubuntu LXC </summary>
+<summary markdown="span"> Ubuntu LXC </summary>
  
 <p align="center"><img src="https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png" alt="Ubuntu" height="100"/></p>
 
