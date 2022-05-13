@@ -101,4 +101,6 @@ msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+mkdir /var/log/apache2
+chmod 750 /var/log/apache2
 msg_ok "Cleaned"
