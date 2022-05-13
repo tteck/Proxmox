@@ -641,6 +641,112 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸PostgreSQL LXC </summary>
+ 
+<p align="center"><img src="https://wiki.postgresql.org/images/3/30/PostgreSQL_logo.3colors.120x120.png" height="100"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
+
+<h1 align="center" id="heading"> PostgreSQL LXC </h1>
+
+To create a new Proxmox PostgreSQL LXC, run the following in the Proxmox Shell.
+ 
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/postgresql-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+ 
+To enable PostgreSQL to listen to remote connections, you need to edit your defaults file. To do this, open the console in your PostgreSQL LXC
+```yaml
+nano /etc/postgresql/13/main/postgresql.conf
+```
+Un-comment `listen_addresses` and replace localhost with * sign to allow all Ip-address to connect to the Database server.
+```
+listen_addresses = '*'          # what IP address(es) to listen on;
+```
+Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
+
+```yaml
+nano /etc/postgresql/13/main/pg_hba.conf
+```
+Change values to match as shown below
+```
+# Database administrative login by Unix domain socket
+local   all             postgres                                md5
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             0.0.0.0/0               md5
+# IPv6 local connections:
+host    all             all             ::0/0                   md5
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     peer
+host    replication     all             127.0.0.1/32            md5
+host    replication     all             ::1/128                 md5
+```
+Save and exit the editor with "Ctrl+O", "Enter" and "Ctrl+X".
+
+Restart the Database server to apply the changes:
+```
+sudo systemctl restart postgresql
+```
+
+To make sure our PostgreSQL is secured with a strong password, set a password for its system user and then change the default database admin user account
+
+Change user password
+```yaml
+passwd postgres
+```
+Login using Postgres system account
+ 
+```
+su - postgres
+```
+Now, change the Admin database password 
+```
+psql -c "ALTER USER postgres WITH PASSWORD 'your-password';"
+```
+Create a new user.
+```yaml
+psql
+```
+```yaml
+CREATE USER admin WITH PASSWORD 'your-password';
+```
+Create a new database:
+```yaml
+CREATE DATABASE homeassistant;
+```
+Grant all rights or privileges on created database to the user
+```yaml
+GRANT ALL ON DATABASE homeassistant TO admin;
+```
+To check that the database has been created
+```yaml
+\l
+``` 
+Change the recorder: `db_url:` in your HA configuration.yaml
+ 
+Example: `db_url: postgresql://admin:your-password@192.168.100.20:5432/homeassistant?client_encoding=utf8`
+ 
+⚙️ **To Update PostgreSQL**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+⚙️ [**Adminer**](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer.png) (formerly phpMinAdmin) is a full-featured database management tool
+ 
+ `http://your-PostgreSQL-lxc-ip/adminer/`
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Zigbee2MQTT LXC </summary>
  
 <p align="center"><img src="https://github.com/Koenkk/zigbee2mqtt/blob/master/images/logo_bee_only.png?raw=true" height="100"/></p>
