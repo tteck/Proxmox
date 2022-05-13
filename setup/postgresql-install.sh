@@ -80,7 +80,6 @@ msg_ok "Setup PostgreSQL Repository"
 msg_info "Installing PostgreSQL"
 apt-get update &>/dev/null
 apt-get install -y postgresql &>/dev/null
-msg_ok "Installed PostgreSQL"
 
 cat <<EOF > /etc/postgresql/14/main/pg_hba.conf
 # PostgreSQL Client Authentication Configuration File
@@ -967,6 +966,7 @@ include_dir = 'conf.d'                  # include files ending in '.conf' from
 EOF
 
 sudo systemctl restart postgresql
+msg_ok "Installed PostgreSQL"
 
 msg_info "Installing Adminer"
 sudo apt install adminer -y &>/dev/null
