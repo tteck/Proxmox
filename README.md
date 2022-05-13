@@ -640,6 +640,74 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸PostgreSQL LXC </summary>
+ 
+<p align="center"><img src="https://wiki.postgresql.org/images/3/30/PostgreSQL_logo.3colors.120x120.png" height="100"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
+
+<h1 align="center" id="heading"> PostgreSQL LXC </h1>
+
+To create a new Proxmox PostgreSQL LXC, run the following in the Proxmox Shell.
+ 
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/postgresql-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+
+To make sure our PostgreSQL is secured with a strong password, set a password for its system user and then change the default database admin user account
+
+Change user password
+```yaml
+passwd postgres
+```
+Login using Postgres system account
+ 
+```
+su - postgres
+```
+Now, change the Admin database password 
+```
+psql -c "ALTER USER postgres WITH PASSWORD 'your-password';"
+```
+Create a new user.
+```yaml
+psql
+```
+```yaml
+CREATE USER admin WITH PASSWORD 'your-password';
+```
+Create a new database:
+```yaml
+CREATE DATABASE homeassistant;
+```
+Grant all rights or privileges on created database to the user
+```yaml
+GRANT ALL ON DATABASE homeassistant TO admin;
+```
+To exit psql
+```yaml
+\q
+``` 
+Then type exit to get back to root
+
+Change the recorder: `db_url:` in your HA configuration.yaml
+ 
+Example: `db_url: postgresql://admin:your-password@192.168.100.20:5432/homeassistant?client_encoding=utf8`
+ 
+⚙️ **To Update PostgreSQL**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+⚙️ [**Adminer**](https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer.png) (formerly phpMinAdmin) is a full-featured database management tool
+ 
+ `http://your-PostgreSQL-lxc-ip/adminer/`
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span"> Zigbee2MQTT LXC </summary>
