@@ -663,11 +663,11 @@ passwd postgres
 ```
 Login using Postgres system account
  
-```
+```yaml
 su - postgres
 ```
 Now, change the Admin database password 
-```
+```yaml
 psql -c "ALTER USER postgres WITH PASSWORD 'your-password';"
 ```
 Create a new user.
