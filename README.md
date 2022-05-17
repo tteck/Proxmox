@@ -791,7 +791,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸deCONZ LXC </summary>
+<summary markdown="span"> deCONZ LXC </summary>
  
 <p align="center"><img src="https://phoscon.de/img/phoscon-logo128x.svg" height="100"/></p>
 
