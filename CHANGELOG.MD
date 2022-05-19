@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **File Browser LXC**
+- **File Browser**
   - NEW Script.
 
 ## 2022-05-13
