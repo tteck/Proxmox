@@ -62,9 +62,9 @@ function msg_ok() {
 
 msg_info "Installing ${APP}"
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
-filebrowser config init -a '0.0.0.0'
-filebrowser config set -a '0.0.0.0'
-filebrowser users add admin changeme --perm.admin
+filebrowser config init -a '0.0.0.0' &>/dev/null
+filebrowser config set -a '0.0.0.0' &>/dev/null
+filebrowser users add admin changeme --perm.admin &>/dev/null
 msg_ok "Installed ${APP}"
 
 msg_info "Creating Service"
