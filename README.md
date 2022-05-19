@@ -1481,6 +1481,45 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸File Browser</summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/filebrowser.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> File Browser </h1>
+
+To Install File Browser, ⚠️ run the following in the LXC console.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/filebrowser-v3.sh)"
+```
+
+[File Browser](https://filebrowser.org/features) is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface. Many available features!
+
+
+
+**File Browser Interface - http:// IP:8080**
+
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ changeme
+ ```
+ 
+⚙️ **To Update File Browser**
+
+```yaml
+Working On
+```
+___________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Webmin System Administration</summary>
  
 <p align="center"><img src="https://github.com/webmin/webmin/blob/master/images/webmin-blue.png?raw=true" height="100"/></p>
