@@ -150,7 +150,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homeassistan
 ```yaml
 /var/lib/docker/volumes/hass_config/_data
  ```
-⚙️ **To Edit the HA configuration.yaml** (Recommend Using Webmin System Administration)
+⚙️ **To Edit the HA configuration.yaml** (Recommend Using File Browser)
  
 Run in the LXC console
 ```yaml
