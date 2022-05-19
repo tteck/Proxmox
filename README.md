@@ -1513,7 +1513,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/filebrowse
 ⚙️ **To Update File Browser**
 
 ```yaml
-Working On
+curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
 ```
 ___________________________________________________________________________________________ 
 
