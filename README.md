@@ -1618,11 +1618,11 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Keycloak</summary>
+<summary markdown="span"> 🔸Keycloak LXC</summary>
  
 <p align="center"><img src="https://www.keycloak.org/resources/images/keycloak_icon_512px.svg?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> Keycloak </h1>
+<h1 align="center" id="heading"> Keycloak LXC</h1>
 
 To create a new Proxmox Keycloak LXC, run the following in the Proxmox Shell.
 
