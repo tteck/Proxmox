@@ -1618,6 +1618,50 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Keycloak</summary>
+ 
+<p align="center"><img src="https://www.keycloak.org/resources/images/keycloak_icon_512px.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Keycloak </h1>
+
+To create a new Proxmox Keycloak LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/keycloak-v3.sh)"
+```
+
+[Keycloak](https://www.keycloak.org/) is an Open Source Identity and Access Management solution for modern Applications and Services.
+
+**Keycloak Interface - http:// IP:8080** (First start can take a few minutes)
+
+⚙️ **Initial Login**
+
+The initial admin user can be added manually using the web frontend when accessed from localhost or automatically using environment variables.
+
+To add the initial admin user using environment variables, set `KEYCLOAK_ADMIN` for the initial admin username and `KEYCLOAK_ADMIN_PASSWORD` for the initial admin password.
+ 
+First, stop Keycloak
+```
+systemctl stop keycloak.service
+```
+then start Keycloak by coping & pasting the following (only needed once)
+```
+cd /opt/keycloak
+export KEYCLOAK_ADMIN=admin
+export KEYCLOAK_ADMIN_PASSWORD=changeme
+
+bin/kc.sh start-dev 
+```
+⚙️ **To Update Keycloak**
+
+```yaml
+working On
+```
+___________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
