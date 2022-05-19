@@ -81,7 +81,7 @@ ExecStart=/usr/local/bin/filebrowser -r /
 [Install]
 WantedBy=default.target" > $service_path
 
-systemctl enable --now filebrowser.service
+systemctl enable --now filebrowser.service &>/dev/null
 msg_ok "Created Service"
 
 msg_ok "Completed Successfully!\n"
