@@ -1641,11 +1641,11 @@ The initial admin user can be added manually using the web frontend when accesse
 To add the initial admin user using environment variables, set `KEYCLOAK_ADMIN` for the initial admin username and `KEYCLOAK_ADMIN_PASSWORD` for the initial admin password.
  
 First, stop Keycloak
-```
+```yaml
 systemctl stop keycloak.service
 ```
 then start Keycloak by coping & pasting the following (only needed once)
-```
+```yaml
 cd /opt/keycloak
 export KEYCLOAK_ADMIN=admin
 export KEYCLOAK_ADMIN_PASSWORD=changeme
