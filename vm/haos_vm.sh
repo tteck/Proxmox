@@ -309,7 +309,6 @@ case $STORAGE_TYPE in
   btrfs|nfs|dir)
         DISK_EXT=".qcow2"
         DISK_REF="$VMID/"
-        IMPORT_OPT="-format qcow2"
 esac
 for i in {0,1}; do
   disk="DISK$i"
