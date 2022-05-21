@@ -328,39 +328,6 @@ qm set $VMID \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
-set +o errtrace
-(
-msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
-
-msg_info "Adding Serial Port and Configuring Console"
-trap '
-  echo -e "Unable to configure serial port. VM is still functional."
-  if [ "$(qm config $VMID | sed -n ''/serial0/p'')" != "" ]; then
-    qm set $VMID --delete serial0 >/dev/null
-  fi
-  exit
-  ' ERR
-msg_ok "Added Serial Port and Configured Console"
-  if [ "$(command -v kpartx)" = "" ]; then
-    msg_info "Installing kpartx"
-    apt-get update >/dev/null
-    apt-get -qqy install kpartx &>/dev/null
-    msg_ok "Installed kpartx"
-  fi
-  DISK1_PATH="$(pvesm path $DISK1_REF)"
-  DISK1_PART1="$(kpartx -al $DISK1_PATH | awk 'NR==1 {print $1}')"
-  DISK1_PART1_PATH="/dev/mapper/$DISK1_PART1"
-  TEMP_MOUNT="${TEMP_DIR}/mnt"
-  trap '
-    findmnt $TEMP_MOUNT >/dev/null && umount $TEMP_MOUNT
-    command -v kpartx >/dev/null && kpartx -d $DISK1_PATH
-  ' EXIT
-  kpartx -a $DISK1_PATH
-  mkdir $TEMP_MOUNT
-  mount $DISK1_PART1_PATH $TEMP_MOUNT
-  sed -i 's/$/ console=ttyS0/' ${TEMP_MOUNT}/cmdline.txt
-  qm set $VMID -serial0 socket >/dev/null
-)
 if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
 qm start $VMID
