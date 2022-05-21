@@ -80,26 +80,26 @@ function default_settings() {
         clear
         header_info
         echo -e "${BL}Using Default Settings${CL}"
-        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}
+        echo -e "${DGN}Using CT Type ${BGN}Privileged${CL}"
         CT_TYPE="0"
-        echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
-        PW=" "
-        echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
-        CT_ID=$NEXTID
-        echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
-        HN=$NSAPP
-        echo -e "${DGN}Using Disk Size ${BGN}8${CL}${DGN}GB${CL}"
-        DISK_SIZE="8"
-        echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
-        CORE_COUNT="2"
-        echo -e "${DGN}Using ${BGN}2048${CL}${DGN}MiB RAM${CL}"
-        RAM_SIZE="2048"
-        echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
-        BRG="vmbr0"
-        echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
-        NET=dhcp
-        echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
-        GATE=""
+	echo -e "${DGN}Using CT Password ${BGN}Automatic Login${CL}"
+	PW=" "
+	echo -e "${DGN}Using CT ID ${BGN}$NEXTID${CL}"
+	CT_ID=$NEXTID
+	echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
+	HN=$NSAPP
+	echo -e "${DGN}Using Disk Size ${BGN}8${CL}${DGN}GB${CL}"
+	DISK_SIZE="8"
+	echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
+	CORE_COUNT="2"
+	echo -e "${DGN}Using ${BGN}2048${CL}${DGN}MiB RAM${CL}"
+	RAM_SIZE="2048"
+	echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
+	BRG="vmbr0"
+	echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
+	NET=dhcp
+	echo -e "${DGN}Using Gateway Address ${BGN}NONE${CL}"
+	GATE=""
         echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
         VLAN=""
 }
