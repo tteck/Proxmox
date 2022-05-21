@@ -58,7 +58,7 @@ function select_storage() {
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
 
   if [ $((${#MENU[@]}/3)) -eq 0 ]; then            
-    warn "'$CONTENT_LABEL' needs to be selected for at least one storage location."
+    echo -e "'$CONTENT_LABEL' needs to be selected for at least one storage location."
     die "Unable to detect valid storage location."
   elif [ $((${#MENU[@]}/3)) -eq 1 ]; then          
     printf ${MENU[0]}
@@ -80,7 +80,7 @@ function select_storage() {
 [ "$CTID" -ge "100" ] || die "ID cannot be less than 100."
 
 if pct status $CTID &>/dev/null; then
-  warn "ID '$CTID' is already in use."
+  echo -e "ID '$CTID' is already in use."
   unset CTID
   die "Cannot use ID that is already in use."
 fi
