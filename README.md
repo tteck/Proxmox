@@ -190,13 +190,6 @@ Run in the LXC console
 ```yaml
 ./update
 ```
-⚙️ **Migrate to the latest Update Menu**
-
-Run in the LXC console
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/latest-update-menu.sh)"
-```
- 
 ____________________________________________________________________________________________ 
 </details>
 
