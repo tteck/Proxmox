@@ -72,7 +72,7 @@ apt-get -y install \
     ocl-icd-libopencl1 \
     beignet-opencl-icd &>/dev/null
     
-#/bin/chgrp video /dev/dri
+/bin/chgrp video /dev/dri
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
 msg_ok "Set Up Hardware Acceleration"  
