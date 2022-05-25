@@ -1474,7 +1474,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸File Browser</summary>
+<summary markdown="span"> File Browser</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/filebrowser.png?raw=true" height="100"/></p>
 
