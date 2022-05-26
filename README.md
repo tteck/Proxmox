@@ -1611,7 +1611,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Keycloak LXC</summary>
+<summary markdown="span"> Keycloak LXC</summary>
  
 <p align="center"><img src="https://www.keycloak.org/resources/images/keycloak_icon_512px.svg?raw=true" height="100"/></p>
 
