@@ -97,7 +97,7 @@ msg_info "Building Vaultwarden (Patience)"
 git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
 pushd vaultwarden &>/dev/null
 cargo clean &>/dev/null 
-cargo build --features sqlite --release &>/dev/null
+cargo build --features sqlite,mysql,postgresql --release &>/dev/null
 file target/release/vaultwarden &>/dev/null
 msg_ok "Built Vaultwarden"
 
