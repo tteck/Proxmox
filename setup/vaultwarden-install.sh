@@ -70,6 +70,10 @@ apt-get -qqy install \
     openssl \
     libssl1.1 \
     libssl-dev \
+    libmariadb-dev \
+    libmariadb-dev-compat \
+    libpq-dev \
+    pkg-config \
     curl \
     sudo &>/dev/null
 msg_ok "Installed Dependencies"
