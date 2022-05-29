@@ -1611,6 +1611,27 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸CrowdSec</summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/crowdsecurity/crowdsec-docs/main/crowdsec-docs/static/img/crowdsec_no_txt.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> CrowdSec</h1>
+
+To Install CrowdSec, ⚠️ run the following in the LXC console.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/crowdsec-v3.sh)"
+```
+
+[CrowdSec](https://crowdsec.net/) is a free, open-source and collaborative IPS. Analyze behaviors, respond to attacks & share signals across the community.
+
+[**Control center for your CrowdSec machines.**](https://app.crowdsec.net/product-tour)
+
+___________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Keycloak LXC</summary>
  
 <p align="center"><img src="https://www.keycloak.org/resources/images/keycloak_icon_512px.svg?raw=true" height="100"/></p>
