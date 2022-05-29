@@ -85,8 +85,8 @@ function default_settings() {
         CT_ID=$NEXTID
         echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
         HN=$NSAPP
-        echo -e "${DGN}Using Disk Size ${BGN}8${CL}${DGN}GB${CL}"
-        DISK_SIZE="8"
+        echo -e "${DGN}Using Disk Size ${BGN}6${CL}${DGN}GB${CL}"
+        DISK_SIZE="6"
         echo -e "${DGN}Using ${BGN}4${CL}${DGN}vCPU${CL}"
         CORE_COUNT="4"
         echo -e "${DGN}Using ${BGN}4096${CL}${DGN}MiB RAM${CL}"
@@ -164,9 +164,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 8 "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 6 "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="8"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="6"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}${DGN}GB${CL}"
 echo -e " ${CM}${CL} \r"
@@ -345,6 +345,11 @@ msg_ok "Started LXC Container"
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/vaultwarden-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
+
+msg_info "Setting Container to Normal Resources"
+pct set $CTID -memory 512
+pct set $CTID -cores 1
+msg_ok "Set Container to Normal Resources"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
