@@ -42,7 +42,7 @@ msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
-  1>&2 echo -en "${CROSS}${RD}  No Network! "
+  1>&2 echo -en "${CROSS}${RD} No Network! "
   sleep $RETRY_EVERY
   ((NUM--))
   if [ $NUM -eq 0 ]
@@ -51,8 +51,14 @@ while [ "$(hostname -I)" = "" ]; do
     exit 1
   fi
 done
-msg_ok "Set up Container OS"
+msg_ok "Setup Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
+
+if : >/dev/tcp/8.8.8.8/53; then
+  msg_ok "Internet Online"
+else
+  echo -e "${BFR} ${CROSS}${RD} Internet Offline"
+fi
 
 msg_info "Updating Container OS"
 apt update &>/dev/null
@@ -63,69 +69,63 @@ msg_info "Installing Dependencies"
 apt-get update &>/dev/null
 apt-get -qqy install \
     git \
-    nano \
-    wget \
-    htop \
-    pkg-config \
-    openssl \
-    libssl1.1 \
+    build-essential \
+    pkgconf \
     libssl-dev \
+    libmariadb-dev-compat \
+    libpq-dev \
     curl \
     sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Build Essentials"
-apt-get install -y build-essential &>/dev/null
-msg_ok "Installed Build Essentials"
+WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 2, length($2)-3) }') \
+
+VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 2, length($2)-3) }') \
 
 msg_info "Installing Rust"
-curl https://sh.rustup.rs -sSf | sh -s -- -y &>/dev/null
+curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal &>/dev/null
 echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
 export PATH=~/.cargo/bin:$PATH &>/dev/null
 which rustc &>/dev/null
 msg_ok "Installed Rust"
 
-msg_info "Installing Node.js"
-curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &>/dev/null
-apt-get install -y nodejs &>/dev/null
-npm -g install npm@7 &>/dev/null
-which npm &>/dev/null
-npm i npm@latest -g &>/dev/null
-msg_ok "Installed Node.js"
-
-msg_info "Building Vaultwarden (Patience)"
+msg_info "Building Vaultwarden ${VAULT} (Patience)"
 git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
-pushd vaultwarden &>/dev/null
-cargo clean &>/dev/null 
-cargo build --features sqlite --release &>/dev/null
-file target/release/vaultwarden &>/dev/null
-msg_ok "Built Vaultwarden"
+cd vaultwarden
+cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
+msg_ok "Built Vaultwarden ${VAULT}"
 
-msg_info "Building Web-Vault"
-pushd target/release/ &>/dev/null
-git clone --recurse-submodules https://github.com/bitwarden/web.git web-vault.git &>/dev/null
-cd web-vault.git &>/dev/null
-git checkout v2.25.1 &>/dev/null
-git submodule update --init --recursive &>/dev/null
-wget https://raw.githubusercontent.com/dani-garcia/bw_web_builds/master/patches/v2.25.0.patch &>/dev/null
-git apply v2.25.0.patch &>/dev/null
-npm ci --silent --legacy-peer-deps &>/dev/null
-npm audit fix --silent --legacy-peer-deps || true &>/dev/null
-npm run --silent dist:oss:selfhost &>/dev/null
-cp -a build ../web-vault &>/dev/null
-cd ..
-mkdir data 
-msg_ok "Built Web-Vault"
+addgroup --system vaultwarden &>/dev/null
+adduser --system --home /opt/vaultwarden --shell /usr/sbin/nologin --no-create-home --gecos 'vaultwarden' --ingroup vaultwarden --disabled-login --disabled-password vaultwarden &>/dev/null
+mkdir -p /opt/vaultwarden/bin
+mkdir -p /opt/vaultwarden/data
+cp target/release/vaultwarden /opt/vaultwarden/bin/
+
+msg_info "Downloading Web-Vault ${WEBVAULT}"
+wget https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz &>/dev/null
+tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/ &>/dev/null
+rm -f bw_web_$WEBVAULT.tar.gz
+msg_ok "Downloaded Web-Vault ${WEBVAULT}"
+
+cat <<EOF > /opt/vaultwarden/.env
+## https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
+ROCKET_ADDRESS=0.0.0.0
+DATA_FOLDER=/opt/vaultwarden/data
+DATABASE_MAX_CONNS=10
+WEB_VAULT_FOLDER=/opt/vaultwarden/web-vault
+WEB_VAULT_ENABLED=true
+EOF
 
 msg_info "Creating Service"
-cp ../../.env.template /etc/vaultwarden.env &>/dev/null
-cp vaultwarden /usr/bin/vaultwarden &>/dev/null
-chmod +x /usr/bin/vaultwarden &>/dev/null
-useradd -m -d /var/lib/vaultwarden vaultwarden &>/dev/null
-sudo cp -R data /var/lib/vaultwarden/ &>/dev/null
-cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
-chown -R vaultwarden:vaultwarden /var/lib/vaultwarden &>/dev/null
-
+chown -R vaultwarden:vaultwarden /opt/vaultwarden/
+chown root:root /opt/vaultwarden/bin/vaultwarden
+chmod +x /opt/vaultwarden/bin/vaultwarden
+chown -R root:root /opt/vaultwarden/web-vault/
+chmod +r /opt/vaultwarden/.env
 service_path="/etc/systemd/system/vaultwarden.service" &>/dev/null
 
 echo "[Unit]
@@ -135,21 +135,29 @@ After=network.target
 [Service]
 User=vaultwarden
 Group=vaultwarden
-EnvironmentFile=/etc/vaultwarden.env
-ExecStart=/usr/bin/vaultwarden
-LimitNOFILE=1048576
+EnvironmentFile=-/opt/vaultwarden/.env
+ExecStart=/opt/vaultwarden/bin/vaultwarden
+LimitNOFILE=65535
+LimitNPROC=4096
 PrivateTmp=true
 PrivateDevices=true
 ProtectHome=true
 ProtectSystem=strict
-WorkingDirectory=/var/lib/vaultwarden
-ReadWriteDirectories=/var/lib/vaultwarden
+DevicePolicy=closed
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+MemoryDenyWriteExecute=yes
+LockPersonality=yes
+WorkingDirectory=/opt/vaultwarden
+ReadWriteDirectories=/opt/vaultwarden/data
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 [Install]
 WantedBy=multi-user.target" > $service_path
 systemctl daemon-reload
-systemctl enable vaultwarden.service &>/dev/null
-systemctl start vaultwarden.service &>/dev/null
+systemctl enable --now vaultwarden.service &>/dev/null
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
