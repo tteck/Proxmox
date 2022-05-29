@@ -107,7 +107,7 @@ cp target/release/vaultwarden /opt/vaultwarden/bin/
 
 msg_info "Downloading Web-Vault ${WEBVAULT}"
 #wget https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz &>/dev/null
-curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
+curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz &>/dev/null
 tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/ &>/dev/null
 #rm -f bw_web_$WEBVAULT.tar.gz
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
