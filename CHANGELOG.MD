@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
 
 - **Vaultwarden LXC**
   - Code refactoring
+- **CrowdSec**
+  - NEW Script.
 
 ## 2022-05-21
 
