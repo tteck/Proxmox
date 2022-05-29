@@ -1661,22 +1661,20 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Vaultwarden LXC </h1>
 
+Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream [Bitwarden clients](https://bitwarden.com/download/), perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+ 
 To create a new Proxmox Vaultwarden LXC, run the following in the Proxmox Shell.
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/vaultwarden-v3.sh)"
 ```
 ⚠️ Vaultwarden needs to be behind a proxy (Nginx Proxy Manager) to obtain HTTPS and to allow clients to connect.
- 
-⚠️ If you find the Vaultwarden Interface unreachable,  `nano /etc/vaultwarden.env` and uncomment `ROCKET_ADDRESS=0.0.0.0` and reboot
 
-It builds from source, which takes time and resources. After the installation, resources can be set to Normal Settings. 
+The script builds from source, which takes time and resources. After the build, the script will automatically set resources to Normal Settings. 
 
 Expect 30+ minute install time.
-<h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 8GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 6GB Storage - 1vCPU ⚡</h3>
 
-[Clients](https://bitwarden.com/download/)
- 
 **Vaultwarden Interface - IP:8000**
 
 ⚙️ **To Update Vaultwarden**
