@@ -35,13 +35,12 @@ systemctl stop vaultwarden.service
 sleep 1
 
 echo -e "${GN} Updating to ${VWRELEASE}... ${CL}"
-wget https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
-tar -xzf bw_web_$VWRELEASE.tar.gz &>/dev/null
-cp -R web-vault /var/lib/vaultwarden/ &>/dev/null
-
-echo -e "${GN} Cleanup... ${CL}"
-rm -r bw_web_$VWRELEASE.tar.gz web-vault
-sleep 2
+curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
+if [ -d "/var/lib/vaultwarden" ]; then
+tar -xzf bw_web_$VWRELEASE.tar.gz -C /var/lib/vaultwarden/ &>/dev/null
+else 
+tar -zxf bw_web_$VWRELEASE.tar.gz -C /opt/vaultwarden/ &>/dev/null
+fi
 
 echo -e "${GN} Starting Vaultwarden... ${CL}"
 systemctl start vaultwarden.service
