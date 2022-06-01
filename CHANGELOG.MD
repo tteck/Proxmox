@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-06-01
+
+### Changed
+
+- **CrowdSec**
+  - Removed until CrowdSec/packagecloud resolves issues
+
 ## 2022-05-29
 
 ### Changed
