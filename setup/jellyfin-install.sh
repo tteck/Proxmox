@@ -64,6 +64,7 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y apt-transport-https &>/dev/null
 apt-get install -y software-properties-common &>/dev/null
+apt-get install -y ffmpeg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting Up Hardware Acceleration"  
