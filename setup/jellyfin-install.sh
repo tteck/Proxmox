@@ -86,6 +86,7 @@ msg_ok "Set Up Jellyfin Repository"
 msg_info "Installing Jellyfin"
 apt-get update &>/dev/null
 sudo apt install jellyfin-server -y &>/dev/null
+apt install jellyfin-ffmpeg -y &>/dev/null
 msg_ok "Installed Jellyfin"
 
 msg_info "Creating Service"
