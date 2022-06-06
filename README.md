@@ -1304,6 +1304,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Whoogle LXC </summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/whoogle.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Whoogle LXC </h1>
+
+Get Google search results, but without any ads, javascript, AMP links, cookies, or IP address tracking.
+
+To create a new Proxmox Whoogle LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/whoogle-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**Whoogle Interface - IP:5000**
+
+⚙️ **To Update Whoogle**
+
+Run in the LXC console
+```yaml
+pip3 install whoogle-search --upgrade
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
