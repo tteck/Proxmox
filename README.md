@@ -1297,7 +1297,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma-v
 
 Run in the LXC console
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/uptimekuma-update.sh)"
+
 ```
 ____________________________________________________________________________________________ 
 
