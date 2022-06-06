@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ### ⚠️ [IMPORTANT NOTICE](https://github.com/tteck/Proxmox/issues/71#issue-1169207591)
 
+## 2022-06-06
+
+### Changed
+
+- **Whoogle LXC**
+  - NEW Script
+
 ## 2022-05-29
 
 ### Changed
@@ -12,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - **Vaultwarden LXC**
   - Code refactoring
 - **CrowdSec**
-  - NEW Script.
+  - NEW Script
 
 ## 2022-05-21
 
@@ -26,49 +33,49 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Keycloak LXC**
-  - NEW Script.
+  - NEW Script
 
 ## 2022-05-18
 
 ### Changed
 
 - **File Browser**
-  - NEW Script.
+  - NEW Script
 
 ## 2022-05-13
 
 ### Changed
 
 - **PostgreSQL LXC**
-  - NEW Script.
+  - NEW Script
 
 ## 2022-05-10
 
 ### Changed
 
 - **deCONZ LXC**
-  - NEW Script.
+  - NEW Script
 
 ## 2022-05-07
 
 ### Changed
 
 - **NocoDB LXC**
-  - ADD update script.
+  - ADD update script
 
 ## 2022-05-06
 
 ### Changed
 
 - **PhotoPrism LXC**
-  - ADD GO Dependencies for full functionality.
+  - ADD GO Dependencies for full functionality
 
 ## 2022-05-05
 
 ### Changed
 
 - **Ubuntu LXC**
-  - ADD option to define version (18.04 20.04 21.10 22.04).
+  - ADD option to define version (18.04 20.04 21.10 22.04)
 
 ## 2022-04-28
 
