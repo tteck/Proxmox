@@ -106,6 +106,7 @@ msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
 cat <<EOF > /opt/vaultwarden/.env
 ## https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
+# ADMIN_TOKEN=Vy2VyYTTsKPv8W5aEOWUbB/Bt3DEKePbHmI4m9VcemUMS2rEviDowNAFqYi1xjmp
 ROCKET_ADDRESS=0.0.0.0
 DATA_FOLDER=/opt/vaultwarden/data
 DATABASE_MAX_CONNS=10
