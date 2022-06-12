@@ -1727,6 +1727,11 @@ Expect 30+ minute install time.
 
 **Vaultwarden Interface - IP:8000**
 
+⚙️ **Path to Vaultwarden .env file** (to enable `ADMIN_TOKEN`)
+```yaml
+/opt/vaultwarden/.env
+```
+ 
 ⚙️ **To Update Vaultwarden**
 
 Run in the LXC console
