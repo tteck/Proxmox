@@ -1304,7 +1304,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Whoogle LXC </summary>
+<summary markdown="span"> Whoogle LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/whoogle.png?raw=true" height="100"/></p>
 
