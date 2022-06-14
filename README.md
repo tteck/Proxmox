@@ -1289,7 +1289,7 @@ To create a new Proxmox Uptime Kuma LXC, run the following in the Proxmox Shell.
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/uptimekuma-v3.sh)"
 ```
 
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 **Uptime Kuma Interface - IP:3001**
 
