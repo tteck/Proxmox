@@ -91,8 +91,8 @@ function default_settings() {
         DISK_SIZE="4"
         echo -e "${DGN}Using ${BGN}1${CL}${DGN}vCPU${CL}"
         CORE_COUNT="1"
-        echo -e "${DGN}Using ${BGN}512${CL}${DGN}MiB RAM${CL}"
-        RAM_SIZE="512"
+        echo -e "${DGN}Using ${BGN}1024${CL}${DGN}MiB RAM${CL}"
+        RAM_SIZE="1024"
         echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
         BRG="vmbr0"
         echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
@@ -196,9 +196,9 @@ header_info
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 512 "
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 1024 "
         read RAM_SIZE
-        if [ -z $RAM_SIZE ]; then RAM_SIZE="512"; fi;
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="1024"; fi;
         echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}${DGN}MiB RAM${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
