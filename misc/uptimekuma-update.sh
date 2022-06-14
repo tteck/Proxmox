@@ -1,4 +1,5 @@
 #!/usr/bin/env bash -ex
+LATEST=$(curl -sL https://api.github.com/repos/louislam/uptime-kuma/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -11,7 +12,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 APP="Uptime Kuma"
 while true; do
-    read -p "This will Update ${APP} LXC. Proceed(y/n)?" yn
+    read -p "This will Update ${APP} to ${LATEST}. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -45,24 +46,24 @@ function msg_ok() {
 }
 
 
-msg_info "Stopping Uptime Kuma"
+msg_info "Stopping ${APP}"
 sudo systemctl stop uptime-kuma &>/dev/null
-msg_ok "Stopped Uptime Kuma"
+msg_ok "Stopped ${APP}"
 
 cd /opt/uptime-kuma
 
-msg_info "Pulling Uptime Kuma"
+msg_info "Pulling ${APP} ${LATEST}"
 git fetch &>/dev/null
-git checkout master &>/dev/null
+git checkout $LATEST &>/dev/null
 git pull &>/dev/null
-msg_ok "Pulled Uptime Kuma"
+msg_ok "Pulled ${APP} ${LATEST}"
 
-msg_info "Updating Uptime Kuma (Patience)"
+msg_info "Updating ${APP} to ${LATEST} (Patience)"
 npm ci &>/dev/null
-msg_ok "Updated Uptime Kuma"
+msg_ok "Updated ${APP}"
 
-msg_info "Starting Uptime Kuma"
+msg_info "Starting ${APP}"
 sudo systemctl start uptime-kuma &>/dev/null
-msg_ok "Started Uptime Kuma"
+msg_ok "Started ${APP}"
 
 msg_ok "Done!"
