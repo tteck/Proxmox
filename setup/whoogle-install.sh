@@ -73,7 +73,7 @@ pip install whoogle-search &>/dev/null
 
 service_path="/etc/systemd/system/whoogle.service"
 echo "[Unit]
-Description=ESPHome Dashboard
+Description=Whoogle-Search
 After=network.target
 [Service]
 ExecStart=/usr/local/bin/whoogle-search --host 0.0.0.0
