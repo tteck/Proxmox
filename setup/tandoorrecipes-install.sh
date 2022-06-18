@@ -60,99 +60,110 @@ apt-get -qqy upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
-apt-get update &>/dev/null
 apt-get -qqy install \
     git \
-    build-essential \
-    pkgconf \
-    libssl-dev \
-    libmariadb-dev-compat \
-    libpq-dev \
+    python3 \
+    python3-pip \
+    python3-venv \
+    nginx \
     curl \
+    libpq-dev \
+    postgresql \
+    libsasl2-dev \
+    python3-dev \
+    libldap2-dev \
+    libssl-dev \
     sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+msg_info "Cloning & Preparation of Recipes"
+git clone https://github.com/vabene1111/recipes.git -b master
+mv recipes /var/www
+cd /var/www/recipes
+sudo useradd recipes
+chown -R recipes:www-data /var/www/recipes
+python3 -m venv /var/www/recipes
+msg_ok "Cloning & Preparation done"
 
-VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+msg_ok "Installing NodeJS"
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt install -y nodejs
+msg_ok "Installed NodeJS"
 
-msg_info "Installing Rust"
-curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal &>/dev/null
-echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
-export PATH=~/.cargo/bin:$PATH &>/dev/null
-which rustc &>/dev/null
-msg_ok "Installed Rust"
+msg_ok "Installing Project Requirements"
+/var/www/recipes/bin/pip3 install -r requirements.txt
+cd ./vue
+yarn install
+yarn build
+msg_ok "Installed Project Requirements"
 
-msg_info "Building Vaultwarden ${VAULT} (Patience)"
-git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
-cd vaultwarden
-cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
-msg_ok "Built Vaultwarden ${VAULT}"
+msg_ok "Setup Database started"
+sudo -u postgres psql
+PWDJANGO=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 23 ; echo '')
+CREATE DATABASE djangodb;
+CREATE USER djangouser WITH PASSWORD '$PWDJANGO';
+GRANT ALL PRIVILEGES ON DATABASE djangodb TO djangouser;
+ALTER DATABASE djangodb OWNER TO djangouser;
+ALTER ROLE djangouser SET client_encoding TO 'utf8';
+ALTER ROLE djangouser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE djangouser SET timezone TO 'UTC';
+ALTER USER djangouser WITH SUPERUSER;
+exit
+msg_ok "Setup Database finished"
 
-addgroup --system vaultwarden &>/dev/null
-adduser --system --home /opt/vaultwarden --shell /usr/sbin/nologin --no-create-home --gecos 'vaultwarden' --ingroup vaultwarden --disabled-login --disabled-password vaultwarden &>/dev/null
-mkdir -p /opt/vaultwarden/bin
-mkdir -p /opt/vaultwarden/data
-cp target/release/vaultwarden /opt/vaultwarden/bin/
-
-msg_info "Downloading Web-Vault ${WEBVAULT}"
-curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz &>/dev/null
-tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/ &>/dev/null
-msg_ok "Downloaded Web-Vault ${WEBVAULT}"
-
-cat <<EOF > /opt/vaultwarden/.env
-## https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
-# ADMIN_TOKEN=Vy2VyYTTsKPv8W5aEOWUbB/Bt3DEKePbHmI4m9VcemUMS2rEviDowNAFqYi1xjmp
-ROCKET_ADDRESS=0.0.0.0
-DATA_FOLDER=/opt/vaultwarden/data
-DATABASE_MAX_CONNS=10
-WEB_VAULT_FOLDER=/opt/vaultwarden/web-vault
-WEB_VAULT_ENABLED=true
-EOF
+msg_ok "Setup .env started"
+wget https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O /var/www/recipes/.env
+SECRETKEY=$(base64 /dev/urandom | head -c50)
+msg_ok "Setup .env finished"
 
 msg_info "Creating Service"
-chown -R vaultwarden:vaultwarden /opt/vaultwarden/
-chown root:root /opt/vaultwarden/bin/vaultwarden
-chmod +x /opt/vaultwarden/bin/vaultwarden
-chown -R root:root /opt/vaultwarden/web-vault/
-chmod +r /opt/vaultwarden/.env
-service_path="/etc/systemd/system/vaultwarden.service" &>/dev/null
+service_path="/etc/systemd/system/gunicorn_recipes.service" &>/dev/null
 
 echo "[Unit]
-Description=Bitwarden Server (Powered by Vaultwarden)
-Documentation=https://github.com/dani-garcia/vaultwarden
+Description=gunicorn daemon for recipes
 After=network.target
+
 [Service]
-User=vaultwarden
-Group=vaultwarden
-EnvironmentFile=-/opt/vaultwarden/.env
-ExecStart=/opt/vaultwarden/bin/vaultwarden
-LimitNOFILE=65535
-LimitNPROC=4096
-PrivateTmp=true
-PrivateDevices=true
-ProtectHome=true
-ProtectSystem=strict
-DevicePolicy=closed
-ProtectControlGroups=yes
-ProtectKernelModules=yes
-ProtectKernelTunables=yes
-RestrictNamespaces=yes
-RestrictRealtime=yes
-MemoryDenyWriteExecute=yes
-LockPersonality=yes
-WorkingDirectory=/opt/vaultwarden
-ReadWriteDirectories=/opt/vaultwarden/data
-AmbientCapabilities=CAP_NET_BIND_SERVICE
+Type=simple
+Restart=always
+RestartSec=3
+User=recipes
+Group=www-data
+WorkingDirectory=/var/www/recipes
+EnvironmentFile=/var/www/recipes/.env
+ExecStart=/var/www/recipes/bin/gunicorn --error-logfile /tmp/gunicorn_err.log --log-level debug --capture-output --bind unix:/var/www/recipes/recipes.sock recipes.wsgi:application
+
 [Install]
 WantedBy=multi-user.target" > $service_path
 systemctl daemon-reload
-systemctl enable --now vaultwarden.service &>/dev/null
+systemctl enable --now gunicorn_recipes.service &>/dev/null
 msg_ok "Created Service"
+
+msg_ok "Creating NGINX Config"
+nginxconfig_path="/etc/nginx/conf.d/recipes.conf" &>/dev/null
+
+echo "server {
+    listen 8002;
+    #access_log /var/log/nginx/access.log;
+    #error_log /var/log/nginx/error.log;
+
+    # serve media files
+    location /static {
+        alias /var/www/recipes/staticfiles;
+    }
+    
+    location /media {
+        alias /var/www/recipes/mediafiles;
+    }
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_pass http://unix:/var/www/recipes/recipes.sock;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}" > $nginxconfig_path
+systemctl reload nginx
+msg_ok "Created NGINX Config"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
@@ -173,7 +184,7 @@ msg_ok "Customized Container"
   fi
   
 msg_info "Cleaning up"
-apt-get autoremove >/dev/null
+apt-get autoremove -y >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 msg_ok "Cleaned"
