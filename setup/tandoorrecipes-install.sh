@@ -11,9 +11,9 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
-set -o errexit
-set -o errtrace
-set -o nounset
+#set -o errexit
+#set -o errtrace
+#set -o nounset
 set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
