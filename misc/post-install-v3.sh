@@ -103,5 +103,10 @@ echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxli
 apt --reinstall install proxmox-widget-toolkit &>/dev/null
 msg_ok "Disabled Subscription Nag"
 fi
-msg_ok "Finished....Please Update Proxmox"
+
+msg_info "Updating Proxmox"
+sleep 2
+apt-get update
+apt-get dist-upgrade
+msg_ok "Finished"
 
