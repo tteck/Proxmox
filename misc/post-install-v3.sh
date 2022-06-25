@@ -104,9 +104,14 @@ apt --reinstall install proxmox-widget-toolkit &>/dev/null
 msg_ok "Disabled Subscription Nag"
 fi
 
-msg_info "Updating Proxmox"
-sleep 2
-apt-get update
-apt-get dist-upgrade
-msg_ok "Finished"
+read -r -p "Update Proxmox VE 7 now? <Y/n> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Updating Proxmox VE 7"
+apt-get update &>/dev/null
+apt-get -y dist-upgrade &>/dev/null
+msg_ok "Updated Proxmox VE 7"
+fi
 
+sleep 2
+msg_ok "Finished Post Install Routines"
