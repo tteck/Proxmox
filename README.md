@@ -690,8 +690,11 @@ Then type exit to get back to root
 
 Change the recorder: `db_url:` in your HA configuration.yaml
  
-Example: `db_url: postgresql://admin:your-password@192.168.100.20:5432/homeassistant?client_encoding=utf8`
- 
+Example:
+```yaml
+recorder:
+  db_url: postgresql://admin:your-password@192.168.100.20:5432/homeassistant?client_encoding=utf8
+``` 
 ⚙️ **To Update PostgreSQL**
 
 Run in the LXC console
