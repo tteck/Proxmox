@@ -62,14 +62,18 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
+apt-get install -y git &>/dev/null
+apt-get install -y make &>/dev/null
+apt-get install -y g++ &>/dev/null
+apt-get install -y gcc &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
-sudo curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - &>/dev/null
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
-apt-get install -y nodejs npm git make g++ gcc &>/dev/null
+apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
  
 msg_info "Setting up Zigbee2MQTT Repository"
