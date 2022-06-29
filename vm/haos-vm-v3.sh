@@ -287,7 +287,7 @@ elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
 else
   while [ -z "${STORAGE:+x}" ]; do
     STORAGE=$(whiptail --title "Storage Pools" --radiolist \
-    "Which storage pool you would like to use for the container?\n\n" \
+    "Which storage pool you would like to use for the HAOS VM?\n\n" \
     16 $(($MSG_MAX_LENGTH + 23)) 6 \
     "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
@@ -309,6 +309,7 @@ case $STORAGE_TYPE in
   btrfs|nfs|dir)
         DISK_EXT=".qcow2"
         DISK_REF="$VMID/"
+        DIR_IMPORT="-format qcow2"
 esac
 for i in {0,1}; do
   disk="DISK$i"
@@ -321,12 +322,13 @@ msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
-qm importdisk $VMID ${FILE%.*} $STORAGE 1>&/dev/null
+qm importdisk $VMID ${FILE%.*} $STORAGE ${DIR_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},size=128K \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
+
 msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 if [ "$START_VM" == "yes" ]; then
