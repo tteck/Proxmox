@@ -69,11 +69,11 @@ sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
-sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
+sudo apt-get install -y nodejs npm git make g++ gcc &>/dev/null
 msg_ok "Installed Node.js"
  
 msg_info "Setting up Zigbee2MQTT Repository"
-sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
+sudo git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
 msg_ok "Set up Zigbee2MQTT Repository"
 
 msg_info "Installing Zigbee2MQTT"
