@@ -65,11 +65,11 @@ apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
-sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
+sudo curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
-sudo apt-get install -y nodejs npm git make g++ gcc &>/dev/null
+apt-get install -y nodejs npm git make g++ gcc &>/dev/null
 msg_ok "Installed Node.js"
  
 msg_info "Setting up Zigbee2MQTT Repository"
