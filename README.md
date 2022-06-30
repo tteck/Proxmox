@@ -881,6 +881,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Prometheus LXC </summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/prome.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Prometheus LXC </h1>
+
+[Prometheus](https://prometheus.io/) is an open-source systems monitoring and alerting toolkit
+
+To create a new Proxmox Prometheus LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/prometheus-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  12GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+
+**Prometheus Interface - IP:9090**
+
+⚙️ **To Update Prometheus**
+
+```yaml
+Working On
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> InfluxDB/Telegraf LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
