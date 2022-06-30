@@ -61,12 +61,13 @@ msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
 apt-get update &>/dev/null
-apt-get -qqy install \
+apt-get -y install \
     sudo \
     curl \
-    wget \
     gnupg \
-    openssl \
+    make \
+    g++ \
+    gcc \
     ca-certificates \
     apache2-utils \
     logrotate \
@@ -76,7 +77,7 @@ apt-get -qqy install \
     lsb-release &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Python"
   apt-get install -y -q --no-install-recommends python3 python3-pip python3-venv &>/dev/null
   pip3 install --upgrade setuptools &>/dev/null
   pip3 install --upgrade pip &>/dev/null
@@ -85,7 +86,7 @@ msg_info "Installing Dependencies"
     python3 -m pip install --no-cache-dir -U cryptography==3.3.2 &>/dev/null
   fi
   python3 -m pip install --no-cache-dir cffi certbot &>/dev/null
-msg_ok "Installed Dependencies"
+msg_ok "Installed Python"
 
 msg_info "Installing Openresty"
 wget -q -O - https://openresty.org/package/pubkey.gpg | apt-key add - &>/dev/null
@@ -96,11 +97,11 @@ apt-get -y install --no-install-recommends openresty &>/dev/null
 msg_ok "Installed Openresty"
 
 msg_info "Setting up Node.js Repository"
-sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
+curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
-sudo apt-get install -y nodejs git make g++ gcc &>/dev/null
+apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
  
 msg_info "Installing Yarn"
