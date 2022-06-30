@@ -895,7 +895,7 @@ To create a new Proxmox Prometheus LXC, run the following in the Proxmox Shell.
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/prometheus-v3.sh)"
 ```
 
-<h3 align="center" id="heading">⚡ Default Settings:  12GB RAM - 4GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 4GB Storage - 1vCPU ⚡</h3>
 
 **Prometheus Interface - IP:9090**
 
