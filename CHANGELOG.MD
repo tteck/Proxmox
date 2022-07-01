@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Home Assistant OS VM**
-  - Fixed to use different storage types.
+  - Allow different storage types.
 
 ## 2022-06-30
 
