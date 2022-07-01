@@ -293,7 +293,7 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
-msg_ok "Container ID is ${CL}${BL}$VMID${CL}."
+msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
 URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 msg_ok "Found URL for Home Assistant ${BRANCH} Disk Image"
