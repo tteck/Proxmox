@@ -321,10 +321,10 @@ msg_ok "Extracted Disk Image"
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 528 1>&/dev/null
+pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DIR_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF},efitype=4m,size=528K \
+  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
