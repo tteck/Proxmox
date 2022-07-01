@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-07-01
+
+### Changed
+
+- **Home Assistant OS VM**
+  - Fixed to use different storage types.
+
 ## 2022-06-30
 
 ### Changed
