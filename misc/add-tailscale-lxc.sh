@@ -45,5 +45,5 @@ lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
 EOF
 
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/add-tailscale-install.sh)" || exit
-
+# lxc-attach -n $CTID -- bash -c "$(curl -fsSL https://tailscale.com/install.sh)" || exit
 msg "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
