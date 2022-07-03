@@ -1674,6 +1674,34 @@ apt update && apt upgrade -y
 ____________________________________________________________________________________________ 
 
 </details>
+<details>
+<summary markdown="span"> 🔸Tailscale</summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/48932923?v=4&s=100"/></p>
+
+<h1 align="center" id="heading"> Tailscale</h1>
+
+[Tailscale](https://tailscale.com/) Creates a secure network between your servers, computers, and cloud instances. Even when separated by firewalls or subnets, Tailscale just works.
+
+To Install Talescale on an existing LXC, run the following in the Proxmox Shell (replace `106` with your LXC ID).
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/add-tailscale-lxc.sh)" -s 106
+```
+After the script finishes, reboot the LXC then run `tailscale up` in the LXC console
+
+[**Tailscale Login**](https://login.tailscale.com/start)
+
+⚙️ **To Update Tailscale**
+ 
+Run in the LXC console
+ ```yaml
+apt update && apt upgrade -y
+```
+
+___________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span"> CrowdSec</summary>
