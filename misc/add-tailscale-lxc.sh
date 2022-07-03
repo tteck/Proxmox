@@ -49,4 +49,4 @@ lxc-attach -n $CTID -- bash -c "$(curl -fsSL https://tailscale.com/install.sh)" 
 msg "⌛ Installed Tailscale"
 sleep 2
 msg "\e[1;32m ✔ Completed Successfully!\e[0m"
-msg "Reboot ${CTID} LXC to apply the changes, then run tailscale up in the LXC console"
+msg "\e[1;31m Reboot ${CTID} LXC to apply the changes, then run tailscale up in the LXC console\e[0m"
