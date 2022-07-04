@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo -e "\e[1;33m This script will add Tailscale to an existing LXC Container ONLY\e[0m"
+echo -e "\e[1;33mThis script will add Tailscale to an existing LXC Container ONLY\e[0m"
 while true; do
     read -p "Did you replace 106 with your LXC ID? Proceed(y/n)?" yn
     case $yn in
@@ -16,26 +16,19 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-trap cleanup EXIT
 
 function error_exit() {
   trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="\e[1;31m‼ ERROR\e[0m $EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
   exit $EXIT
 }
 function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
 
 CTID=$1
 CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
