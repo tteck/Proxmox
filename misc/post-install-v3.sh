@@ -113,5 +113,13 @@ apt-get -y dist-upgrade &>/dev/null
 msg_ok "Updated Proxmox VE 7"
 fi
 
+read -r -p "Enable dark theme for the Proxmox Web UI? <Y/n> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Enabling UI dark theme"
+bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
+msg_ok "Web UI dark theme enabled"
+fi
+
 sleep 2
 msg_ok "Finished Post Install Routines"
