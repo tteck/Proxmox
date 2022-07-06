@@ -1215,6 +1215,8 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/jellyfin-v3.
 
 **Jellyfin Media Server Interface - IP:8096**
 
+FFmpeg path: `/usr/lib/jellyfin-ffmpeg/ffmpeg`
+
 ⚙️ **To Update Jellyfin Media Server**
 
 Run in the LXC console
