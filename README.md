@@ -18,7 +18,7 @@ Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-install-v3.sh)"
 ```
 
-It's recommended to update Proxmox after running this script, before adding any VM/CT.
+It's recommended to answer `y` to all options.
 
 ____________________________________________________________________________________________ 
 
