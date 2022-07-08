@@ -295,6 +295,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸openHAB LXC</summary>
+ 
+<p align="center"><img src="https://www.openhab.org/openhab-logo-square.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> openHAB LXC </h1>
+ 
+[openHAB](https://www.openhab.org/), a vendor and technology agnostic open source automation software for your home.
+ 
+To create a new Proxmox openHAB LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/openhab-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+**openHAB Interface - IP:8080**
+
+⚙️ **To Update openHAB**
+
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+ 
+</details>
+
+<details>
 <summary markdown="span"> Homebridge LXC</summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
