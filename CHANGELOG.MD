@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-07-08
+
+### Changed
+
+- **openHAB LXC**
+  - NEW Script
+
 ## 2022-07-03
 
 ### Changed
