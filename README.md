@@ -1710,7 +1710,7 @@ ________________________________________________________________________________
 
 </details>
 <details>
-<summary markdown="span"> 🔸Tailscale</summary>
+<summary markdown="span"> Tailscale</summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/48932923?v=4&s=100"/></p>
 
