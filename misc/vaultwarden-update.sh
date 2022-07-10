@@ -42,6 +42,9 @@ else
 tar -zxf bw_web_$VWRELEASE.tar.gz -C /opt/vaultwarden/ &>/dev/null
 fi
 
+echo -e "${GN} Cleaning up... ${CL}"
+rm bw_web_$VWRELEASE.tar.gz
+
 echo -e "${GN} Starting Vaultwarden... ${CL}"
 systemctl start vaultwarden.service
 sleep 1
