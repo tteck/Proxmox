@@ -1035,7 +1035,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/docker-v3.sh
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-**⚠ Run Compose V2 by replacing the hyphen (-) with a space, using docker compose, instead of docker-compose.**
+**⚠ You run Compose V2 by replacing the hyphen (-) with a space, using docker compose, instead of docker-compose.**
 
 **Portainer Interface - IP:9000**
 
