@@ -329,7 +329,8 @@ ________________________________________________________________________________
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.dingz.ch%2Fadmin%2Fdata%2Ffiles%2Fintegration%2Flogo%2F20%2F200514-em-logo-homebridge_logo.png%3Flm%3D1589459081&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> Homebridge LXC </h1>
-Homebridge allows you to integrate with smart home devices that do not natively support HomeKit
+
+[Homebridge](https://homebridge.io/) allows you to integrate with smart home devices that do not natively support HomeKit
 
 To create a new Proxmox Homebridge LXC, run the following in the Proxmox Shell.
 
@@ -386,6 +387,8 @@ Update from the Homebridge UI
 
 <h1 align="center" id="heading"> ESPHome LXC </h1>
 
+[ESPHome](https://esphome.io/) is a system to control your ESP8266/ESP32 by simple yet powerful configuration files and control them remotely through Home Automation systems.
+
 To create a new Proxmox ESPHome LXC, run the following in the Proxmox Shell.
 
 ```yaml
@@ -416,6 +419,8 @@ ________________________________________________________________________________
 
 
 <h1 align="center" id="heading"> Nginx Proxy Manager LXC </h1>
+
+[Nginx Proxy Manager](https://nginxproxymanager.com/) Expose your services easily and securely
 
 To create a new Proxmox Nginx Proxy Manager LXC Container, run the following in the Proxmox Shell.
 
@@ -464,8 +469,9 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/npm_update
  
 <p align="center"><img src="https://mosquitto.org/images/mosquitto-text-side-28.png" height="75"/></p>
 
-
 <h1 align="center" id="heading"> MQTT LXC </h1>
+
+[Eclipse Mosquitto](https://mosquitto.org/) is an open source message broker that implements the MQTT protocol
 
 To create a new Proxmox MQTT LXC, run the following in the Proxmox Shell.
 
@@ -517,6 +523,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Node-Red LXC </h1>
  
+[Node-RED](https://nodered.org/) is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways. It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
 
 To create a new Proxmox Node-RED LXC, run the following in the Proxmox Shell.
 
@@ -559,6 +566,8 @@ ________________________________________________________________________________
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
 
 <h1 align="center" id="heading"> Mariadb LXC </h1>
+
+[MariaDB](https://mariadb.org/) is a community-developed, commercially supported fork of the MySQL relational database management system.
 
 To create a new Proxmox Mariadb LXC, run the following in the Proxmox Shell.
  
@@ -675,6 +684,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> PostgreSQL LXC </h1>
 
+[PostgreSQL](https://www.postgresql.org/), also known as Postgres, is a free and open-source relational database management system emphasizing extensibility and SQL compliance.
+
 To create a new Proxmox PostgreSQL LXC, run the following in the Proxmox Shell.
  
 ```yaml
@@ -747,6 +758,8 @@ ________________________________________________________________________________
 
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC </h1>
+
+[Zigbee2MQTT](https://www.zigbee2mqtt.io/) is a standalone nodejs application that connects a zigbee network to MQTT
 
 To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell.
 
@@ -828,6 +841,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> deCONZ LXC </h1>
 
+[deCONZ](https://www.phoscon.de/en/conbee2/software#deconz) is used to configure, control and display Zigbee networks.
+
 To create a new Proxmox deCONZ LXC, run the following in the Proxmox Shell.
 
 ```yaml
@@ -854,6 +869,8 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
+
+[Zwavejs2MQTT](https://zwave-js.github.io/zwavejs2mqtt/#/) is a fully configurable Z-Wave to MQTT Gateway and Control Panel.
 
 To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell.
 
@@ -888,7 +905,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> NocoDB LXC </h1>
 
-NocoDB is an open source #NoCode platform that turns any database into a smart spreadsheet. Airtable Alternative.
+[NocoDB](https://www.nocodb.com/) is an open source #NoCode platform that turns any database into a smart spreadsheet. Airtable Alternative.
 
 To create a new Proxmox NocoDB LXC, run the following in the Proxmox Shell.
 
