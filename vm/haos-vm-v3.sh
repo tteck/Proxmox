@@ -306,10 +306,19 @@ msg_info "Extracting KVM Disk Image"
 unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
-  btrfs|nfs|dir)
-        DISK_EXT=".qcow2"
-        DISK_REF="$VMID/"
-        DIR_IMPORT="-format qcow2"
+  nfs|dir)
+    DISK_EXT=".qcow2"
+    DISK_REF="$VMID/"
+    DISK_IMPORT="-format qcow2"
+    ;;
+    
+  btrfs)
+    DISK_EXT=".raw"
+    DISK_REF="$VMID/"
+    DISK_FORMAT="subvol"
+    DISK_IMPORT="-format raw"
+    ;;
+    
 esac
 for i in {0,1}; do
   disk="DISK$i"
@@ -322,7 +331,7 @@ msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
-qm importdisk $VMID ${FILE%.*} $STORAGE ${DIR_IMPORT:-} 1>&/dev/null
+qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
