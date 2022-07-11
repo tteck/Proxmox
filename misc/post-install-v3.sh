@@ -51,7 +51,7 @@ function msg_ok() {
 
 clear
 header_info
-read -r -p "Disable Enterprise Repository? <Y/n> " prompt
+read -r -p "Disable Enterprise Repository? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Disabling Enterprise Repository"
@@ -60,7 +60,7 @@ sed -i "s/^deb/#deb/g" /etc/apt/sources.list.d/pve-enterprise.list
 msg_ok "Disabled Enterprise Repository"
 fi
 
-read -r -p "Add/Correct PVE7 Sources (sources.list)? <Y/n> " prompt
+read -r -p "Add/Correct PVE7 Sources (sources.list)? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Adding or Correcting PVE7 Sources"
@@ -73,7 +73,7 @@ sleep 2
 msg_ok "Added or Corrected PVE7 Sources"
 fi
 
-read -r -p "Enable No-Subscription Repository? <Y/n> " prompt
+read -r -p "Enable No-Subscription Repository? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Enabling No-Subscription Repository"
@@ -84,7 +84,7 @@ sleep 2
 msg_ok "Enabled No-Subscription Repository"
 fi
 
-read -r -p "Add (Disabled) Beta/Test Repository? <Y/n> " prompt
+read -r -p "Add (Disabled) Beta/Test Repository? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Adding Beta/Test Repository and set disabled"
@@ -95,7 +95,7 @@ sleep 2
 msg_ok "Added Beta/Test Repository"
 fi
 
-read -r -p "Disable Subscription Nag? <Y/n> " prompt
+read -r -p "Disable Subscription Nag? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Disabling Subscription Nag"
@@ -104,7 +104,7 @@ apt --reinstall install proxmox-widget-toolkit &>/dev/null
 msg_ok "Disabled Subscription Nag"
 fi
 
-read -r -p "Update Proxmox VE 7 now? <Y/n> " prompt
+read -r -p "Update Proxmox VE 7 now? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Updating Proxmox VE 7"
