@@ -1282,6 +1282,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Pi-hole LXC </h1>
 
+[Pi-hole](https://pi-hole.net/) is a Linux network-level advertisement and Internet tracker blocking application which acts as a DNS sinkhole and optionally a DHCP server.
+
 To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell.
 
 ```yaml
