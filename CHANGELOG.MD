@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-07-11
+
+### Changed
+
+- **Home Assistant OS VM**
+  - Supports lvmthin, zfspool, nfs, dir and btrfs storage types.
+
 ## 2022-07-08
 
 ### Changed
