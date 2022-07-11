@@ -312,7 +312,7 @@ case $STORAGE_TYPE in
     DISK_IMPORT="-format qcow2"
     ;;
     
-  zfspool|btrfs)
+  btrfs)
     DISK_EXT=".raw"
     DISK_REF="$VMID/"
     DISK_FORMAT="subvol"
