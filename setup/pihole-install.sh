@@ -55,17 +55,20 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
-apt update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
+apt-get update &>/dev/null
+apt-get -y dist-upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
+apt-get install -y ufw &>/dev/null
+apt-get install -y ntp &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Pi-hole"
-curl -sSL https://install.pi-hole.net | bash
+wget -O tteck-install.sh https://install.pi-hole.net &>/dev/null
+bash tteck-install.sh
 msg_ok "Installed Pi-hole"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -89,5 +92,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/tteck-install.sh
 msg_ok "Cleaned"
