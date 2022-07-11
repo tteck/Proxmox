@@ -110,7 +110,7 @@ ________________________________________________________________________________
 <h1 align="center" id="heading"> Home Assistant OS VM </h1>
 <h3 align="center"> Option to create VM using the Latest or Stable Image </h3>
 
-The script automates the manual process of finding, downloading and extracting the Official KVM (qcow2) disk image provided by the Home Assistant Team, creating a VM with user defined settings, importing and attaching the disk, setting the boot order and starting the VM. No hidden (kpartx, unzip) installs of any kind.
+The script automates the manual process of finding, downloading and extracting the Official KVM (qcow2) disk image provided by the Home Assistant Team, creating a VM with user defined settings, importing and attaching the disk, setting the boot order and starting the VM. No hidden (kpartx, unzip) installs of any kind. Supports lvmthin, zfspool, nfs, dir and btrfs storage types.
 
 To create a new Proxmox Home Assistant OS VM, run the following in the Proxmox Shell
 
