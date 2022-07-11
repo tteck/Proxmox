@@ -313,10 +313,10 @@ case $STORAGE_TYPE in
     ;;
     
   zfspool|btrfs)
-    DISK_EXT=".qcow2"
+    DISK_EXT=".raw"
     DISK_REF="$VMID/"
     DISK_FORMAT="subvol"
-    DISK_IMPORT="-format subvol"
+    DISK_IMPORT="-format raw"
     ;;
     
 esac
@@ -330,7 +330,7 @@ msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null #--format ${DISK_FORMAT:-qcow2}
+pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
