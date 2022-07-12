@@ -135,7 +135,9 @@ ________________________________________________________________________________
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img src="https://avatars1.githubusercontent.com/u/22225832?s=400&amp;v=4" alt="GitHub - portainer/portainer-docs: Portainer documentation" width="100" height="100"/></p>
 
 <h1 align="center" id="heading"> Home Assistant Container LXC </h1>
- 
+
+A standalone container-based installation of Home Assistant Core
+
 To create a new Proxmox Home Assistant Container LXC, run the following in the Proxmox Shell.
  
 ```yaml
@@ -202,9 +204,11 @@ ________________________________________________________________________________
 <img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" alt="@home-assistant" width="100" height="100"/><img/><img src="https://raw.githubusercontent.com/SelfhostedPro/Yacht/master/readme_media/Yacht_logo_1_dark.png" height="80"/><img/></p>
  
 <h1 align="center" id="heading"> Podman Home Assistant Container LXC </h1>
-To create a new Proxmox Podman Home Assistant Container LXC, run the following in the Proxmox Shell. 
+A standalone container-based installation of Home Assistant Core
 
- ([What is Podman?](https://youtu.be/lkg5QJsoCCQ)) ⚠️ Podman seems to need a privileged LXC
+⚠️ Podman seems to need a privileged LXC
+
+To create a new Proxmox Podman Home Assistant Container LXC, run the following in the Proxmox Shell. 
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/podman-homeassistant-v3.sh)"
@@ -964,6 +968,10 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> InfluxDB/Telegraf LXC </h1>
 
+[InfluxDB](https://www.influxdata.com/) is an open-source time series database developed by the company InfluxData.
+
+[Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) is an open source plugin-driven server agent for collecting and reporting metrics.
+
 To create a new Proxmox InfluxDB LXC, run the following in the Proxmox Shell.
 
 ```yaml
@@ -1004,6 +1012,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Grafana LXC </h1>
 
+[Grafana](https://grafana.com/) is a multi-platform open source analytics and interactive visualization web application.
+
 To create a new Proxmox Grafana LXC, run the following in the Proxmox Shell.
 
 ```yaml
@@ -1043,6 +1053,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Docker LXC </h1>
 <h3 align="center"> Options to Install Portainer and/or Docker Compose V2</h3>
+
+[Docker](https://www.docker.com/) is an open-source project for automating the deployment of applications as portable, self-sufficient containers.
 
 To create a new Proxmox Docker LXC, run the following in the Proxmox Shell.
 
