@@ -22,11 +22,11 @@ apt-get -y install libnet-ssleay-perl libauthen-pam-perl libio-pty-perl unzip sh
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Downloading Webmin... "
-wget http://prdownloads.sourceforge.net/webadmin/webmin_1.990_all.deb &>/dev/null
+wget http://prdownloads.sourceforge.net/webadmin/webmin_1.996_all.deb &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Installing Webmin... "
-dpkg --install webmin_1.990_all.deb &>/dev/null
+dpkg --install webmin_1.996_all.deb &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Setting Default Webmin usermame & password to root... "
