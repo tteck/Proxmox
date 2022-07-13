@@ -17,7 +17,7 @@ current_kernel=$(uname -r)
 pve=$(pveversion)
 
 while true; do
-    read -p "This will Clean Unused Kernel Images. Proceed(y/n)?" yn
+    read -p "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
