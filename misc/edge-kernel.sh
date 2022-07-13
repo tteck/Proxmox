@@ -105,6 +105,7 @@ while [ $opt != '' ]
            clear;
             option_picked "Unpinning Current Kernel";
             proxmox-boot-tool kernel unpin
+            clear;
             break;
         ;;
         5) while true; do
