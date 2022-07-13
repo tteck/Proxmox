@@ -49,7 +49,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading">Proxmox Edge Kernel Tool </h1>
 
-[Proxmox Edge Kernels](https://github.com/fabianishere/pve-edge-kernel) are custom Linux Kernels for Proxmox VE 7, keeping up with new Kernel releases instead of LTS
+Proxmox [Edge Kernels](https://github.com/fabianishere/pve-edge-kernel) are custom Linux Kernels for Proxmox VE 7, keeping up with new Kernel releases instead of LTS
 
 Run the following in the Proxmox Shell.
 
