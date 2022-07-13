@@ -28,7 +28,8 @@ show_menu(){
     printf "${menu}**${number} 1)${normal} Install Proxmox 5.18 Edge Kernel & Reboot\n"
     printf "${menu}**${number} 2)${normal} Switch to Proxmox PVE ${menu}${PVE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 3)${normal} Switch to Proxmox Edge ${menu}${EDGE_KERNEL}${normal} Kernel & Reboot\n"
-    printf "${menu}**${number} 4)${normal} Remove Proxmox Edge Kernel & Reboot\n"
+    printf "${menu}**${number} 4)${normal} Unpin Current Kernel\n"
+    printf "${menu}**${number} 5)${normal} Remove Proxmox Edge Kernel & Reboot\n"
     printf "${menu}*********************************************${normal}\n"
     printf "Please choose an option from the menu and enter or ${fgred}x${normal} to exit."
     read opt
@@ -94,6 +95,19 @@ while [ $opt != '' ]
             break;
         ;;
         4) while true; do
+            read -p "Are you sure you want to Unpin the Current Kernel? Proceed(y/n)?" yn
+            case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) exit;;
+                * ) echo "Please answer yes or no.";;
+            esac
+           done
+           clear;
+            option_picked "Unpinning Current Kernel";
+            proxmox-boot-tool kernel unpin
+            break;
+        ;;
+        5) while true; do
             read -p "Are you sure you want to Remove Proxmox Edge Kernel & Reboot? Proceed(y/n)?" yn
             case $yn in
             [Yy]* ) break;;
