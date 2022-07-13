@@ -54,9 +54,18 @@ function check_root() {
                 exit 1
         else
             header_info
+            edge_kernel
             kernel_info
             kernel_clean
         fi
+}
+
+function edge_kernel() {
+    if [[ "$current_kernel" == *"edge"* ]]; then
+         echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
+         echo -e "\nAn Active PVE Kernel is required to run Kernel Clean\n"
+         exit 1
+    fi
 }
 
 function kernel_info() {
@@ -67,7 +76,7 @@ function kernel_info() {
         echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
       fi
     else
-        echo -e "\n${CROSS}${RD}ERROR: No PVE Kernel Found\n${CL}"
+        echo -e "\n${CROSS} ${RD}ERROR: No PVE Kernel Found\n${CL}"
         exit 1
     fi
 }
