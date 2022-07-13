@@ -43,6 +43,24 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Proxmox Edge Kernel Tool</summary>
+ 
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading">Proxmox Edge Kernel Tool </h1>
+
+[Proxmox Edge Kernels](https://github.com/fabianishere/pve-edge-kernel) are custom Linux Kernels for Proxmox VE 7, keeping up with new Kernel releases instead of LTS
+
+Run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Proxmox CPU Scaling Governor</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/cpu.png?raw=true" height="100"/></p>
