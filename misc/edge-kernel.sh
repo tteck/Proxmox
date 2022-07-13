@@ -26,7 +26,7 @@ show_menu(){
     echo -e "\nCurrent Kernel: ${menu}${KERNEL_ON}${normal}"
     printf "\n${menu}*********************************************${normal}\n"
     printf "${menu}**${number} 1)${normal} Install Proxmox 5.18 Edge Kernel & Reboot\n"
-    printf "${menu}**${number} 2)${normal} Switch to Proxmox PVE ${menu}${PVE_KERNEL}${normal} Kernel & Reboot\n"
+    printf "${menu}**${number} 2)${normal} Switch to Proxmox VE 7 ${menu}${PVE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 3)${normal} Switch to Proxmox Edge ${menu}${EDGE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 4)${normal} Unpin Current Kernel\n"
     printf "${menu}**${number} 5)${normal} Remove Proxmox Edge Kernel & Reboot\n"
@@ -67,7 +67,7 @@ while [ $opt != '' ]
             break;
         ;;
         2) while true; do
-            read -p "Are you sure you want to Switch to Proxmox PVE ${PVE_KERNEL} Kernel & Reboot? Proceed(y/n)?" yn
+            read -p "Are you sure you want to Switch to Proxmox VE 7 ${PVE_KERNEL} Kernel & Reboot? Proceed(y/n)?" yn
             case $yn in
             [Yy]* ) break;;
             [Nn]* ) exit;;
@@ -75,7 +75,7 @@ while [ $opt != '' ]
             esac
            done
            clear;
-            option_picked "Switching to Proxmox PVE Kernel & Rebooting";
+            option_picked "Switching to Proxmox VE 7 Kernel & Rebooting";
             proxmox-boot-tool kernel pin ${PVE_KERNEL}
             reboot
             break;
