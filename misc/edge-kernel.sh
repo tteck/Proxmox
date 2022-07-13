@@ -6,9 +6,7 @@ PVE_KERNEL=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print substr($2, 12, leng
 EDGE_KERNEL=$(dpkg --list| grep 'kernel-.*-edge' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)
 clear
 while true; do
-    read -p "THIS IS A PROXMOX EDGE KERNEL TOOL, USE AT YOUR OWN RISK. 
-THE INFORMATION AND CONTENT MADE AVAILABLE TO YOU ON THE SITE IS PROVIDED 'AS IS' AND 'AS AVAILABLE.' 
-WE MAKE NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. Proceed(y/n)?" yn
+    read -p "THIS IS A PROXMOX EDGE KERNEL TOOL, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
