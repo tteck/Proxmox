@@ -63,7 +63,7 @@ function check_root() {
 function edge_kernel() {
     if [[ "$current_kernel" == *"edge"* ]]; then
          echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
-         echo -e "\nAn Active PVE Kernel is required to run Kernel Clean\n"
+         echo -e "\nAn Active PVE Kernel is required to use Kernel Clean\n"
          exit 1
     fi
 }
