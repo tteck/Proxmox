@@ -1513,6 +1513,38 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸MagicMirror Server LXC </summary>
+ 
+
+
+<h1 align="center" id="heading"> MagicMirror Server LXC </h1>
+ 
+[MagicMirror²](https://docs.magicmirror.builders/) is an open source modular smart mirror platform.
+
+To create a new MagicMirror Server LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/magicmirror-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings: 512MiB RAM - 3GB Storage - 1vCPU ⚡</h3>
+
+**MagicMirror Interface - IP:8080**
+
+⚙️ **To Update MagicMirror**
+
+Run in the LXC Console
+```yaml
+cd /opt/magicmirror
+git pull && npm install --only=prod --omit=dev
+```
+
+
+____________________________________________________________________________________________ 
+
+</details>
+
 
 <details>
 <summary markdown="span"> PhotoPrism LXC </summary>
