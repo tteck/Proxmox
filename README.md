@@ -1533,7 +1533,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/magicmirror-
 **MagicMirror Interface - IP:8080**
 
 ⚙️ **Configuration File**
-```
+```yaml
 /opt/magicmirror/config/config.js
 ```
 ⚙️ **To Update MagicMirror**
