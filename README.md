@@ -1532,11 +1532,11 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/magicmirror-
 
 **MagicMirror Interface - IP:8080**
 
-⚙️ **Configuration File**
+⚙️ **[Configuration](https://docs.magicmirror.builders/configuration/introduction.html#configuring-your-magicmirror)**
 ```yaml
 /opt/magicmirror/config/config.js
 ```
-⚙️ **To Update MagicMirror**
+⚙️ **[Update MagicMirror](https://docs.magicmirror.builders/getting-started/upgrade-guide.html#upgrade-guide)**
 
 Run in the LXC Console
 ```yaml
