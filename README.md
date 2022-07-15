@@ -318,7 +318,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸openHAB LXC</summary>
+<summary markdown="span"> openHAB LXC</summary>
  
 <p align="center"><img src="https://www.openhab.org/openhab-logo-square.png?raw=true" height="100"/></p>
 
