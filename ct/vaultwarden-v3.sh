@@ -346,6 +346,9 @@ lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
+pct set $CTID -description "# ${APP} LXC
+### https://github.com/tteck/Proxmox"
+
 msg_info "Setting Container to Normal Resources"
 pct set $CTID -memory 512
 pct set $CTID -cores 1
