@@ -337,6 +337,8 @@ qm set $VMID \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
+qm set $VMID -description "# Home Assistant OS
+### https://github.com/tteck/Proxmox"
 
 msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
