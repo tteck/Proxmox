@@ -843,8 +843,7 @@ npm start
  
 Run in the LXC console
  ```yaml
-cd /opt/zigbee2mqtt
-bash update.sh
+cd /opt/zigbee2mqtt && bash update.sh
  ```
 ⚙️ **Copy Data From a Existing Zigbee2MQTT LXC to another Zigbee2MQTT LXC**
 
@@ -1541,8 +1540,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/magicmirror-
 
 Run in the LXC Console
 ```yaml
-cd /opt/magicmirror
-git pull && npm install --only=prod --omit=dev
+cd /opt/magicmirror && git pull && npm install --only=prod --omit=dev
 ```
 
 
