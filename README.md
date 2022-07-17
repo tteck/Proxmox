@@ -1906,6 +1906,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/vaultwarden-
 The script builds from source, which takes time and resources. After the build, the script will automatically set resources to Normal Settings. 
 
 Expect 30+ minute install time.
+<h3 align="center" id="heading">⚡ Build Settings:  2048Mib RAM - 6GB Storage - 2vCPU ⚡</h3>
 <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 6GB Storage - 1vCPU ⚡</h3>
 
 **Vaultwarden Interface - IP:8000**
