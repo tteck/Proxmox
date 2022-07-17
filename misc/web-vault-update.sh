@@ -19,7 +19,7 @@ echo -e "${BL}
                    ${VWRELEASE} UPDATE                                                                                                                        
 ${CL}"
 }
-
+clear
 update_info
 while true; do
     read -p "This will Update Web-Vault to $VWRELEASE. Proceed(y/n)?" yn
