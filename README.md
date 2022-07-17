@@ -1888,7 +1888,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Vaultwarden LXC</summary>
+<summary markdown="span"> 🔸Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
@@ -1916,11 +1916,17 @@ Expect 30+ minute install time.
 /opt/vaultwarden/.env
 ```
  
-⚙️ **To Update Vaultwarden**
+⚙️ **To Update Vaultwarden (post 2022-05-29 only)**
 
 Run in the LXC console
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/vaultwarden-update.sh)"
+```
+⚙️ **To Update Web-vault (any)**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/web-vault-update.sh)"
 ```
 
 ____________________________________________________________________________________________ 
