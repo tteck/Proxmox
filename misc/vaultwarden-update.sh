@@ -45,7 +45,6 @@ systemctl start vaultwarden.service
 sleep 1
 
 echo -e "${GN} Cleaning up... ${CL}"
-cd ~
-rm -rf vaultwarden
+cd ~ && rm -rf vaultwarden
 
 echo -e "${GN} Finished Update (set resources back to normal settings)${CL}"
