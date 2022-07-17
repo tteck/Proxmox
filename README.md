@@ -1888,7 +1888,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Vaultwarden LXC</summary>
+<summary markdown="span"> 🔸Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
@@ -1909,18 +1909,24 @@ Expect 30+ minute install time.
 <h3 align="center" id="heading">⚡ Build Settings:  2048Mib RAM - 6GB Storage - 2vCPU ⚡</h3>
 <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 6GB Storage - 1vCPU ⚡</h3>
 
-**Vaultwarden Interface - IP:8000**
+**Vaultwarden Interface: CTIP:8000**
 
 ⚙️ **Path to Vaultwarden .env file** (to enable `ADMIN_TOKEN`)
 ```yaml
 /opt/vaultwarden/.env
 ```
  
-⚙️ **To Update Vaultwarden**
+⚙️ **To Update Vaultwarden (post 2022-05-29 only)**
 
 Run in the LXC console
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/vaultwarden-update.sh)"
+```
+⚙️ **To Update Web-vault (any)**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/web-vault-update.sh)"
 ```
 
 ____________________________________________________________________________________________ 

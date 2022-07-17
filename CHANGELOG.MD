@@ -3,6 +3,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-07-17
+
+### Changed
+
+- **Vaultwarden LXC**
+  - NEW Vaultwarden Update (post 2022-05-29 only) Script
+  - NEW Web-vault Update (any) Script
+
 ## 2022-07-14
 
 ### Changed

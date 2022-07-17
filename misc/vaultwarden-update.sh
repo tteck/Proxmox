@@ -1,5 +1,5 @@
-#!/bin/sh
-VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
+#!/usr/bin/env bash
+VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 2, length($2)-3) }') \
 
@@ -16,13 +16,13 @@ echo -e "${BL}
    \ \/ / _  | | | | | __\ \ /\ / / _  |  __/ _  |/ _ \  _ \ 
     \  / (_| | |_| | | |_ \ V  V / (_| | | | (_| |  __/ | | |
      \/ \__,_|\__,_|_|\__| \_/\_/ \__,_|_|  \__,_|\___|_| |_|
-                            UPDATE                                                                                                                        
+                        ${VAULT} UPDATE                                                                                                                        
 ${CL}"
 }
 
 update_info
 while true; do
-    read -p "This will Update Vaultwarden to $VWRELEASE. Proceed(y/n)?" yn
+    read -p "This will Update Vaultwarden to $VAULT (set 2vCPU 2048MiB RAM Min.). Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -34,18 +34,17 @@ echo -e "${GN} Stopping Vaultwarden... ${CL}"
 systemctl stop vaultwarden.service
 sleep 1
 
-echo -e "${GN} Updating to ${VWRELEASE}... ${CL}"
-curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$VWRELEASE/bw_web_$VWRELEASE.tar.gz &>/dev/null
-if [ -d "/var/lib/vaultwarden" ]; then
-tar -xzf bw_web_$VWRELEASE.tar.gz -C /var/lib/vaultwarden/ &>/dev/null
-else 
-tar -zxf bw_web_$VWRELEASE.tar.gz -C /opt/vaultwarden/ &>/dev/null
-fi
+echo -e "${GN} Updating (Building) to ${VAULT} (Patience)... ${CL}"
+git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
+cd vaultwarden
+cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
+cp target/release/vaultwarden /opt/vaultwarden/bin/
 
-echo -e "${GN} Cleaning up... ${CL}"
-rm bw_web_$VWRELEASE.tar.gz
-
-echo -e "${GN} Starting Vaultwarden... ${CL}"
+echo -e "${GN} Starting Vaultwarden ${VAULT}... ${CL}"
 systemctl start vaultwarden.service
 sleep 1
-echo -e "${GN} Finished Update ${CL}"
+
+echo -e "${GN} Cleaning up... ${CL}"
+cd ~ && rm -rf vaultwarden
+
+echo -e "${GN} Finished Update (set resources back to normal settings)${CL}"
