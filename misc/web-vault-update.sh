@@ -10,19 +10,19 @@ GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 function update_info {
 echo -e "${BL}
- __      __         _ _                         _            
- \ \    / /        | | |                       | |           
-  \ \  / /_ _ _   _| | |___      ____ _ _ __ __| | ___ _ __  
-   \ \/ / _  | | | | | __\ \ /\ / / _  |  __/ _  |/ _ \  _ \ 
-    \  / (_| | |_| | | |_ \ V  V / (_| | | | (_| |  __/ | | |
-     \/ \__,_|\__,_|_|\__| \_/\_/ \__,_|_|  \__,_|\___|_| |_|
+ __          __  _                            _ _   
+ \ \        / / | |                          | | |  
+  \ \  /\  / /__| |__ ________   ____ _ _   _| | |_ 
+   \ \/  \/ / _ \  _ \______\ \ / / _  | | | | | __|
+    \  /\  /  __/ |_) |      \ V / (_| | |_| | | |_ 
+     \/  \/ \___|_.__/        \_/ \__,_|\__,_|_|\__|
                             UPDATE                                                                                                                        
 ${CL}"
 }
 
 update_info
 while true; do
-    read -p "This will Update Vaultwarden to $VWRELEASE. Proceed(y/n)?" yn
+    read -p "This will Update Web-Vault to $VWRELEASE. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
