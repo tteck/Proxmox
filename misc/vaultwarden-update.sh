@@ -22,7 +22,7 @@ ${CL}"
 
 update_info
 while true; do
-    read -p "This will Update Vaultwarden to $VAULT (set 2vCPU 2048MiB RAM). Proceed(y/n)?" yn
+    read -p "This will Update Vaultwarden to $VAULT (set 2vCPU 2048MiB RAM Min.). Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
