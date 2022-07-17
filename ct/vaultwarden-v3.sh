@@ -88,9 +88,9 @@ function default_settings() {
         echo -e "${DGN}Using Disk Size ${BGN}6${CL}${DGN}GB${CL}"
         DISK_SIZE="6"
         echo -e "${DGN}Using ${BGN}4${CL}${DGN}vCPU${CL}"
-        CORE_COUNT="4"
+        CORE_COUNT="2"
         echo -e "${DGN}Using ${BGN}4096${CL}${DGN}MiB RAM${CL}"
-        RAM_SIZE="4096"
+        RAM_SIZE="2048"
         echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
         BRG="vmbr0"
         echo -e "${DGN}Using Static IP Address ${BGN}DHCP${CL}"
@@ -179,9 +179,9 @@ header_info
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
-        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 4 "
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
         read CORE_COUNT
-        if [ -z $CORE_COUNT ]; then CORE_COUNT="4"; fi;
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
         echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}${DGN}vCPU${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -194,9 +194,9 @@ header_info
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
         echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
+        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 2048 "
         read RAM_SIZE
-        if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
+        if [ -z $RAM_SIZE ]; then RAM_SIZE="2048"; fi;
         echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}${DGN}MiB RAM${CL}"
 echo -e " ${CM}${CL} \n"
 sleep 1
