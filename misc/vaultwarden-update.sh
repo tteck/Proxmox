@@ -47,4 +47,4 @@ sleep 1
 echo -e "${GN} Cleaning up... ${CL}"
 rm -rf vaultwarden
 
-echo -e "${GN} Finished Update ${CL}"
+echo -e "${GN} Finished Update (set resources back to normal settings)${CL}"
