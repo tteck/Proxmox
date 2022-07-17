@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+clear
 VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 2, length($2)-3) }') \
@@ -19,7 +20,6 @@ echo -e "${BL}
                    ${VWRELEASE} UPDATE                                                                                                                        
 ${CL}"
 }
-clear
 update_info
 while true; do
     read -p "This will Update Web-Vault to $VWRELEASE. Proceed(y/n)?" yn
