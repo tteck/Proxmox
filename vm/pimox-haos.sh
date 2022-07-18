@@ -329,7 +329,7 @@ qm set $VMID \
   -scsi0 ${DISK1_REF},size=6G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
-qm resize $VMID scsi0 +26G >/dev/null
+#qm resize $VMID scsi0 +26G >/dev/null
 qm set $VMID -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox" >/dev/null
 
