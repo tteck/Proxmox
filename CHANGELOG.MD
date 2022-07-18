@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Vaultwarden LXC**
-  - NEW Vaultwarden Update (post 2022-05-29 only) Script
+  - NEW Vaultwarden Update (post 2022-05-29 installs only) Script
   - NEW Web-vault Update (any) Script
 
 ## 2022-07-14
