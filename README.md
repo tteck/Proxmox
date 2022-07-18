@@ -1916,7 +1916,7 @@ Expect 30+ minute install time.
 /opt/vaultwarden/.env
 ```
  
-⚙️ **To Update Vaultwarden (post 2022-05-29 only)**
+⚙️ **To Update Vaultwarden (post 2022-05-29 installs only)**
 
 Run in the LXC console
 ```yaml
