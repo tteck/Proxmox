@@ -87,9 +87,9 @@ function default_settings() {
         HN=$NSAPP
         echo -e "${DGN}Using Disk Size ${BGN}6${CL}${DGN}GB${CL}"
         DISK_SIZE="6"
-        echo -e "${DGN}Using ${BGN}4${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
         CORE_COUNT="2"
-        echo -e "${DGN}Using ${BGN}4096${CL}${DGN}MiB RAM${CL}"
+        echo -e "${DGN}Using ${BGN}2048${CL}${DGN}MiB RAM${CL}"
         RAM_SIZE="2048"
         echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
         BRG="vmbr0"
