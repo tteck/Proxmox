@@ -98,7 +98,7 @@ After = network.target
 Type = simple
 EnvironmentFile = /etc/default/jellyfin
 User = root
-ExecStart = /usr/bin/jellyfin ${JELLYFIN_WEB_OPT} ${JELLYFIN_RESTART_OPT} ${JELLYFIN_FFMPEG_OPT} ${JELL>
+ExecStart = /usr/bin/jellyfin
 Restart = on-failure
 TimeoutSec = 15
 [Install]
