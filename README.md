@@ -44,7 +44,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox Edge Kernel Tool</summary>
+<summary markdown="span"> Proxmox Edge Kernel Tool</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
