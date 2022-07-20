@@ -29,7 +29,7 @@ trap die ERR
 
 function error_exit() {
   trap - ERR
-  local reason="Unknown failure occured."
+  local reason="Unknown failure occurred."
   local msg="${1:-$reason}"
   local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
   echo -e "$flag $msg" 1>&2
