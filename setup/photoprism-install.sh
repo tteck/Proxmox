@@ -70,6 +70,7 @@ apt-get install -y gnupg &>/dev/null
 apt-get install -y make &>/dev/null
 apt-get install -y zip &>/dev/null
 apt-get install -y unzip &>/dev/null
+apt-get install -y exiftool &>/dev/null
 apt-get install -y ffmpeg &>/dev/null
 msg_ok "Installed Dependencies"
 
