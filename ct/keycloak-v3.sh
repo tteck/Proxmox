@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo -e "Loading..."
 APP="Keycloak"
 var_disk="4"
 var_cpu="2"
@@ -47,6 +48,7 @@ function msg_ok() {
 }
 
 while true; do
+    clear
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
