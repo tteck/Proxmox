@@ -1514,6 +1514,46 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸grocy LXC </summary>
+ 
+<p align="center"><img src="https://grocy.info/img/grocy_logo.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> grocy LXC </h1>
+
+[grocy](https://grocy.info/) is a web-based self-hosted groceries & household management solution for your home.
+
+To create a new Proxmox grocy LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/grocy-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**grocy Interface: http:// IP**
+
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ admin
+ ```
+ 
+⚙️ **To Update grocy**
+ 
+Run in the LXC console
+ ```yaml
+bash /var/www/html/update.sh
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> MagicMirror Server LXC </summary>
 
 <p align="center"><img src="https://github.com/MichMich/MagicMirror/raw/master/.github/header.png" height="100"/></p>
@@ -1588,46 +1628,6 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/photoprism
 ```
 
 
-____________________________________________________________________________________________ 
-
-</details>
-
-<details>
-<summary markdown="span"> 🔸grocy LXC </summary>
- 
-<p align="center"><img src="https://grocy.info/img/grocy_logo.svg" height="100"/></p>
-
-<h1 align="center" id="heading"> grocy LXC </h1>
-
-[grocy](https://grocy.info/) is a web-based self-hosted groceries & household management solution for your home.
-
-To create a new Proxmox grocy LXC, run the following in the Proxmox Shell.
-
-```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/grocy-v3.sh)"
-```
-
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-**grocy Interface: http:// IP**
-
-⚙️ **Initial Login**
-
-**username** 
- ```yaml
- admin
- ```
- **password** 
- ```yaml
- admin
- ```
- 
-⚙️ **To Update grocy**
- 
-Run in the LXC console
- ```yaml
-bash /var/www/html/update.sh
-```
 ____________________________________________________________________________________________ 
 
 </details>
