@@ -2,7 +2,7 @@
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
-STABLE="8.2"
+STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -258,7 +258,7 @@ fi
 }
 
 function start_script() {
-		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
+		echo -e "${YW}Type Advanced (Latest ${RELEASE}), or Press [ENTER] for Default Settings (Stable ${STABLE}) "
 		read SETTINGS
 		if [ -z $SETTINGS ]; then default_settings; 
 		else
