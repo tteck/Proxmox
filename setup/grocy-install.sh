@@ -83,6 +83,7 @@ cat <<EOF > /etc/apache2/sites-available/grocy.conf
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
   DocumentRoot /var/www/html/public
+  ErrorLog /var/log/apache2/error.log
 </VirtualHost>
 EOF
 
