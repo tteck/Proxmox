@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+echo -e "Loading..."
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
-STABLE="8.2"
+STABLE="8.1"
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -50,6 +51,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 while true; do
+    clear
     read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
