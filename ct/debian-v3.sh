@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo -e "Loading"
+echo -e "Loading..."
 APP="Debian"
 var_disk="2"
 var_cpu="1"
