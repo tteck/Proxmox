@@ -1514,7 +1514,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸MagicMirror Server LXC </summary>
+<summary markdown="span"> MagicMirror Server LXC </summary>
 
 <p align="center"><img src="https://github.com/MichMich/MagicMirror/raw/master/.github/header.png" height="100"/></p>
 
