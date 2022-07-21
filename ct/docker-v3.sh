@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo -e "Loading..."
 NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
@@ -31,6 +32,7 @@ function error_exit() {
 }
 
 while true; do
+    clear
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
