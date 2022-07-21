@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo -e "Loading..."
 APP="Whoogle"
 var_disk="2"
 var_cpu="1"
@@ -48,6 +49,7 @@ function msg_ok() {
 }
 
 while true; do
+    clear
     read -p "This will create a New ${APP} LXC. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
