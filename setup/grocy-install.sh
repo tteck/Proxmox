@@ -78,7 +78,7 @@ unzip latest -d /var/www/html &>/dev/null
 chown -R www-data:www-data /var/www/html
 cp /var/www/html/config-dist.php /var/www/html/data/config.php
 chmod +x /var/www/html/update.sh
-
+mkdir /var/log/apache2/
 cat <<EOF > /etc/apache2/sites-available/grocy.conf                                 
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
