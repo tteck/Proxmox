@@ -71,7 +71,7 @@ echo "deb https://apt.ombi.app/master jessie main" | sudo tee /etc/apt/sources.l
 msg_ok "Set up Ombi Repository and Key"
 
 msg_info "Installing Ombi"
-sudo apt install ombi &>/dev/null
+sudo apt update && sudo apt install ombi &>/dev/null
 msg_ok "Installed Ombi"
 
 msg_info "Creating Service"
