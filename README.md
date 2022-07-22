@@ -584,6 +584,35 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸n8n LXC</summary>
+ 
+<p align="center"><img src="https://docs.n8n.io/_images/n8n-docs-icon.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> n8n LXC </h1>
+ 
+[n8n](https://n8n.io/) is a workflow automation platform that doesn't box you in, that you never outgrow
+ 
+To create a new Proxmox n8n LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/n8n-v3.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 3GB Storage - 2vCPU ⚡</h3>
+ 
+**n8n Interface: IP:5678**
+
+⚙️ **To Update n8n**
+
+```yaml
+npm update -g n8n
+```
+
+____________________________________________________________________________________________ 
+ 
+</details>
+
+<details>
 <summary markdown="span"> Mariadb LXC </summary>
  
 <p align="center"><img src="https://mariadb.com/wp-content/webp-express/webp-images/doc-root/wp-content/themes/sage/dist/images/mariadb-logo-white.png.webp" alt="MariaDB"/><img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/adminer_logo-cl.png" height="60"></p>
