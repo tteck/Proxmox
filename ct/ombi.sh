@@ -90,7 +90,7 @@ function default_settings() {
         HN=$NSAPP
         echo -e "${DGN}Using Disk Size ${BGN}3${CL}${DGN}GB${CL}"
         DISK_SIZE="3"
-        echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
+        echo -e "${DGN}Using ${BGN}1${CL}${DGN}vCPU${CL}"
         CORE_COUNT="2"
         echo -e "${DGN}Using ${BGN}2048${CL}${DGN}MiB RAM${CL}"
         RAM_SIZE="2048"
@@ -182,9 +182,9 @@ header_info
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
         echo -e "${DGN}Using Disk Size ${BGN}$DISK_SIZE${CL}${DGN}GB${CL}"
-        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
+        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 1 "
         read CORE_COUNT
-        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
+        if [ -z $CORE_COUNT ]; then CORE_COUNT="1"; fi;
         echo -en "${DGN}Set Cores To ${BL}$CORE_COUNT${CL}${DGN}vCPU${CL}"
 echo -e " ${CM}${CL} \r"
 sleep 1
