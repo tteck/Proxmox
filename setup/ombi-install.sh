@@ -54,6 +54,11 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+msg_info "Updating Container OS"
+apt update &>/dev/null
+apt-get -qqy upgrade &>/dev/null
+msg_ok "Updated Container OS"
+
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
