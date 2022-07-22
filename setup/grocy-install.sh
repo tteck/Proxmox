@@ -84,10 +84,15 @@ cat <<EOF > /etc/apache2/sites-available/grocy.conf
   ServerAdmin webmaster@localhost
   DocumentRoot /var/www/html/public
   ErrorLog /var/log/apache2/error.log
+<Directory /var/www/html/public>
+  Options Indexes FollowSymLinks MultiViews
+  AllowOverride All
+  Order allow,deny
+  allow from all
+</Directory>
 </VirtualHost>
 EOF
 
-sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 a2dissite 000-default.conf &>/dev/null
 a2ensite grocy.conf &>/dev/null
 a2enmod rewrite &>/dev/null
@@ -114,5 +119,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /root/latest
+rm -rf /var/cache/* /var/lib/apt/lists/* /root/latest
 msg_ok "Cleaned"
