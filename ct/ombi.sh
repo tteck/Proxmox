@@ -88,10 +88,10 @@ function default_settings() {
         CT_ID=$NEXTID
         echo -e "${DGN}Using CT Name ${BGN}$NSAPP${CL}"
         HN=$NSAPP
-        echo -e "${DGN}Using Disk Size ${BGN}3${CL}${DGN}GB${CL}"
-        DISK_SIZE="3"
+        echo -e "${DGN}Using Disk Size ${BGN}5${CL}${DGN}GB${CL}"
+        DISK_SIZE="5"
         echo -e "${DGN}Using ${BGN}1${CL}${DGN}vCPU${CL}"
-        CORE_COUNT="2"
+        CORE_COUNT="1"
         echo -e "${DGN}Using ${BGN}2048${CL}${DGN}MiB RAM${CL}"
         RAM_SIZE="2048"
         echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
@@ -167,9 +167,9 @@ header_info
         echo -e "${DGN}Using CT Password ${BGN}$PW1${CL}"
         echo -e "${DGN}Using CT ID ${BGN}$CT_ID${CL}"
         echo -e "${DGN}Using CT Name ${BGN}$HN${CL}"
-        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 3 "
+        echo -e "${YW}Enter a Disk Size, or Press [ENTER] for Default: 5 "
         read DISK_SIZE
-        if [ -z $DISK_SIZE ]; then DISK_SIZE="3"; fi;
+        if [ -z $DISK_SIZE ]; then DISK_SIZE="5"; fi;
         if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo "ERROR! DISK SIZE MUST HAVE INTEGER NUMBER!"; exit; fi;
         echo -en "${DGN}Set Disk Size To ${BL}$DISK_SIZE${CL}${DGN}GB${CL}"
 echo -e " ${CM}${CL} \r"

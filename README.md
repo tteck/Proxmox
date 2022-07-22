@@ -2014,7 +2014,7 @@ To Install Ombi, ⚠️ run the following in the LXC console.
 ```yaml
 bash -c "$(wget -qLO - https://github.com/Kickbut101/Proxmox/raw/main/ct/ombi.sh)"
 ```
-<h3 align="center" id="heading">⚡ Build Settings:  2048Mib RAM - 3GB Storage - 1vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Build Settings:  2048Mib RAM - 5GB Storage - 1vCPU ⚡</h3>
 
 **Webmin Interface - http:// IP:5000 (http)**
 
