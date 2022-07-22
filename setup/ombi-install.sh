@@ -55,7 +55,7 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Setting up Ombi Repository and Key"
-wget -q -O - https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
+wget -q -O - https://apt.ombi.app/pub.key | apt-key add - &>/dev/null
 echo "deb https://apt.ombi.app/master debian main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
 msg_ok "Set up Ombi Repository and Key"
 
