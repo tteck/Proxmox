@@ -54,8 +54,13 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+msg_info "Installing Dependencies"
+apt-get install -y curl &>/dev/null
+apt-get install -y sudo &>/dev/null
+msg_ok "Installed Dependencies"
+
 msg_info "Setting up Ombi Repository and Key"
-wget -q -O - https://apt.ombi.app/pub.key | apt-key add - &>/dev/null
+curl -sSL https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
 echo "deb https://apt.ombi.app/master debian main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
 msg_ok "Set up Ombi Repository and Key"
 
