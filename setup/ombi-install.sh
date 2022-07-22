@@ -67,12 +67,12 @@ msg_ok "Installed Dependencies"
 
 msg_info "Setting up Ombi Repository and Key"
 curl -sSL https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
-echo "deb https://apt.ombi.app/master debian main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
+echo "deb https://apt.ombi.app/master jessie main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
 msg_ok "Set up Ombi Repository and Key"
 
 msg_info "Updating Container OS with new repository"
 apt update &>/dev/null
-apt-get -qqy upgrade
+apt-get -qqy upgrade &>/dev/null
 msg_ok "Updated Container OS with new repository"
 
 msg_info "Installing Ombi"
