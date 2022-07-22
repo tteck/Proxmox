@@ -2001,3 +2001,23 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/web-vault-
 ____________________________________________________________________________________________ 
 
 </details>
+
+<details>
+<summary markdown="span">Ombi</summary>
+ 
+<p align="center"><img src="https://github.com/Ombi-app/Ombi/blob/develop/src/Ombi/wwwroot/images/favicon/apple-touch-icon.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading">Ombi</h1>
+
+To Install Ombi, ⚠️ run the following in the LXC console.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/Kickbut101/Proxmox/raw/main/ct/ombi.sh)"
+```
+
+[Ombi](https://ombi.io/) Ombi is your friendly media request tool, automatically syncs with your media servers! Don't worry, it's grandma friendly, and more importantly; has wife approval certification 😂.
+
+
+___________________________________________________________________________________________ 
+
+</details>
