@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-07-22
+
+### Changed
+
+- **n8n LXC** (thanks to @cyakimov)
+  - NEW Script
+
 ## 2022-07-21
 
 ### Changed
