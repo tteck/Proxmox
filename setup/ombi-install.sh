@@ -55,7 +55,7 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Setting up Ombi Repository and Key"
-echo "deb https://apt.ombi.app/master jessie main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
+echo "deb https://apt.ombi.app/master $( lsb_release -c -s ) main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
 curl -sSL https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
 msg_ok "Set up Ombi Repository and Key"
 
