@@ -590,7 +590,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> n8n LXC </h1>
  
-[n8n](https://n8n.io/) is a workflow automation platform that doesn't box you in, that you never outgrow
+[n8n](https://n8n.io/) is an extendable workflow automation tool which enables you to connect anything to everything.
  
 To create a new Proxmox n8n LXC, run the following in the Proxmox Shell.
 
