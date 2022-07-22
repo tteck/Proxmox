@@ -2014,6 +2014,9 @@ To Install Ombi, ⚠️ run the following in the LXC console.
 ```yaml
 bash -c "$(wget -qLO - https://github.com/Kickbut101/Proxmox/raw/main/ct/ombi.sh)"
 ```
+<h3 align="center" id="heading">⚡ Build Settings:  2048Mib RAM - 3GB Storage - 1vCPU ⚡</h3>
+
+**Webmin Interface - http:// IP:5000 (http)**
 
 [Ombi](https://ombi.io/) Ombi is your friendly media request tool, automatically syncs with your media servers! Don't worry, it's grandma friendly, and more importantly; has wife approval certification 😂.
 
