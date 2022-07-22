@@ -68,31 +68,13 @@ msg_ok "Installed Dependencies"
 msg_info "Setting up Ombi Repository and Key"
 curl -sSL https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
 echo "deb https://apt.ombi.app/master jessie main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
-msg_ok "Set up Ombi Repository and Key"
-
-msg_info "Updating Container OS with new repository"
 apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
-msg_ok "Updated Container OS with new repository"
+msg_ok "Set up Ombi Repository and Key"
 
 msg_info "Installing Ombi"
 sudo apt install ombi &>/dev/null
 msg_ok "Installed Ombi"
-
-msg_info "Creating Service"
-cat <<EOF > /etc/systemd/system/ombi.service
-[Unit]
-Description=ombi
-
-[Service]
-Type=simple
-ExecStart=ombi start
-[Install]
-WantedBy=multi-user.target
-EOF
-sudo systemctl start ombi &>/dev/null
-sudo systemctl enable ombi &>/dev/null
-msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
