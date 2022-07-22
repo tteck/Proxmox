@@ -70,8 +70,13 @@ curl -sSL https://apt.ombi.app/pub.key | sudo apt-key add - &>/dev/null
 echo "deb https://apt.ombi.app/master jessie main" | sudo tee /etc/apt/sources.list.d/ombi.list &>/dev/null
 msg_ok "Set up Ombi Repository and Key"
 
+msg_info "Updating Container OS with new repository"
+apt update &>/dev/null
+apt-get -qqy upgrade
+msg_ok "Updated Container OS with new repository"
+
 msg_info "Installing Ombi"
-sudo apt update && sudo apt install ombi &>/dev/null
+sudo apt install ombi &>/dev/null
 msg_ok "Installed Ombi"
 
 msg_info "Creating Service"
