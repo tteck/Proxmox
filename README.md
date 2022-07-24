@@ -1957,7 +1957,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Vaultwarden LXC</summary>
+<summary markdown="span"> Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
 
