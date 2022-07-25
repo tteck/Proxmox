@@ -7,9 +7,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Home Assistant OS VM**
+- **Home Assistant OS VM** 
   - Present the drive to the guest as a solid-state drive rather than a rotational hard disk. There is no requirement that the underlying storage actually be backed by SSD's. 
   - When the VM’s filesystem marks blocks as unused after deleting files, the SCSI controller will relay this information to the storage, which will then shrink the disk image accordingly.
+  - 👉 [more info](https://github.com/tteck/Proxmox/discussions/378)
 
 
 ## 2022-07-22
