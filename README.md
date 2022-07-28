@@ -1543,7 +1543,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸grocy LXC </summary>
+<summary markdown="span"> grocy LXC </summary>
  
 <p align="center"><img src="https://grocy.info/img/grocy_logo.svg" height="100"/></p>
 
