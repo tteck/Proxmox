@@ -3,7 +3,7 @@ echo -e "Loading..."
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
-STABLE="8.1"
+STABLE="8.2"
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -332,10 +332,10 @@ msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
+pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
+  -efidisk0 ${DISK0_REF},size=128k \
   -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
