@@ -584,7 +584,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸n8n LXC</summary>
+<summary markdown="span"> n8n LXC</summary>
  
 <p align="center"><img src="https://docs.n8n.io/_images/n8n-docs-icon.svg" height="70"/></p>
 
