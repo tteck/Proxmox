@@ -110,7 +110,7 @@ then
 msg_info "Updating Proxmox VE 7"
 apt-get update &>/dev/null
 apt-get -y dist-upgrade &>/dev/null
-msg_ok "Updated Proxmox VE 7"
+msg_ok "Updated Proxmox VE 7 (Reboot Recommended)"
 fi
 
 sleep 2
