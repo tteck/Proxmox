@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
+PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
-STABLE="8.2"
+STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -49,6 +50,12 @@ function cleanup() {
 
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+    
+if [[ "$PVE" == "1" ]]; then
+    echo -e "${YW}This script is for Proxmox Virtual Environment 6${CL}"
+    echo -e "Continuing..."
+    sleep 5
+fi
 
 while true; do
     clear
@@ -260,7 +267,7 @@ fi
 }
 
 function start_script() {
-		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
+		echo -e "${YW}Type Advanced (Latest ${RELEASE}), or Press [ENTER] for Default Settings (Stable ${STABLE}) "
 		read SETTINGS
 		if [ -z $SETTINGS ]; then default_settings; 
 		else
@@ -312,15 +319,6 @@ case $STORAGE_TYPE in
     DISK_EXT=".qcow2"
     DISK_REF="$VMID/"
     DISK_IMPORT="-format qcow2"
-    ;;
-    
-  btrfs)
-    DISK_EXT=".raw"
-    DISK_REF="$VMID/"
-    DISK_FORMAT="subvol"
-    DISK_IMPORT="-format raw"
-    ;;
-    
 esac
 for i in {0,1}; do
   disk="DISK$i"
@@ -341,7 +339,6 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 qm set $VMID -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox" >/dev/null
-
 msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
 
 if [ "$START_VM" == "yes" ]; then
