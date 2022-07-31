@@ -35,14 +35,7 @@ function update_container() {
   clear
   header_info
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
-  pct config $container > temp
-  os=`awk '/^ostype/' temp | cut -d' ' -f2`
-  if [ "$os" == "alpine" ]
-  then
-        pct exec $container -- ash -c "apk update && apk upgrade"
-  else
-        pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
-  fi
+  pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
 }
 read -p "Skip stopped containers? " -n 1 -r
 echo
@@ -76,5 +69,4 @@ do
  fi 
 done; wait
 
-rm temp
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
