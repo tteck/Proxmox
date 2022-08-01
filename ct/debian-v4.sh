@@ -210,9 +210,10 @@ fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
 else
-    clear
-    echo "Going Back to Advanced Settings"
-    advanced_settings
+  clear
+  header_info
+  echo -e "${RD}Using Advanced Settings${CL}"
+  advanced_settings
 fi
 }
 function start_script() {
