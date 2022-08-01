@@ -128,7 +128,7 @@ else
     echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
   fi
 fi
-CT_ID=$(whiptail --inputbox "Set Container ID?" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
+CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
