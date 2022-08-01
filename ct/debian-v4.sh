@@ -44,12 +44,11 @@ else
 fi
 function header_info {
 echo -e "${RD}
-  _____       _     _             
- |  __ \     | |   (_)            
- | |  | | ___| |__  _  __ _ _ __  
- | |  | |/ _ \  _ \| |/ _  |  _ \ 
- | |__| |  __/ |_) | | (_| | | | |
- |_${YW}v4${RD}__/ \___|_.__/|_|\__,_|_| |_|
+    ____  __________  _______    _   __
+   / __ \/ ____/ __ )/  _/   |  / | / /
+  / / / / __/ / __  |/ // /| | /  |/ / 
+ / /_/ / /_v4/ /_/ // // ___ |/ /|  /  
+/_____/_____/_____/___/_/  |_/_/ |_/   
 ${CL}"
 }
 function msg_info() {
@@ -72,7 +71,7 @@ fi
 function default_settings() {
 		echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
 		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-    CT_TYPE="1"
+		CT_TYPE="1"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
 		PW=""
 		echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
