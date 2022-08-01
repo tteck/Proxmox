@@ -129,6 +129,7 @@ msg_ok "Built PhotoPrism"
 
 env_path="/var/lib/photoprism/.env"
 echo " 
+PHOTOPRISM_AUTH_MODE='password'
 PHOTOPRISM_ADMIN_PASSWORD='admin'
 PHOTOPRISM_HTTP_HOST='0.0.0.0'
 PHOTOPRISM_HTTP_PORT=2342
