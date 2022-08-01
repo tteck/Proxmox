@@ -173,9 +173,10 @@ fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" 10 58); then
     echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
 else
-    clear
-    echo "Going Back to Advanced Settings"
-    advanced_settings
+  clear
+  header_info
+  echo -e "${RD}Using Advanced Settings${CL}"
+  advanced_settings
 fi
 }
 function start_script() {
@@ -260,7 +261,7 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 qm set $VMID -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox" >/dev/null
-msg_ok "Created HAOS VM ${CL}${BL}${HN}"
+msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
 qm start $VMID
