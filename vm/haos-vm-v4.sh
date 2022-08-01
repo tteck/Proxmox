@@ -95,7 +95,7 @@ function default_settings() {
 	MAC=$GEN_MAC
 	echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
 	VLAN=""
-	echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
+	echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
 	START_VM="yes"
 	echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
@@ -165,10 +165,10 @@ else
   fi  
 fi
 if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
-    echo -e "${DGN}Starting VM when completed${CL}"
+    echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
 else
-    echo -e "${DGN}Do not start VM when completed${CL}"
+    echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
     START_VM="no"
 fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" 10 58); then
