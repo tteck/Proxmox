@@ -1646,7 +1646,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism-v
  ```
  **password** 
  ```yaml
- admin
+ changeme
  ```
 [PhotoSync](https://www.photosync-app.com/home.html)
 
