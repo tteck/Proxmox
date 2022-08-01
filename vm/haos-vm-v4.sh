@@ -7,6 +7,7 @@ LATEST=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-sys
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
+HA=`echo "\033[1;34m"`
 RD=`echo "\033[01;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
@@ -60,13 +61,13 @@ else
     exit
 fi
 function header_info {
-echo -e "${BL}
-        _    _          ____   _____ 
-       | |  | |   /\   / __ \ / ____|
-       | |__| |  /  \ | |  | | (___  
-       |  __  | / /\ \| |  | |\___ \ 
-       | |  | |/ ____ \ |__| |____) |
-       |_|  |_/_/ ${CL}${YW}v4${CL}${BL} \_\____/|_____/ 
+echo -e "${HA}
+    __  _____   ____  _____
+   / / / /   | / __ \/ ___/
+  / /_/ / /| |/ / / /\__ \ 
+ / __  / ___ / /_/ /___/ / 
+/_/ /_/_/v4|_\____//____/  
+    Home Assistant OS
 ${CL}"
 }
 function msg_info() {
