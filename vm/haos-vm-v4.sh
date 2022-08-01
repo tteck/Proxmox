@@ -23,7 +23,6 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 trap cleanup EXIT
-
 function error_exit() {
   trap - ERR
   local reason="Unknown failure occurred."
@@ -33,7 +32,6 @@ function error_exit() {
   [ ! -z ${VMID-} ] && cleanup_vmid
   exit $EXIT
 }
-
 function cleanup_vmid() {
   if $(qm status $VMID &>/dev/null); then
     if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
@@ -42,22 +40,18 @@ function cleanup_vmid() {
     qm destroy $VMID
   fi
 }
-
 function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
-
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-    
 if [[ "$PVE" != "1" ]]; then
-    echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
-    echo -e "Exiting..."
-    sleep 2
-    exit
+  echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
+  echo -e "Exiting..."
+  sleep 2
+  exit
 fi
-
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
 else
@@ -75,12 +69,10 @@ echo -e "${BL}
        |_|  |_/_/ ${CL}${YW}v4${CL}${BL} \_\____/|_____/ 
 ${CL}"
 }
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
-
 function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
@@ -91,7 +83,7 @@ function default_settings() {
 	echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
 	VMID=$NEXTID
 	echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
-	VM_NAME=haos${STABLE}
+	HN=haos${STABLE}
 	echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
 	CORE_COUNT="2"
  	echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
@@ -104,7 +96,7 @@ function default_settings() {
 	VLAN=""
 	echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
 	START_VM="yes"
-
+	echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
 BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 2 \
@@ -117,7 +109,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -125,7 +116,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${STABLE} --title "HOSTNAME" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -134,7 +124,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -142,7 +131,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -150,7 +138,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -158,7 +145,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 MAC1=$(whiptail --inputbox "Set a MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -167,7 +153,6 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-
 VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58  --title "VLAN" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -178,7 +163,6 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
-
 if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
     echo -e "${DGN}Starting VM when completed${CL}"
     START_VM="yes"
@@ -194,7 +178,6 @@ else
     advanced_settings
 fi
 }
-
 function start_script() {
 if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
   clear
@@ -208,9 +191,7 @@ else
   advanced_settings
 fi
 }
-
 start_script
-
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -254,14 +235,12 @@ case $STORAGE_TYPE in
     DISK_REF="$VMID/"
     DISK_IMPORT="-format qcow2"
     ;;
-    
   btrfs)
     DISK_EXT=".raw"
     DISK_REF="$VMID/"
     DISK_FORMAT="subvol"
     DISK_IMPORT="-format raw"
     ;;
-    
 esac
 for i in {0,1}; do
   disk="DISK$i"
@@ -269,7 +248,6 @@ for i in {0,1}; do
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 msg_ok "Extracted KVM Disk Image"
-
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1 -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -283,7 +261,6 @@ qm set $VMID \
 qm set $VMID -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox" >/dev/null
 msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
-
 if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
 qm start $VMID
