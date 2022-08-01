@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-08-01
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - v4 Script - Whiptail menus
+
 ## 2022-07-26
 
 ### Changed
