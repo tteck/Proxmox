@@ -27,7 +27,6 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-
 function error_exit() {
   trap - ERR
   local reason="Unknown failure occurred."
@@ -36,7 +35,6 @@ function error_exit() {
   echo -e "$flag $msg" 1>&2
   exit $EXIT
 }
-
 if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
     echo "User selected Yes"
 else
@@ -53,28 +51,23 @@ echo -e "${YW}
 \____/_.___/\__,_/_/ /_/\__/\__,_/  
 ${CL}"
 }
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
-
 function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
-
 function PVE_CHECK() {
     PVE=$(pveversion | grep "pve-manager/7" | wc -l)
-
-    if [[ $PVE != 1 ]]; then
-        echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
-        echo -e "Exiting..."
-        sleep 2
-        exit
-    fi
+if [[ $PVE != 1 ]]; then
+   echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
+   echo -e "Exiting..."
+   sleep 2
+   exit
+fi
 }
-
 function default_settings() {
 		echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
 		#var_version="22.04"
@@ -104,23 +97,19 @@ function default_settings() {
                 VLAN=""
 		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
-
 function advanced_settings() {
 var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 4 \
-"18.04" "18.04" OFF \
-"20.04" "20.04" OFF \
-"21.10" "21.10" OFF \
-"22.04" "22.04" ON \
+"18.04" "Bionic" OFF \
+"20.04" "Focal" OFF \
+"21.10" "Impish" OFF \
+"22.04" "Jammy" ON \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 8 58 2 \
 "1" "Unprivileged" ON \
 "0" "Privileged" OFF \
@@ -129,11 +118,8 @@ exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 PW1=$(whiptail --inputbox "Set Root Password" 8 58  --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -144,78 +130,56 @@ else
     echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
   fi
 fi
-
 CT_ID=$(whiptail --inputbox "Set Container ID?" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     HN=$(echo ${CT_NAME,,} | tr -d ' ')
     echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
 else
-    clear
-    echo -e "⚠ User exited script \n"
     exit
 fi
-
 GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58  --title "GATEWAY IP" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -226,7 +190,6 @@ else
     echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
   fi
 fi
-
 MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58  --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -237,7 +200,6 @@ else
     echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
   fi
 fi
-
 VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58  --title "VLAN" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -248,7 +210,6 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
-
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
 else
@@ -257,7 +218,6 @@ else
     advanced_settings
 fi
 }
-
 function start_script() {
 if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
   header_info
@@ -271,16 +231,13 @@ fi
 }
 clear
 start_script
-
 if [ "$CT_TYPE" == "1" ]; then 
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
  fi
-
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-
 export CTID=$CT_ID
 export PCT_OSTYPE=$var_os
 export PCT_OSVERSION=$var_version
@@ -296,16 +253,11 @@ export PCT_OPTIONS="
   $PW
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
-
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
-
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
-
 pct set $CTID -description "# ${APP} ${var_version} LXC
 ### https://tteck.github.io/Proxmox/"
-
 msg_ok "Completed Successfully!\n"
