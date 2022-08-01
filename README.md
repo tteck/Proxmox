@@ -1127,21 +1127,22 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Debian 11 LXC </summary>
+<summary markdown="span"> Debian LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
 
-<h1 align="center" id="heading"> Debian 11 LXC </h1>
+<h1 align="center" id="heading"> Debian LXC </h1>
+<h3 align="center" id="heading"> Option to define version 10 or 11</h3>
 
-To create a new Proxmox Debian 11 (curl. sudo) LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Debian (curl & sudo) LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/debian-v3.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/debian-v4.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
-⚙️ **To Update Debian 11**
+⚙️ **To Update Debian**
 
 Run in the LXC console
 ```yaml
@@ -1161,10 +1162,10 @@ ________________________________________________________________________________
 <h1 align="center" id="heading"> Ubuntu LXC </h1>
 <h3 align="center" id="heading"> Option to define version 18.04, 20.04, 21.10 or 22.04</h3>
 
-To create a new Proxmox Ubuntu (curl. sudo) LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Ubuntu (curl & sudo) LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu-v3.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/ubuntu-v4.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU - 22.04 ⚡</h3>
