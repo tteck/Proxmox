@@ -93,7 +93,7 @@ function default_settings() {
 	BRG="vmbr0"
 	echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
 	MAC=$GEN_MAC
-	echo -e "${DGN}Using VLAN: ${BGN}NONE${CL}"
+	echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
 	VLAN=""
 	echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
 	START_VM="yes"
