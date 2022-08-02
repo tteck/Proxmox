@@ -122,7 +122,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Home Assistant OS VM</summary>
+<summary markdown="span"> Home Assistant OS VM</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/haos.png?raw=true"/></p>
  
