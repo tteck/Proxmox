@@ -1618,50 +1618,6 @@ ________________________________________________________________________________
 
 </details>
 
-
-<details>
-<summary markdown="span"> PhotoPrism LXC </summary>
- 
-<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/photoprism.png?raw=true" height="100"/></p>
-
-<h1 align="center" id="heading"> PhotoPrism LXC </h1>
- 
-PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. 
-
-To create a new Proxmox PhotoPrism LXC, run the following in the Proxmox Shell.
-
-```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism-v4.sh)"
-```
-
-<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
-
-**PhotoPrism Interface - IP:2342**
-
-⚙️ **Initial Login**
-
-**username** 
- ```yaml
- admin
- ```
- **password** 
- ```yaml
- changeme
- ```
-[PhotoSync](https://www.photosync-app.com/home.html)
-
-⚙️ **To Update PhotoPrism**
-
-Run in the LXC Console
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/photoprism-update.sh)"
-```
-
-
-____________________________________________________________________________________________ 
-
-</details>
-
 <details>
 <summary markdown="span"> Daemon Sync Server LXC</summary>
  
