@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-APP="Wireguaed"
+APP="Wireguard"
 var_disk="2"
 var_cpu="1"
 var_ram="512"
