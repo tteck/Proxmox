@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **All LXC/VM** 
-  - v4 Script - Whiptail menus
+  - v4 Script - Whiptail menu's
 
 ## 2022-07-26
 
