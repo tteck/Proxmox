@@ -1722,6 +1722,29 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Code Server</summary>
+ 
+<p align="center"><img src="https://user-images.githubusercontent.com/674621/71187801-14e60a80-2280-11ea-94c9-e56576f76baf.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Code Server </h1>
+
+To Install Code Server, ⚠️ run the following in the LXC console.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/code-server.sh)"
+```
+
+[Code Server](https://code.visualstudio.com/docs/remote/vscode-server) is a service you can run on a remote development machine, like your desktop PC or a virtual machine (VM). It allows you to securely connect to that remote machine from anywhere through a vscode.dev URL, without the requirement of SSH.
+
+
+
+**Code Server Interface - http:// IP:8680**
+
+___________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Webmin System Administration</summary>
  
 <p align="center"><img src="https://github.com/webmin/webmin/blob/master/images/webmin-blue.png?raw=true" height="100"/></p>
