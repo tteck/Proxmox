@@ -11,6 +11,7 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 APP="FileBrowser"
+hostname="$(hostname)"
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -29,7 +30,7 @@ function error_exit() {
 }
 
 while true; do
-    read -p "This will Install ${APP}. Proceed(y/n)?" yn
+    read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -66,7 +67,7 @@ curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bas
 filebrowser config init -a '0.0.0.0' &>/dev/null
 filebrowser config set -a '0.0.0.0' &>/dev/null
 filebrowser users add admin changeme --perm.admin &>/dev/null
-msg_ok "Installed ${APP}"
+msg_ok "Installed ${APP} on $hostname"
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/filebrowser.service"
