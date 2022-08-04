@@ -260,5 +260,5 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/"
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} Setup should be reachable by going to the following URL.
+echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8084${CL} \n"
