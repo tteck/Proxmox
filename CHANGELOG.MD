@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Code Server** 
+- **VS Code Server** 
   - NEW Script
 
 ## 2022-08-02
