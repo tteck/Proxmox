@@ -96,7 +96,7 @@ msg_ok "Customized Container"
   fi
   
 msg_info "Cleaning up"
-apt-get autoremove >/dev/null
-apt-get autoclean >/dev/null
+#apt-get autoremove >/dev/null
+#apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 msg_ok "Cleaned"
