@@ -37,7 +37,7 @@ Cleaning unused kernel images is not only good because of a reduced grub menu, b
 Run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean-v3.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/kernel-clean.sh)"
 ```
 ____________________________________________________________________________________________ 
 
@@ -1692,7 +1692,7 @@ ________________________________________________________________________________
 To Install File Browser, ⚠️ run the following in the LXC console.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/filebrowser-v3.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/filebrowser.sh)"
 ```
 
 [File Browser](https://filebrowser.org/features) is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface. Many available features!
@@ -1858,7 +1858,7 @@ ________________________________________________________________________________
 To Install CrowdSec, ⚠️ run the following in the LXC console.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/crowdsec-v3.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/crowdsec.sh)"
 ```
 
 [CrowdSec](https://crowdsec.net/) is a free, open-source and collaborative IPS. Analyze behaviors, respond to attacks & share signals across the community.
