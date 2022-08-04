@@ -10,6 +10,7 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 APP="CrowdSec"
+hostname="$(hostname)"
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -28,7 +29,7 @@ function error_exit() {
 }
 
 while true; do
-    read -p "This will Install ${APP}. Proceed(y/n)?" yn
+    read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -41,7 +42,7 @@ echo -e "${BL}
    _____                      _  _____           
   / ____|                    | |/ ____|          
  | |     _ __ _____      ____| | (___   ___  ___ 
- | | v3 |  __/ _ \ \ /\ / / _  |\___ \ / _ \/ __|
+ | |    |  __/ _ \ \ /\ / / _  |\___ \ / _ \/ __|
  | |____| | | (_) \ V  V / (_| |____) |  __/ (__ 
   \_____|_|  \___/ \_/\_/ \__ _|_____/ \___|\___|
 ${CL}"
@@ -68,7 +69,7 @@ msg_ok "Setup ${APP} Repository"
 msg_info "Installing ${APP}"
 apt-get update &>/dev/null
 apt-get install -y crowdsec &>/dev/null
-msg_ok "Installed ${APP}"
+msg_ok "Installed ${APP} on $hostname"
 
 msg_info "Installing ${APP} Common Bouncer"
 apt-get install -y crowdsec-firewall-bouncer-iptables &>/dev/null
