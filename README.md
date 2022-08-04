@@ -1722,23 +1722,23 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Code Server</summary>
+<summary markdown="span"> 🔸VS Code Server</summary>
  
 <p align="center"><img src="https://user-images.githubusercontent.com/674621/71187801-14e60a80-2280-11ea-94c9-e56576f76baf.png?raw=true" height="100"/></p>
 
-<h1 align="center" id="heading"> Code Server </h1>
+<h1 align="center" id="heading"> VS Code Server </h1>
 
-To Install Code Server, ⚠️ run the following in the LXC console.
+To Install VS Code Server, ⚠️ run the following in the LXC console.
 
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/code-server.sh)"
 ```
 
-[Code Server](https://code.visualstudio.com/docs/remote/vscode-server) is a service you can run on a remote development machine, like your desktop PC or a virtual machine (VM). It allows you to securely connect to that remote machine from anywhere through a vscode.dev URL, without the requirement of SSH.
+[VS Code Server](https://code.visualstudio.com/docs/remote/vscode-server) is a service you can run on a remote development machine, like your desktop PC or a virtual machine (VM). It allows you to securely connect to that remote machine from anywhere through a vscode.dev URL, without the requirement of SSH.
 
 
 
-**Code Server Interface - http:// IP:8680**
+**VS Code Server Interface - http:// IP:8680**
 
 ___________________________________________________________________________________________ 
 
