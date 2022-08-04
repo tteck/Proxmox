@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+IP=$(hostname -I | awk '{print $1}')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 RD=`echo "\033[01;31m"`
@@ -86,4 +87,4 @@ msg_ok "Created Service"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://$(hostname -I):8080${CL} \n"
+         ${BL}http://$IP:8080${CL} \n"
