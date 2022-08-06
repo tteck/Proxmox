@@ -236,13 +236,13 @@ for i in {0,1}; do
 done
 msg_ok "Extracted Disk Image"
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1 -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
+qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
+pvesm alloc $STORAGE $VMID $DISK0 64M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF},size=128K \
-  -scsi0 ${DISK1_REF},discard=on,size=32G,ssd=1 >/dev/null
+  -efidisk0 ${DISK0_REF},efitype=4m,size=64M \
+  -scsi0 ${DISK1_REF},size=32G >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
 qm set $VMID -description "# Home Assistant OS
