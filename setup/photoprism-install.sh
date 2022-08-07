@@ -127,17 +127,26 @@ NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 msg_ok "Built PhotoPrism"
 
-env_path="/var/lib/photoprism/.env"
-echo " 
-PHOTOPRISM_AUTH_MODE='password'
-PHOTOPRISM_ADMIN_PASSWORD='changeme'
-PHOTOPRISM_HTTP_HOST='0.0.0.0'
-PHOTOPRISM_HTTP_PORT=2342
-PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
-PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
-PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
-" > $env_path
+#env_path="/var/lib/photoprism/.env"
+#echo " 
+#PHOTOPRISM_AUTH_MODE='password'
+#PHOTOPRISM_ADMIN_PASSWORD='changeme'
+#PHOTOPRISM_HTTP_HOST='0.0.0.0'
+#PHOTOPRISM_HTTP_PORT=2342
+#PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
+#PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
+#PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
+#" > $env_path
 
+cat <<EOF >  /var/lib/photoprism/.env
+PHOTOPRISM_AUTH_MODE="password"
+PHOTOPRISM_ADMIN_PASSWORD="changeme"
+PHOTOPRISM_HTTP_HOST="0.0.0.0"
+PHOTOPRISM_HTTP_PORT="2342"
+PHOTOPRISM_STORAGE_PATH="/var/lib/photoprism/storage"
+PHOTOPRISM_ORIGINALS_PATH="/var/lib/photoprism/photos/Originals"
+PHOTOPRISM_IMPORT_PATH="/var/lib/photoprism/photos/Import"
+EOF
 msg_info "Creating Service"
 service_path="/etc/systemd/system/photoprism.service"
 
