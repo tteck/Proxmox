@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 LATEST=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
@@ -47,11 +46,12 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [[ "$PVE" != "1" ]]; then
-  echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
-  echo -e "Exiting..."
-  sleep 2
-  exit
+if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
+	echo "⚠ This version of Proxmox Virtual Environment is not supported"
+	echo "Requires PVE Version: 7.XX"
+	echo "Exiting..."
+	sleep 3
+	exit
 fi
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
