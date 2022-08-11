@@ -23,10 +23,11 @@ while true; do
     esac
 done
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
-        echo -e "This script requires Proxmox Virtual Environment 7.0 or greater"
-        echo -e "Exiting..."
-        sleep 2
-        exit
+	echo "⚠ This version of Proxmox Virtual Environment is not supported"
+	echo "Requires PVE Version: 7.XX"
+	echo "Exiting..."
+	sleep 3
+	exit
 fi
 function header_info {
 echo -e "${RD}
