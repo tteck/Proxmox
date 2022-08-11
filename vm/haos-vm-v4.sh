@@ -194,6 +194,7 @@ else
 fi
 }
 start_script
+msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -203,11 +204,13 @@ while read -r line; do
   if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
     MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
   fi
-  STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
+STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
-if [ $((${#STORAGE_MENU[@]}/3)) -eq 0 ]; then
-  echo -e "'Disk image' needs to be selected for at least one storage location."
-  die "Unable to detect valid storage location."
+VALID=$(pvesm status -content images | awk 'NR>1')
+if [ -z "$VALID" ]; then
+	echo -e "${RD}⚠ Unable to detect a valid storage location.${CL}"
+	echo -e "Exiting..."
+	exit
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
 else
