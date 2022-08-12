@@ -146,6 +146,7 @@ DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DI
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+    if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo -e "${RD}⚠ DISK SIZE MUST BE A INTEGER NUMBER!${CL}"; advanced_settings; fi;
 else
     exit
 fi
