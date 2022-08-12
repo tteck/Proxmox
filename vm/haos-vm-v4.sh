@@ -208,7 +208,7 @@ STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
 VALID=$(pvesm status -content images | awk 'NR>1')
 if [ -z "$VALID" ]; then
-	echo -e "${RD}⚠ Unable to detect a valid storage location.${CL}"
+	echo -e "\n${RD}⚠ Unable to detect a valid storage location.${CL}"
 	echo -e "Exiting..."
 	exit
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
