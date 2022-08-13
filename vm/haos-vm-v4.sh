@@ -2,8 +2,9 @@
 echo -e "Loading..."
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
-LATEST=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
+LATEST=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
+DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 HA=`echo "\033[1;34m"`
@@ -100,9 +101,10 @@ function default_settings() {
 	echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
-BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 2 \
+BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 3 \
 "$STABLE" "Stable" ON \
 "$LATEST" "Latest" OFF \
+"$DEV" "Dev" OFF \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -117,7 +119,7 @@ if [ $exitstatus = 0 ]; then
 else
     exit
 fi
-VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${STABLE} --title "HOSTNAME" 3>&1 1>&2 2>&3)
+VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     HN=$(echo ${VM_NAME,,} | tr -d ' ')
@@ -224,7 +226,11 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+if [ "$BRANCH" == "$DEV" ]; then 
+URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
+else
 URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
+fi
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
