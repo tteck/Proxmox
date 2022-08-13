@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-08-13
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - Option to create VM using Stable, Latest or Dev Image
+
 ## 2022-08-11
 
 ### Changed
