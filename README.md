@@ -127,7 +127,7 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/haos.png?raw=true"/></p>
  
 <h1 align="center" id="heading"> Home Assistant OS VM </h1>
-<h3 align="center"> Option to create VM using Stable, Latest or Dev Image </h3>
+<h3 align="center"> Option to create VM using Stable, Beta or Dev Image </h3>
 
 The script automates the manual process of finding, downloading and extracting the Official KVM (qcow2) disk image provided by the Home Assistant Team, creating a VM with user defined settings, importing and attaching the disk, setting the boot order and starting the VM. No hidden (kpartx, unzip, ect...) installs of any kind. Supports lvmthin, zfspool, nfs, dir and btrfs storage types.
 
