@@ -3,7 +3,7 @@ echo -e "Loading..."
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
-LATEST=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
+BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
@@ -103,7 +103,7 @@ function default_settings() {
 function advanced_settings() {
 BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 3 \
 "$STABLE" "Stable" ON \
-"$LATEST" "Latest" OFF \
+"$BETA" "Beta" OFF \
 "$DEV" "Dev" OFF \
 3>&1 1>&2 2>&3)
 exitstatus=$?

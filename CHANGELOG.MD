@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Home Assistant OS VM** 
-  - Option to create VM using Stable, Latest or Dev Image
+  - Option to create VM using Stable, Beta or Dev Image
 
 ## 2022-08-11
 
