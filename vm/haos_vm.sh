@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-PVE=$(pveversion | grep "pve-manager/7" | wc -l)
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
-RELEASE=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
+BETA=$(curl -sX GET "https://api.github.com/repos/home-assistant/operating-system/releases" | awk '/tag_name/{print $4;exit}' FS='[""]')
+DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
+HA=`echo "\033[1;34m"`
 RD=`echo "\033[01;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
@@ -23,7 +24,6 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 trap cleanup EXIT
-
 function error_exit() {
   trap - ERR
   local reason="Unknown failure occurred."
@@ -33,7 +33,6 @@ function error_exit() {
   [ ! -z ${VMID-} ] && cleanup_vmid
   exit $EXIT
 }
-
 function cleanup_vmid() {
   if $(qm status $VMID &>/dev/null); then
     if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
@@ -42,241 +41,160 @@ function cleanup_vmid() {
     qm destroy $VMID
   fi
 }
-
 function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
-
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-    
-if [[ "$PVE" == "1" ]]; then
-    echo -e "${YW}This script is for Proxmox Virtual Environment 6${CL}"
+if [ `pveversion | grep "pve-manager/7" | wc -l` -eq 1 ]; then
+    echo -e "${YW}This script is for Proxmox Virtual Environment 6.xx${CL}"
     echo -e "Continuing..."
-    sleep 5
+    sleep 3
 fi
-
-while true; do
+if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
+    echo "User selected Yes"
+else
     clear
-    read -p "This will create a New Home Assistant OS VM. Proceed(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-clear
-
+    echo -e "⚠ User exited script \n"
+    exit
+fi
 function header_info {
-echo -e "${BL}
-        _    _          ____   _____ 
-       | |  | |   /\   / __ \ / ____|
-       | |__| |  /  \ | |  | | (___  
-       |  __  | / /\ \| |  | |\___ \ 
-       | |  | |/ ____ \ |__| |____) |
-       |_|  |_/_/ ${CL}${YW}v3${CL}${BL} \_\____/|_____/ 
+echo -e "${HA}
+    __  _____   ____  _____
+   / / / /   | / __ \/ ___/
+  / /_/ / /| |/ / / /\__ \ 
+ / __  / ___ / /_/ /___/ / 
+/_/ /_/_/v4|_\____//____/  
+    Home Assistant OS
 ${CL}"
 }
-header_info
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
-
 function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 function default_settings() {
-        clear
-        header_info
-        echo -e "${BL}Using Default Settings${CL}"
-		echo -e "${DGN}Using Version ${BGN}${STABLE}${CL}"
-		BRANCH=${STABLE}
-		echo -e "${DGN}Using VM ID ${BGN}$NEXTID${CL}"
-		VMID=$NEXTID
-		echo -e "${DGN}Using VM Name ${BGN}haos${STABLE}${CL}"
-		VM_NAME=haos${STABLE}
-	        echo -e "${DGN}Using ${BGN}2${CL}${DGN}vCPU${CL}"
-	        CORE_COUNT="2"
- 	        echo -e "${DGN}Using ${BGN}4096${CL}${DGN}MiB RAM${CL}"
-	        RAM_SIZE="4096"
-	        echo -e "${DGN}Using Bridge ${BGN}vmbr0${CL}"
-	        BRG="vmbr0"
-	        echo -e "${DGN}Using MAC Address ${BGN}$GEN_MAC${CL}"
-		MAC=$GEN_MAC
-	        echo -e "${DGN}Using VLAN Tag ${BGN}NONE${CL}"
-	        VLAN=""
-		echo -e "${DGN}Start VM when completed ${BGN}yes${CL}"
-		START_VM="yes"
-
+	echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
+	BRANCH=${STABLE}
+	echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
+	VMID=$NEXTID
+	echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
+	HN=haos${STABLE}
+	echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
+	CORE_COUNT="2"
+ 	echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
+	RAM_SIZE="4096"
+	echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
+	BRG="vmbr0"
+	echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
+	MAC=$GEN_MAC
+	echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
+	VLAN=""
+	echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
+	START_VM="yes"
+	echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
-        clear
-        header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-        echo -e "${YW}Type Latest for Version ${RELEASE}, or Press [ENTER] for Stable Version ${STABLE} "
-        read BRANCH
-        if [ -z $BRANCH ]; then BRANCH=$STABLE; 
-        else
-          BRANCH=$RELEASE; fi;
-	echo -en "${DGN}Set Version To ${BL}$BRANCH${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-	clear
-        header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${YW}Enter the VM ID, or Press [ENTER] to automatically generate (${NEXTID}) "
-        read VMID
-        if [ -z $VMID ]; then VMID=$NEXTID; fi;
-	echo -en "${DGN}Set VM ID To ${BL}$VMID${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${YW}Enter VM Name (no-spaces), or Press [ENTER] for Default: haos${BRANCH} "
-        read VMNAME
-        if [ -z $VMNAME ]; then
-           VM_NAME=haos${BRANCH}
-        else
-           VM_NAME=$(echo ${VMNAME,,} | tr -d ' ')
-        fi
-        echo -en "${DGN}Set CT Name To ${BL}$VM_NAME${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${YW}Allocate CPU cores, or Press [ENTER] for Default: 2 "
-        read CORE_COUNT
-        if [ -z $CORE_COUNT ]; then CORE_COUNT="2"; fi;
-        echo -en "${DGN}Set Cores To ${BL}${CORE_COUNT}${CL}"
-echo -e " ${CM}${CL} \r"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${YW}Allocate RAM in MiB, or Press [ENTER] for Default: 4096 "
-        read RAM_SIZE
-        if [ -z $RAM_SIZE ]; then RAM_SIZE="4096"; fi;
-        echo -en "${DGN}Set RAM To ${BL}$RAM_SIZE${CL}"
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
-        echo -e "${YW}Enter a Bridge, or Press [ENTER] for Default: vmbr0 "
-        read BRG
-        if [ -z $BRG ]; then BRG="vmbr0"; fi;
-        echo -en "${DGN}Set Bridge To ${BL}$BRG${CL}"
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${YW}Enter a Valid MAC Address, or Press [ENTER] for Generated MAC: $GEN_MAC "
-        read MAC
-        if [ -z $MAC ]; then MAC=$GEN_MAC; fi;
-        echo -en "${DGN}Set MAC Address To ${BL}$MAC${CL}"
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB RAM${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
-        read VLAN1
-        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=""; 
-        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-        else
-          VLAN=",tag=$VLAN1"
-        echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
-        fi;
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-	echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
-        echo -e "${YW}Start VM when completed, or Press [ENTER] for Default: yes "
-        read START_VM
-        if [ -z $START_VM ]; then START_VM="yes"; 
-        else
-          START_VM="no"; fi;
-        echo -en "${DGN}Starting VM when completed ${BL}$START_VM${CL}"
-echo -e " ${CM}${CL} \n"
-sleep 1
-clear
-header_info
-        echo -e "${RD}Using Advanced Settings${CL}"
-	echo -e "${DGN}Using Version ${BGN}$BRANCH${CL}"
-        echo -e "${DGN}Using VM ID ${BGN}$VMID${CL}"
-        echo -e "${DGN}Using VM Name ${BGN}$VM_NAME${CL}"
-        echo -e "${DGN}Using ${BGN}${CORE_COUNT}${CL}${DGN}vCPU${CL}"
-        echo -e "${DGN}Using ${BGN}${RAM_SIZE}${CL}${DGN}MiB${CL}"
-	echo -e "${DGN}Using Bridge ${BGN}${BRG}${CL}"
-        echo -e "${DGN}Using MAC Address ${BGN}$MAC${CL}"
-        echo -e "${DGN}Using VLAN Tag ${BGN}$VLAN1${CL}"
-	echo -e "${DGN}Start VM when completed ${BGN}$START_VM${CL}"
-
-read -p "Are these settings correct(y/n)? " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    advanced_settings
+BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 3 \
+"$STABLE" "Stable" ON \
+"$BETA" "Beta" OFF \
+"$DEV" "Dev" OFF \
+3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"
+else
+    exit
+fi
+VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo -e "${DGN}Using Virtual Machine ID: ${BGN}$VMID${CL}"
+else
+    exit
+fi
+VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    HN=$(echo ${VM_NAME,,} | tr -d ' ')
+    echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+else
+    exit
+fi
+CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+else
+    exit
+fi
+RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+else
+    exit
+fi
+BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
+else
+    exit
+fi
+MAC1=$(whiptail --inputbox "Set a MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+    MAC="$MAC1"
+    echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
+else
+    exit
+fi
+VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58  --title "VLAN" 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+  if [ -z $VLAN1 ]; then VLAN1="Default" VLAN="";
+    echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
+else
+    VLAN=",tag=$VLAN1"
+    echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
+  fi  
+fi
+if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
+    echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
+    START_VM="yes"
+else
+    echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
+    START_VM="no"
+fi
+if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" 10 58); then
+    echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
+else
+  clear
+  header_info
+  echo -e "${RD}Using Advanced Settings${CL}"
+  advanced_settings
 fi
 }
-
 function start_script() {
-		echo -e "${YW}Type Advanced (Latest ${RELEASE}), or Press [ENTER] for Default Settings (Stable ${STABLE}) "
-		read SETTINGS
-		if [ -z $SETTINGS ]; then default_settings; 
-		else
-		advanced_settings 
-		fi;
+if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
+  clear
+  header_info
+  echo -e "${BL}Using Default Settings${CL}"
+  default_settings
+else
+  clear
+  header_info
+  echo -e "${RD}Using Advanced Settings${CL}"
+  advanced_settings
+fi
 }
-
 start_script
-
+msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -286,11 +204,13 @@ while read -r line; do
   if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
     MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
   fi
-  STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
+STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
-if [ $((${#STORAGE_MENU[@]}/3)) -eq 0 ]; then
-  echo -e "'Disk image' needs to be selected for at least one storage location."
-  die "Unable to detect valid storage location."
+VALID=$(pvesm status -content images | awk 'NR>1')
+if [ -z "$VALID" ]; then
+	echo -e "\n${RD}⚠ Unable to detect a valid storage location.${CL}"
+	echo -e "Exiting..."
+	exit
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
 else
@@ -304,7 +224,11 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+if [ "$BRANCH" == "$DEV" ]; then 
+URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
+else
 URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
+fi
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
@@ -326,9 +250,8 @@ for i in {0,1}; do
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 msg_ok "Extracted KVM Disk Image"
-
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $VM_NAME -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
+qm create $VMID -agent 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 128 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
@@ -339,8 +262,7 @@ qm set $VMID \
   -boot order=scsi0 >/dev/null
 qm set $VMID -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox" >/dev/null
-msg_ok "Created HAOS VM ${CL}${BL}${VM_NAME}"
-
+msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Home Assistant OS VM"
 qm start $VMID
