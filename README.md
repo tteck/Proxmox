@@ -972,7 +972,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nocodb-v4.sh
 
 Run in the LXC console
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/nocodb-update.sh)"
+cd /opt/nocodb && npm run upgrade
 ```
 
 ____________________________________________________________________________________________ 
