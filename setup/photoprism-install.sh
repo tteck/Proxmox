@@ -97,6 +97,7 @@ cp /usr/local/go/bin/richgo /usr/local/bin/richgo
 cp /usr/local/go/bin/gosu /usr/local/sbin/gosu
 chown root:root /usr/local/sbin/gosu
 chmod 755 /usr/local/sbin/gosu
+rm go1.18.3.linux-amd64.tar.gz
 msg_ok "Installed Golang"
 
 msg_info "Installing Tensorflow"
@@ -111,6 +112,7 @@ if [[ "$AVX" =~ avx2 ]]; then
   tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
 fi
 ldconfig &>/dev/null
+rm libtensorflow-linux-avx2-1.15.2.tar.gz
 msg_ok "Installed Tensorflow"
 
 msg_info "Cloning PhotoPrism"
@@ -127,25 +129,17 @@ NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 msg_ok "Built PhotoPrism"
 
-#env_path="/var/lib/photoprism/.env"
-#echo " 
-#PHOTOPRISM_AUTH_MODE='password'
-#PHOTOPRISM_ADMIN_PASSWORD='changeme'
-#PHOTOPRISM_HTTP_HOST='0.0.0.0'
-#PHOTOPRISM_HTTP_PORT=2342
-#PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
-#PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
-#PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
-#" > $env_path
-
-cat <<EOF >  /var/lib/photoprism/.env
-PHOTOPRISM_AUTH_MODE="password"
-PHOTOPRISM_ADMIN_PASSWORD="changeme"
-PHOTOPRISM_HTTP_HOST="0.0.0.0"
-PHOTOPRISM_HTTP_PORT="2342"
-PHOTOPRISM_STORAGE_PATH="/var/lib/photoprism/storage"
-PHOTOPRISM_ORIGINALS_PATH="/var/lib/photoprism/photos/Originals"
-PHOTOPRISM_IMPORT_PATH="/var/lib/photoprism/photos/Import"
+cat <<EOF >  /var/lib/photoprism/options.yml
+# Authentication
+AuthMode: password
+AdminPassword: changeme
+# Listening address/port
+HttpPort: 2342
+HttpHost: 0.0.0.0
+# Paths
+StoragePath: /var/lib/photoprism/storage
+OriginalsPath: /var/lib/photoprism/photos/Originals
+ImportPath: /var/lib/photoprism/photos/Import
 EOF
 msg_info "Creating Service"
 service_path="/etc/systemd/system/photoprism.service"
@@ -158,8 +152,7 @@ After=network.target
 Type=forking
 User=root
 WorkingDirectory=/opt/photoprism
-EnvironmentFile=/var/lib/photoprism/.env
-ExecStart=/opt/photoprism/bin/photoprism up -d
+ExecStart=/opt/photoprism/bin/photoprism --config-path /var/lib/photoprism/ up -d
 ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
