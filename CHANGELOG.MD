@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-08-19
+
+### Changed
+
+- **PhotoPrism LXC** 
+  - Fixed .env bug Thanks @cklam2 
+
 ## 2022-08-13
 
 ### Changed
