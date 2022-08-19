@@ -60,7 +60,7 @@ apt update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y gcc &>/dev/null
@@ -82,7 +82,7 @@ msg_info "Installing Node.js"
 apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
-msg_info "Installing Golang"
+msg_info "Installing Golang (Patience)"
 wget https://golang.org/dl/go1.18.4.linux-amd64.tar.gz &>/dev/null
 tar -xzf go1.18.4.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
@@ -179,6 +179,10 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /root/go1.18.4.linux-amd64.tar.gz /root/libtensorflow-linux-avx2-1.15.2.tar.gz /root/libtensorflow-linux-avx-1.15.2.tar.gz /root/libtensorflow-linux-cpu-1.15.2.tar.gz
+rm -rf /var/{cache,log}/* \
+/go1.18.4.linux-amd64.tar.gz \
+/libtensorflow-linux-avx2-1.15.2.tar.gz \
+/libtensorflow-linux-avx-1.15.2.tar.gz \
+/libtensorflow-linux-cpu-1.15.2.tar.gz
 systemctl enable --now photoprism &>/dev/null
 msg_ok "Cleaned"
