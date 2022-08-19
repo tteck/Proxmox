@@ -179,9 +179,13 @@ msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* \
+/photoprism \
 /go1.18.4.linux-amd64.tar.gz \
 /libtensorflow-linux-avx2-1.15.2.tar.gz \
 /libtensorflow-linux-avx-1.15.2.tar.gz \
 /libtensorflow-linux-cpu-1.15.2.tar.gz
-systemctl enable --now photoprism &>/dev/null
 msg_ok "Cleaned"
+
+msg_info "Starting PhotoPrism"
+systemctl enable --now photoprism &>/dev/null
+msg_info "Started PhotoPrism"
