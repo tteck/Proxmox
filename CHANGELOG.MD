@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **PhotoPrism LXC** 
-  - Fixed .env bug Thanks @cklam2 
+  - Fixed .env bug (Thanks @cklam2)
 
 ## 2022-08-13
 
