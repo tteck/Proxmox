@@ -189,4 +189,3 @@ msg_ok "Cleaned"
 
 msg_info "Starting PhotoPrism"
 systemctl enable --now photoprism &>/dev/null
-msg_ok "Started PhotoPrism"
