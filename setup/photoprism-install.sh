@@ -83,8 +83,8 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Golang"
-wget https://golang.org/dl/go1.18.3.linux-amd64.tar.gz &>/dev/null
-tar -xzf go1.18.3.linux-amd64.tar.gz -C /usr/local &>/dev/null
+wget https://golang.org/dl/go1.18.4.linux-amd64.tar.gz &>/dev/null
+tar -xzf go1.18.4.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 go install github.com/tianon/gosu@latest &>/dev/null
 go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
@@ -97,7 +97,6 @@ cp /usr/local/go/bin/richgo /usr/local/bin/richgo
 cp /usr/local/go/bin/gosu /usr/local/sbin/gosu
 chown root:root /usr/local/sbin/gosu
 chmod 755 /usr/local/sbin/gosu
-rm go1.18.3.linux-amd64.tar.gz
 msg_ok "Installed Golang"
 
 msg_info "Installing Tensorflow"
@@ -112,7 +111,6 @@ if [[ "$AVX" =~ avx2 ]]; then
   tar -C /usr/local -xzf libtensorflow-linux-cpu-1.15.2.tar.gz &>/dev/null
 fi
 ldconfig &>/dev/null
-rm libtensorflow-linux-avx2-1.15.2.tar.gz
 msg_ok "Installed Tensorflow"
 
 msg_info "Cloning PhotoPrism"
@@ -123,7 +121,7 @@ cd photoprism
 git checkout release &>/dev/null
 msg_ok "Cloned PhotoPrism"
 
-msg_info "Building PhotoPrism"
+msg_info "Building PhotoPrism (Patience)"
 NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
 cp -a assets/ /opt/photoprism/assets/ &>/dev/null
@@ -141,6 +139,7 @@ StoragePath: /var/lib/photoprism/storage
 OriginalsPath: /var/lib/photoprism/photos/Originals
 ImportPath: /var/lib/photoprism/photos/Import
 EOF
+
 msg_info "Creating Service"
 service_path="/etc/systemd/system/photoprism.service"
 
@@ -157,7 +156,6 @@ ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
 WantedBy=multi-user.target" > $service_path
-systemctl enable --now photoprism &>/dev/null
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -181,5 +179,6 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
+rm -rf /var/{cache,log}/* /root/go1.18.4.linux-amd64.tar.gz /root/libtensorflow-linux-avx2-1.15.2.tar.gz /root/libtensorflow-linux-avx-1.15.2.tar.gz /root/libtensorflow-linux-cpu-1.15.2.tar.gz
+systemctl enable --now photoprism &>/dev/null
 msg_ok "Cleaned"
