@@ -56,8 +56,8 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
-apt update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies (Patience)"
@@ -75,7 +75,7 @@ apt-get install -y ffmpeg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
-sudo curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - &>/dev/null
+curl -sL https://deb.nodesource.com/setup_16.x | bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
@@ -127,18 +127,16 @@ NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 cp -a assets/ /opt/photoprism/assets/ &>/dev/null
 msg_ok "Built PhotoPrism"
 
-cat <<EOF >  /var/lib/photoprism/options.yml
-# Authentication
-AuthMode: password
-AdminPassword: changeme
-# Listening address/port
-HttpPort: 2342
-HttpHost: 0.0.0.0
-# Paths
-StoragePath: /var/lib/photoprism/storage
-OriginalsPath: /var/lib/photoprism/photos/Originals
-ImportPath: /var/lib/photoprism/photos/Import
-EOF
+env_path="/var/lib/photoprism/.env"
+echo " 
+PHOTOPRISM_AUTH_MODE='password'
+PHOTOPRISM_ADMIN_PASSWORD='changeme'
+PHOTOPRISM_HTTP_HOST='0.0.0.0'
+PHOTOPRISM_HTTP_PORT='2342'
+PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
+PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
+PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
+" > $env_path
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/photoprism.service"
@@ -151,7 +149,8 @@ After=network.target
 Type=forking
 User=root
 WorkingDirectory=/opt/photoprism
-ExecStart=/opt/photoprism/bin/photoprism --config-path /var/lib/photoprism/ up -d
+EnvironmentFile=/var/lib/photoprism/.env
+ExecStart=/opt/photoprism/bin/photoprism up -d
 ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
