@@ -1673,7 +1673,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism-v
  ```
 [PhotoSync](https://www.photosync-app.com/home.html)
 
-⚙️ **To Update PhotoPrism**
+⚙️ **To Update or Change Branch**
 
 Run in the LXC Console
 ```yaml
