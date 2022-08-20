@@ -107,11 +107,11 @@ fi
 read -r -p "Update Proxmox VE 7 now? <y/n> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
-msg_info "Updating Proxmox VE 7"
+msg_info "Updating Proxmox VE 7 (Patience)"
 apt-get update &>/dev/null
 apt-get -y dist-upgrade &>/dev/null
-msg_ok "Updated Proxmox VE 7 (Reboot Recommended)"
+msg_ok "Updated Proxmox VE 7 (⚠ Reboot Recommended)"
 fi
 
 sleep 2
-msg_ok "Finished Post Install Routines"
+msg_ok "Completed Post Install Routines"
