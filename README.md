@@ -1977,6 +1977,28 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Mikrotik RouterOS VM </summary>
+ 
+<p align="center"><img src="https://mikrotik.com/img/mtv2/newlogo.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Mikrotik RouterOS VM </h1>
+ 
+[Mikrotik RouterOS](https://wiki.mikrotik.com/wiki/Manual:TOC) can be installed on a PC and will turn it into a router with all the necessary features - routing, firewall, bandwidth management, wireless access point, backhaul link, hotspot gateway, VPN server and more. 
+
+To create a new Proxmox Mikrotik RouterOS VM, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mikrotik-routeros-v4.sh.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 2GB Storage - 1CPU ⚡</h3>
+
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Vaultwarden LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/dani-garcia/vaultwarden/main/resources/vaultwarden-icon-white.svg" width="100" height="100"/></p>
