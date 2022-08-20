@@ -55,21 +55,25 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
-apt update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y openjdk-11-jdk &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Keycloak"
+RELEASE=$(curl -s https://api.github.com/repos/keycloak/keycloak/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 2, length($2)-3) }') \
+
+msg_info "Installing Keycloak v$RELEASE"
 cd /opt
-wget https://github.com/keycloak/keycloak/releases/download/18.0.0/keycloak-18.0.0.tar.gz &>/dev/null
-tar -xvf keycloak-18.0.0.tar.gz &>/dev/null
-mv keycloak-18.0.0 keycloak
+wget https://github.com/keycloak/keycloak/releases/download/$RELEASE/keycloak-$RELEASE.tar.gz &>/dev/null
+tar -xvf keycloak-$RELEASE.tar.gz &>/dev/null
+mv keycloak-$RELEASE keycloak
 msg_ok "Installed Keycloak"
 
 msg_info "Creating Service"
