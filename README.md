@@ -1990,6 +1990,7 @@ To create a new Proxmox Mikrotik RouterOS VM, run the following in the Proxmox S
 ```
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mikrotik-routeros-v4.sh.sh)"
 ```
+Setup is done via VM console.
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 2GB Storage - 1CPU ⚡</h3>
 
