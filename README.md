@@ -1307,6 +1307,30 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Emby Media Server LXC </summary>
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/emby/icon.png?raw=true" height="100"/></p>
+<h1 align="center" id="heading"> Emby Media Server LXC </h1>
+
+To create a new Proxmox Emby Media Server LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emby-v4.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**Emby Media Server Interface - IP:8096**
+
+⚙️ **To Update Emby Media Server**
+
+Run in the LXC console
+```yaml
+
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Jellyfin Media Server LXC </summary>
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/jellyfin/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Jellyfin Media Server LXC </h1>
