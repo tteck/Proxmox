@@ -1320,12 +1320,8 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emby-v4.sh)"
 
 **Emby Media Server Interface - IP:8096**
 
-⚙️ **To Update Emby Media Server**
+⚙️ **Emby Media Server Uses Automatic Updates**
 
-Run in the LXC console
-```yaml
-
-```
 ____________________________________________________________________________________________ 
 
 </details>
