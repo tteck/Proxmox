@@ -1482,6 +1482,29 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Wiki.js LXC </summary>
+ 
+<p align="center"><img src="https://static.requarks.io/logo/wikijs-butterfly.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Wiki.js LXC </h1>
+ 
+[Wiki.js](https://js.wiki/) is a modern, lightweight and powerful wiki app built on NodeJS. 
+
+To create a new Proxmox Wiki.js LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/wikijs-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**Wiki.js Interface - IP:3000**
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Heimdall Dashboard LXC</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/heimdall.png?raw=true" height="100"/></p>
