@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Wiki.js LXC** 
   - NEW Script
+- **Emby Media Server LXC**
+  - NEW Script
 
 ## 2022-08-20
 
