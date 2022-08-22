@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-08-22
+
+### Changed
+
+- **Wiki.js LXC** 
+  - NEW Script
+
 ## 2022-08-20
 
 ### Changed
