@@ -2066,7 +2066,7 @@ Expect 30+ minute install time.
 
 **Vaultwarden Interface: CTIP:8000**
 
-⚙️ **Path to Vaultwarden .env file** (to enable `ADMIN_TOKEN`)
+⚙️ **Path to Vaultwarden .env file** (to find the `ADMIN_TOKEN`)
 ```yaml
 /opt/vaultwarden/.env
 ```
