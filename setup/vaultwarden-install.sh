@@ -105,8 +105,7 @@ tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/ &>/dev/null
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
 cat <<EOF > /opt/vaultwarden/.env
-## https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
-# ADMIN_TOKEN=$(openssl rand -base64 48)
+ADMIN_TOKEN=$(openssl rand -base64 48)
 ROCKET_ADDRESS=0.0.0.0
 DATA_FOLDER=/opt/vaultwarden/data
 DATABASE_MAX_CONNS=10
