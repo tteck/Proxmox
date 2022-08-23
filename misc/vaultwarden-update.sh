@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
 | grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+| awk '{print substr($2, 2, length($2)-3) }')
 
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
