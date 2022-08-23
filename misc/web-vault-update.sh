@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 VWRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
 | grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+| awk '{print substr($2, 2, length($2)-3) }')
 
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
