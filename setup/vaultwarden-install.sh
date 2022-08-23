@@ -74,11 +74,11 @@ msg_ok "Installed Dependencies"
 
 WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
 | grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+| awk '{print substr($2, 2, length($2)-3) }')
 
 VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
 | grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }') \
+| awk '{print substr($2, 2, length($2)-3) }')
 
 msg_info "Installing Rust"
 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal &>/dev/null
