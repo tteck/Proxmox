@@ -1311,6 +1311,8 @@ ________________________________________________________________________________
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/emby/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Emby Media Server LXC </h1>
 
+[Emby](https://emby.media/) brings together your personal videos, music, photos, and live television.
+
 To create a new Proxmox Emby Media Server LXC, run the following in the Proxmox Shell.
 
 ```yaml
