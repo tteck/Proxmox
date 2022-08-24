@@ -75,10 +75,11 @@ apt-get -y install \
 /bin/chmod 660 /dev/dri/*
 msg_ok "Set Up Hardware Acceleration"  
 
+LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+
 msg_info "Installing Emby"
-wget https://github.com/MediaBrowser/Emby.Releases/releases/download/4.7.6.0/emby-server-deb_4.7.6.0_amd64.deb &>/dev/null
-dpkg -i emby-server-deb_4.7.6.0_amd64.deb &>/dev/null
-apt-get install -y ffmpeg &>/dev/null
+wget https://github.com/MediaBrowser/Emby.Releases/releases/download/${LATEST}/emby-server-deb_${LATEST}_amd64.deb &>/dev/null
+dpkg -i emby-server-deb_${LATEST}_amd64.deb &>/dev/null
 msg_ok "Installed Emby"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
