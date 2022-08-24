@@ -12,8 +12,8 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
-
-echo -e "\e[1;33m This script will Perform Post Install Routines. PVE7 ONLY \e[0m"
+clear
+echo -e "${BL}This script will Perform Post Install Routines.${CL}"
 while true; do
     read -p "Start the PVE7 Post Install Script (y/n)?" yn
     case $yn in
@@ -23,11 +23,11 @@ while true; do
     esac
 done
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
-	echo "⚠ This version of Proxmox Virtual Environment is not supported"
-	echo "Requires PVE Version: 7.XX"
-	echo "Exiting..."
-	sleep 3
-	exit
+        echo -e "\n${RD}⚠ This version of Proxmox Virtual Environment is not supported"
+        echo -e "Requires PVE Version: 7.XX${CL}"
+        echo -e "\nExiting..."
+        sleep 3
+        exit
 fi
 function header_info {
 echo -e "${RD}
@@ -51,7 +51,7 @@ function msg_ok() {
 
 clear
 header_info
-read -r -p "Disable Enterprise Repository? <y/n> " prompt
+read -r -p "Disable Enterprise Repository? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Disabling Enterprise Repository"
@@ -60,7 +60,7 @@ sed -i "s/^deb/#deb/g" /etc/apt/sources.list.d/pve-enterprise.list
 msg_ok "Disabled Enterprise Repository"
 fi
 
-read -r -p "Add/Correct PVE7 Sources (sources.list)? <y/n> " prompt
+read -r -p "Add/Correct PVE7 Sources (sources.list)? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Adding or Correcting PVE7 Sources"
@@ -73,7 +73,7 @@ sleep 2
 msg_ok "Added or Corrected PVE7 Sources"
 fi
 
-read -r -p "Enable No-Subscription Repository? <y/n> " prompt
+read -r -p "Enable No-Subscription Repository? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Enabling No-Subscription Repository"
@@ -84,7 +84,7 @@ sleep 2
 msg_ok "Enabled No-Subscription Repository"
 fi
 
-read -r -p "Add (Disabled) Beta/Test Repository? <y/n> " prompt
+read -r -p "Add (Disabled) Beta/Test Repository? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Adding Beta/Test Repository and set disabled"
@@ -95,7 +95,7 @@ sleep 2
 msg_ok "Added Beta/Test Repository"
 fi
 
-read -r -p "Disable Subscription Nag? <y/n> " prompt
+read -r -p "Disable Subscription Nag? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Disabling Subscription Nag"
@@ -104,13 +104,22 @@ apt --reinstall install proxmox-widget-toolkit &>/dev/null
 msg_ok "Disabled Subscription Nag"
 fi
 
-read -r -p "Update Proxmox VE 7 now? <y/n> " prompt
+read -r -p "Update Proxmox VE 7 now? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 msg_info "Updating Proxmox VE 7 (Patience)"
 apt-get update &>/dev/null
 apt-get -y dist-upgrade &>/dev/null
 msg_ok "Updated Proxmox VE 7 (⚠ Reboot Recommended)"
+fi
+
+read -r -p "Reboot Proxmox VE 7 now? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+msg_info "Rebooting Proxmox VE 7"
+sleep 2
+msg_ok "Completed Post Install Routines"
+reboot
 fi
 
 sleep 2
