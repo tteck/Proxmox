@@ -48,7 +48,7 @@ function cleanup() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 if [ `pveversion | grep "pve-manager/7" | wc -l` -eq 1 ]; then
-    echo -e "${YW}This script is for Proxmox Virtual Environment 6.xx${CL}"
+    echo -e "\n🚨 ${RD}This script is for Proxmox Virtual Environment 6.xx${CL}\n"
 	echo "Exiting..."
 	sleep 3
 	exit
