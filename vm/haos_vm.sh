@@ -49,8 +49,9 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 if [ `pveversion | grep "pve-manager/7" | wc -l` -eq 1 ]; then
     echo -e "${YW}This script is for Proxmox Virtual Environment 6.xx${CL}"
-    echo -e "Continuing..."
-    sleep 3
+	echo "Exiting..."
+	sleep 3
+	exit
 fi
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
