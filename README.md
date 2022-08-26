@@ -2033,7 +2033,7 @@ ________________________________________________________________________________
 To create a new Proxmox Mikrotik RouterOS VM, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mikrotik-routeros-v4.sh.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/mikrotik-routeros-v4.sh)"
 ```
 Setup is done via VM console.
 
