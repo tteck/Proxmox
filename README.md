@@ -2022,7 +2022,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Mikrotik RouterOS VM </summary>
+<summary markdown="span"> Mikrotik RouterOS VM </summary>
  
 <p align="center"><img src="https://mikrotik.com/img/mtv2/newlogo.svg?raw=true" height="100"/></p>
 
