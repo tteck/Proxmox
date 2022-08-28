@@ -72,9 +72,9 @@ msg_info "Installing Node.js"
 sudo apt-get install -y nodejs gcc g++ make python net-tools &>/dev/null
 msg_ok "Installed Node.js"
 
-msg_info "nstalling Homebridge"
+msg_info "Installing Homebridge"
 sudo npm install -g --unsafe-perm homebridge homebridge-config-ui-x &>/dev/null
-msg_info "nstalled Homebridge"
+msg_info "Installed Homebridge"
 
 msg_info "Creating Service"
 sudo hb-service install --user homebridge &>/dev/null
