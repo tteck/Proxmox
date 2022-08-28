@@ -25,7 +25,7 @@ show_menu(){
     proxmox-boot-tool kernel list
     echo -e "\nCurrent Kernel: ${menu}${KERNEL_ON}${normal}"
     printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Install Proxmox 5.18 Edge Kernel & Reboot\n"
+    printf "${menu}**${number} 1)${normal} Install Proxmox Edge Kernel & Reboot\n"
     printf "${menu}**${number} 2)${normal} Switch to Proxmox VE 7 ${menu}${PVE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 3)${normal} Switch to Proxmox Edge ${menu}${EDGE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 4)${normal} Unpin Current Kernel\n"
@@ -49,7 +49,7 @@ while [ $opt != '' ]
     else
       case $opt in
         1) while true; do
-            read -p "Are you sure you want to Install Proxmox 5.18 Edge Kernel & Reboot? Proceed(y/n)?" yn
+            read -p "Are you sure you want to Install Proxmox Edge Kernel & Reboot? Proceed(y/n)?" yn
             case $yn in
             [Yy]* ) break;;
             [Nn]* ) exit;;
@@ -57,12 +57,12 @@ while [ $opt != '' ]
             esac
            done
            clear;
-            option_picked "Installing Proxmox 5.18 Edge Kernel & Rebooting";
+            option_picked "Installing Proxmox Edge Kernel & Rebooting";
             apt-get install -y gnupg
             curl -1sLf 'https://dl.cloudsmith.io/public/pve-edge/kernel/gpg.8EC01CCF309B98E7.key' | apt-key add -
             echo "deb https://dl.cloudsmith.io/public/pve-edge/kernel/deb/debian bullseye main" > /etc/apt/sources.list.d/pve-edge-kernel.list
             apt-get -y update
-            apt-get -y install pve-kernel-5.18-edge
+            apt-get -y install pve-kernel-5.19-edge
             reboot
             break;
         ;;
