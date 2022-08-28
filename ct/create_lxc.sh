@@ -33,7 +33,7 @@ function msg_ok() {
    local msg="$1"
    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
-
+msg_info "Validating Storage"
 function select_storage() {
   local CLASS=$1
   local CONTENT
