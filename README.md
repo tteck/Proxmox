@@ -1371,7 +1371,9 @@ To create a new Proxmox Pi-hole LXC, run the following in the Proxmox Shell.
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/pihole-v4.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
- 
+
+⚠️ **Reboot Pi-hole LXC after install**
+
 ⚙️ **To set your password:**
  
 Run in the LXC console
