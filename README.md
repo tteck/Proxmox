@@ -1307,7 +1307,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Emby Media Server LXC </summary>
+<summary markdown="span"> Emby Media Server LXC </summary>
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/emby/icon.png?raw=true" height="100"/></p>
 <h1 align="center" id="heading"> Emby Media Server LXC </h1>
 
@@ -1506,7 +1506,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Wiki.js LXC </summary>
+<summary markdown="span"> Wiki.js LXC </summary>
  
 <p align="center"><img src="https://static.requarks.io/logo/wikijs-butterfly.svg?raw=true" height="100"/></p>
 
