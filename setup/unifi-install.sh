@@ -56,8 +56,8 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 msg_info "Updating Container OS"
-apt update &>/dev/null
-apt-get -qqy upgrade &>/dev/null
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
