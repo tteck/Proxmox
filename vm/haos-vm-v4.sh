@@ -16,6 +16,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -48,11 +49,11 @@ function cleanup() {
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
-	echo "⚠ This version of Proxmox Virtual Environment is not supported"
-	echo "Requires PVE Version: 7.XX"
-	echo "Exiting..."
-	sleep 3
-	exit
+        echo "⚠ This version of Proxmox Virtual Environment is not supported"
+        echo "Requires PVE Version: 7.XX"
+        echo "Exiting..."
+        sleep 3
+        exit
 fi
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
@@ -79,26 +80,31 @@ function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+function msg_error() {
+    local msg="$1"
+    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
+
 function default_settings() {
-	echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
-	BRANCH=${STABLE}
-	echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
-	VMID=$NEXTID
-	echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
-	HN=haos${STABLE}
-	echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
-	CORE_COUNT="2"
- 	echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
-	RAM_SIZE="4096"
-	echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
-	BRG="vmbr0"
-	echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
-	MAC=$GEN_MAC
-	echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
-	VLAN=""
-	echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
-	START_VM="yes"
-	echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
+        echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
+        BRANCH=${STABLE}
+        echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
+        VMID=$NEXTID
+        echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
+        HN=haos${STABLE}
+        echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
+        CORE_COUNT="2"
+        echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
+        RAM_SIZE="4096"
+        echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
+        BRG="vmbr0"
+        echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
+        MAC=$GEN_MAC
+        echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
+        VLAN=""
+        echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
+        START_VM="yes"
+        echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
 BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" 10 58 3 \
@@ -210,9 +216,8 @@ STORAGE_MENU+=( "$TAG" "$ITEM" "OFF" )
 done < <(pvesm status -content images | awk 'NR>1')
 VALID=$(pvesm status -content images | awk 'NR>1')
 if [ -z "$VALID" ]; then
-	echo -e "\n${RD}⚠ Unable to detect a valid storage location.${CL}"
-	echo -e "Exiting..."
-	exit
+msg_error "Unable to detect a valid storage location."
+  exit
 elif [ $((${#STORAGE_MENU[@]}/3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
 else
