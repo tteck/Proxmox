@@ -2091,3 +2091,5 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/web-vault-
 ____________________________________________________________________________________________ 
 
 </details>
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)
