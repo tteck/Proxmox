@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-08-31
+
+### Changed
+
+- **All LXC's** 
+  - Add Internet & DNS Check
+
 ## 2022-08-22
 
 ### Changed
