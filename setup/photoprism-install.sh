@@ -84,7 +84,7 @@ apt-get install -y ffmpeg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
-curl -sL https://deb.nodesource.com/setup_16.x | bash - &>/dev/null
+curl -sL https://deb.nodesource.com/setup_18.x | bash - &>/dev/null
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
@@ -92,8 +92,8 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Golang (Patience)"
-wget https://golang.org/dl/go1.18.4.linux-amd64.tar.gz &>/dev/null
-tar -xzf go1.18.4.linux-amd64.tar.gz -C /usr/local &>/dev/null
+wget https://golang.org/dl/go1.19.linux-amd64.tar.gz &>/dev/null
+tar -xzf go1.19.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 go install github.com/tianon/gosu@latest &>/dev/null
 go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
@@ -190,7 +190,7 @@ apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* \
 /photoprism \
-/go1.18.4.linux-amd64.tar.gz \
+/go1.19.linux-amd64.tar.gz \
 /libtensorflow-linux-avx2-1.15.2.tar.gz \
 /libtensorflow-linux-avx-1.15.2.tar.gz \
 /libtensorflow-linux-cpu-1.15.2.tar.gz
