@@ -73,5 +73,5 @@ EOF
 echo -e "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
 
 # In the Proxmox web shell run (replace 106 with your LXC ID)
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/frigate-support.sh)" -s 106
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/frigate-support.sh)" -s 106
 # Reboot the LXC to apply the changes
