@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Navidrome LXC** 
   - NEW Script
+- **Homepage LXC** 
+  - NEW Script
 
 ## 2022-08-31
 
