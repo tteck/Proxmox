@@ -1690,6 +1690,29 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Navidrome LXC </summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Navidrome LXC </h1>
+ 
+[Navidrome](https://www.navidrome.org/) allows you to enjoy your music collection from anywhere, by making it available through a modern Web UI and through a wide range of third-party compatible mobile apps, for both iOS and Android devices. 
+
+To create a new Proxmox Navidrome LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/navidrome-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+**Navidrome Interface - IP:4533**
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> PhotoPrism LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/photoprism.png?raw=true" height="100"/></p>
