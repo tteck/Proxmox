@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+YW=`echo "\033[33m"`
+RD=`echo "\033[01;31m"`
+BL=`echo "\033[36m"`
+GN=`echo "\033[1;92m"`
+CL=`echo "\033[m"`
+RETRY_NUM=10
+RETRY_EVERY=3
+NUM=$RETRY_NUM
+CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
+BFR="\\r\\033[K"
+HOLD="-"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occurred."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
+}
+
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+function msg_error() {
+    local msg="$1"
+    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
+
+msg_info "Setting up Container OS "
+sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+locale-gen >/dev/null
+while [ "$(hostname -I)" = "" ]; do
+  1>&2 echo -en "${CROSS}${RD} No Network! "
+  sleep $RETRY_EVERY
+  ((NUM--))
+  if [ $NUM -eq 0 ]
+  then
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    exit 1
+  fi
+done
+msg_ok "Set up Container OS"
+msg_ok "Network Connected: ${BL}$(hostname -I)"
+
+if nc -zw1 8.8.8.8 443; then  msg_ok "Internet Connected"; else  msg_error "Internet NOT Connected"; exit 1; fi;
+RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
+if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure";  else msg_ok "DNS Resolved github.com to $RESOLVEDIP";  fi;
+
+msg_info "Updating Container OS"
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
+msg_ok "Updated Container OS"
+
+msg_info "Installing Dependencies"
+apt-get install -y curl &>/dev/null
+apt-get install -y sudo &>/dev/null
+apt-get install -y ffmpeg &>/dev/null
+msg_ok "Installed Dependencies"
+
+msg_info "Installing Navidrome"
+sudo install -d -o root -g root /opt/navidrome
+sudo install -d -o root -g root /var/lib/navidrome
+wget https://github.com/navidrome/navidrome/releases/download/v0.47.5/navidrome_0.47.5_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
+sudo tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
+sudo chown -R root:root /opt/navidrome 
+mkdir -p /music
+cat <<EOF > /var/lib/navidrome/navidrome.toml
+MusicFolder = '/music'
+EOF
+msg_ok "Installed Navidrome"
+
+msg_info "Creating Service"
+service_path="/etc/systemd/system/navidrome.service"
+
+echo "[Unit]
+Description=Navidrome Music Server and Streamer compatible with Subsonic/Airsonic
+After=remote-fs.target network.target
+AssertPathExists=/var/lib/navidrome
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/opt/navidrome/navidrome --configfile '/var/lib/navidrome/navidrome.toml'
+WorkingDirectory=/var/lib/navidrome
+TimeoutStopSec=20
+KillMode=process
+Restart=on-failure
+DevicePolicy=closed
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictRealtime=yes
+SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @setuid @swap
+ReadWritePaths=/var/lib/navidrome
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target" > $service_path
+systemctl daemon-reload
+systemctl enable --now navidrome.service &>/dev/null
+
+msg_ok "Created Service"
+
+PASS=$(grep -w "root" /etc/shadow | cut -b6);
+  if [[ $PASS != $ ]]; then
+msg_info "Customizing Container"
+chmod -x /etc/update-motd.d/*
+touch ~/.hushlogin
+GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
+mkdir -p $(dirname $GETTY_OVERRIDE)
+cat << EOF > $GETTY_OVERRIDE
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
+EOF
+systemctl daemon-reload
+systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
+msg_ok "Customized Container"
+  fi
+  
+msg_info "Cleaning up"
+apt-get autoremove >/dev/null
+apt-get autoclean >/dev/null
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/Navidrome.tar.gz
+msg_ok "Cleaned"
