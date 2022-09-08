@@ -1573,7 +1573,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homepage-v4.
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 2vCPU ⚡</h3>
 
-[Configuration](https://github.com/benphelps/homepage/wiki) file path: `/opt/homepage/config/`
+[Configuration](https://github.com/benphelps/homepage/wiki) (bookmarks.yaml, services.yaml, widgets.yaml) path: `/opt/homepage/config/`
 
 **Homepage Interface - IP:3000**
 
