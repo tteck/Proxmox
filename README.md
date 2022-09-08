@@ -1557,6 +1557,29 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸Homepage LXC </summary>
+
+
+<h1 align="center" id="heading"> Homepage LXC </h1>
+ 
+[Homepage](https://github.com/benphelps/homepage) is a self-hosted dashboard.
+
+To create a new Proxmox Homepage LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homepage-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 2vCPU ⚡</h3>
+
+[Configuration](https://github.com/benphelps/homepage/wiki) file path: `/opt/homepage/config/`
+
+**Homepage Interface - IP:3000**
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span"> Dashy LXC</summary>
