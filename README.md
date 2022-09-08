@@ -1706,7 +1706,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/navidrome-v4
 
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-To change Navidrome music folder path, edit: `/var/lib/photoprism/navidrome.toml`
+To change Navidrome music folder path, edit: `/var/lib/navidrome/navidrome.toml`
 
 **Navidrome Interface - IP:4533**
 
