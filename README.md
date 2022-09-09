@@ -1127,6 +1127,30 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸CasaOS LXC </summary>
+
+<p align="center"><img src="https://www.casaos.io/img/casa.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> CasaOS LXC </h1>
+ 
+[CasaOS](https://www.casaos.io/) is a community-based open source software focused on delivering simple home cloud experience around Docker ecosystem.
+
+
+To create a new Proxmox CasaOS LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/CasaOS-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**CasaOS Interface - IP**
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Debian LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
