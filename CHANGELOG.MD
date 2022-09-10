@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **CasaOS LXC** 
   - NEW Script
+- **Proxmox Kernel Clean** 
+  - Now works with Proxmox Backup Server
 
 ## 2022-09-08
 
