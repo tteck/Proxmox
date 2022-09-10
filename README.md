@@ -1139,7 +1139,7 @@ ________________________________________________________________________________
 To create a new Proxmox CasaOS LXC, run the following in the Proxmox Shell.
 
 ```
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/CasaOS-v4.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/casaos-v4.sh)"
 ```
 
 <h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
