@@ -14,7 +14,6 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 PARTY="🎉"
 current_kernel=$(uname -r)
-pve=$(pveversion)
 
 while true; do
     read -p "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
@@ -70,7 +69,9 @@ function edge_kernel() {
 
 function kernel_info() {
     latest_kernel=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | tac | head -n 1)
-    echo -e "${YW}PVE Version: ${BL}$pve\n${CL}"
+ if [[ "$MODE" != "PBS" ]]; then
+     echo -e "${YW}PVE Version: ${BL}$(pveversion)\n${CL}" 
+ fi
     if [[ "$current_kernel" == *"pve"* ]]; then
       if [[ "$latest_kernel" != *"$current_kernel"* ]]; then
         echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
@@ -119,5 +120,13 @@ msg_ok "Kernel Search Completed\n"
       fi
     fi
 }
+
+if ! command -v pveversion >/dev/null 2>&1; then
+  echo -e " Switching to PBS mode"
+  MODE="PBS"
+  sleep 2
+  else
+  MODE="PVE"
+fi
 
 check_root
