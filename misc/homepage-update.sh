@@ -9,7 +9,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-APP="NocoDB"
+APP="Homepage"
 set -o errexit
 set -o errtrace
 set -o nounset
