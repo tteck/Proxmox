@@ -1554,6 +1554,13 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/trilium-v4.s
 
 **Trilium Interface - IP:8080**
 
+⚙️ **To Update Trilium**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/trilium-update.sh)"
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
@@ -1792,6 +1799,13 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/navidrome-v4
 To change Navidrome music folder path, edit: `/var/lib/navidrome/navidrome.toml`
 
 **Navidrome Interface - IP:4533**
+
+⚙️ **To Update Navidrome**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/navidrome-update.sh)"
+```
 
 ____________________________________________________________________________________________ 
 
