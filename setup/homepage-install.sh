@@ -79,14 +79,15 @@ msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
 apt-get install -y nodejs &>/dev/null
+npm install -g pnpm &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Homepage"
 git clone https://github.com/benphelps/homepage.git /opt/homepage &>/dev/null
 cd /opt/homepage
 mkdir -p config
-npm install &>/dev/null
-npm run build &>/dev/null
+pnpm install &>/dev/null
+pnpm build &>/dev/null
 msg_ok "Installed Homepage"
 
 msg_info "Creating Service"
