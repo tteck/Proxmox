@@ -1605,7 +1605,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homepage-v4.
 
 Run in the LXC console
 ```yaml
-cd /opt/homepage && systemctl stop homepage && git pull --force && pnpm install && pnpm build && systemctl start homepage
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/homepage-update.sh)"
 ```
 
 ____________________________________________________________________________________________ 
