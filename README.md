@@ -1536,6 +1536,29 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Trilium LXC </summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/zadam/trilium/master/images/app-icons/png/128x128.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Trilium LXC </h1>
+ 
+[Trilium](https://github.com/zadam/trilium#trilium-notes) is a hierarchical note taking application with focus on building large personal knowledge bases.
+
+To create a new Proxmox Trilium LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/trilium-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**Trilium Interface - IP:8080**
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Wiki.js LXC </summary>
  
 <p align="center"><img src="https://static.requarks.io/logo/wikijs-butterfly.svg?raw=true" height="100"/></p>
