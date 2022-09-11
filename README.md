@@ -1601,6 +1601,13 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homepage-v4.
 
 **Homepage Interface - IP:3000**
 
+⚙️ **To Update Homepage**
+
+Run in the LXC console
+```yaml
+cd /opt/homepage && systemctl stop homepage && git pull --force && pnpm install && pnpm build && systemctl start homepage
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
