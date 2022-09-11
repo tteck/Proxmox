@@ -1146,6 +1146,12 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/casaos-v4.sh
 
 **CasaOS Interface - IP**
 
+⚙️ **To Update CasaOS**
+
+```yaml
+update from the CasaOS UI
+```
+
 ____________________________________________________________________________________________ 
 
 </details>
