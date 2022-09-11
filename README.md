@@ -1949,10 +1949,41 @@ bash /etc/webmin/uninstall.sh
 ___________________________________________________________________________________________ 
 
 </details>
+ 
+<details>
+<summary markdown="span"> 🔸Syncthing LXC</summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/syncthing/syncthing/6afaa9f20c8eb9c7af5abbe2f2d90fa2571aa7ad/assets/logo-only.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Syncthing LXC </h1>
+ 
+[Syncthing](https://syncthing.net/) is a continuous file synchronization program. It synchronizes files between two or more computers.
+ 
+To create a new Proxmox Syncthing LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/syncthing-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+⚙️ For the initial start, run `syncthing --gui-address=0.0.0.0:8384` in the LXC console, then go to the LXC IP:8384 In settings set the LXC IP address under the GUI (also set the GUI Authentication User and GUI Authentication Password) and Connections tab's and save. Reboot the LXC. 
+
+**Syncthing Interface - IP:8384**
+
+⚙️ **To Update Syncthing**
+
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+ 
+</details>
 
 <details>
 <summary markdown="span"> WireGuard LXC </summary>
- 
+
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2699%2FPNG%2F512%2Fwireguard_logo_icon_168760.png&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> WireGuard LXC </h1>
