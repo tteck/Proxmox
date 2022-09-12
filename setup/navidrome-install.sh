@@ -67,16 +67,20 @@ apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (patience)"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y ffmpeg &>/dev/null
 msg_ok "Installed Dependencies"
 
+RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 3, length($2)-4) }')
+
 msg_info "Installing Navidrome"
 sudo install -d -o root -g root /opt/navidrome
 sudo install -d -o root -g root /var/lib/navidrome
-wget https://github.com/navidrome/navidrome/releases/download/v0.47.5/navidrome_0.47.5_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
+wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
 sudo tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
 sudo chown -R root:root /opt/navidrome 
 mkdir -p /music
