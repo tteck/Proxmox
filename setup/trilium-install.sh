@@ -72,9 +72,13 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
+RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest \
+| grep "tag_name" \
+| awk '{print substr($2, 3, length($2)-4) }')
+
 msg_info "Installing Trilium"
-wget -q https://github.com/zadam/trilium/releases/download/v0.54.3/trilium-linux-x64-server-0.54.3.tar.xz
-tar -xvf trilium-linux-x64-server-0.54.3.tar.xz &>/dev/null
+wget -q https://github.com/zadam/trilium/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
+tar -xvf trilium-linux-x64-server-$RELEASE.tar.xz &>/dev/null
 mv trilium-linux-x64-server /opt/trilium
 msg_ok "Installed Trilium"
 
@@ -118,5 +122,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/trilium-linux-x64-server-0.54.3.tar.xz
+rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/trilium-linux-x64-server-$RELEASE.tar.xz
 msg_ok "Cleaned"
