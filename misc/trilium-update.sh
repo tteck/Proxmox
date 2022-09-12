@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VWRELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest \
+RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
 
@@ -21,7 +21,7 @@ EOF
 }
 update_info
 while true; do
-    read -p "This will Update Trilium to v$VWRELEASE. Proceed(y/n)?" yn
+    read -p "This will Update Trilium to v$RELEASE. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -33,13 +33,13 @@ echo -e "${GN} Stopping Trilium... ${CL}"
 systemctl stop trilium.service
 sleep 1
 
-echo -e "${GN} Updating to v${VWRELEASE}... ${CL}"
-wget -q https://github.com/zadam/trilium/releases/download/v$VWRELEASE/trilium-linux-x64-server-$VWRELEASE.tar.xz
+echo -e "${GN} Updating to v${RELEASE}... ${CL}"
+wget -q https://github.com/zadam/trilium/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
 
-tar -xzf trilium-linux-x64-server-$VWRELEASE.tar.xz -C /opt/trilium &>/dev/null
+tar -xzf trilium-linux-x64-server-$RELEASE.tar.xz -C /opt/trilium &>/dev/null
 
 echo -e "${GN} Cleaning up... ${CL}"
-rm trilium-linux-x64-server-$VWRELEASE.tar.xz
+rm trilium-linux-x64-server-$RELEASE.tar.xz
 
 echo -e "${GN} Starting Trilium... ${CL}"
 systemctl start trilium.service
