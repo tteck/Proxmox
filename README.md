@@ -1276,34 +1276,6 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> MeshCentral LXC</summary>
- 
-<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
-
-<h1 align="center" id="heading"> MeshCentral LXC </h1>
-
-MeshCentral is a full computer management web site. With MeshCentral, you can run your own web server to remotely manage and control computers on a local network or anywhere on the internet.
-
-To create a new Proxmox MeshCentral LXC, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral-v4.sh)"
-```
-
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-**MeshCentral Interface - http:// IP**
-
-⚙️ **To Update MeshCentral**
-
-```yaml
-Update from the MeshCentral UI
-```
-____________________________________________________________________________________________ 
-
-</details>
-
-<details>
 <summary markdown="span"> Plex Media Server LXC </summary>
 
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/plex/icon.png?raw=true" height="100"/></p>
@@ -2077,6 +2049,35 @@ Run in the LXC console
 Run in the LXC console
  ```yaml
 apt update && apt upgrade -y
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+
+<details>
+<summary markdown="span"> MeshCentral LXC</summary>
+ 
+<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> MeshCentral LXC </h1>
+
+[MeshCentral](https://meshcentral.com/info/) is a full computer management web site. With MeshCentral, you can run your own web server to remotely manage and control computers on a local network or anywhere on the internet.
+
+To create a new Proxmox MeshCentral LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**MeshCentral Interface - http:// IP**
+
+⚙️ **To Update MeshCentral**
+
+```yaml
+Update from the MeshCentral UI
 ```
 ____________________________________________________________________________________________ 
 
