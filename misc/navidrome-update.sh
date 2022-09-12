@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VWRELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest \
+RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
 
@@ -21,7 +21,7 @@ EOF
 }
 update_info
 while true; do
-    read -p "This will Update Navidrome to v$VWRELEASE. Proceed(y/n)?" yn
+    read -p "This will Update Navidrome to v$RELEASE. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -33,8 +33,8 @@ echo -e "${GN} Stopping Navidrome... ${CL}"
 systemctl stop navidrome.service
 sleep 1
 
-echo -e "${GN} Updating to v${VWRELEASE}... ${CL}"
-wget https://github.com/navidrome/navidrome/releases/download/v$VWRELEASE/navidrome_$VWRELEASE_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
+echo -e "${GN} Updating to v${RELEASE}... ${CL}"
+wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
 tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
 
 echo -e "${GN} Cleaning up... ${CL}"
