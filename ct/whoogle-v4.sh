@@ -69,7 +69,6 @@ if [[ $PVE != 1 ]]; then
 fi
 }
 function default_settings() {
-		echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
 		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
 		CT_TYPE="1"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
@@ -97,16 +96,6 @@ function default_settings() {
 		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
-var_version=$(whiptail --title "DEBIAN VERSION" --radiolist "Choose Version" 10 58 2 \
-"10" "Buster" OFF \
-"11" "Bullseye" ON \
-3>&1 1>&2 2>&3)
-exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Debian Version: ${BGN}$var_version${CL}"
-else
-    exit
-fi
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 8 58 2 \
 "1" "Unprivileged" ON \
 "0" "Privileged" OFF \
@@ -258,7 +247,8 @@ msg_ok "Started LXC Container"
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 pct set $CTID -description "# ${APP} LXC
-### https://tteck.github.io/Proxmox/"
+### https://tteck.github.io/Proxmox/
+<a href="https://ko-fi.com/D1D7EP4GF"><img src="https://img.shields.io/badge/%E2%98%95-Buy%20me%20a%20coffee-red" /></a>"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:5000${CL} \n"

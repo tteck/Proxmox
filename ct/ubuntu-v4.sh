@@ -70,9 +70,8 @@ fi
 }
 function default_settings() {
 		echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
-		
-	        echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-	        CT_TYPE="1"
+		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+	    CT_TYPE="1"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
 		PW=""
 		echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
@@ -261,5 +260,6 @@ msg_ok "Started LXC Container"
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 pct set $CTID -description "# ${APP} ${var_version} LXC
-### https://tteck.github.io/Proxmox/"
+### https://tteck.github.io/Proxmox/
+<a href="https://ko-fi.com/D1D7EP4GF"><img src="https://img.shields.io/badge/%E2%98%95-Buy%20me%20a%20coffee-red" /></a>"
 msg_ok "Completed Successfully!\n"
