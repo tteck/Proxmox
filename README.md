@@ -1590,7 +1590,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Homepage LXC </summary>
+<summary markdown="span"> Homepage LXC </summary>
 
 
 <h1 align="center" id="heading"> Homepage LXC </h1>
@@ -1752,7 +1752,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Navidrome LXC </summary>
+<summary markdown="span"> Navidrome LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png?raw=true" height="100"/></p>
 
