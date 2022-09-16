@@ -1525,7 +1525,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/paperless-ng
 
 <h3 align="center" id="heading">⚡ Default Settings:  2048MiB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-**Paperless-ngx Interface - IP:8080**
+**Paperless-ngx Interface - IP:8000**
 
 🛈 A paperless.creds file is in root home directory that contains the usernames and passwords.
 
