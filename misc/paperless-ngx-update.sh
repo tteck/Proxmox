@@ -73,3 +73,4 @@ msg_info "Starting Paperless-ngx"
 systemctl start paperless-consumer paperless-webserver paperless-scheduler
 sleep 1
 msg_ok "Finished Update"
+echo -e "\n${BL}It may take a minute or so for Paperless-ngx to become available.${CL}\n"
