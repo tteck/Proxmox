@@ -18,7 +18,6 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-Paperlessngx=$(wget -q https://github.com/paperless-ngx/paperless-ngx/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
 
 function error_exit() {
   trap - ERR
@@ -69,7 +68,7 @@ apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
-msg_info "Installing Paperless Dependencies"
+msg_info "Installing Paperless-ngx Dependencies"
 apt-get install -y --no-install-recommends \
 	python3 \
 	python3-pip \
@@ -84,7 +83,7 @@ apt-get install -y --no-install-recommends \
 	libzbar0 \
 	poppler-utils \
 	sudo &>/dev/null
-msg_ok "Installed Paperless Dependencies"
+msg_ok "Installed Paperless-ngx Dependencies"
 
 msg_info "Installing OCR Dependencies"
 apt-get install -y --no-install-recommends \
@@ -129,7 +128,8 @@ cd /opt/jbig2enc
 rm -rf /opt/jbig2enc 
 msg_ok "Installed JBIG2"
 
-msg_info "Downloading Paperless-NGx"
+msg_info "Downloading Paperless-ngx"
+Paperlessngx=$(wget -q https://github.com/paperless-ngx/paperless-ngx/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
 cd /opt && \
 wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$Paperlessngx/paperless-ngx-$Paperlessngx.tar.xz &>/dev/null && \
 tar -xf paperless-ngx-$Paperlessngx.tar.xz -C /opt/ &>/dev/null && \
@@ -142,7 +142,7 @@ sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://gi
 
 /usr/bin/python3 -m pip install --upgrade pip &>/dev/null
 /usr/bin/python3 -m pip install -r requirements.txt &>/dev/null
-msg_ok "Downloaded Paperless-NGx"
+msg_ok "Downloaded Paperless-ngx"
 
 msg_info "Setting up database"
 DB_USER=paperless
@@ -152,11 +152,11 @@ DB_NAME=paperlessdb
 sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';" &>/dev/null
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;" &>/dev/null
 
-echo "Paperless-NGx Database User" >> ~/paperless.creds
+echo "Paperless-ngx Database User" >> ~/paperless.creds
 echo $DB_USER >> ~/paperless.creds
-echo "Paperless-NGx Database Password" >> ~/paperless.creds
+echo "Paperless-ngx Database Password" >> ~/paperless.creds
 echo $DB_PASS >> ~/paperless.creds
-echo "Paperless-NGx Database Name" >> ~/paperless.creds
+echo "Paperless-ngx Database Name" >> ~/paperless.creds
 echo $DB_NAME >> ~/paperless.creds
 
 /bin/bash -c "mkdir -p {consume,media}"
@@ -170,7 +170,7 @@ cd /opt/paperless/src
 /usr/bin/python3 manage.py migrate &>/dev/null
 msg_ok "Set up database"
 
-msg_info "Setting up admin Paperless-NGx User & Password"
+msg_info "Setting up admin Paperless-ngx User & Password"
 ## From https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
 cat << EOF | python3 /opt/paperless/src/manage.py shell
 from django.contrib.auth import get_user_model
@@ -182,11 +182,11 @@ if len(UserModel.objects.all()) == 1:
     user.save()
 EOF
 echo "" >> ~/paperless.creds
-echo "Paperless-NGx WebUI User" >> ~/paperless.creds
+echo "Paperless-ngx WebUI User" >> ~/paperless.creds
 echo admin >> ~/paperless.creds
-echo "Paperless-NGx WebUI Password" >> ~/paperless.creds
+echo "Paperless-ngx WebUI Password" >> ~/paperless.creds
 echo $DB_PASS >> ~/paperless.creds
-msg_ok "Set up admin Paperless-NGx User & Password"
+msg_ok "Set up admin Paperless-ngx User & Password"
 
 cat << EOF > /etc/systemd/system/paperless-scheduler.service
 [Unit]
@@ -234,7 +234,7 @@ sed -i -e 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' /et
 systemctl daemon-reload
 systemctl enable --now paperless-consumer paperless-webserver paperless-scheduler &>/dev/null
 
-msg_ok "Finished installing Paperless-NGx"
+msg_ok "Finished installing Paperless-ngx"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
