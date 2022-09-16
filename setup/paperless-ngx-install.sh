@@ -110,7 +110,6 @@ msg_ok "Installed Extra Dependencies"
 
 msg_info "Installing JBIG2"
 apt-get install -y --no-install-recommends \
-	build-essential \
 	automake \
 	libtool \
 	pkg-config \
