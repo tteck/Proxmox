@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-APP="Vaultwarden"
-var_disk="6"
-var_cpu="2"
-var_ram="2048"
+APP="Trilium"
+var_disk="2"
+var_cpu="1"
+var_ram="512"
 var_os="debian"
 var_version="11"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
@@ -43,13 +43,14 @@ else
     exit
 fi
 function header_info {
-echo -e "${CL}
- _    _____   __  ____  _______       _____    ____  ____  _______   __
-| |  / /   | / / / / / /_  __/ |     / /   |  / __ \/ __ \/ ____/ | / /
-| | / / /| |/ / / / /   / /  | | /| / / /| | / /_/ / / / / __/ /  |/ / 
-| |/ / ___ / /_/ / /___/ /   | |/ |/ / ___ |/ _, _/ /_/ / /___/ /|  /  
-|___/_/  |_\____/_____/_/ v4 |__/|__/_/  |_/_/ |_/_____/_____/_/ |_/   
-${CL}"
+cat << "EOF"
+  ______     _ ___               
+ /_  __/_v4_(_) (_)_  ______ ___ 
+  / / / ___/ / / / / / / __ `__ \
+ / / / /  / / / / /_/ / / / / / /
+/_/ /_/  /_/_/_/\__,_/_/ /_/ /_/ 
+                                                                      
+EOF
 }
 function msg_info() {
     local msg="$1"
@@ -249,10 +250,6 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 512
-pct set $CTID -cores 1
-msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8000${CL} \n"
+         ${BL}http://${IP}:8080${CL} \n"

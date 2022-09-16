@@ -70,8 +70,7 @@ fi
 }
 function default_settings() {
 		echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
-		
-    echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
+		echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
     CT_TYPE="0"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
 		PW=""
@@ -272,7 +271,8 @@ msg_ok "Started LXC Container"
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 pct set $CTID -description "# ${APP} LXC
-### https://tteck.github.io/Proxmox/"
+### https://tteck.github.io/Proxmox/
+<a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
              ${BL}http://${IP}${CL}\n"

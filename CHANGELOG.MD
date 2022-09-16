@@ -3,6 +3,38 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-09-11
+
+### Changed
+
+- **Trilium LXC** 
+  - NEW Script
+
+## 2022-09-10
+
+### Changed
+
+- **Syncthing LXC** 
+  - NEW Script
+
+## 2022-09-09
+
+### Changed
+
+- **CasaOS LXC** 
+  - NEW Script
+- **Proxmox Kernel Clean** 
+  - Now works with Proxmox Backup Server
+
+## 2022-09-08
+
+### Changed
+
+- **Navidrome LXC** 
+  - NEW Script
+- **Homepage LXC** 
+  - NEW Script
+
 ## 2022-08-31
 
 ### Changed

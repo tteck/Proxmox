@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-APP="Vaultwarden"
-var_disk="6"
+APP="CasaOS"
+var_disk="8"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
@@ -43,13 +43,14 @@ else
     exit
 fi
 function header_info {
-echo -e "${CL}
- _    _____   __  ____  _______       _____    ____  ____  _______   __
-| |  / /   | / / / / / /_  __/ |     / /   |  / __ \/ __ \/ ____/ | / /
-| | / / /| |/ / / / /   / /  | | /| / / /| | / /_/ / / / / __/ /  |/ / 
-| |/ / ___ / /_/ / /___/ /   | |/ |/ / ___ |/ _, _/ /_/ / /___/ /|  /  
-|___/_/  |_\____/_____/_/ v4 |__/|__/_/  |_/_/ |_/_____/_____/_/ |_/   
-${CL}"
+cat << "EOF"
+   ______                 ____  _____
+  / ____/___ __v4______ _/ __ \/ ___/
+ / /   / __ `/ ___/ __ `/ / / /\__ \ 
+/ /___/ /_/ (__  ) /_/ / /_/ /___/ / 
+\____/\__,_/____/\__,_/\____//____/  
+                                     
+EOF
 }
 function msg_info() {
     local msg="$1"
@@ -69,8 +70,8 @@ if [[ $PVE != 1 ]]; then
 fi
 }
 function default_settings() {
-		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-		CT_TYPE="1"
+	    echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+	    CT_TYPE="1"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
 		PW=""
 		echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
@@ -91,8 +92,8 @@ function default_settings() {
 		GATE=""
 		echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
 		MAC=""
-    echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
-    VLAN=""
+                echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
+                VLAN=""
 		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
@@ -116,7 +117,7 @@ else
     echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
   fi
 fi
-CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
+CT_ID=$(whiptail --inputbox "Set Container ID?" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
@@ -241,6 +242,11 @@ export PCT_OPTIONS="
   $PW
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >> $LXC_CONFIG
+lxc.cgroup2.devices.allow: a
+lxc.cap.drop:
+EOF
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
@@ -249,10 +255,6 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 512
-pct set $CTID -cores 1
-msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8000${CL} \n"
+echo -e "${APP} Setup should be reachable by going to the following URL.
+         ${BL}http://${IP} ${CL} \n"

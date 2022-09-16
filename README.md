@@ -2,7 +2,8 @@
 
 <p align="center"><sub> Always remember to use due diligence when sourcing scripts and automation tasks from third-party sites. </sub></p>
 
-<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://badgen.net/github/license/tteck/Proxmox" ></a> <a href="https://tteck.github.io/Proxmox/"><img src="https://badgen.net/github/checks/tteck/Proxmox/main/"></a> <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/discussions.png?raw=true" height="21" /></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/change.png?raw=true" height="21" /></a>🔸
+<a href="https://github.com/tteck/Proxmox/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" ></a> <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://img.shields.io/badge/%F0%9F%92%AC-Discussions-orange" /></a> <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.MD"><img src="https://img.shields.io/badge/🔶-Changelog-blue" /></a> <a
+href="https://ko-fi.com/D1D7EP4GF"><img src="https://img.shields.io/badge/%E2%98%95-Buy%20me%20a%20coffee-red" /></a>
 
 <details>
 <summary markdown="span"> Proxmox VE 7 Post Install</summary>
@@ -865,8 +866,7 @@ advanced:
  
 Run in the LXC console
 ```yaml
-cd /opt/zigbee2mqtt
-npm start
+cd /opt/zigbee2mqtt && npm start
 ```
 ⚙️ **To update Zigbee2MQTT**
  
@@ -1127,6 +1127,36 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸CasaOS LXC </summary>
+
+<p align="center"><img src="https://www.casaos.io/img/casa.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> CasaOS LXC </h1>
+ 
+[CasaOS](https://www.casaos.io/) is a community-based open source software focused on delivering simple home cloud experience around Docker ecosystem.
+
+
+To create a new Proxmox CasaOS LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/casaos-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**CasaOS Interface - IP**
+
+⚙️ **To Update CasaOS**
+
+```yaml
+update from the CasaOS UI
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Debian LXC </summary>
  
 <p align="center"><img src="https://www.debian.org/Pics/debian-logo-1024x576.png" alt="Debian" height="100"/></p>
@@ -1241,34 +1271,6 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada-v4.sh)
 
 https://github.com/tteck/Proxmox/issues/402#issue-1328460983
 
-____________________________________________________________________________________________ 
-
-</details>
-
-<details>
-<summary markdown="span"> MeshCentral LXC</summary>
- 
-<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
-
-<h1 align="center" id="heading"> MeshCentral LXC </h1>
-
-MeshCentral is a full computer management web site. With MeshCentral, you can run your own web server to remotely manage and control computers on a local network or anywhere on the internet.
-
-To create a new Proxmox MeshCentral LXC, run the following in the Proxmox Shell.
-
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral-v4.sh)"
-```
-
-<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
-
-**MeshCentral Interface - http:// IP**
-
-⚙️ **To Update MeshCentral**
-
-```yaml
-Update from the MeshCentral UI
-```
 ____________________________________________________________________________________________ 
 
 </details>
@@ -1506,6 +1508,36 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸Trilium LXC </summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/zadam/trilium/master/images/app-icons/png/128x128.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Trilium LXC </h1>
+ 
+[Trilium](https://github.com/zadam/trilium#trilium-notes) is a hierarchical note taking application with focus on building large personal knowledge bases.
+
+To create a new Proxmox Trilium LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/trilium-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**Trilium Interface - IP:8080**
+
+⚙️ **To Update Trilium**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/trilium-update.sh)"
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Wiki.js LXC </summary>
  
 <p align="center"><img src="https://static.requarks.io/logo/wikijs-butterfly.svg?raw=true" height="100"/></p>
@@ -1557,6 +1589,36 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> Homepage LXC </summary>
+
+
+<h1 align="center" id="heading"> Homepage LXC </h1>
+ 
+[Homepage](https://github.com/benphelps/homepage) is a self-hosted dashboard.
+
+To create a new Proxmox Homepage LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homepage-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 3GB Storage - 2vCPU ⚡</h3>
+
+[Configuration](https://github.com/benphelps/homepage/wiki) (bookmarks.yaml, services.yaml, widgets.yaml) path: `/opt/homepage/config/`
+
+**Homepage Interface - IP:3000**
+
+⚙️ **To Update Homepage**
+
+Run in the LXC console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/homepage-update.sh)"
+```
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span"> Dashy LXC</summary>
@@ -1686,6 +1748,38 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/daemonsync-v
 Search: `DAEMON Sync` in your favorite app store
 
 __________________________________________________________________________________________ 
+
+</details>
+
+<details>
+<summary markdown="span"> Navidrome LXC </summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Navidrome LXC </h1>
+ 
+[Navidrome](https://www.navidrome.org/) allows you to enjoy your music collection from anywhere, by making it available through a modern Web UI and through a wide range of third-party compatible mobile apps, for both iOS and Android devices. 
+
+To create a new Proxmox Navidrome LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/navidrome-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+To change Navidrome music folder path, edit: `/var/lib/navidrome/navidrome.toml`
+
+**Navidrome Interface - IP:4533**
+
+⚙️ **To Update Navidrome**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/navidrome-update.sh)"
+```
+
+____________________________________________________________________________________________ 
 
 </details>
 
@@ -1877,10 +1971,41 @@ bash /etc/webmin/uninstall.sh
 ___________________________________________________________________________________________ 
 
 </details>
+ 
+<details>
+<summary markdown="span"> 🔸Syncthing LXC</summary>
+ 
+<p align="center"><img src="https://raw.githubusercontent.com/syncthing/syncthing/6afaa9f20c8eb9c7af5abbe2f2d90fa2571aa7ad/assets/logo-only.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Syncthing LXC </h1>
+ 
+[Syncthing](https://syncthing.net/) is a continuous file synchronization program. It synchronizes files between two or more computers.
+ 
+To create a new Proxmox Syncthing LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/syncthing-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+⚙️ For the initial start, run `syncthing --gui-address=0.0.0.0:8384` in the LXC console, then go to the LXC IP:8384 In settings set the LXC IP address under the GUI (also set the GUI Authentication User and GUI Authentication Password) and Connections tab's and save. Reboot the LXC. 
+
+**Syncthing Interface - IP:8384**
+
+⚙️ **To Update Syncthing**
+
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+ 
+</details>
 
 <details>
 <summary markdown="span"> WireGuard LXC </summary>
- 
+
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2699%2FPNG%2F512%2Fwireguard_logo_icon_168760.png&f=1&nofb=1" height="100"/></p>
 
 <h1 align="center" id="heading"> WireGuard LXC </h1>
@@ -1924,6 +2049,35 @@ Run in the LXC console
 Run in the LXC console
  ```yaml
 apt update && apt upgrade -y
+```
+____________________________________________________________________________________________ 
+
+</details>
+
+
+<details>
+<summary markdown="span"> MeshCentral LXC</summary>
+ 
+<p align="center"><img src="https://github.com/Ylianst/MeshCentral/blob/master/public/favicon-303x303.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> MeshCentral LXC </h1>
+
+[MeshCentral](https://meshcentral.com/info/) is a full computer management web site. With MeshCentral, you can run your own web server to remotely manage and control computers on a local network or anywhere on the internet.
+
+To create a new Proxmox MeshCentral LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/meshcentral-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+**MeshCentral Interface - http:// IP**
+
+⚙️ **To Update MeshCentral**
+
+```yaml
+Update from the MeshCentral UI
 ```
 ____________________________________________________________________________________________ 
 
@@ -2091,5 +2245,3 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/web-vault-
 ____________________________________________________________________________________________ 
 
 </details>
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)
