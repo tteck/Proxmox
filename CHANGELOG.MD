@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-09-16
+
+### Changed
+
+- **Paperless-ngx LXC** 
+  - NEW Script
+
 ## 2022-09-11
 
 ### Changed
