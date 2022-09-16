@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Paperless-ngx LXC** 
-  - NEW Script
+  - NEW Script (Thanks @Donkeykong307)
 
 ## 2022-09-11
 
