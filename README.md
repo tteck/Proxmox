@@ -1127,7 +1127,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸CasaOS LXC </summary>
+<summary markdown="span"> CasaOS LXC </summary>
 
 <p align="center"><img src="https://www.casaos.io/img/casa.svg" height="100"/></p>
 
