@@ -1507,6 +1507,36 @@ ________________________________________________________________________________
 
 </details>
 
+
+<details>
+<summary markdown="span"> 🔸Paperless-ngx LXC </summary>
+ 
+<p align="center"><img src="https://github.com/paperless-ngx/paperless-ngx/blob/main/resources/logo/web/svg/square.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Paperless-ngx LXC </h1>
+ 
+[Paperless-ngx](https://paperless-ngx.readthedocs.io/en/latest/#) is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, less paper.
+
+To create a new Proxmox Paperless-ngx LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/paperless-ngx-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2048MiB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+**Paperless-ngx Interface - IP:8080**
+
+🛈 A paperless.creds file is in root home directory that contains the usernames and passwords.
+
+Run in the LXC Console
+```yaml
+cat paperless.creds
+```
+____________________________________________________________________________________________ 
+
+</details>
+
 <details>
 <summary markdown="span"> 🔸Trilium LXC </summary>
  
