@@ -17,3 +17,8 @@ If applicable, add screenshots to help explain your problem.
 Add any other context about the problem here.
 
 **Bug reports will be closed after 12 hours of NO communication.**
+
+As the saying goes...
+It’s not DNS
+There’s no way it’s DNS
+It was DNS
