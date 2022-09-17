@@ -7,4 +7,4 @@ assignees: tteck
 
 ---
 
-**Please submit feature request to the [discussions](https://github.com/tteck/Proxmox/discussions)area.**
+**Please submit feature request to [discussions](https://github.com/tteck/Proxmox/discussions)**
