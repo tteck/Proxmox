@@ -2003,7 +2003,7 @@ ________________________________________________________________________________
 </details>
  
 <details>
-<summary markdown="span"> 🔸Syncthing LXC</summary>
+<summary markdown="span"> Syncthing LXC</summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/syncthing/syncthing/6afaa9f20c8eb9c7af5abbe2f2d90fa2571aa7ad/assets/logo-only.svg?raw=true" height="100"/></p>
 
