@@ -2,8 +2,8 @@
 name: Bug report
 about: Create a report to help us improve (script related)
 title: ''
-labels: bug
-assignees: tteck
+labels: ''
+assignees: ''
 
 ---
 
