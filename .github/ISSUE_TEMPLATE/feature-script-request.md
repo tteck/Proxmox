@@ -7,5 +7,5 @@ assignees: tteck
 
 ---
 
-Please submit feature request to Discussions
+Please submit feature/script requests to Discussions
 https://github.com/tteck/Proxmox/discussions
