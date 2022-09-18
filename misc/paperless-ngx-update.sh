@@ -56,6 +56,7 @@ msg_ok "Stopped Paperless-ngx"
 msg_info "Updating to ${RELEASE}"
 wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz &>/dev/null
 tar -xf paperless-ngx-$RELEASE.tar.xz &>/dev/null
+cp -r /opt/paperless/paperless.conf paperless-ngx/
 cp -r paperless-ngx/* /opt/paperless/
 cd /opt/paperless
 pip install -r requirements.txt &>/dev/null
