@@ -1533,6 +1533,13 @@ Run in the LXC Console
 ```yaml
 cat paperless.creds
 ```
+
+⚙️ **To Update Paperless-ngx**
+
+Run in the LXC Console
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/paperless-ngx-update.sh)"
+```
 ____________________________________________________________________________________________ 
 
 </details>
