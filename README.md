@@ -1545,7 +1545,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Trilium LXC </summary>
+<summary markdown="span"> Trilium LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/zadam/trilium/master/images/app-icons/png/128x128.png?raw=true" height="100"/></p>
 
