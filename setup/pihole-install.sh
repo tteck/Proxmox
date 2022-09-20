@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export DEBIAN_FRONTEND=noninteractive
 YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
@@ -76,8 +77,24 @@ apt-get install -y ntp &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Pi-hole"
-wget -O tteck-install.sh https://install.pi-hole.net &>/dev/null
-bash tteck-install.sh
+mkdir -p /etc/pihole/
+cat <<EOF > /etc/pihole/setupVars.conf
+PIHOLE_INTERFACE=eth0
+PIHOLE_DNS_1=8.8.8.8
+PIHOLE_DNS_2=8.8.4.4
+QUERY_LOGGING=true
+INSTALL_WEB_SERVER=true
+INSTALL_WEB_INTERFACE=true
+LIGHTTPD_ENABLED=true
+CACHE_SIZE=10000
+DNS_FQDN_REQUIRED=true
+DNS_BOGUS_PRIV=true
+DNSMASQ_LISTENING=local
+WEBPASSWORD=$(openssl rand -base64 48)
+BLOCKING_ENABLED=true
+EOF
+
+curl -sSL https://install.pi-hole.net | bash /dev/stdin --unattended &>/dev/null
 msg_ok "Installed Pi-hole"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -101,5 +118,4 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/tteck-install.sh
 msg_ok "Cleaned"
