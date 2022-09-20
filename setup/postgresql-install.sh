@@ -971,11 +971,21 @@ EOF
 sudo systemctl restart postgresql
 msg_ok "Installed PostgreSQL"
 
+read -r -p "Would you like to add Adminer? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+ADMINER="Y"
+else
+ADMINER="N"
+fi
+
+if [[ $ADMINER == "Y" ]]; then
 msg_info "Installing Adminer"
 sudo apt install adminer -y &>/dev/null
 sudo a2enconf adminer &>/dev/null
 sudo systemctl reload apache2 &>/dev/null
 msg_ok "Installed Adminer"
+fi
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
@@ -997,7 +1007,4 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
-mkdir /var/log/apache2
-chmod 750 /var/log/apache2
 msg_ok "Cleaned"
