@@ -1789,6 +1789,40 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸OpenMediaVault LXC </summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/omv.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> OpenMediaVault LXC </h1>
+
+[OpenMediaVault](https://www.openmediavault.org/) is the next generation network attached storage (NAS) solution based on Debian Linux.
+
+To create a new Proxmox OpenMediaVault LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omv-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+**OpenMediaVault Interface - IP**
+
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ openmediavault
+ ```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Navidrome LXC </summary>
  
 <p align="center"><img src="https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png?raw=true" height="100"/></p>
