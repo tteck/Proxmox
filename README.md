@@ -1376,6 +1376,8 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/pihole-v4.sh
 
 ⚠️ **Reboot Pi-hole LXC after install**
 
+**Pi-hole Interface - http:// IP/admin**
+
 ⚙️ **To set your password:**
  
 Run in the LXC console
@@ -1383,12 +1385,6 @@ Run in the LXC console
 ```yaml
 pihole -a -p
 ```
-⚙️ **To Update Pi-hole:**
-
-```yaml
-Update from the Pi-hole UI
-```
-
 ____________________________________________________________________________________________ 
 
 </details>
