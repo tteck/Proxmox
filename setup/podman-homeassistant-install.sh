@@ -71,11 +71,11 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-apt-get install -y runc &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Podman"
 apt-get -y install podman &>/dev/null
+systemctl enable --now podman.socket &>/dev/null
 msg_ok "Installed Podman"
 
 msg_info "Pulling Yacht Image"
@@ -145,5 +145,4 @@ systemctl enable yacht &>/dev/null
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 msg_ok "Cleaned"
