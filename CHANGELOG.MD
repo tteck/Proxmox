@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - **Proxmox Backup Server Post Install** 
   - NEW Script
+- **Z-wave JS UI LXC** 
+  - NEW Script (and all sub scripts 🤞)
+- **Zwave2MQTT LXC** 
+  - Bye Bye Script
 
 ## 2022-09-20
 
