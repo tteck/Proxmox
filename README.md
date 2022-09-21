@@ -17,7 +17,7 @@ The script will give options to Disable the Enterprise Repo, Add/Correct PVE7 So
 Run the following in the Proxmox Shell. ⚠️ **PVE7 ONLY**
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-install.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-pve-install.sh)"
 ```
 
 It's recommended to answer `y` to all options.
