@@ -22,6 +22,12 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+
+if ! command -v pveversion >/dev/null 2>&1; then
+  echo -e "\n🛑  No PVE Detected, Wrong Script!\n"
+  exit 1
+fi
+
 if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
         echo -e "\n${RD}⚠ This version of Proxmox Virtual Environment is not supported"
         echo -e "Requires PVE Version: 7.XX${CL}"
