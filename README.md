@@ -937,38 +937,37 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Zwavejs2MQTT LXC </summary>
+<summary markdown="span"> 🔸Z-Wave JS UI LXC </summary>
  
-<p align="center"><img src="https://github.com/zwave-js/zwavejs2mqtt/raw/master/docs/_images/zwavejs_logo.svg" height="100"/></p>
+<p align="center"><img src="https://github.com/zwave-js/zwave-js-ui/blob/master/docs/_images/app_logo.svg" height="100"/></p>
 
 <h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
 
-[Zwavejs2MQTT](https://zwave-js.github.io/zwavejs2mqtt/#/) is a fully configurable Z-Wave to MQTT Gateway and Control Panel.
+[Z-Wave JS UI](https://github.com/zwave-js/zwave-js-ui#) is a fully configurable Z-Wave to MQTT Gateway and Control Panel.
 
-To create a new Proxmox Zwavejs2MQTT LXC, run the following in the Proxmox Shell.
+To create a new Proxmox Z-Wave JS UI LXC, run the following in the Proxmox Shell.
 
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zwavejs2mqtt-v4.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/zwave-js-ui-v4.sh)"
 ```
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
-**Zwavejs2MQTT Interface - IP:8091**
+**Z-Wave JS UI Interface - IP:8091**
 
-⚙️ **Copy Data From a Existing Zwavejs2MQTT LXC to another Zwavejs2MQTT LXC**
+⚙️ **Copy Data From a Existing Zwavejs2MQTT LXC to a Z-Wave JS UI LXC**
 
 Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/zwave-copy-data.sh)"
  ```
-⚙️ **To Update Zwavejs2MQTT**
+⚙️ **To Update Z-Wave JS UI**
 
 Run in the LXC Console
 ```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/zwavejs2mqtt-update.sh)"
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/zwave-js-ui-update.sh)"
 ```
 
 ____________________________________________________________________________________________ 
-
 </details>
 
 <details>
