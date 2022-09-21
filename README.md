@@ -121,6 +121,26 @@ ________________________________________________________________________________
 
 </details>
 
+<details>
+<summary markdown="span"> 🔸Proxmox Backup Server Post Install</summary>
+ 
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Proxmox Backup Server Post Install </h1>
+
+The script will give options to Disable the Enterprise Repo, Add/Correct PBS Sources, Enable the No-Subscription Repo, Add Test Repo, Disable Subscription Nag, Update Proxmox Backup Server and Reboot PBS.
+ 
+Run the following in the Proxmox Shell. ⚠️ **Proxmox Backup Server ONLY**
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/post-pbs-install.sh)"
+```
+
+It's recommended to answer `y` to all options.
+
+____________________________________________________________________________________________ 
+
+</details>
 
 <details>
 <summary markdown="span"> Home Assistant OS VM</summary>
