@@ -125,6 +125,10 @@ podman run -d \
   -v /etc/timezone:/etc/timezone:ro \
   --net=host \
   homeassistant/home-assistant:stable &>/dev/null
+podman generate systemd \
+    --new --name homeassistant \
+    > /etc/systemd/system/homeassistant.service 
+systemctl enable homeassistant &>/dev/null
 msg_ok "Installed Home Assistant"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -144,12 +148,7 @@ systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 msg_ok "Customized Container"
   fi
-
-podman generate systemd \
-    --new --name homeassistant \
-    > /etc/systemd/system/homeassistant.service 
-systemctl enable homeassistant &>/dev/null
-
+  
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
