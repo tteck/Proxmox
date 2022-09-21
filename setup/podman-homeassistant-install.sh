@@ -78,6 +78,15 @@ apt-get -y install podman &>/dev/null
 systemctl enable --now podman.socket &>/dev/null
 msg_ok "Installed Podman"
 
+read -r -p "Would you like to add Yacht (Semifunctional)? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+YACHT="Y"
+else
+YACHT="N"
+fi
+
+if [[ $YACHT == "Y" ]]; then
 msg_info "Pulling Yacht Image"
 podman pull docker.io/selfhostedpro/yacht:latest &>/dev/null
 msg_ok "Pulled Yacht Image"
@@ -94,8 +103,12 @@ podman run -d \
   -v /etc/timezone:/etc/timezone:ro \
   -p 8000:8000 \
   selfhostedpro/yacht:latest &>/dev/null
+podman generate systemd \
+    --new --name yacht \
+    > /etc/systemd/system/yacht.service 
+systemctl enable yacht &>/dev/null
 msg_ok "Installed Yacht"
-
+fi
 msg_info "Pulling Home Assistant Image"
 podman pull docker.io/homeassistant/home-assistant:stable &>/dev/null
 msg_ok "Pulled Home Assistant Image"
@@ -136,11 +149,6 @@ podman generate systemd \
     --new --name homeassistant \
     > /etc/systemd/system/homeassistant.service 
 systemctl enable homeassistant &>/dev/null
-
-podman generate systemd \
-    --new --name yacht \
-    > /etc/systemd/system/yacht.service 
-systemctl enable yacht &>/dev/null
 
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
