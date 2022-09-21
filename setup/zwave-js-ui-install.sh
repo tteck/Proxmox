@@ -74,28 +74,28 @@ apt-get install -y sudo &>/dev/null
 apt-get install -y unzip &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Zwavejs2MQTT"
-mkdir /opt/zwavejs2mqtt
-cd /opt/zwavejs2mqtt
+msg_info "Installing Z-Wave JS UI"
+mkdir /opt/zwave-js-ui
+cd /opt/zwave-js-ui
 mkdir store
-curl -s https://api.github.com/repos/zwave-js/zwavejs2mqtt/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
-unzip zwavejs2mqtt-v*.zip zwavejs2mqtt &>/dev/null
-msg_ok "Installed Zwavejs2MQTT"
+curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
+unzip zwave-js-ui-v*.zip zwave-js-ui &>/dev/null
+msg_ok "Installed Z-Wave JS UI"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/zwavejs2mqtt.service"
+service_path="/etc/systemd/system/zwave-js-ui.service"
 echo "[Unit]
-Description=ZWavejs2MQTT
+Description=zwave-js-ui
 Wants=network-online.target
 After=network-online.target
 [Service]
 User=root
-WorkingDirectory=/opt/zwavejs2mqtt
-ExecStart=/opt/zwavejs2mqtt/zwavejs2mqtt
+WorkingDirectory=/opt/zwave-js-ui
+ExecStart=/opt/zwave-js-ui/zwave-js-ui
 [Install]
 WantedBy=multi-user.target" > $service_path
-systemctl start zwavejs2mqtt
-systemctl enable zwavejs2mqtt &>/dev/null
+systemctl start zwave-js-ui
+systemctl enable zwave-js-ui &>/dev/null
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -117,8 +117,7 @@ msg_ok "Customized Container"
   fi
 
 msg_info "Cleaning up"
-rm zwavejs2mqtt-v*.zip
+rm zwave-js-ui-v*.zip
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/*
 msg_ok "Cleaned"  
