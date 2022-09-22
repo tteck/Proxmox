@@ -36,10 +36,10 @@ sleep 1
 echo -e "${GN} Updating to v${RELEASE}... ${CL}"
 wget -q https://github.com/zadam/trilium/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
 
-tar -xzf trilium-linux-x64-server-$RELEASE.tar.xz -C /opt/trilium &>/dev/null
-
+tar -xvf trilium-linux-x64-server-$RELEASE.tar.xz &>/dev/null
+cp -r trilium-linux-x64-server/* /opt/trilium/
 echo -e "${GN} Cleaning up... ${CL}"
-rm trilium-linux-x64-server-$RELEASE.tar.xz
+rm -rf trilium-linux-x64-server-$RELEASE.tar.xz trilium-linux-x64-server
 
 echo -e "${GN} Starting Trilium... ${CL}"
 systemctl start trilium.service
