@@ -941,7 +941,7 @@ ________________________________________________________________________________
  
 <p align="center"><img src="https://github.com/zwave-js/zwave-js-ui/blob/master/docs/_images/app_logo.svg" height="100"/></p>
 
-<h1 align="center" id="heading"> Zwavejs2MQTT LXC </h1>
+<h1 align="center" id="heading"> Z-Wave JS UI LXC </h1>
 
 [Z-Wave JS UI](https://github.com/zwave-js/zwave-js-ui#) is a fully configurable Z-Wave to MQTT Gateway and Control Panel.
 
