@@ -939,7 +939,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸Z-Wave JS UI LXC </summary>
  
-<p align="center"><img src="https://github.com/zwave-js/zwave-js-ui/blob/master/docs/_images/app_logo.svg" height="100"/></p>
+<p align="center"><img src="https://github.com/zwave-js/zwave-js-ui/blob/master/docs/_images/app_logo.svg?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Z-Wave JS UI LXC </h1>
 
