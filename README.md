@@ -561,6 +561,41 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸EMQX LXC </summary>
+ 
+<p align="center"><img src="https://github.com/hassio-addons/repository/blob/master/emqx/icon.png" alt="hero" height="100"/></p>
+
+
+<h1 align="center" id="heading"> EMQX LXC </h1>
+
+[EMQX](https://www.emqx.io/) is an Open-source MQTT broker with a high-performance real-time message processing engine, powering event streaming for IoT devices at massive scale.
+
+To create a new Proxmox EMQX LXC Container, run the following in the Proxmox Shell.
+
+```yaml
+ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emqx-v4.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
+
+
+**EMQX Interface - IP:18083**
+ 
+⚙️ **Initial Login**
+
+**username** 
+ ```yaml
+ admin
+ ```
+ **password** 
+ ```yaml
+ public
+ ```
+***More info to come when someone figures it out*** ッ
+ ____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Node-Red LXC </summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/custom_integrations/nodered/icon.png?raw=true" height="100"/></p>
