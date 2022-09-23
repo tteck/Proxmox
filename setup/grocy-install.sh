@@ -128,5 +128,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/cache/* /root/latest
+rm -rf /root/latest
 msg_ok "Cleaned"

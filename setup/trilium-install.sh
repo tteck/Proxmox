@@ -122,5 +122,5 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf /var/{cache,log}/* /var/lib/apt/lists/* /root/trilium-linux-x64-server-$RELEASE.tar.xz
+rm -rf /root/trilium-linux-x64-server-$RELEASE.tar.xz
 msg_ok "Cleaned"
