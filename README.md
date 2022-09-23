@@ -563,7 +563,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸EMQX LXC </summary>
  
-<p align="center"><img src="https://github.com/hassio-addons/repository/blob/master/emqx/icon.png" alt="hero" height="100"/></p>
+<p align="center"><img src="https://github.com/hassio-addons/repository/blob/master/emqx/icon.png?raw=true" height="100"/></p>
 
 
 <h1 align="center" id="heading"> EMQX LXC </h1>
