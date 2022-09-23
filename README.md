@@ -1832,6 +1832,7 @@ Go to config ➡ nc-trusted-domains, add `0.0.0.0` or a static NextCloudPi IP
 Get back to the command prompt, and restart Apache2 `sudo service apache2 restart`
 
 ❗2. **NextCloudPi Interface - https:// IP/**
+
 ____________________________________________________________________________________________ 
 
 </details>
