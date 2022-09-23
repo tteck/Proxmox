@@ -1806,6 +1806,37 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> 🔸NextCloudPi LXC</summary>
+ 
+<p align="center"><img src="https://github.com/nextcloud/nextcloudpi/blob/master/ncp-app/img/app.svg?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading">NextCloudPi LXC </h1>
+
+[NextCloudPi LXC](https://github.com/nextcloud/nextcloudpi#features) is the most popular self-hosted collaboration solution.
+
+To create a new Proxmox NextCloudPi LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/nextcloudpi-v4.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+ 
+❗1️. Set nc trusted domains
+
+Run in the LXC console
+```
+sudo ncp-config
+```
+Go to config ➡ nc-trusted-domains, add 0.0.0.0 or a static NextCloudPi IP
+
+Get back to the command prompt, and restart Apache2 `sudo service apache2 restart`
+
+❗2. **NextCloudPi Interface - https:// IP/**
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> 🔸OpenMediaVault LXC </summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/omv.png?raw=true" height="100"/></p>
