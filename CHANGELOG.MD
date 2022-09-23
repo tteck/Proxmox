@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-09-23
+
+### Changed
+
+- **EMQX LXC** 
+  - NEW Script
+
 ## 2022-09-22
 
 ### Changed
