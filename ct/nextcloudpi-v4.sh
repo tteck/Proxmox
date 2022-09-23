@@ -70,8 +70,8 @@ if [[ $PVE != 1 ]]; then
 fi
 }
 function default_settings() {
-		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-		CT_TYPE="1"
+		echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
+		CT_TYPE="0"
 		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
 		PW=""
 		echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
@@ -98,8 +98,8 @@ function default_settings() {
 }
 function advanced_settings() {
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 8 58 2 \
-"1" "Unprivileged" ON \
-"0" "Privileged" OFF \
+"1" "Unprivileged" OFF \
+"0" "Privileged" ON \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
