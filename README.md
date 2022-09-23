@@ -578,7 +578,7 @@ To create a new Proxmox EMQX LXC, run the following in the Proxmox Shell.
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 4GB Storage - 2vCPU ⚡</h3>
 
 
-**EMQX Interface - IP:18083**
+**EMQX Interface - IP:18083** (If the web UI doesn't load, reboot the LXC)
  
 ⚙️ **Initial Login**
 
