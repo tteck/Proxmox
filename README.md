@@ -570,7 +570,7 @@ ________________________________________________________________________________
 
 [EMQX](https://www.emqx.io/) is an Open-source MQTT broker with a high-performance real-time message processing engine, powering event streaming for IoT devices at massive scale.
 
-To create a new Proxmox EMQX LXC Container, run the following in the Proxmox Shell.
+To create a new Proxmox EMQX LXC, run the following in the Proxmox Shell.
 
 ```yaml
  bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emqx-v4.sh)"
