@@ -1827,7 +1827,7 @@ Run in the LXC console
 ```
 sudo ncp-config
 ```
-Go to config ➡ nc-trusted-domains, add 0.0.0.0 or a static NextCloudPi IP
+Go to config ➡ nc-trusted-domains, add `0.0.0.0` or a static NextCloudPi IP
 
 Get back to the command prompt, and restart Apache2 `sudo service apache2 restart`
 
