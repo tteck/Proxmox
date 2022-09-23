@@ -1526,7 +1526,7 @@ ________________________________________________________________________________
 
 
 <details>
-<summary markdown="span"> 🔸Paperless-ngx LXC </summary>
+<summary markdown="span"> Paperless-ngx LXC </summary>
  
 <p align="center"><img src="https://github.com/paperless-ngx/paperless-ngx/blob/main/resources/logo/web/svg/square.svg?raw=true" height="100"/></p>
 
