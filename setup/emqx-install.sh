@@ -74,8 +74,9 @@ apt-get install -y gnupg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing EMQX"
-wget https://www.emqx.com/en/downloads/broker/5.0.8/emqx-5.0.8-debian11-amd64.deb &>/dev/null
-apt install ./emqx-5.0.8-debian11-amd64.deb &>/dev/null
+curl -s https://assets.emqx.com/scripts/install-emqx-deb.sh | sudo bash 
+sudo apt-get install -y emqx 
+sudo emqx start
 msg_ok "Installed EMQX"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -99,4 +100,3 @@ msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 msg_ok "Cleaned"
-systemctl start emqx
