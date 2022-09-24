@@ -74,9 +74,9 @@ apt-get install -y gnupg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing EMQX"
-curl -s https://assets.emqx.com/scripts/install-emqx-deb.sh | sudo bash 
-sudo apt-get install -y emqx 
-sudo emqx start
+curl -s https://assets.emqx.com/scripts/install-emqx-deb.sh | sudo bash &>/dev/null
+sudo apt-get install -y emqx &>/dev/null
+sudo emqx start &>/dev/null
 msg_ok "Installed EMQX"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
