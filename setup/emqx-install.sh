@@ -98,5 +98,4 @@ msg_ok "Customized Container"
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
-rm -rf emqx-5.0.8-debian11-amd64.deb
 msg_ok "Cleaned"
