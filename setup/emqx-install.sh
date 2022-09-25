@@ -70,15 +70,11 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
-apt-get install -y gnupg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing EMQX"
 curl -s https://packagecloud.io/install/repositories/emqx/emqx/script.deb.sh | bash &>/dev/null
 sudo apt-get install -y emqx=5.0.8 &>/dev/null
-#sudo emqx start &>/dev/null
-#wget https://www.emqx.com/en/downloads/broker/5.0.8/emqx-5.0.8-debian11-amd64.deb &>/dev/null
-#apt install ./emqx-5.0.8-debian11-amd64.deb &>/dev/null
 systemctl start emqx
 msg_ok "Installed EMQX"
 
