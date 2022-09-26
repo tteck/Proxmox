@@ -16,5 +16,5 @@ cd /var/lib/containers/storage/volumes/hass_config/_data
 wget -O - https://get.hacs.xyz | bash -
 
 # To install HACS run the following from the container (LXC) console
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/podman_hacs.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/misc/podman_hacs.sh)"
 # Then add the integration in HA

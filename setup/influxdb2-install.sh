@@ -74,20 +74,22 @@ apt-get install -y sudo &>/dev/null
 apt-get install -y lsb-base &>/dev/null
 apt-get install -y lsb-release &>/dev/null
 apt-get install -y gnupg2 &>/dev/null
+apt-get install -y gpg &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up InfluxDB Repository"
-wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add - &>/dev/null
-echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list &>/dev/null
+wget -q https://repos.influxdata.com/influxdb.key
+echo '23a1c8836f0afc5ed24e0486339d7cc8f6790b83886c4c96995b88a061c5bb5d influxdb.key' | sha256sum -c && cat influxdb.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdb.gpg > /dev/null
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdb.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 msg_ok "Set up InfluxDB Repository"
 
 msg_info "Installing InfluxDB"
 apt-get update &>/dev/null
-apt-get install -y influxdb &>/dev/null
+sudo apt-get update && sudo apt-get install influxdb2 -y &>/dev/null
 msg_ok "Installed InfluxDB"
 
 msg_info "Installing Telegraf"
-apt-get install -y telegraf &>/dev/null
+sudo apt-get update && sudo apt-get install telegraf -y &>/dev/null
 msg_ok "Installed Telegraf"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);

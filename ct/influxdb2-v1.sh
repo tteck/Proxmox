@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
-APP="Technitium DNS"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="InfluxDB2"
+var_disk="8"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
@@ -43,12 +43,12 @@ else
     exit
 fi
 function header_info {
-echo -e "${RD}
-  ______          __          _ __  _                    ____  _   _______
- /_  __/__  _____/ /_  ____  (_) /_(_)_  ______ ___ v4  / __ \/ | / / ___/
-  / / / _ \/ ___/ __ \/ __ \/ / __/ / / / / __  __ \   / / / /  |/ /\__ \ 
- / / /  __/ /__/ / / / / / / / /_/ / /_/ / / / / / /  / /_/ / /|  /___/ / 
-/_/  \___/\___/_/ /_/_/ /_/_/\__/_/\__,_/_/ /_/ /_/  /_____/_/ |_//____/  
+echo -e "${YW}
+    ____      ______           ____  ____ 
+   /  _/_v4  / __/ /_  ___  __/ __ \/ __ )
+   / // __ \/ /_/ / / / / |/_/ / / / __  |
+ _/ // / / / __/ / /_/ />  </ /_/ / /_/ / 
+/___/_/ /_/_/ /_/\__,_/_/|_/_____/_____/  
 ${CL}"
 }
 function msg_info() {
@@ -260,5 +260,3 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 pct set $CTID -description "# ${APP} LXC
 ### https://hungnt612.github.io/Proxmox/"
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:5380${CL} \n"

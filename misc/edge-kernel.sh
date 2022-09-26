@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
+# bash -c "$(wget -qLO - https://github.com/hungnt612/Proxmox/raw/main/misc/edge-kernel.sh)"
 set -e
 KERNEL_ON=$(uname -r)
 PVE_KERNEL=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)

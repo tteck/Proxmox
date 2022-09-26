@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Use to copy all data from one Home Assistant LXC to another
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/misc/ha-copy-data.sh)"
 while true; do
     read -p "Use to copy all data from one Home Assistant LXC to another. Proceed(y/n)?" yn
     case $yn in
@@ -118,4 +118,4 @@ info "Successfully Transferred Data."
 
 # Use to copy all data from one Home Assistant LXC to another
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/misc/ha-copy-data.sh)"

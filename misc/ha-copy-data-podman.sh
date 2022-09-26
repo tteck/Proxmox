@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Use to copy all data from a Home Assistant LXC to a Podman Home Assistant LXC.
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data-podman.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/misc/ha-copy-data-podman.sh)"
 while true; do
     read -p "Use to copy all data from a Home Assistant LXC to a Podman Home Assistant LXC. Proceed(y/n)?" yn
     case $yn in
@@ -119,4 +119,4 @@ info "Successfully Transferred Data."
 
 # Use to copy all data from a Home Assistant LXC to a Podman Home Assistant LXC
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/ha-copy-data-podman.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/misc/ha-copy-data-podman.sh)"

@@ -254,7 +254,7 @@ export PCT_OPTIONS="
   -unprivileged $CT_TYPE
   $PW
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/ct/create_lxc.sh)" || exit
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
@@ -269,10 +269,10 @@ EOF
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/setup/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 pct set $CTID -description "# ${APP} LXC
-### https://tteck.github.io/Proxmox/"
+### https://hungnt612.github.io/Proxmox/"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
              ${BL}http://${IP}${CL}\n"

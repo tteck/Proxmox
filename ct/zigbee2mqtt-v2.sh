@@ -219,7 +219,7 @@ export PCT_OPTIONS="
   -unprivileged ${IM}
   ${PW}
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/ct/create_lxc.sh)" || exit
 
 STORAGE_TYPE=$(pvesm status -storage $(pct config $CTID | grep rootfs | awk -F ":" '{print $2}') | awk 'NR>1 {print $2}')
 if [ "$STORAGE_TYPE" == "zfspool" ]; then
@@ -256,7 +256,7 @@ echo -e "${CM}${CL} \r"
 
 alias lxc-cmd="lxc-attach -n $CTID --"
 
-lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/zigbee2mqtt-install.sh)" || exit
+lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/hungnt612/Proxmox/main/setup/zigbee2mqtt-install.sh)" || exit
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 

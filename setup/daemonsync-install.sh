@@ -75,7 +75,7 @@ apt-get install -y g++-multilib &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Daemon Sync Server"
-wget -qL https://github.com/tteck/Proxmox/raw/main/misc/daemonsync_2.2.0.0059_amd64.deb &>/dev/null
+wget -qL https://github.com/hungnt612/Proxmox/raw/main/misc/daemonsync_2.2.0.0059_amd64.deb &>/dev/null
 sudo dpkg -i daemonsync_2.2.0.0059_amd64.deb &>/dev/null
 msg_ok "Installed Daemon Sync Server"
 
