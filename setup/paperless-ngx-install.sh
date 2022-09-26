@@ -82,6 +82,7 @@ apt-get install -y --no-install-recommends \
 	mime-support \
 	libzbar0 \
 	poppler-utils \
+	default-libmysqlclient-dev \
 	sudo &>/dev/null
 msg_ok "Installed Paperless-ngx Dependencies"
 
