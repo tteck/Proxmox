@@ -60,8 +60,8 @@ cp -r /opt/paperless/paperless.conf paperless-ngx/
 cp -r paperless-ngx/* /opt/paperless/
 cd /opt/paperless
 pip install -r requirements.txt &>/dev/null
-cd src
-python3 manage.py migrate &>/dev/null
+cd /opt/paperless/src
+/usr/bin/python3 manage.py migrate &>/dev/null
 msg_ok "Updated to ${RELEASE}"
 
 msg_info "Cleaning up"
