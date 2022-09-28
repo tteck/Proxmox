@@ -97,17 +97,15 @@ function default_settings() {
 		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
-CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 8 58 2 \
+CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
 "1" "Unprivileged" ON \
 "0" "Privileged" OFF \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
-else
-    exit
 fi
-PW1=$(whiptail --inputbox "Set Root Password" 8 58  --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3)
+PW1=$(whiptail --inputbox "Set Root Password" 8 58  --title "PASSWORD(leave blank for automatic login)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $PW1 ]; then PW1="Automatic Login" PW=" ";
@@ -117,58 +115,50 @@ else
     echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
   fi
 fi
-CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
+CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
+if [ -z $CT_ID ]; then CT_ID="$NEXTID"; echo -e "${DGN}Container ID: ${BGN}$CT_ID${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"; fi;
 fi
-CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3>&1 1>&2 2>&3)
+CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    HN=$(echo ${CT_NAME,,} | tr -d ' ')
-    echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+if [ -z $CT_NAME ]; then HN="$NSAPP"; echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then HN=$(echo ${CT_NAME,,} | tr -d ' '); echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"; fi;
 fi
-DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3)
+DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+if [ -z $DISK_SIZE ]; then DISK_SIZE="$var_disk"; echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}";
+else
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"; fi;
     if ! [[ $DISK_SIZE =~ $INTEGER ]] ; then echo -e "${RD}⚠ DISK SIZE MUST BE A INTEGER NUMBER!${CL}"; advanced_settings; fi;
-else
-    exit
 fi
-CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3)
+CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+if [ -z $CORE_COUNT ]; then CORE_COUNT="$var_cpu"; echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"; fi;
 fi
-RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3)
+RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+if [ -z $RAM_SIZE ]; then RAM_SIZE="$var_ram"; echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"; fi;
 fi
-BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
+BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE"--cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
+if [ -z $BRG ]; then BRG="vmbr0"; echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"; fi;
 fi
-NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3)
+NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
-if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+if [ -z $NET ]; then NET="dhcp"; echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}";
 else
-    exit
+  if [ $exitstatus = 0 ]; then echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"; fi;
 fi
-GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58  --title "GATEWAY IP" 3>&1 1>&2 2>&3)
+GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58  --title "GATEWAY IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $GATE1 ]; then GATE1="Default" GATE="";
@@ -178,7 +168,7 @@ else
     echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
   fi
 fi
-MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58  --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
+MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58  --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $MAC1 ]; then MAC1="Default" MAC="";
@@ -188,7 +178,7 @@ else
     echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
   fi
 fi
-VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58  --title "VLAN" 3>&1 1>&2 2>&3)
+VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58  --title "VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $VLAN1 ]; then VLAN1="Default" VLAN="";
@@ -198,7 +188,7 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
-if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
+if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
 else
   clear
@@ -208,7 +198,7 @@ else
 fi
 }
 function start_script() {
-if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
+if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
   header_info
   echo -e "${BL}Using Default Settings${CL}"
   default_settings
