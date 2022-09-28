@@ -122,7 +122,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Proxmox Backup Server Post Install</summary>
+<summary markdown="span"> Proxmox Backup Server Post Install</summary>
  
 <p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
 
@@ -982,7 +982,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Z-Wave JS UI LXC </summary>
+<summary markdown="span"> Z-Wave JS UI LXC </summary>
  
 <p align="center"><img src="https://github.com/zwave-js/zwave-js-ui/blob/master/docs/_images/app_logo.svg?raw=true" height="100"/></p>
 
