@@ -178,6 +178,8 @@ ________________________________________________________________________________
 
 A standalone container-based installation of Home Assistant Core
 
+🛈 *If the LXC is created Privileged, the script will automatically set up USB passthrough.*
+
 To create a new Proxmox Home Assistant Container LXC, run the following in the Proxmox Shell.
  
 ```yaml
@@ -208,16 +210,6 @@ Run in the Proxmox Shell
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/ha-copy-data.sh)"
  ```
-
-⚙️ **To Allow USB Device Passthrough:**
- 
-Run in the Proxmox Shell. (**replace `106` with your LXC ID**)
-```yaml
-bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/usb-passthrough.sh)" -s 106
-```
- 
-Reboot the LXC to apply the changes
-
 
 ⚙️ **To Install HACS:**
 
