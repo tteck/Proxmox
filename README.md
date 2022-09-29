@@ -1851,7 +1851,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸NextCloudPi LXC</summary>
+<summary markdown="span"> NextCloudPi LXC</summary>
  
 <p align="center"><img src="https://github.com/nextcloud/nextcloudpi/blob/master/ncp-app/img/app.svg?raw=true" height="100"/></p>
 
