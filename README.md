@@ -167,6 +167,30 @@ ________________________________________________________________________________
  
 </details>
 
+<details>
+<summary markdown="span"> PiMox HAOS VM</summary>
+ 
+<p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/pimox.png?raw=true" width="100" height="100"/></p>
+ 
+<h1 align="center" id="heading"> PiMox HAOS VM </h1>
+<h3 align="center"> Option to create VM using Stable, Beta or Dev Image </h3>
+
+The script automates the manual process of finding, downloading and extracting the aarch64 (qcow2) disk image provided by the Home Assistant Team, creating a VM with user defined settings, importing and attaching the disk, setting the boot order and starting the VM.
+
+To create a new PiMox HAOS VM, run the following in the Proxmox Shell
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/vm/pimox-haos-vm-v4.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  4GB RAM - 32GB Storage - 2vCPU - Stable Image⚡</h3>
+ 
+After the script completes, click on the VM Console to find the Home Assistant IP.
+
+**Home Assistant Interface - IP:8123**
+
+____________________________________________________________________________________________ 
+ 
+</details>
 
 <details>
 <summary markdown="span"> Home Assistant Container LXC </summary>
