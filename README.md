@@ -230,7 +230,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Home Assistant Core LXC </summary>
+<summary markdown="span"> 🔸Home Assistant Core LXC </summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" width="100" height="100"/>
 
