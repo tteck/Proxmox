@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Home Assistant Container LXC** 
   - If the LXC is created Privileged, the script will automatically set up USB passthrough.
+- **Home Assistant Core LXC** 
+  - NEW Script
 
 ## 2022-09-23
 
