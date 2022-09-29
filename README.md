@@ -270,7 +270,8 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homeassistan
  
 <h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 8GB Storage - 2vCPU ⚡</h3>
 
-⚠️ Initialize Home Assistant-Core (Only required once)</br>
+⚠️ Initialize Home Assistant-Core (Only required once)
+
 <sub>Run in the LXC console</sub>
 ```yaml
 cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
@@ -278,21 +279,24 @@ cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
 
 ***Home Assistant Interface - IP:8123***
 
-⚙️ **Edit the HA configuration.yaml**</br>
+⚙️ **Edit the HA configuration.yaml**
+
 <sub>Run in the LXC console</sub>
 ```yaml
 nano .homeassistant/configuration.yaml
 ```
 <sub>Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”</sub>
  
-⚙️ **Install HACS:**</br>
+⚙️ **Install HACS:**
+
 <sub>Run in the LXC console</sub>
 ```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/hacs-core.sh)"
 ```
 <sub>After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.</sub>
 
-⚙️ **Update Home Assistant**</br>
+⚙️ **Update Home Assistant**
+
 <sub>Run in the LXC console</sub>
 ```yaml
 systemctl stop homeassistant.service && source /srv/homeassistant/bin/activate && pip3 install --upgrade homeassistant && systemctl start homeassistant.service && exit
