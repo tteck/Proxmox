@@ -230,6 +230,53 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> Home Assistant Core LXC </summary>
+ 
+<p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" width="100" height="100"/>
+
+<h1 align="center" id="heading"> Home Assistant Core LXC </h1>
+
+A standalone installation of Home Assistant Core
+
+To create a new Proxmox Home Assistant Core LXC, run the following in the Proxmox Shell.
+ 
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/homeassistant-core-v4.sh)"
+```
+ 
+<h3 align="center" id="heading">⚡ Default Settings:  1GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+⚠️ Initialize Home Assistant-Core (Only required once)</br>
+<sub>Run in the LXC console</sub>
+```yaml
+cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
+```
+
+***Home Assistant Interface - IP:8123***
+
+⚙️ **Edit the HA configuration.yaml**</br>
+<sub>Run in the LXC console</sub>
+```yaml
+nano .homeassistant/configuration.yaml
+```
+<sub>Save and exit the editor with “Ctrl+O”, “Enter” and “Ctrl+X”</sub>
+ 
+⚙️ **Install HACS:**</br>
+<sub>Run in the LXC console</sub>
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/hacs-core.sh)"
+```
+<sub>After install, reboot Home Assistant and **clear browser cache** then Add HACS integration.</sub>
+
+⚙️ **Update Home Assistant**</br>
+<sub>Run in the LXC console</sub>
+```yaml
+systemctl stop homeassistant.service && source /srv/homeassistant/bin/activate && pip3 install --upgrade homeassistant && systemctl start homeassistant.service && exit
+```
+____________________________________________________________________________________________ 
+</details>
+
+<details>
 <summary markdown="span"> Podman Home Assistant Container LXC </summary>
  
 <p align="center"><img src="https://heise.cloudimg.io/width/223/q50.png-lossy-50.webp-lossy-50.foil1/_www-heise-de_/imgs/18/2/5/8/2/8/1/0/podman_logo-670078d7ea1d15a6.png" width="100" height="100"/>
