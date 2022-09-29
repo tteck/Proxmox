@@ -168,11 +168,11 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> PiMox HAOS VM</summary>
+<summary markdown="span"> 🔸PiMox HAOS VM</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/pimox.png?raw=true" width="100" height="100"/></p>
  
-<h1 align="center" id="heading"> 🔸PiMox HAOS VM </h1>
+<h1 align="center" id="heading"> PiMox HAOS VM </h1>
 <h3 align="center"> Option to create VM using Stable, Beta or Dev Image </h3>
 
 The script automates the manual process of finding, downloading and extracting the aarch64 (qcow2) disk image provided by the Home Assistant Team, creating a VM with user defined settings, importing and attaching the disk, setting the boot order and starting the VM.
