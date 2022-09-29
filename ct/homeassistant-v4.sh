@@ -247,6 +247,7 @@ else
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
+EOF
 fi
 msg_info "Starting LXC Container"
 pct start $CTID
