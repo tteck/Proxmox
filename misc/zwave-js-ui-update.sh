@@ -26,7 +26,7 @@ echo -en "${GN} Updating Z-wave JS UI... "
 systemctl stop zwave-js-ui.service
 cd /opt/zwave-js-ui
 curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
-unzip zwave-js-ui-v*.zip zwave-js-ui &>/dev/null
+unzip -o zwave-js-ui-v*.zip zwave-js-ui &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
