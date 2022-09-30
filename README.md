@@ -1760,6 +1760,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> Homepage LXC </summary>
 
+<p align="center"><img src="https://github.com/benphelps/homepage/raw/main/images/homepage-light.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Homepage LXC </h1>
  
