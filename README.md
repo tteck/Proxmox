@@ -630,7 +630,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸EMQX LXC </summary>
+<summary markdown="span"> EMQX LXC </summary>
  
 <p align="center"><img src="https://github.com/hassio-addons/repository/blob/master/emqx/icon.png?raw=true" height="100"/></p>
 
