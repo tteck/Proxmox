@@ -21,6 +21,16 @@ function error_exit() {
   echo -e "$flag $msg" 1>&2
   exit $EXIT
 }
+clear
+while true; do
+    read -p "This will update ZWave JS UI. Proceed(y/n)?" yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+clear
 
 echo -en "${GN} Updating Z-wave JS UI... "
 systemctl stop zwave-js-ui.service
