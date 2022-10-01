@@ -1404,7 +1404,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/omada-v4.sh)
  
 ⚙️ **To Update Omada**
 
-https://github.com/tteck/Proxmox/issues/402#issue-1328460983
+[#403](https://github.com/tteck/Proxmox/issues/402#issue-1328460983)
 
 ____________________________________________________________________________________________ 
 
