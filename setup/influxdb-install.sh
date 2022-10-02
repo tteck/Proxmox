@@ -86,9 +86,19 @@ apt-get update &>/dev/null
 apt-get install -y influxdb &>/dev/null
 msg_ok "Installed InfluxDB"
 
+read -r -p "Would you like to add Telegraf? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
+then
+TELEGRAF="Y"
+else
+TELEGRAF="N"
+fi
+
+if [[ $TELEGRAF == "Y" ]]; then
 msg_info "Installing Telegraf"
 apt-get install -y telegraf &>/dev/null
 msg_ok "Installed Telegraf"
+fi
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
