@@ -59,13 +59,13 @@ while read -r line; do
 done < <(pct list | awk 'NR>1')
 while [ -z "${CTID_FROM:+x}" ]; do
   CTID_FROM=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich HA Container LXC would you like to copy FROM?\n" \
+  "\nWhich HA Core LXC would you like to copy FROM?\n" \
   16 $(($MSG_MAX_LENGTH + 23)) 6 \
   "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 while [ -z "${CTID_TO:+x}" ]; do
   CTID_TO=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich HA Core LXC would you like to copy TO?\n" \
+  "\nWhich HA Container LXC would you like to copy TO?\n" \
   16 $(($MSG_MAX_LENGTH + 23)) 6 \
   "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
