@@ -1347,7 +1347,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Server - Networklng </summary>
+<summary markdown="span"> Server - Networking </summary>
 ⬇__________________________________________________________________________________________
 
 <details>
