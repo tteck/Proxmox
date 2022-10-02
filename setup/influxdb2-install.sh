@@ -86,6 +86,11 @@ apt-get update &>/dev/null
 apt-get install -y influxdb2 &>/dev/null
 msg_ok "Installed InfluxDB"
 
+# https://docs.influxdata.com/influxdb/v2.4/reference/config-options/?t=TOML#reporting-disabled
+msg_info "Disabling Influxdb2 telemetry"
+echo 'reporting-disabled = true' >> /etc/influxdb/config.toml
+msg_info "Disabled Influxdb2 telemetry"
+
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
 msg_info "Customizing Container"
