@@ -59,6 +59,7 @@ tar -xf paperless-ngx-$RELEASE.tar.xz &>/dev/null
 cp -r /opt/paperless/paperless.conf paperless-ngx/
 cp -r paperless-ngx/* /opt/paperless/
 cd /opt/paperless
+sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
 pip install -r requirements.txt &>/dev/null
 cd /opt/paperless/src
 /usr/bin/python3 manage.py migrate &>/dev/null
