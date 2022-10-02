@@ -1144,11 +1144,13 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> InfluxDB/Telegraf LXC </summary>
+<summary markdown="span"> InfluxDB LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
 
-<h1 align="center" id="heading"> InfluxDB/Telegraf LXC </h1>
+<h1 align="center" id="heading"> InfluxDB LXC </h1>
+
+<h3 align="center"> Option to Install Telegraf</h3>
 
 [InfluxDB](https://www.influxdata.com/) is an open-source time series database developed by the company InfluxData.
 
