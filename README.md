@@ -1188,6 +1188,43 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> InfluxDB2</summary>
+
+<p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hopisystems.com%2Fassets%2Fimages%2Fintegrations%2Finfluxdb.png&f=1&nofb=1" height="150"/></p>
+
+<h1 align="center" id="heading"> InfluxDB2 LXC </h1>
+
+[InfluxDB2](https://www.influxdata.com/) is an open-source time series database developed by the company InfluxData.
+
+To create a new Proxmox InfluxDB2 LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/influxdb2.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**InfluxDB2 Interface - IP:8086**
+
+⚙️ **InfluxDB2 Configuration**
+
+Run in the LXC console
+```yaml
+nano /etc/influxdb/influxdb.conf
+```
+
+⚙️ **To Update InfluxDB2**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> Grafana LXC </summary>
  
 <p align="center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fdocs.checkmk.com%2Flatest%2Fimages%2Fgrafana_logo.png&f=1&nofb=1" height="100"/></p>
