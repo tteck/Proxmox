@@ -920,7 +920,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> InfluxDB LXC </h1>
 
-<h3 align="center"> Option to Install Telegraf</h3>
+<h3 align="center"> Options to Install InfluxDB v1 or v2 and Telegraf</h3>
 
 [InfluxDB](https://www.influxdata.com/) is an open-source time series database developed by the company InfluxData.
 
