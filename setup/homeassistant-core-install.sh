@@ -77,6 +77,7 @@ apt-get install -y \
         libffi-dev \
         libssl-dev \
         libjpeg-dev \
+        libpcap-dev \
         zlib1g-dev \
         autoconf \
         build-essential \
@@ -95,6 +96,8 @@ python3 -m venv .
 source bin/activate 
 python3 -m pip install wheel &>/dev/null
 pip3 install homeassistant &>/dev/null
+pip3 install Cython &>/dev/null
+pip3 install python-libpcap &>/dev/null
 pip3 install psycopg2-binary &>/dev/null
 msg_ok "Installed Home Assistant-Core"
 
