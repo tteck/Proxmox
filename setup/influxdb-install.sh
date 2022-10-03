@@ -81,9 +81,21 @@ wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add - &>/dev/
 echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list &>/dev/null
 msg_ok "Set up InfluxDB Repository"
 
+read -r -p "Which version of InfluxDB to install? (1 or 2) " prompt
+if [[ $prompt == "2" ]]
+then
+INFLUX="2"
+else
+INFLUX="1"
+fi
+
 msg_info "Installing InfluxDB"
 apt-get update &>/dev/null
+if [[ $INFLUX == "2" ]]; then
+apt-get install -y influxdb2 &>/dev/null
+else
 apt-get install -y influxdb &>/dev/null
+fi
 msg_ok "Installed InfluxDB"
 
 read -r -p "Would you like to add Telegraf? <y/N> " prompt
