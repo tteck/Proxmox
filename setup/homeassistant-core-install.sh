@@ -108,7 +108,7 @@ After=network-online.target
 Type=simple
 WorkingDirectory=/root/.homeassistant
 ExecStart=/srv/homeassistant/bin/hass -c "/root/.homeassistant"
-
+RestartForceExitStatus=100
 [Install]
 WantedBy=multi-user.target
 EOF
