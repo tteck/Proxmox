@@ -1896,7 +1896,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> Ad Blocker </summary>
+<summary markdown="span"> Ad Blocker - DNS </summary>
 ⬇__________________________________________________________________________________________
 
 <details>
