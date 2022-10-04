@@ -86,11 +86,22 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
  
 msg_info "Setting up Zigbee2MQTT Repository"
-sudo git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
+git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
 msg_ok "Set up Zigbee2MQTT Repository"
+
+read -r -p "Switch to Edge/dev branch? (y/N) " prompt
+if [[ $prompt == "y" ]]
+then
+DEV="y"
+else
+DEV="n"
+fi
 
 msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt &>/dev/null
+if [[ $DEV == "y" ]]; then
+git checkout dev &>/dev/null
+fi
 npm ci &>/dev/null
 msg_ok "Installed Zigbee2MQTT"
 
