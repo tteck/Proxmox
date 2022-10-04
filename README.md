@@ -973,6 +973,8 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading">Zigbee2MQTT LXC </h1>
 
+<h3 align="center"> Option to switch to Edge/dev branch</h3>
+
 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) is a standalone nodejs application that connects a zigbee network to MQTT
 
 To create a new Proxmox Zigbee2MQTT LXC, run the following in the Proxmox Shell.
