@@ -2019,7 +2019,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> 🔸Blocky LXC</summary>
  
-<p align="center"><img src="https://github.com/0xERR0R/blocky/blob/master/docs/blocky.svg" height="100"/></p>
+<p align="center"><img src="https://github.com/0xERR0R/blocky/blob/master/docs/blocky.svg?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Blocky LXC </h1>
 
