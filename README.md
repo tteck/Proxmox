@@ -1256,6 +1256,36 @@ ________________________________________________________________________________
 </details>
 
 <details>
+<summary markdown="span"> Umbrel LXC </summary>
+
+<p align="center"><img src="https://uploads-ssl.webflow.com/62966b49981ba146f4842f45/62966b49981ba15b44842fe4_umbrel-logo-compact-purple.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> Umbrel LXC </h1>
+ 
+[Umbrel](https://umbrel.com/) is a beautiful personal server OS for self-hosting.
+
+
+To create a new Proxmox Umbrel LXC, run the following in the Proxmox Shell.
+
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/umbrel-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**Umbrel Interface - IP**
+
+⚙️ **To Update Umbrel**
+
+```yaml
+update from the Umbrel UI
+```
+
+____________________________________________________________________________________________ 
+
+</details>
+
+<details>
 <summary markdown="span"> CasaOS LXC </summary>
 
 <p align="center"><img src="https://www.casaos.io/img/casa.svg" height="100"/></p>
