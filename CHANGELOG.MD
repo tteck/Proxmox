@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **Umbrel LXC** 
+- **Umbrel LXC** (Docker)
   - NEW Script
 
 ## 2022-09-29
