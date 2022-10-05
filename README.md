@@ -2015,6 +2015,34 @@ Update from the Adguard UI
 __________________________________________________________________________________________ 
 
 </details>
+
+<details>
+<summary markdown="span"> 🔸Blocky LXC</summary>
+ 
+<p align="center"><img src="https://github.com/0xERR0R/blocky/blob/master/docs/blocky.svg" height="100"/></p>
+
+<h1 align="center" id="heading"> Blocky LXC </h1>
+
+[Blocky](https://0xerr0r.github.io/blocky/) is a DNS proxy and ad-blocker for the local network written in Go.
+
+To create a new Proxmox Blocky LXC, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/blocky-v4.sh)"
+```
+
+<h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
+
+
+⚙️ **To Update Blocky**
+
+```yaml
+Working On
+```
+__________________________________________________________________________________________ 
+
+</details>
+
 ⬆__________________________________________________________________________________________
 </details>
 
