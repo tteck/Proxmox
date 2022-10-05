@@ -2034,10 +2034,10 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/blocky-v4.sh
 <h3 align="center" id="heading">⚡ Default Settings:  512MiB RAM - 2GB Storage - 1vCPU ⚡</h3>
 
 
-⚙️ **To Update Blocky**
+⚙️ **Blocky Config Path**
 
 ```yaml
-Working On
+/opt/blocky/config.yml
 ```
 __________________________________________________________________________________________ 
 
