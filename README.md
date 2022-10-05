@@ -2023,7 +2023,7 @@ ________________________________________________________________________________
 
 <h1 align="center" id="heading"> Blocky LXC </h1>
 
-[Blocky](https://0xerr0r.github.io/blocky/) is a DNS proxy and ad-blocker for the local network written in Go.
+[Blocky](https://0xerr0r.github.io/blocky/) is a DNS proxy and ad-blocker for the local network written in Go. 🚨 For Advanced Users. No UI.
 
 To create a new Proxmox Blocky LXC, run the following in the Proxmox Shell.
 
