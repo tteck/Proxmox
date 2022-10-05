@@ -176,7 +176,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸PiMox HAOS VM</summary>
+<summary markdown="span"> PiMox HAOS VM</summary>
  
 <p align="center"><img src="https://github.com/tteck/Proxmox/blob/main/misc/images/pimox.png?raw=true" width="100" height="100"/></p>
  
@@ -262,7 +262,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Home Assistant Core LXC </summary>
+<summary markdown="span"> Home Assistant Core LXC </summary>
  
 <p align="center"><img src="https://avatars.githubusercontent.com/u/13844975?s=200&amp;v=4" width="100" height="100"/></p>
 
