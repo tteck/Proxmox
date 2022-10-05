@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Umbrel LXC** 
   - NEW Script (Docker)
+- **Blocky LXC** 
+  - NEW Script (Adblocker - DNS)
 
 ## 2022-09-29
 
