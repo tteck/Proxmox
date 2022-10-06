@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
+RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
 set -e
+YW=`echo "\033[33m"`
 RD=`echo "\033[01;31m"`
 BL=`echo "\033[36m"`
-CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
+RETRY_NUM=10
+RETRY_EVERY=3
+NUM=$RETRY_NUM
+CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
+BFR="\\r\\033[K"
+HOLD="-"
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -21,24 +29,52 @@ function error_exit() {
   echo -e "$flag $msg" 1>&2
   exit $EXIT
 }
+function msg_info() {
+    local msg="$1"
+    echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+function msg_ok() {
+    local msg="$1"
+    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
+function msg_error() {
+    local msg="$1"
+    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
 clear
+cat << "EOF"
+ _____                                  _______    __  ______
+/__  /_      ______ __   _____         / / ___/   / / / /  _/
+  / /| | /| / / __ `/ | / / _ \   __  / /\__ \   / / / // /  
+ / /_| |/ |/ / /_/ /| |/ /  __/  / /_/ /___/ /  / /_/ // /   
+/____/__/|__/\__,_/ |___/\___/   \____//____/   \____/___/   
+                             UPDATE
+                             
+EOF
+
 while true; do
-    read -p "This will update ZWave JS UI. Proceed(y/n)?" yn
+    read -p "This will update ZWave JS UI to $RELEASE. Proceed(y/n)?" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
 done
-clear
+if [ ! -d /opt/zwave-js-ui ]; then msg_error "No Zwave JS UI Install Detected!"; exit; fi
 
-echo -en "${GN} Updating Z-wave JS UI... "
+msg_info "Stopping Z-wave JS UI"
 systemctl stop zwave-js-ui.service
-RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
+msg_ok "Stopped Z-wave JS UI"
+
+msg_info "Updating Z-wave JS UI"
 wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
 unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
 \cp -R zwave-js-ui-linux /opt/zwave-js-ui
+msg_ok "Updated Z-wave JS UI"
 
+msg_info "Updating Z-wave JS UI service file"
 cat << EOF > /etc/systemd/system/zwave-js-ui.service
 [Unit]
 Description=zwave-js-ui
@@ -51,12 +87,15 @@ ExecStart=/opt/zwave-js-ui/zwave-js-ui-linux
 [Install]
 WantedBy=multi-user.target
 EOF
-echo -e "${CM}${CL} \r"
-
-echo -en "${GN} Cleanup... "
-rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
 systemctl daemon-reload
-systemctl enable --now zwave-js-ui.service
-echo -e "${CM}${CL} \n"
+msg_ok "Updated Z-wave JS UI service file"
 
-echo -e "${GN} Finished ${CL}"
+msg_info "Cleanup"
+rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
+msg_ok "Cleaned"
+
+msg_info "Starting Z-wave JS UI"
+systemctl enable --now zwave-js-ui.service
+msg_info "Started Z-wave JS UI"
+
+msg_ok "Completed Successfully!\n"
