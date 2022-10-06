@@ -37,7 +37,7 @@ systemctl stop zwave-js-ui.service
 RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
 wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
 unzip zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux &>/dev/null
-cp -R zwave-js-ui-linux /opt/zwave-js-ui
+\cp -R zwave-js-ui-linux /opt/zwave-js-ui
 
 cat << EOF > /etc/systemd/system/zwave-js-ui.service
 [Unit]
@@ -54,7 +54,7 @@ EOF
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
-rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux
+rm -rf zwave-js-ui-${RELEASE}-linux.zip store
 systemctl daemon-reload
 systemctl enable --now zwave-js-ui.service
 echo -e "${CM}${CL} \n"
