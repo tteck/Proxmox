@@ -118,7 +118,7 @@ msg_ok "Customized Container"
   fi
 
 msg_info "Cleaning up"
-rm zwave-js-ui-v*.zip
+rm zwave-js-ui-${RELEASE}-linux.zip
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 msg_ok "Cleaned"  
