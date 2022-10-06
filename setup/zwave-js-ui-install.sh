@@ -78,8 +78,9 @@ msg_info "Installing Z-Wave JS UI"
 mkdir /opt/zwave-js-ui
 cd /opt/zwave-js-ui
 mkdir store
-curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
-unzip zwave-js-ui-v*.zip zwave-js-ui &>/dev/null
+RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
+unzip zwave-js-ui-${RELEASE}.zip zwave-js-ui &>/dev/null
 msg_ok "Installed Z-Wave JS UI"
 
 msg_info "Creating Service"
