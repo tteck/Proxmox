@@ -54,7 +54,7 @@ EOF
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
-rm -rf zwave-js-ui-${RELEASE}-linux.zip store
+rm -rf zwave-js-ui-${RELEASE}-linux.zip store zwave-js-ui-linux
 systemctl daemon-reload
 systemctl enable --now zwave-js-ui.service
 echo -e "${CM}${CL} \n"
