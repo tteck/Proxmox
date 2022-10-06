@@ -38,12 +38,25 @@ cd /opt/zwave-js-ui
 RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
 wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
 unzip zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux &>/dev/null
+
+cat << EOF > /etc/systemd/system/zwave-js-ui.service
+[Unit]
+Description=zwave-js-ui
+Wants=network-online.target
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/opt/zwave-js-ui
+ExecStart=/opt/zwave-js-ui/zwave-js-ui-linux
+[Install]
+WantedBy=multi-user.target
+EOF
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
-rm zwave-js-ui-${RELEASE}-linux.zip
-systemctl --system daemon-reload
-systemctl start zwave-js-ui.service
+rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui
+systemctl daemon-reload
+systemctl enable --now zwave-js-ui.service
 echo -e "${CM}${CL} \n"
 
 echo -e "${GN} Finished ${CL}"
