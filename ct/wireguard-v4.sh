@@ -147,7 +147,7 @@ if [ -z $RAM_SIZE ]; then RAM_SIZE="$var_ram"; echo -e "${DGN}Allocated RAM: ${B
 else
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"; fi;
 fi
-BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE"--cancel-button Exit-Script 3>&1 1>&2 2>&3)
+BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ -z $BRG ]; then BRG="vmbr0"; echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}";
 else
