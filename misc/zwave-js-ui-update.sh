@@ -35,8 +35,9 @@ clear
 echo -en "${GN} Updating Z-wave JS UI... "
 systemctl stop zwave-js-ui.service
 cd /opt/zwave-js-ui
-curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "browser_download_url.*zip" | cut -d : -f 2,3 | tr -d \" | wget -i - &>/dev/null
-unzip -o zwave-js-ui-v*.zip zwave-js-ui &>/dev/null
+RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
+wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
+unzip zwave-js-ui-${RELEASE}.zip zwave-js-ui &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleanup... "
