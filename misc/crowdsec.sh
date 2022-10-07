@@ -62,6 +62,7 @@ function msg_ok() {
 
 msg_info "Setting up ${APP} Repository"
 apt-get update &>/dev/null
+apt-get install -y curl &>/dev/null
 apt-get install -y gnupg &>/dev/null
 curl -s https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh | sudo bash &>/dev/null
 msg_ok "Setup ${APP} Repository"
