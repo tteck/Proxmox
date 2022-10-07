@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-10-07
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - Add "Latest" Image
+
 ## 2022-10-05
 
 ### Changed
