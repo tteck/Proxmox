@@ -53,13 +53,14 @@ msg_ok "Stopped ${APP}"
 cd /opt/uptime-kuma
 
 msg_info "Pulling ${APP} ${LATEST}"
-git fetch &>/dev/null
-git checkout $LATEST &>/dev/null
+git fetch --all &>/dev/null
+git checkout $LATEST --force &>/dev/null
 git pull &>/dev/null
 msg_ok "Pulled ${APP} ${LATEST}"
 
-msg_info "Updating ${APP} to ${LATEST} (Patience)"
-npm ci &>/dev/null
+msg_info "Updating ${APP} to ${LATEST}"
+npm install --production &>/dev/null
+npm run download-dist &>/dev/null
 msg_ok "Updated ${APP}"
 
 msg_info "Starting ${APP}"
