@@ -1256,7 +1256,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Umbrel LXC </summary>
+<summary markdown="span"> Umbrel LXC </summary>
 
 <p align="center"><img src="https://uploads-ssl.webflow.com/62966b49981ba146f4842f45/62966b49981ba15b44842fe4_umbrel-logo-compact-purple.svg" height="100"/></p>
 
@@ -2017,7 +2017,7 @@ ________________________________________________________________________________
 </details>
 
 <details>
-<summary markdown="span"> 🔸Blocky LXC</summary>
+<summary markdown="span"> Blocky LXC</summary>
  
 <p align="center"><img src="https://github.com/0xERR0R/blocky/blob/master/docs/blocky.svg?raw=true" height="100"/></p>
 
