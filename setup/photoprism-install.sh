@@ -92,8 +92,8 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Golang (Patience)"
-wget https://golang.org/dl/go1.19.linux-amd64.tar.gz &>/dev/null
-tar -xzf go1.19.linux-amd64.tar.gz -C /usr/local &>/dev/null
+wget https://golang.org/dl/go1.19.2.linux-amd64.tar.gz &>/dev/null
+tar -xzf go1.19.2.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 go install github.com/tianon/gosu@latest &>/dev/null
 go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
