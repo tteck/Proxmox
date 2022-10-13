@@ -190,7 +190,7 @@ apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* \
 /photoprism \
-/go1.19.linux-amd64.tar.gz \
+/go1.19.2.linux-amd64.tar.gz \
 /libtensorflow-linux-avx2-1.15.2.tar.gz \
 /libtensorflow-linux-avx-1.15.2.tar.gz \
 /libtensorflow-linux-cpu-1.15.2.tar.gz
