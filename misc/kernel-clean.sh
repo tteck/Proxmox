@@ -68,14 +68,11 @@ function edge_kernel() {
 }
 
 function kernel_info() {
-    latest_kernel=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | tac | head -n 1)
  if [[ "$MODE" != "PBS" ]]; then
      echo -e "${YW}PVE Version: ${BL}$(pveversion)\n${CL}" 
  fi
     if [[ "$current_kernel" == *"pve"* ]]; then
-      if [[ "$latest_kernel" != *"$current_kernel"* ]]; then
-        echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
-      fi
+        echo -e "${YW}Current Kernel: ${BL}$current_kernel\n${CL}"
     else
         echo -e "\n${CROSS} ${RD}ERROR: No PVE Kernel Found\n${CL}"
         exit 1
