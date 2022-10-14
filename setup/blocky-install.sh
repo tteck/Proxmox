@@ -73,6 +73,8 @@ apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Blocky"
+systemctl stop systemd-resolved &>/dev/null
+systemctl disable systemd-resolved.service &>/dev/null
 RELEASE=$(curl -s https://api.github.com/repos/0xERR0R/blocky/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 wget https://github.com/0xERR0R/blocky/releases/download/v$RELEASE/blocky_${RELEASE}_Linux_x86_64.tar.gz &>/dev/null
 mkdir -p /opt/blocky
