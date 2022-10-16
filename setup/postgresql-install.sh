@@ -84,7 +84,7 @@ msg_info "Installing PostgreSQL"
 apt-get update &>/dev/null
 apt-get install -y postgresql &>/dev/null
 
-cat <<EOF > /etc/postgresql/14/main/pg_hba.conf
+cat <<EOF > /etc/postgresql/15/main/pg_hba.conf
 # PostgreSQL Client Authentication Configuration File
 # ===================================================
 #
@@ -186,7 +186,7 @@ host    all             all             ::1/128                 scram-sha-256
 host    all             all             0.0.0.0/0               md5
 EOF
 
-cat <<EOF > /etc/postgresql/14/main/postgresql.conf
+cat <<EOF > /etc/postgresql/15/main/postgresql.conf
 # -----------------------------
 # PostgreSQL configuration file
 # -----------------------------
@@ -228,15 +228,15 @@ cat <<EOF > /etc/postgresql/14/main/postgresql.conf
 # The default values of these variables are driven from the -D command-line
 # option or PGDATA environment variable, represented here as ConfigDir.
 
-data_directory = '/var/lib/postgresql/14/main'          # use data in another directory
+data_directory = '/var/lib/postgresql/15/main'          # use data in another directory
                                         # (change requires restart)
-hba_file = '/etc/postgresql/14/main/pg_hba.conf'        # host-based authentication file
+hba_file = '/etc/postgresql/15/main/pg_hba.conf'        # host-based authentication file
                                         # (change requires restart)
-ident_file = '/etc/postgresql/14/main/pg_ident.conf'    # ident configuration file
+ident_file = '/etc/postgresql/15/main/pg_ident.conf'    # ident configuration file
                                         # (change requires restart)
 
 # If external_pid_file is not explicitly set, no extra PID file is written.
-external_pid_file = '/var/run/postgresql/14-main.pid'                   # write an extra PID file
+external_pid_file = '/var/run/postgresql/15-main.pid'                   # write an extra PID file
                                         # (change requires restart)
 
 
@@ -755,7 +755,7 @@ log_timezone = 'Etc/UTC'
 # PROCESS TITLE
 #------------------------------------------------------------------------------
 
-cluster_name = '14/main'                        # added to process titles if nonempty
+cluster_name = '15/main'                        # added to process titles if nonempty
                                         # (change requires restart)
 #update_process_title = on
 
@@ -771,7 +771,7 @@ cluster_name = '14/main'                        # added to process titles if non
 #track_io_timing = off
 #track_functions = none                 # none, pl, all
 #track_activity_query_size = 1024       # (change requires restart)
-stats_temp_directory = '/var/run/postgresql/14-main.pg_stat_tmp'
+stats_temp_directory = '/var/run/postgresql/15-main.pg_stat_tmp'
 
 
 # - Monitoring -
