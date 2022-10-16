@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -52,7 +52,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -162,7 +162,7 @@ show_menu(){
     read opt
 }
 option_picked(){
-    msgcolor=`echo "\033[01;31m"`
+    msgcolor=`echo "\033[1;31m"`
     normal=`echo "\033[00;00m"`
     message=${@:-"${normal}Error: No message passed"}
     printf "${msgcolor}${message}${normal}\n"
@@ -307,7 +307,7 @@ for container in ${CONTAINER_LIST}; do
     DOCKER_COMMAND="$(runlike "${container}")"
     docker rm --force "${container}"
     eval ${DOCKER_COMMAND}
-  fi 
+  fi
 done
 EOF
 sudo chmod +x /root/update-containers.sh

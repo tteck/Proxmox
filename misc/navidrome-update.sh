@@ -3,20 +3,20 @@ RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/late
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
 
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 function update_info {
 cat << "EOF"
-    _   __            _     __                        
-   / | / /___ __   __(_)___/ /________  ____ ___  ___ 
+    _   __            _     __
+   / | / /___ __   __(_)___/ /________  ____ ___  ___
   /  |/ / __  / | / / / __  / ___/ __ \/ __  __ \/ _ \
  / /|  / /_/ /| |/ / / /_/ / /  / /_/ / / / / / /  __/
-/_/ |_/\__,_/ |___/_/\__,_/_/   \____/_/ /_/ /_/\___/ 
+/_/ |_/\__,_/ |___/_/\__,_/_/   \____/_/ /_/ /_/\___/
                     UPDATE
-            
+
 EOF
 }
 update_info

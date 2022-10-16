@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 while true; do
     read -p "This will create a New Node-Red LXC. Proceed(y/n)?" yn
     case $yn in
@@ -16,13 +16,13 @@ done
 clear
 function header_info {
 echo -e "${RD}
-      _   _           _             _____          _ 
+      _   _           _             _____          _
      | \ | |         | |           |  __ \        | |
      |  \| | ___   __| | ___ ______| |__) |___  __| |
      |     |/ _ \ / _  |/ _ \______|  _  // _ \/ _  |
      | |\  | (_) | (_| |  __/      | | \ \  __/ (_| |
      |_| \_|\___/ \__,_|\___|      |_|  \_\___|\__,_|
-                                                 
+
 ${CL}"
 }
 
@@ -194,7 +194,7 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"

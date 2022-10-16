@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[94m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 while true; do
     read -p "This will create a New Home Assistant Container LXC. Proceed(y/n)?" yn
     case $yn in
@@ -16,13 +16,13 @@ done
 clear
 function header_info {
 echo -e "${BL}
-  _                                        _     _              _   
- | |                                      (_)   | |            | |  
- | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_ 
+  _                                        _     _              _
+ | |                                      (_)   | |            | |
+ | |__   ___  _ __ ___   ___  __ _ ___ ___ _ ___| |_ __ _ _ __ | |_
  |  _ \ / _ \|  _   _ \ / _ \/ _  / __/ __| / __| __/ _  |  _ \| __|
- | | | | (_) | | | | | |  __/ (_| \__ \__ \ \__ \ || (_| | | | | |_ 
+ | | | | (_) | | | | | |  __/ (_| \__ \__ \ \__ \ || (_| | | | | |_
  |_| |_|\___/|_| |_| |_|\___|\__,_|___/___/_|___/\__\__,_|_| |_|\__|
-                                                 
+
 ${CL}"
 }
 
@@ -191,7 +191,7 @@ while [ "$opt" != " " ]
         ;;
       esac
   done
-   
+
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -238,13 +238,13 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == " " ]; then 
+ if [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == " " ]; then
  FEATURES="nesting=1,keyctl=1"
  elif
- [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ [ "$IM" == "1" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
  FEATURES="nesting=1,keyctl=1,fuse=1"
  elif
- [ "$IM" == "0" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then 
+ [ "$IM" == "0" ] && [ "$STORAGE_DRIVER" == "fuse" ]; then
  FEATURES="nesting=1,fuse=1"
  else
  FEATURES="nesting=1"

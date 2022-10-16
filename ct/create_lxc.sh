@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -66,11 +66,11 @@ function select_storage() {
     MENU+=( "$TAG" "$ITEM" "OFF" )
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
 
-  if [ $((${#MENU[@]}/3)) -eq 1 ]; then          
+  if [ $((${#MENU[@]}/3)) -eq 1 ]; then
     printf ${MENU[0]}
-  else                                             
+  else
     local STORAGE
-    while [ -z "${STORAGE:+x}" ]; do              
+    while [ -z "${STORAGE:+x}" ]; do
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
       "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
@@ -115,7 +115,7 @@ fi
 
 DEFAULT_PCT_OPTIONS=(
   -arch $(dpkg --print-architecture))
-  
+
 PCT_OPTIONS=( ${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}} )
 [[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=( -rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8} )
 

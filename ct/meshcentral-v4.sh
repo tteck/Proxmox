@@ -12,11 +12,11 @@ NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -46,9 +46,9 @@ function header_info {
 echo -e "${BL}
     __  ___          __    ______           __             __
    /  |/  /__  _____/ /_  / ____/__  ____  / /__________ _/ /
-  / /|_/ / _ \/ ___/ __ \/ /   / _ \/ __ \/ __/ ___/ __  / / 
- / /  / /  __(__  ) / / / /___/  __/ / / / /_/ /  / /_/ / /  
-/_/  /_/\___/____/_/ /_/\____/\___/_/ /_/\__/_/ v4\__,_/_/   
+  / /|_/ / _ \/ ___/ __ \/ /   / _ \/ __ \/ __/ ___/ __  / /
+ / /  / /  __(__  ) / / / /___/  __/ / / / /_/ /  / /_/ / /
+/_/  /_/\___/____/_/ /_/\____/\___/_/ /_/\__/_/ v4\__,_/_/
 ${CL}"
 }
 function msg_info() {
@@ -185,7 +185,7 @@ if [ $exitstatus = 0 ]; then
 else
     VLAN=",tag=$VLAN1"
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
-  fi  
+  fi
 fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
@@ -209,7 +209,7 @@ fi
 }
 clear
 start_script
-if [ "$CT_TYPE" == "1" ]; then 
+if [ "$CT_TYPE" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"

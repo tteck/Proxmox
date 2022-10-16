@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -52,7 +52,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -84,7 +84,7 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js"
 apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
- 
+
 msg_info "Setting up Zigbee2MQTT Repository"
 git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt &>/dev/null
 msg_ok "Set up Zigbee2MQTT Repository"

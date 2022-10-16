@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -52,7 +52,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -84,9 +84,9 @@ apt-get -y install zulu11-jdk &>/dev/null
 msg_ok "Installed Azul Zulu"
 
 msg_info "Installing openHAB"
-curl -fsSL "https://openhab.jfrog.io/artifactory/api/gpg/key/public" | gpg --dearmor > openhab.gpg 
-mv openhab.gpg /usr/share/keyrings 
-chmod u=rw,g=r,o=r /usr/share/keyrings/openhab.gpg 
+curl -fsSL "https://openhab.jfrog.io/artifactory/api/gpg/key/public" | gpg --dearmor > openhab.gpg
+mv openhab.gpg /usr/share/keyrings
+chmod u=rw,g=r,o=r /usr/share/keyrings/openhab.gpg
 echo 'deb [signed-by=/usr/share/keyrings/openhab.gpg] https://openhab.jfrog.io/artifactory/openhab-linuxpkg stable main' | tee /etc/apt/sources.list.d/openhab.list &>/dev/null
 apt update &>/dev/null
 apt-get -y install openhab &>/dev/null
@@ -111,7 +111,7 @@ systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 msg_ok "Customized Container"
   fi
-  
+
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null

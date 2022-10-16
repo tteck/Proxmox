@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -38,12 +38,12 @@ done
 clear
 function header_info {
 cat << "EOF"
-    __  __                                          
-   / / / /___  ____ ___  ___  ____  ____ _____ ____ 
+    __  __
+   / / / /___  ____ ___  ___  ____  ____ _____ ____
   / /_/ / __ \/ __ `__ \/ _ \/ __ \/ __ `/ __ `/ _ \
  / __  / /_/ / / / / / /  __/ /_/ / /_/ / /_/ /  __/
-/_/ /_/\____/_/ /_/ /_/\___/ .___/\__,_/\__, /\___/ 
-                          /_/  UPDATE  /____/       
+/_/ /_/\____/_/ /_/ /_/\___/ .___/\__,_/\__, /\___/
+                          /_/  UPDATE  /____/
 EOF
 }
 
@@ -63,8 +63,8 @@ msg_info "Updating ${APP}"
 if ! command -v pnpm >/dev/null 2>&1; then
   npm install -g pnpm &>/dev/null
 fi
-cd /opt/homepage 
-systemctl stop homepage 
+cd /opt/homepage
+systemctl stop homepage
 git pull --force &>/dev/null
 pnpm install &>/dev/null
 pnpm build &>/dev/null

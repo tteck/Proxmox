@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 APP="MeshCentral"
 HN=$(echo ${APP,,} | tr -d ' ')
 while true; do
@@ -18,7 +18,7 @@ done
 clear
 function header_info {
 echo -e "${BL}
-  __  __           _      _____           _             _ 
+  __  __           _      _____           _             _
  |  \/  |         | |    / ____|         | |           | |
  | \  / | ___  ___| |__ | |     ___ _ __ | |_ _ __ __ _| |
  | |\/| |/ _ \/ __|  _ \| |    / _ \  _ \| __|  __/ _  | |
@@ -195,7 +195,7 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
@@ -253,6 +253,6 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}. 
+echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}.
 ${APP} should be reachable by going to the following URL.
       ${BL}http://${IP}${CL} \n"

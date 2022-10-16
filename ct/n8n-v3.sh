@@ -4,11 +4,11 @@ NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -43,10 +43,10 @@ done
 clear
 function header_info {
 echo -e "${RD}
-         ___        
-        / _ \       
-  _ __ | (_) |_v3_  
- |  _ \ > _ <|  _ \ 
+         ___
+        / _ \
+  _ __ | (_) |_v3_
+ |  _ \ > _ <|  _ \
  | | | | (_) | | | |
  |_| |_|\___/|_| |_|
 ${CL}"

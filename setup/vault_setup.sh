@@ -8,11 +8,11 @@ shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 CHECKMARK='\033[0;32m\xE2\x9C\x94\033[0m'
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -84,7 +84,7 @@ npm i npm@latest -g &>/dev/null
 echo -e "${CHECKMARK} \e[1;92m Building Vaultwarden (Patience)... \e[0m"
 git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
 pushd vaultwarden &>/dev/null
-cargo clean &>/dev/null 
+cargo clean &>/dev/null
 cargo build --features sqlite --release &>/dev/null
 file target/release/vaultwarden &>/dev/null
 
@@ -101,7 +101,7 @@ npm audit fix --silent --legacy-peer-deps || true &>/dev/null
 npm run --silent dist:oss:selfhost &>/dev/null
 cp -a build ../web-vault &>/dev/null
 cd ..
-mkdir data 
+mkdir data
 
 echo -e "${CHECKMARK} \e[1;92m Create Systemd Service... \e[0m"
 cp ../../.env.template /etc/vaultwarden.env &>/dev/null

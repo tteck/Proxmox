@@ -12,11 +12,11 @@ NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -44,15 +44,15 @@ else
 fi
 function header_info {
 echo -e "${BL}
-                     ____            __                                      
-                    / __ \____  ____/ /___ ___  ____ _____                   
-           v4      / /_/ / __ \/ __  / __  __ \/ __  / __ \                  
-                  / ____/ /_/ / /_/ / / / / / / /_/ / / / /                  
-    __  __       /_/    \____/\__,_/_/ /_/ /_/\__,_/_/ /_/__              __ 
+                     ____            __
+                    / __ \____  ____/ /___ ___  ____ _____
+           v4      / /_/ / __ \/ __  / __  __ \/ __  / __ \
+                  / ____/ /_/ / /_/ / / / / / / /_/ / / / /
+    __  __       /_/    \____/\__,_/_/ /_/ /_/\__,_/_/ /_/__              __
    / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____  / /_
   / /_/ / __ \/ __  __ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __  / __ \/ __/
- / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_  
-/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/  
+ / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_
+/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/
 ${CL}"
 }
 function msg_info() {
@@ -189,7 +189,7 @@ if [ $exitstatus = 0 ]; then
 else
     VLAN=",tag=$VLAN1"
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
-  fi  
+  fi
 fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
@@ -213,7 +213,7 @@ fi
 }
 clear
 start_script
-if [ "$CT_TYPE" == "1" ]; then 
+if [ "$CT_TYPE" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"

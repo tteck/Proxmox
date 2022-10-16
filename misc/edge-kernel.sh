@@ -35,7 +35,7 @@ show_menu(){
     read opt
 }
 option_picked(){
-    msgcolor=`echo "\033[01;31m"`
+    msgcolor=`echo "\033[1;31m"`
     normal=`echo "\033[00;00m"`
     message=${@:-"${normal}Error: No message passed"}
     printf "${msgcolor}${message}${normal}\n"

@@ -9,10 +9,10 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=5
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -41,7 +41,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done

@@ -2,10 +2,10 @@
 
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 while true; do
     read -p "This will create a New Adguard Home LXC. Proceed(y/n)?" yn
     case $yn in
@@ -17,15 +17,15 @@ done
 clear
 function header_info {
 echo -e "${GN}
-              _                           _ 
+              _                           _
      /\      | |                         | |
     /  \   __| | __ _ _   _  __ _ _ __ __| |
    / /\ \ / _  |/ _  | | | |/ _  |  __/ _  |
   / ____ \ (_| | (_| | |_| | (_| | | | (_| |
  /_/    \_\__,_|\__, |\__,_|\__,_|_|  \__,_|
-                 __/ |                      
-                |___/                       
-                                                                                                                        
+                 __/ |
+                |___/
+
 ${CL}"
 }
 
@@ -182,7 +182,7 @@ function info() {
 function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
-}  
+}
 function cleanup_ctid() {
   if $(pct status $CTID &>/dev/null); then
     if [ "$(pct status $CTID | awk '{print $2}')" == "running" ]; then
@@ -197,7 +197,7 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
@@ -253,4 +253,3 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 echo -e "${GN}Successfully created Adguard Home LXC to${CL} ${BL}$CTID${CL}.
 ${GN}Adguard${CL} Setup should be reachable by going to the following URL.
          ${BL}http://${IP}:3000${CL} \n"
-         

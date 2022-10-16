@@ -3,11 +3,11 @@ set -euo pipefail
 shopt -s inherit_errexit nullglob
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -27,10 +27,10 @@ clear
 
 function header_info {
 echo -e "${RD}
-  _  __                    _    _____ _                  
- | |/ /                   | |  / ____| |                 
- |   / ___ _ __ _ __   ___| | | |    | | ___  __ _ _ __  
- |  < / _ \  __|  _ \ / _ \ | | |    | |/ _ \/ _  |  _ \ 
+  _  __                    _    _____ _
+ | |/ /                   | |  / ____| |
+ |   / ___ _ __ _ __   ___| | | |    | | ___  __ _ _ __
+ |  < / _ \  __|  _ \ / _ \ | | |    | |/ _ \/ _  |  _ \
  |   \  __/ |  | | | |  __/ | | |____| |  __/ (_| | | | |
  |_|\_\___|_|  |_| |_|\___|_|  \_____|_|\___|\__,_|_| |_|
 
@@ -49,7 +49,7 @@ function msg_ok() {
 
 function check_root() {
         if [[ $EUID -ne 0 ]]; then
-                echo -e "${CROSS}${RD}Error: This script must be ran as the root user.\n${CL}" 
+                echo -e "${CROSS}${RD}Error: This script must be ran as the root user.\n${CL}"
                 exit 1
         else
             header_info
@@ -69,7 +69,7 @@ function edge_kernel() {
 
 function kernel_info() {
  if [[ "$MODE" != "PBS" ]]; then
-     echo -e "${YW}PVE Version: ${BL}$(pveversion)\n${CL}" 
+     echo -e "${YW}PVE Version: ${BL}$(pveversion)\n${CL}"
  fi
     if [[ "$current_kernel" == *"pve"* ]]; then
         echo -e "${YW}Current Kernel: ${BL}$current_kernel\n${CL}"

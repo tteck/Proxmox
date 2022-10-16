@@ -3,21 +3,21 @@ RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-man
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }') \
 
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 
 function update_info {
 echo -e "${RD}
-  _   _   _____    __  __ 
+  _   _   _____    __  __
  | \ | | |  __ \  |  \/  |
  |  \| | | |__) | | \  / |
  |     | |  ___/  | |\/| |
  | |\  | | |      | |  | |
  |_| \_| |_|      |_|  |_|
-      UPDATE  v${RELEASE}                                                                                                                      
+      UPDATE  v${RELEASE}
 ${CL}"
 }
 
@@ -33,10 +33,10 @@ while true; do
 done
 clear
 update_info
-set -o errexit  
-set -o errtrace 
-set -o nounset  
-set -o pipefail 
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
@@ -63,8 +63,8 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Stopping Services... "
   systemctl stop openresty
   systemctl stop npm
-echo -e "${CM}${CL} \r"  
- 
+echo -e "${CM}${CL} \r"
+
 echo -en "${GN} Cleaning Old Files... "
   rm -rf /app \
   /var/www/html \
@@ -173,5 +173,5 @@ TS="$(($(date +%M)-T))"
 IP=$(hostname -I | cut -f1 -d ' ')
 echo -e "${GN}Successfully Updated Nginx Proxy Manager to ${RD}${RELEASE}${CL} and it took ${RD}${TS} minutes.${CL}
                NPM should be reachable at ${BL}http://${IP}:81 ${CL}
-                  
+
                   "

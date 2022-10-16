@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -o errexit 
-set -o errtrace 
-set -o nounset 
-set -o pipefail 
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
@@ -128,7 +128,7 @@ show_menu(){
     read opt
 }
 option_picked(){
-    msgcolor=`echo "\033[01;31m"`
+    msgcolor=`echo "\033[1;31m"`
     normal=`echo "\033[00;00m"`
     message=${@:-"${normal}Error: No message passed"}
     printf "${msgcolor}${message}${normal}\n"
@@ -273,15 +273,15 @@ for container in ${CONTAINER_LIST}; do
     DOCKER_COMMAND="$(runlike "${container}")"
     docker rm --force "${container}"
     eval ${DOCKER_COMMAND}
-  fi 
+  fi
 done
 EOF
 sudo chmod +x /root/update-containers.sh
 
 echo -e "${CHECKMARK} \e[1;92m Customizing LXC... \e[0m"
-rm /etc/motd 
-rm /etc/update-motd.d/10-uname 
-touch ~/.hushlogin 
+rm /etc/motd
+rm /etc/update-motd.d/10-uname
+touch ~/.hushlogin
 GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 mkdir -p $(dirname $GETTY_OVERRIDE)
 cat << EOF > $GETTY_OVERRIDE

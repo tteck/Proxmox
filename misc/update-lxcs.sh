@@ -2,10 +2,10 @@
 set -e
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 while true; do
     read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
     case $yn in
@@ -17,11 +17,11 @@ done
 clear
 function header_info {
 echo -e "${BL}
-  _    _ _____  _____       _______ ______ 
+  _    _ _____  _____       _______ ______
  | |  | |  __ \|  __ \   /\|__   __|  ____|
- | |  | | |__) | |  | | /  \  | |  | |__   
- | |  | |  ___/| |  | |/ /\ \ | |  |  __|  
- | |__| | |    | |__| / ____ \| |  | |____ 
+ | |  | | |__) | |  | | /  \  | |  | |__
+ | |  | |  ___/| |  | |/ /\ \ | |  |  __|
+ | |__| | |    | |__| / ____ \| |  | |____
   \____/|_|    |_____/_/    \_\_|  |______|
 
 ${CL}"
@@ -49,7 +49,7 @@ fi
 for container in $containers
 do
   status=`pct status $container`
- if [ "$skip" == "no" ]; then 
+ if [ "$skip" == "no" ]; then
   if [ "$status" == "status: stopped" ]; then
     echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
     pct start $container
@@ -61,12 +61,12 @@ do
   elif [ "$status" == "status: running" ]; then
     update_container $container
   fi
- fi 
+ fi
  if [ "$skip" == "yes" ]; then
   if [ "$status" == "status: running" ]; then
     update_container $container
   fi
- fi 
+ fi
 done; wait
 
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"

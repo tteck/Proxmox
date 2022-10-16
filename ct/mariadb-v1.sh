@@ -18,7 +18,7 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 trap die ERR
 trap cleanup EXIT
 

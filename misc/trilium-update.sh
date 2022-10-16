@@ -3,20 +3,20 @@ RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 3, length($2)-4) }')
 
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 function update_info {
 cat << "EOF"
-  ______     _ ___               
- /_  __/____(_) (_)_  ______ ___ 
+  ______     _ ___
+ /_  __/____(_) (_)_  ______ ___
   / / / ___/ / / / / / / __ `__ \
  / / / /  / / / / /_/ / / / / / /
-/_/ /_/  /_/_/_/\__,_/_/ /_/ /_/ 
+/_/ /_/  /_/_/_/\__,_/_/ /_/ /_/
             UPDATE
-            
+
 EOF
 }
 update_info

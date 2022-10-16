@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -38,12 +38,12 @@ done
 clear
 function header_info {
 echo -e "${YW}
-  _   _                 _____  ____  
- | \ | |               |  __ \|  _ \ 
+  _   _                 _____  ____
+ | \ | |               |  __ \|  _ \
  |  \| | ___ v3___ ___ | |  | | |_) |
- |     |/ _ \ / __/ _ \| |  | |  _ < 
+ |     |/ _ \ / __/ _ \| |  | |  _ <
  | |\  | (_) | (_| (_) | |__| | |_) |
- |_| \_|\___/ \___\___/|_____/|____/ 
+ |_| \_|\___/ \___\___/|_____/|____/
            UPDATE
 ${CL}"
 }
@@ -75,11 +75,11 @@ else
     reboot=no
 fi
 
-if [ "$reboot" == "yes" ]; then 
+if [ "$reboot" == "yes" ]; then
 msg_info "Rebooting ${APP} LXC"
 reboot
 fi
 
-if [ "$reboot" == "no" ]; then 
+if [ "$reboot" == "no" ]; then
 msg_ok "Finished Updating ${APP}. Reboot to apply the update."
 fi

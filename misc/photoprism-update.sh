@@ -6,10 +6,10 @@ RELEASE=$(curl -s https://api.github.com/repos/photoprism/photoprism/releases/la
 
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 PP=`echo "\e[1;35m"`
 
 while true; do
@@ -23,10 +23,10 @@ done
 clear
 function header_info {
 echo -e "${PP}
-  _____  _           _        _____      _               
- |  __ \| |         | |      |  __ \    (_)              
- | |__) | |__   ___ | |_ ___ | |__) | __ _ ___ _ __ ___  
- |  ___/|  _ \ / _ \| __/ _ \|  ___/  __| / __|  _   _ \ 
+  _____  _           _        _____      _
+ |  __ \| |         | |      |  __ \    (_)
+ | |__) | |__   ___ | |_ ___ | |__) | __ _ ___ _ __ ___
+ |  ___/|  _ \ / _ \| __/ _ \|  ___/  __| / __|  _   _ \
  | |    | | | | (_) | || (_) | |   | |  | \__ \ | | | | |
  |_|    |_| |_|\___/ \__\___/|_|   |_|  |_|___/_| |_| |_|
              ${RD} UPDATE
@@ -100,5 +100,3 @@ sudo systemctl start photoprism
 echo -e "${CM}${CL} \n"
 
 echo -e "${GN} Finished ${CL} \n "
-
-

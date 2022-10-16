@@ -4,11 +4,11 @@ NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -43,14 +43,14 @@ done
 clear
 function header_info {
 echo -e "${DGN}
-  _    _       _   _                  _  __                     
- | |  | |     | | (_)                | |/ /                     
- | |  | |_v3_ | |_ _ _ __ ___   ___  | ' /_   _ _ __ ___   __ _ 
+  _    _       _   _                  _  __
+ | |  | |     | | (_)                | |/ /
+ | |  | |_v3_ | |_ _ _ __ ___   ___  | ' /_   _ _ __ ___   __ _
  | |  | |  _ \| __| |  _   _ \ / _ \ |  <| | | |  _   _ \ / _  |
  | |__| | |_) | |_| | | | | | |  __/ | . \ |_| | | | | | | (_| |
   \____/| .__/ \__|_|_| |_| |_|\___| |_|\_\__,_|_| |_| |_|\__,_|
-        | |                                                     
-        |_|                                                     
+        | |
+        |_|
 ${CL}"
 }
 
@@ -111,12 +111,12 @@ function advanced_settings() {
         echo -e "${RD}Using Advanced Settings${CL}"
         echo -e "${YW}Type Privileged, or Press [ENTER] for Default: Unprivileged (${RD}NO DEVICE PASSTHROUGH${CL}${YW})"
         read CT_TYPE1
-        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1"; 
+        if [ -z $CT_TYPE1 ]; then CT_TYPE1="Unprivileged" CT_TYPE="1";
         echo -en "${DGN}Set CT Type ${BL}$CT_TYPE1${CL}"
         else
         CT_TYPE1="Privileged"
         CT_TYPE="0"
-        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"  
+        echo -en "${DGN}Set CT Type ${BL}Privileged${CL}"
         fi;
 echo -e " ${CM}${CL} \r"
 sleep 1
@@ -126,7 +126,7 @@ header_info
         echo -e "${DGN}Using CT Type ${BGN}$CT_TYPE1${CL}"
         echo -e "${YW}Set Password, or Press [ENTER] for Default: Automatic Login "
         read PW1
-        if [ -z $PW1 ]; then PW1="Automatic Login" PW=" "; 
+        if [ -z $PW1 ]; then PW1="Automatic Login" PW=" ";
         echo -en "${DGN}Set CT ${BL}$PW1${CL}"
         else
           PW="-password $PW1"
@@ -251,7 +251,7 @@ header_info
         echo -e "${DGN}Using Static IP Address ${BGN}$NET${CL}"
         echo -e "${YW}Enter a Gateway IP (mandatory if static IP is used), or Press [ENTER] for Default: NONE "
         read GATE1
-        if [ -z $GATE1 ]; then GATE1="NONE" GATE=""; 
+        if [ -z $GATE1 ]; then GATE1="NONE" GATE="";
         echo -en "${DGN}Set Gateway IP To ${BL}$GATE1${CL}"
         else
           GATE=",gw=$GATE1"
@@ -275,7 +275,7 @@ header_info
         echo -e "${DGN}Using Gateway IP Address ${BGN}$GATE1${CL}"
         echo -e "${YW}Enter a VLAN Tag, or Press [ENTER] for Default: NONE "
         read VLAN1
-        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN=""; 
+        if [ -z $VLAN1 ]; then VLAN1="NONE" VLAN="";
         echo -en "${DGN}Set VLAN Tag To ${BL}$VLAN1${CL}"
         else
           VLAN=",tag=$VLAN1"
@@ -309,15 +309,15 @@ fi
 function start_script() {
 		echo -e "${YW}Type Advanced, or Press [ENTER] for Default Settings "
 		read SETTINGS
-		if [ -z $SETTINGS ]; then default_settings; 
+		if [ -z $SETTINGS ]; then default_settings;
 		else
-		advanced_settings 
+		advanced_settings
 		fi;
 }
 
 start_script
 
-if [ "$CT_TYPE" == "1" ]; then 
+if [ "$CT_TYPE" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"

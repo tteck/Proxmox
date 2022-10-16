@@ -19,7 +19,7 @@ apt-get update &>/dev/null
 echo -e "\e[1;92m Installing pip3... \e[0m"
 apt-get install -y python3-pip &>/dev/null
 echo -e "\e[1;92m Installing runlike... \e[0m"
-pip3 install runlike &>/dev/null 
+pip3 install runlike &>/dev/null
 fi
 echo -e "\e[1;92m Creating Update Script... \e[0m"
 if [ -d /root/hass_config ]; then
@@ -57,7 +57,7 @@ show_menu(){
     read opt
 }
 option_picked(){
-    msgcolor=`echo "\033[01;31m"`
+    msgcolor=`echo "\033[1;31m"`
     normal=`echo "\033[00;00m"`
     message=${@:-"${normal}Error: No message passed"}
     printf "${msgcolor}${message}${normal}\n"
@@ -202,7 +202,7 @@ for container in ${CONTAINER_LIST}; do
     DOCKER_COMMAND="$(runlike "${container}")"
     docker rm --force "${container}"
     eval ${DOCKER_COMMAND}
-  fi 
+  fi
 done
 EOF
 sudo chmod +x /root/update-containers.sh

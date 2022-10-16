@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -52,7 +52,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -88,7 +88,7 @@ chown -R www-data:www-data /var/www/html
 cp /var/www/html/config-dist.php /var/www/html/data/config.php
 chmod +x /var/www/html/update.sh
 
-cat <<EOF > /etc/apache2/sites-available/grocy.conf                                 
+cat <<EOF > /etc/apache2/sites-available/grocy.conf
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
   DocumentRoot /var/www/html/public
@@ -124,7 +124,7 @@ systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 msg_ok "Customized Container"
   fi
-  
+
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null

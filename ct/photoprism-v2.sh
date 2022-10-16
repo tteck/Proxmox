@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 PP=`echo "\e[1;35m"`
 APP="PhotoPrism"
 HN=$(echo ${APP,,} | tr -d ' ')
@@ -19,10 +19,10 @@ done
 clear
 function header_info {
 echo -e "${PP}
-  _____  _           _        _____      _               
- |  __ \| |         | |      |  __ \    (_)              
- | |__) | |__   ___ | |_ ___ | |__) | __ _ ___ _ __ ___  
- |  ___/|  _ \ / _ \| __/ _ \|  ___/  __| / __|  _   _ \ 
+  _____  _           _        _____      _
+ |  __ \| |         | |      |  __ \    (_)
+ | |__) | |__   ___ | |_ ___ | |__) | __ _ ___ _ __ ___
+ |  ___/|  _ \ / _ \| __/ _ \|  ___/  __| / __|  _   _ \
  | |    | | | | (_) | || (_) | |   | |  | \__ \ | | | | |
  |_|    |_| |_|\___/ \__\___/|_|   |_|  |_|___/_| |_| |_|
 ${CL}"
@@ -196,7 +196,7 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
- if [ "$IM" == "1" ]; then 
+ if [ "$IM" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
@@ -254,6 +254,6 @@ lxc-cmd bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/m
 
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 
-echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}. 
+echo -e "${GN}Successfully created ${APP} LXC to${CL} ${BL}$CTID${CL}.
 ${APP} should be reachable by going to the following URL.
       ${BL}http://${IP}:2342${CL} \n"

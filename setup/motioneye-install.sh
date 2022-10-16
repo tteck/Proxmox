@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -52,7 +52,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -92,7 +92,7 @@ msg_info "Installing Python"
  apt-get install libffi-dev libzbar-dev libzbar0 -y &>/dev/null
  apt-get install python2-dev libssl-dev libcurl4-openssl-dev libjpeg-dev -y &>/dev/null
  msg_ok "Installed Python"
- 
+
 msg_info "Installing MotionEye"
  apt-get update &>/dev/null
  sudo pip install motioneye &>/dev/null
@@ -101,11 +101,11 @@ msg_info "Installing MotionEye"
  mkdir -p /var/lib/motioneye
 msg_ok "Installed MotionEye"
 
-msg_info "Creating Service" 
+msg_info "Creating Service"
  cp /usr/local/share/motioneye/extra/motioneye.systemd-unit-local /etc/systemd/system/motioneye.service &>/dev/null
  systemctl enable motioneye &>/dev/null
- systemctl start motioneye 
-msg_ok "Created Service" 
+ systemctl start motioneye
+msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
@@ -124,7 +124,7 @@ systemctl daemon-reload
 systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 msg_ok "Customized Container"
   fi
-  
+
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null

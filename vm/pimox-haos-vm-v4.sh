@@ -8,11 +8,11 @@ DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/de
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 HA=`echo "\033[1;34m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -59,9 +59,9 @@ function header_info {
 echo -e "${RD}
     ____  _     __  ___              __  _____   ____  _____
    / __ \(_)   /  |/  /___  _  __   / / / /   | / __ \/ ___/
-  / /_/ / /v4_/ /|_/ / __ \| |/_/  / /_/ / /| |/ / / /\__ \ 
- / ____/ /___/ /  / / /_/ />  <   / __  / ___ / /_/ /___/ / 
-/_/   /_/   /_/  /_/\____/_/|_|  /_/ /_/_/  |_\____//____/  
+  / /_/ / /v4_/ /|_/ / __ \| |/_/  / /_/ / /| |/ / / /\__ \
+ / ____/ /___/ /  / / /_/ />  <   / __  / ___ / /_/ /___/ /
+/_/   /_/   /_/  /_/\____/_/|_|  /_/ /_/_/  |_\____//____/
 ${CL}"
 }
 function msg_info() {
@@ -150,7 +150,7 @@ if [ $exitstatus = 0 ]; then
 else
     VLAN=",tag=$VLAN1"
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
-  fi  
+  fi
 fi
 if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
     echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"

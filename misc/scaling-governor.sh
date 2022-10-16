@@ -12,17 +12,17 @@ done
 clear
 function header_info {
 echo -e "
-   _____ _____  _    _ 
+   _____ _____  _    _
   / ____|  __ \| |  | |
  | |    | |__) | |  | |
  | |    |  ___/| |  | |
  | |____| |    | |__| |
-  \_____|_|     \____/ 
+  \_____|_|     \____/
     Scaling Governors
 "
 }
 show_menu(){
-    CL=`echo "\033[m"`
+    CL=`echo "\033[0m"`
     GN=`echo "\033[32m"`
     BL=`echo "\033[36m"`
     YW=`echo "\033[33m"`
@@ -41,7 +41,7 @@ header_info
 
     echo -e "\n${YW}Available CPU Scaling Governors
     ${BL}${ACSG}${CL}"
-    
+
     echo -e "\n${YW}Current CPU Scaling Governor
     ${BL}${CCSG}${CL}"
     printf "\n ${fgred}Only Select Available CPU Scaling Governors From Above${CL}\n \n"

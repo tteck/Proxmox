@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
+RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 set -e
 YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -28,11 +28,11 @@ clear
 cat << "EOF"
  _____                                  _______    __  ______
 /__  /_      ______ __   _____         / / ___/   / / / /  _/
-  / /| | /| / / __ `/ | / / _ \   __  / /\__ \   / / / // /  
- / /_| |/ |/ / /_/ /| |/ /  __/  / /_/ /___/ /  / /_/ // /   
-/____/__/|__/\__,_/ |___/\___/   \____//____/   \____/___/   
+  / /| | /| / / __ `/ | / / _ \   __  / /\__ \   / / / // /
+ / /_| |/ |/ / /_/ /| |/ /  __/  / /_/ /___/ /  / /_/ // /
+/____/__/|__/\__,_/ |___/\___/   \____//____/   \____/___/
                              UPDATE
-                             
+
 EOF
 
 while true; do

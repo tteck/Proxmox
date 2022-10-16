@@ -12,11 +12,11 @@ NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -46,9 +46,9 @@ function header_info {
 echo -e "${YW}
  _____   _       __             ___   __  _______  ____________
 /__  /  (_)___ _/ /_  ___  ___ |__ \ /  |/  / __ \/_  __/_  __/
-  / /  / / __  / __ \/ _ \/ _ \__/ // /|_/ / / / / / /   / /   
- / /__/ / /_/ / /_/ /  __/  __/ __// /  / / /_/ / / /   / /    
-/____/_/\__, /_.___/\___/\___/____/_/  /_/\___\_\/_/   /_/     
+  / /  / / __  / __ \/ _ \/ _ \__/ // /|_/ / / / / / /   / /
+ / /__/ / /_/ / /_/ /  __/  __/ __// /  / / /_/ / / /   / /
+/____/_/\__, /_.___/\___/\___/____/_/  /_/\___\_\/_/   /_/
    v4  /____/ 🐝
 ${CL}"
 }
@@ -186,7 +186,7 @@ if [ $exitstatus = 0 ]; then
 else
     VLAN=",tag=$VLAN1"
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
-  fi  
+  fi
 fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
@@ -210,7 +210,7 @@ fi
 }
 clear
 start_script
-if [ "$CT_TYPE" == "1" ]; then 
+if [ "$CT_TYPE" == "1" ]; then
  FEATURES="nesting=1,keyctl=1"
  else
  FEATURES="nesting=1"
@@ -235,7 +235,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/c
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >> $LXC_CONFIG
 lxc.cgroup2.devices.allow: a
-lxc.cap.drop: 
+lxc.cap.drop:
 lxc.cgroup2.devices.allow: c 188:* rwm
 lxc.cgroup2.devices.allow: c 189:* rwm
 lxc.mount.entry: /dev/serial/by-id  dev/serial/by-id  none bind,optional,create=dir

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -e
 PP=`echo "\e[1;35m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 while true; do
     read -p "This will Update Heimdall Dashboard. Proceed(y/n)?" yn
     case $yn in
@@ -17,7 +17,7 @@ done
 clear
 function header_info {
 echo -e "${PP}
-  _    _      _               _       _ _   _____            _     _                         _ 
+  _    _      _               _       _ _   _____            _     _                         _
  | |  | |    (_)             | |     | | | |  __ \          | |   | |                       | |
  | |__| | ___ _ _ __ ___   __| | __ _| | | | |  | | __ _ ___| |__ | |__   ___   __ _ _ __ __| |
  |  __  |/ _ \ |  _   _ \ / _  |/ _  | | | | |  | |/ _  / __|  _ \|  _ \ / _ \ / _  |  __/ _  |
@@ -61,7 +61,7 @@ VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest 
 | awk '{print substr($2, 3, length($2)-4) }')
 
 if [ ! -d "/opt/Heimdall" ]; then
-  mv Heimdall-${VER} /opt/Heimdall  
+  mv Heimdall-${VER} /opt/Heimdall
   else
   cp -R Heimdall-${VER}/* /opt/Heimdall
 fi
@@ -116,4 +116,3 @@ sleep 2
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Finished! ${CL}\n"
-

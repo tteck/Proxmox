@@ -2,11 +2,11 @@
 IP=$(hostname -I | awk '{print $1}')
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BGN=`echo "\033[4;92m"`
 GN=`echo "\033[1;92m"`
 DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -40,11 +40,11 @@ done
 clear
 function header_info {
 echo -e "${BL}
-   ______          __        _____                          
+   ______          __        _____
   / ____/___  ____/ /__     / ___/___  ______   _____  _____
  / /   / __ \/ __  / _ \    \__ \/ _ \/ ___/ | / / _ \/ ___/
-/ /___/ /_/ / /_/ /  __/   ___/ /  __/ /   | |/ /  __/ /    
-\____/\____/\__,_/\___/   /____/\___/_/    |___/\___/_/     
+/ /___/ /_/ / /_/ /  __/   ___/ /  __/ /   | |/ /  __/ /
+\____/\____/\__,_/\___/   /____/\___/_/    |___/\___/_/
 ${CL}"
 }
 
@@ -79,7 +79,7 @@ sudo systemctl enable --now code-server@$USER &>/dev/null
 cat <<EOF > ~/.config/code-server/config.yaml
 bind-addr: 0.0.0.0:8680
 auth: none
-password: 
+password:
 cert: false
 EOF
 sudo systemctl restart code-server@$USER

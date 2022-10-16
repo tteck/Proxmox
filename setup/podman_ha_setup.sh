@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -o errexit 
-set -o errtrace 
-set -o nounset 
-set -o pipefail 
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
@@ -23,11 +23,11 @@ function msg() {
 }
 
 CROSS='\033[1;31m\xE2\x9D\x8C\033[0m'
-RD=`echo "\033[01;31m"`
+RD=`echo "\033[1;31m"`
 BL=`echo "\033[36m"`
 CM='\xE2\x9C\x94\033'
 GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+CL=`echo "\033[0m"`
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -41,7 +41,7 @@ while [ "$(hostname -I)" = "" ]; do
   ((NUM--))
   if [ $NUM -eq 0 ]
   then
-    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"    
+    1>&2 echo -e "${CROSS}${RD}  No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -143,12 +143,12 @@ systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 
 podman generate systemd \
     --new --name homeassistant \
-    > /etc/systemd/system/homeassistant.service 
+    > /etc/systemd/system/homeassistant.service
 systemctl enable homeassistant &>/dev/null
 
 podman generate systemd \
     --new --name yacht \
-    > /etc/systemd/system/yacht.service 
+    > /etc/systemd/system/yacht.service
 systemctl enable yacht &>/dev/null
 echo -e "${CM}${CL} \r"
 
