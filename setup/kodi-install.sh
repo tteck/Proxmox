@@ -80,7 +80,9 @@ apt-get -y install \
     va-driver-all \
     ocl-icd-libopencl1 &>/dev/null 
 set +e
+alias die=''
 apt-get install --ignore-missing -y beignet-opencl-icd &>/dev/null
+alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
     
 msg_ok "Set Up Hardware Acceleration"  
@@ -103,7 +105,9 @@ msg_info "Installing kodi"
 apt-get update &>/dev/null
 apt-get install -y kodi &>/dev/null
 set +e
+alias die=''
 apt-get install --ignore-missing -y kodi-peripheral-joystick &>/dev/null
+alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 msg_ok "Installed kodi"
 
@@ -129,6 +133,7 @@ msg_ok "Set up autologin"
 msg_info "Setting up device detection for xorg"
 apt-get install -y xserver-xorg-input-evdev &>/dev/null
 #following script needs to be executed before Xorg starts to enumerate all input devices
+/bin/mkdir -p /etc/X11/xorg.conf.d
 cat >/usr/local/bin/preX-populate-input.sh  << __EOF__
 #!/usr/bin/env bash
 
