@@ -162,7 +162,7 @@ cat > /etc/systemd/system/lightdm.service.d/override.conf << __EOF__
 ExecStartPre=/bin/sh -c '/usr/local/bin/preX-populate-input.sh'
 SupplementaryGroups=video input audio
 __EOF__
-/usr/bin/systemctl daemon-reload
+systemctl daemon-reload
 msg_ok "Set up device detection for xorg"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
@@ -188,7 +188,7 @@ apt-get autoclean >/dev/null
 msg_ok "Cleaned"
 
 msg_info "Starting X up"
-/usr/bin/systemctl start lightdm
+systemctl start lightdm
 ln -fs /lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
 msg_info "Started X"
 
