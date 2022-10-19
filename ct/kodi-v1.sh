@@ -94,7 +94,6 @@ function default_settings() {
 }
 function advanced_settings() {
 var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 3 \
-"18.04" "Bionic" OFF \
 "20.04" "Focal" OFF \
 "22.04" "Jammy" ON \
 3>&1 1>&2 2>&3)
