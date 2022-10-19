@@ -78,8 +78,10 @@ msg_ok "Installed Dependencies"
 msg_info "Setting Up Hardware Acceleration"  
 apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 &>/dev/null #\ #not in 22.04
-#    beignet-opencl-icd &>/dev/null
+    ocl-icd-libopencl1 &>/dev/null 
+set +e
+apt-get install --ignore-missing -y beignet-opencl-icd &>/dev/null
+set -e
     
 msg_ok "Set Up Hardware Acceleration"  
 
@@ -100,7 +102,9 @@ msg_ok "Installed lightdm"
 msg_info "Installing kodi"
 apt-get update &>/dev/null
 apt-get install -y kodi &>/dev/null
-apt-get install -y kodi-peripheral-joystick &>/dev/null
+set +e
+apt-get install --ignore-missing -y kodi-peripheral-joystick &>/dev/null
+set -e
 msg_ok "Installed kodi"
 
 msg_info "Updating xsession"
