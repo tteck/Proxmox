@@ -1922,6 +1922,33 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/photoprism
 ____________________________________________________________________________________________ 
 
 </details>
+
+<details>
+<summary markdown="span"> Kodi Media Manager LXC </summary>
+
+<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/kodi/icon.png?raw=true" height="100"/></p>
+
+<h1 align="center" id="heading"> Kodi Media Manager LXC </h1>
+<h3 align="center" id="heading"> With Hardware Acceleration Support </h3> 
+To create a new Proxmox Kodi Media Manager, run the following in the Proxmox Shell.
+
+```yaml
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/kodi-v1.sh)"
+```
+<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+
+**Kodi Media Server Interface attached to TTY7 consol**
+
+⚙️ **To Update Kodi Media Manager:**
+
+Run in the LXC console
+```yaml
+apt update && apt upgrade -y
+```
+____________________________________________________________________________________________ 
+
+</details>
+
 ⬆__________________________________________________________________________________________
 </details>
 
