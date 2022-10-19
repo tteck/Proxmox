@@ -165,7 +165,7 @@ __EOF__
 cat > /etc/systemd/system/lightdm.service.d/override.conf << __EOF__
 [Service]
 ExecStartPre=/bin/sh -c '/usr/local/bin/preX-populate-input.sh'
-SupplementaryGroups=video input audio
+SupplementaryGroups=video input audio tty
 __EOF__
 systemctl daemon-reload
 msg_ok "Set up device detection for xorg"
