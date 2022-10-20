@@ -1,4 +1,4 @@
-# Pull Request Template
+# All Pull Requests should be made to the `pull-requests` branch
 
 ## Description
 
