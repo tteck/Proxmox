@@ -73,6 +73,7 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
+if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
 msg_info "Setting Up Hardware Acceleration"  
 apt-get -y install \
     va-driver-all \
@@ -83,6 +84,7 @@ apt-get -y install \
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
 msg_ok "Set Up Hardware Acceleration"  
+fi
 
 LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 
