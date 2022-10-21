@@ -75,6 +75,7 @@ apt-get install -y apt-transport-https &>/dev/null
 apt-get install -y software-properties-common &>/dev/null
 msg_ok "Installed Dependencies"
 
+if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
 msg_info "Setting Up Hardware Acceleration"  
 apt-get -y install \
     va-driver-all \
@@ -85,6 +86,7 @@ apt-get -y install \
 /bin/chmod 755 /dev/dri
 /bin/chmod 660 /dev/dri/*
 msg_ok "Set Up Hardware Acceleration"  
+fi
 
 msg_info "Setting Up Jellyfin Repository"
 sudo add-apt-repository universe -y &>/dev/null
