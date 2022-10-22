@@ -240,6 +240,7 @@ pct start $CTID
 msg_ok "Pre-started LXC Container"
 
 VIDEO_GID=$(pct exec ${CTID} getent group video | cut -d: -f3)
+RENDER_GID=$(pct exec ${CTID} getent group render | cut -d: -f3)
 TTY_GID=$(pct exec ${CTID} getent group tty | cut -d: -f3)
 INPUT_GID=$(pct exec ${CTID} getent group input | cut -d: -f3)
 AUDIO_GID=$(pct exec ${CTID} getent group audio | cut -d: -f3)
@@ -272,7 +273,7 @@ lxc.idmap: u 0 100000 65536
 EOF
     #TODO internalize code to generate mapping instad of using external python script
     LXC_SUB_CONF=$(python3 -c "$(wget -qLO - https://raw.githubusercontent.com/ddimick/proxmox-lxc-idmapper/master/run.py)" \
-      ${VIDEO_GID}=$(getent group video | cut -d: -f3) ${TTY_GID}=$(getent group tty | cut -d: -f3) ${INPUT_GID}=$(getent group input | cut -d: -f3) ${AUDIO_GID}=$(getent group audio | cut -d: -f3)) 
+      ${VIDEO_GID}=$(getent group video | cut -d: -f3) ${RENDER_GID}=$(getent group render | cut -d: -f3) ${TTY_GID}=$(getent group tty | cut -d: -f3) ${INPUT_GID}=$(getent group input | cut -d: -f3) ${AUDIO_GID}=$(getent group audio | cut -d: -f3)) 
     echo "$LXC_SUB_CONF" | grep 'lxc.idmap: g ' >> $LXC_CONFIG
     # on host add rights to map gids but only if they are not already in the file
     echo "$LXC_SUB_CONF" | sed -n '/subgid/,// { /subgid/! p }' | while read line; do cat /etc/subgid | sed 's/[[:blank:]]*//g' | grep -qxF "$line" || echo $line >> /etc/subgid; done
@@ -290,7 +291,7 @@ EOF
 /bin/chmod 755 /dev/dri
 /bin/chown :${VIDEO_GID} /dev/dri/*
 /bin/chmod 660 /dev/dri/*
-/bin/chown :${VIDEO_GID} /dev/renderD128
+/bin/chown :${RENDER_GID} /dev/renderD128
 /bin/chmod 660 /dev/renderD128
 /bin/chown :${TTY_GID} /dev/tty7
 /bin/chown :${INPUT_GID} /dev/input/*
