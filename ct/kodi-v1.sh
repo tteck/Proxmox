@@ -267,16 +267,21 @@ lxc.cgroup2.devices.allow: c 116:* rwm
 lxc.mount.entry: /dev/snd dev/snd none bind,optional,create=dir
 EOF
 if [ "$CT_TYPE" == "1" ]; then
-cat <<EOF >> $LXC_CONFIG
+    cat <<EOF >> $LXC_CONFIG
 lxc.idmap: u 0 100000 65536
 EOF
-python3 -c "$(wget -qLO - https://raw.githubusercontent.com/ddimick/proxmox-lxc-idmapper/master/run.py)" \
-	${VIDEO_GID}=${VIDEO_GID} ${TTY_GID}=${TTY_GID} ${INPUT_GID}=${INPUT_GID} ${AUDIO_GID}=${AUDIO_GID} | grep 'lxc.idmap: g ' >> $LXC_CONFIG
- else
-cat <<EOF >> $LXC_CONFIG
+    #TODO internalize code to generate mapping instad of using external python script
+    LXC_SUB_CONF=$(python3 -c "$(wget -qLO - https://raw.githubusercontent.com/ddimick/proxmox-lxc-idmapper/master/run.py)" \
+      ${VIDEO_GID}=${VIDEO_GID} ${TTY_GID}=${TTY_GID} ${INPUT_GID}=${INPUT_GID} ${AUDIO_GID}=${AUDIO_GID}) 
+    echo "$LXC_SUB_CONF" | grep 'lxc.idmap: g ' >> $LXC_CONFIG
+    # on host add rights to map gids but only if they are not already in the file
+    echo "$LXC_SUB_CONF" | sed -n '/subgid/,// { /subgid/! p }' | while read line; do cat /etc/subgid | sed 's/[[:blank:]]*//g' | grep -qxF "$line" || echo $line >> /etc/subgid; done
+    /usr/bin/systemctl restart lxc
+else
+    cat <<EOF >> $LXC_CONFIG
 lxc.hook.mount: sh -c "/var/lib/lxc/${CTID}/mount_hook.sh"
 EOF
-cat <<EOF >/var/lib/lxc/${CTID}/mount_hook.sh
+    cat <<EOF >/var/lib/lxc/${CTID}/mount_hook.sh
 #!/usr/bin/env bash
 
 /bin/chown :${VIDEO_GID} /dev/fb0
@@ -291,14 +296,14 @@ cat <<EOF >/var/lib/lxc/${CTID}/mount_hook.sh
 /bin/chown :${INPUT_GID} /dev/input/*
 /bin/chown :${AUDIO_GID} /dev/snd/*
 EOF
-/bin/chmod +x /var/lib/lxc/${CTID}/mount_hook.sh
- fi
+    /bin/chmod +x /var/lib/lxc/${CTID}/mount_hook.sh
+fi
 
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
 
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/setup/$var_install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/mrrudy/Proxmox/main/setup/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2}')
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
