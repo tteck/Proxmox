@@ -2468,11 +2468,13 @@ Expect 30+ minute install time.
 <h3 align="center" id="heading">⚡ Build Settings:  3072Mib RAM - 6GB Storage - 2vCPU ⚡</h3>
 <h3 align="center" id="heading">⚡ Normal Settings:  512Mib RAM - 6GB Storage - 1vCPU ⚡</h3>
 
-**Vaultwarden Interface: CTIP:8000**
+**Vaultwarden Interface: IP:8000**
 
-⚙️ **Path to Vaultwarden .env file** (to find the `ADMIN_TOKEN`)
+**Vaultwarden Admin Interface: IP:8000/admin**
+
+⚙️ **Vaultwarden .env file** (to find the `ADMIN_TOKEN`)
 ```yaml
-/opt/vaultwarden/.env
+cat /opt/vaultwarden/.env
 ```
  
 ⚙️ **To Update Vaultwarden (post 2022-05-29 installs only)**
