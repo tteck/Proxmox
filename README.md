@@ -1896,8 +1896,9 @@ To create a new Proxmox PhotoPrism LXC, run the following in the Proxmox Shell.
 ```
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/photoprism-v4.sh)"
 ```
-
-<h3 align="center" id="heading">⚡ Default Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+The script builds from source, which takes time and resources. After the build, the script will automatically set resources to Normal Settings.
+<h3 align="center" id="heading">⚡ Build Settings:  3GB RAM - 8GB Storage - 2vCPU ⚡</h3>
+<h3 align="center" id="heading">⚡ Normal Settings:  2GB RAM - 8GB Storage - 2vCPU ⚡</h3>
 
 **PhotoPrism Interface - IP:2342**
 
