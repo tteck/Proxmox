@@ -80,7 +80,7 @@ apt-get install -y build-essential &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Node-Red"
-bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi --node18 --no-init &>/dev/nul
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi --node18 --no-init &>/dev/null
 systemctl enable --now nodered.service &>/dev/null
 msg_ok "Installed Node-Red"
 
