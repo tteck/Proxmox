@@ -78,9 +78,8 @@ apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Node-Red"
-bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi &>/dev/nul
-sudo systemctl enable nodered.service &>/dev/null
-sudo systemctl start nodered.service &>/dev/null
+bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi --node18 --no-init &>/dev/nul
+systemctl enable --now nodered.service &>/dev/null
 msg_ok "Installed Node-Red"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
