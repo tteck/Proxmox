@@ -132,6 +132,6 @@ echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Restarting Node-Red... "
 echo -e "${CM}${CL} \r"
-node-red-restart
+systemctl restart nodered
 echo -en "${GN} Finished... ${CL} \n"
 exit
