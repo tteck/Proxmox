@@ -560,7 +560,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/node-red-v4.
 
 Run in the LXC console
 ```yaml
-node-red-restart
+systemctl restart nodered
 ```
 
 ⚙️ **To Update Node-Red:**
