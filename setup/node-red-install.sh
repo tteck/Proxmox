@@ -11,6 +11,22 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occurred."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
+}
 
 function msg_info() {
     local msg="$1"
@@ -43,9 +59,13 @@ done
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
+set +e
+alias die=''
 if nc -zw1 8.8.8.8 443; then  msg_ok "Internet Connected"; else  msg_error "Internet NOT Connected"; exit 1; fi;
 RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure";  else msg_ok "DNS Resolved github.com to $RESOLVEDIP";  fi;
+alias die='EXIT=$? LINE=$LINENO error_exit'
+set -e
 
 msg_info "Updating Container OS"
 apt-get update &>/dev/null
@@ -57,10 +77,40 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
+msg_info "Setting up Node.js Repository"
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash - &>/dev/null
+msg_ok "Set up Node.js Repository"
+
+msg_info "Installing Node.js"
+apt-get install -y nodejs &>/dev/null
+msg_ok "Installed Node.js"
+
 msg_info "Installing Node-Red"
-bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered) --confirm-root --confirm-install --skip-pi --no-init &>/dev/null
-systemctl enable --now nodered.service &>/dev/null
+npm install -g --unsafe-perm node-red &>/dev/null
 msg_ok "Installed Node-Red"
+
+msg_info "Creating Service"
+service_path="/etc/systemd/system/nodered.service"
+echo "[Unit]
+Description=Node-RED
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/node-red --max-old-space-size=128 -v
+Restart=on-failure
+KillSignal=SIGINT
+
+SyslogIdentifier=node-red
+StandardOutput=syslog
+
+WorkingDirectory=/root/
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target" > $service_path
+systemctl enable --now nodered.service &>/dev/null
+msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
   if [[ $PASS != $ ]]; then
