@@ -1752,7 +1752,7 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emby-v4.sh)"
 
 ⚙️ **To Update Emby**
  
-```
+```yaml
 bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/emby-update.sh)"
 ```
 
