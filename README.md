@@ -1750,7 +1750,11 @@ bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/emby-v4.sh)"
 
 **Emby Media Server Interface - IP:8096**
 
-⚙️ **Emby Media Server Utilizes Automatic Updates**
+⚙️ **To Update Emby**
+ 
+```
+bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/emby-update.sh)"
+```
 
 ____________________________________________________________________________________________ 
 
@@ -2208,7 +2212,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> Homepage LXC </summary>
 
-<p align="center"><img src="https://github.com/benphelps/homepage/raw/main/images/homepage-light.png?raw=true" height="100"/></p>
+<p align="center"><img src="https://github.com/benphelps/homepage/raw/main/images/banner_light%402x.png?raw=true" height="100"/></p>
 
 <h1 align="center" id="heading"> Homepage LXC </h1>
  
