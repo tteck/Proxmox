@@ -78,7 +78,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing EMQX"
 curl -s https://packagecloud.io/install/repositories/emqx/emqx/script.deb.sh | bash &>/dev/null
-sudo apt-get install -y emqx=5.0.8 &>/dev/null
+sudo apt-get install -y emqx=5.0.9 &>/dev/null
 systemctl start emqx
 msg_ok "Installed EMQX"
 
