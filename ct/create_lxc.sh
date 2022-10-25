@@ -5,7 +5,6 @@ RD=`echo "\033[01;31m"`
 GN=`echo "\033[1;92m"`
 CL=`echo "\033[m"`
 CM="${GN}✓${CL}"
-CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
 set -o errexit
@@ -34,14 +33,6 @@ function msg_ok() {
    local msg="$1"
    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
-function msg_error() {
-    local msg="$1"
-    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
-}
-
-msg_info "Validating Storage"
-VALID=$(pvesm status -content rootdir | awk 'NR>1')
-if [ -z "$VALID" ]; then msg_error "Unable to detect a valid storage location."; exit 1; fi;
 
 function select_storage() {
   local CLASS=$1
@@ -66,7 +57,10 @@ function select_storage() {
     MENU+=( "$TAG" "$ITEM" "OFF" )
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
 
-  if [ $((${#MENU[@]}/3)) -eq 1 ]; then          
+  if [ $((${#MENU[@]}/3)) -eq 0 ]; then            
+    echo -e "'$CONTENT_LABEL' needs to be selected for at least one storage location."
+    die "Unable to detect valid storage location."
+  elif [ $((${#MENU[@]}/3)) -eq 1 ]; then          
     printf ${MENU[0]}
   else                                             
     local STORAGE
