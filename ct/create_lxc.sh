@@ -8,22 +8,6 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occurred."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  exit $EXIT
-}
 
 function msg_info() {
    local msg="$1"
@@ -40,8 +24,27 @@ function msg_error() {
 }
 
 msg_info "Validating Storage"
-VALID=$(pvesm status -content rootdir | awk 'NR>1')
-if [ -z "$VALID" ]; then msg_error "Unable to detect a valid storage location."; exit 1; fi;
+VALIDCT=$(pvesm status -content rootdir | awk 'NR>1')
+if [ -z "$VALIDCT" ]; then msg_error "Unable to detect a valid Container Storage location."; exit 1; fi;
+VALIDTMP=$(pvesm status -content vztmpl | awk 'NR>1')
+if [ -z "$VALIDTMP" ]; then msg_error "Unable to detect a valid Template Storage location."; exit 1; fi;
+
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occurred."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
+}
 
 function select_storage() {
   local CLASS=$1
