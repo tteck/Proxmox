@@ -37,39 +37,33 @@ function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
 }
-
 function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
-
-DIR=/root/.restore
+DIR=/root/.homeassistant/restore
 if [ -d "$DIR" ];
 then
     msg_ok "Restore Directory Exists."
 else
-	mkdir -p /root/.restore
-	msg_ok "Created Restore Directory."
+    mkdir -p /root/.homeassistant/restore
+    msg_ok "Created Restore Directory."
 fi
-
+if [ -z "$(ls -A /root/.homeassistant/backups/)" ]; then echo -e "${RD}No backups found!${CL} \n"; exit 1; fi
 cd /root/.homeassistant/backups/
 PS3="Please enter your choice: "
 files="$(ls -A .)"
-select filename in ${files}; do msg_ok "You selected ${filename}"; break; done
+select filename in ${files}; do msg_ok "You selected ${BL}${filename}${CL}"; break; done
 msg_info "Stopping Home Assistant"
 sudo service homeassistant stop
 msg_ok "Stopped Home Assistant"
-
 msg_info "Restoring Home Assistant using ${filename}"
-tar xvf ${filename} -C /root/.restore &>/dev/null
-cd /root/.restore
+tar xvf ${filename} -C /root/.homeassistant/restore &>/dev/null
+cd /root/.homeassistant/restore
 tar -xvf homeassistant.tar.gz &>/dev/null
-if ! command -v rsync >/dev/null 2>&1; then
-  apt-get install -y rsync &>/dev/null
-fi
-rsync -a /root/.restore/data/ /root/.homeassistant
-
-rm -rf /root/.restore/*
+if ! command -v rsync >/dev/null 2>&1; then apt-get install -y rsync &>/dev/null; fi
+rsync -a /root/.homeassistant/restore/data/ /root/.homeassistant
+rm -rf /root/.homeassistant/restore/*
 msg_ok "Restore Complete"
-msg_ok "Starting Home Assistant"
+msg_ok "Starting Home Assistant \n"
 sudo service homeassistant start
