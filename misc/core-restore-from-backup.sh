@@ -10,6 +10,7 @@ CL=`echo "\033[m"`
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 APP="Home Assistant Core"
 while true; do
     read -p "This will restore ${APP} from a backup. Proceed(y/n)?" yn
@@ -41,6 +42,10 @@ function msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+function msg_error() {
+    local msg="$1"
+    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
 DIR=/root/.homeassistant/restore
 if [ -d "$DIR" ];
 then
@@ -49,7 +54,7 @@ else
     mkdir -p /root/.homeassistant/restore
     msg_ok "Created Restore Directory."
 fi
-if [ -z "$(ls -A /root/.homeassistant/backups/)" ]; then echo -e "${RD}No backups found!${CL} \n"; exit 1; fi
+if [ -z "$(ls -A /root/.homeassistant/backups/)" ]; then msg_error "No backups found! \n"; exit 1; fi
 cd /root/.homeassistant/backups/
 PS3="Please enter your choice: "
 files="$(ls -A .)"
