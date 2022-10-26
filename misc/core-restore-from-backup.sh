@@ -46,6 +46,7 @@ function msg_error() {
     local msg="$1"
     echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
+if [ -z "$(ls -A /root/.homeassistant/backups/)" ]; then msg_error "No backups found! \n"; exit 1; fi
 DIR=/root/.homeassistant/restore
 if [ -d "$DIR" ];
 then
@@ -54,7 +55,6 @@ else
     mkdir -p /root/.homeassistant/restore
     msg_ok "Created Restore Directory."
 fi
-if [ -z "$(ls -A /root/.homeassistant/backups/)" ]; then msg_error "No backups found! \n"; exit 1; fi
 cd /root/.homeassistant/backups/
 PS3="Please enter your choice: "
 files="$(ls -A .)"
