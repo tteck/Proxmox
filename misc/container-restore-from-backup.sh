@@ -60,7 +60,7 @@ PS3="Please enter your choice: "
 files="$(ls -A .)"
 select filename in ${files}; do msg_ok "You selected ${BL}${filename}${CL}"; break; done
 msg_info "Stopping Home Assistant"
-docker stop homeassistant
+docker stop homeassistant &>/dev/null
 msg_ok "Stopped Home Assistant"
 msg_info "Restoring Home Assistant using ${filename}"
 tar xvf ${filename} -C /var/lib/docker/volumes/hass_config/_data/restore &>/dev/null
