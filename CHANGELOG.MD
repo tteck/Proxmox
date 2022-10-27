@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-10-27
+
+### Changed
+
+- **Container & Core Restore from Backup** 
+  - NEW Scripts https://github.com/tteck/Proxmox/discussions/674
+
 ## 2022-10-07
 
 ### Changed
