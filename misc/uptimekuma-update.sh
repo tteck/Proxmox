@@ -45,6 +45,7 @@ function msg_ok() {
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
+if [ ! -d "/opt/uptime-kuma" ]; then echo -e "No Uptime Kuma Directory Found."; exit; fi
 
 msg_info "Stopping ${APP}"
 sudo systemctl stop uptime-kuma &>/dev/null
