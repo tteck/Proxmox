@@ -916,7 +916,7 @@ ________________________________________________________________________________
 <details>
 <summary markdown="span"> InfluxDB LXC </summary>
  
-<p align="center"><img src="https://d7umqicpi7263.cloudfront.net/img/product/83e3ab8e-540e-4391-b603-f65174ac0275/ea15d6da-1c4f-409f-8c24-4bbcfbb0d309.png" height="150"/></p>
+<p align="center"><img src="https://d7umqicpi7263.cloudfront.net/img/product/83e3ab8e-540e-4391-b603-f65174ac0275/ea15d6da-1c4f-409f-8c24-4bbcfbb0d309.png" height="100"/></p>
 
 <h1 align="center" id="heading"> InfluxDB LXC </h1>
 
