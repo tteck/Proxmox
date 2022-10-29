@@ -79,7 +79,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing EMQX"
 curl -s https://packagecloud.io/install/repositories/emqx/emqx/script.deb.sh | bash &>/dev/null
 sudo apt-get install -y emqx >/dev/null
-systemctl start emqx
+systemctl enable --now emqx
 msg_ok "Installed EMQX"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6);
