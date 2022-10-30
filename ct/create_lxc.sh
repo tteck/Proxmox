@@ -1,33 +1,39 @@
 #!/usr/bin/env bash
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
 
 function msg_info() {
-   local msg="$1"
-   echo -ne " ${HOLD} ${YW}${msg}..."
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
 function msg_ok() {
-   local msg="$1"
-   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 function msg_error() {
-    local msg="$1"
-    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
 msg_info "Validating Storage"
 VALIDCT=$(pvesm status -content rootdir | awk 'NR>1')
-if [ -z "$VALIDCT" ]; then msg_error "Unable to detect a valid Container Storage location."; exit 1; fi;
+if [ -z "$VALIDCT" ]; then
+  msg_error "Unable to detect a valid Container Storage location."
+  exit 1
+fi
 VALIDTMP=$(pvesm status -content vztmpl | awk 'NR>1')
-if [ -z "$VALIDTMP" ]; then msg_error "Unable to detect a valid Template Storage location."; exit 1; fi;
+if [ -z "$VALIDTMP" ]; then
+  msg_error "Unable to detect a valid Template Storage location."
+  exit 1
+fi
 
 set -o errexit
 set -o errtrace
@@ -51,9 +57,15 @@ function select_storage() {
   local CONTENT
   local CONTENT_LABEL
   case $CLASS in
-    container) CONTENT='rootdir'; CONTENT_LABEL='Container';;
-    template) CONTENT='vztmpl'; CONTENT_LABEL='Container template';;
-    *) false || die "Invalid storage class.";;
+  container)
+    CONTENT='rootdir'
+    CONTENT_LABEL='Container'
+    ;;
+  template)
+    CONTENT='vztmpl'
+    CONTENT_LABEL='Container template'
+    ;;
+  *) false || die "Invalid storage class." ;;
   esac
 
   local -a MENU
@@ -66,18 +78,18 @@ function select_storage() {
     if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
       local MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
     fi
-    MENU+=( "$TAG" "$ITEM" "OFF" )
+    MENU+=("$TAG" "$ITEM" "OFF")
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
 
-  if [ $((${#MENU[@]}/3)) -eq 1 ]; then          
+  if [ $((${#MENU[@]} / 3)) -eq 1 ]; then
     printf ${MENU[0]}
-  else                                             
+  else
     local STORAGE
-    while [ -z "${STORAGE:+x}" ]; do              
+    while [ -z "${STORAGE:+x}" ]; do
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
-      "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
-      16 $(($MSG_MAX_LENGTH + 23)) 6 \
-      "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
+        "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
+        16 $(($MSG_MAX_LENGTH + 23)) 6 \
+        "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
     done
     printf $STORAGE
   fi
@@ -118,9 +130,9 @@ fi
 
 DEFAULT_PCT_OPTIONS=(
   -arch $(dpkg --print-architecture))
-  
-PCT_OPTIONS=( ${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}} )
-[[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=( -rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8} )
+
+PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
+[[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=(-rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8})
 
 msg_info "Creating LXC Container"
 pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
