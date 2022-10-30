@@ -57,8 +57,8 @@ show_menu() {
 }
 clear
 show_menu
-while [ $opt != '' ]; do
-    if [ $opt = '' ]; then
+while [ "$opt" != "" ]; do
+    if [ "$opt" = "" ]; then
         exit
     else
         case $opt in
