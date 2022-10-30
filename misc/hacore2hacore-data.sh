@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 clear
 while true; do
-    read -p "Use to copy all data from a Home Assistant Core LXC to a Home Assistant Core LXC. Proceed(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
+  read -p "Use to copy all data from a Home Assistant Core LXC to a Home Assistant Core LXC. Proceed(y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
 done
 set -o errexit
 set -o errtrace
@@ -51,28 +51,28 @@ while read -r line; do
   if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
     MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
   fi
-  CTID_MENU+=( "$TAG" "$ITEM " "OFF" )
+  CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
 while [ -z "${CTID_FROM:+x}" ]; do
   CTID_FROM=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich HA Core LXC would you like to copy FROM?\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
+    "\nWhich HA Core LXC would you like to copy FROM?\n" \
+    16 $(($MSG_MAX_LENGTH + 23)) 6 \
+    "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 while [ -z "${CTID_TO:+x}" ]; do
   CTID_TO=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich HA Core LXC would you like to copy TO?\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
+    "\nWhich HA Core LXC would you like to copy TO?\n" \
+    16 $(($MSG_MAX_LENGTH + 23)) 6 \
+    "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 for i in ${!CTID_MENU[@]}; do
-  [ "${CTID_MENU[$i]}" == "$CTID_FROM" ] && \
-    CTID_FROM_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i+1]})
-  [ "${CTID_MENU[$i]}" == "$CTID_TO" ] && \
-    CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i+1]})
+  [ "${CTID_MENU[$i]}" == "$CTID_FROM" ] &&
+    CTID_FROM_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i + 1]})
+  [ "${CTID_MENU[$i]}" == "$CTID_TO" ] &&
+    CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i + 1]})
 done
 whiptail --defaultno --title "$TITLE" --yesno \
-"Are you sure you want to copy data between the following LXCs?
+  "Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: 2022.10.03" 13 50 || exit
 info "Home Assistant Data from '$CTID_FROM' to '$CTID_TO'"
@@ -83,13 +83,13 @@ fi
 msg "Mounting Container Disks..."
 DOCKER_PATH=/var/lib/docker/volumes/hass_config/_data
 CORE_PATH=/root/.homeassistant
-CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") || \
+CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_FROM}'."
-[ -d "${CTID_FROM_PATH}${CORE_PATH}" ] || \
+[ -d "${CTID_FROM_PATH}${CORE_PATH}" ] ||
   die "Home Assistant directories in '$CTID_FROM' not found."
-CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") || \
+CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_TO}'."
-[ -d "${CTID_TO_PATH}${CORE_PATH}" ] || \
+[ -d "${CTID_TO_PATH}${CORE_PATH}" ] ||
   die "Home Assistant directories in '$CTID_TO' not found."
 
 msg "Copying Data..."

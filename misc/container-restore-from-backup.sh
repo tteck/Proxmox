@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 clear
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
-BGN=`echo "\033[4;92m"`
-GN=`echo "\033[1;92m"`
-DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
+BGN=$(echo "\033[4;92m")
+GN=$(echo "\033[1;92m")
+DGN=$(echo "\033[32m")
+CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -15,14 +15,14 @@ APP="Home Assistant Container"
 while true; do
     read -p "This will restore ${APP} from a backup. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
 function header_info {
-cat << "EOF"
+    cat <<"EOF"
     __  __                        ___              _      __              __              
    / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____  / /_   
   / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  
@@ -46,10 +46,12 @@ function msg_error() {
     local msg="$1"
     echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
-if [ -z "$(ls -A /var/lib/docker/volumes/hass_config/_data/backups/)" ]; then msg_error "No backups found! \n"; exit 1; fi
+if [ -z "$(ls -A /var/lib/docker/volumes/hass_config/_data/backups/)" ]; then
+    msg_error "No backups found! \n"
+    exit 1
+fi
 DIR=/var/lib/docker/volumes/hass_config/_data/restore
-if [ -d "$DIR" ];
-then
+if [ -d "$DIR" ]; then
     msg_ok "Restore Directory Exists."
 else
     mkdir -p /var/lib/docker/volumes/hass_config/_data/restore
@@ -58,7 +60,10 @@ fi
 cd /var/lib/docker/volumes/hass_config/_data/backups/
 PS3="Please enter your choice: "
 files="$(ls -A .)"
-select filename in ${files}; do msg_ok "You selected ${BL}${filename}${CL}"; break; done
+select filename in ${files}; do
+    msg_ok "You selected ${BL}${filename}${CL}"
+    break
+done
 msg_info "Stopping Home Assistant"
 docker stop homeassistant &>/dev/null
 msg_ok "Stopped Home Assistant"

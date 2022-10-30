@@ -3,12 +3,12 @@
 # run from the Proxmox Shell
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/zwave-copy-data.sh)"
 while true; do
-    read -p "Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC. Proceed(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
+  read -p "Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC. Proceed(y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
 done
 clear
 set -o errexit
@@ -59,28 +59,28 @@ while read -r line; do
   if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
     MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
   fi
-  CTID_MENU+=( "$TAG" "$ITEM " "OFF" )
+  CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
 while [ -z "${CTID_FROM:+x}" ]; do
   CTID_FROM=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich Zwavejs2MQTT LXC would you like to copy FROM?\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
+    "\nWhich Zwavejs2MQTT LXC would you like to copy FROM?\n" \
+    16 $(($MSG_MAX_LENGTH + 23)) 6 \
+    "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 while [ -z "${CTID_TO:+x}" ]; do
   CTID_TO=$(whiptail --title "$TITLE" --radiolist \
-  "\nWhich Z-wave JS UI LXC would you like to copy TO?\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
+    "\nWhich Z-wave JS UI LXC would you like to copy TO?\n" \
+    16 $(($MSG_MAX_LENGTH + 23)) 6 \
+    "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 for i in ${!CTID_MENU[@]}; do
-  [ "${CTID_MENU[$i]}" == "$CTID_FROM" ] && \
-    CTID_FROM_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i+1]})
-  [ "${CTID_MENU[$i]}" == "$CTID_TO" ] && \
-    CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i+1]})
+  [ "${CTID_MENU[$i]}" == "$CTID_FROM" ] &&
+    CTID_FROM_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i + 1]})
+  [ "${CTID_MENU[$i]}" == "$CTID_TO" ] &&
+    CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i + 1]})
 done
 whiptail --defaultno --title "$TITLE" --yesno \
-"Are you sure you want to copy data between the following LXCs?
+  "Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: 2022.09.21" 13 50 || exit
 info "Zwavejs2MQTT Data from '$CTID_FROM' to '$CTID_TO'"
@@ -91,13 +91,13 @@ fi
 msg "Mounting Container Disks..."
 DATA_PATH=/opt/zwavejs2mqtt/store/
 DATA_PATH_NEW=/opt/zwave-js-ui/store/
-CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") || \
+CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_FROM}'."
-[ -d "${CTID_FROM_PATH}${DATA_PATH}" ] || \
+[ -d "${CTID_FROM_PATH}${DATA_PATH}" ] ||
   die "Zwavejs2MQTT directories in '$CTID_FROM' not found."
-CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") || \
+CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_TO}'."
-[ -d "${CTID_TO_PATH}${DATA_PATH_NEW}" ] || \
+[ -d "${CTID_TO_PATH}${DATA_PATH_NEW}" ] ||
   die "Zwavejs2MQTT directories in '$CTID_TO' not found."
 
 #rm -rf ${CTID_TO_PATH}${DATA_PATH}
@@ -117,4 +117,3 @@ rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DATA_PATH} ${CTID_TO_PATH}${DATA_PA
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
-

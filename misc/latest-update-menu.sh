@@ -3,9 +3,9 @@
 while true; do
     read -p "This will create a New Update Menu for Home Assistant Container LXC. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
@@ -13,19 +13,19 @@ set -o errexit
 rm -rf /root/update.sh update update-containers.sh
 echo -e "\e[1;92m Creating New Update Menu Script... \e[0m"
 if [ -f /usr/local/lib/python3.9/dist-packages/runlike/runlike.py ]; then
-echo -e "\e[1;92m pip3/runlike Already Installed! \e[0m"
+    echo -e "\e[1;92m pip3/runlike Already Installed! \e[0m"
 else
-apt-get update &>/dev/null
-echo -e "\e[1;92m Installing pip3... \e[0m"
-apt-get install -y python3-pip &>/dev/null
-echo -e "\e[1;92m Installing runlike... \e[0m"
-pip3 install runlike &>/dev/null 
+    apt-get update &>/dev/null
+    echo -e "\e[1;92m Installing pip3... \e[0m"
+    apt-get install -y python3-pip &>/dev/null
+    echo -e "\e[1;92m Installing runlike... \e[0m"
+    pip3 install runlike &>/dev/null
 fi
 echo -e "\e[1;92m Creating Update Script... \e[0m"
 if [ -d /root/hass_config ]; then
-echo -e "\e[1;92m There's Already (hass_config) Folder! \e[0m"
+    echo -e "\e[1;92m There's Already (hass_config) Folder! \e[0m"
 else
-mkdir /root/hass_config
+    mkdir /root/hass_config
 fi
 UPDATE_PATH='/root/update'
 UPDATE_CONTAINERS_PATH='/root/update-containers.sh'

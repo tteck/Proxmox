@@ -1,12 +1,12 @@
 #!/usr/bin/env bash -ex
 LATEST=$(curl -sL https://api.github.com/repos/louislam/uptime-kuma/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
-BGN=`echo "\033[4;92m"`
-GN=`echo "\033[1;92m"`
-DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
+BGN=$(echo "\033[4;92m")
+GN=$(echo "\033[1;92m")
+DGN=$(echo "\033[32m")
+CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -14,14 +14,14 @@ APP="Uptime Kuma"
 while true; do
     read -p "This will Update ${APP} to ${LATEST}. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
 function header_info {
-echo -e "${DGN}
+    echo -e "${DGN}
   _    _       _   _                  _  __                     
  | |  | |     | | (_)                | |/ /                     
  | |  | |_v3_ | |_ _ _ __ ___   ___  | ' /_   _ _ __ ___   __ _ 
@@ -45,7 +45,10 @@ function msg_ok() {
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-if [ ! -d "/opt/uptime-kuma" ]; then echo -e "No Uptime Kuma Directory Found."; exit; fi
+if [ ! -d "/opt/uptime-kuma" ]; then
+    echo -e "No Uptime Kuma Directory Found."
+    exit
+fi
 
 msg_info "Stopping ${APP}"
 sudo systemctl stop uptime-kuma &>/dev/null
