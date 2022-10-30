@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 IP=$(hostname -I | awk '{print $1}')
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
-BGN=`echo "\033[4;92m"`
-GN=`echo "\033[1;92m"`
-DGN=`echo "\033[32m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
+BGN=$(echo "\033[4;92m")
+GN=$(echo "\033[1;92m")
+DGN=$(echo "\033[32m")
+CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
@@ -21,25 +21,25 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 
 function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occured."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  exit $EXIT
+    trap - ERR
+    local reason="Unknown failure occured."
+    local msg="${1:-$reason}"
+    local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+    echo -e "$flag $msg" 1>&2
+    exit $EXIT
 }
 
 while true; do
     read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
 function header_info {
-echo -e "${BL}
+    echo -e "${BL}
    ______          __        _____                          
   / ____/___  ____/ /__     / ___/___  ______   _____  _____
  / /   / __ \/ __  / _ \    \__ \/ _ \/ ___/ | / / _ \/ ___/
@@ -66,9 +66,9 @@ apt-get install -y sudo &>/dev/null
 apt-get install -y git &>/dev/null
 msg_ok "Installed Dependencies"
 
-VERSION=$(curl -s https://api.github.com/repos/coder/code-server/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 3, length($2)-4) }') \
+VERSION=$(curl -s https://api.github.com/repos/coder/code-server/releases/latest |
+    grep "tag_name" |
+    awk '{print substr($2, 3, length($2)-4) }')
 
 msg_info "Installing Code-Server v${VERSION}"
 curl -fOL https://github.com/coder/code-server/releases/download/v$VERSION/code-server_${VERSION}_amd64.deb &>/dev/null
@@ -76,7 +76,7 @@ sudo dpkg -i code-server_${VERSION}_amd64.deb &>/dev/null
 rm -rf code-server_${VERSION}_amd64.deb
 mkdir -p ~/.config/code-server/
 sudo systemctl enable --now code-server@$USER &>/dev/null
-cat <<EOF > ~/.config/code-server/config.yaml
+cat <<EOF >~/.config/code-server/config.yaml
 bind-addr: 0.0.0.0:8680
 auth: none
 password: 

@@ -4,9 +4,9 @@ echo -e "\e[1;33m This script will install Home Assistant Community Store (HACS)
 while true; do
     read -p "Start the HACS Install Script (y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 

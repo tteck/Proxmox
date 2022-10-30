@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
-BL=`echo "\033[36m"`
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+RD=$(echo "\033[01;31m")
+BL=$(echo "\033[36m")
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
 RETRY_NUM=10
 RETRY_EVERY=3
 NUM=$RETRY_NUM
@@ -29,30 +29,29 @@ function error_exit() {
 }
 
 function msg_info() {
-    local msg="$1"
-    echo -ne " ${HOLD} ${YW}${msg}..."
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
 function msg_ok() {
-    local msg="$1"
-    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
 function msg_error() {
-    local msg="$1"
-    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
 msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
-  1>&2 echo -en "${CROSS}${RD} No Network! "
+  echo 1>&2 -en "${CROSS}${RD} No Network! "
   sleep $RETRY_EVERY
   ((NUM--))
-  if [ $NUM -eq 0 ]
-  then
-    1>&2 echo -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"    
+  if [ $NUM -eq 0 ]; then
+    echo 1>&2 -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
     exit 1
   fi
 done
@@ -61,9 +60,12 @@ msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 set +e
 alias die=''
-if nc -zw1 8.8.8.8 443; then  msg_ok "Internet Connected"; else  msg_error "Internet NOT Connected"; exit 1; fi;
+if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
+  msg_error "Internet NOT Connected"
+  exit 1
+fi
 RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
-if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure";  else msg_ok "DNS Resolved github.com to $RESOLVEDIP";  fi;
+if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to $RESOLVEDIP"; fi
 alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 
@@ -75,27 +77,27 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 apt-get update &>/dev/null
 apt-get -qqy install \
-    git \
-    build-essential \
-    pkgconf \
-    libssl-dev \
-    libmariadb-dev-compat \
-    libpq-dev \
-    curl \
-    sudo &>/dev/null
+  git \
+  build-essential \
+  pkgconf \
+  libssl-dev \
+  libmariadb-dev-compat \
+  libpq-dev \
+  curl \
+  sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }')
+WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
+  grep "tag_name" |
+  awk '{print substr($2, 2, length($2)-3) }')
 
-VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest \
-| grep "tag_name" \
-| awk '{print substr($2, 2, length($2)-3) }')
+VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest |
+  grep "tag_name" |
+  awk '{print substr($2, 2, length($2)-3) }')
 
 msg_info "Installing Rust"
 curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal &>/dev/null
-echo 'export PATH=~/.cargo/bin:$PATH' >> ~/.bashrc &>/dev/null
+echo 'export PATH=~/.cargo/bin:$PATH' >>~/.bashrc &>/dev/null
 export PATH=~/.cargo/bin:$PATH &>/dev/null
 which rustc &>/dev/null
 msg_ok "Installed Rust"
@@ -117,7 +119,7 @@ curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBV
 tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/ &>/dev/null
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
-cat <<EOF > /opt/vaultwarden/.env
+cat <<EOF >/opt/vaultwarden/.env
 ADMIN_TOKEN=$(openssl rand -base64 48)
 ROCKET_ADDRESS=0.0.0.0
 DATA_FOLDER=/opt/vaultwarden/data
@@ -161,29 +163,29 @@ WorkingDirectory=/opt/vaultwarden
 ReadWriteDirectories=/opt/vaultwarden/data
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 [Install]
-WantedBy=multi-user.target" > $service_path
+WantedBy=multi-user.target" >$service_path
 systemctl daemon-reload
 systemctl enable --now vaultwarden.service &>/dev/null
 msg_ok "Created Service"
 
-PASS=$(grep -w "root" /etc/shadow | cut -b6);
-  if [[ $PASS != $ ]]; then
-msg_info "Customizing Container"
-rm /etc/motd
-rm /etc/update-motd.d/10-uname
-touch ~/.hushlogin
-GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
-mkdir -p $(dirname $GETTY_OVERRIDE)
-cat << EOF > $GETTY_OVERRIDE
+PASS=$(grep -w "root" /etc/shadow | cut -b6)
+if [[ $PASS != $ ]]; then
+  msg_info "Customizing Container"
+  rm /etc/motd
+  rm /etc/update-motd.d/10-uname
+  touch ~/.hushlogin
+  GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
+  mkdir -p $(dirname $GETTY_OVERRIDE)
+  cat <<EOF >$GETTY_OVERRIDE
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
-systemctl daemon-reload
-systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
-msg_ok "Customized Container"
-  fi
-  
+  systemctl daemon-reload
+  systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
+  msg_ok "Customized Container"
+fi
+
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') 
+RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 set -e
-YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
-BL=`echo "\033[36m"`
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+YW=$(echo "\033[33m")
+RD=$(echo "\033[01;31m")
+BL=$(echo "\033[36m")
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -25,7 +25,7 @@ function msg_error() {
     echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 clear
-cat << "EOF"
+cat <<"EOF"
  _____                                  _______    __  ______
 /__  /_      ______ __   _____         / / ___/   / / / /  _/
   / /| | /| / / __ `/ | / / _ \   __  / /\__ \   / / / // /  
@@ -38,12 +38,15 @@ EOF
 while true; do
     read -p "This will update ZWave JS UI to $RELEASE. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
-if [ ! -d /opt/zwave-js-ui ]; then msg_error "No Zwave JS UI Install Detected!"; exit; fi
+if [ ! -d /opt/zwave-js-ui ]; then
+    msg_error "No Zwave JS UI Install Detected!"
+    exit
+fi
 
 msg_info "Stopping Z-wave JS UI"
 systemctl stop zwave-js-ui.service
@@ -56,7 +59,7 @@ unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
 msg_ok "Updated Z-wave JS UI"
 
 msg_info "Updating Z-wave JS UI service file"
-cat << EOF > /etc/systemd/system/zwave-js-ui.service
+cat <<EOF >/etc/systemd/system/zwave-js-ui.service
 [Unit]
 Description=zwave-js-ui
 Wants=network-online.target

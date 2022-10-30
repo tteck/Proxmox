@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 set -e
 clear
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
 CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
 while true; do
     read -p "This will Update Dashy LXC. Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
 function header_info {
-echo -e "${RD}
+    echo -e "${RD}
   _____            _           
  |  __ \          | |          
  | |  | | __ _ ___| |__  _   _ 

@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-YW=`echo "\033[33m"`
-RD=`echo "\033[01;31m"`
-BL=`echo "\033[36m"`
+YW=$(echo "\033[33m")
+RD=$(echo "\033[01;31m")
+BL=$(echo "\033[36m")
 CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
 while true; do
     read -p "This will Install Webmin, Proceed(y/n)?" yn
     case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
     esac
 done
 clear
@@ -34,7 +34,6 @@ echo -en "${GN} Setting Default Webmin usermame & password to root... "
 rm -rf /root/webmin_2.000_all.deb
 echo -e "${CM}${CL} \r"
 IP=$(hostname -I | cut -f1 -d ' ')
-echo -e    "Successfully Installed!! Webmin should be reachable by going to https://${IP}:10000"
-
+echo -e "Successfully Installed!! Webmin should be reachable by going to https://${IP}:10000"
 
 # bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
