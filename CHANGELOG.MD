@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Alpine LXC** 
   - NEW Script
+- **Arch LXC** 
+  - NEW Script
 
 ## 2022-10-27
 
