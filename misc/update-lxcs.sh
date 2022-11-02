@@ -16,15 +16,15 @@ while true; do
 done
 clear
 function header_info {
-  echo -e "${BL}
-  _    _ _____  _____       _______ ______ 
- | |  | |  __ \|  __ \   /\|__   __|  ____|
- | |  | | |__) | |  | | /  \  | |  | |__   
- | |  | |  ___/| |  | |/ /\ \ | |  |  __|  
- | |__| | |    | |__| / ____ \| |  | |____ 
-  \____/|_|    |_____/_/    \_\_|  |______|
+  cat <<"EOF"
+   __  __          __      __          __   _  ________
+  / / / /___  ____/ /___ _/ /____     / /  | |/ / ____/
+ / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /     
+/ /_/ / /_/ / /_/ / /_/ / /_/  __/  / /___/   / /___   
+\____/ .___/\__,_/\__,_/\__/\___/  /_____/_/|_\____/   
+    /_/                                                
 
-${CL}"
+EOF
 }
 header_info
 
@@ -35,7 +35,14 @@ function update_container() {
   clear
   header_info
   echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
-  pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
+  pct config $container > temp
+  os=`awk '/^ostype/' temp | cut -d' ' -f2`
+  if [ "$os" == "alpine" ]
+  then
+        pct exec $container -- ash -c "apk update && apk upgrade"
+  else
+        pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
+  fi
 }
 read -p "Skip stopped containers? " -n 1 -r
 echo
@@ -67,5 +74,5 @@ for container in $containers; do
   fi
 done
 wait
-
+rm -rf temp
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
