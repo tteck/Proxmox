@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
 APP="Nginx Proxy Manager"
-var_disk="3"
+var_disk="4"
 var_cpu="1"
 var_ram="1024"
 var_os="debian"
