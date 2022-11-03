@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo -e "Loading..."
 APP="Alpine"
-var_disk="1"
+var_disk="0.1"
 var_cpu="1"
 var_ram="512"
 var_os="alpine"
@@ -78,7 +78,7 @@ function default_settings() {
   CT_ID=$NEXTID
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
   HN=$NSAPP
-  echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
+  echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}"
   DISK_SIZE="$var_disk"
   echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
   CORE_COUNT="$var_cpu"
@@ -142,10 +142,6 @@ function advanced_settings() {
     echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"; fi
-    if ! [[ $DISK_SIZE =~ $INTEGER ]]; then
-      echo -e "${RD}⚠ DISK SIZE MUST BE A INTEGER NUMBER!${CL}"
-      advanced_settings
-    fi
   fi
   CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
