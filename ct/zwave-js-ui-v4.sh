@@ -256,8 +256,9 @@ export PCT_OPTIONS="
   $PW
 "
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >>$LXC_CONFIG
+if [ "$CT_TYPE" == "0" ]; then
+  LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+  cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 lxc.cgroup2.devices.allow: c 188:* rwm
@@ -268,6 +269,7 @@ lxc.mount.entry: /dev/ttyUSB1       dev/ttyUSB1       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
+fi
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
