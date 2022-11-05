@@ -139,7 +139,7 @@ msg_ok "Cloned PhotoPrism"
 msg_info "Building PhotoPrism (Patience)"
 NODE_OPTIONS=--max_old_space_size=2048 make all &>/dev/null
 ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-cp -a assets/ /opt/photoprism/assets/ &>/dev/null
+cp -r assets/ /opt/photoprism/ &>/dev/null
 msg_ok "Built PhotoPrism"
 
 env_path="/var/lib/photoprism/.env"
