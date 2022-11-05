@@ -98,8 +98,8 @@ apt-get install -y nodejs &>/dev/null
 msg_ok "Installed Node.js"
 
 msg_info "Installing Golang (Patience)"
-wget https://golang.org/dl/go1.19.2.linux-amd64.tar.gz &>/dev/null
-tar -xzf go1.19.2.linux-amd64.tar.gz -C /usr/local &>/dev/null
+wget https://golang.org/dl/go1.19.3.linux-amd64.tar.gz &>/dev/null
+tar -xzf go1.19.3.linux-amd64.tar.gz -C /usr/local &>/dev/null
 ln -s /usr/local/go/bin/go /usr/local/bin/go &>/dev/null
 go install github.com/tianon/gosu@latest &>/dev/null
 go install golang.org/x/tools/cmd/goimports@latest &>/dev/null
@@ -196,7 +196,7 @@ apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
 rm -rf /var/{cache,log}/* \
   /photoprism \
-  /go1.19.2.linux-amd64.tar.gz \
+  /go1.19.3.linux-amd64.tar.gz \
   /libtensorflow-linux-avx2-1.15.2.tar.gz \
   /libtensorflow-linux-avx-1.15.2.tar.gz \
   /libtensorflow-linux-cpu-1.15.2.tar.gz
