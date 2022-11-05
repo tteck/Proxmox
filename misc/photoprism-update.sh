@@ -91,7 +91,8 @@ echo -e "${CM}${CL} \r"
 echo -en "${GN} Building PhotoPrism ${BR} branch... "
 sudo make all &>/dev/null
 sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-sudo cp -a assets/ /opt/photoprism/assets/ &>/dev/null
+sudo rm -rf /opt/photoprism/assets 
+sudo cp -r assets/ /opt/photoprism/ &>/dev/null
 echo -e "${CM}${CL} \r"
 
 echo -en "${GN} Cleaning... "
