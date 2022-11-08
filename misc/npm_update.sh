@@ -54,7 +54,6 @@ function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
 }
-T="$(date +%M)"
 
 if [ -f /lib/systemd/system/npm.service ]; then
   echo -en "${GN} Prep For Update... "
@@ -168,10 +167,9 @@ systemctl enable npm &>/dev/null
 systemctl start openresty
 systemctl start npm
 echo -e "${CM}${CL} \r"
-TS="$(($(date +%M) - T))"
 
 IP=$(hostname -I | cut -f1 -d ' ')
-echo -e "${GN}Successfully Updated Nginx Proxy Manager to ${RD}${RELEASE}${CL} and it took ${RD}${TS} minutes.${CL}
+echo -e "${GN}Successfully Updated Nginx Proxy Manager to ${RD}${RELEASE}${CL}.
                NPM should be reachable at ${BL}http://${IP}:81 ${CL}
                   
                   "
