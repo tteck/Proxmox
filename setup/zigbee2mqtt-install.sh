@@ -116,6 +116,7 @@ echo "[Unit]
 Description=zigbee2mqtt
 After=network.target
 [Service]
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/npm start
 WorkingDirectory=/opt/zigbee2mqtt
 StandardOutput=inherit
