@@ -270,5 +270,5 @@ pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} Setup should be reachable by going to the following URL.
+echo -e "${APP} Setup should be reachable by going to the following URL (a reboot is required before app installs).
          ${BL}http://${IP} ${CL} \n"
