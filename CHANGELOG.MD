@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-11-11
+
+### Changed
+
+- **HA Bluetooth Integration Preparation** 
+  - [NEW Script](https://github.com/tteck/Proxmox/discussions/719)
+
 ## 2022-11-04
 
 ### Changed
