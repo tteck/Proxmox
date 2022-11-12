@@ -84,7 +84,7 @@ systemctl disable systemd-resolved.service &>/dev/null
 RELEASE=$(curl -s https://api.github.com/repos/0xERR0R/blocky/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 wget https://github.com/0xERR0R/blocky/releases/download/v$RELEASE/blocky_${RELEASE}_Linux_x86_64.tar.gz &>/dev/null
 mkdir -p /opt/blocky
-tar -xf blocky_0.19_Linux_x86_64.tar.gz -C /opt/blocky
+tar -xf blocky_${RELEASE}_Linux_x86_64.tar.gz -C /opt/blocky
 rm -rf blocky_${RELEASE}_Linux_x86_64.tar.gz
 cat <<EOF >/opt/blocky/config.yml
 upstream:
