@@ -89,6 +89,8 @@ EOF
 
 msg_info "Installing Umbrel (Patience)"
 curl -sL https://umbrel.sh | bash &>/dev/null
+systemctl daemon-reload
+systemctl enable --now umbrel-startup.service &>/dev/null
 msg_ok "Installed Umbrel"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
@@ -108,7 +110,6 @@ EOF
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
 fi
-cd ~/umbrel/scripts && bash start &>/dev/null
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
