@@ -108,7 +108,7 @@ EOF
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
 fi
-
+cd ~/umbrel/scripts && bash start &>/dev/null
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
 apt-get autoclean >/dev/null
