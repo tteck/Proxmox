@@ -31,7 +31,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Container & Core Restore from Backup** 
-  - NEW Scripts https://github.com/tteck/Proxmox/discussions/674
+  - [NEW Scripts](https://github.com/tteck/Proxmox/discussions/674)
 
 ## 2022-10-07
 
