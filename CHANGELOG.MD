@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-11-13
+
+### Changed
+
+- **All LXC's** 
+  - Add option to continue upon Internet NOT Connected
+
 ## 2022-11-11
 
 ### Changed
