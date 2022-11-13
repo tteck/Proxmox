@@ -62,7 +62,7 @@ while [ $opt != '' ]; do
             curl -1sLf 'https://dl.cloudsmith.io/public/pve-edge/kernel/gpg.8EC01CCF309B98E7.key' | apt-key add -
             echo "deb https://dl.cloudsmith.io/public/pve-edge/kernel/deb/debian bullseye main" >/etc/apt/sources.list.d/pve-edge-kernel.list
             apt-get -y update
-            apt-get -y install pve-kernel-5.19-edge
+            apt-get -y install pve-kernel-6.0-edge
             reboot
             break
             ;;
