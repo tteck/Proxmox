@@ -85,13 +85,21 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 apt-get install -y apache2 &>/dev/null
 apt-get install -y unzip &>/dev/null
-apt-get install -y php &>/dev/null
-apt-get install -y libapache2-mod-php &>/dev/null
+apt-get install -y apt-transport-https &>/dev/null
+apt-get install -y lsb-release &>/dev/null
+msg_ok "Installed Dependencies"
+
+msg_info "Installing PHP 8.1"
+curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
+apt-get update &>/dev/null
+apt-get install -y php8.1 &>/dev/null
+apt-get install -y libapache2-mod-php8.1 &>/dev/null
 apt-get install -y php-sqlite3 &>/dev/null
 apt-get install -y php-gd &>/dev/null
 apt-get install -y php-intl &>/dev/null
 apt-get install -y php-mbstring &>/dev/null
-msg_ok "Installed Dependencies"
+msg_ok "Installed PHP 8.1"
 
 msg_info "Installing grocy"
 wget https://releases.grocy.info/latest &>/dev/null
