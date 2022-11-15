@@ -86,7 +86,7 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-read -r -p "Local Controller? <Y/n> " prompt
+read -r -p "Local Controller? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
   LOCAL="--local-controller"
 else
