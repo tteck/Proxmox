@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 2, length($2)-3) }')
