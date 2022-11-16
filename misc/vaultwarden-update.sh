@@ -23,7 +23,7 @@ ${CL}"
 
 update_info
 while true; do
-    read -p "This will Update Vaultwarden to $VAULT (set 2vCPU 3072MiB RAM Min.). Proceed(y/n)?" yn
+    read -p "This will Update Vaultwarden to $VAULT (Ensure you set 2vCPU 3072MiB RAM Min.). Proceed(y/n)?" yn
     case $yn in
     [Yy]*) break ;;
     [Nn]*) exit ;;
@@ -52,4 +52,4 @@ sleep 1
 echo -e "${GN} Cleaning up... ${CL}"
 cd ~ && rm -rf vaultwarden
 
-echo -e "${GN} Finished Update (set resources back to normal settings)${CL}"
+echo -e "${GN} Finished Update (Ensure you set resources back to normal settings)${CL}"
