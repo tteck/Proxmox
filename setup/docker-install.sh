@@ -81,6 +81,7 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
+apt-get install -y fuse-overlayfs &>/dev/null
 apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
@@ -98,6 +99,7 @@ DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 cat >$DOCKER_CONFIG_PATH <<'EOF'
 {
+  "storage-driver": "fuse-overlayfs",
   "log-driver": "journald"
 }
 EOF
