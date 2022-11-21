@@ -34,16 +34,23 @@ function update_container() {
   container=$1
   clear
   header_info
-  echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
+  name=`pct exec $container hostname`
+  echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} \n"
   pct config $container > temp
   os=`awk '/^ostype/' temp | cut -d' ' -f2`
-  if [ "$os" == "alpine" ]
-  then
-        pct exec $container -- ash -c "apk update && apk upgrade"
+  if [ "$os" == "alpine" ]; then
+        pct exec $container -- ash -c "apk update && apk upgrade -y"
+  elif [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] || [ "$os" == "devuan" ]; then
+        pct exec $container -- bash -c "apt-get update && apt-get upgrade -y && apt-get clean && apt-get --purge autoremove -y"
+  elif [ "$os" == "fedora" ]; then
+        pct exec $container -- bash -c "dnf -y update && dnf -y upgrade && dnf -y --purge autoremove"
+  elif [ "$os" == "archlinux" ]; then
+        pct exec $container -- bash -c "pacman -Syyu --noconfirm"
   else
-        pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
+        pct exec $container -- bash -c "yum -y update"
   fi
 }
+
 read -p "Skip stopped containers? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
