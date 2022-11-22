@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-11-21
+
+### Changed
+
+- **Proxmox LXC Updater** 
+  - Now updates Ubuntu, Debian, Devuan, Alpine Linux, CentOS-Rocky-Alma, Fedora, ArchLinux [(@Uruknara)](https://github.com/tteck/Proxmox/commits?author=Uruknara)
+
 ## 2022-11-13
 
 ### Changed
