@@ -108,6 +108,12 @@ EOF
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
 fi
+if [[ "${SSH_ROOT}" == "yes" ]]; then
+    cat <<EOF >>/etc/ssh/sshd_config
+PermitRootLogin yes
+EOF
+systemctl restart sshd
+fi
 
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null
