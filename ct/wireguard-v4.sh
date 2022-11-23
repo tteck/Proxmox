@@ -95,6 +95,8 @@ function default_settings() {
   MAC=""
   echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
   VLAN=""
+    echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+  SSH="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
@@ -213,6 +215,13 @@ function advanced_settings() {
       echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
     fi
   fi
+  if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
+      echo -e "${DGN}Enable Root SSH Access: ${BGN}Yes${CL}"
+      SSH="yes"
+  else
+      echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+      SSH="no"
+  fi
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
   else
@@ -242,6 +251,7 @@ else
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export SSH_ROOT=${SSH}
 export CTID=$CT_ID
 export PCT_OSTYPE=$var_os
 export PCT_OSVERSION=$var_version

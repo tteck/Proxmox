@@ -93,7 +93,9 @@ function default_settings() {
 		MAC=""
     echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
     VLAN=""
-		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
+		  echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+  SSH="no"
+  echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
@@ -216,6 +218,7 @@ if [ "$CT_TYPE" == "1" ]; then
  fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export SSH_ROOT=${SSH}
 export CTID=$CT_ID
 export PCT_OSTYPE=$var_os
 export PCT_OSVERSION=$var_version
