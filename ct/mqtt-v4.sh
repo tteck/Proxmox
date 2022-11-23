@@ -93,7 +93,9 @@ function default_settings() {
 		MAC=""
     echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
     VLAN=""
-		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
+		  echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+  SSH="no"
+  echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
@@ -104,7 +106,7 @@ exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
 fi
-PW1=$(whiptail --inputbox "Set Root Password" 8 58  --title "PASSWORD(leave blank for automatic login)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+PW1=$(whiptail --inputbox "Set Root Password (needed for root ssh access)" 8 58  --title "PASSWORD(leave blank for automatic login)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $PW1 ]; then PW1="Automatic Login" PW=" ";
@@ -216,6 +218,7 @@ if [ "$CT_TYPE" == "1" ]; then
  fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export SSH_ROOT=${SSH}
 export CTID=$CT_ID
 export PCT_OSTYPE=$var_os
 export PCT_OSVERSION=$var_version
