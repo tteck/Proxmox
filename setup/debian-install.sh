@@ -42,7 +42,7 @@ function msg_error() {
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
-msg_info "Setting up Container OS "
+msg_info "Setting up Container OS"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
 while [ "$(hostname -I)" = "" ]; do
@@ -99,6 +99,12 @@ EOF
   systemctl daemon-reload
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
+fi
+if [[ "${SSH_ROOT}" == "yes" ]]; then
+    cat <<EOF >>/etc/ssh/sshd_config
+PermitRootLogin yes
+EOF
+systemctl restart sshd
 fi
 
 msg_info "Cleaning up"
