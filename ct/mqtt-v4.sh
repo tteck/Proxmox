@@ -106,7 +106,7 @@ exitstatus=$?
 if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
 fi
-PW1=$(whiptail --inputbox "Set Root Password" 8 58  --title "PASSWORD(leave blank for automatic login)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+PW1=$(whiptail --inputbox "Set Root Password (needed for root ssh access)" 8 58  --title "PASSWORD(leave blank for automatic login)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
   if [ -z $PW1 ]; then PW1="Automatic Login" PW=" ";
