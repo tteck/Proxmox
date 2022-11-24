@@ -3,6 +3,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-11-23
+
+### Changed
+
+- **All LXC's** 
+  - Now you can enable root ssh access during lxc creation (Advance)
 ## 2022-11-21
 
 ### Changed
