@@ -276,12 +276,11 @@ qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $COR
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
-  qm set $VMID \
-  -efidisk0 ${DISK0_REF}${FORMAT} \
-  -scsi0 ${DISK1_REF},discard=on,size=32G,ssd=1 >/dev/null
 qm set $VMID \
-  -boot order=scsi0 >/dev/null
-qm set $VMID -description "# Home Assistant OS
+  -efidisk0 ${DISK0_REF}${FORMAT} \
+  -scsi0 ${DISK1_REF},discard=on,size=32G,ssd=1 \
+  -boot order=scsi0 \
+  -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
