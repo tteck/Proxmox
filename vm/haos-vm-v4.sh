@@ -91,6 +91,9 @@ function default_settings() {
         BRANCH=${STABLE}
         echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
         VMID=$NEXTID
+        echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
+        FORMAT=",efitype=4m"
+        MACHINE=""
         echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
         HN=haos${STABLE}
         echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
@@ -121,6 +124,20 @@ exitstatus=$?
 if [ -z $VMID ]; then VMID="$NEXTID"; echo -e "${DGN}Virtual Machine: ${BGN}$VMID${CL}";
 else
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi;
+fi
+MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
+"i440fx" "Machine i440fx" ON \
+"q35" "Machine q35" OFF \
+3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $MACH = q35 ]; then
+  echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
+  FORMAT=",format=raw"
+  MACHINE=" -machine q35"
+  else
+  echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
+  FORMAT=",efitype=4m"
+  MACHINE=""
 fi
 VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
@@ -255,12 +272,12 @@ for i in {0,1}; do
 done
 msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1 -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
+qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
-qm set $VMID \
-  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
+  qm set $VMID \
+  -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},discard=on,size=32G,ssd=1 >/dev/null
 qm set $VMID \
   -boot order=scsi0 >/dev/null
