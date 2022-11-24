@@ -3,12 +3,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-11-24
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - Add option to set machine type during VM creation (Advance)
+
 ## 2022-11-23
 
 ### Changed
 
 - **All LXC's** 
-  - Add option to enable root ssh access during lxc creation (Advance)
+  - Add option to enable root ssh access during LXC creation (Advance)
+
 ## 2022-11-21
 
 ### Changed
