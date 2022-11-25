@@ -90,6 +90,7 @@ apt-get install python3-pip -y &>/dev/null
 msg_ok "Installed pip3"
 
 msg_info "Installing Whoogle"
+pip install brotli &>/dev/null
 pip install whoogle-search &>/dev/null
 
 service_path="/etc/systemd/system/whoogle.service"
