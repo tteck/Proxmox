@@ -39,7 +39,7 @@ function update_container() {
   pct config $container > temp
   os=`awk '/^ostype/' temp | cut -d' ' -f2`
   if [ "$os" == "alpine" ]; then
-        pct exec $container -- ash -c "apk update && apk upgrade -y"
+        pct exec $container -- ash -c "apk update && apk upgrade"
   elif [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] || [ "$os" == "devuan" ]; then
         pct exec $container -- bash -c "apt-get update && apt-get upgrade -y && apt-get clean && apt-get --purge autoremove -y"
   elif [ "$os" == "fedora" ]; then
