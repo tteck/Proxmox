@@ -196,12 +196,12 @@ msg_ok "Set up admin Paperless-ngx User & Password"
 
 cat <<EOF >/etc/systemd/system/paperless-scheduler.service
 [Unit]
-Description=Paperless consumer
+Description=Paperless Celery Beat
 Requires=redis.service
 
 [Service]
 WorkingDirectory=/opt/paperless/src
-ExecStart=python3 manage.py qcluster
+ExecStart=celery --app paperless beat --loglevel INFO
 
 [Install]
 WantedBy=multi-user.target
