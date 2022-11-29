@@ -99,6 +99,7 @@ rm -rf paperless-ngx
 msg_ok "Cleaned"
 
 msg_info "Starting Paperless-ngx"
+systemctl daemon-reload
 systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
 sleep 1
 msg_ok "Finished Update"
