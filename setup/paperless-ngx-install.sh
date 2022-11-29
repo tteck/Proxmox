@@ -137,10 +137,10 @@ msg_ok "Installed JBIG2"
 msg_info "Downloading Paperless-ngx"
 Paperlessngx=$(wget -q https://github.com/paperless-ngx/paperless-ngx/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
 cd /opt &&
-	wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$Paperlessngx/paperless-ngx-$Paperlessngx.tar.xz &>/dev/null &&
-	tar -xf paperless-ngx-$Paperlessngx.tar.xz -C /opt/ &>/dev/null &&
+	wget https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.9.2/paperless-ngx-v1.9.2.tar.xz &>/dev/null &&
+	tar -xf paperless-ngx-v1.9.2.tar.xz -C /opt/ &>/dev/null &&
 	mv paperless-ngx paperless &&
-	rm paperless-ngx-$Paperlessngx.tar.xz
+	rm paperless-ngx-v1.9.2.tar.xz
 cd /opt/paperless
 
 ## python 3.10+ doesn't like the '-e', so we remove it from this the requirements file
@@ -201,7 +201,8 @@ Requires=redis.service
 
 [Service]
 WorkingDirectory=/opt/paperless/src
-ExecStart=celery --app paperless beat --loglevel INFO
+#ExecStart=celery --app paperless beat --loglevel INFO
+ExecStart=python3 manage.py qcluster
 
 [Install]
 WantedBy=multi-user.target
