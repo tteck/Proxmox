@@ -77,7 +77,7 @@ ExecStart=celery --app paperless worker --loglevel INFO
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable --now paperless-task-queue
+systemctl enable paperless-task-queue &>/dev/null
 msg_ok "paperless-task-queue.service Created."
 fi
 cat <<EOF >/etc/systemd/system/paperless-scheduler.service
