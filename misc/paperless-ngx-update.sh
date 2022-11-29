@@ -38,8 +38,7 @@ cat <<"EOF"
 /_/    \__,_/ .___/\___/_/  /_/\___/____/____/   /_/ /_/\__, /_/|_|  
            /_/           UPDATE                        /____/        
 EOF
-echo -e "🚨  This will break Paperless-ngx DO NOT UPGRADE to version 1.10.0"
-echo -e "Working on a solution"
+
 while true; do
     read -p "This will Update Paperless-ngx to $RELEASE. Proceed(y/n)?" yn
     case $yn in
@@ -50,7 +49,7 @@ while true; do
 done
 sleep 2
 msg_info "Stopping Paperless-ngx"
-systemctl stop paperless-consumer paperless-webserver paperless-scheduler
+systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
 sleep 1
 msg_ok "Stopped Paperless-ngx"
 
@@ -64,6 +63,33 @@ sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://gi
 pip install -r requirements.txt &>/dev/null
 cd /opt/paperless/src
 /usr/bin/python3 manage.py migrate &>/dev/null
+SER=/etc/systemd/system/paperless-task-queue.service
+if [ -f "$SER" ]; then
+    msg_ok "paperless-task-queue.service Exists."
+else
+cat <<EOF >/etc/systemd/system/paperless-task-queue.service
+[Unit]
+Description=Paperless Celery Workers
+Requires=redis.service
+[Service]
+WorkingDirectory=/opt/paperless/src
+ExecStart=celery --app paperless worker --loglevel INFO
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable --now paperless-task-queue
+msg_ok "paperless-task-queue.service Created."
+fi
+cat <<EOF >/etc/systemd/system/paperless-scheduler.service
+[Unit]
+Description=Paperless Celery beat
+Requires=redis.service
+[Service]
+WorkingDirectory=/opt/paperless/src
+ExecStart=celery --app paperless beat --loglevel INFO
+[Install]
+WantedBy=multi-user.target
+EOF
 msg_ok "Updated to ${RELEASE}"
 
 msg_info "Cleaning up"
@@ -73,7 +99,7 @@ rm -rf paperless-ngx
 msg_ok "Cleaned"
 
 msg_info "Starting Paperless-ngx"
-systemctl start paperless-consumer paperless-webserver paperless-scheduler
+systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
 sleep 1
 msg_ok "Finished Update"
 echo -e "\n${BL}It may take a minute or so for Paperless-ngx to become available.${CL}\n"
