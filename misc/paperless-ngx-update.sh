@@ -38,7 +38,8 @@ cat <<"EOF"
 /_/    \__,_/ .___/\___/_/  /_/\___/____/____/   /_/ /_/\__, /_/|_|  
            /_/           UPDATE                        /____/        
 EOF
-
+echo -e "🚨  This will break Paperless-ngx DO NOT UPGRADE to version 1.10.0"
+echo -e "Working on a solution"
 while true; do
     read -p "This will Update Paperless-ngx to $RELEASE. Proceed(y/n)?" yn
     case $yn in
