@@ -137,10 +137,10 @@ msg_ok "Installed JBIG2"
 msg_info "Downloading Paperless-ngx"
 Paperlessngx=$(wget -q https://github.com/paperless-ngx/paperless-ngx/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
 cd /opt &&
-	wget https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.9.2/paperless-ngx-v1.9.2.tar.xz &>/dev/null &&
-	tar -xf paperless-ngx-v1.9.2.tar.xz -C /opt/ &>/dev/null &&
+	wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$Paperlessngx/paperless-ngx-$Paperlessngx.tar.xz &>/dev/null &&
+	tar -xf paperless-ngx-$Paperlessngx.tar.xz -C /opt/ &>/dev/null &&
 	mv paperless-ngx paperless &&
-	rm paperless-ngx-v1.9.2.tar.xz
+	rm paperless-ngx-$Paperlessngx.tar.xz
 cd /opt/paperless
 
 ## python 3.10+ doesn't like the '-e', so we remove it from this the requirements file
@@ -196,13 +196,25 @@ msg_ok "Set up admin Paperless-ngx User & Password"
 
 cat <<EOF >/etc/systemd/system/paperless-scheduler.service
 [Unit]
-Description=Paperless Celery Beat
+Description=Paperless Celery beat
 Requires=redis.service
 
 [Service]
 WorkingDirectory=/opt/paperless/src
-#ExecStart=celery --app paperless beat --loglevel INFO
-ExecStart=python3 manage.py qcluster
+ExecStart=celery --app paperless beat --loglevel INFO
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat <<EOF >/etc/systemd/system/paperless-task-queue.service
+[Unit]
+Description=Paperless Celery Workers
+Requires=redis.service
+
+[Service]
+WorkingDirectory=/opt/paperless/src
+ExecStart=celery --app paperless worker --loglevel INFO
 
 [Install]
 WantedBy=multi-user.target
@@ -239,7 +251,7 @@ EOF
 sed -i -e 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' /etc/ImageMagick-6/policy.xml
 
 systemctl daemon-reload
-systemctl enable --now paperless-consumer paperless-webserver paperless-scheduler &>/dev/null
+systemctl enable --now paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service &>/dev/null
 
 msg_ok "Finished installing Paperless-ngx"
 
