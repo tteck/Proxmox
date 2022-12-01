@@ -81,15 +81,15 @@ if [ $(pct status $CTID_TO | sed 's/.* //') == 'running' ]; then
   pct stop $CTID_TO
 fi
 msg "Mounting Container Disks..."
-DOCKER_PATH=/var/lib/docker/volumes/hass_config/_data
 CORE_PATH=/root/.homeassistant
+CORE_PATH2=/root/
 CTID_FROM_PATH=$(pct mount $CTID_FROM | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_FROM}'."
 [ -d "${CTID_FROM_PATH}${CORE_PATH}" ] ||
   die "Home Assistant directories in '$CTID_FROM' not found."
 CTID_TO_PATH=$(pct mount $CTID_TO | sed -n "s/.*'\(.*\)'/\1/p") ||
   die "There was a problem mounting the root disk of LXC '${CTID_TO}'."
-[ -d "${CTID_TO_PATH}${CORE_PATH}" ] ||
+[ -d "${CTID_TO_PATH}${CORE_PATH2}" ] ||
   die "Home Assistant directories in '$CTID_TO' not found."
 
 msg "Copying Data..."
@@ -102,7 +102,7 @@ RSYNC_OPTIONS=(
   --info=progress2
 )
 msg "<======== Docker Data ========>"
-rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${CORE_PATH} ${CTID_TO_PATH}${CORE_PATH}
+rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${CORE_PATH} ${CTID_TO_PATH}${CORE_PATH2}
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
