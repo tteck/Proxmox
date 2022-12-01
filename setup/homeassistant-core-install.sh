@@ -85,7 +85,6 @@ apt-get install -y \
   python3-dev \
   python3-venv \
   python3-pip \
-  bluez \
   libffi-dev \
   libssl-dev \
   libjpeg-dev \
