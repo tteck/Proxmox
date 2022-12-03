@@ -89,6 +89,8 @@ function default_settings() {
   NET=dhcp
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
   GATE=""
+  echo -e "${DGN}Using DNS Domain: ${BGN}Host${CL}"
+  SD=""
   echo -e "${DGN}Using DNS Server Address: ${BGN}Host${CL}"
   NS=""
   echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
@@ -186,13 +188,23 @@ function advanced_settings() {
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $GATE1 ]; then
-      NS=""
       GATE1="Default" GATE=""
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     else
-      NS="-nameserver=$GATE1"
       GATE=",gw=$GATE1"
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+    fi
+  fi
+  SD=$(whiptail --inputbox "Set a DNS Domain (leave blank for HOST)" 8 58 --title "DNS Domain" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+    if [ -z $SD ]; then
+      SD=""
+      echo -e "${DGN}Using DNS Domain: ${BGN}Host${CL}"
+    else
+      SX=$SD
+      SD="-searchdomain=$SD"
+      echo -e "${DGN}Using DNS Domain: ${BGN}$SX${CL}"
     fi
   fi
   NS=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
@@ -207,7 +219,7 @@ function advanced_settings() {
       echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NX${CL}"
     fi
   fi
- MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $MAC1 ]; then
@@ -273,6 +285,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
+  $SD
   $NS
   -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN
   -onboot 1
