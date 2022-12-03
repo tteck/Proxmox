@@ -187,6 +187,7 @@ function advanced_settings() {
       GATE1="Default" GATE=""
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     else
+      NS=$GATE
       GATE=",gw=$GATE1"
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
@@ -258,7 +259,7 @@ export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
   -searchdomain=$HN
-  -nameserver=$GATE
+  -nameserver=$NS
   -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN
   -onboot 1
   -cores $CORE_COUNT
