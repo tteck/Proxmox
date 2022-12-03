@@ -88,8 +88,9 @@ function default_settings() {
   echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
   NET=dhcp
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
-  NS=""
   GATE=""
+  echo -e "${DGN}Using DNS Server Address: ${BGN}Host${CL}"
+  NS=""
   echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
   MAC=""
   echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
@@ -194,7 +195,18 @@ function advanced_settings() {
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
   fi
-  MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  NS=$(whiptail --inputbox "Set a DNS Server IP (blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+    if [ -z $NS ]; then
+      NS=""
+      echo -e "${DGN}Using DNS Server IP Address: ${BGN}Host${CL}"
+    else
+      NS="-nameserver=$NS"
+      echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NS${CL}"
+    fi
+  fi
+ MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $MAC1 ]; then
