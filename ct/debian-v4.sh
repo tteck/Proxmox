@@ -195,7 +195,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
   fi
-  NS=$(whiptail --inputbox "Set a DNS Server IP (blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  NS=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $NS ]; then
