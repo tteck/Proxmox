@@ -257,6 +257,8 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
+  -searchdomain $GATE
+  -nameserver $GATE
   -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN
   -onboot 1
   -cores $CORE_COUNT
