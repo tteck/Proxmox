@@ -202,8 +202,9 @@ function advanced_settings() {
       NS=""
       echo -e "${DGN}Using DNS Server IP Address: ${BGN}Host${CL}"
     else
+      NX=$NS
       NS="-nameserver=$NS"
-      echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NS${CL}"
+      echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NX${CL}"
     fi
   fi
  MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
