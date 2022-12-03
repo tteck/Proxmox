@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-03
+
+### Changed
+
+- **All LXC's** 
+  - Add options to set DNS Server IP Address and DNS Search Domain (Advanced)
+
 ## 2022-11-27
 
 ### Changed
