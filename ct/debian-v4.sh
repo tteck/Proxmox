@@ -89,7 +89,7 @@ function default_settings() {
   NET=dhcp
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
   GATE=""
-  echo -e "${DGN}Using DNS Domain: ${BGN}Host${CL}"
+  echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
   SD=""
   echo -e "${DGN}Using DNS Server Address: ${BGN}Host${CL}"
   NS=""
@@ -195,16 +195,16 @@ function advanced_settings() {
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
   fi
-  SD=$(whiptail --inputbox "Set a DNS Domain (leave blank for HOST)" 8 58 --title "DNS Domain" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  SD=$(whiptail --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $SD ]; then
       SD=""
-      echo -e "${DGN}Using DNS Domain: ${BGN}Host${CL}"
+      echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
     else
       SX=$SD
       SD="-searchdomain=$SD"
-      echo -e "${DGN}Using DNS Domain: ${BGN}$SX${CL}"
+      echo -e "${DGN}Using DNS Search Domain: ${BGN}$SX${CL}"
     fi
   fi
   NS=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
