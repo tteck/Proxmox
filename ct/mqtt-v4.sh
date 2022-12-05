@@ -91,11 +91,11 @@ function default_settings() {
 		GATE=""
 		echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
 		MAC=""
-    echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
-    VLAN=""
-		  echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
-  SSH="no"
-  echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
+		echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
+ 		VLAN=""
+		echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+		SSH="no"
+		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
