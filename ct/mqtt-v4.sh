@@ -69,33 +69,37 @@ if [[ $PVE != 1 ]]; then
 fi
 }
 function default_settings() {
-		echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
-		CT_TYPE="1"
-		echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
-		PW=""
-		echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
-		CT_ID=$NEXTID
-		echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
-		HN=$NSAPP
-		echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
-		DISK_SIZE="$var_disk"
-		echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
-		CORE_COUNT="$var_cpu"
-		echo -e "${DGN}Allocated Ram ${BGN}$var_ram${CL}"
-		RAM_SIZE="$var_ram"
-		echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
-		BRG="vmbr0"
-		echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
-		NET=dhcp
-		echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
-		GATE=""
-		echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
-		MAC=""
-		echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
- 		VLAN=""
-		echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
-		SSH="no"
-		echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
+  echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
+  CT_TYPE="1"
+  echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
+  PW=""
+  echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
+  CT_ID=$NEXTID
+  echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
+  HN=$NSAPP
+  echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
+  DISK_SIZE="$var_disk"
+  echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
+  CORE_COUNT="$var_cpu"
+  echo -e "${DGN}Allocated Ram ${BGN}$var_ram${CL}"
+  RAM_SIZE="$var_ram"
+  echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
+  BRG="vmbr0"
+  echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
+  NET=dhcp
+  echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
+  GATE=""
+  echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
+  SD=""
+  echo -e "${DGN}Using DNS Server Address: ${BGN}Host${CL}"
+  NS=""
+  echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
+  MAC=""
+  echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
+  VLAN=""
+  echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+  SSH="no"
+  echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
 CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
@@ -169,6 +173,30 @@ else
     echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
   fi
 fi
+  SD=$(whiptail --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+    if [ -z $SD ]; then
+      SD=""
+      echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
+    else
+      SX=$SD
+      SD="-searchdomain=$SD"
+      echo -e "${DGN}Using DNS Search Domain: ${BGN}$SX${CL}"
+    fi
+  fi
+  NS=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+    if [ -z $NS ]; then
+      NS=""
+      echo -e "${DGN}Using DNS Server IP Address: ${BGN}Host${CL}"
+    else
+      NX=$NS
+      NS="-nameserver=$NS"
+      echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NX${CL}"
+    fi
+  fi
 MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58  --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -189,6 +217,13 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
+  if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
+      echo -e "${DGN}Enable Root SSH Access: ${BGN}Yes${CL}"
+      SSH="yes"
+  else
+      echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+      SSH="no"
+  fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
 else
