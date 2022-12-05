@@ -18,6 +18,7 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
+THIN="discard=on,ssd=1,"
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -132,7 +133,7 @@ MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "
 exitstatus=$?
 if [ $MACH = q35 ]; then
   echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-  FORMAT=",format=raw"
+  FORMAT=""
   MACHINE=" -machine q35"
   else
   echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
@@ -254,15 +255,17 @@ unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
   nfs|dir)
-    DISK_EXT=".qcow2"
+    DISK_EXT=".raw"
     DISK_REF="$VMID/"
-    DISK_IMPORT="-format qcow2"
+    DISK_IMPORT="-format raw"
+    THIN=""
     ;;
   btrfs)
     DISK_EXT=".raw"
     DISK_REF="$VMID/"
-    DISK_FORMAT="subvol"
     DISK_IMPORT="-format raw"
+    FORMAT=",efitype=4m"
+    THIN=""
     ;;
 esac
 for i in {0,1}; do
@@ -278,7 +281,7 @@ pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
-  -scsi0 ${DISK1_REF},discard=on,size=32G,ssd=1 \
+  -scsi0 ${DISK1_REF},${THIN}size=32G \
   -boot order=scsi0 \
   -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox
