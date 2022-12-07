@@ -34,3 +34,25 @@ echo "Installed Home Assistant Beta"
 echo -e " Go to $(hostname -I | awk '{print $1}'):8123"
 hass
 fi
+
+read -r -p "Would you like to install ESPHome Beta? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+  ESP="Y"
+fi
+if [[ $ESP == "Y" ]]; then
+echo "Installing ESPHome"
+pip3 install --pre esphome &>/dev/null
+cat <<EOF >/etc/systemd/system/esphomeDashboard.service
+[Unit]
+Description=ESPHome Dashboard
+After=network.target
+[Service]
+ExecStart=/root/.pyenv/versions/3.10.8/bin/esphome /root/.pyenv/versions/3.10.8/lib/python3.10/site-packages/esphome_dashboard dashboard
+Restart=always
+User=root
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable --now esphomeDashboard &>/dev/null
+echo "Installed ESPHome"
+fi
