@@ -73,3 +73,21 @@ systemctl enable --now esphomedashboard &>/dev/null
 echo "Installed ESPHome Beta"
 echo -e " Go to $(hostname -I | awk '{print $1}'):6052"
 fi
+
+read -r -p "Would you like to install Matter-Server? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+  MTR="Y"
+fi
+if [[ $MTR == "Y" ]]; then
+echo "Installing Matter Server"
+apt-get install -y \
+libcairo2-dev \
+libjpeg62-turbo-dev \
+libgirepository1.0-dev \
+libpango1.0-dev \
+libgif-dev \
+g++ &>/dev/null
+python3 -m pip install wheel 
+pip3 install --upgrade pip 
+pip install python-matter-server[server]
+echo "Installed Matter Server"
