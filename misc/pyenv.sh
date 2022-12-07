@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Can't Install on Proxmox "; exit; fi
 set -e
 echo "Installing pyenv"
 apt-get install -y \
