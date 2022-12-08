@@ -97,5 +97,6 @@ python3 -m pip install wheel
 pip3 install --upgrade pip 
 pip install python-matter-server[server]
 echo "Installed Matter Server"
+echo -e "Start server > python -m matter_server.server"
 fi
 echo -e "\nFinished\n"
