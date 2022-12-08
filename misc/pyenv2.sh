@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 if command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Can't Install on Proxmox "; exit; fi
 set -e
+DIR=/root/.pyenv/3.10.8
+if [ -d "$DIR" ]; then
+    echo "Python 3.10.8 is already installed, moving on..."
+else
 echo "Installing Python 3.10.8"
 pyenv install 3.10.8 &>/dev/null
 pyenv global 3.10.8
 echo "Installed Python 3.10.8"
+fi
 read -r -p "Would you like to install Home Assistant Beta? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
   HA="Y"
