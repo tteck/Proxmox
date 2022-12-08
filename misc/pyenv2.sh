@@ -96,5 +96,6 @@ g++ &>/dev/null
 python3 -m pip install wheel 
 pip3 install --upgrade pip 
 pip install python-matter-server[server]
-fi
 echo "Installed Matter Server"
+fi
+echo -e "\nFinished\n"
