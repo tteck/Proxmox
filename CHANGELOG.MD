@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-09
+
+### Changed
+
+- **Change Detection LXC** 
+  - NEW Script
+
 ## 2022-12-03
 
 ### Changed
