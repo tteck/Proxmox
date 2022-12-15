@@ -239,6 +239,7 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+if ! command -v wget >/dev/null 2>&1; then apt-get install -y wget &>/dev/null; fi
 if [ "$BRANCH" == "$DEV" ]; then 
 URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 else
