@@ -79,26 +79,47 @@ apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated Container OS"
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 apt-get install -y \
-  python3 \
-  python3-dev \
-  python3-venv \
-  python3-pip \
-  libffi-dev \
-  libssl-dev \
+  make \
+  build-essential \
   libjpeg-dev \
   libpcap-dev \
+  libssl-dev \
   zlib1g-dev \
+  libbz2-dev \
+  libreadline-dev \
+  libsqlite3-dev \
   autoconf \
-  build-essential \
+  git \
+  curl \
+  sudo \
+  llvm \
+  libncursesw5-dev \
+  xz-utils \
+  tk-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  libffi-dev \
   libopenjp2-7 \
   libtiff5 \
   libturbojpeg0-dev \
-  tzdata \
-  curl \
-  sudo &>/dev/null
+  liblzma-dev &>/dev/null
 msg_ok "Installed Dependencies"
+
+msg_info "Installing pyenv"
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv &>/dev/null
+set +e
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >> ~/.bashrc  
+msg_ok "Installed pyenv"
+. ~/.bashrc
+set -e
+msg_info "Installing Python 3.10.8"
+pyenv install 3.10.8 &>/dev/null
+pyenv global 3.10.8
+msg_ok "Installed Python 3.10.8"
 
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
@@ -107,14 +128,10 @@ python3 -m venv .
 source bin/activate
 python3 -m pip install wheel &>/dev/null
 pip3 install homeassistant &>/dev/null
-pip3 install Cython &>/dev/null
-pip3 install python-libpcap &>/dev/null
-pip3 install psycopg2-binary &>/dev/null
 msg_ok "Installed Home Assistant-Core"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/homeassistant.service
-
 [Unit]
 Description=Home Assistant
 After=network-online.target
