@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Can't Run from the Proxmox Shell"; exit; fi
 set -e
 clear
 
