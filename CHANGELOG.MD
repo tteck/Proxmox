@@ -3,6 +3,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-17
+
+### Changed
+
+- **Home Assistant Core LXC** 
+  - Linux D-Bus Message Broker
+  - Mariadb & PostgreSQL Ready
+  - Bluetooth Ready
+  - Fix for Inconsistent Dependency Versions (dbus-fast & bleak)
+
 ## 2022-12-16
 
 ### Changed
