@@ -90,6 +90,7 @@ apt-get install -y \
   libbz2-dev \
   libreadline-dev \
   libsqlite3-dev \
+  libmariadb-dev-compat \
   autoconf \
   git \
   curl \
@@ -97,6 +98,8 @@ apt-get install -y \
   llvm \
   libncursesw5-dev \
   xz-utils \
+  tzdata \
+  bluez \
   tk-dev \
   libxml2-dev \
   libxmlsec1-dev \
@@ -106,6 +109,16 @@ apt-get install -y \
   libturbojpeg0-dev \
   liblzma-dev &>/dev/null
 msg_ok "Installed Dependencies"
+
+msg_info "Installing Linux D-Bus Message Broker"
+cat <<EOF >>/etc/apt/sources.list
+deb http://deb.debian.org/debian bullseye-backports main contrib non-free
+deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
+EOF
+apt-get update &>/dev/null
+apt-get -t bullseye-backports install -y dbus-broker &>/dev/null
+systemctl enable --now dbus-broker.service &>/dev/null
+msg_ok "Installed Linux D-Bus Message Broker"
 
 msg_info "Installing pyenv"
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv &>/dev/null
@@ -126,9 +139,18 @@ mkdir /srv/homeassistant
 cd /srv/homeassistant
 python3 -m venv .
 source bin/activate
+pip install --upgrade pip &>/dev/null
 python3 -m pip install wheel &>/dev/null
-pip3 install homeassistant &>/dev/null
+pip install mysqlclient &>/dev/null
+pip install psycopg2-binary &>/dev/null
+pip install homeassistant &>/dev/null
 msg_ok "Installed Home Assistant-Core"
+
+# fix for inconsistent versions, hopefully the HA team will get this fixed
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/homeassistant.service
