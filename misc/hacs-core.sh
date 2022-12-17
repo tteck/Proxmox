@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Can't Run from the Proxmox Shell"; exit; fi
 echo -e "\e[1;33m This script will install Home Assistant Community Store (HACS)  \e[0m"
 
 while true; do
