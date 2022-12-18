@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 clear
+if ! command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Run from the Proxmox Shell"; exit; fi
 while true; do
   read -p "Use to copy all data from a Home Assistant Core LXC to a Home Assistant Core LXC. Proceed(y/n)?" yn
   case $yn in
