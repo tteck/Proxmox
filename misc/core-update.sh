@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 clear
 if command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Can't Run from the Proxmox Shell"; exit; fi
+set -e
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
 RD=$(echo "\033[01;31m")
@@ -42,16 +43,23 @@ msg_info "Updating Home Assistant"
 source /srv/homeassistant/bin/activate 
 pip install ${BR}--upgrade homeassistant &>/dev/null
 msg_ok "Updated Home Assistant"
-
+set +e
 msg_info "Setting Dependency Versions"
+DIR=/srv/homeassistant/lib/python3.10
+if [ -d "$DIR" ]; then
 sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
 sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
 sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+else
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/package_constraints.txt
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/components/bluetooth/manifest.json
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/package_constraints.txt
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/components/bluetooth/manifest.json
+fi
 msg_ok "Set Dependency Versions"
-
+set -e
 msg_info "Starting Home Assistant"
 systemctl start homeassistant
 msg_ok "Started Home Assistant"
 msg_ok "Update Successful"
-exit
