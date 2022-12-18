@@ -21,6 +21,10 @@ CROSS="${RD}✗${CL}"
 \/ /_/ \___/|_| |_| |_|\___| \_/ \_/___/___/_|___/\__\__,_|_| |_|\__| \____/\___/|_|  \___|
                                      UPDATE
 EOF
+PY=$(ls /srv/homeassistant/lib/)
+IP=$(hostname -I | awk '{print $1}')
+if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
+sleep 2
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
@@ -33,7 +37,7 @@ msg_info "Stopping Home Assistant"
 systemctl stop homeassistant 
 msg_ok "Stopped Home Assistant"
 
-read -r -p "Use the Beta Branch? <y/N> " prompt
+read -r -p "  Use the Beta Branch? <y/N> " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
   BR="--pre "
 else
@@ -43,23 +47,16 @@ msg_info "Updating Home Assistant"
 source /srv/homeassistant/bin/activate 
 pip install ${BR}--upgrade homeassistant &>/dev/null
 msg_ok "Updated Home Assistant"
-set +e
+
 msg_info "Setting Dependency Versions"
-DIR=/srv/homeassistant/lib/python3.10
-if [ -d "$DIR" ]; then
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
-else
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/package_constraints.txt
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/components/bluetooth/manifest.json
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/package_constraints.txt
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.9/site-packages/homeassistant/components/bluetooth/manifest.json
-fi
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/package_constraints.txt
+sed -i "s/dbus-fast==1.75.0/dbus-fast==1.82.0/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/components/bluetooth/manifest.json
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/package_constraints.txt
+sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/components/bluetooth/manifest.json
 msg_ok "Set Dependency Versions"
-set -e
+
 msg_info "Starting Home Assistant"
 systemctl start homeassistant
 msg_ok "Started Home Assistant"
 msg_ok "Update Successful"
+echo -e "\n  Go to http://${IP}:8123 \n"
