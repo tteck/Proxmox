@@ -116,10 +116,8 @@ EOF
   msg_ok "Customized Container"
 fi
 if [[ "${SSH_ROOT}" == "yes" ]]; then
-    cat <<EOF >>/etc/ssh/sshd_config
-PermitRootLogin yes
-EOF
-systemctl restart sshd
+  sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
+  systemctl restart sshd
 fi
 systemctl start grafana-server
 systemctl enable grafana-server.service &>/dev/null
