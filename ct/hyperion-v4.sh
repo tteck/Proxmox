@@ -3,7 +3,7 @@ echo -e "Loading..."
 APP="Hyperion"
 var_disk="2"
 var_cpu="1"
-var_ram="1024"
+var_ram="512"
 var_os="debian"
 var_version="11"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
