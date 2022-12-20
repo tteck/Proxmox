@@ -4,6 +4,9 @@ set -e
 KERNEL_ON=$(uname -r)
 PVE_KERNEL=$(dpkg --list | grep 'kernel-.*-pve' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)
 EDGE_KERNEL=$(dpkg --list | grep 'kernel-.*-edge' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)
+VER=$(curl -s https://api.github.com/repos/fabianishere/pve-edge-kernel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-9) }')
+KER=$(curl -s https://api.github.com/repos/fabianishere/pve-edge-kernel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-6) }')
+
 clear
 while true; do
     read -p "This is a Proxmox Edge Kernel Tool, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
@@ -14,7 +17,16 @@ while true; do
     esac
 done
 clear
-
+function header_info {
+cat <<"EOF"
+    ____ _    ________   ______    __              __ __                     __    
+   / __ \ |  / / ____/  / ____/___/ /___ ____     / //_/__  _________  ___  / /____
+  / /_/ / | / / __/    / __/ / __  / __ `/ _ \   / ,< / _ \/ ___/ __ \/ _ \/ / ___/
+ / ____/| |/ / /___   / /___/ /_/ / /_/ /  __/  / /| /  __/ /  / / / /  __/ (__  ) 
+/_/     |___/_____/  /_____/\__,_/\__, /\___/  /_/ |_\___/_/  /_/ /_/\___/_/____/  
+                                 /____/                                            
+EOF
+}
 show_menu() {
     normal=$(echo "\033[m")
     safe=$(echo "\033[32m")
@@ -25,13 +37,13 @@ show_menu() {
     proxmox-boot-tool kernel list
     echo -e "\nCurrent Kernel: ${menu}${KERNEL_ON}${normal}"
     printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Install Proxmox Edge Kernel & Reboot\n"
+    printf "${menu}**${number} 1)${normal} Install Proxmox Edge Kernel ${menu}${KER}${normal} & Reboot\n"
     printf "${menu}**${number} 2)${normal} Switch to Proxmox VE 7 ${menu}${PVE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 3)${normal} Switch to Proxmox Edge ${menu}${EDGE_KERNEL}${normal} Kernel & Reboot\n"
     printf "${menu}**${number} 4)${normal} Unpin Current Kernel\n"
-    printf "${menu}**${number} 5)${normal} Remove Proxmox Edge Kernel & Reboot\n"
+    printf "${menu}**${number} 5)${normal} Remove All Current ${menu}${VER}*${normal} Proxmox Edge Kernels & Reboot\n"
     printf "${menu}*********************************************${normal}\n"
-    printf "Please choose an option from the menu and enter or ${fgred}x${normal} to exit."
+    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit."
     read opt
 }
 option_picked() {
@@ -41,6 +53,7 @@ option_picked() {
     printf "${msgcolor}${message}${normal}\n"
 }
 clear
+header_info
 show_menu
 while [ "$opt" != "" ]; do
     if [ "$opt" = "" ]; then
@@ -62,7 +75,7 @@ while [ "$opt" != "" ]; do
             curl -1sLf 'https://dl.cloudsmith.io/public/pve-edge/kernel/gpg.8EC01CCF309B98E7.key' | apt-key add -
             echo "deb https://dl.cloudsmith.io/public/pve-edge/kernel/deb/debian bullseye main" >/etc/apt/sources.list.d/pve-edge-kernel.list
             apt-get -y update
-            apt-get -y install pve-kernel-6.0-edge
+            apt-get -y install pve-kernel-${VER}-edge
             reboot
             break
             ;;
@@ -122,7 +135,7 @@ while [ "$opt" != "" ]; do
             done
             clear
             option_picked "Removing Proxmox Edge Kernel & Rebooting"
-            apt-get purge -y ${EDGE_KERNEL}
+            apt --purge remove -y pve-kernel-${VER}*edge pve-headers-${VER}*edge
             rm -rf /etc/apt/sources.list.d/pve-edge-kernel.list
             proxmox-boot-tool kernel unpin
             reboot
@@ -137,10 +150,11 @@ while [ "$opt" != "" ]; do
         *)
             clear
             option_picked "Please choose an option from the menu"
+            header_info
             show_menu
             ;;
         esac
     fi
 done
-
+header_info
 show_menu
