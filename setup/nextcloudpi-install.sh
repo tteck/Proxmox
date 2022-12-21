@@ -85,7 +85,7 @@ apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
 msg_info "Installing NextCloudPi (Patience)"
-curl -sSL https://raw.githubusercontent.com/tteck/nextcloudpi/master/install.sh | bash &>/dev/null
+curl -sSL https://raw.githubusercontent.com/nextcloud/nextcloudpi/master/install.sh | bash &>/dev/null
 msg_ok "Installed NextCloudPi"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
