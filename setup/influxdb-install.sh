@@ -108,6 +108,7 @@ if [[ $INFLUX == "2" ]]; then
 else
   apt-get install -y influxdb &>/dev/null
 fi
+systemctl enable --now influxdb &>/dev/null
 msg_ok "Installed InfluxDB"
 
 read -r -p "Would you like to add Telegraf? <y/N> " prompt
