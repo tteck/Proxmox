@@ -100,6 +100,8 @@ function default_settings() {
   VLAN=""
     echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
   SSH="no"
+  echo -e "${DGN}Enable Verbose Mode: ${BGN}No${CL}"
+  VERB="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 function advanced_settings() {
@@ -245,6 +247,13 @@ function advanced_settings() {
       echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
       SSH="no"
   fi
+  if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
+      echo -e "${DGN}Enable Verbose Mode: ${BGN}Yes${CL}"
+      VERB="yes"
+  else
+      echo -e "${DGN}Enable Verbose Mode: ${BGN}No${CL}"
+      VERB="no"
+  fi
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
   else
@@ -267,6 +276,7 @@ function start_script() {
 }
 clear
 start_script
+if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
   FEATURES="nesting=1,keyctl=1"
 else
@@ -274,6 +284,7 @@ else
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export VERBOSE=$VERB
 export SSH_ROOT=${SSH}
 export CTID=$CT_ID
 export PCT_OSTYPE=$var_os

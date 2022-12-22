@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if [ "$VERBOSE" == "yes" ]; then set -x; fi
 AVX=$(grep -o -m1 'avx[^ ]*' /proc/cpuinfo)
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
