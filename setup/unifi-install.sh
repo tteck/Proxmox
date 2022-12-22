@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if [ "$VERBOSE" == "yes" ]; then set -x; fi
 #https://community.ui.com/questions/UniFi-Installation-Scripts-or-UniFi-Easy-Update-Script-or-UniFi-Lets-Encrypt-or-UniFi-Easy-Encrypt-/ccbc7530-dd61-40a7-82ec-22b17f027776
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
