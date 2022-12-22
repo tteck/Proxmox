@@ -58,6 +58,8 @@ sleep 1
 msg_ok "Stopped Paperless-ngx"
 
 msg_info "Updating to ${RELEASE}"
+if [ "$(dpkg -l | awk '/libmariadb-dev/ {print }'|wc -l)" != 1 ]; then apt-get install libmariadb-dev; fi &>/dev/null
+if [ "$(dpkg -l | awk '/libmariadb-dev-compat/ {print }'|wc -l)" != 1 ]; then apt-get install libmariadb-dev-compat; fi &>/dev/null
 wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz &>/dev/null
 tar -xf paperless-ngx-$RELEASE.tar.xz &>/dev/null
 cp -r /opt/paperless/paperless.conf paperless-ngx/
