@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-22
+
+### Changed
+
+- **All LXC's** 
+  - Add an option to run the script in Verbose Mode (Advanced)
+
 ## 2022-12-20
 
 ### Changed
