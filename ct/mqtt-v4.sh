@@ -255,11 +255,6 @@ fi
 }
 clear
 start_script
-if [ "$CT_TYPE" == "1" ]; then 
- FEATURES="nesting=1,keyctl=1"
- else
- FEATURES="nesting=1"
- fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
   FEATURES="nesting=1,keyctl=1"
