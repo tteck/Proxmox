@@ -106,8 +106,8 @@ function default_settings() {
 }
 function advanced_settings() {
   CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
-    "1" "Unprivileged" ON \
-    "0" "Privileged" OFF \
+    "1" "Unprivileged" OFF \
+    "0" "Privileged" ON \
     3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
