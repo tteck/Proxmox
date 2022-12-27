@@ -97,6 +97,13 @@ DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
 msg_info "Installing Docker $DOCKER_LATEST_VERSION"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
+if [ "$ST" == "yes" ]; then
+VER=$(curl -s https://api.github.com/repos/containers/fuse-overlayfs/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+cd /usr/local/bin
+curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
+chmod 755 /usr/local/bin/fuse-overlayfs
+cd ~
+fi
 cat >$DOCKER_CONFIG_PATH <<'EOF'
 {
   "log-driver": "journald"
