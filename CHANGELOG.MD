@@ -3,6 +3,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-27
+
+### Changed
+
+- **Docker LXC** 
+  - Add an option to use Fuse Overlayfs (ZFS) (Advanced)
+  - If the LXC is created Privileged, the script will automatically set up USB passthrough.
+
 ## 2022-12-22
 
 ### Changed
