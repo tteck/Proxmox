@@ -95,10 +95,10 @@ sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://pa
 apt-get update &>/dev/null
 apt-get install -y php8.1 &>/dev/null
 apt-get install -y libapache2-mod-php8.1 &>/dev/null
-apt-get install -y php-sqlite3 &>/dev/null
-apt-get install -y php-gd &>/dev/null
-apt-get install -y php-intl &>/dev/null
-apt-get install -y php-mbstring &>/dev/null
+apt-get install -y php8.1-sqlite3 &>/dev/null
+apt-get install -y php8.1-gd &>/dev/null
+apt-get install -y php8.1-intl &>/dev/null
+apt-get install -y php8.1-mbstring &>/dev/null
 msg_ok "Installed PHP 8.1"
 
 msg_info "Installing grocy"
