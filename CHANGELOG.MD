@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **Home Assistant Container LXC** 
+  - Add an option to use Fuse Overlayfs (ZFS) (Advanced)
+
 - **Docker LXC** 
   - Add an option to use Fuse Overlayfs (ZFS) (Advanced)
   - If the LXC is created Privileged, the script will automatically set up USB passthrough.
