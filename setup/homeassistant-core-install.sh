@@ -155,8 +155,13 @@ pip install ${BR}homeassistant &>/dev/null
 msg_ok "Installed Home Assistant-Core"
 
 # fix for inconsistent versions, hopefully the HA team will get this fixed
+if [ "${BR}" == "--pre " ]; then
+sed -i "s/dbus-fast==1.82.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+sed -i "s/dbus-fast==1.82.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+else
 sed -i "s/dbus-fast==1.75.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
 sed -i "s/dbus-fast==1.75.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+fi
 sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
 sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 
