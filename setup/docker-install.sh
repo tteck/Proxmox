@@ -102,6 +102,7 @@ VER=$(curl -s https://api.github.com/repos/containers/fuse-overlayfs/releases/la
 cd /usr/local/bin
 curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
 chmod 755 /usr/local/bin/fuse-overlayfs
+echo -e '{\n  "storage-driver": "fuse-overlayfs"\n}' > /etc/docker/daemon.json
 cd ~
 fi
 cat >$DOCKER_CONFIG_PATH <<'EOF'
