@@ -98,8 +98,10 @@ function default_settings() {
   MAC=""
   echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
   VLAN=""
-    echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
+  echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
   SSH="no"
+  echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}No${CL}"
+  FUSE="no"
   echo -e "${DGN}Enable Verbose Mode: ${BGN}No${CL}"
   VERB="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
@@ -251,6 +253,13 @@ function advanced_settings() {
       echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
       SSH="no"
   fi
+  if (whiptail --defaultno --title "FUSE OVERLAYFS" --yesno "(ZFS) Enable Fuse Overlayfs?" 10 58); then
+      echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}Yes${CL}"
+      FUSE="yes"
+  else
+      echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}No${CL}"
+      FUSE="no"
+  fi
   if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
       echo -e "${DGN}Enable Verbose Mode: ${BGN}Yes${CL}"
       VERB="yes"
@@ -281,13 +290,14 @@ function start_script() {
 clear
 start_script
 if [ "$VERB" == "yes" ]; then set -x; fi
-if [ "$CT_TYPE" == "1" ]; then
-  FEATURES="nesting=1,keyctl=1"
+if [ "$FUSE" == "yes" ]; then 
+FEATURES="fuse=1,keyctl=1,nesting=1"
 else
-  FEATURES="nesting=1"
+FEATURES="keyctl=1,nesting=1" 
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export ST=$FUSE
 export VERBOSE=$VERB
 export SSH_ROOT=${SSH}
 export CTID=$CT_ID
