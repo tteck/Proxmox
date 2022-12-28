@@ -135,6 +135,13 @@ pyenv install 3.10.8 &>/dev/null
 pyenv global 3.10.8
 msg_ok "Installed Python 3.10.8"
 
+read -r -p "  Use the Beta Branch? <y/N> " prompt
+if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+  BR="--pre "
+else
+  BR=""
+fi
+
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
 cd /srv/homeassistant
@@ -144,7 +151,7 @@ pip install --upgrade pip &>/dev/null
 python3 -m pip install wheel &>/dev/null
 pip install mysqlclient &>/dev/null
 pip install psycopg2-binary &>/dev/null
-pip install homeassistant &>/dev/null
+pip install ${BR}homeassistant &>/dev/null
 msg_ok "Installed Home Assistant-Core"
 
 # fix for inconsistent versions, hopefully the HA team will get this fixed
