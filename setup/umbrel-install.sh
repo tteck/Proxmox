@@ -95,6 +95,13 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
 EOF
 
 msg_info "Installing Umbrel (Patience)"
+if [ "$ST" == "yes" ]; then
+VER=$(curl -s https://api.github.com/repos/containers/fuse-overlayfs/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+cd /usr/local/bin
+curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
+chmod 755 /usr/local/bin/fuse-overlayfs
+cd ~
+fi
 curl -sL https://umbrel.sh | bash &>/dev/null
 systemctl daemon-reload
 systemctl enable --now umbrel-startup.service &>/dev/null
