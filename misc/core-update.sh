@@ -50,14 +50,12 @@ msg_ok "Updated Home Assistant"
 
 msg_info "Setting Dependency Versions"
 if [ "${BR}" == "--pre " ]; then
-sed -i "s/dbus-fast==1.82.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i "s/dbus-fast==1.82.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 else
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i "s/dbus-fast==1.75.0/dbus-fast==1.83.1/g" /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 fi
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/package_constraints.txt
-sed -i "s/bleak==0.19.2/bleak==0.19.5/g" /srv/homeassistant/lib/$PY/site-packages/homeassistant/components/bluetooth/manifest.json
 msg_ok "Set Dependency Versions"
 
 msg_info "Starting Home Assistant"
