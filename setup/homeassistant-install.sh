@@ -109,7 +109,7 @@ chmod 755 /usr/local/bin/fuse-overlayfs
 cd ~
 echo -e '{\n  "storage-driver": "fuse-overlayfs",\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
 else
-echo -e '{\n  "storage-driver": "overlay2",\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
+echo -e '{\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
 fi
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
