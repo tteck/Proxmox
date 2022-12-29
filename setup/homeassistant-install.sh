@@ -107,12 +107,10 @@ cd /usr/local/bin
 curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
 chmod 755 /usr/local/bin/fuse-overlayfs
 cd ~
+echo -e '{\n  "storage-driver": "fuse-overlayfs",\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
+else
+echo -e '{\n  "storage-driver": "overlay2",\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
 fi
-cat >$DOCKER_CONFIG_PATH <<'EOF'
-{
-  "log-driver": "journald"
-}
-EOF
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
