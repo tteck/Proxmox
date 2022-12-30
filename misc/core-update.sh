@@ -13,6 +13,7 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
+function header_info {
   cat <<"EOF"
                                 _           _     _              _       ___               
   /\  /\___  _ __ ___   ___    /_\  ___ ___(_)___| |_ __ _ _ __ | |_    / __\___  _ __ ___ 
@@ -21,10 +22,12 @@ CROSS="${RD}✗${CL}"
 \/ /_/ \___/|_| |_| |_|\___| \_/ \_/___/___/_|___/\__\__,_|_| |_|\__| \____/\___/|_|  \___|
                                      UPDATE
 EOF
+}
 PY=$(ls /srv/homeassistant/lib/)
 IP=$(hostname -I | awk '{print $1}')
-if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
-sleep 2
+STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "default" | awk '{print substr($2, 2, length($2)-3) }')
+BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "default" | awk '{print substr($2, 2, length($2)-3) }')
+
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
@@ -33,16 +36,30 @@ function msg_ok() {
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+if (whiptail --title "CORE UPDATE" --yesno "This will update Home Assistant Core. Proceed?" 10 58); then
+  echo "User selected Yes"
+else
+  clear
+  echo -e "⚠ User exited script \n"
+  exit
+fi
+if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
+    clear
+    header_info
+    echo -e "${GN}Updating to Version ${BETA}${CL}"
+    BR="--pre "
+else
+    clear
+    header_info
+    echo -e "${GN}Updating to Version ${STABLE}${CL}"
+    BR=""
+fi
+if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
+
 msg_info "Stopping Home Assistant"
 systemctl stop homeassistant 
 msg_ok "Stopped Home Assistant"
 
-read -r -p "  Use the Beta Branch? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
-  BR="--pre "
-else
-  BR=""
-fi
 msg_info "Updating Home Assistant"
 source /srv/homeassistant/bin/activate 
 pip install ${BR}--upgrade homeassistant &>/dev/null
@@ -56,10 +73,12 @@ else
 sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
 sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
 fi
+sleep 2
 msg_ok "Set Dependency Versions"
 
 msg_info "Starting Home Assistant"
 systemctl start homeassistant
+sleep 2
 msg_ok "Started Home Assistant"
 msg_ok "Update Successful"
 echo -e "\n  Go to http://${IP}:8123 \n"
