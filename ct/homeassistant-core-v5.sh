@@ -79,7 +79,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
     msg_error "No Home Assistant Core Installation Found!";
     exit 
   fi
-  if (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC to ${STABLE} Or, Beta to ${BETA}. Proceed?" 10 58); then
+  if (whiptail --title "${APP} LXC TOOLS" --yesno "Tools to Initialize, Update and Install HACS. Proceed?" 10 58); then
     echo "User selected Yes"
   else
     clear
@@ -315,6 +315,20 @@ function install_script() {
 function update_script() {
    PY=$(ls /srv/homeassistant/lib/)
    IP=$(hostname -I | awk '{print $1}') 
+  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 3 \
+  "1" "Initialize" ON \
+  "2" "Update" OFF \
+  "3" "HACS" OFF \
+  3>&1 1>&2 2>&3)
+
+if [ "$UPD" == "1" ]; then
+clear
+header_info
+echo -e "\n   LOG VIEWER - Go to http://${IP}:8123 to setup \n"
+cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
+exit
+fi
+if [ "$UPD" == "2" ]; then  
   if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
       clear
       header_info
@@ -338,13 +352,13 @@ pip install ${BR}--upgrade homeassistant &>/dev/null
 msg_ok "Updated Home Assistant"
 
 msg_info "Setting Dependency Versions"
-if [ "${BR}" == "--pre " ]; then
-sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
-else
-sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
-fi
+  if [ "${BR}" == "--pre " ]; then
+  sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+  sed -i '{s/dbus-fast==1.82.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+  else
+  sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
+  sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
+  fi
 sleep 2
 msg_ok "Set Dependency Versions"
 
@@ -355,6 +369,19 @@ msg_ok "Started Home Assistant"
 msg_ok "Update Successful"
 echo -e "\n  Go to http://${IP}:8123 \n"
 exit
+fi
+if [ "$UPD" == "3" ]; then
+clear
+header_info
+msg_info "Installing Home Assistant Comunity Store (HACS)"
+apt update &>/dev/null
+apt install unzip &>/dev/null
+cd .homeassistant
+wget -O - https://get.hacs.xyz | bash - &>/dev/null
+msg_ok "Installed Home Assistant Comunity Store (HACS)"
+echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
+exit
+fi
 }
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
