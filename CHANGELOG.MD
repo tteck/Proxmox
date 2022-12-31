@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **v5 Sccripts** (Testing before moving forward)
+- **v5 Sccripts** (Testing before moving forward https://github.com/tteck/Proxmox/discussions/881)
   - Adguard Home LXC
   - Docker LXC
   - Home Assistant Core LXC
