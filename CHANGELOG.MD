@@ -3,6 +3,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2022-12-31
+
+### Changed
+
+- **v5 Sccripts** (Testing before moving forward)
+  - Adguard Home LXC
+  - Docker LXC
+  - Home Assistant Core LXC
+  - PhotoPrism LXC
+  - Vaultwarden LXC
+
 ## 2022-12-27
 
 ### Changed
