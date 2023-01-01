@@ -321,6 +321,7 @@ function update_script() {
 UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
   "1" "Update ALL Containers" ON \
   "2" "Remove ALL Unused Images" OFF \
+  "3" "Install HACS" OFF \
   3>&1 1>&2 2>&3)
 clear
 header_info
@@ -346,6 +347,18 @@ if [ "$UPD" == "2" ]; then
 msg_info "Removing ALL Unused Images"
 docker image prune -af
 msg_ok "Removed ALL Unused Images"
+exit
+fi
+if [ "$UPD" == "3" ]; then
+clear
+header_info
+msg_info "Installing Home Assistant Comunity Store (HACS)"
+apt update &>/dev/null
+apt install unzip &>/dev/null
+cd /var/lib/docker/volumes/hass_config/_data
+wget -O - https://get.hacs.xyz | bash -
+msg_ok "Installed Home Assistant Comunity Store (HACS)"
+echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
 exit
 fi
 }
