@@ -30,6 +30,7 @@ CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 set -o errexit
 set -o errtrace
 set -o nounset
