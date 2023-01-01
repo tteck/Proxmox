@@ -97,9 +97,7 @@ $STD apt-get install -y ffmpeg
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
-wget -qL https://deb.nodesource.com/setup_18.x
-$STD bash setup_18.x
-rm setup_18.x
+$STD bash <(curl -fsSL https://deb.nodesource.com/setup_18.x)
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
