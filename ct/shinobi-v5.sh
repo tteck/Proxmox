@@ -319,7 +319,7 @@ function update_script() {
 clear
 header_info
 msg_info "Updating Shinobi LXC"
-cd /home/Shinobi
+cd /opt/Shinobi
 sh UPDATE.sh
 pm2 flush
 pm2 restart camera
