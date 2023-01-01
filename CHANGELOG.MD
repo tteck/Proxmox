@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
   - Docker LXC
   - Home Assistant Core LXC
   - PhotoPrism LXC
+  - Shinobi
   - Vaultwarden LXC
 
 ## 2022-12-27
