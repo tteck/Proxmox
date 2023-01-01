@@ -318,7 +318,7 @@ function install_script() {
   fi
 }
 function update_script() {
-UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
+UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 3 \
   "1" "Update ALL Containers" ON \
   "2" "Remove ALL Unused Images" OFF \
   "3" "Install HACS" OFF \
