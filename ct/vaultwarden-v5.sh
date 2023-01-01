@@ -12,8 +12,8 @@ EOF
 echo -e "Loading..."
 APP="Vaultwarden"
 var_disk="6"
-var_cpu="2"
-var_ram="3072"
+var_cpu="4"
+var_ram="4096"
 var_os="debian"
 var_version="11"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
