@@ -81,7 +81,7 @@ if command -v pveversion >/dev/null 2>&1; then
 fi
 if ! command -v pveversion >/dev/null 2>&1; then
   if [[ ! -d /etc/docker ]]; then
-    msg_error "No Docker Installation Found!";
+    msg_error "No ${APP} Installation Found!";
     exit 
   fi
   if (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC. Proceed?" 10 58); then
@@ -317,10 +317,10 @@ function install_script() {
 function update_script() {
 clear
 header_info
-msg_info "Updating Docker LXC"
+msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated Docker LXC"
+msg_ok "Updated ${APP} LXC"
 exit
 }
 clear
