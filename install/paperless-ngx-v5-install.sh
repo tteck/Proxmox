@@ -173,7 +173,7 @@ echo $DB_PASS >>~/paperless.creds
 echo "Paperless-ngx Database Name" >>~/paperless.creds
 echo $DB_NAME >>~/paperless.creds
 
-/bin/bash -c "mkdir -p {consume,media}"
+mkdir -p {consume,media}
 
 sed -i -e 's|#PAPERLESS_DBNAME=paperless|PAPERLESS_DBNAME=paperlessdb|' /opt/paperless/paperless.conf
 sed -i -e "s|#PAPERLESS_DBPASS=paperless|PAPERLESS_DBPASS=$DB_PASS|" /opt/paperless/paperless.conf
@@ -181,7 +181,7 @@ SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 sed -i -e "s|#PAPERLESS_SECRET_KEY=change-me|PAPERLESS_SECRET_KEY=$SECRET_KEY|" /opt/paperless/paperless.conf
 
 cd /opt/paperless/src
-$STD /usr/bin/python3 manage.py migrate
+$STD python3 manage.py migrate
 msg_ok "Set up database"
 
 msg_info "Setting up admin Paperless-ngx User & Password"
