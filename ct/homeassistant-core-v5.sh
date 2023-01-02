@@ -74,22 +74,22 @@ function PVE_CHECK() {
   fi
 }
 
-if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -d /srv/homeassistant ]]; then
-    msg_error "No Home Assistant Core Installation Found!";
-    exit 
-  fi
-  if (whiptail --title "${APP} LXC TOOLS" --yesno "Tools to Initialize, Update and Install HACS. Proceed?" 10 58); then
-    echo "User selected Yes"
+if command -v pveversion >/dev/null 2>&1; then
+  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
+    NEXTID=$(pvesh get /cluster/nextid)
   else
     clear
     echo -e "⚠ User exited script \n"
     exit
   fi
 fi
-if command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
-    NEXTID=$(pvesh get /cluster/nextid)
+if ! command -v pveversion >/dev/null 2>&1; then
+  if [[ ! -d /srv/homeassistant ]]; then
+    msg_error "No Home Assistant Core Installation Found!";
+    exit 
+  fi
+  if (whiptail --title "${APP} LXC SUPPORT" --yesno "Initialize, Update or Install HACS. Proceed?" 10 58); then
+    echo "User selected Support"
   else
     clear
     echo -e "⚠ User exited script \n"
