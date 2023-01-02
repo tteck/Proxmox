@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
-echo -e "Loading..."
-GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
+function header_info {
+cat <<"EOF"
+    __  __                        ___              _      __              __     ____  _____
+   / / / /___  ____ ___  ___ v4  /   |  __________(_)____/ /_____ _____  / /_   / __ \/ ___/
+  / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \ 
+ / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ / 
+/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/  
+
+EOF
+}
+clear
+header_info
+echo -e "\n Loading..."
+GEN_MAC=$(echo 'AE 1A 60'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
@@ -64,16 +76,7 @@ else
     echo -e "⚠ User exited script \n"
     exit
 fi
-function header_info {
-cat <<"EOF"
-    __  __                        ___              _      __              __     ____  _____
-   / / / /___  ____ ___  ___ v4  /   |  __________(_)____/ /_____ _____  / /_   / __ \/ ___/
-  / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \ 
- / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ / 
-/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/  
 
-EOF
-}
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
