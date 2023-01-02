@@ -317,8 +317,8 @@ function update_script() {
    IP=$(hostname -I | awk '{print $1}') 
   UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 3 \
   "1" "Initialize" OFF \
-  "2" "Update" ON \
-  "3" "HACS" OFF \
+  "2" "Update Core" ON \
+  "3" "Install HACS" OFF \
   3>&1 1>&2 2>&3)
 
 if [ "$UPD" == "1" ]; then
