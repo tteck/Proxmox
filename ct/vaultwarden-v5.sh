@@ -318,7 +318,7 @@ WVRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/relea
 UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 3 \
   "1" "VaultWarden $VAULT" ON \
   "2" "Web-Vault $WVRELEASE" OFF \
-  "3" "Get Admin Token" OFF \
+  "3" "Show Admin Token" OFF \
   3>&1 1>&2 2>&3)
 
 clear
