@@ -62,9 +62,9 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
+if [ `pveversion | grep "pve-manager/7.2" | wc -l` -ne 1 ]; then
         echo "⚠ This version of Proxmox Virtual Environment is not supported"
-        echo "Requires PVE Version: 7.XX"
+        echo "Requires PVE Version: =>7.2"
         echo "Exiting..."
         sleep 3
         exit
