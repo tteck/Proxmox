@@ -330,9 +330,9 @@ systemctl stop vaultwarden.service
 msg_ok "Stopped Vaultwarden"
 
 msg_info "Updating VaultWarden to $VAULT (Patience)"
-git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
+git clone https://github.com/dani-garcia/vaultwarden
 cd vaultwarden
-cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
+cargo build --features "sqlite,mysql,postgresql" --release
 DIR=/usr/bin/vaultwarden
   if [ -d "$DIR" ]; then
       cp target/release/vaultwarden /usr/bin/
