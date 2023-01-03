@@ -311,6 +311,7 @@ function install_script() {
 function update_script() {
 clear
 header_info
+LATEST=$(curl -sL https://api.github.com/repos/louislam/uptime-kuma/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 msg_info "Stopping ${APP}"
 sudo systemctl stop uptime-kuma &>/dev/null
 msg_ok "Stopped ${APP}"
