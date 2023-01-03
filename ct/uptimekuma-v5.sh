@@ -321,7 +321,6 @@ cd /opt/uptime-kuma
 msg_info "Pulling ${APP} ${LATEST}"
 git fetch --all &>/dev/null
 git checkout $LATEST --force &>/dev/null
-git pull &>/dev/null
 msg_ok "Pulled ${APP} ${LATEST}"
 
 msg_info "Updating ${APP} to ${LATEST}"
