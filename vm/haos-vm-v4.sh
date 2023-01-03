@@ -62,13 +62,15 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [ `pveversion | grep "pve-manager/7" | wc -l` -ne 1 ]; then
+if [ `pveversion | grep "pve-manager/7.2" | wc -l` -ne 1 ]; then
+  if [ `pveversion | grep "pve-manager/7.3" | wc -l` -ne 1 ]; then
         echo "⚠ This version of Proxmox Virtual Environment is not supported"
         echo "Requires PVE Version: =>7.2"
         echo "Exiting..."
         sleep 3
         exit
-fi
+  fi
+fi  
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
 else
