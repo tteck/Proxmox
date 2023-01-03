@@ -330,6 +330,7 @@ systemctl stop vaultwarden.service
 msg_ok "Stopped Vaultwarden"
 
 msg_info "Updating VaultWarden to $VAULT (Patience)"
+cd ~ && rm -rf vaultwarden
 git clone https://github.com/dani-garcia/vaultwarden
 cd vaultwarden
 cargo build --features "sqlite,mysql,postgresql" --release
