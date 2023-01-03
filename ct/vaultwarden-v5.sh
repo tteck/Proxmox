@@ -331,9 +331,9 @@ msg_ok "Stopped Vaultwarden"
 
 msg_info "Updating VaultWarden to $VAULT (Patience)"
 cd ~ && rm -rf vaultwarden
-git clone https://github.com/dani-garcia/vaultwarden
+git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
 cd vaultwarden
-cargo build --features "sqlite,mysql,postgresql" --release
+cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
 DIR=/usr/bin/vaultwarden
   if [ -d "$DIR" ]; then
       cp target/release/vaultwarden /usr/bin/
