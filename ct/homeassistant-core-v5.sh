@@ -351,11 +351,6 @@ source /srv/homeassistant/bin/activate
 pip install ${BR}--upgrade homeassistant &>/dev/null
 msg_ok "Updated Home Assistant"
 
-  if [ "${BR}" == "" ]; then
-  sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/package_constraints.txt
-  sed -i '{s/dbus-fast==1.75.0/dbus-fast==1.83.1/g; s/bleak==0.19.2/bleak==0.19.5/g}' /srv/homeassistant/lib/python3.10/site-packages/homeassistant/components/bluetooth/manifest.json
-  fi
-
 msg_info "Starting Home Assistant"
 systemctl start homeassistant
 sleep 2
