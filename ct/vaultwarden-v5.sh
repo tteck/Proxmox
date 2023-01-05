@@ -378,7 +378,7 @@ fi
 if [ "$UPD" == "3" ]; then
 DIR=/usr/bin/vaultwarden
   if [ -d "$DIR" ]; then
-      cat cat /etc/vaultwarden.env | grep "ADMIN_TOKEN"
+      cat /etc/vaultwarden.env | grep "ADMIN_TOKEN"
   else
       cat /opt/vaultwarden/.env | grep "ADMIN_TOKEN"
   fi
