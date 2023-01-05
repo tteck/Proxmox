@@ -376,7 +376,12 @@ msg_ok "$WVRELEASE Update Successful"
 exit;
 fi
 if [ "$UPD" == "3" ]; then
-cat /opt/vaultwarden/.env | grep "ADMIN_TOKEN"
+DIR=/usr/bin/vaultwarden
+  if [ -d "$DIR" ]; then
+      cat /usr/bin/vaultwarden/.env | grep "ADMIN_TOKEN"
+  else
+      cat /opt/vaultwarden/.env | grep "ADMIN_TOKEN"
+  fi
 exit
 fi
 }
