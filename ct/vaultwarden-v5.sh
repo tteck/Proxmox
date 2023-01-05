@@ -80,7 +80,7 @@ if command -v pveversion >/dev/null 2>&1; then
   fi
 fi
 if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -d /opt/vaultwarden ]]; then
+  if [[ ! -f /etc/systemd/system/vaultwarden.service ]]; then
     msg_error "No ${APP} Installation Found!";
     exit 
   fi
