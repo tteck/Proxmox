@@ -90,7 +90,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
 $STD bash <(curl -fsSL https://install.yunohost.org) -a
-wget -q -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+$STD wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 msg_ok "Installed YunoHost"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
