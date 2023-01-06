@@ -82,11 +82,11 @@ msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
 $STD apt-get install -y \
-curl \
-sudo \
-apt-transport-https \
-lsb-release \
-ca-certificates
+        curl \
+        sudo \
+        apt-transport-https \
+        lsb-release \
+        ca-certificates
 msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
