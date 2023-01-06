@@ -86,32 +86,10 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 msg_ok "Installed Dependencies"
 
-DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
-mkdir -p $(dirname $DOCKER_CONFIG_PATH)
-cat >$DOCKER_CONFIG_PATH <<'EOF'
-{
-  "log-driver": "journald"
-}
-EOF
-
-msg_info "Installing Umbrel (Patience)"
-if [ "$ST" == "yes" ]; then
-VER=$(curl -s https://api.github.com/repos/containers/fuse-overlayfs/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-cd /usr/local/bin
-curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
-chmod 755 /usr/local/bin/fuse-overlayfs
-cd ~
-fi
-$STD bash <(curl -fsSL https://umbrel.sh)
-systemctl daemon-reload
-$STD systemctl enable --now umbrel-startup.service
-msg_ok "Installed Umbrel"
-
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
-  rm /etc/motd
-  rm /etc/update-motd.d/10-uname
+  chmod -x /etc/update-motd.d/*
   touch ~/.hushlogin
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
   mkdir -p $(dirname $GETTY_OVERRIDE)
@@ -128,6 +106,7 @@ if [[ "${SSH_ROOT}" == "yes" ]]; then
   sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
   systemctl restart sshd
 fi
+
 msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
