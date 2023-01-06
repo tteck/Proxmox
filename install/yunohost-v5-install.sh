@@ -89,8 +89,8 @@ $STD apt-get install -y ca-certificates
 msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
+wget -q -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 $STD bash <(curl -fsSL https://install.yunohost.org) -a
-$STD wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 msg_ok "Installed YunoHost"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
