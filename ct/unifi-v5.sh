@@ -9,6 +9,8 @@ function header_info {
  
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="Unifi"
 var_disk="8"

@@ -9,6 +9,8 @@ cat <<"EOF"
                                                     
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="MQTT"
 var_disk="2"

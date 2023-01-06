@@ -10,6 +10,8 @@ function header_info {
  
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="Uptime Kuma"
 var_disk="4"

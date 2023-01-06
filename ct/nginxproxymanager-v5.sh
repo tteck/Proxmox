@@ -10,6 +10,8 @@ function header_info {
  
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="Nginx Proxy Manager"
 var_disk="4"

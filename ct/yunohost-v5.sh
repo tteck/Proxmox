@@ -9,6 +9,8 @@ __  __                  __  __           __
                                             
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="YunoHost"
 var_disk="20"

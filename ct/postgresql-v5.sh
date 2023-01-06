@@ -9,6 +9,8 @@ function header_info {
                      /____/                              
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="PostgreSQL"
 var_disk="4"
