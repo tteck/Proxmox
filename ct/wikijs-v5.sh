@@ -318,9 +318,9 @@ systemctl stop wikijs
 msg_ok "Stopped ${APP}"
 
 msg_info "Updating ${APP}"
-cp /opt/wiki/config.yml ~/config.yml.bak
-rm -rf /opt/wiki/*
-cd /opt/wiki
+cp /opt/wikijs/config.yml ~/config.yml.bak
+rm -rf /opt/wikijs/*
+cd /opt/wikijs
 wget https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz &>/dev/null
 tar xzf wiki-js.tar.gz 
 cp ~/config.yml.bak ./config.yml
