@@ -83,6 +83,7 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y gnupg
 $STD apt-key adv --fetch-keys 'https://packages.sury.org/php/apt.gpg'
 $STD apt-get install -y apt-transport-https
 $STD apt-get install -y lsb-release
