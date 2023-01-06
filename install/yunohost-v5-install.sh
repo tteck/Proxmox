@@ -81,13 +81,17 @@ $STD apt-get -y upgrade
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
-$STD apt-get install -y curl
-$STD apt-get install -y sudo
+$STD apt-get install -y \
+curl \
+sudo \
+apt-transport-https \
+lsb-release \
+ca-certificates
 msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
 $STD bash <(curl -fsSL https://install.yunohost.org) -a
-$STD apt-key adv --fetch-keys 'https://packages.sury.org/php/apt.gpg'
+wget -s -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 msg_ok "Installed YunoHost"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
