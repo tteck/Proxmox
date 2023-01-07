@@ -367,6 +367,7 @@ fi
 if [ "$UPD" == "4" ]; then
 clear
 header_info
+IP=$(hostname -I | awk '{print $1}') 
 msg_info "Installing FileBrowser"
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
 filebrowser config init -a '0.0.0.0' &>/dev/null
