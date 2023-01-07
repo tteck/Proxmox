@@ -90,7 +90,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
     msg_error "No Home Assistant Core Installation Found!";
     exit 
   fi
-  if (whiptail --title "${APP} LXC SUPPORT" --yesno "Initialize, Update or Install HACS. Proceed?" 10 58); then
+  if (whiptail --title "${APP} LXC SUPPORT" --yesno "Initialize, Update Core, Install HACS or FileBrowser. Proceed?" 10 58); then
     echo "User selected Support"
   else
     clear
