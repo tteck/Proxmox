@@ -382,7 +382,7 @@ curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bas
 filebrowser config init -a '0.0.0.0' &>/dev/null
 filebrowser config set -a '0.0.0.0' &>/dev/null
 filebrowser users add admin changeme --perm.admin &>/dev/null
-msg_ok "Installed FileBrowser on $hostname"
+msg_ok "Installed FileBrowser"
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/filebrowser.service"
