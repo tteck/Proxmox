@@ -403,7 +403,9 @@ msg_ok "Completed Successfully!\n"
 echo -e "FileBrowser should be reachable by going to the following URL.
          ${BL}http://$IP:8080${CL} \n"
 exit
+fi
 }
+
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
