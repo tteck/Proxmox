@@ -320,10 +320,11 @@ function install_script() {
   fi
 }
 function update_script() {
-UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 3 \
+UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 15 58 4 \
   "1" "Update ALL Containers" ON \
   "2" "Remove ALL Unused Images" OFF \
   "3" "Install HACS" OFF \
+  "4" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
 clear
 header_info
@@ -358,11 +359,42 @@ msg_info "Installing Home Assistant Comunity Store (HACS)"
 apt update &>/dev/null
 apt install unzip &>/dev/null
 cd /var/lib/docker/volumes/hass_config/_data
-wget -O - https://get.hacs.xyz | bash -
+bash <(curl -fsSL https://get.hacs.xyz) &>/dev/null
 msg_ok "Installed Home Assistant Comunity Store (HACS)"
 echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
 exit
 fi
+if [ "$UPD" == "4" ]; then
+clear
+header_info
+msg_info "Installing FileBrowser"
+curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
+filebrowser config init -a '0.0.0.0' &>/dev/null
+filebrowser config set -a '0.0.0.0' &>/dev/null
+filebrowser users add admin changeme --perm.admin &>/dev/null
+msg_ok "Installed FileBrowser"
+
+msg_info "Creating Service"
+service_path="/etc/systemd/system/filebrowser.service"
+echo "[Unit]
+Description=Filebrowser
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/root/
+ExecStart=/usr/local/bin/filebrowser -r /
+[Install]
+WantedBy=default.target" >$service_path
+
+systemctl enable --now filebrowser.service &>/dev/null
+msg_ok "Created Service"
+
+msg_ok "Completed Successfully!\n"
+echo -e "FileBrowser should be reachable by going to the following URL.
+         ${BL}http://$IP:8080${CL}   admin|changeme\n"
+exit
+fi
+}
 }
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
