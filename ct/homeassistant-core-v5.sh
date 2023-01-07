@@ -392,7 +392,7 @@ After=network-online.target
 [Service]
 User=root
 WorkingDirectory=/root/
-ExecStart=/usr/local/bin/filebrowser -r /
+ExecStart=/usr/local/bin/filebrowser -r /root/.homeassistant
 [Install]
 WantedBy=default.target" >$service_path
 
@@ -401,7 +401,7 @@ msg_ok "Created Service"
 
 msg_ok "Completed Successfully!\n"
 echo -e "FileBrowser should be reachable by going to the following URL.
-         ${BL}http://$IP:8080${CL} \n"
+         ${BL}http://$IP:8080${CL}   admin|changeme\n"
 exit
 fi
 }
