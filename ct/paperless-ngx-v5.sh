@@ -313,7 +313,7 @@ function update_script() {
 RELEASE=$(curl -s https://api.github.com/repos/paperless-ngx/paperless-ngx/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 SER=/etc/systemd/system/paperless-task-queue.service
 
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
   "1" "Update Paperless-ngx to $RELEASE" ON \
   "2" "Paperless-ngx Credentials" OFF \
   3>&1 1>&2 2>&3)

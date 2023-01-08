@@ -317,7 +317,7 @@ WVRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/relea
     grep "tag_name" |
     awk '{print substr($2, 2, length($2)-3) }')
     
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
   "1" "VaultWarden $VAULT" ON \
   "2" "Web-Vault $WVRELEASE" OFF \
   "3" "Show Admin Token" OFF \

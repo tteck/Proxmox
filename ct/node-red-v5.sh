@@ -309,7 +309,7 @@ function install_script() {
   fi
 }
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
   "1" "Update ${APP}" ON \
   "2" "Install Themes" OFF \
   3>&1 1>&2 2>&3)
