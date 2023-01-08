@@ -357,7 +357,6 @@ echo -e "\n ⚠️  Ensure you set resources back to normal settings \n"
 exit;
 fi
 if [ "$UPD" == "2" ]; then
-
 msg_info "Stopping Vaultwarden"
 systemctl stop vaultwarden.service
 msg_ok "Stopped Vaultwarden"

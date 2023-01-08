@@ -382,12 +382,11 @@ msg_ok "Updated Successfully!\n"
 exit
 fi
 if [ "$UPD" == "2" ]; then
-clear
-header_info
 cat paperless.creds
 exit
 fi
 }
+
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
