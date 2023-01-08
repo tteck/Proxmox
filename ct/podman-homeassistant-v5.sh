@@ -314,15 +314,61 @@ function install_script() {
 }
 
 function update_script() {
+  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+  "1" "Update Podman" ON \
+  "2" "Install HACS" OFF \
+  "3" "Install FileBrowser" OFF \
+  3>&1 1>&2 2>&3)
 clear
 header_info
+if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
 msg_ok "Update Successfull"
 exit
+if [ "$UPD" == "2" ]; then
+msg_info "Installing Home Assistant Comunity Store (HACS)"
+apt update &>/dev/null
+apt install unzip &>/dev/null
+cd /var/lib/containers/storage/volumes/hass_config/_data
+bash <(curl -fsSL https://get.hacs.xyz) &>/dev/null
+msg_ok "Installed Home Assistant Comunity Store (HACS)"
+echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
+exit
+fi
+if [ "$UPD" == "3" ]; then
+IP=$(hostname -I | awk '{print $1}') 
+msg_info "Installing FileBrowser"
+curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
+filebrowser config init -a '0.0.0.0' &>/dev/null
+filebrowser config set -a '0.0.0.0' &>/dev/null
+filebrowser users add admin changeme --perm.admin &>/dev/null
+msg_ok "Installed FileBrowser"
+
+msg_info "Creating Service"
+service_path="/etc/systemd/system/filebrowser.service"
+echo "[Unit]
+Description=Filebrowser
+After=network-online.target
+[Service]
+User=root
+WorkingDirectory=/root/
+ExecStart=/usr/local/bin/filebrowser -r /
+[Install]
+WantedBy=default.target" >$service_path
+
+systemctl enable --now filebrowser.service &>/dev/null
+msg_ok "Created Service"
+
+msg_ok "Completed Successfully!\n"
+echo -e "FileBrowser should be reachable by going to the following URL.
+         ${BL}http://$IP:8080${CL}   admin|changeme\n"
+exit
+fi
 }
+
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
