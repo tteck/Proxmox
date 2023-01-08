@@ -310,7 +310,7 @@ function install_script() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
   "1" "Update ${APP} LXC" ON \
   "2" "Install WGDashboard" OFF \
   3>&1 1>&2 2>&3)
