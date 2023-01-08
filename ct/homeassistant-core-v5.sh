@@ -323,10 +323,9 @@ function update_script() {
   "3" "Install HACS" OFF \
   "4" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
-
-if [ "$UPD" == "1" ]; then
 clear
 header_info
+if [ "$UPD" == "1" ]; then
 echo -e "\n   LOG VIEWER - Go to http://${IP}:8123 to setup \n"
 cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
 exit
@@ -363,8 +362,6 @@ echo -e "\n  Go to http://${IP}:8123 \n"
 exit
 fi
 if [ "$UPD" == "3" ]; then
-clear
-header_info
 msg_info "Installing Home Assistant Comunity Store (HACS)"
 apt update &>/dev/null
 apt install unzip &>/dev/null
@@ -375,8 +372,6 @@ echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integrat
 exit
 fi
 if [ "$UPD" == "4" ]; then
-clear
-header_info
 msg_info "Installing FileBrowser"
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
 filebrowser config init -a '0.0.0.0' &>/dev/null
