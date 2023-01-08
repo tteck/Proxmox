@@ -129,7 +129,7 @@ if [ -z $VMID ]; then VMID="$NEXTID"; echo -e "${DGN}Virtual Machine: ${BGN}$VMI
 else
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi;
 fi
-MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
+MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
 "i440fx" "Machine i440fx" ON \
 "q35" "Machine q35" OFF \
 3>&1 1>&2 2>&3)

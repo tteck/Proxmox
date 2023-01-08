@@ -142,7 +142,7 @@ function advanced_settings() {
     3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"; fi
-  CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 8 58 2 \
+  CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
     "1" "Unprivileged" ON \
     "0" "Privileged" OFF \
     3>&1 1>&2 2>&3)
