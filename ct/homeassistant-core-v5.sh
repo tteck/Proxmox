@@ -317,7 +317,7 @@ function install_script() {
 function update_script() {
    PY=$(ls /srv/homeassistant/lib/)
    IP=$(hostname -I | awk '{print $1}') 
-  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 15 58 4 \
+  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
   "1" "Initialize" OFF \
   "2" "Update Core" ON \
   "3" "Install HACS" OFF \
