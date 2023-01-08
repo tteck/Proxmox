@@ -320,7 +320,7 @@ function install_script() {
   fi
 }
 function update_script() {
-UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Choose Type" 15 58 4 \
+  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
   "1" "Update ALL Containers" ON \
   "2" "Remove ALL Unused Images" OFF \
   "3" "Install HACS" OFF \
@@ -353,8 +353,6 @@ msg_ok "Removed ALL Unused Images"
 exit
 fi
 if [ "$UPD" == "3" ]; then
-clear
-header_info
 msg_info "Installing Home Assistant Comunity Store (HACS)"
 apt update &>/dev/null
 apt install unzip &>/dev/null
@@ -365,8 +363,6 @@ echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integrat
 exit
 fi
 if [ "$UPD" == "4" ]; then
-clear
-header_info
 IP=$(hostname -I | awk '{print $1}') 
 msg_info "Installing FileBrowser"
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
