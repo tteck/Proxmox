@@ -19,7 +19,7 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-
+silent() { "$@" > /dev/null 2>&1; }
 function error_exit() {
   trap - ERR
   local reason="Unknown failure occurred."
@@ -76,46 +76,20 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 
 msg_info "Updating Container OS"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
+$STD apt-get update
+$STD apt-get -y upgrade
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
-apt-get install -y curl &>/dev/null
-apt-get install -y sudo &>/dev/null
+$STD apt-get install -y curl
+$STD apt-get install -y sudo
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Podman"
-apt-get -y install podman &>/dev/null
-systemctl enable --now podman.socket &>/dev/null
+$STD apt-get -y install podman
+$STD systemctl enable --now podman.socket
 echo -e 'unqualified-search-registries=["docker.io"]' >> /etc/containers/registries.conf
 msg_ok "Installed Podman"
-
-read -r -p "Would you like to add Portainer? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
-  PORTAINER="Y"
-else
-  PORTAINER="N"
-fi
-
-if [[ $PORTAINER == "Y" ]]; then
-  msg_info "Installing Portainer"
-  podman run -d \
-    --name portainer \
-    --restart always \
-    -v /var/run/podman/podman.sock:/var/run/docker.sock \
-    -v portainer:/config \
-    -v /etc/localtime:/etc/localtime:ro \
-    -v /etc/timezone:/etc/timezone:ro \
-    -p 8000:8000 \
-    -p 9000:9000 \
-    portainer/portainer-ce:latest &>/dev/null
-  podman generate systemd \
-    --new --name portainer \
-    >/etc/systemd/system/portainer.service
-  systemctl enable portainer &>/dev/null
-  msg_ok "Installed Portainer"
-fi
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
 if [[ $PASS != $ ]]; then
@@ -139,6 +113,6 @@ if [[ "${SSH_ROOT}" == "yes" ]]; then
 fi
 
 msg_info "Cleaning up"
-apt-get autoremove >/dev/null
-apt-get autoclean >/dev/null
+$STD apt-get autoremove
+$STD apt-get autoclean
 msg_ok "Cleaned"
