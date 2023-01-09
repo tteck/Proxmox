@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **ALL LXC's** 
   - v5
+- **k0s Kubernetes LXC** 
+  - NEW Script
 
 ## 2023-01-04
 
