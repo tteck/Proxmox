@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file.
   - v5
 - **k0s Kubernetes LXC** 
   - NEW Script
+- **Podman LXC** 
+  - NEW Script
 
 ## 2023-01-04
 
