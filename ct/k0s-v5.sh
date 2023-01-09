@@ -9,6 +9,8 @@ function header_info {
                    
 EOF
 }
+clear
+header_info
 echo -e "Loading..."
 APP="k0s"
 var_disk="4"
