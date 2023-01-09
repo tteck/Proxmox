@@ -83,7 +83,7 @@ if command -v pveversion >/dev/null 2>&1; then
   fi
 fi
 if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -f /etc/systemd/system/podman.socket ]]; then
+  if [[ ! -f /etc/containers/registries.conf ]]; then
     msg_error "No ${APP} Installation Found!";
     exit 
   fi
