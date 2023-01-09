@@ -84,7 +84,7 @@ if command -v pveversion >/dev/null 2>&1; then
   fi
 fi
 if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -f /etc/apt/sources.list.d/emqx_emqx.list ]]; then
+  if [[ ! -f /etc/alpine-release ]]; then
     msg_error "No ${APP} Installation Found!";
     exit 
   fi
@@ -310,9 +310,8 @@ function update_script() {
 clear
 header_info
 msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
+apk update &>/dev/null
+apk upgrade &>/dev/null
 msg_ok "Update Successfull"
 exit
 }
