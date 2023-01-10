@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 # bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
+function header_info {
+cat <<"EOF"
+    ____ _    ________   ______    __              __ __                     __    
+   / __ \ |  / / ____/  / ____/___/ /___ ____     / //_/__  _________  ___  / /____
+  / /_/ / | / / __/    / __/ / __  / __ `/ _ \   / ,< / _ \/ ___/ __ \/ _ \/ / ___/
+ / ____/| |/ / /___   / /___/ /_/ / /_/ /  __/  / /| /  __/ /  / / / /  __/ (__  ) 
+/_/     |___/_____/  /_____/\__,_/\__, /\___/  /_/ |_\___/_/  /_/ /_/\___/_/____/  
+                                 /____/                                            
+ 
+EOF
+}
 set -e
 KERNEL_ON=$(uname -r)
 PVE_KERNEL=$(dpkg --list | grep 'kernel-.*-pve' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)
 EDGE_KERNEL=$(dpkg --list | grep 'kernel-.*-edge' | awk '{print substr($2, 12, length($2)-1) }' | tac | head -n 1)
 VER=$(curl -s https://api.github.com/repos/fabianishere/pve-edge-kernel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-9) }')
 KER=$(curl -s https://api.github.com/repos/fabianishere/pve-edge-kernel/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-6) }')
-
 clear
+header_info
 while true; do
     read -p "This is a Proxmox Edge Kernel Tool, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
     case $yn in
@@ -17,16 +28,7 @@ while true; do
     esac
 done
 clear
-function header_info {
-cat <<"EOF"
-    ____ _    ________   ______    __              __ __                     __    
-   / __ \ |  / / ____/  / ____/___/ /___ ____     / //_/__  _________  ___  / /____
-  / /_/ / | / / __/    / __/ / __  / __ `/ _ \   / ,< / _ \/ ___/ __ \/ _ \/ / ___/
- / ____/| |/ / /___   / /___/ /_/ / /_/ /  __/  / /| /  __/ /  / / / /  __/ (__  ) 
-/_/     |___/_____/  /_____/\__,_/\__, /\___/  /_/ |_\___/_/  /_/ /_/\___/_/____/  
-                                 /____/                                            
-EOF
-}
+header_info
 show_menu() {
     normal=$(echo "\033[m")
     safe=$(echo "\033[32m")
