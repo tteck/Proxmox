@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
+function header_info {
+    cat <<"EOF"
+   __________  __  __
+  / ____/ __ \/ / / /
+ / /   / /_/ / / / / 
+/ /___/ ____/ /_/ /  
+\____/_/    \____/   
+Scaling Governors
+ 
+EOF
+}
 clear
+header_info
 set -e
 while true; do
     read -p "View CPU Scaling Governors. Proceed(y/n)?" yn
@@ -10,17 +22,7 @@ while true; do
     esac
 done
 clear
-function header_info {
-    echo -e "
-   _____ _____  _    _ 
-  / ____|  __ \| |  | |
- | |    | |__) | |  | |
- | |    |  ___/| |  | |
- | |____| |    | |__| |
-  \_____|_|     \____/ 
-    Scaling Governors
-"
-}
+
 show_menu() {
     CL=$(echo "\033[m")
     GN=$(echo "\033[32m")
