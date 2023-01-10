@@ -1,4 +1,14 @@
 #!/usr/bin/env bash -ex
+function header_info {
+    cat <<"EOF"
+    ____ _    _____________   ____             __     ____           __        ____
+   / __ \ |  / / ____/__  /  / __ \____  _____/ /_   /  _/___  _____/ /_____ _/ / /
+  / /_/ / | / / __/    / /  / /_/ / __ \/ ___/ __/   / // __ \/ ___/ __/ __  / / / 
+ / ____/| |/ / /___   / /  / ____/ /_/ (__  ) /_   _/ // / / (__  ) /_/ /_/ / / /  
+/_/     |___/_____/  /_/  /_/    \____/____/\__/  /___/_/ /_/____/\__/\__,_/_/_/   
+ 
+EOF
+}
 set -euo pipefail
 shopt -s inherit_errexit nullglob
 YW=$(echo "\033[33m")
@@ -13,6 +23,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 clear
+header_info
 echo -e "${BL}This script will Perform Post Install Routines.${CL}"
 while true; do
     read -p "Start the PVE7 Post Install Script (y/n)?" yn
@@ -35,15 +46,6 @@ if [ $(pveversion | grep "pve-manager/7" | wc -l) -ne 1 ]; then
     sleep 3
     exit
 fi
-function header_info {
-    echo -e "${RD}
-    ____ _    _____________   ____             __     ____           __        ____
-   / __ \ |  / / ____/__  /  / __ \____  _____/ /_   /  _/___  _____/ /_____ _/ / /
-  / /_/ / | / / __/    / /  / /_/ / __ \/ ___/ __/   / // __ \/ ___/ __/ __  / / / 
- / ____/| |/ / /___   / /  / ____/ /_/ (__  ) /_   _/ // / / (__  ) /_/ /_/ / / /  
-/_/     |___/_____/  /_/  /_/    \____/____/\__/  /___/_/ /_/____/\__/\__,_/_/_/   
-${CL}"
-}
 
 function msg_info() {
     local msg="$1"
