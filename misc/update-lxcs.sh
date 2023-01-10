@@ -1,20 +1,4 @@
 #!/bin/bash
-set -e
-YW=$(echo "\033[33m")
-BL=$(echo "\033[36m")
-RD=$(echo "\033[01;31m")
-CM='\xE2\x9C\x94\033'
-GN=$(echo "\033[1;92m")
-CL=$(echo "\033[m")
-while true; do
-  read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
-  case $yn in
-  [Yy]*) break ;;
-  [Nn]*) exit ;;
-  *) echo "Please answer yes or no." ;;
-  esac
-done
-clear
 function header_info {
   cat <<"EOF"
    __  __          __      __          __   _  ________
@@ -26,8 +10,24 @@ function header_info {
 
 EOF
 }
+set -e
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
+CM='\xE2\x9C\x94\033'
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
+clear
 header_info
-
+while true; do
+  read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
+done
+clear
 containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 
 function update_container() {
@@ -50,7 +50,7 @@ function update_container() {
         pct exec $container -- bash -c "yum -y update"
   fi
 }
-
+header_info
 read -p "Skip stopped containers? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -82,4 +82,6 @@ for container in $containers; do
 done
 wait
 rm -rf temp
+clear
+header_info
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
