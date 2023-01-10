@@ -1,4 +1,14 @@
 #!/usr/bin/env bash -ex
+function header_info {
+    cat <<"EOF"
+    __ __                     __   ________               
+   / //_/__  _________  ___  / /  / ____/ /__  ____ _____ 
+  / ,< / _ \/ ___/ __ \/ _ \/ /  / /   / / _ \/ __ `/ __ \
+ / /| /  __/ /  / / / /  __/ /  / /___/ /  __/ /_/ / / / /
+/_/ |_\___/_/  /_/ /_/\___/_/   \____/_/\___/\__,_/_/ /_/ 
+                                                          
+EOF
+}
 set -euo pipefail
 shopt -s inherit_errexit nullglob
 YW=$(echo "\033[33m")
@@ -14,7 +24,8 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 PARTY="🎉"
 current_kernel=$(uname -r)
-
+clear
+header_info
 while true; do
     read -p "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed(y/n)?" yn
     case $yn in
@@ -24,19 +35,6 @@ while true; do
     esac
 done
 clear
-
-function header_info {
-    echo -e "${RD}
-  _  __                    _    _____ _                  
- | |/ /                   | |  / ____| |                 
- |   / ___ _ __ _ __   ___| | | |    | | ___  __ _ _ __  
- |  < / _ \  __|  _ \ / _ \ | | |    | |/ _ \/ _  |  _ \ 
- |   \  __/ |  | | | |  __/ | | |____| |  __/ (_| | | | |
- |_|\_\___|_|  |_| |_|\___|_|  \_____|_|\___|\__,_|_| |_|
-
-${CL}"
-}
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
