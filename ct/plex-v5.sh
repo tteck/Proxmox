@@ -319,13 +319,24 @@ function install_script() {
   fi
 }
 function update_script() {
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 10 58 2 \
+  "1" "Update LXC" ON \
+  "2" "Run plexupdate" OFF \
+  3>&1 1>&2 2>&3)
+
 clear
 header_info
+if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
 exit
+fi
+if [ "$UPD" == "2" ]; then
+bash -c "$(wget -qO - https://raw.githubusercontent.com/mrworf/plexupdate/master/extras/installer.sh)"
+exit
+fi
 }
 clear
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
