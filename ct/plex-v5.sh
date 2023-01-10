@@ -319,7 +319,7 @@ function install_script() {
   fi
 }
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 10 58 2 \
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select \nplexupdate info >> https://github.com/mrworf/plexupdate" 10 59 2 \
   "1" "Update LXC" ON \
   "2" "Run plexupdate" OFF \
   3>&1 1>&2 2>&3)
