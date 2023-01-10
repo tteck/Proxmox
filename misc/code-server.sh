@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+function header_info {
+    cat <<"EOF"
+   ______          __        _____                          
+  / ____/___  ____/ /__     / ___/___  ______   _____  _____
+ / /   / __ \/ __  / _ \    \__ \/ _ \/ ___/ | / / _ \/ ___/
+/ /___/ /_/ / /_/ /  __/   ___/ /  __/ /   | |/ /  __/ /    
+\____/\____/\__,_/\___/   /____/\___/_/    |___/\___/_/     
+ 
+EOF
+}
 IP=$(hostname -I | awk '{print $1}')
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -28,7 +38,8 @@ function error_exit() {
     echo -e "$flag $msg" 1>&2
     exit $EXIT
 }
-
+clear
+header_info
 while true; do
     read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
     case $yn in
@@ -37,18 +48,6 @@ while true; do
     *) echo "Please answer yes or no." ;;
     esac
 done
-clear
-function header_info {
-    echo -e "${BL}
-   ______          __        _____                          
-  / ____/___  ____/ /__     / ___/___  ______   _____  _____
- / /   / __ \/ __  / _ \    \__ \/ _ \/ ___/ | / / _ \/ ___/
-/ /___/ /_/ / /_/ /  __/   ___/ /  __/ /   | |/ /  __/ /    
-\____/\____/\__,_/\___/   /____/\___/_/    |___/\___/_/     
-${CL}"
-}
-
-header_info
 
 function msg_info() {
     local msg="$1"
