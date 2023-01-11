@@ -317,20 +317,14 @@ function install_script() {
 function update_script() {
    PY=$(ls /srv/homeassistant/lib/)
    IP=$(hostname -I | awk '{print $1}') 
-  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
-  "1" "Initialize" OFF \
-  "2" "Update Core" ON \
-  "3" "Install HACS" OFF \
-  "4" "Install FileBrowser" OFF \
+  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
+  "1" "Update Core" ON \
+  "2" "Install HACS" OFF \
+  "3" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
 clear
 header_info
-if [ "$UPD" == "1" ]; then
-echo -e "\n   LOG VIEWER - Go to http://${IP}:8123 to setup \n"
-cd /srv/homeassistant && python3 -m venv . && source bin/activate && hass
-exit
-fi
-if [ "$UPD" == "2" ]; then  
+if [ "$UPD" == "1" ]; then  
   if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
       clear
       header_info
@@ -361,7 +355,7 @@ msg_ok "Update Successful"
 echo -e "\n  Go to http://${IP}:8123 \n"
 exit
 fi
-if [ "$UPD" == "3" ]; then
+if [ "$UPD" == "2" ]; then
 msg_info "Installing Home Assistant Comunity Store (HACS)"
 apt update &>/dev/null
 apt install unzip &>/dev/null
@@ -371,7 +365,7 @@ msg_ok "Installed Home Assistant Comunity Store (HACS)"
 echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
 exit
 fi
-if [ "$UPD" == "4" ]; then
+if [ "$UPD" == "3" ]; then
 msg_info "Installing FileBrowser"
 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
 filebrowser config init -a '0.0.0.0' &>/dev/null
@@ -454,5 +448,5 @@ pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable (after it's initialized) by going to the following URL.
+echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8123${CL}"
