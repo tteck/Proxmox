@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-11
+
+### Changed
+
+- **Home Assistant Core LXC** 
+  - Auto Initialize
+
 ## 2023-01-09
 
 ### Changed
