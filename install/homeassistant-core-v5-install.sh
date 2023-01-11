@@ -146,6 +146,7 @@ $STD python3 -m pip install wheel
 $STD pip install mysqlclient
 $STD pip install psycopg2-binary
 $STD pip install homeassistant
+mkdir -p /root/.homeassistant
 msg_ok "Installed Home Assistant-Core"
 
 msg_info "Creating Service"
@@ -161,7 +162,7 @@ RestartForceExitStatus=100
 [Install]
 WantedBy=multi-user.target
 EOF
-$STD systemctl enable homeassistant
+$STD systemctl enable --now homeassistant
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
