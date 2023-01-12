@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 - **Home Assistant Core LXC** 
   - Auto Initialize
-- **Cronicle Master/Worker LXC** 
+- **Cronicle Primary/Worker LXC** 
   - NEW Script
 
 ## 2023-01-09
