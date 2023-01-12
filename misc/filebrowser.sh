@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+function header_info {
+    cat <<"EOF"
+    _______ __     ____                                   
+   / ____(_) /__  / __ )_________ _      __________  _____
+  / /_  / / / _ \/ __  / ___/ __ \ | /| / / ___/ _ \/ ___/
+ / __/ / / /  __/ /_/ / /  / /_/ / |/ |/ (__  )  __/ /    
+/_/   /_/_/\___/_____/_/   \____/|__/|__/____/\___/_/     
+                                                          
+EOF
+}
 IP=$(hostname -I | awk '{print $1}')
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -28,7 +38,8 @@ function error_exit() {
     echo -e "$flag $msg" 1>&2
     exit $EXIT
 }
-
+clear
+header_info
 while true; do
     read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
     case $yn in
@@ -38,20 +49,7 @@ while true; do
     esac
 done
 clear
-function header_info {
-    echo -e "${DGN}
-
-  ______ _ _      ____                                  
- |  ____(_) |    |  _ \                                 
- | |__   _| | ___| |_) |_ __ _____      _____  ___ _ __ 
- |  __| | | |/ _ \  _ <|  __/ _ \ \ /\ / / __|/ _ \  __|
- | |    | | |  __/ |_) | | | (_) \ V  V /\__ \  __/ |   
- |_|    |_|_|\___|____/|_|  \___/ \_/\_/ |___/\___|_|   
-${CL}"
-}
-
 header_info
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
@@ -63,7 +61,7 @@ function msg_ok() {
 }
 
 msg_info "Installing ${APP}"
-curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
+bash <(curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh) &>/dev/null
 filebrowser config init -a '0.0.0.0' &>/dev/null
 filebrowser config set -a '0.0.0.0' &>/dev/null
 filebrowser users add admin changeme --perm.admin &>/dev/null
