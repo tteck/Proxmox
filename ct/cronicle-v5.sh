@@ -316,12 +316,20 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
 clear
 header_info
 if [ "$UPD" == "1" ]; then
+  if [[ ! -d /opt/cronicle ]]; then
+    msg_error "No ${APP} Installation Found!";
+    exit 
+  fi
 msg_info "Updating ${APP}"
 /opt/cronicle/bin/control.sh upgrade &>/dev/null
 msg_ok "Updated ${APP}"
 exit
 fi
 if [ "$UPD" == "2" ]; then
+  if [[ -d /opt/cronicle ]]; then
+    msg_error "${APP} Installation Found!";
+    exit 
+  fi
 LATEST=$(curl -sL https://api.github.com/repos/jhuckaby/Cronicle/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 IP=$(hostname -I | awk '{print $1}')
 msg_info "Installing Dependencies"
