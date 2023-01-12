@@ -224,7 +224,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
   fi
-  MTU1=$(whiptail --inputbox "Set Interface MTU Size" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $MTU1 ]; then
