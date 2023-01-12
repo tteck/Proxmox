@@ -325,6 +325,10 @@ msg_ok "Update Successfull"
 exit
 fi
 if [ "$UPD" == "2" ]; then
+  if [[ -f /etc/systemd/system/wg-dashboard.service ]]; then
+    msg_error "Existing WGDashboard Installation Found!";
+    exit 
+  fi
 IP=$(hostname -I | awk '{print $1}')
 msg_info "Installing pip3"
 apt-get install -y python3-pip &>/dev/null
