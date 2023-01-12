@@ -97,7 +97,7 @@ msg_info "Installing Node.js"
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Cronicle Master"
+msg_info "Installing Cronicle Primary Server"
 LATEST=$(curl -sL https://api.github.com/repos/jhuckaby/Cronicle/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 IP=$(hostname -I | awk '{print $1}')
 mkdir -p /opt/cronicle
@@ -111,7 +111,7 @@ $STD /opt/cronicle/bin/control.sh start
 $STD cp /opt/cronicle/bin/cronicled.init /etc/init.d/cronicled
 chmod 775 /etc/init.d/cronicled
 $STD update-rc.d cronicled defaults
-msg_ok "Installed Cronicle Master"
+msg_ok "Installed Cronicle Primary Server"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
 if [[ $PASS != $ ]]; then
