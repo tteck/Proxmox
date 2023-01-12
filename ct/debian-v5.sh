@@ -336,7 +336,7 @@ export PCT_OPTIONS="
   -hostname $HN
   $SD
   $NS
-  -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN
+  -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN,mtu=1500
   -onboot 1
   -cores $CORE_COUNT
   -memory $RAM_SIZE
