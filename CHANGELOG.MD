@@ -1,4 +1,4 @@
-<a href="https://tteck.github.io/Proxmox/"><img src="https://github-readme-stats.vercel.app/api?username=tteck&theme=blue-green" height="130"/></a>
+<a href="https://tteck.github.io/Proxmox/"><img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username=tteck&theme=blue-green" height="130"/></a>
 
 # Change Log
 All notable changes to this project will be documented in this file.
