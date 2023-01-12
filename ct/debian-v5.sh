@@ -113,6 +113,8 @@ function default_settings() {
   NET=dhcp
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
   GATE=""
+  echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+  MTU=""
   echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
   SD=""
   echo -e "${DGN}Using DNS Server Address: ${BGN}Host${CL}"
@@ -220,6 +222,17 @@ function advanced_settings() {
     else
       GATE=",gw=$GATE1"
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+    fi
+  fi
+  MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $exitstatus = 0 ]; then
+    if [ -z $MTU1 ]; then
+      MTU1="Default" MTU=""
+      echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+    else
+      MTU=",mtu=$MTU1"
+      echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
   fi
   SD=$(whiptail --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
@@ -336,7 +349,7 @@ export PCT_OPTIONS="
   -hostname $HN
   $SD
   $NS
-  -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN
+  -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
   -onboot 1
   -cores $CORE_COUNT
   -memory $RAM_SIZE
