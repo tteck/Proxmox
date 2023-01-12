@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-12
+
+### Changed
+
+- **ALL LXC's** 
+  - Add an option to set MTU size (Advanced)
+
 ## 2023-01-11
 
 ### Changed
