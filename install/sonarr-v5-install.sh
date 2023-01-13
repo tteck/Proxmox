@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export DEBIAN_FRONTEND=noninteractive
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
