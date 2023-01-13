@@ -91,7 +91,7 @@ msg_info "Installing Sonarr"
 $STD apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
 sh -c 'echo "deb https://apt.sonarr.tv/debian buster-develop main" > /etc/apt/sources.list.d/sonarr.list'
 $STD apt-get update
-$STD apt-get install -y sonarr
+$STD apt-get -o Dpkg::Options::="--force-confold" install -y sonarr
 msg_ok "Installed Sonarr"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
