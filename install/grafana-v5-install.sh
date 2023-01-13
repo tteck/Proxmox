@@ -90,10 +90,8 @@ $STD apt-get install -y software-properties-common
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Grafana Repository"
-$STD apt-key add <(curl -fsSL https://packages.grafana.com/gpg.key)
-cat <<EOF >/etc/apt/sources.list.d/grafana.list
-deb https://packages.grafana.com/oss/deb stable main
-EOF
+wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+sh -c 'echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" > /etc/apt/sources.list.d/grafana.list'
 msg_ok "Set up Grafana Repository"
 
 msg_info "Installing Grafana"
