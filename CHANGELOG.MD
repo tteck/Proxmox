@@ -3,6 +3,23 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-13
+
+### Changed
+
+- **Lidarr LXC** 
+  - NEW Script
+- **Prowlarr LXC** 
+  - NEW Script
+- **Radarr LXC** 
+  - NEW Script
+- **Readarr LXC** 
+  - NEW Script
+- **Sonarr LXC** 
+  - NEW Script
+- **Whisparr LXC** 
+  - NEW Script
+
 ## 2023-01-12
 
 ### Changed
