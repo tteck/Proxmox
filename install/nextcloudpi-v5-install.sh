@@ -88,6 +88,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing NextCloudPi (Patience)"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nextcloud/nextcloudpi/master/install.sh)
 sed -i "s/3 => 'nextcloudpi.lan',/3 => '0.0.0.0',/g" /var/www/nextcloud/config/config.php
+sed -i '{s|root:/usr/sbin/nologing|root:/bin/bash|g}' /etc/passwd
 service apache2 restart
 msg_ok "Installed NextCloudPi"
 
