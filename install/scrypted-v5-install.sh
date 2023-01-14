@@ -116,7 +116,7 @@ $STD apt-get -y install \
 msg_ok "Installed GStreamer"
 
 msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_16.x)
+$STD bash <(curl -fsSL https://deb.nodesource.com/setup_18.x)
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
