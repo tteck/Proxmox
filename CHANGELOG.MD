@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 
 - **Tdarr LXC** 
   - NEW Script
+- **Deluge LXC** 
+  - NEW Script
 
 ## 2023-01-13
 
