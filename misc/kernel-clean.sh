@@ -51,16 +51,21 @@ function check_root() {
         exit 1
     else
         header_info
-        edge_kernel
+        other_kernel
         kernel_info
         kernel_clean
     fi
 }
 
-function edge_kernel() {
+function other_kernel() {
     if [[ "$current_kernel" == *"edge"* ]]; then
         echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
         echo -e "\nAn Active PVE Kernel is required to use Kernel Clean\n"
+        exit 1
+    fi
+    if [[ "$current_kernel" == *"6.1"* ]]; then
+        echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
+        echo -e "\nAs 5.15 is the current default kernel in PVE 7.3 the package management directly depends on it, it's not possible to use this script while running 6.1 kernels. (the script tries to remove ALL old kernels) \n"
         exit 1
     fi
 }
