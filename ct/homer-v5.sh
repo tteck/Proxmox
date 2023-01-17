@@ -325,10 +325,10 @@ msg_info "Stopping ${APP}"
 systemctl stop homer
 msg_ok "Stopped ${APP}"
 
-msg_info "Backing up conf.yml"
+msg_info "Backing up config.yml"
 cd ~
 cp -R /opt/homer/assets/config.yml config.yml
-msg_ok "Backed up conf.yml"
+msg_ok "Backed up config.yml"
 
 msg_info "Updating ${APP}"
 rm -rf /opt/homer/*
