@@ -327,7 +327,7 @@ msg_ok "Stopped ${APP}"
 
 msg_info "Backing up conf.yml"
 cd ~
-cp -R /opt/homer/assets/conf.yml conf.yml
+cp -R /opt/homer/assets/config.yml config.yml
 msg_ok "Backed up conf.yml"
 
 msg_info "Updating ${APP}"
@@ -338,11 +338,11 @@ unzip homer.zip &>/dev/null
 msg_ok "Updated ${APP}"
 msg_info "Restoring conf.yml"
 cd ~
-cp -R conf.yml /opt/homer/assets
+cp -R config.yml /opt/homer/assets
 msg_ok "Restored conf.yml"
 
 msg_info "Cleaning"
-rm -rf conf.yml /opt/homer/homer.zip
+rm -rf config.yml /opt/homer/homer.zip
 msg_ok "Cleaned"
 
 msg_info "Starting ${APP}"
