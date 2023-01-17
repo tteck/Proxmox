@@ -91,6 +91,7 @@ msg_ok "Installed pip3"
 
 msg_info "Installing Deluge"
 $STD pip install deluge[all]
+$STD pip install lbry-libtorrent
 msg_ok "Installed Deluge"
 
 msg_info "Creating Service"
