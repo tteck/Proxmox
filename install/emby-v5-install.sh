@@ -90,8 +90,8 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   $STD apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd
+    ocl-icd-libopencl1
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then $STD apt-get -y install beignet-opencl-icd; fi
 
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
