@@ -91,8 +91,8 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   $STD apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd
+    ocl-icd-libopencl1 
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then $STD apt-get -y install beignet-opencl-icd; fi
 
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
@@ -102,9 +102,7 @@ fi
 
 msg_info "Setting Up Plex Media Server Repository"
 $STD apt-key add <(curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key)
-cat <<EOF >/etc/apt/sources.list.d/plexmediaserver.list
-deb [arch=amd64] https://downloads.plex.tv/repo/deb/ public main
-EOF
+sh -c 'echo "deb [arch=$(dpkg --print-architecture)] https://downloads.plex.tv/repo/deb/ public main" > /etc/apt/sources.list.d/plexmediaserver.list'
 msg_ok "Set Up Plex Media Server Repository"
 
 msg_info "Installing Plex Media Server"
