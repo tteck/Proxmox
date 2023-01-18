@@ -92,9 +92,8 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   $STD apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd
-
+    ocl-icd-libopencl1
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then $STD apt-get -y install beignet-opencl-icd; fi
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
   /bin/chmod 660 /dev/dri/*
@@ -104,9 +103,7 @@ fi
 msg_info "Setting Up Jellyfin Repository"
 $STD add-apt-repository universe -y
 $STD apt-key add <(curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key)
-cat <<EOF >/etc/apt/sources.list.d/jellyfin.list
-deb [arch=amd64] https://repo.jellyfin.org/ubuntu focal main
-EOF
+sh -c 'echo "deb [arch=$(dpkg --print-architecture)] https://repo.jellyfin.org/ubuntu $(lsb_release -c -s) main" > /etc/apt/sources.list.d/jellyfin.list'
 msg_ok "Set Up Jellyfin Repository"
 
 msg_info "Installing Jellyfin"
