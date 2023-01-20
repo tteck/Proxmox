@@ -1,4 +1,16 @@
 #!/usr/bin/env bash
+function header_info {
+cat <<"EOF"
+    __  ____ __              __  _ __      ____              __            ____  _____
+   /  |/  (_) /___________  / /_(_) /__   / __ \____v5__  __/ /____  _____/ __ \/ ___/
+  / /|_/ / / //_/ ___/ __ \/ __/ / //_/  / /_/ / __ \/ / / / __/ _ \/ ___/ / / /\__ \ 
+ / /  / / /  < / /  / /_/ / /_/ /  <    / _  _/ /_/ / /_/ / /_/  __/ /  / /_/ /___/ / 
+/_/  /_/_/_/|_/_/   \____/\__/_/_/|_|  /_/ |_|\____/\__,_/\__/\___/_/   \____//____/  
+ 
+EOF
+}
+clear
+header_info
 echo -e "Loading..."
 GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
@@ -58,15 +70,7 @@ else
     echo -e "⚠ User exited script \n"
     exit
 fi
-function header_info {
-echo -e "${RD}
-    __  ____ __              __  _ __      ____              __            ____  _____
-   /  |/  (_) /___________  / /_(_) /__   / __ \____  __  __/ /____  _____/ __ \/ ___/
-  / /|_/ / / //_/ ___/ __ \/ __/ / //_/  / /_/ / __ \/ / / / __/ _ \/ ___/ / / /\__ \ 
- / /  / / /  < / /  / /_/ / /_/ /  < v4 / _  _/ /_/ / /_/ / /_/  __/ /  / /_/ /___/ / 
-/_/  /_/_/_/|_/_/   \____/\__/_/_/|_|  /_/ |_|\____/\__,_/\__/\___/_/   \____//____/  
-${CL}"
-}
+
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
@@ -90,6 +94,8 @@ function default_settings() {
 	MAC=$GEN_MAC
 	echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
 	VLAN=""
+	echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+	MTU=""
 	echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
 	START_VM="no"
 	echo -e "${BL}Creating a Mikrotik RouterOS VM using the above default settings${CL}"
@@ -149,6 +155,17 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
+MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+  if [ -z $MTU1 ]; then
+    MTU1="Default" MTU=""
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+  else
+    MTU=",mtu=$MTU1"
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+  fi
+fi  
 if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start Mikrotik RouterOS VM when completed?" 10 58); then
     echo -e "${DGN}Start Mikrotik RouterOS VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
@@ -241,17 +258,17 @@ for i in {0,1}; do
 done
 msg_ok "Extracted Mikrotik RouterOS Disk Image"
 msg_info "Creating Mikrotik RouterOS VM"
-qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
+qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
   -scsi0 ${DISK1_REF},size=2G >/dev/null
-qm set $VMID \
   -boot order=scsi0 >/dev/null
-qm set $VMID -description "# Mikrotik RouterOS
-### https://github.com/tteck/Proxmox" >/dev/null
+  -description "# Home Assistant OS
+### https://github.com/tteck/Proxmox
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "Mikrotik RouterOS VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
 msg_info "Starting Mikrotik RouterOS VM"
