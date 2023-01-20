@@ -266,7 +266,7 @@ qm set $VMID \
   -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
   -scsi0 ${DISK1_REF},size=2G >/dev/null
   -boot order=scsi0 >/dev/null
-  -description "# Home Assistant OS
+  -description "# Mikrotik RouterOS VM
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "Mikrotik RouterOS VM ${CL}${BL}(${HN})"
