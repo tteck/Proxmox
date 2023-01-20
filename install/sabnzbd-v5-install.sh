@@ -83,12 +83,14 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y unzip
+$STD apt-get install -y par2
+$STD apt-get install -y unrar-free
 msg_ok "Installed Dependencies"
 
 msg_info "Installing pip3"
-$STD apt-get install -y par2 \
-  python3-setuptools \
-  python3-pip
+$STD apt-get install -y python3-setuptools
+$STD apt-get install -y python3-pip
 msg_ok "Installed pip3"
 
 msg_info "Installing SABnzbd"
