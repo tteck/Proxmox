@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-21
+
+### Changed
+
+- **Kavita LXC** 
+  - NEW Script
+
 ## 2023-01-19
 
 ### Changed
