@@ -109,7 +109,7 @@ msg_ok "Set Up Jellyfin Repository"
 msg_info "Installing Jellyfin"
 $STD apt-get update
 $STD apt install jellyfin-server -y
-$STD apt install jellyfin-ffmpeg -y
+$STD apt install jellyfin-ffmpeg5 -y
 msg_ok "Installed Jellyfin"
 
 msg_info "Creating Service"
