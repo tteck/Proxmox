@@ -96,7 +96,7 @@ $STD apt-get install -y nodejs
 $STD npm install -g pnpm
 msg_ok "Installed Node.js"
 
-msg_info "Installing Homepage"
+msg_info "Installing Homepage (Patience)"
 $STD git clone https://github.com/benphelps/homepage.git /opt/homepage
 cd /opt/homepage
 mkdir -p config
