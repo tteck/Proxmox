@@ -93,13 +93,14 @@ msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
 $STD apt-get install -y nodejs
-$STD npm install -g pnpm
+$STD npm install -g npm@9.3.1
 msg_ok "Installed Node.js"
 
 msg_info "Installing Homepage"
 $STD git clone https://github.com/benphelps/homepage.git /opt/homepage
 cd /opt/homepage
 mkdir -p config
+cp /opt/homepage/src/skeleton/* /opt/homepage/config
 $STD pnpm install
 $STD pnpm build
 msg_ok "Installed Homepage"
