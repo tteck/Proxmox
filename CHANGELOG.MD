@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-23
+
+### Changed
+
+- **ALL LXC's** 
+  - Add [Midnight Commander (mc)](https://www.linuxcommand.org/lc3_adv_mc.php)
+
 ## 2023-01-22
 
 ### Changed
