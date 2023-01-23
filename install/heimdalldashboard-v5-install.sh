@@ -84,6 +84,7 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing PHP"
@@ -124,6 +125,7 @@ $STD sudo systemctl enable --now heimdall.service
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

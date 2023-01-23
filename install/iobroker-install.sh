@@ -91,6 +91,7 @@ curl -sLf https://iobroker.net/install.sh | bash - &>/dev/null
 msg_ok "Installed ioBroker"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

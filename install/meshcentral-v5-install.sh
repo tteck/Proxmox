@@ -84,6 +84,7 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
@@ -102,6 +103,7 @@ $STD node node_modules/meshcentral --install
 msg_ok "Installed MeshCentral"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

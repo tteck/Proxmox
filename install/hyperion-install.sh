@@ -97,6 +97,7 @@ systemctl enable --now hyperion@root.service &>/dev/null
 msg_ok "Installed Hyperion"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*

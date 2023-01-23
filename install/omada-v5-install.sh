@@ -97,6 +97,7 @@ $STD dpkg -i Omada_SDN_Controller_v5.7.4_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*
