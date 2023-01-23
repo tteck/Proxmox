@@ -98,7 +98,8 @@ $STD apt-get -y install \
     librsvg2-dev \
     pkg-config \
     curl \
-    sudo
+    sudo \
+    mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing GStreamer"

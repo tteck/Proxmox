@@ -96,7 +96,8 @@ $STD apt-get install -y --no-install-recommends \
 	libzbar0 \
 	poppler-utils \
 	default-libmysqlclient-dev \
-	sudo
+	sudo \
+	mc
 msg_ok "Installed Paperless-ngx Dependencies"
 
 msg_info "Installing OCR Dependencies"

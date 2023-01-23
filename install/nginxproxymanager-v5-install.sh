@@ -85,6 +85,7 @@ msg_info "Installing Dependencies"
 $STD apt-get update
 $STD apt-get -y install \
   sudo \
+  mc \
   curl \
   gnupg \
   make \
