@@ -333,7 +333,7 @@ pip3 install esphome --upgrade &>/dev/null
 msg_ok "Updated ESPHome"
 
 msg_info "Starting ESPHome"
-systemctl stop esphomeDashboard
+systemctl start esphomeDashboard
 msg_ok "Started ESPHome"
 msg_ok "Update Successfull"
 exit
