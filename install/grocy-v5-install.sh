@@ -84,6 +84,7 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y mc
 $STD apt-get install -y apache2
 $STD apt-get install -y unzip
 $STD apt-get install -y apt-transport-https
@@ -130,6 +131,7 @@ systemctl reload apache2
 msg_ok "Installed grocy"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*

@@ -99,6 +99,7 @@ wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh && b
 msg_ok "Installed UniFi Network Application"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

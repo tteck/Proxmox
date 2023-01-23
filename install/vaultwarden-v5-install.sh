@@ -91,7 +91,8 @@ $STD apt-get -qqy install \
   libmariadb-dev-compat \
   libpq-dev \
   curl \
-  sudo
+  sudo \
+  mc
 msg_ok "Installed Dependencies"
 
 WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
@@ -177,6 +178,7 @@ $STD systemctl enable --now vaultwarden.service
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

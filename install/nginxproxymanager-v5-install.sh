@@ -85,6 +85,7 @@ msg_info "Installing Dependencies"
 $STD apt-get update
 $STD apt-get -y install \
   sudo \
+  mc \
   curl \
   gnupg \
   make \
@@ -247,6 +248,7 @@ EOF
 msg_ok "Created Service"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

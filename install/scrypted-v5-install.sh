@@ -98,7 +98,8 @@ $STD apt-get -y install \
     librsvg2-dev \
     pkg-config \
     curl \
-    sudo
+    sudo \
+    mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing GStreamer"
@@ -182,6 +183,7 @@ WantedBy=multi-user.target" >$service_path
 $STD systemctl enable --now scrypted.service
 msg_ok "Created Service"
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*

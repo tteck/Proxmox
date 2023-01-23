@@ -82,11 +82,12 @@ $STD apt-get -y upgrade
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
-$STD apt-get -y install curl
-$STD apt-get -y install sudo
-$STD apt-get -y install gnupg
-$STD apt-get -y install openjdk-8-jre-headless
-$STD apt-get -y install jsvc
+$STD apt-get install -y curl
+$STD apt-get install -y sudo
+$STD apt-get install -y mc
+$STD apt-get install -y gnupg
+$STD apt-get install -y openjdk-8-jre-headless
+$STD apt-get install -y jsvc
 wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiverse/binary-amd64/mongodb-org-server_3.6.23_amd64.deb
 $STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
 msg_ok "Installed Dependencies"
@@ -97,6 +98,7 @@ $STD dpkg -i Omada_SDN_Controller_v5.7.4_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*

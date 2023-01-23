@@ -91,6 +91,7 @@ curl -sSL https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scrip
 msg_ok "Installed AdGuard Home"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

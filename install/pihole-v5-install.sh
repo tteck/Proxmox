@@ -85,6 +85,7 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y mc
 $STD apt-get install -y ufw
 $STD apt-get install -y ntp
 msg_ok "Installed Dependencies"
@@ -111,6 +112,7 @@ $STD bash <(curl -fsSL https://install.pi-hole.net) /dev/stdin --unattended
 msg_ok "Installed Pi-hole"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   rm /etc/motd

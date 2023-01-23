@@ -91,7 +91,7 @@ if [ "$ubuntuversion" = "18" ] || [ "$ubuntuversion" -le "18" ]; then
 fi
 
 msg_info "Installing Dependencies"
-$STD apt-get install -y curl sudo git
+$STD apt-get install -y curl sudo git mc
 $STD apt-get install -y make zip net-tools
 $STD apt-get install -y gcc g++ cmake
 msg_ok "Installed Dependencies"
@@ -150,6 +150,7 @@ $STD pm2 list
 msg_ok "Installed Shinobi"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*

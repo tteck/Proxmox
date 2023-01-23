@@ -96,7 +96,8 @@ $STD apt-get install -y --no-install-recommends \
 	libzbar0 \
 	poppler-utils \
 	default-libmysqlclient-dev \
-	sudo
+	sudo \
+	mc
 msg_ok "Installed Paperless-ngx Dependencies"
 
 msg_info "Installing OCR Dependencies"
@@ -265,6 +266,7 @@ $STD systemctl enable --now paperless-consumer paperless-webserver paperless-sch
 msg_ok "Created Services"
 
 PASS=$(grep -w "root" /etc/shadow | cut -b6)
+echo "export TERM='xterm-256color'" >>/root/.bashrc
 if [[ $PASS != $ ]]; then
 	msg_info "Customizing Container"
 	rm /etc/motd
