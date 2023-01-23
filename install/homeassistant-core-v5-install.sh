@@ -97,6 +97,7 @@ $STD apt-get install -y \
   git \
   curl \
   sudo \
+  mc \
   llvm \
   libncursesw5-dev \
   xz-utils \
