@@ -2,7 +2,7 @@
 function header_info {
 cat <<"EOF"
     __  __                        ___              _      __              __     ____  _____
-   / / / /___  ____ ___  ___ v4  /   |  __________(_)____/ /_____ _____  / /_   / __ \/ ___/
+   / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____v5/ /_   / __ \/ ___/
   / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \ 
  / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ / 
 /_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/  
@@ -13,6 +13,7 @@ clear
 header_info
 echo -e "\n Loading..."
 GEN_MAC=$(echo 'AE 1A 60'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
+USEDID=$(pvesh get /cluster/resources --type vm --output-format yaml | egrep -i 'vmid' | awk '{print substr($2, 1, length($2)-0) }')
 NEXTID=$(pvesh get /cluster/nextid)
 STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
@@ -62,13 +63,6 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [ `pveversion | grep "pve-manager/7.2\|7.3" | wc -l` -ne 1 ]; then
-        echo "⚠ This version of Proxmox Virtual Environment is not supported"
-        echo "Requires PVE Version: =>7.2"
-        echo "Exiting..."
-        sleep 3
-        exit
-fi  
 if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
     echo "User selected Yes"
 else
@@ -76,7 +70,6 @@ else
     echo -e "⚠ User exited script \n"
     exit
 fi
-
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
@@ -89,7 +82,24 @@ function msg_error() {
     local msg="$1"
     echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
-
+function PVE_CHECK() {
+if [ `pveversion | grep "pve-manager/7.2\|7.3" | wc -l` -ne 1 ]; then
+        echo "⚠ This version of Proxmox Virtual Environment is not supported"
+        echo "Requires PVE Version: =>7.2"
+        echo "Exiting..."
+        sleep 2
+        exit
+fi
+}
+function ARCH_CHECK() {
+  ARCH=$(dpkg --print-architecture)
+  if [[ "$ARCH" != "amd64" ]]; then
+    echo -e "\n ❌  This script will not work with PiMox! \n"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
 function default_settings() {
         echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
         BRANCH=${STABLE}
@@ -110,6 +120,8 @@ function default_settings() {
         MAC=$GEN_MAC
         echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
         VLAN=""
+        echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+        MTU=""
         echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
         START_VM="yes"
         echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
@@ -126,8 +138,16 @@ if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${C
 VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ -z $VMID ]; then VMID="$NEXTID"; echo -e "${DGN}Virtual Machine: ${BGN}$VMID${CL}";
-else
-  if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi;
+  else
+    if echo "$USEDID" | egrep -q "$VMID"
+    then
+      echo -e "\n🚨  ${RD}ID $VMID is already in use${CL} \n"
+      echo -e "Exiting Script \n"
+      sleep 2;
+      exit
+  else
+    if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi;
+    fi
 fi
 MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
 "i440fx" "Machine i440fx" ON \
@@ -183,6 +203,17 @@ else
     echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   fi  
 fi
+MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+  if [ -z $MTU1 ]; then
+    MTU1="Default" MTU=""
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+  else
+    MTU=",mtu=$MTU1"
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+  fi
+fi
 if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
     echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
@@ -199,7 +230,7 @@ else
   advanced_settings
 fi
 }
-function start_script() {
+function START_SCRIPT() {
 if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
   clear
   header_info
@@ -212,7 +243,9 @@ else
   advanced_settings
 fi
 }
-start_script
+ARCH_CHECK
+PVE_CHECK
+START_SCRIPT
 msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
@@ -278,8 +311,8 @@ for i in {0,1}; do
 done
 msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN \
-  -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
+qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE \
+  -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
