@@ -10,8 +10,8 @@ All notable changes to this project will be documented in this file.
 - **Home Assistant OS VM** 
   - switch to v5
   - add an option to set MTU size (Advanced)
-  - add arch check (no ARM64)
-  - add check to insure VMID isn't already used before VM creation (Advanced)
+  - add arch check (no ARM64) (issue from community.home-assistant.io)
+  - add check to insure VMID isn't already used before VM creation (Advanced) (issue from forum.proxmox.com)
   - code refactoring
 - **PiMox Home Assistant OS VM** 
   - switch to v5
@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
   - add pve check (=>7.2)
   - add check to insure VMID isn't already used before VM creation (Advanced)
   - code refactoring
+- **All LXC's** 
+  - add arch check (no ARM64) (issue from forum.proxmox.com)
 
 ## 2023-01-24
 
