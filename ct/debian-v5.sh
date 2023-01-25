@@ -74,7 +74,7 @@ function PVE_CHECK() {
 }
 function ARCH_CHECK() {
   ARCH=$(dpkg --print-architecture)
-  if [[ "$ARCH" == "amd64" ]]; then
+  if [[ "$ARCH" != "amd64" ]]; then
     echo -e "\n ❌  This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
