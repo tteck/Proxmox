@@ -3,6 +3,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-25
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - switch to v5
+  - add an option to set MTU size (Advanced)
+  - add arch check (no ARM64)
+  - add check to insure VMID isn't already used before VM creation (Advanced)
+  - code refactoring
+- **PiMox Home Assistant OS VM** 
+  - switch to v5
+  - add an option to set MTU size (Advanced)
+  - add arch check (no AMD64)
+  - add pve check (=>7.2)
+  - add check to insure VMID isn't already used before VM creation (Advanced)
+  - code refactoring
+
 ## 2023-01-24
 
 ### Changed
