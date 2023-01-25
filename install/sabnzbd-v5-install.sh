@@ -87,6 +87,7 @@ $STD apt-get install -y mc
 $STD apt-get install -y unzip
 $STD apt-get install -y par2
 $STD apt-get install -y unrar-free
+$STD apt-get install -y p7zip-full
 msg_ok "Installed Dependencies"
 
 msg_info "Installing pip3"
