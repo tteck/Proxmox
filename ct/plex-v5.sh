@@ -72,6 +72,15 @@ function PVE_CHECK() {
     exit
   fi
 }
+function ARCH_CHECK() {
+  ARCH=$(dpkg --print-architecture)
+  if [[ "$ARCH" != "amd64" ]]; then
+    echo -e "\n ❌  This script will not work with PiMox! \n"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
 
 if command -v pveversion >/dev/null 2>&1; then
   if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
@@ -352,6 +361,7 @@ exit
 fi
 }
 clear
+ARCH_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then

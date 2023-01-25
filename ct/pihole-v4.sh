@@ -68,6 +68,15 @@ function PVE_CHECK() {
     exit
   fi
 }
+function ARCH_CHECK() {
+  ARCH=$(dpkg --print-architecture)
+  if [[ "$ARCH" != "amd64" ]]; then
+    echo -e "\n ❌  This script will not work with PiMox! \n"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
   CT_TYPE="0"
