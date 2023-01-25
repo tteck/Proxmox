@@ -137,7 +137,7 @@ if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${C
 VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ -z $VMID ]; then VMID="$NEXTID"; echo -e "${DGN}Virtual Machine: ${BGN}$VMID${CL}";
-  elif
+  else
     if echo "$USEDID" | egrep -q "$VMID"
     then
       echo -e "\n🚨  ${RD}ID $VMID is already in use${CL} \n"
