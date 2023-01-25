@@ -1,4 +1,4 @@
-<h2><p align="center">Copy data to another LXC</p></h2>
+<h2><p align="center">Copy data to another LXC (run in the Proxmox Shell)</p></h2>
 <div align="center"> To copy data from Home Assistant Container to Home Assistant Container </div>
 
 ```
