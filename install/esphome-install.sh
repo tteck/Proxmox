@@ -87,9 +87,9 @@ apt-get install -y sudo &>/dev/null
 apt-get install -y git &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 apt-get install -y python3-pip &>/dev/null
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 msg_info "Installing ESPHome"
 pip3 install esphome &>/dev/null

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
 BL=$(echo "\033[36m")
@@ -88,9 +89,9 @@ $STD apt-get install -y mc
 $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 $STD apt-get install -y python3-pip
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 msg_info "Installing ESPHome"
 $STD pip3 install esphome

@@ -126,6 +126,8 @@ function default_settings() {
   NET=dhcp
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
   GATE=""
+  echo -e "${DGN}Disable IPv6: ${BGN}No${CL}"
+  DISABLEIP6="no"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   MTU=""
   echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
@@ -236,6 +238,13 @@ function advanced_settings() {
       GATE=",gw=$GATE1"
       echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
     fi
+  fi
+  if (whiptail --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
+      echo -e "${DGN}Disable IPv6: ${BGN}Yes${CL}"
+      DISABLEIP6="yes"
+  else
+      echo -e "${DGN}Disable IPv6: ${BGN}No${CL}"
+      DISABLEIP6="no"
   fi
   MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
@@ -352,13 +361,13 @@ if [ "$UPD" == "2" ]; then
     exit 
   fi
 IP=$(hostname -I | awk '{print $1}')
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 apt-get install -y python3-pip &>/dev/null
 pip install flask &>/dev/null
 pip install ifcfg &>/dev/null
 pip install flask_qrcode &>/dev/null
 pip install icmplib &>/dev/null
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 msg_info "Installing WGDashboard"
 WGDREL=$(curl -s https://api.github.com/repos/donaldzou/WGDashboard/releases/latest |
@@ -407,6 +416,7 @@ else
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export DISABLEIPV6=$DISABLEIP6
 export VERBOSE=$VERB
 export STD=$VERB2
 export SSH_ROOT=${SSH}

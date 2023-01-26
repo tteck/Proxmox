@@ -86,9 +86,9 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 apt-get install python3-pip -y &>/dev/null
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 msg_info "Installing Whoogle"
 pip install brotli &>/dev/null

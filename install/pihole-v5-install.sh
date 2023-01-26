@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; fi
 export DEBIAN_FRONTEND=noninteractive
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
