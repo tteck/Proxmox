@@ -83,6 +83,7 @@ function ARCH_CHECK() {
     sleep 2
     exit
   fi
+ }
 if command -v pveversion >/dev/null 2>&1; then
   if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
     NEXTID=$(pvesh get /cluster/nextid)
