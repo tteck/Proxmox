@@ -244,7 +244,6 @@ function advanced_settings() {
       echo -e "${DGN}Disable IPv6: ${BGN}No${CL}"
       DISABLEIP6="no"
   fi
-  fi
   MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
