@@ -89,6 +89,8 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing AdGuard Home"
+echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 wget -qL https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh
 $STD bash install.sh
 rm install.sh
