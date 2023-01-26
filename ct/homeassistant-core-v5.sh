@@ -325,6 +325,7 @@ function advanced_settings() {
 }
 
 function install_script() {
+  ARCH_CHECK
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
     echo -e "${BL}Using Default Settings${CL}"
@@ -418,7 +419,6 @@ fi
 }
 
 clear
-ARCH_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
