@@ -91,7 +91,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing AdGuard Home"
 echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
 ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
-systemctl restart systemd-resolved
+#systemctl restart systemd-resolved
 wget -qL https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh
 $STD bash install.sh
 rm install.sh
