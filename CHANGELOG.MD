@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-01-26
+
+### Changed
+
+- **ALL LXC's** 
+  - Add an option to disable IPv6 (Advanced)
+
 ## 2023-01-25
 
 ### Changed
