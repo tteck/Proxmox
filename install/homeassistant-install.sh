@@ -86,9 +86,9 @@ apt-get install -y curl &>/dev/null
 apt-get install -y sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 apt-get install -y python3-pip &>/dev/null
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 get_latest_release() {
   curl -sL https://api.github.com/repos/$1/releases/latest | grep '"tag_name":' | cut -d'"' -f4

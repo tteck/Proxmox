@@ -87,9 +87,9 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing pip3"
+msg_info "Installing Python3-pip"
 $STD apt-get install -y python3-pip
-msg_ok "Installed pip3"
+msg_ok "Installed Python3-pip"
 
 msg_info "Installing Deluge"
 $STD pip install deluge[all]
