@@ -66,5 +66,6 @@ for container in $containers; do
   fi
 done
 wait
-
+clear
+header_info
 echo -e "${GN} Finished, All Containers Cleaned. ${CL} \n"
