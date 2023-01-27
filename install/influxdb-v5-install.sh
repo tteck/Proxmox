@@ -93,9 +93,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Setting up InfluxDB Repository"
 $STD apt-key add <(curl -fsSL https://repos.influxdata.com/influxdb.key)
-cat <<EOF >/etc/apt/sources.list.d/influxdb.list
-deb https://repos.influxdata.com/debian bullseye stable
-EOF
+sh -c 'echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" > sudo tee /etc/apt/sources.list.d/influxdb.list'
 msg_ok "Set up InfluxDB Repository"
 
 read -r -p "Which version of InfluxDB to install? (1 or 2) " prompt
