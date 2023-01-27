@@ -92,8 +92,9 @@ $STD apt-get install -y gnupg2
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up InfluxDB Repository"
-$STD apt-key add <(curl -fsSL https://repos.influxdata.com/influxdb.key)
-sh -c 'echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" > sudo tee /etc/apt/sources.list.d/influxdb.list'
+wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+$STD gpg --with-fingerprint --show-keys ./influxdata-archive_compat.key
+sh -c 'echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main" > /etc/apt/sources.list.d/influxdata.list'
 msg_ok "Set up InfluxDB Repository"
 
 read -r -p "Which version of InfluxDB to install? (1 or 2) " prompt
