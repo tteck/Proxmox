@@ -93,8 +93,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Setting up InfluxDB Repository"
 wget -q https://repos.influxdata.com/influxdata-archive_compat.key
-gpg --with-fingerprint --show-keys ./influxdata-archive_compat.key
-cat influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
 sh -c 'echo "deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main" > /etc/apt/sources.list.d/influxdata.list'
 msg_ok "Set up InfluxDB Repository"
 
