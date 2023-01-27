@@ -153,9 +153,7 @@ fi
 if [[ $CORAL == "Y" ]]; then
 msg_info "Adding Coral Edge TPU Support"
 $STD apt-key add <(curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg)
-cat <<EOF >/etc/apt/sources.list.d/coral-edgetpu.list
-deb https://packages.cloud.google.com/apt coral-edgetpu-stable main
-EOF
+sh -c 'echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" > /etc/apt/sources.list.d/coral-edgetpu.list'
 $STD apt-get -y update
 $STD apt-get -y install libedgetpu1-std
 msg_ok "Coral Edge TPU Support Added"

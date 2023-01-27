@@ -92,9 +92,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Hyperion"
 wget -qO- https://apt.hyperion-project.org/hyperion.pub.key | gpg --dearmor -o /usr/share/keyrings/hyperion.pub.gpg
-cat <<EOF >/etc/apt/sources.list.d/hyperion.list
-deb [signed-by=/usr/share/keyrings/hyperion.pub.gpg] https://apt.hyperion-project.org/ bullseye main
-EOF
+sh -c 'echo "deb [signed-by=/usr/share/keyrings/hyperion.pub.gpg] https://apt.hyperion-project.org/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/hyperion.list'
 $STD apt-get update
 $STD apt-get install -y hyperion
 $STD systemctl enable --now hyperion@root.service

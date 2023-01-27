@@ -114,9 +114,7 @@ msg_ok "Installed Python"
 
 msg_info "Installing Openresty"
 $STD apt-key add <(curl -fsSL https://openresty.org/package/pubkey.gpg)
-cat <<EOF >/etc/apt/sources.list.d/openresty.list
-deb http://openresty.org/package/debian bullseye openresty
-EOF
+sh -c 'echo "deb http://openresty.org/package/debian $(lsb_release -cs) openresty" > /etc/apt/sources.list.d/openresty.list'
 $STD apt-get -y update
 $STD apt-get -y install --no-install-recommends openresty
 msg_ok "Installed Openresty"
