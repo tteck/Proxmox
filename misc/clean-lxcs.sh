@@ -18,6 +18,7 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 clear
 header_info
+echo -e "\n ${RD} USE AT YOUR OWN RISK. Deleting logs/cache may result in some apps/services broken!${CL} \n"
 while true; do
   read -p "This Will Clean logs, cache and update apt lists on all LXC Containers. Proceed(y/n)?" yn
   case $yn in
@@ -28,13 +29,13 @@ while true; do
 done
 clear
 containers=$(pct list | tail -n +2 | cut -f1 -d' ')
-
 function clean_container() {
   container=$1
   clear
   header_info
-  echo -e "${BL}[Info]${GN} Cleaning${BL} $container${CL} \n"
-  pct exec $container -- bash -c "apt-get -y autoremove && apt-get -y autoclean && rm -rf /var/{cache,log}/* /var/lib/apt/lists/* && apt-get update"
+  name=`pct exec $container hostname`
+  echo -e "${BL}[Info]${GN} Cleaning ${name} ${CL} \n"
+  pct exec $container -- bash -c "apt-get -y --purge autoremove && apt-get -y autoclean && bash <(curl -fsSL https://github.com/tteck/Proxmox/raw/dev/misc/clean.sh) && rm -rf /var/lib/apt/lists/* && apt-get update"
 }
 read -p "Skip stopped containers? " -n 1 -r
 echo
@@ -68,4 +69,4 @@ done
 wait
 clear
 header_info
-echo -e "${GN} Finished, All Containers Cleaned. ${CL} \n"
+echo -e "${GN} Finished, Containers Cleaned. ${CL} \n"
