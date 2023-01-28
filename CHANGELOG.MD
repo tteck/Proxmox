@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 - **LXC Cleaner** 
   - Code refactoring to let the user decide if cache or logs gets deleted for each app/service.
+  - Leaves directory structure intact
 
 ## 2023-01-27
 
