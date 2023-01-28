@@ -93,6 +93,9 @@ $STD apt-get install -y ntp
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Pi-hole"
+systemctl stop systemd-resolved
+echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 mkdir -p /etc/pihole/
 cat <<EOF >/etc/pihole/setupVars.conf
 PIHOLE_INTERFACE=eth0
