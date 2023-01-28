@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+silent() { "$@" > /dev/null 2>&1; }
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
-if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; fi
+if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 #https://community.ui.com/questions/UniFi-Installation-Scripts-or-UniFi-Easy-Update-Script-or-UniFi-Lets-Encrypt-or-UniFi-Easy-Encrypt-/ccbc7530-dd61-40a7-82ec-22b17f027776
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -21,7 +22,7 @@ set -o pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
-silent() { "$@" > /dev/null 2>&1; }
+
 function error_exit() {
   trap - ERR
   local reason="Unknown failure occurred."
