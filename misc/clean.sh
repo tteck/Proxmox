@@ -15,7 +15,7 @@ CL=$(echo "\033[m")
 name=$(hostname)
 clear
 header_info
-echo -e "${BL}[Info]${GN} Cleaning $name${CL}"
+echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
 cache=$(find /var/cache/ -type f)
     if [[ -z "$cache" ]]; then
     echo -e "It appears there are no cached files on your system. \n"
@@ -34,7 +34,7 @@ cache=$(find /var/cache/ -type f)
     fi
 clear
 header_info
-echo -e "${BL}[Info]${GN} Cleaning $name${CL}"
+echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
 logs=$(find /var/log/ -type f)
     if [[ -z "$logs" ]]; then
     echo -e "It appears there are no logs on your system. \n"
