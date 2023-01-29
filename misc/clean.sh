@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 function header_info() {
   cat <<"EOF"
    ________                    __   _  ________
@@ -10,17 +9,13 @@ function header_info() {
                                                
 EOF
 }
-
 BL=$(echo "\033[36m")
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 name=$(hostname)
-
 clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
-
-# Clean cache
 cache=$(find /var/cache/ -type f)
 if [[ -z "$cache" ]]; then
   echo -e "It appears there are no cached files on your system. \n"
@@ -37,8 +32,6 @@ else
     sleep 2
   fi
 fi
-
-# Clean logs
 clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
@@ -49,7 +42,7 @@ if [[ -z "$logs" ]]; then
 else
   echo -e "$logs \n"
   echo -e "${GN}Logs in $name${CL}"
-  read -p "Would you like to remove the selected logs listed above? [y/n]" -n 1 -r
+  read -p "Would you like to remove the selected logs listed above? [y/n] " -n 1 -r
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Removing logs"
@@ -58,8 +51,6 @@ else
     sleep 2
   fi
 fi
-
-# Populate apt lists
 clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
