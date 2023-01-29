@@ -51,7 +51,7 @@ function update_container() {
   fi
 }
 header_info
-read -p "Skip stopped containers? " -n 1 -r
+read -p "Skip stopped containers? [y/N]" -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
   skip=no
