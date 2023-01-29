@@ -35,7 +35,7 @@ function clean_container() {
   header_info
   name=`pct exec $container hostname`
   echo -e "${BL}[Info]${GN} Cleaning ${name} ${CL} \n"
-  pct exec $container -- bash -c "apt-get -y --purge autoremove && apt-get -y autoclean && bash <(curl -fsSL https://github.com/tteck/Proxmox/raw/dev/misc/clean.sh) && rm -rf /var/lib/apt/lists/* && apt-get update"
+  pct exec $container -- bash -c "apt-get -y --purge autoremove && apt-get -y autoclean && bash <(curl -fsSL https://github.com/tteck/Proxmox/raw/main/misc/clean.sh) && rm -rf /var/lib/apt/lists/* && apt-get update"
 }
 read -p "Skip stopped containers? [y/N]" -n 1 -r
 echo
