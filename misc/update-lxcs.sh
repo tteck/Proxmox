@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 function header_info {
   cat <<"EOF"
    __  __          __      __          __   _  ________
@@ -41,9 +41,9 @@ function update_container() {
   if [ "$os" == "alpine" ]; then
         pct exec $container -- ash -c "apk update && apk upgrade"
   elif [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] || [ "$os" == "devuan" ]; then
-        pct exec $container -- bash -c "apt-get update && apt-get upgrade -y && apt-get clean && apt-get --purge autoremove -y"
-  elif [ "$os" == "fedora" ]; then
-        pct exec $container -- bash -c "dnf -y update && dnf -y upgrade && dnf -y --purge autoremove"
+        pct exec $container -- bash -c "apt-get update && apt-get -y upgrade"
+  elif [ "$os" == "fedora" ] || [ "$os" == "rocky" ] || [ "$os" == "centos" ] || [ "$os" == "alma" ]; then
+        pct exec $container -- bash -c "dnf -y update && dnf -y upgrade"
   elif [ "$os" == "archlinux" ]; then
         pct exec $container -- bash -c "pacman -Syyu --noconfirm"
   else
