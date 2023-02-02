@@ -3,6 +3,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-02-02
+
+### Changed
+
+- **Audiobookshelf LXC** 
+  - NEW Script
+- **Rocky Linux LXC** 
+  - NEW Script
+
 ## 2023-01-28
 
 ### Changed
