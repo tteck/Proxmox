@@ -69,7 +69,7 @@ if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
     fi
 fi
 RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
-if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to $RESOLVEDIP"; fi
+if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 

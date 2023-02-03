@@ -70,7 +70,7 @@ if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
     fi
 fi
 RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
-if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to $RESOLVEDIP"; fi
+if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 
@@ -92,8 +92,7 @@ $STD dpkg -i daemonsync_2.2.0.0059_amd64.deb
 msg_ok "Installed Daemon Sync Server"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-passwd -S root | grep -q "P"
-if [ $? -ne 0 ]; then 
+if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
   rm /etc/motd
   rm /etc/update-motd.d/10-uname
