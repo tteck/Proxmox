@@ -36,14 +36,21 @@ if [ -z "$VALIDTMP" ]; then
   exit 1
 fi
 
-set -Eeuo pipefail
-trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
-function error_handler() {
-  local exit_code="$?"
-  local line_number="$1"
-  local command="$2"
-  local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
-  echo -e "\n$error_message\n"
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
+
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occurred."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
 }
 
 function select_storage() {
@@ -59,7 +66,7 @@ function select_storage() {
     CONTENT='vztmpl'
     CONTENT_LABEL='Container template'
     ;;
-  *) false;;
+  *) false || die "Invalid storage class." ;;
   esac
 
   local -a MENU
@@ -83,20 +90,21 @@ function select_storage() {
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
         "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
         16 $(($MSG_MAX_LENGTH + 23)) 6 \
-        "${MENU[@]}" 3>&1 1>&2 2>&3)"
+        "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
     done
     printf $STORAGE
   fi
 }
 
-[[ "${CTID:-}" ]]
-[[ "${PCT_OSTYPE:-}" ]]
+[[ "${CTID:-}" ]] || die "You need to set 'CTID' variable."
+[[ "${PCT_OSTYPE:-}" ]] || die "You need to set 'PCT_OSTYPE' variable."
 
-[ "$CTID" -ge "100" ]
+[ "$CTID" -ge "100" ] || die "ID cannot be less than 100."
 
 if pct status $CTID &>/dev/null; then
   echo -e "ID '$CTID' is already in use."
   unset CTID
+  die "Cannot use ID that is already in use."
 fi
 
 TEMPLATE_STORAGE=$(select_storage template) || exit
@@ -111,12 +119,13 @@ msg_ok "Updated LXC Template List"
 
 TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
-[ ${#TEMPLATES[@]} -gt 0 ]
+[ ${#TEMPLATES[@]} -gt 0 ] || die "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
 TEMPLATE="${TEMPLATES[-1]}"
 
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_info "Downloading LXC Template"
-  pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null
+  pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
+    die "A problem occured while downloading the LXC template."
   msg_ok "Downloaded LXC Template"
 fi
 
@@ -127,5 +136,6 @@ PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
 [[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=(-rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8})
 
 msg_info "Creating LXC Container"
-pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null
+pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
+  die "A problem occured while trying to create container."
 msg_ok "LXC Container ${BL}$CTID${CL} ${GN}was successfully created."
