@@ -98,7 +98,8 @@ msg_ok "Installed Hyperion"
 echo "export TERM='xterm-256color'" >>/root/.bashrc
 if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
-  chmod -x /etc/update-motd.d/*
+  OS=`awk '/^ostype/' temp | cut -d' ' -f2`
+if [ "$OS" == "debian" ]; then rm /etc/motd /etc/update-motd.d/10-uname; else chmod -x /etc/update-motd.d/*; fi
   touch ~/.hushlogin
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
   mkdir -p $(dirname $GETTY_OVERRIDE)
