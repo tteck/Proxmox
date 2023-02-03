@@ -85,8 +85,7 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-passwd -S root | grep -q "P"
-if [ $? -ne 0 ]; then 
+if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*
   touch ~/.hushlogin
