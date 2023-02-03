@@ -151,10 +151,7 @@ EOF
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
 fi
-if [[ "${SSH_ROOT}" == "yes" ]]; then
-  sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
-  systemctl restart sshd
-fi
+if [[ "${SSH_ROOT}" == "yes" ]]; then sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config; systemctl restart sshd; fi
 
 msg_info "Cleaning up"
 $STD apt-get autoremove
