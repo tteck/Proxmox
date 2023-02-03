@@ -335,7 +335,6 @@ function update_script() {
 clear
 header_info
 cd /opt/zigbee2mqtt
-#!/bin/bash
 
 stop_zigbee2mqtt() {
   if which systemctl 2> /dev/null > /dev/null; then
