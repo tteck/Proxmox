@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+if [ "$VERBOSE" == "yes" ]; then set -x;  STD=""; fi
+if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }
-if [ "$VERBOSE" == "yes" ]; then set -x; fi
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -9,7 +10,6 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 RETRY_NUM=10
 RETRY_EVERY=3
-NUM=$RETRY_NUM
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -74,7 +74,7 @@ if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
     fi
 fi
 RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
-if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to $RESOLVEDIP"; fi
+if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 alias die='EXIT=$? LINE=$LINENO error_exit'
 set -e
 
@@ -267,12 +267,11 @@ $STD systemctl enable --now paperless-consumer paperless-webserver paperless-sch
 
 msg_ok "Created Services"
 
-PASS=$(grep -w "root" /etc/shadow | cut -b6)
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-if [[ $PASS != $ ]]; then
+if ! getent shadow root | grep -q "^root:[^\!*]"; then
 	msg_info "Customizing Container"
-	rm /etc/motd
-	rm /etc/update-motd.d/10-uname
+OS=$(grep "^ID=" /etc/os-release | cut -d'=' -f2)
+if [ "$OS" == "debian" ]; then rm /etc/motd /etc/update-motd.d/10-uname; else chmod -x /etc/update-motd.d/*; fi
 	touch ~/.hushlogin
 	GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
 	mkdir -p $(dirname $GETTY_OVERRIDE)
@@ -285,6 +284,7 @@ EOF
 	systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
 	msg_ok "Customized Container"
 fi
+if [[ "${SSH_ROOT}" == "yes" ]]; then sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config; systemctl restart sshd; fi
 
 msg_info "Cleaning up"
 $STD apt-get autoremove
