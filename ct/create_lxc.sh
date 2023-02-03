@@ -59,7 +59,7 @@ function select_storage() {
     CONTENT='vztmpl'
     CONTENT_LABEL='Container template'
     ;;
-  *) false || die "Invalid storage class." ;;
+  *) false;;
   esac
 
   local -a MENU
@@ -83,21 +83,20 @@ function select_storage() {
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
         "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
         16 $(($MSG_MAX_LENGTH + 23)) 6 \
-        "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
+        "${MENU[@]}" 3>&1 1>&2 2>&3)"
     done
     printf $STORAGE
   fi
 }
 
-[[ "${CTID:-}" ]] || die "You need to set 'CTID' variable."
-[[ "${PCT_OSTYPE:-}" ]] || die "You need to set 'PCT_OSTYPE' variable."
+[[ "${CTID:-}" ]]
+[[ "${PCT_OSTYPE:-}" ]]
 
-[ "$CTID" -ge "100" ] || die "ID cannot be less than 100."
+[ "$CTID" -ge "100" ]
 
 if pct status $CTID &>/dev/null; then
   echo -e "ID '$CTID' is already in use."
   unset CTID
-  die "Cannot use ID that is already in use."
 fi
 
 TEMPLATE_STORAGE=$(select_storage template) || exit
@@ -112,13 +111,12 @@ msg_ok "Updated LXC Template List"
 
 TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
-[ ${#TEMPLATES[@]} -gt 0 ] || die "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
+[ ${#TEMPLATES[@]} -gt 0 ]
 TEMPLATE="${TEMPLATES[-1]}"
 
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_info "Downloading LXC Template"
-  pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
-    die "A problem occured while downloading the LXC template."
+  pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null
   msg_ok "Downloaded LXC Template"
 fi
 
@@ -129,6 +127,5 @@ PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
 [[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=(-rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8})
 
 msg_info "Creating LXC Container"
-pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
-  die "A problem occured while trying to create container."
+pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null
 msg_ok "LXC Container ${BL}$CTID${CL} ${GN}was successfully created."
