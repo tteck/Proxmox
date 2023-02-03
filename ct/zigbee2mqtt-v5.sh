@@ -365,7 +365,7 @@ fi
 
 stop_zigbee2mqtt
 
-echo "Creating backup of configuration..."
+echo "Generating a backup of the configuration..."
 cp -R data data-backup || { echo "Failed to create backup."; exit 1; }
 
 echo "Initiating update"
