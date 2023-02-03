@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$VERBOSE" == "yes" ]; then set -x;  STD=""; fi
 if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
