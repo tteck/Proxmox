@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-silent() { "$@" > /dev/null 2>&1; }
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
+silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -9,7 +10,6 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 RETRY_NUM=10
 RETRY_EVERY=3
-NUM=$RETRY_NUM
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -267,9 +267,9 @@ $STD systemctl enable --now paperless-consumer paperless-webserver paperless-sch
 
 msg_ok "Created Services"
 
-PASS=$(grep -w "root" /etc/shadow | cut -b6)
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-if [[ $PASS != $ ]]; then
+passwd -S root | grep -q "P"
+if [ $? -ne 0 ]; then 
 	msg_info "Customizing Container"
 	rm /etc/motd
 	rm /etc/update-motd.d/10-uname

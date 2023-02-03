@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-silent() { "$@" > /dev/null 2>&1; }
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
+silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -9,7 +10,6 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 RETRY_NUM=10
 RETRY_EVERY=3
-NUM=$RETRY_NUM
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
@@ -42,15 +42,18 @@ function msg_error() {
 msg_info "Setting up Container OS"
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-while [ "$(hostname -I)" = "" ]; do
+for ((i=RETRY_NUM; i>0; i--)); do
+  if [ "$(hostname -I)" != "" ]; then
+    break
+  fi
   echo 1>&2 -en "${CROSS}${RD} No Network! "
   sleep $RETRY_EVERY
-  ((NUM--))
-  if [ $NUM -eq 0 ]; then
-    echo 1>&2 -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
-    exit 1
-  fi
 done
+if [ "$(hostname -I)" = "" ]; then
+  echo 1>&2 -e "\n${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
+  echo -e " 🖧  Check Network Settings"
+  exit 1
+fi
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
@@ -108,9 +111,9 @@ chmod +x /opt/Kavita/* && chown root /opt/Kavita/*
 systemctl enable --now -q kavita.service
 msg_ok "Created Service"
 
-PASS=$(grep -w "root" /etc/shadow | cut -b6)
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-if [[ $PASS != $ ]]; then
+passwd -S root | grep -q "P"
+if [ $? -ne 0 ]; then 
   msg_info "Customizing Container"
   chmod -x /etc/update-motd.d/*
   touch ~/.hushlogin

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-silent() { "$@" > /dev/null 2>&1; }
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
+silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -9,26 +10,18 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 RETRY_NUM=10
 RETRY_EVERY=3
-NUM=$RETRY_NUM
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occurred."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  exit $EXIT
+set -Eeuo pipefail
+trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
+function error_handler() {
+  local exit_code="$?"
+  local line_number="$1"
+  local command="$2"
+  local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: w>
+  echo -e "\n$error_message\n"
 }
 
 function msg_info() {
@@ -49,15 +42,18 @@ function msg_error() {
 msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-while [ "$(hostname -I)" = "" ]; do
+for ((i=RETRY_NUM; i>0; i--)); do
+  if [ "$(hostname -I)" != "" ]; then
+    break
+  fi
   echo 1>&2 -en "${CROSS}${RD} No Network! "
   sleep $RETRY_EVERY
-  ((NUM--))
-  if [ $NUM -eq 0 ]; then
-    echo 1>&2 -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
-    exit 1
-  fi
 done
+if [ "$(hostname -I)" = "" ]; then
+  echo 1>&2 -e "\n${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
+  echo -e " 🖧  Check Network Settings"
+  exit 1
+fi
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
@@ -100,9 +96,9 @@ $STD apt-get -y install mosquitto
 $STD apt-get -y install mosquitto-clients
 msg_ok "Installed Mosquitto MQTT Broker"
 
-PASS=$(grep -w "root" /etc/shadow | cut -b6)
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-if [[ $PASS != $ ]]; then
+passwd -S root | grep -q "P"
+if [ $? -ne 0 ]; then 
   msg_info "Customizing Container"
   rm /etc/motd
   rm /etc/update-motd.d/10-uname
