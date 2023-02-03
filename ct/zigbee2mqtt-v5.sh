@@ -335,40 +335,57 @@ function update_script() {
 clear
 header_info
 cd /opt/zigbee2mqtt
-msg_info "Checking for Backup Directory"
+#!/bin/bash
+
+stop_zigbee2mqtt() {
+  if which systemctl 2> /dev/null > /dev/null; then
+    echo "Shutting down Zigbee2MQTT..."
+    sudo systemctl stop zigbee2mqtt
+  else
+    echo "Skipped stopping Zigbee2MQTT, no systemctl found"
+  fi
+}
+
+start_zigbee2mqtt() {
+  if which systemctl 2> /dev/null > /dev/null; then
+    echo "Starting Zigbee2MQTT..."
+    sudo systemctl start zigbee2mqtt
+  else
+    echo "Skipped starting Zigbee2MQTT, no systemctl found"
+  fi
+}
+
+set -e
+
 if [ -d data-backup ]; then
-   echo "ERROR: Backup directory exists. May be previous restoring was failed?"
-   echo "1. Save 'data-backup' and 'data' dirs to safe location to make possibility to restore config later."
-   echo "2. Manually delete 'data-backup' dir and try again."
-   exit 1
+  echo "ERROR: Backup directory exists. May be previous restoring was failed?"
+  echo "1. Save 'data-backup' and 'data' dirs to safe location to make possibility to restore config later."
+  echo "2. Manually delete 'data-backup' dir and try again."
+  exit 1
 fi
-msg_ok "No Backup Directory Exists"
 
-msg_info "Stopping Zigbee2MQTT"
-systemctl stop zigbee2mqtt
-msg_ok "Stopped Zigbee2MQTT"
+stop_zigbee2mqtt
 
-msg_info "Creating Backup of Configuration"
-cp -R data data-backup
-msg_ok "Created Backup of Configuration"
+echo "Creating backup of configuration..."
+cp -R data data-backup || { echo "Failed to create backup."; exit 1; }
 
-msg_info "Updating Zigbee2MQTT"
-git pull &>/dev/null
-msg_ok "Updated Zigbee2MQTT"
+echo "Initiating update"
+if ! git pull; then
+  echo "Update failed, temporarily storing changes and trying again."
+  git stash && git pull || (echo "Update failed even after storing changes. Aborting."; exit 1)
+fi
 
-msg_info "Installing Dependencies"
-npm ci &>/dev/null
-msg_ok "Installed Dependencies"
+echo "Acquiring necessary components..."
+npm ci || { echo "Failed to install necessary components."; exit 1; }
 
-msg_info "Restoring Configuration"
-cp -R data-backup/* data
-rm -rf data-backup
-msg_ok "Restored Configuration"
+echo "Restoring configuration..."
+cp -R data-backup/* data || { echo "Failed to restore configuration."; exit 1; }
 
-msg_info "Starting Zigbee2MQTT"
-systemctl start zigbee2mqtt
-msg_ok "Started Zigbee2MQTT"
-msg_ok "Update Successful"
+rm -rf data-backup || { echo "Failed to remove backup directory."; exit 1; }
+
+start_zigbee2mqtt
+
+echo "Done!"
 exit
 }
 clear
