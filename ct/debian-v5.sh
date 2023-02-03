@@ -155,6 +155,7 @@ function advanced_settings() {
     fi
   fi
   CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  if [ $? -ne 0 ]; then exit 0; fi
   exitstatus=$?
   if [ -z $CT_ID ]; then
     CT_ID="$NEXTID"
