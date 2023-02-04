@@ -40,7 +40,7 @@ function update_container() {
   os=`awk '/^ostype/' temp | cut -d' ' -f2`
   if [ "$os" == "alpine" ]; then
         pct exec $container -- ash -c "apk update && apk upgrade"
-  elif [ "$os" == "ubuntu" ] || [ "$os" == "debian" ] || [ "$os" == "devuan" ]; then
+  elif [ "$os" == "ubuntu" ] || [ "$PCT_OSTYPE" == "debian" ] || [ "$os" == "devuan" ]; then
         pct exec $container -- bash -c "apt-get update && apt-get -y upgrade"
   elif [ "$os" == "fedora" ] || [ "$os" == "rocky" ] || [ "$os" == "centos" ] || [ "$os" == "alma" ]; then
         pct exec $container -- bash -c "dnf -y update && dnf -y upgrade"
