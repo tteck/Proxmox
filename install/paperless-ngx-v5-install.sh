@@ -74,12 +74,21 @@ $STD apt-get update
 $STD apt-get -y upgrade
 msg_ok "Updated Container OS"
 
-msg_info "Installing Paperless-ngx Dependencies"
+msg_info "Installing Python3"
 $STD apt-get install -y --no-install-recommends \
 	python3 \
 	python3-pip \
 	python3-dev \
-	imagemagick \
+	python3-setuptools \
+	python3-wheel 
+msg_ok "Installed Python3"
+
+msg_info "Installing Dependencies (Patience)"
+$STD apt-get install -y --no-install-recommends \
+	redis \
+	postgresql \
+	build-essential \
+        imagemagick \
 	fonts-liberation \
 	optipng \
 	gnupg \
@@ -89,11 +98,19 @@ $STD apt-get install -y --no-install-recommends \
 	libzbar0 \
 	poppler-utils \
 	default-libmysqlclient-dev \
+	automake \
+	libtool \
+	pkg-config \
+	git \
+	curl \
+	libtiff-dev \
+	libpng-dev \
+	libleptonica-dev \
 	sudo \
 	mc
-msg_ok "Installed Paperless-ngx Dependencies"
+msg_ok "Installed Dependencies"
 
-msg_info "Installing OCR Dependencies"
+msg_info "Installing OCR Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
 	unpaper \
 	ghostscript \
@@ -107,26 +124,7 @@ $STD apt-get install -y --no-install-recommends \
 	tesseract-ocr-eng
 msg_ok "Installed OCR Dependencies"
 
-msg_info "Installing Extra Dependencies"
-$STD apt-get install -y --no-install-recommends \
-	redis \
-	postgresql \
-	build-essential \
-	python3-setuptools \
-	python3-wheel
-msg_ok "Installed Extra Dependencies"
-
 msg_info "Installing JBIG2"
-$STD apt-get install -y --no-install-recommends \
-	automake \
-	libtool \
-	pkg-config \
-	git \
-	curl \
-	libtiff-dev \
-	libpng-dev \
-	libleptonica-dev
-
 $STD git clone https://github.com/agl/jbig2enc /opt/jbig2enc
 cd /opt/jbig2enc
 $STD bash ./autogen.sh
@@ -144,36 +142,30 @@ $STD tar -xf paperless-ngx-$Paperlessngx.tar.xz -C /opt/
 mv paperless-ngx paperless
 rm paperless-ngx-$Paperlessngx.tar.xz
 cd /opt/paperless
-
 ## python 3.10+ doesn't like the '-e', so we remove it from this the requirements file
 sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
-
 $STD pip install --upgrade pip
 $STD pip install -r requirements.txt
+$STD python3 -m nltk.downloader -d /usr/share/nltk_data stopwords
 msg_ok "Installed Paperless-ngx"
 
 msg_info "Setting up database"
 DB_USER=paperless
 DB_PASS="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13)"
 DB_NAME=paperlessdb
-
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
-
 echo "Paperless-ngx Database User" >>~/paperless.creds
 echo $DB_USER >>~/paperless.creds
 echo "Paperless-ngx Database Password" >>~/paperless.creds
 echo $DB_PASS >>~/paperless.creds
 echo "Paperless-ngx Database Name" >>~/paperless.creds
 echo $DB_NAME >>~/paperless.creds
-
 mkdir -p {consume,media}
-
 sed -i -e 's|#PAPERLESS_DBNAME=paperless|PAPERLESS_DBNAME=paperlessdb|' /opt/paperless/paperless.conf
 sed -i -e "s|#PAPERLESS_DBPASS=paperless|PAPERLESS_DBPASS=$DB_PASS|" /opt/paperless/paperless.conf
 SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 sed -i -e "s|#PAPERLESS_SECRET_KEY=change-me|PAPERLESS_SECRET_KEY=$SECRET_KEY|" /opt/paperless/paperless.conf
-
 cd /opt/paperless/src
 $STD python3 manage.py migrate
 msg_ok "Set up database"
