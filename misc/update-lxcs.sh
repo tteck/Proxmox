@@ -40,7 +40,7 @@ function update_container() {
     alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
     archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
     fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
-    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update && apt-get -y upgrade" ;;
+    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update && apt-get -y dist-upgrade" ;;
   esac
 }
 header_info
