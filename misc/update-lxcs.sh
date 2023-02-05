@@ -66,6 +66,5 @@ for container in $containers; do
   fi
 done
 wait
-rm -rf temp
 header_info
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
