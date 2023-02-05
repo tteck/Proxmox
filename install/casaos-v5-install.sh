@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-if [ "$VERBOSE" == "yes" ]; then set -x;  STD=""; fi
-if [ "$VERBOSE" != "yes" ]; then STD="silent"; fi
+if [ "$VERBOSE" = "yes" ]; then set -x; STD=""; else STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
 YW=$(echo "\033[33m")
@@ -58,7 +57,7 @@ msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
 set +e
-if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
+if ping -c 1 -W 1 1.1.1.1 &> /dev/null; then msg_ok "Internet Connected"; else
   msg_error "Internet NOT Connected"
     read -r -p "Would you like to continue anyway? <y/N> " prompt
     if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
@@ -68,7 +67,7 @@ if nc -zw1 8.8.8.8 443; then msg_ok "Internet Connected"; else
       exit 1
     fi
 fi
-RESOLVEDIP=$(nslookup "github.com" | awk -F':' '/^Address: / { matched = 1 } matched { print $2}' | xargs)
+RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 set -e
 
