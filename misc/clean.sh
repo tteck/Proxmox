@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 function header_info() {
-  cat <<"EOF"
+clear
+cat <<"EOF"
    ________                    __   _  ________
   / ____/ /__  ____ _____     / /  | |/ / ____/
  / /   / / _ \/ __ `/ __ \   / /   |   / /     
@@ -13,7 +14,6 @@ BL=$(echo "\033[36m")
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 name=$(hostname)
-clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
 cache=$(find /var/cache/ -type f)
@@ -32,7 +32,6 @@ else
     sleep 2
   fi
 fi
-clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
 logs=$(find /var/log/ -type f)
@@ -51,7 +50,6 @@ else
     sleep 2
   fi
 fi
-clear
 header_info
 echo -e "${BL}[Info]${GN} Cleaning $name${CL} \n"
 echo -e "${GN}Populating apt lists${CL} \n"
