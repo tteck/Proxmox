@@ -71,6 +71,11 @@ RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 set -e
 
+cat <<EOF >/etc/apt/sources.list
+deb http://archive.linux.duke.edu/ubuntu/ jammy main 
+deb-src http://archive.linux.duke.edu/ubuntu/ jammy main 
+EOF
+
 msg_info "Updating Container OS"
 $STD apt-get update
 $STD apt-get -y upgrade
