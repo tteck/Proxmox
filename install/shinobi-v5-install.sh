@@ -86,7 +86,7 @@ if [ "$ubuntuversion" = "18" ] || [ "$ubuntuversion" -le "18" ]; then
 fi
 
 msg_info "Installing Dependencies"
-$STD apt-get install -y curl sudo git mc
+$STD apt-get install -y curl sudo git
 $STD apt-get install -y make zip net-tools
 $STD apt-get install -y gcc g++ cmake
 msg_ok "Installed Dependencies"
