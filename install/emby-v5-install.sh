@@ -79,7 +79,6 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
-$STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
