@@ -376,7 +376,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/c
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/install/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
