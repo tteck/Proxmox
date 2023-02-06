@@ -114,6 +114,7 @@ if ! getent shadow root | grep -q "^root:[^\!*]"; then
   mkdir -p $(dirname $GETTY_OVERRIDE)
   cat <<EOF >$GETTY_OVERRIDE
 [Service]
+ExecStart=
 ExecStart=-/sbin/agetty --autologin root --noclear --keep-baud tty%I 115200,38400,9600 \$TERM
 EOF
   systemctl daemon-reload
