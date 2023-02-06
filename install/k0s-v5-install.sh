@@ -103,7 +103,7 @@ $STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/
 msg_ok "Installed Helm"
 fi
 echo "export TERM='xterm-256color'" >>/root/.bashrc
-echo -e "\n${APPLICATION} LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
+echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 chmod -x /etc/update-motd.d/*
 if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
