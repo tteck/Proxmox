@@ -72,8 +72,8 @@ if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS
 set -e
 
 cat <<EOF >/etc/apt/sources.list
-deb http://archive.linux.duke.edu/ubuntu/ jammy main 
-deb-src http://archive.linux.duke.edu/ubuntu/ jammy main 
+deb http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ jammy main 
+deb-src http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ jammy main 
 EOF
 
 msg_info "Updating Container OS"
