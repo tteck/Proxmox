@@ -98,8 +98,8 @@ fi
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
   CT_TYPE="1"
-  echo -e "${DGN}Using Root Password: ${BGN}devuan${CL}"
-  PW="-password devuan"
+  echo -e "${DGN}Using Root Password: ${BGN}$NSAPP${CL}"
+  PW="-password $NSAPP"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   CT_ID=$NEXTID
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
@@ -143,11 +143,11 @@ function advanced_settings() {
   if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
   fi
-  PW1=$(whiptail --inputbox "Set Root Password" 8 58 --title "PASSWORD (leave blank for devuan)" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  PW1=$(whiptail --inputbox "Set Root Password" 8 58 $NSAPP --title "ROOT PASSWORD" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $PW1 ]; then
-      PW1="devuan" PW="-password devuan"
+      PW1="$NSAPP" PW="-password $NSAPP"
       echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
     else
       PW="-password $PW1"
