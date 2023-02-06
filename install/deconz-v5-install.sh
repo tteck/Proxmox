@@ -71,6 +71,12 @@ RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 set -e
 
+CODENAME=$(cat /etc/*release | grep "UBUNTU_CODENAME" | awk '{print substr($1, 17, length($1)) }')
+cat <<EOF >/etc/apt/sources.list
+deb http://mirror.genesisadaptive.com/ubuntu/ $CODENAME main 
+deb-src http://mirror.genesisadaptive.com/ubuntu/ $CODENAME main 
+EOF
+
 msg_info "Updating Container OS"
 $STD apt-get update
 $STD apt-get -y upgrade
