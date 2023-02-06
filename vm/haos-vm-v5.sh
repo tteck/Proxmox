@@ -274,7 +274,7 @@ else
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+msg_info "Retrieving the URL for Home Assistant ${BRANCH} Disk Image"
 if [ "$BRANCH" == "$DEV" ]; then 
 URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 else
