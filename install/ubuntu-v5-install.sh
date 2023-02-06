@@ -71,9 +71,10 @@ RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 set -e
 
+DISTRO=$(cat /etc/*release | grep "UBUNTU_CODENAME" | awk '{print substr($1, 17, length($1)) }')
 cat <<EOF >/etc/apt/sources.list
-deb http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ jammy main 
-deb-src http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ jammy main 
+deb http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ $DISTRO main 
+deb-src http://mirror.vcu.edu/pub/gnu+linux/ubuntu/ $DISTRO main 
 EOF
 
 msg_info "Updating Container OS"
