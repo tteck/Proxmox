@@ -105,10 +105,10 @@ $STD systemctl enable --now whoogle.service
 msg_ok "Installed Whoogle"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
+echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
+chmod -x /etc/update-motd.d/*
 if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
-if [ "$PCT_OSTYPE" == "debian" ]; then rm -rf /etc/motd /etc/update-motd.d/10-uname; else chmod -x /etc/update-motd.d/*; fi
-  touch ~/.hushlogin
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
   mkdir -p $(dirname $GETTY_OVERRIDE)
   cat <<EOF >$GETTY_OVERRIDE

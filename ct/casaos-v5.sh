@@ -363,6 +363,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 export ST=$FUSE
 export DISABLEIPV6=$DISABLEIP6
+export APPLICATION=$APP
 export VERBOSE=$VERB
 export SSH_ROOT=${SSH}
 export CTID=$CT_ID

@@ -71,6 +71,12 @@ RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
 if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
 set -e
 
+CODENAME=$(cat /etc/*release | grep "UBUNTU_CODENAME" | awk '{print substr($1, 17, length($1)) }')
+cat <<EOF >/etc/apt/sources.list
+deb http://mirror.genesisadaptive.com/ubuntu/ $CODENAME main 
+deb-src http://mirror.genesisadaptive.com/ubuntu/ $CODENAME main 
+EOF
+
 msg_info "Updating Container OS"
 $STD apt-get update
 $STD apt-get -y upgrade
@@ -79,7 +85,6 @@ msg_ok "Updated Container OS"
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
-$STD apt-get install -y mc
 $STD apt-get install -y gnupg
 $STD apt-get install -y openjdk-8-jre-headless
 $STD apt-get install -y jsvc
@@ -93,10 +98,10 @@ $STD dpkg -i Omada_SDN_Controller_v5.7.4_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
+echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
+chmod -x /etc/update-motd.d/*
 if ! getent shadow root | grep -q "^root:[^\!*]"; then
   msg_info "Customizing Container"
-if [ "$PCT_OSTYPE" == "debian" ]; then rm -rf /etc/motd /etc/update-motd.d/10-uname; else chmod -x /etc/update-motd.d/*; fi
-  touch ~/.hushlogin
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
   mkdir -p $(dirname $GETTY_OVERRIDE)
   cat <<EOF >$GETTY_OVERRIDE
