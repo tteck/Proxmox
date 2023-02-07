@@ -89,7 +89,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Omada Controller v5.8.4"
 wget -qL https://static.tp-link.com/upload/software/2023/202301/20230130/Omada_SDN_Controller_v5.8.4_Linux_x64.tar.gz
-$STD dpkg -i Omada_SDN_Controller_v5.7.4_Linux_x64.deb
+$STD dpkg -i Omada_SDN_Controller_v5.8.4_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
