@@ -356,6 +356,7 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
 msg_ok "Update Successfull"
 exit
+fi
 if [ "$UPD" == "2" ]; then
 msg_info "Installing Home Assistant Comunity Store (HACS)"
 apt update &>/dev/null
