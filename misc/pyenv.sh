@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 set -e
 YW=$(echo "\033[33m")
 RD=$(echo "\033[01;31m")
@@ -108,7 +114,13 @@ python3 -m pip install wheel &>/dev/null
 pip3 install --upgrade pip &>/dev/null
 pip3 install --pre esphome &>/dev/null
 cat <<EOF >/srv/esphome/start.sh
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 source /srv/esphome/bin/activate
 esphome dashboard /srv/esphome/
 EOF
