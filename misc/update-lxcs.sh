@@ -31,7 +31,6 @@ clear
 containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 function update_container() {
   container=$1
-  clear
   header_info
   name=$(pct exec "$container" hostname)
   echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} \n"
