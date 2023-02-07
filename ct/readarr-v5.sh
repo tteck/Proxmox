@@ -336,10 +336,10 @@ function install_script() {
 function update_script() {
 clear
 header_info
-msg_info "Updating Debian LXC"
+msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated Debian LXC"
+msg_ok "Updated $APP LXC"
 exit
 }
 clear
