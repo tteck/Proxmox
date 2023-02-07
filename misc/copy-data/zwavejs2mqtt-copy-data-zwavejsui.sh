@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 # Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC
 # run from the Proxmox Shell
 clear

@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 export DEBIAN_FRONTEND=noninteractive
 if [ "$VERBOSE" = "yes" ]; then set -x; STD=""; else STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }

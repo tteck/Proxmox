@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
