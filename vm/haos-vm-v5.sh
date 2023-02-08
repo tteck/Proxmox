@@ -19,12 +19,11 @@ clear
 header_info
 echo -e "\n Loading..."
 GEN_MAC=02:$(openssl rand -hex 5 | sed 's/\(..\)/\1:/g; s/.$//' | tr '[:lower:]' '[:upper:]')
-USEDID=$(pvesh get /cluster/resources --type vm --output-format yaml | egrep -i 'vmid' | awk '{print substr($2, 1, length($2)-0) }')
 NEXTID=$(pvesh get /cluster/nextid)
-STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
-BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
-DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
-LATEST=$(curl -s https://api.github.com/repos/home-assistant/operating-system/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | cut -d '"' -f 4)
+BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | cut -d '"' -f 4)
+DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | cut -d '"' -f 4)
+LATEST=$(curl -s https://api.github.com/repos/home-assistant/operating-system/releases/latest | grep "tag_name" | cut -d '"' -f 4)
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 HA=`echo "\033[1;34m"`
@@ -69,13 +68,12 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if (whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58); then
-    echo "User selected Yes"
+if whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58; then
+  :
 else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
+  clear && echo -e "⚠ User exited script \n" && exit
 fi
+
 function msg_info() {
     local msg="$1"
     echo -ne " ${HOLD} ${YW}${msg}..."
@@ -100,7 +98,7 @@ fi
 function ARCH_CHECK() {
   ARCH=$(dpkg --print-architecture)
   if [[ "$ARCH" != "amd64" ]]; then
-    echo -e "\n ❌  This script will not work with PiMox! \n"
+    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
     exit
@@ -141,20 +139,24 @@ BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-b
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"; fi
-VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
-exitstatus=$?
-if [ -z $VMID ]; then VMID="$NEXTID"; echo -e "${DGN}Virtual Machine: ${BGN}$VMID${CL}";
+while true; do
+  VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ -z "$VMID" ]; then
+    VMID="$NEXTID"
+    echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
+    break
   else
-    if echo "$USEDID" | egrep -q "$VMID"
-    then
-      echo -e "\n🚨  ${RD}ID $VMID is already in use${CL} \n"
-      echo -e "Exiting Script \n"
-      sleep 2;
-      exit
-  else
-    if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi;
+    if pct status "$VMID" &>/dev/null || qm status "$VMID" &>/dev/null; then
+      echo -e "${CROSS}${RD} ID $VMID is already in use${CL}"
+      sleep 2
+      continue
     fi
-fi
+    echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
+    break
+  fi
+done
+
 MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
 "i440fx" "Machine i440fx" ON \
 "q35" "Machine q35" OFF \
