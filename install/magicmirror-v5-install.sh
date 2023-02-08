@@ -47,15 +47,18 @@ function msg_error() {
 msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-while [ "$(hostname -I)" = "" ]; do
-        echo 1>&2 -en "${CROSS}${RD} No Network! "
-        sleep $RETRY_EVERY
-        ((NUM--))
-        if [ $NUM -eq 0 ]; then
-                echo 1>&2 -e "${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
-                exit 1
-        fi
+for ((i=RETRY_NUM; i>0; i--)); do
+  if [ "$(hostname -I)" != "" ]; then
+    break
+  fi
+  echo 1>&2 -en "${CROSS}${RD} No Network! "
+  sleep $RETRY_EVERY
 done
+if [ "$(hostname -I)" = "" ]; then
+  echo 1>&2 -e "\n${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
+  echo -e " 🖧  Check Network Settings"
+  exit 1
+fi
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(hostname -I)"
 
