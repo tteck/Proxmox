@@ -102,30 +102,30 @@ function ARCH_CHECK() {
   fi
 }
 function default_settings() {
-        echo -e "${DGN}Using HAOS Version: ${BGN}${stable}${CL}"
-        BRANCH=${stable}
-        echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
-        VMID=$NEXTID
-        echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
-        FORMAT=",efitype=4m"
-        MACHINE=""
-        echo -e "${DGN}Using Hostname: ${BGN}haos${stable}${CL}"
-        HN=haos${stable}
-        echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
-        CORE_COUNT="2"
-        echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
-        RAM_SIZE="4096"
-        echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
-        BRG="vmbr0"
-        echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
-        MAC=$GEN_MAC
-        echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
-        VLAN=""
-        echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
-        MTU=""
-        echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
-        START_VM="yes"
-        echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
+  BRANCH="$stable"
+  VMID="$NEXTID"
+  FORMAT=",efitype=4m"
+  MACHINE=""
+  HN="haos$stable"
+  CORE_COUNT="2"
+  RAM_SIZE="4096"
+  BRG="vmbr0"
+  MAC="$GEN_MAC"
+  VLAN=""
+  MTU=""
+  START_VM="yes"
+  echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
+  echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
+  echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
+  echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
+  echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
+  echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
+  echo -e "${DGN}Using Bridge: ${BGN}${BRG}${CL}"
+  echo -e "${DGN}Using MAC Address: ${BGN}${MAC}${CL}"
+  echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
+  echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+  echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
+  echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
 BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
