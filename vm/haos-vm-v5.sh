@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "\n Loading..."
-GEN_MAC=02:$(openssl rand -hex 5 | sed 's/\(..\)/\1:/g; s/.$//' | tr '[:lower:]' '[:upper:]')
+GEN_MAC=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
 NEXTID=$(pvesh get /cluster/nextid)
 VERSIONS=( stable beta dev )
 for version in "${VERSIONS[@]}"; do
