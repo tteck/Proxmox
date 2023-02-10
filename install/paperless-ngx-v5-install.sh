@@ -154,8 +154,11 @@ cd /opt/paperless
 sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
 $STD pip install --upgrade pip
 $STD pip install -r requirements.txt
-$STD python3 -m nltk.downloader -d /usr/share/nltk_data all
 msg_ok "Installed Paperless-ngx"
+
+msg_info "Installing Natural Language Toolkit (Patience)"
+$STD python3 -m nltk.downloader -d /usr/share/nltk_data all
+msg_ok "Installed Natural Language Toolkit"
 
 msg_info "Setting up database"
 DB_USER=paperless
