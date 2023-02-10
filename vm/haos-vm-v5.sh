@@ -20,10 +20,10 @@ header_info
 echo -e "\n Loading..."
 GEN_MAC=02:$(openssl rand -hex 5 | sed 's/\(..\)/\1:/g; s/.$//' | tr '[:lower:]' '[:upper:]')
 NEXTID=$(pvesh get /cluster/nextid)
-STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | cut -d '"' -f 4)
-BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | cut -d '"' -f 4)
-DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | cut -d '"' -f 4)
-LATEST=$(curl -s https://api.github.com/repos/home-assistant/operating-system/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+VERSIONS=( stable beta dev )
+for version in "${VERSIONS[@]}"; do
+  eval "$version=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/$version.json | grep "ova" | cut -d '"' -f 4)"
+done
 YW=`echo "\033[33m"`
 BL=`echo "\033[36m"`
 HA=`echo "\033[1;34m"`
@@ -102,15 +102,15 @@ function ARCH_CHECK() {
   fi
 }
 function default_settings() {
-        echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
-        BRANCH=${STABLE}
+        echo -e "${DGN}Using HAOS Version: ${BGN}${stable}${CL}"
+        BRANCH=${stable}
         echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
         VMID=$NEXTID
         echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
         FORMAT=",efitype=4m"
         MACHINE=""
-        echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
-        HN=haos${STABLE}
+        echo -e "${DGN}Using Hostname: ${BGN}haos${stable}${CL}"
+        HN=haos${stable}
         echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
         CORE_COUNT="2"
         echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
@@ -128,11 +128,10 @@ function default_settings() {
         echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
-BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 4 \
-"$STABLE" "Stable" ON \
-"$BETA" "Beta" OFF \
-"$DEV" "Dev" OFF \
-"$LATEST" "Latest" OFF \
+BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
+"$stable" "Stable  " ON \
+"$beta" "Beta  " OFF \
+"$dev" "Dev  " OFF \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"; fi
@@ -277,7 +276,7 @@ fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Retrieving the URL for Home Assistant ${BRANCH} Disk Image"
-if [ "$BRANCH" == "$DEV" ]; then 
+if [ "$BRANCH" == "$dev" ]; then 
 URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 else
 URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
