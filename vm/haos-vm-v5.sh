@@ -6,6 +6,7 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
+clear
 cat <<"EOF"
     __  __                        ___              _      __              __     ____  _____
    / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____v5/ /_   / __ \/ ___/
@@ -15,7 +16,6 @@ cat <<"EOF"
 
 EOF
 }
-clear
 header_info
 echo -e "\n Loading..."
 GEN_MAC=02:$(openssl rand -hex 5 | sed 's/\(..\)/\1:/g; s/.$//' | tr '[:lower:]' '[:upper:]')
@@ -55,11 +55,9 @@ function error_exit() {
   exit $EXIT
 }
 function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
-    fi
-    qm destroy $VMID
+  if qm status $VMID &>/dev/null; then
+    qm stop $VMID &>/dev/null
+    qm destroy $VMID &>/dev/null
   fi
 }
 function cleanup() {
@@ -71,7 +69,7 @@ pushd $TEMP_DIR >/dev/null
 if whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58; then
   :
 else
-  clear && echo -e "⚠ User exited script \n" && exit
+  header_info && echo -e "⚠ User exited script \n" && exit
 fi
 
 function msg_info() {
@@ -87,17 +85,16 @@ function msg_error() {
     echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 function PVE_CHECK() {
-if [ `pveversion | grep "pve-manager/7.2\|7.3" | wc -l` -ne 1 ]; then
-        echo "⚠ This version of Proxmox Virtual Environment is not supported"
-        echo "Requires PVE Version: =>7.2"
-        echo "Exiting..."
-        sleep 2
-        exit
+if [ $(pveversion | grep -c "pve-manager/7\.[2-9]") -eq 0 ]; then
+  echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 7.2 or higher"
+  echo -e "Exiting..."
+  sleep 2
+  exit
 fi
 }
 function ARCH_CHECK() {
-  ARCH=$(dpkg --print-architecture)
-  if [[ "$ARCH" != "amd64" ]]; then
+  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
     echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
@@ -232,7 +229,6 @@ fi
 if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
 else
-  clear
   header_info
   echo -e "${RD}Using Advanced Settings${CL}"
   advanced_settings
@@ -240,12 +236,10 @@ fi
 }
 function START_SCRIPT() {
 if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
-  clear
   header_info
   echo -e "${BL}Using Default Settings${CL}"
   default_settings
 else
-  clear
   header_info
   echo -e "${RD}Using Advanced Settings${CL}"
   advanced_settings
