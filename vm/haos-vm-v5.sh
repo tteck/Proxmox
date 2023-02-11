@@ -37,22 +37,16 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 THIN="discard=on,ssd=1,"
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
+set -Eeuo pipefail
+trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 trap cleanup EXIT
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occurred."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  [ ! -z ${VMID-} ] && cleanup_vmid
-  exit $EXIT
+function error_handler() {
+  local exit_code="$?"
+  local line_number="$1"
+  local command="$2"
+  local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
+  echo -e "\n$error_message\n"
+  cleanup_vmid
 }
 function cleanup_vmid() {
   if qm status $VMID &>/dev/null; then
