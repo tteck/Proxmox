@@ -3,6 +3,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-02-10
+
+### Changed
+
+- **Home Assistant OS VM** 
+  - Code Refactoring
+
 ## 2023-02-05
 
 ### Changed
