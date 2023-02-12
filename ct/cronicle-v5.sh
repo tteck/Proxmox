@@ -307,6 +307,7 @@ function install_script() {
 ARCH_CHECK
 PVE_CHECK
 header_info
+NEXTID=$(pvesh get /cluster/nextid)
 SERVER="y"
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
