@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
    ______                 _      __   
   / ____/________v5____  (_)____/ /__ 
  / /   / ___/ __ \/ __ \/ / ___/ / _ \
@@ -15,7 +17,6 @@ function header_info {
                                       
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Cronicle"
@@ -65,18 +66,17 @@ function msg_error() {
 }
 
 function PVE_CHECK() {
-  PVE=$(pveversion | grep "pve-manager/7" | wc -l)
-  if [[ $PVE != 1 ]]; then
-    echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
+if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
+  echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 7.0 or higher"
+  echo -e "Exiting..."
+  sleep 2
+  exit
+fi
 }
 function ARCH_CHECK() {
-  ARCH=$(dpkg --print-architecture)
-  if [[ "$ARCH" != "amd64" ]]; then
-    echo -e "\n ❌  This script will not work with PiMox! \n"
+  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
     exit
@@ -341,7 +341,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "2" "Install ${APP} Worker" OFF \
   3>&1 1>&2 2>&3)
 
-clear
 header_info
 if [ "$UPD" == "1" ]; then
   if [[ ! -d /opt/cronicle ]]; then
@@ -393,8 +392,9 @@ exit
 fi
 }
 
-clear
 ARCH_CHECK
+PVE_CHECK
+header_info
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then

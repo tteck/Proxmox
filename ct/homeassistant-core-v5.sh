@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
                                 _           _     _              _       ___               
   /\  /\___  _ __ ___   ___    /_\  ___ ___(_)___| |_ __ _ _ __ | |_    / __\___v5_ __ ___ 
  / /_/ / _ \| '_ ` _ \ / _ \  //_\\/ __/ __| / __| __/ _` | '_ \| __|  / /  / _ \| '__/ _ \
@@ -15,7 +17,6 @@ function header_info {
                                                                                            
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Home Assistant-Core"
@@ -66,23 +67,22 @@ function msg_error() {
 }
 
 function PVE_CHECK() {
-  PVE=$(pveversion | grep "pve-manager/7" | wc -l)
-  if [[ $PVE != 1 ]]; then
-    msg_error "This script requires Proxmox Virtual Environment 7.0 or greater"
+if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
+  echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 7.0 or higher"
+  echo -e "Exiting..."
+  sleep 2
+  exit
+fi
+}
+function ARCH_CHECK() {
+  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
     exit
   fi
 }
-function ARCH_CHECK() {
-  ARCH=$(dpkg --print-architecture)
-  if [[ "$ARCH" != "amd64" ]]; then
-    echo -e "\n ❌  This script will not work with PiMox! \n"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
- }
 if command -v pveversion >/dev/null 2>&1; then
   if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
     NEXTID=$(pvesh get /cluster/nextid)
@@ -348,7 +348,6 @@ function update_script() {
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then  
   if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
@@ -421,8 +420,9 @@ exit
 fi
 }
 
-clear
 ARCH_CHECK
+PVE_CHECK
+header_info
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then

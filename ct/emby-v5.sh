@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ______          __         
    / ____/___ v5_  / /_  __  __
   / __/ / __  __ \/ __ \/ / / /
@@ -15,7 +17,6 @@ function header_info {
                       /____/   
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Emby"
@@ -64,18 +65,17 @@ function msg_error() {
 }
 
 function PVE_CHECK() {
-  PVE=$(pveversion | grep "pve-manager/7" | wc -l)
-  if [[ $PVE != 1 ]]; then
-    echo -e "${RD}This script requires Proxmox Virtual Environment 7.0 or greater${CL}"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
+if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
+  echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 7.0 or higher"
+  echo -e "Exiting..."
+  sleep 2
+  exit
+fi
 }
 function ARCH_CHECK() {
-  ARCH=$(dpkg --print-architecture)
-  if [[ "$ARCH" != "amd64" ]]; then
-    echo -e "\n ❌  This script will not work with PiMox! \n"
+  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
     exit
@@ -346,7 +346,6 @@ function install_script() {
   fi
 }
 function update_script() {
-clear
 header_info
 LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 msg_info "Stopping ${APP}"
@@ -366,8 +365,9 @@ msg_ok "Update Successfull"
 exit
 }
 
-clear
 ARCH_CHECK
+PVE_CHECK
+header_info
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
