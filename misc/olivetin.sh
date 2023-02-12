@@ -50,7 +50,7 @@ function msg_ok() {
 }
 
 msg_info "Installing ${APP}"
-RELEASE=$(curl -s https://api.github.com/repos/OliveTin/OliveTin/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+RELEASE=$(curl -s https://api.github.com/repos/OliveTin/OliveTin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 wget -q github.com/OliveTin/OliveTin/releases/download/$RELEASE/OliveTin_linux_amd64.deb
 dpkg -i OliveTin_linux_amd64.deb &>/dev/null
 systemctl enable --now OliveTin &>/dev/null
