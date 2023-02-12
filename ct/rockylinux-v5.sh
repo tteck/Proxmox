@@ -61,8 +61,8 @@ function msg_ok() {
 }
 
 function msg_error() {
-    local msg="$1"
-    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
 function PVE_CHECK() {
@@ -71,16 +71,16 @@ if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
   echo -e "Requires PVE Version 7.0 or higher"
   echo -e "Exiting..."
   sleep 2
-  exit
 fi
+exit
 }
 function ARCH_CHECK() {
-  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
+if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+  echo -e "\n ${CROSS} This script will not work with PiMox! \n"
+  echo -e "Exiting..."
+  sleep 2
+fi
+exit
 }
 
 function default_settings() {
@@ -321,12 +321,35 @@ header_info
 function update_script() {
 header_info
 msg_info "Updating ${APP} LXC"
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Sy archlinux-keyring && pacman -Su
+dnf -y update
+dnf -y upgrade
 msg_ok "Update Successfull"
 exit
 }
+
+if command -v pveversion >/dev/null 2>&1; then
+  if ! (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+  fi
+  install_script
+fi
+
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/AdGuardHome ]]; then
+  msg_error "No ${APP} Installation Found!"
+  exit 
+fi
+
+if ! command -v pveversion >/dev/null 2>&1; then
+  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+  fi
+  update_script
+fi
+
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
   FEATURES="nesting=1,keyctl=1"
