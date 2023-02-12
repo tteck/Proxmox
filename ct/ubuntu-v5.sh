@@ -82,10 +82,6 @@ function ARCH_CHECK() {
   fi
 }
 
-
-if ! command -v pveversion >/dev/null 2>&1; then
-
-
 function default_settings() {
   echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"

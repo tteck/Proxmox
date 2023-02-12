@@ -82,10 +82,6 @@ function ARCH_CHECK() {
   fi
 }
 
-
-if ! command -v pveversion >/dev/null 2>&1; then
-
-
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
   CT_TYPE="0"

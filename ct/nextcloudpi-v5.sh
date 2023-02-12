@@ -82,14 +82,6 @@ function ARCH_CHECK() {
   fi
 }
 
-
-if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -f /lib/systemd/system/nextcloud-domain.service ]]; then
-    msg_error "No ${APP} Installation Found!";
-    exit 
-  fi
-
-
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
   CT_TYPE="0"

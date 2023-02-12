@@ -83,14 +83,6 @@ function ARCH_CHECK() {
   fi
 }
 
-
-if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -d /usr/lib/jellyfin ]]; then
-    msg_error "No ${APP} Installation Found!";
-    exit 
-  fi
-
-
 function default_settings() {
   echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
 

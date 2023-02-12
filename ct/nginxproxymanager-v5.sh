@@ -83,14 +83,6 @@ function ARCH_CHECK() {
   fi
 }
 
-
-if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -f /lib/systemd/system/npm.service ]]; then
-    msg_error "No ${APP} Installation Found!";
-    exit 
-  fi
-
-
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
   CT_TYPE="1"
