@@ -19,6 +19,7 @@ EOF
 
 IP=$(hostname -I | awk '{print $1}')
 YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 BFR="\\r\\033[K"
@@ -54,6 +55,7 @@ RELEASE=$(curl -s https://api.github.com/repos/OliveTin/OliveTin/releases/latest
 wget -q github.com/OliveTin/OliveTin/releases/download/$RELEASE/OliveTin_linux_amd64.deb
 dpkg -i OliveTin_linux_amd64.deb &>/dev/null
 systemctl enable --now OliveTin &>/dev/null
+rm OliveTin_linux_amd64.deb
 # configuration file path /etc/OliveTin/config.yaml
 msg_ok "Installed ${APP} on $hostname"
 
