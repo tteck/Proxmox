@@ -53,7 +53,6 @@ msg_info "Installing ${APP}"
 RELEASE=$(curl -s https://api.github.com/repos/OliveTin/OliveTin/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 wget -q github.com/OliveTin/OliveTin/releases/download/$RELEASE/OliveTin_linux_amd64.deb
 dpkg -i OliveTin_linux_amd64.deb &>/dev/null
-rm OliveTin_linux_amd64.deb
 systemctl enable --now OliveTin &>/dev/null
 # configuration file path /etc/OliveTin/config.yaml
 msg_ok "Installed ${APP} on $hostname"
