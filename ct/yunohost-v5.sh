@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
 __  __                  __  __           __ 
 \ \/ /_  ______v5____  / / / /___  _____/ /_
  \  / / / / __ \/ __ \/ /_/ / __ \/ ___/ __/
@@ -15,7 +17,6 @@ __  __                  __  __           __
                                             
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="YunoHost"
@@ -333,7 +334,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
@@ -341,7 +341,7 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated $APP LXC"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

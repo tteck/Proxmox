@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ____  __  ______  __________  ____  ____  _________ __  ___
    / __ \/ / / / __ \/_  __/ __ \/ __ \/ __ \/  _/ ___//  |/  /
   / /_/ / /_/ / / / / / / / / / / /_/ / /_/ // / \__ \/ /|_/ / 
@@ -15,7 +17,6 @@ function header_info {
 
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="PhotoPrism"
@@ -336,7 +337,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 echo -e "\n ⚠️  Ensure you set 2vCPU & 3072MiB RAM MIMIMUM!!! \n" 
 msg_info "Stopping PhotoPrism"
@@ -367,7 +367,7 @@ msg_ok "Started PhotoPrism"
 msg_ok "Update Successful"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

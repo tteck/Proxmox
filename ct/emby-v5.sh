@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ______          __         
    / ____/___ v5_  / /_  __  __
   / __/ / __  __ \/ __ \/ / / /
@@ -15,7 +17,6 @@ function header_info {
                       /____/   
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Emby"
@@ -345,7 +346,6 @@ function install_script() {
   fi
 }
 function update_script() {
-clear
 header_info
 LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 msg_info "Stopping ${APP}"
@@ -365,7 +365,7 @@ msg_ok "Update Successfull"
 exit
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

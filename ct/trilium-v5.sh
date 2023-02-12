@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
   ______     _ ___               
  /_  __/_v5_(_) (_)_  ______ ___ 
   / / / ___/ / / / / / / __ `__ \
@@ -15,7 +17,6 @@ function header_info {
                                                                       
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Trilium"
@@ -337,7 +338,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest |
     grep "tag_name" |
@@ -365,7 +365,7 @@ msg_ok "Started ${APP}"
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

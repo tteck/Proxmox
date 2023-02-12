@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
  _____   _       __             ___   __  _______  ____________
 /__  /  (_)___ _/ /_  ___  ___ |__ \ /  |/  / __ \/_  __/_  __/
   / /  / / __  / __ \/ _ \/ _ \__/ // /|_/ / / / / / /   / /   
@@ -16,7 +18,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Zigbee2MQTT"
@@ -337,7 +338,6 @@ function install_script() {
   fi
 }
 function update_script() {
-clear
 header_info
 cd /opt/zigbee2mqtt
 
@@ -392,7 +392,7 @@ start_zigbee2mqtt
 echo "Done!"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

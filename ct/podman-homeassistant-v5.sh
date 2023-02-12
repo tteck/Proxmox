@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
                      ____            __                                      
                     / __ \____  ____/ /___ ___  ____ _____                   
                    / /_/ / __ \/ __  / __  __ \/ __  / __ \                  
@@ -19,7 +21,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Podman-Home Assistant"
@@ -346,7 +347,6 @@ function update_script() {
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
@@ -397,7 +397,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

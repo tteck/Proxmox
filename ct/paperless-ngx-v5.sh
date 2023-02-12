@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ____                        __                                     
    / __ \____ _____  ___  _____/ /__v5__________    ____  ____ __  __
   / /_/ / __ `/ __ \/ _ \/ ___/ / _ \/ ___/ ___/___/ __ \/ __ `/ |/_/
@@ -16,7 +18,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Paperless-ngx"
@@ -344,7 +345,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "1" "Update Paperless-ngx to $RELEASE" ON \
   "2" "Paperless-ngx Credentials" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Stopping Paperless-ngx"
@@ -414,7 +414,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

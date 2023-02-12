@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
    ______                 _      __   
   / ____/________v5____  (_)____/ /__ 
  / /   / ___/ __ \/ __ \/ / ___/ / _ \
@@ -15,7 +17,6 @@ function header_info {
                                       
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Cronicle"
@@ -340,7 +341,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "2" "Install ${APP} Worker" OFF \
   3>&1 1>&2 2>&3)
 
-clear
 header_info
 if [ "$UPD" == "1" ]; then
   if [[ ! -d /opt/cronicle ]]; then
@@ -392,7 +392,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

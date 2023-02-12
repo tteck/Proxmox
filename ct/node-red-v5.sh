@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     _   __          __        ____           __
    / | / /___  ____/ /__ v5  / __ \___  ____/ /
   /  |/ / __ \/ __  / _ \   / /_/ / _ \/ __  / 
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Node-Red"
@@ -340,7 +341,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "1" "Update ${APP}" ON \
   "2" "Install Themes" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Stopping ${APP}"
@@ -366,7 +366,6 @@ THEME=$(whiptail --title "NODE-RED THEMES" --radiolist --cancel-button Exit-Scri
     "solarized-dark" "" OFF \
     "solarized-light" "" OFF \
     3>&1 1>&2 2>&3)
-clear
 header_info
 msg_info "Installing ${THEME} Theme"    
 cd /root/.node-red
@@ -382,7 +381,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

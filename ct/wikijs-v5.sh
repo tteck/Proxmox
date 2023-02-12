@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
  _       ___ __   _     _     
 | | v5  / (_) /__(_)   (_)____
 | | /| / / / //_/ /   / / ___/
@@ -16,7 +18,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Wikijs"
@@ -338,7 +339,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Stopping ${APP}"
 systemctl stop wikijs
@@ -359,7 +359,7 @@ msg_ok "Started ${APP}"
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

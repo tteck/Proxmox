@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ____  __             __  ___         ___          _____                          
    / __ \/ /__  _  __   /  |/  /__v5____/ (_)___ _   / ___/___  ______   _____  _____
   / /_/ / / _ \| |/_/  / /|_/ / _ \/ __  / / __ `/   \__ \/ _ \/ ___/ | / / _ \/ ___/
@@ -15,7 +17,6 @@ function header_info {
                                                                                       
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Plex"
@@ -351,7 +352,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "2" "Run plexupdate" OFF \
   3>&1 1>&2 2>&3)
 
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
@@ -365,7 +365,7 @@ bash -c "$(wget -qO - https://raw.githubusercontent.com/mrworf/plexupdate/master
 exit
 fi
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

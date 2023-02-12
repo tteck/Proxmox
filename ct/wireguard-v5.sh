@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
  _       ___           ______                     __
 | |     / (_)_______  / ____/_  ______ __________/ /
 | | /| / / / ___/ _ \/ / __/ / / / __ `/ ___/ __  / 
@@ -15,7 +17,6 @@ function header_info {
                                                     
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Wireguard"
@@ -341,7 +342,6 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "1" "Update ${APP} LXC" ON \
   "2" "Install WGDashboard" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
@@ -401,7 +401,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

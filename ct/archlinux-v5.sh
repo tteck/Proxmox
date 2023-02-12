@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ___              __       __    _                 
    /   |  __________/ /_ v5  / /   (_)___  __  ___  __
   / /| | / ___/ ___/ __ \   / /   / / __ \/ / / / |/_/
@@ -15,7 +17,6 @@ function header_info {
                                                       
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Arch Linux"
@@ -337,7 +338,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Updating ${APP} LXC"
 pacman-key --init
@@ -346,7 +346,7 @@ pacman -Sy archlinux-keyring && pacman -Su
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

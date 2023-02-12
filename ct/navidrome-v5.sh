@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     _   __            _     __                        
    / | / /___ __ v5__(_)___/ /________  ____ ___  ___ 
   /  |/ / __  / | / / / __  / ___/ __ \/ __  __ \/ _ \
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Navidrome"
@@ -337,7 +338,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 msg_info "Stopping ${APP}"
@@ -357,7 +357,7 @@ msg_ok "Update Successfull"
 exit
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

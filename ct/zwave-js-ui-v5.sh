@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
  _____                                  _______    __  ______
 /__  /_      ______ __v5 _____         / / ___/   / / / /  _/
   / /| | /| / / __ `/ | / / _ \   __  / /\__ \   / / / // /  
@@ -15,7 +17,6 @@ function header_info {
                                                              
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Zwave-JS-UI"
@@ -336,7 +337,6 @@ function install_script() {
   fi
 }
 function update_script() {
-clear
 header_info
 RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 msg_info "Stopping Z-wave JS UI"
@@ -359,7 +359,7 @@ msg_ok "Cleaned"
 msg_ok "Updated Successfully!\n"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

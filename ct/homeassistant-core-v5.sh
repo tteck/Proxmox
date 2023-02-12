@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
                                 _           _     _              _       ___               
   /\  /\___  _ __ ___   ___    /_\  ___ ___(_)___| |_ __ _ _ __ | |_    / __\___v5_ __ ___ 
  / /_/ / _ \| '_ ` _ \ / _ \  //_\\/ __/ __| / __| __/ _` | '_ \| __|  / /  / _ \| '__/ _ \
@@ -15,7 +17,6 @@ function header_info {
                                                                                            
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Home Assistant-Core"
@@ -347,7 +348,6 @@ function update_script() {
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then  
   if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
@@ -420,7 +420,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

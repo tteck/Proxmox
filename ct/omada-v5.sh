@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
    ____                      __     
   / __ \____ ___v5____ _____/ /___ _
  / / / / __  __ \/ __  / __  / __  /
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Omada"
@@ -344,7 +345,7 @@ function install_script() {
     advanced_settings
   fi
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

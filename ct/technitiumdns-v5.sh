@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
   ______          __          _ __  _                    ____  _   _______
  /_  __/__  _____/ /_  ____  (_) /_(_)_  ______ ___ v5  / __ \/ | / / ___/
   / / / _ \/ ___/ __ \/ __ \/ / __/ / / / / __  __ \   / / / /  |/ /\__ \ 
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Technitium DNS"
@@ -337,7 +338,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Updating ${APP} LXC"
 dotnetDir="/opt/dotnet"
@@ -408,7 +408,7 @@ fi
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

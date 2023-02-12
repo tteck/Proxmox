@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     __  __                        ___              _      __              __ 
    / / / /___v5____ ___  ___     /   |  __________(_)____/ /_____ _____  / /_
   / /_/ / __ \/ __  __ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __  / __ \/ __/
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Home Assistant"
@@ -353,7 +354,6 @@ function update_script() {
   "3" "Install HACS" OFF \
   "4" "Install FileBrowser" OFF \
   3>&1 1>&2 2>&3)
-clear
 header_info
 if [ "$UPD" == "1" ]; then
 msg_info "Updating All Containers"
@@ -420,7 +420,7 @@ exit
 fi
 }
 
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ___ v5 __      _          
    /   |  / /___  (_)___  ___ 
   / /| | / / __ \/ / __ \/ _ \
@@ -16,7 +18,6 @@ function header_info {
 
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="Alpine"
@@ -334,7 +335,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Updating ${APP} LXC"
 apk update &>/dev/null
@@ -342,7 +342,7 @@ apk upgrade &>/dev/null
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi

@@ -6,7 +6,9 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  cat <<"EOF"
+clear
+cat <<"EOF"
+
     ____      ______           ____  ____ 
    /  _/_v5  / __/ /_  ___  __/ __ \/ __ )
    / // __ \/ /_/ / / / / |/_/ / / / __  |
@@ -15,7 +17,6 @@ function header_info {
  
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
 APP="InfluxDB"
@@ -337,7 +338,6 @@ function install_script() {
 }
 
 function update_script() {
-clear
 header_info
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
@@ -346,7 +346,7 @@ msg_ok "Updated ${APP} LXC"
 msg_ok "Update Successfull"
 exit
 }
-clear
+header_info
 ARCH_CHECK
 PVE_CHECK
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
