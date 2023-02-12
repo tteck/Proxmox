@@ -336,6 +336,7 @@ function advanced_settings() {
 function install_script() {
 ARCH_CHECK
 PVE_CHECK
+header_info
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
     echo -e "${BL}Using Default Settings${CL}"
@@ -354,7 +355,6 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
 exit
 }
-header_info
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$FUSE" == "yes" ]; then 
