@@ -117,7 +117,7 @@ function default_settings() {
   VLAN=""
   echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
   SSH="no"
-  echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}No${CL}"
+  echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}No${CL}"
   FUSE="no"
   echo -e "${DGN}Enable Verbose Mode: ${BGN}No${CL}"
   VERB="no"
@@ -289,10 +289,10 @@ function advanced_settings() {
       SSH="no"
   fi
   if (whiptail --defaultno --title "FUSE OVERLAYFS" --yesno "(ZFS) Enable Fuse Overlayfs?" 10 58); then
-      echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}Yes${CL}"
+      echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}Yes${CL}"
       FUSE="yes"
   else
-      echo -e "${DGN}(ZFS) Enable Fuse Overlayfs: ${BGN}No${CL}"
+      echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}No${CL}"
       FUSE="no"
   fi
   if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
