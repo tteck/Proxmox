@@ -60,8 +60,8 @@ function msg_ok() {
 }
 
 function msg_error() {
-    local msg="$1"
-    echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
 function PVE_CHECK() {
@@ -70,40 +70,17 @@ if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
   echo -e "Requires PVE Version 7.0 or higher"
   echo -e "Exiting..."
   sleep 2
-  exit
+exit
 fi
 }
 function ARCH_CHECK() {
-  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
+if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+  echo -e "\n ${CROSS} This script will not work with PiMox! \n"
+  echo -e "Exiting..."
+  sleep 2
+exit
+fi
 }
-
-if command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
-    NEXTID=$(pvesh get /cluster/nextid)
-  else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
-if ! command -v pveversion >/dev/null 2>&1; then
-  if [[ ! -d /etc/pacman.d ]]; then
-    msg_error "No ${APP} Installation Found!";
-    exit 
-  fi
-  if (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
-    echo "User selected Update"
-    else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
 
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
@@ -328,6 +305,7 @@ function advanced_settings() {
 function install_script() {
 ARCH_CHECK
 PVE_CHECK
+NEXTID=$(pvesh get /cluster/nextid)
 header_info
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
@@ -349,7 +327,25 @@ pacman -Sy archlinux-keyring && pacman -Su
 msg_ok "Update Successfull"
 exit
 }
-if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
+
+if command -v pveversion >/dev/null 2>&1; then
+  if ! (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+  fi
+  install_script
+fi
+
+if ! command -v pveversion >/dev/null 2>&1; then
+  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+  fi
+  update_script
+fi
+
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
   FEATURES="nesting=1,keyctl=1"
