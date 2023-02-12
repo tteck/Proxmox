@@ -345,9 +345,9 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
 exit
 }
-header_info
 ARCH_CHECK
 PVE_CHECK
+header_info
 if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
