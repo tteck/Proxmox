@@ -337,10 +337,6 @@ msg_ok "Updated ${APP}"
 exit
 fi
 if [ "$UPD" == "2" ]; then
-  if [[ -d /opt/cronicle ]]; then
-    msg_error "${APP} Installation Found!";
-    exit 
-  fi
 LATEST=$(curl -sL https://api.github.com/repos/jhuckaby/Cronicle/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 IP=$(hostname -I | awk '{print $1}')
 msg_info "Installing Dependencies"
@@ -383,11 +379,6 @@ if command -v pveversion >/dev/null 2>&1; then
     exit
   fi
   install_script
-fi
-
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/AdGuardHome ]]; then
-  msg_error "No ${APP} Installation Found!"
-  exit 
 fi
 
 if ! command -v pveversion >/dev/null 2>&1; then

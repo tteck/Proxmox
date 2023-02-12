@@ -322,7 +322,7 @@ function update_script() {
 header_info
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
+pip3 install deluge[all] --upgrade
 msg_ok "Updated $APP LXC"
 exit
 }
@@ -336,7 +336,7 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/AdGuardHome ]]; then
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/systemd/system/deluged.service ]]; then
   msg_error "No ${APP} Installation Found!"
   exit 
 fi

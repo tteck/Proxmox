@@ -336,11 +336,6 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/AdGuardHome ]]; then
-  msg_error "No ${APP} Installation Found!"
-  exit 
-fi
-
 if ! command -v pveversion >/dev/null 2>&1; then
   if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
     clear

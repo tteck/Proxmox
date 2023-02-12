@@ -338,7 +338,7 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/AdGuardHome ]]; then
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/systemd/system/nocodb.service ]]; then
   msg_error "No ${APP} Installation Found!"
   exit 
 fi
