@@ -72,16 +72,16 @@ if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
   echo -e "Requires PVE Version 7.0 or higher"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
 function ARCH_CHECK() {
 if [ "$(dpkg --print-architecture)" != "amd64" ]; then
   echo -e "\n ${CROSS} This script will not work with PiMox! \n"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
 
 function default_settings() {
@@ -397,8 +397,8 @@ msg_ok "Created Service"
 msg_ok "Completed Successfully!\n"
 echo -e "FileBrowser should be reachable by going to the following URL.
          ${BL}http://$IP:8080${CL}   admin|changeme\n"
-fi
 exit
+fi
 }
 
 if command -v pveversion >/dev/null 2>&1; then

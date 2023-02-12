@@ -71,16 +71,16 @@ if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
   echo -e "Requires PVE Version 7.0 or higher"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
 function ARCH_CHECK() {
 if [ "$(dpkg --print-architecture)" != "amd64" ]; then
   echo -e "\n ${CROSS} This script will not work with PiMox! \n"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
 
 function default_settings() {
@@ -368,8 +368,8 @@ chmod 775 /etc/init.d/cronicled
 update-rc.d cronicled defaults &>/dev/null
 msg_ok "Installed Cronicle Worker on $hostname"
 echo -e "\n Add Masters secret key to /opt/cronicle/conf/config.json \n"
-fi
 exit
+fi
 }
 
 if command -v pveversion >/dev/null 2>&1; then

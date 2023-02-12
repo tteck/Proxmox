@@ -70,16 +70,16 @@ if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
   echo -e "Requires PVE Version 7.0 or higher"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
 function ARCH_CHECK() {
 if [ "$(dpkg --print-architecture)" != "amd64" ]; then
   echo -e "\n ${CROSS} This script will not work with PiMox! \n"
   echo -e "Exiting..."
   sleep 2
-fi
 exit
+fi
 }
  
 function default_settings() {
