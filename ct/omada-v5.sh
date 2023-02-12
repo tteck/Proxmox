@@ -324,8 +324,8 @@ header_info
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
-  fi
   exit
+  fi
 }
 
 function update_script() {
