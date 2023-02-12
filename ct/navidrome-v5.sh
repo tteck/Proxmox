@@ -344,7 +344,7 @@ if command -v pveversion >/dev/null 2>&1; then
     echo -e "⚠  User exited script \n"
     exit
   fi
-install_script
+  install_script
 fi
 
 if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/navidrome ]]; then
