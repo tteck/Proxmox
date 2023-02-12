@@ -83,15 +83,7 @@ function ARCH_CHECK() {
   fi
 }
 
-if command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
-    NEXTID=$(pvesh get /cluster/nextid)
-  else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
+
 if ! command -v pveversion >/dev/null 2>&1; then
   if (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
     echo "User selected Update"

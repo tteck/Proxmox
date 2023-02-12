@@ -83,26 +83,6 @@ function ARCH_CHECK() {
   fi
 }
 
-if command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} Master LXC. Proceed?" 10 58); then
-    NEXTID=$(pvesh get /cluster/nextid)
-    SERVER="y"
-  else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
-if ! command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} SUPPORT" --yesno "Options to Update or Install ${APP} Worker on $hostname.  Proceed?" 10 58); then
-    echo "User selected Support"
-    else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
-
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
   CT_TYPE="1"
@@ -327,6 +307,7 @@ function install_script() {
 ARCH_CHECK
 PVE_CHECK
 header_info
+SERVER="y"
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
     echo -e "${BL}Using Default Settings${CL}"

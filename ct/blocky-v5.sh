@@ -82,15 +82,7 @@ function ARCH_CHECK() {
   fi
 }
 
-if command -v pveversion >/dev/null 2>&1; then
-  if (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
-    NEXTID=$(pvesh get /cluster/nextid)
-  else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
+
 if ! command -v pveversion >/dev/null 2>&1; then
   if [[ ! -d /opt/blocky/ ]]; then
     msg_error "No ${APP} Installation Found!";
