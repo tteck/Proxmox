@@ -89,14 +89,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
     msg_error "No ${APP} Installation Found!";
     exit 
   fi
-  if (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
-    echo "User selected Update"
-    else
-    clear
-    echo -e "⚠ User exited script \n"
-    exit
-  fi
-fi
+
 
 function default_settings() {
   echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"
@@ -450,7 +443,6 @@ msg_ok "Cleaned"
 msg_ok "Update Successfull"
 exit
 }
-if ! command -v pveversion >/dev/null 2>&1; then update_script; else install_script; fi
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
   FEATURES="nesting=1,keyctl=1"
