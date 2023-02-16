@@ -107,6 +107,7 @@ ExecStart=/opt/go2rtc/go2rtc_linux_amd64
 
 [Install]
 WantedBy=multi-user.target" >$service_path
+systemctl enable -q --now go2rtc
 msg_ok "Created Service"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
