@@ -154,6 +154,7 @@ cd /opt/paperless
 sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
 $STD pip install --upgrade pip
 $STD pip install -r requirements.txt
+curl -s -o /opt/paperless/paperless.conf https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/paperless.conf.example
 msg_ok "Installed Paperless-ngx"
 
 msg_info "Installing Natural Language Toolkit (Patience)"
