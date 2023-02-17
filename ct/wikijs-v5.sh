@@ -325,17 +325,26 @@ msg_info "Stopping ${APP}"
 systemctl stop wikijs
 msg_ok "Stopped ${APP}"
 
+msg_info "Backing up Data"
+mkdir -p data-backup
+cp -R /opt/wikijs/{db.sqlite,config.yml,/data} ~/data-backup
+msg_ok "Backed up Data"
+
 msg_info "Updating ${APP}"
-cp /opt/wikijs/config.yml ~/config.yml.bak
 rm -rf /opt/wikijs/*
 cd /opt/wikijs
-wget https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz &>/dev/null
+wget -q https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz
 tar xzf wiki-js.tar.gz 
-cp ~/config.yml.bak ./config.yml
 msg_ok "Updated ${APP}"
 
+msg_info "Restoring Data"
+cp -R ~/data-backup/* /opt/wikijs
+rm -rf ~/data-backup
+npm rebuild sqlite3 &>/dev/null
+msg_ok "Restored Data"
+
 msg_info "Starting ${APP}"
-systemctl stop wikijs
+systemctl start wikijs
 msg_ok "Started ${APP}"
 msg_ok "Update Successfull"
 exit
