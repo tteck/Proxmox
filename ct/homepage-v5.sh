@@ -327,6 +327,8 @@ fi
 cd /opt/homepage
 systemctl stop homepage
 git pull --force &>/dev/null
+sed -i 's/prowlarr: dynamic(() => import("\.\/prowlarr\/component")),/\/\/ &/' /opt/homepage/src/widgets/components.js
+rm -rf /opt/homepage/src/widgets/prowlarr/component.jsx
 pnpm install &>/dev/null
 pnpm build &>/dev/null
 systemctl start homepage
