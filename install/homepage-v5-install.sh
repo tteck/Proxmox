@@ -102,6 +102,8 @@ $STD git clone https://github.com/benphelps/homepage.git /opt/homepage
 cd /opt/homepage
 mkdir -p config
 cp /opt/homepage/src/skeleton/* /opt/homepage/config
+sed -i 's/prowlarr: dynamic(() => import("\.\/prowlarr\/component")),/\/\/ &/' /opt/homepage/src/widgets/components.js
+rm -rf /opt/homepage/src/widgets/prowlarr/component.jsx
 $STD pnpm install
 $STD pnpm build
 msg_ok "Installed Homepage"
