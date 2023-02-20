@@ -270,6 +270,7 @@ $STD systemctl enable --now npm
 msg_ok "Started Services"
 
 msg_info "Cleaning up"
+rm -rf ../nginx-proxy-manager-*
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
