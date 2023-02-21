@@ -133,7 +133,7 @@ if grep -q avx2 /proc/cpuinfo; then
 elif grep -q avx /proc/cpuinfo; then
   suffix="avx-"
 else
-  suffix=""
+  suffix="1"
 fi
 version=$(curl -s https://dl.photoprism.org/tensorflow/amd64/ | grep -o "libtensorflow-amd64-$suffix.*\\.tar.gz" | head -n 1)
 wget -q https://dl.photoprism.org/tensorflow/amd64/$version
