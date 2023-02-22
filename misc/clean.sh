@@ -29,7 +29,7 @@ if [[ -z "$cache" ]]; then
 else
   echo -e "$cache \n"
   echo -e "${GN}Cache in $name${CL}"
-  read -p "Would you like to remove the selected cache listed above? [y/n] " -n 1 -r
+  read -p "Would you like to remove the selected cache listed above? [y/N] " -n 1 -r
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Removing cache"
@@ -47,7 +47,7 @@ if [[ -z "$logs" ]]; then
 else
   echo -e "$logs \n"
   echo -e "${GN}Logs in $name${CL}"
-  read -p "Would you like to remove the selected logs listed above? [y/n] " -n 1 -r
+  read -p "Would you like to remove the selected logs listed above? [y/N] " -n 1 -r
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Removing logs"
