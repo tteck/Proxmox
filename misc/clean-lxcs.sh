@@ -42,17 +42,11 @@ function clean_container() {
   echo -e "${BL}[Info]${GN} Cleaning ${name} ${CL} \n"
   pct exec $container -- bash -c "apt-get -y --purge autoremove && apt-get -y autoclean && bash <(curl -fsSL https://github.com/tteck/Proxmox/raw/main/misc/clean.sh) && rm -rf /var/lib/apt/lists/* && apt-get update"
 }
-read -p "Skip stopped containers? [y/N]" -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-  skip=no
-else
-  skip=yes
-fi
 
 for container in $containers; do
   status=$(pct status $container)
-  if [ "$skip" == "no" ] && [ "$status" == "status: stopped" ]; then
+  template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
+   if [ "$template" == "false" ] && [ "$status" == "status: stopped" ]; then
       echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
       pct start $container
       echo -e "${BL}[Info]${GN} Waiting For${BL} $container${CL}${GN} To Start ${CL} \n"
