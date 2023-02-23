@@ -3,6 +3,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-02-23
+
+### Changed
+
+- **Proxmox LXC Updater** 
+  - Skip all templates, allowing for the starting, updating, and shutting down of containers to be resumed automatically.
+  - Exclude an additional container by adding the CTID at the end of the shell command ( -s 103).
+
 ## 2023-02-16
 
 ### Changed
