@@ -389,6 +389,4 @@ pct set $CTID -description "# ${APP} LXC
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8080${CL}\n
-         username: ${BGN}admin${CL}\n
-         password: ${BGN}adminadmin${CL} (${RD}Change it!)"${CL}
+         ${BL}http://${IP}:8080${CL}\n"
