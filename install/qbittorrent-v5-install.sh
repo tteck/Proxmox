@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2023 tteck
-# Author: romka777 (Roman Gogolev)
+# Author: tteck/romka777 (Roman Gogolev)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -90,7 +90,6 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-
 msg_info "Installing qbittorrent-nox"
 $STD apt-get install -y qbittorrent-nox
 $STD adduser \
@@ -100,8 +99,6 @@ $STD adduser \
    --disabled-password \
    --home /home/qbtuser \
    qbtuser
-
-
 msg_ok "qbittorrent-nox"
 
 msg_info "Creating Service"
@@ -125,8 +122,6 @@ EOF
 systemctl -q daemon-reload
 systemctl enable --now -q qbittorrent-nox
 msg_ok "Created Service"
-
-
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
