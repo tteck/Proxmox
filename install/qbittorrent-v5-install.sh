@@ -5,7 +5,6 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-export DEBIAN_FRONTEND=noninteractive
 if [ "$VERBOSE" = "yes" ]; then set -x; STD=""; else STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
@@ -92,35 +91,20 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing qbittorrent-nox"
 $STD apt-get install -y qbittorrent-nox
-$STD adduser \
-   --system \
-   --shell /usr/sbin/nologin \
-   --group \
-   --disabled-password \
-   --home /home/qbtuser \
-   qbtuser
 msg_ok "qbittorrent-nox"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/qbittorrent-nox.service
 [Unit]
-Description=qBittorrent-nox service for user %I
-Documentation=man:qbittorrent-nox(1)
-Wants=network-online.target
-After=local-fs.target network-online.target nss-lookup.target
-
+Description=qBittorrent client
+After=network.target
 [Service]
-Type=simple
-PrivateTmp=false
-User=qbtuser
-ExecStart=/usr/bin/qbittorrent-nox
-TimeoutStopSec=1800
-
+ExecStart=/usr/bin/qbittorrent-nox --webui-port=8090
+Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl -q daemon-reload
-systemctl enable --now -q qbittorrent-nox
+systemctl enable -q --now qbittorrent-nox
 msg_ok "Created Service"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
