@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2023 tteck
-# Author: romka777 (Roman Gogolev)
+# Author: tteck/romka777 (Roman Gogolev)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"
-
-            ____     _    __    __                                         __ 
-  ____ _   / __ )   (_)  / /_  / /_  ____    _____   _____  ___    ____   / /_
- / __ `/  / __  |  / /  / __/ / __/ / __ \  / ___/  / ___/ / _ \  / __ \ / __/
-/ /_/ /  / /_/ /  / /  / /_  / /_  / /_/ / / /     / /    /  __/ / / / // /_  
-\__, /  /_____/  /_/   \__/  \__/  \____/ /_/     /_/     \___/ /_/ /_/ \__/  
-  /_/                                                                         
-
-                                                                
+         ____  _ __  __                             __ 
+  ____ _/ __ )(_) /_/ /_____  _____________v5____  / /_
+ / __ `/ __  / / __/ __/ __ \/ ___/ ___/ _ \/ __ \/ __/
+/ /_/ / /_/ / / /_/ /_/ /_/ / /  / /  /  __/ / / / /_  
+\__, /_____/_/\__/\__/\____/_/  /_/   \___/_/ /_/\__/  
+  /_/                                                  
+ 
 EOF
 }
 header_info
@@ -27,7 +25,6 @@ var_cpu="2"
 var_ram="2048"
 var_os="debian"
 var_version="11"
-var_repo="tteck/Proxmox"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 var_install="${NSAPP}-v5-install"
 INTEGER='^[0-9]+$'
@@ -339,7 +336,7 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/transmission-daemon/settings.json ]]; then
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/systemd/system/qbittorrent-nox.service ]]; then
   msg_error "No ${APP} Installation Found!"
   exit 
 fi
@@ -381,11 +378,11 @@ export PCT_OPTIONS="
   -unprivileged $CT_TYPE
   $PW
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/$var_repo/main/ct/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/$var_repo/main/install/$var_install.sh)" || exit
+lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/pull-requests/install/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
