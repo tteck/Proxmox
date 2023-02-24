@@ -90,6 +90,14 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
+msg_info "Installing ASP.NET Core Runtime"
+wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+$STD dpkg -i packages-microsoft-prod.deb
+rm -rf packages-microsoft-prod.deb
+$STD apt-get update
+$STD apt-get install -y aspnetcore-runtime-7.0
+msg_ok "Installed ASP.NET Core Runtime"
+
 msg_info "Installing Technitium DNS"
 systemctl stop systemd-resolved
 echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
