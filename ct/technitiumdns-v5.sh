@@ -320,20 +320,7 @@ header_info
 
 function update_script() {
 header_info
-msg_info "Updating ${APP} LXC"
-dotnetDir="/opt/dotnet"
-dnsDir="/etc/dns"
-dnsTar="/etc/dns/DnsServerPortable.tar.gz"
-dnsUrl="https://download.technitium.com/dns/DnsServerPortable.tar.gz"
-
-mkdir -p $dnsDir
-installLog="$dnsDir/install.log"
-echo "" >$installLog
-
-echo ""
-echo "==============================="
-echo "Technitium DNS Server Update"
-echo "==============================="
+msg_info "Updating ${APP}"
 
 if ! dpkg -s aspnetcore-runtime-7.0 > /dev/null 2>&1; then
     wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -342,58 +329,10 @@ if ! dpkg -s aspnetcore-runtime-7.0 > /dev/null 2>&1; then
     apt-get install -y aspnetcore-runtime-7.0
     rm packages-microsoft-prod.deb
 fi
-
-if dotnet --list-runtimes 2>/dev/null | grep -q "Microsoft.NETCore.App 7.0."; then
-	dotnetFound="yes"
-else
-	dotnetFound="no"
-fi
-
-if [ -d $dotnetDir ]; then
-	dotnetUpdate="yes"
-	echo "Updating .NET 7 Runtime..."
-fi
-
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -c 7.0 --runtime dotnet --no-path --install-dir $dotnetDir --verbose >>$installLog 2>&1
-
-if [ ! -f "/usr/bin/dotnet" ]; then
-	ln -s $dotnetDir/dotnet /usr/bin >>$installLog 2>&1
-fi
-
-if dotnet --list-runtimes 2>/dev/null | grep -q "Microsoft.NETCore.App 7.0."; then
-	if [ "$dotnetUpdate" = "yes" ]; then
-		echo ".NET 7 Runtime was updated successfully!"
-	fi
-else
-	echo "Failed to update .NET 7 Runtime. Please try again."
-	exit 1
-fi
-
-if curl -o $dnsTar --fail $dnsUrl >>$installLog 2>&1; then
-	if [ -d $dnsDir ]; then
-		echo "Updating Technitium DNS Server..."
-	fi
-
-	tar -zxf $dnsTar -C $dnsDir >>$installLog 2>&1
-
-	if [ "$(ps --no-headers -o comm 1 | tr -d '\n')" = "systemd" ]; then
-		if [ -f "/etc/systemd/system/dns.service" ]; then
-			echo "Restarting systemd service..."
-			systemctl restart dns.service >>$installLog 2>&1
-		fi
-
-		echo ""
-		echo "Technitium DNS Server was updated successfully!"
-	else
-		echo ""
-		echo "Failed to update Technitium DNS Server: systemd was not detected."
-		exit 1
-	fi
-else
-	echo ""
-	echo "Failed to download Technitium DNS Server from: $dnsUrl"
-	exit 1
-fi
+wget -q https://download.technitium.com/dns/DnsServerPortable.tar.gz
+tar -zxf DnsServerPortable.tar.gz -C /etc/dns/ &>/dev/null
+rm -rf DnsServerPortable.tar.gz
+systemctl restart dns.service
 msg_ok "Update Successfull"
 exit
 }
