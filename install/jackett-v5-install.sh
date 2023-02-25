@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2023 tteck
-# Author: romka777 (Roman Gogolev)
+# Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-export DEBIAN_FRONTEND=noninteractive
 if [ "$VERBOSE" = "yes" ]; then set -x; STD=""; else STD="silent"; fi
 silent() { "$@" > /dev/null 2>&1; }
 if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
@@ -90,29 +89,30 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-
 msg_info "Installing Jackett"
-$STD adduser \
-   --system \
-   --shell /usr/sbin/nologin \
-   --group \
-   --disabled-password \
-   --home /home/jackett \
-   jackett
-
-$STD cd /opt
-f=Jackett.Binaries.LinuxAMDx64.tar.gz
-release=$(wget -q https://github.com/Jackett/Jackett/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-$STD wget -Nc https://github.com/Jackett/Jackett/releases/download/$release/"$f"
-$STD tar -xzf "$f"
-$STD rm -f "$f"
-$STD chown -R jackett:jackett Jackett
+RELEASE=$(wget -q https://github.com/Jackett/Jackett/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+wget -q https://github.com/Jackett/Jackett/releases/download/$RELEASE/Jackett.Binaries.LinuxAMDx64.tar.gz
+tar -xzf Jackett.Binaries.LinuxAMDx64.tar.gz -C /opt
+rm -rf Jackett.Binaries.LinuxAMDx64.tar.gz
 msg_ok "Installed Jackett"
 
 msg_info "Creating Service"
-$STD cd Jackett
-$STD ./install_service_systemd.sh
-$STD systemctl status jackett.service
+cat <<EOF >/etc/systemd/system/jackett.service
+[Unit]
+Description=Jackett Daemon
+After=network.target
+[Service]
+SyslogIdentifier=jackett
+Restart=always
+RestartSec=5
+Type=simple
+WorkingDirectory=/opt/Jackett
+ExecStart=/bin/sh /opt/Jackett/jackett_launcher.sh
+TimeoutStopSec=30
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now jackett.service
 msg_ok "Created Service"
 
 echo "export TERM='xterm-256color'" >>/root/.bashrc
