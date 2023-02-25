@@ -1,7 +1,15 @@
 <a href="https://tteck.github.io/Proxmox/"><img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username=tteck&theme=blue-green" height="130"/></a>
-
 # Change Log
 All notable changes to this project will be documented in this file.
+
+## 2023-02-24
+
+### Changed
+
+- **qBittorrent LXC** (Thanks @romka777)
+  - NEW Script
+- **Jackett LXC** (Thanks @romka777)
+  - NEW Script
 
 ## 2023-02-23
 
