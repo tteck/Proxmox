@@ -361,7 +361,7 @@ msg_ok "Installed WGDashboard"
 msg_info "Creating Service"
 service_path="/etc/systemd/system/wg-dashboard.service"
 echo "[Unit]
-After=netword.service
+After=systemd-networkd.service
 
 [Service]
 WorkingDirectory=/etc/wgdashboard/src
