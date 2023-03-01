@@ -43,10 +43,10 @@ function update_container() {
   echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} \n"
   os=$(pct config "$container" | awk '/^ostype/ {print $2}')
   case "$os" in
-    alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
+    alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade && reboot" ;;
     archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
-    fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
-    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update && apt-get -y dist-upgrade" ;;
+    fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade && reboot" ;;
+    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update && apt-get -y dist-upgrade && reboot" ;;
   esac
 }
 header_info
