@@ -11,10 +11,10 @@ cat <<"EOF"
 
     ________  _______v5 _  __
    / ____/  |/  / __ \ | |/ /
-  / __/ / /|_/ / / / / |   / 
- / /___/ /  / / /_/ / /   |  
-/_____/_/  /_/\___\_\/_/|_|  
-                             
+  / __/ / /|_/ / / / / |   /
+ / /___/ /  / / /_/ / /   |
+/_____/_/  /_/\___\_\/_/|_|
+
 EOF
 }
 header_info
@@ -47,6 +47,27 @@ function error_handler() {
   local command="$2"
   local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
   echo -e "\n$error_message\n"
+}
+
+function ct_description() {
+
+  cat <<EOD
+# ${APP} LXC
+
+### https://tteck.github.io/Proxmox/
+
+<a href='https://ko-fi.com/D1D7EP4GF'>
+  <img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>
+
+Connect to ${APP} using the following URL
+
+<pre>http://${NET}:18083</pre>
+
+The initial login:
+
+* username: <pre>admin</pre>
+* password: <pre>public</pre>
+EOD
 }
 
 function msg_info() {
@@ -379,9 +400,7 @@ pct start $CTID
 msg_ok "Started LXC Container"
 lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-pct set $CTID -description "# ${APP} LXC
-### https://tteck.github.io/Proxmox/
-<a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
+pct set $CTID -description "$(ct_description)"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} Setup should be reachable by going to the following URL.
          ${BL}http://${IP}:18083${CL} \n"
