@@ -61,12 +61,12 @@ function ct_description() {
 
 Connect to ${APP} using the following URL
 
-<pre>http://${NET}:18083</pre>
+<code>http://${IP}:18083</code>
 
 The initial login:
 
-* username: <pre>admin</pre>
-* password: <pre>public</pre>
+* username: <code>admin</code>
+* password: <code>public</code>
 EOD
 }
 
