@@ -322,7 +322,7 @@ function update_script() {
 header_info
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
+apt-get install -y hyperion &>/dev/null
 msg_ok "Updated ${APP} LXC"
 msg_ok "Update Successfull"
 exit

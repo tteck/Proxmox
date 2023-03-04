@@ -97,7 +97,11 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   $STD apt-get -y install \
     va-driver-all \
     ocl-icd-libopencl1
-  if [[ ${PCT_OSVERSION} == "20.04" ]]; then $STD apt-get -y install beignet-opencl-icd; fi
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
+  $STD apt-get install -y beignet-opencl-icd
+  else
+  $STD apt-get install -y intel-opencl-icd
+  fi
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
   /bin/chmod 660 /dev/dri/*
