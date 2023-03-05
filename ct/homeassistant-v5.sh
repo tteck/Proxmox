@@ -409,7 +409,7 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /var/lib/docker/volumes/hass_config/_data
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /var/lib/docker/volumes/hass_config/_data
  ]]; then
   msg_error "No ${APP} Installation Found!"
   exit 
