@@ -27,7 +27,6 @@ var_os="debian"
 var_version="11"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 var_install="${NSAPP}-v5-install"
-NEXTID=$(pvesh get /cluster/nextid)
 INTEGER='^[0-9]+$'
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
