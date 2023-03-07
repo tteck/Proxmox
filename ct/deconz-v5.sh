@@ -27,6 +27,7 @@ var_os="ubuntu"
 var_version="20.04"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 var_install="${NSAPP}-v5-install"
+timezone=$(timedatectl | grep "Time zone" | awk '{print $3}')
 INTEGER='^[0-9]+$'
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -359,7 +360,8 @@ else
   FEATURES="nesting=1"
 fi
 TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
+pushd $TEMP_DIR >/dev/null 
+export tz=$timezone
 export DISABLEIPV6=$DISABLEIP6
 export APPLICATION=$APP
 export VERBOSE=$VERB
