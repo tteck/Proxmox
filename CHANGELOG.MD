@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-07
+
+### Changed
+
+- **Alpine-Vaultwarden LXC**
+  - NEW Script
+
 ## 2023-02-24
 
 ### Changed
