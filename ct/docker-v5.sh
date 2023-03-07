@@ -362,6 +362,7 @@ FEATURES="keyctl=1,nesting=1"
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export tz=$timezone
 export ST=$FUSE
 export DISABLEIPV6=$DISABLEIP6
 export APPLICATION=$APP
