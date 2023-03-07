@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Alpine-Vaultwarden LXC**
   - NEW Script
+- **All LXC Scripts**
+  - Retrieve the time zone from Proxmox and configure the container to use the same time zone
 
 ## 2023-02-24
 
