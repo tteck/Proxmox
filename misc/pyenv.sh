@@ -69,7 +69,7 @@ pyenv install 3.10.8 &>/dev/null
 pyenv global 3.10.8
 msg_ok "Installed Python 3.10.8"
 read -r -p "Would you like to install Home Assistant Beta? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   HA="Y"
 fi
 if [[ $HA == "Y" ]]; then
@@ -101,7 +101,7 @@ hass
 fi
 
 read -r -p "Would you like to install ESPHome Beta? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   ESP="Y"
 fi
 if [[ $ESP == "Y" ]]; then
@@ -146,7 +146,7 @@ exec $SHELL
 fi
 
 read -r -p "Would you like to install Matter-Server (Beta)? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   MTR="Y"
 fi
 if [[ $MTR == "Y" ]]; then

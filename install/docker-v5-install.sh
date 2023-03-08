@@ -69,7 +69,7 @@ trap - ERR
 if ping -c 1 -W 1 1.1.1.1 &> /dev/null; then msg_ok "Internet Connected"; else
   msg_error "Internet NOT Connected"
     read -r -p "Would you like to continue anyway? <y/N> " prompt
-    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+    if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
       echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
     else
       echo -e " 🖧  Check Network Settings"
@@ -117,7 +117,7 @@ $STD sh <(curl -sSL https://get.docker.com)
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
 read -r -p "Would you like to add Portainer? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   PORTAINER="Y"
 else
   PORTAINER="N"
@@ -138,7 +138,7 @@ if [[ $PORTAINER == "Y" ]]; then
 fi
 
 read -r -p "Would you like to add Docker Compose? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   DOCKER_COMPOSE="Y"
 else
   DOCKER_COMPOSE="N"

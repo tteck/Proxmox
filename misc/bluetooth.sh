@@ -41,7 +41,7 @@ clear
 
 EOF
 read -r -p "Switch from dbus-daemon to dbus-broker? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 cat <<EOF >>/etc/apt/sources.list
 deb http://deb.debian.org/debian bullseye-backports main contrib non-free
 
@@ -52,7 +52,7 @@ apt-get -t bullseye-backports install -y dbus-broker &>/dev/null
 systemctl enable dbus-broker.service &>/dev/null
 fi
 read -r -p "Install BlueZ? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 apt-get -t bullseye-backports install -y bluez* &>/dev/null
 fi
 echo -e "Finished, reboot for changes to take affect"

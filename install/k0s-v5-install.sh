@@ -68,7 +68,7 @@ trap - ERR
 if ping -c 1 -W 1 1.1.1.1 &> /dev/null; then msg_ok "Internet Connected"; else
   msg_error "Internet NOT Connected"
     read -r -p "Would you like to continue anyway? <y/N> " prompt
-    if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+    if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
       echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
     else
       echo -e " 🖧  Check Network Settings"
@@ -101,7 +101,7 @@ k0s config create > /etc/k0s/k0s.yaml
 msg_ok "Installed k0s Kubernetes"
 
 read -r -p "Would you like to add Helm Package Manager? <y/N> " prompt
-if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   HELM="Y"
 else
   HELM="N"
