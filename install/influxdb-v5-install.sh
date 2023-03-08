@@ -120,12 +120,6 @@ msg_ok "Installed InfluxDB"
 
 read -r -p "Would you like to add Telegraf? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  TELEGRAF="Y"
-else
-  TELEGRAF="N"
-fi
-
-if [[ $TELEGRAF == "Y" ]]; then
   msg_info "Installing Telegraf"
   $STD apt-get install -y telegraf
   msg_ok "Installed Telegraf"

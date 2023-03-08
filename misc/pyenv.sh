@@ -64,15 +64,12 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)
 msg_ok "Installed pyenv"
 . ~/.bashrc
 set -e
-msg_info "Installing Python 3.10.8"
-pyenv install 3.10.8 &>/dev/null
-pyenv global 3.10.8
-msg_ok "Installed Python 3.10.8"
+msg_info "Installing Python 3.11.1"
+pyenv install 3.11.1 &>/dev/null
+pyenv global 3.11.1
+msg_ok "Installed Python 3.11.1"
 read -r -p "Would you like to install Home Assistant Beta? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  HA="Y"
-fi
-if [[ $HA == "Y" ]]; then
 msg_info "Installing Home Assistant Beta"
 cat <<EOF >/etc/systemd/system/homeassistant.service
 [Unit]
@@ -102,9 +99,6 @@ fi
 
 read -r -p "Would you like to install ESPHome Beta? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  ESP="Y"
-fi
-if [[ $ESP == "Y" ]]; then
 msg_info "Installing ESPHome Beta"
 mkdir /srv/esphome
 cd /srv/esphome
@@ -147,9 +141,6 @@ fi
 
 read -r -p "Would you like to install Matter-Server (Beta)? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  MTR="Y"
-fi
-if [[ $MTR == "Y" ]]; then
 msg_info "Installing Matter Server"
 apt-get install -y \
 libcairo2-dev \

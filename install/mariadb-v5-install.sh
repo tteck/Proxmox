@@ -100,12 +100,6 @@ msg_ok "Installed MariaDB"
 
 read -r -p "Would you like to add Adminer? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  ADMINER="Y"
-else
-  ADMINER="N"
-fi
-
-if [[ $ADMINER == "Y" ]]; then
   msg_info "Installing Adminer"
   $STD apt install -y adminer
   $STD a2enconf adminer

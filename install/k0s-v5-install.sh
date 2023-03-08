@@ -102,12 +102,6 @@ msg_ok "Installed k0s Kubernetes"
 
 read -r -p "Would you like to add Helm Package Manager? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  HELM="Y"
-else
-  HELM="N"
-fi
-
-if [[ $HELM == "Y" ]]; then
 msg_info "Installing Helm"
 $STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3)
 msg_ok "Installed Helm"
