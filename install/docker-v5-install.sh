@@ -118,12 +118,6 @@ msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
 read -r -p "Would you like to add Portainer? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  PORTAINER="Y"
-else
-  PORTAINER="N"
-fi
-
-if [[ $PORTAINER == "Y" ]]; then
   msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
   docker volume create portainer_data >/dev/null
  $STD docker run -d \
@@ -139,12 +133,6 @@ fi
 
 read -r -p "Would you like to add Docker Compose? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  DOCKER_COMPOSE="Y"
-else
-  DOCKER_COMPOSE="N"
-fi
-
-if [[ $DOCKER_COMPOSE == "Y" ]]; then
   msg_info "Installing Docker Compose $DOCKER_COMPOSE_LATEST_VERSION"
   DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
   mkdir -p $DOCKER_CONFIG/cli-plugins
