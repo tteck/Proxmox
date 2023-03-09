@@ -124,15 +124,18 @@ function default_settings() {
   VERB="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
+
 function advanced_settings() {
-  var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 11 58 4 \
+if var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 4 \
     "18.04" "Bionic" OFF \
     "20.04" "Focal" ON \
     "22.04" "Jammy" OFF \
     "22.10" "Kinetic" OFF \
-    3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"; fi
+    3>&1 1>&2 2>&3); then
+    echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"
+else
+    exit-script
+fi
   CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
     "1" "Unprivileged" OFF \
     "0" "Privileged" ON \
@@ -313,6 +316,7 @@ function advanced_settings() {
     advanced_settings
   fi
 }
+
 function install_script() {
 ARCH_CHECK
 PVE_CHECK
@@ -328,6 +332,7 @@ header_info
     advanced_settings
   fi
 }
+
 function update_script() {
 UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select \nplexupdate info >> https://github.com/mrworf/plexupdate" 10 59 2 \
   "1" "Update LXC" ON \

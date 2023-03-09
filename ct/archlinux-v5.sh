@@ -122,6 +122,7 @@ function default_settings() {
   VERB="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
+
 function advanced_settings() {
   CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
     "1" "Unprivileged" ON \
@@ -303,6 +304,7 @@ function advanced_settings() {
     advanced_settings
   fi
 }
+
 function install_script() {
 ARCH_CHECK
 PVE_CHECK

@@ -123,6 +123,7 @@ function default_settings() {
   VERB="no"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
+
 function advanced_settings() {
   var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 11 58 4 \
     "18.04" "Bionic" OFF \
@@ -312,6 +313,7 @@ function advanced_settings() {
     advanced_settings
   fi
 }
+
 function install_script() {
 ARCH_CHECK
 PVE_CHECK
@@ -327,6 +329,7 @@ header_info
     advanced_settings
   fi
 }
+
 function update_script() {
 header_info
 msg_info "Updating ${APP} LXC"
