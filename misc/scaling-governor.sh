@@ -17,7 +17,6 @@ Scaling Governors
 EOF
 }
 while true; do
-    header_info
     read -p "View CPU Scaling Governors. Proceed(y/n)?" yn
     case $yn in
     [Yy]*) break ;;
