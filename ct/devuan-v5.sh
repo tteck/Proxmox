@@ -123,6 +123,12 @@ function default_settings() {
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 
+function exit-script() {
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+}
+
 function advanced_settings() {
   CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
     "1" "Unprivileged" ON \
