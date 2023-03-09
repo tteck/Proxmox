@@ -2,6 +2,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## 2023-03-08
+
+### Changed
+
+- **Proxmox CPU Scaling Governor**
+  - Menu options dynamically based on the available scaling governors.
+
 ## 2023-03-07
 
 ### Changed
