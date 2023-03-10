@@ -85,7 +85,6 @@ fi
 
 function default_settings() {
   echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
-
   echo -e "${DGN}Using Container Type: ${BGN}Privileged${CL}"
   CT_TYPE="0"
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
