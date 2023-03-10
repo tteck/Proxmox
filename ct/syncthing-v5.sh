@@ -140,7 +140,7 @@ else
     exit-script
 fi
 
-if PW1=$(whiptail --inputbox "Set Root Password (needed for root ssh access)" 8 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
+if PW1=$(whiptail --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
     if [ -z $PW1 ]; then
         PW1="Automatic Login"
         PW=" "
