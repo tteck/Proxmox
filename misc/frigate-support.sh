@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
 echo -e "\e[1;33m This script will Prepare a LXC Container for Frigate \e[0m"
 while true; do
-    read -p "Did you replace 106 with your LXC ID? Proceed (y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
+  read -p "Did you replace 106 with your LXC ID? Proceed (y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
 done
 set -o errexit
 set -o errtrace
@@ -48,7 +54,7 @@ for char_dev in ${CHAR_DEVS[@]}; do
   CHAR_DEV_STRING+=" -regex \".*/${char_dev}\""
 done
 
-read -r -d '' HOOK_SCRIPT <<- EOF || true
+read -r -d '' HOOK_SCRIPT <<-EOF || true
 for char_dev in \$(find /sys/dev/char -regextype sed $CHAR_DEV_STRING); do
   dev="/dev/\$(sed -n "/DEVNAME/ s/^.*=\(.*\)$/\1/p" \${char_dev}/uevent)";
   mkdir -p \$(dirname \${LXC_ROOTFS_MOUNT}\${dev});
@@ -66,12 +72,12 @@ CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
 sed '/autodev/d' $CTID_CONFIG_PATH >CTID.conf
 cat CTID.conf >$CTID_CONFIG_PATH
 
-cat <<EOF >> $CTID_CONFIG_PATH
+cat <<EOF >>$CTID_CONFIG_PATH
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
 echo -e "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
 
 # In the Proxmox web shell run (replace 106 with your LXC ID)
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/frigate-support.sh)" -s 106
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/frigate-support.sh)" -s 106
 # Reboot the LXC to apply the changes

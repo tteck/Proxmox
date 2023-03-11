@@ -1,80 +1,82 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
+function header_info {
+clear
+cat <<"EOF"
+   __  __          __      __          __   _  ________
+  / / / /___  ____/ /___ _/ /____     / /  | |/ / ____/
+ / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /     
+/ /_/ / /_/ / /_/ / /_/ / /_/  __/  / /___/   / /___   
+\____/ .___/\__,_/\__,_/\__/\___/  /_____/_/|_\____/   
+    /_/                                                
+
+EOF
+}
 set -e
-YW=`echo "\033[33m"`
-BL=`echo "\033[36m"`
-RD=`echo "\033[01;31m"`
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+RD=$(echo "\033[01;31m")
 CM='\xE2\x9C\x94\033'
-GN=`echo "\033[1;92m"`
-CL=`echo "\033[m"`
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
+header_info
 while true; do
-    read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
+  read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
 done
 clear
-function header_info {
-echo -e "${BL}
-  _    _ _____  _____       _______ ______ 
- | |  | |  __ \|  __ \   /\|__   __|  ____|
- | |  | | |__) | |  | | /  \  | |  | |__   
- | |  | |  ___/| |  | |/ /\ \ | |  |  __|  
- | |__| | |    | |__| / ____ \| |  | |____ 
-  \____/|_|    |_____/_/    \_\_|  |______|
-
-${CL}"
-}
-header_info
-
-containers=$(pct list | tail -n +2 | cut -f1 -d' ')
-
+excluded_containers=("$@")
 function update_container() {
   container=$1
-  clear
   header_info
-  echo -e "${BL}[Info]${GN} Updating${BL} $container ${CL} \n"
-  pct config $container > temp
-  os=`awk '/^ostype/' temp | cut -d' ' -f2`
-  if [ "$os" == "alpine" ]
-  then
-        pct exec $container -- ash -c "apk update && apk upgrade"
-  else
-        pct exec $container -- bash -c "apt update && apt upgrade -y && apt autoremove -y"
-  fi
+  name=$(pct exec "$container" hostname)
+  echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} \n"
+  os=$(pct config "$container" | awk '/^ostype/ {print $2}')
+  case "$os" in
+    alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
+    archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
+    fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
+    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update && apt-get -y dist-upgrade" ;;
+  esac
 }
-read -p "Skip stopped containers? " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    skip=no
-else
-    skip=yes
-fi
-
-for container in $containers
-do
-  status=`pct status $container`
- if [ "$skip" == "no" ]; then 
-  if [ "$status" == "status: stopped" ]; then
-    echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
-    pct start $container
-    echo -e "${BL}[Info]${GN} Waiting For${BL} $container${CL}${GN} To Start ${CL} \n"
-    sleep 5
-    update_container $container
-    echo -e "${BL}[Info]${GN} Shutting down${BL} $container ${CL} \n"
-    pct shutdown $container &
-  elif [ "$status" == "status: running" ]; then
-    update_container $container
+header_info
+for container in $(pct list | tail -n +2 | cut -f1 -d' '); do
+  excluded=false
+  for excluded_container in "${excluded_containers[@]}"; do
+    if [ "$container" == "$excluded_container" ]; then
+      excluded=true
+      break
+    fi
+  done
+  if [ "$excluded" == true ]; then
+    header_info
+    echo -e "${BL}[Info]${GN} Skipping ${BL}$container${CL}"
+    sleep 1
+  else
+    status=$(pct status $container)
+    template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
+    if [ "$template" == "false" ] && [ "$status" == "status: stopped" ]; then
+      echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
+      pct start $container
+      echo -e "${BL}[Info]${GN} Waiting For${BL} $container${CL}${GN} To Start ${CL} \n"
+      sleep 5
+      update_container $container
+      echo -e "${BL}[Info]${GN} Shutting down${BL} $container ${CL} \n"
+      pct shutdown $container &
+    elif [ "$status" == "status: running" ]; then
+      update_container $container
+    fi
   fi
- fi 
- if [ "$skip" == "yes" ]; then
-  if [ "$status" == "status: running" ]; then
-    update_container $container
-  fi
- fi 
-done; wait
-
-rm temp
+done
+wait
+header_info
 echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
