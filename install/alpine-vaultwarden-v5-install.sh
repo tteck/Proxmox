@@ -102,7 +102,7 @@ $STD apk add mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Vaultwarden"
-$STD apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing vaultwarden
+$STD apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing vaultwarden
 cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_ENABLED=true
@@ -113,6 +113,9 @@ $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Vaultwarden"
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
+echo -e "https://dl-3.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
+echo -e "https://dl-3.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+echo -e "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
   $STD rc-update add sshd
   $STD /etc/init.d/sshd start
