@@ -67,8 +67,8 @@ if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | c
   exit 1
 fi
 cat <<EOF >/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/edge/main
-https://dl-cdn.alpinelinux.org/alpine/edge/community
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 msg_ok "Set up Container OS"
@@ -94,7 +94,7 @@ trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 
 msg_info "Updating Container OS"
 $STD apk update
-$STD apk upgrade
+$STD apk upgrade -a
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
@@ -105,12 +105,6 @@ $STD apk add openssh
 $STD apk add nano
 $STD apk add mc
 msg_ok "Installed Dependencies"
-
-msg_info "Adjusting Repositories"
-echo -e "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
-echo -e "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
-echo -e "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-msg_ok "Adjusted Repositories"
 
 msg_info "Installing Vaultwarden"
 $STD apk add --no-cache vaultwarden
