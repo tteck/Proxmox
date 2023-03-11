@@ -2,6 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-10
+
+### Changed
+
+- **Proxmox LXC Updater** 
+  - You can use the command line to exclude multiple containers simultaneously.
 
 ## 2023-03-08
 
