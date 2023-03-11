@@ -369,7 +369,7 @@ while [ "$opt" != "" ]; do
             clear
             echo -e "${fgred}Update Vaultwarden${normal}"
             apk update &>/dev/null
-            apk upgrade --update-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing vaultwarden
+            apk upgrade &>/dev/null
             
             break
             ;;

@@ -67,8 +67,8 @@ if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | c
   exit 1
 fi
 cat <<EOF >/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
-https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
+https://dl-cdn.alpinelinux.org/alpine/edge/main
+https://dl-cdn.alpinelinux.org/alpine/edge/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 msg_ok "Set up Container OS"
@@ -124,14 +124,6 @@ EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Vaultwarden"
-
-msg_info "Downloading Web-Vault"
-WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 2, length($2)-3) }')
-$STD curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz
-$STD tar -xzf bw_web_$WEBVAULT.tar.gz -C /var/lib/vaultwarden/
-msg_ok "Downloaded Web-Vault"
 
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
