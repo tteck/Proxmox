@@ -432,6 +432,7 @@ else
 fi
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+export tz=$timezone
 export SERV=$SERVER
 export DISABLEIPV6=$DISABLEIP6
 export APPLICATION=$APP
