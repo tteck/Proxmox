@@ -34,8 +34,7 @@ while true; do
   esac
 done
 clear
-exclude_container="$@"
-containers=$(pct list | tail -n +2 | cut -f1 -d' ' | grep -vE "^($exclude_container)$")
+excluded_containers=("$@")
 function update_container() {
   container=$1
   header_info
@@ -50,10 +49,22 @@ function update_container() {
   esac
 }
 header_info
-for container in $containers; do
-  status=$(pct status $container)
-  template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
-   if [ "$template" == "false" ] && [ "$status" == "status: stopped" ]; then
+for container in $(pct list | tail -n +2 | cut -f1 -d' '); do
+  excluded=false
+  for excluded_container in "${excluded_containers[@]}"; do
+    if [ "$container" == "$excluded_container" ]; then
+      excluded=true
+      break
+    fi
+  done
+  if [ "$excluded" == true ]; then
+    header_info
+    echo -e "${BL}[Info]${GN} Skipping ${BL}$container${CL}"
+    sleep 1
+  else
+    status=$(pct status $container)
+    template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
+    if [ "$template" == "false" ] && [ "$status" == "status: stopped" ]; then
       echo -e "${BL}[Info]${GN} Starting${BL} $container ${CL} \n"
       pct start $container
       echo -e "${BL}[Info]${GN} Waiting For${BL} $container${CL}${GN} To Start ${CL} \n"
@@ -63,6 +74,7 @@ for container in $containers; do
       pct shutdown $container &
     elif [ "$status" == "status: running" ]; then
       update_container $container
+    fi
   fi
 done
 wait
