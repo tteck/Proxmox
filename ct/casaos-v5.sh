@@ -344,6 +344,22 @@ else
 fi
 }
 
+function install_script() {
+ARCH_CHECK
+PVE_CHECK
+NEXTID=$(pvesh get /cluster/nextid)
+header_info
+  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
+    header_info
+    echo -e "${BL}Using Default Settings${CL}"
+    default_settings
+  else
+    header_info
+    echo -e "${RD}Using Advanced Settings${CL}"
+    advanced_settings
+  fi
+}
+
 function update_script() {
 header_info
 msg_info "Updating ${APP} LXC"
