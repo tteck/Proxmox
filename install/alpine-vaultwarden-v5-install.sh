@@ -66,6 +66,11 @@ if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | c
   echo -e " 🖧  Check Network Settings"
   exit 1
 fi
+cat <<EOF >/etc/apk/repositories
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
+https://dl-cdn.alpinelinux.org/alpine/edge/testing
+EOF
 msg_ok "Set up Container OS"
 msg_ok "Network Connected: ${BL}$(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | tail -n1)${CL}"
 
@@ -102,7 +107,7 @@ $STD apk add mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Vaultwarden"
-$STD apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing vaultwarden
+$STD apk add --no-cache vaultwarden
 cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_ENABLED=true
