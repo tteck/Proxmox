@@ -93,7 +93,7 @@ set -e
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 
 msg_info "Updating Container OS"
-$STD apk update
+$STD apk update -a
 $STD apk upgrade
 msg_ok "Updated Container OS"
 
@@ -118,14 +118,6 @@ EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Vaultwarden"
-
-msg_info "Downloading Web-Vault"
-WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 2, length($2)-3) }')
-$STD curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz
-$STD tar -xzf bw_web_$WEBVAULT.tar.gz -C /var/lib/vaultwarden/
-msg_ok "Downloaded Web-Vault"
 
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
