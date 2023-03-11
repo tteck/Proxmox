@@ -93,7 +93,7 @@ set -e
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 
 msg_info "Updating Container OS"
-$STD apk update -a
+$STD apk update
 $STD apk upgrade
 msg_ok "Updated Container OS"
 
