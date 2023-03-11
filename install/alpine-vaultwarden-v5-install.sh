@@ -101,8 +101,14 @@ $STD apk add nano
 $STD apk add mc
 msg_ok "Installed Dependencies"
 
+msg_info "Adjusting Repositories"
+echo -e "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
+echo -e "https://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+echo -e "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+msg_ok "Adjusted Repositories"
+
 msg_info "Installing Vaultwarden"
-$STD apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing vaultwarden
+$STD apk add --no-cache vaultwarden
 cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_ENABLED=true
