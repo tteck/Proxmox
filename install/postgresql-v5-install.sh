@@ -47,6 +47,9 @@ function msg_error() {
 msg_info "Setting up Container OS "
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
+LANG=$(grep -v '^#' /etc/locale.gen | grep -o '^[^ ]*')
+update-locale LANG=$LANG
+echo "export LANG=$LANG" >> ~/.bashrc
 echo $tz > /etc/timezone
 ln -sf /usr/share/zoneinfo/$tz /etc/localtime
 for ((i=RETRY_NUM; i>0; i--)); do
