@@ -110,6 +110,7 @@ msg_info "Installing Vaultwarden"
 $STD apk add --no-cache vaultwarden
 cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
+export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
 export WEB_VAULT_ENABLED=true
 export ADMIN_TOKEN=$(openssl rand -base64 48)
 export ROCKET_ADDRESS=0.0.0.0
@@ -117,6 +118,15 @@ EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Vaultwarden"
+
+msg_info "Downloading Web-Vault"
+WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
+  grep "tag_name" |
+  awk '{print substr($2, 2, length($2)-3) }')
+$STD curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz
+$STD tar -xzf bw_web_$WEBVAULT.tar.gz -C /var/lib/vaultwarden/
+msg_ok "Downloaded Web-Vault"
+
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
   $STD rc-update add sshd
