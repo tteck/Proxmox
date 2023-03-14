@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-function header_info {
+function header_info() {
 clear
 cat <<"EOF"
    ________                    __   _  ________
@@ -44,6 +44,13 @@ function clean_container() {
 }
 
 for container in $containers; do
+  os=$(pct config "$container" | awk '/^ostype/ {print $2}')
+  if [ "$os" != "debian" ] && [ "$os" != "ubuntu" ]; then
+    header_info
+    echo -e "${BL}[Info]${GN} Skipping ${name} ${RD}$container is not Debian or Ubuntu ${CL} \n"
+    sleep 1
+    continue
+  fi
   status=$(pct status $container)
   template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
    if [ "$template" == "false" ] && [ "$status" == "status: stopped" ]; then
