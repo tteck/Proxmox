@@ -357,7 +357,8 @@ header_info
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
   grep "tag_name" |
   awk '{print substr($2, 3, length($2)-4) }')
-  
+echo -e "Please wait until new version ${RELEASE} is confirmed working"
+exit  
 msg_info "Stopping Services"
 systemctl stop openresty
 systemctl stop npm
