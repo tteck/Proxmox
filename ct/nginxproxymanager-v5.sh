@@ -356,9 +356,7 @@ function update_script() {
 header_info
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
   grep "tag_name" |
-  awk '{print substr($2, 3, length($2)-4) }')
-echo -e "Please wait until new version ${RELEASE} is confirmed working"
-exit  
+  awk '{print substr($2, 3, length($2)-4) }') 
 msg_info "Stopping Services"
 systemctl stop openresty
 systemctl stop npm
@@ -454,6 +452,7 @@ EOF
 fi
 cd /app
 export NODE_ENV=development
+sed -i 's/"liquidjs": "\^12\.9\.20",/"liquidjs": "\^10.6.1",/g' package.json
 yarn install --network-timeout=30000 &>/dev/null
 msg_ok "Initialized Backend"
 
