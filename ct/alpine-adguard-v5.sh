@@ -19,7 +19,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Alpine-Adguard"
+APP="Alpine-AdGuard"
 var_disk="0.5"
 var_cpu="1"
 var_ram="256"
@@ -354,12 +354,12 @@ header_info
 function update_script() {
 header_info
 msg_info "Stopping AdguardHome"
-/opt/AdGuardHome/AdGuardHome -s stop
+/opt/AdGuardHome/AdGuardHome -s stop &>/dev/null
 msg_ok "Stopped AdguardHome"
 
 VER=$(curl --silent -qI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
 msg_info "Updating AdguardHome to $VER"
-wget https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz
+wget -qL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
 tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
 mkdir -p adguard-backup
 cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
@@ -368,7 +368,7 @@ cp -r adguard-backup/* /opt/AdGuardHome/
 msg_ok "Updated AdguardHome"
 
 msg_info "Starting AdguardHome"
-/opt/AdGuardHome/AdGuardHome -s start
+/opt/AdGuardHome/AdGuardHome -s start &>/dev/null
 msg_ok "Started AdguardHome"
 
 msg_info "Cleaning Up"
@@ -387,14 +387,14 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
-    clear
-    echo -e "⚠  User exited script \n"
-    exit
-  fi
+if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /opt/AdGuardHome/AdGuardHome ]]; then
+  msg_error "No ${APP} Installation Found!"
+fi
+
+if ! command -v pveversion >/dev/null 2>&1 && [[ -f /opt/AdGuardHome/AdGuardHome ]]; then
   update_script  
 fi
+
 
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
