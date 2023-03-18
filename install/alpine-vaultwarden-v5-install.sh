@@ -106,8 +106,8 @@ $STD apk add nano
 $STD apk add mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Vaultwarden"
-$STD apk add --no-cache vaultwarden
+msg_info "Installing $APPLICATION"
+$STD apk add vaultwarden
 cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
@@ -117,7 +117,7 @@ export ROCKET_ADDRESS=0.0.0.0
 EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
-msg_ok "Installed Vaultwarden"
+msg_ok "Installed $APPLICATION"
 
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
