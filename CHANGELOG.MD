@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-18
+
+### Changed
+
+- **Alpine-AdGuard Home LXC** (Thanks @nicedevil007)
+  - NEW Script
+
 ## 2023-03-15
 
 ### Changed
