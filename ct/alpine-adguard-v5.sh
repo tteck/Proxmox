@@ -20,12 +20,12 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Alpine-AdGuard"
-var_disk="0.5"
+var_disk="0.3"
 var_cpu="1"
 var_ram="256"
 var_os="alpine"
 var_version="3.17"
-NSAPP=$(echo ${APP,,} | tr -d ' ')
+NSAPP=`echo "${APP}" | tr '[A-Z]' '[a-z]'`
 var_install="${NSAPP}-v5-install"
 timezone=$(cat /etc/timezone)
 INTEGER='^[0-9]+([.][0-9]+)?$'
@@ -357,10 +357,10 @@ msg_info "Stopping AdguardHome"
 /opt/AdGuardHome/AdGuardHome -s stop &>/dev/null
 msg_ok "Stopped AdguardHome"
 
-VER=$(curl --silent -qI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
+VER=$(curl -sqI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
 msg_info "Updating AdguardHome to $VER"
-wget -qL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
-tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
+curl -sL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz" > AdGuardHome.tar.gz
+tar -xvf AdGuardHome.tar.gz &>/dev/null
 mkdir -p adguard-backup
 cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
 cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
@@ -372,7 +372,7 @@ msg_info "Starting AdguardHome"
 msg_ok "Started AdguardHome"
 
 msg_info "Cleaning Up"
-rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
+rm -rf AdGuardHome.tar.gz AdGuardHome adguard-backup
 msg_ok "Cleaned"
 msg_ok "Update Successfull"
 exit
@@ -429,7 +429,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/c
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- ash -c "$(wget -qO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
+lxc-attach -n $CTID -- ash -c "$(wget -qO - https://raw.githubusercontent.com/nicedevil007/Proxmox/alpine-adguard-LXC/install/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/

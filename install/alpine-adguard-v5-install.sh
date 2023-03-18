@@ -97,20 +97,18 @@ $STD apk upgrade
 msg_ok "Updated Container OS"
 
 msg_info "Installing Dependencies"
-$STD apk add wget
-$STD apk add bash
-$STD apk add curl
-$STD apk add nano
-$STD apk add mc
-$STD apk add openssh
+$STD apk add --no-cache bash
+$STD apk add --no-cache curl
+$STD apk add --no-cache openssh
+$STD apk add --no-cache nano
 msg_ok "Installed Dependencies"
 
 msg_info "Installing AdguardHome"
 VER=$(curl --silent -qI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
-$STD wget -qL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
-$STD tar -xvf AdGuardHome_linux_amd64.tar.gz >/dev/null 2>&1
+$STD curl -sL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz" > AdGuardHome.tar.gz
+$STD tar -xvf AdGuardHome.tar.gz >/dev/null 2>&1
 $STD mv AdGuardHome /opt
-$STD rm AdGuardHome_linux_amd64.tar.gz
+$STD rm AdGuardHome.tar.gz
 $STD chmod +x /opt/AdGuardHome/AdGuardHome
 $STD /opt/AdGuardHome/AdGuardHome -s install
 $STD /opt/AdGuardHome/AdGuardHome -s start
