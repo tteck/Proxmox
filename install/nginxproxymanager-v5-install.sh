@@ -227,7 +227,6 @@ EOF
 fi
 cd /app
 export NODE_ENV=development
-sed -i 's/"liquidjs": "\^12\.9\.20",/"liquidjs": "\^10.6.1",/g' package.json
 $STD yarn install --network-timeout=30000
 msg_ok "Initialized Backend"
 
