@@ -104,12 +104,12 @@ $STD apk add nano
 $STD apk add mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Grafana"
-$STD apk add --no-cache grafana
+msg_info "Installing $APPLICATION"
+$STD apk add grafana
 $STD sed -i '/http_addr/s/127.0.0.1/0.0.0.0/g' /etc/conf.d/grafana
 $STD rc-service grafana start
 $STD rc-update add grafana default
-msg_ok "Installed Grafana"
+msg_ok "Installed $APPLICATION"
 
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
