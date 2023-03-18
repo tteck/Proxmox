@@ -387,12 +387,10 @@ while [ "$opt" != "" ]; do
             msg_info "Updating AdguardHome to $VER"
             wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
             tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
-            if [ -f "/opt/AdGuardHome/AdGuardHome.yaml"]; then
-                mkdir -p adguard-backup
-                cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
-                cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
-                cp -r adguard-backup/* /opt/AdGuardHome/
-            fi
+            mkdir -p adguard-backup
+            cp -rf /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
+            cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
+            cp -r adguard-backup/* /opt/AdGuardHome/
             msg_ok "Updated AdguardHome"
 
             msg_info "Starting AdguardHome"
@@ -407,10 +405,12 @@ while [ "$opt" != "" ]; do
             break
             ;;
         x)
+            clear
             echo -e "⚠  User exited script \n"
             exit
             ;;
         \n)
+            clear
             echo -e "⚠  User exited script \n"
             exit
             ;;
