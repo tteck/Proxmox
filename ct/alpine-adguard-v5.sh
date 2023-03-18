@@ -361,10 +361,12 @@ VER=$(curl -sqI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk
 msg_info "Updating AdguardHome to $VER"
 wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
 tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
-mkdir -p adguard-backup
-cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
-cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
-cp -r adguard-backup/* /opt/AdGuardHome/
+if test -f "/opt/AdGuardHome/AdGuardHome.yaml"; then
+    mkdir -p adguard-backup
+    cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
+    cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
+    cp -r adguard-backup/* /opt/AdGuardHome/
+fi
 msg_ok "Updated AdguardHome"
 
 msg_info "Starting AdguardHome"
@@ -429,7 +431,7 @@ bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/c
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- ash -c "$(wget -qO - https://raw.githubusercontent.com/nicedevil007/Proxmox/alpine-adguard-LXC/install/$var_install.sh)" || exit
+lxc-attach -n $CTID -- ash -c "$(wget -qO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
 IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
 pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
