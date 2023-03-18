@@ -25,7 +25,7 @@ var_cpu="1"
 var_ram="256"
 var_os="alpine"
 var_version="3.17"
-NSAPP=`echo "${APP}" | tr '[A-Z]' '[a-z]'`
+NSAPP=$(echo ${APP,,} | tr -d ' ')
 var_install="${NSAPP}-v5-install"
 timezone=$(cat /etc/timezone)
 INTEGER='^[0-9]+([.][0-9]+)?$'
@@ -359,8 +359,8 @@ msg_ok "Stopped AdguardHome"
 
 VER=$(curl -sqI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
 msg_info "Updating AdguardHome to $VER"
-curl -sL "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz" > AdGuardHome.tar.gz
-tar -xvf AdGuardHome.tar.gz &>/dev/null
+wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
+tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
 mkdir -p adguard-backup
 cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
 cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
@@ -372,7 +372,7 @@ msg_info "Starting AdguardHome"
 msg_ok "Started AdguardHome"
 
 msg_info "Cleaning Up"
-rm -rf AdGuardHome.tar.gz AdGuardHome adguard-backup
+rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
 msg_ok "Cleaned"
 msg_ok "Update Successfull"
 exit
