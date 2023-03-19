@@ -371,13 +371,11 @@ if command -v pveversion >/dev/null 2>&1; then
 fi
 
 if ! command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
-    clear
-    echo -e "⚠  User exited script \n"
-    exit
+  if [[ ! -f /etc/conf.d/grafana ]]; then
+    msg_error "No ${APP} Installation Found!"
+  else
+    update_script
   fi
-  update_script  
-fi
 
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
