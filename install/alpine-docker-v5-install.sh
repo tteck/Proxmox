@@ -67,8 +67,8 @@ if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | c
   exit 1
 fi
 cat <<EOF >/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/edge/main
-https://dl-cdn.alpinelinux.org/alpine/edge/community
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 msg_ok "Set up Container OS"

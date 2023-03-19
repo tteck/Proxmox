@@ -27,7 +27,6 @@ var_os="alpine"
 var_version="3.17"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
 var_install="${NSAPP}-v5-install"
-timezone=$(cat /etc/timezone)
 INTEGER='^[0-9]+([.][0-9]+)?$'
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -352,6 +351,7 @@ header_info
 }
 
 function update_script() {
+    header_info
     normal=$(echo "\033[m")
     menu=$(echo "\033[36m")
     number=$(echo "\033[33m")
@@ -404,12 +404,12 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/conf.d/vaultwarden ]]; then
-  msg_error "No ${APP} Installation Found!"
-fi
-
-if ! command -v pveversion >/dev/null 2>&1 && [[ -f /etc/conf.d/vaultwarden ]]; then
-  update_script  
+if ! command -v pveversion >/dev/null 2>&1; then
+  if [[ ! -f /etc/conf.d/vaultwarden ]]; then
+    msg_error "No ${APP} Installation Found!"
+  else
+    update_script
+  fi
 fi
 
 if [ "$VERB" == "yes" ]; then set -x; fi
