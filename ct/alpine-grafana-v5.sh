@@ -351,12 +351,73 @@ header_info
 }
 
 function update_script() {
-header_info
-msg_info "Updating ${APP} LXC"
-apk update &>/dev/null
-apk upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_ok "Update Successfull"
+    header_info
+    normal=$(echo "\033[m")
+    menu=$(echo "\033[36m")
+    number=$(echo "\033[33m")
+    fgred=$(echo "\033[31m")
+    LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+    printf "\n${menu}*********************************************${normal}\n"
+    printf "${menu}**${number} 1)${normal} Update LXC OS + Grafana \n"
+    printf "${menu}**${number} 2)${normal} Allow 0.0.0.0 for listening \n"
+    printf "${menu}**${number} 3)${normal} Allow only ${LXCIP} for listening \n"
+    printf "${menu}*********************************************${normal}\n"
+    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit."
+    read opt
+
+while [ "$opt" != "" ]; do
+        case $opt in
+        1)
+            clear
+            echo -e "${fgred}Update LXC OS${normal}"
+            msg_info "Updating LXC OS + Grafana"
+            apk update &>/dev/null
+            apk upgrade &>/dev/null
+            msg_ok "Update Successfull"
+            
+            break
+            ;;
+        2)
+            clear
+            echo -e "${fgred}Updating Grafana Config with IP: ${LXCIP}${normal}"
+            msg_info "Stopping Grafana"
+            service grafana stop &>/dev/null
+            sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=0.0.0.0/g" /etc/conf.d/grafana
+            msg_ok "Restarted Grafana"
+            service grafana start &>/dev/null
+
+            break
+            ;;
+        3)
+            clear
+            echo -e "${fgred}Updating Grafana Config with host IP: ${LXCIP}${normal}"
+            msg_info "Stopping Grafana"
+            service grafana stop &>/dev/null
+            sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=$LXCIP/g" /etc/conf.d/grafana
+            msg_ok "Restarted Grafana"
+            service grafana start &>/dev/null
+
+            break
+            ;;
+        x)
+            clear
+            echo -e "⚠  User exited script \n"
+            exit
+            ;;
+        \n)
+            clear
+            echo -e "⚠  User exited script \n"
+            exit
+            ;;
+        *)
+            clear
+            echo -e "Please choose an option from the menu"
+            update_script
+            ;;
+        esac
+done
+
+
 exit
 }
 
