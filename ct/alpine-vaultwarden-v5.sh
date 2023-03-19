@@ -404,13 +404,12 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/conf.d/vaultwarden ]]; then
-  msg_error "No ${APP} Installation Found!"
-fi
-
-if ! command -v pveversion >/dev/null 2>&1 && [[ -f /etc/conf.d/vaultwarden ]]; then
-  update_script  
-fi
+if ! command -v pveversion >/dev/null 2>&1; then
+  if [[ ! -f /etc/conf.d/vaultwarden ]]; then
+    msg_error "No ${APP} Installation Found!"
+  else
+    update_script
+  fi
 
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
