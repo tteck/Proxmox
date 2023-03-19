@@ -396,12 +396,12 @@ if command -v pveversion >/dev/null 2>&1; then
   install_script
 fi
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -f /etc/zigbee2mqtt/configuration.yaml ]]; then
-  msg_error "No ${APP} Installation Found!"
-fi
-
-if ! command -v pveversion >/dev/null 2>&1 && [[ -f /etc/zigbee2mqtt/configuration.yaml ]]; then
-  update_script  
+if ! command -v pveversion >/dev/null 2>&1; then
+  if [[ ! -d /etc/docker ]]; then
+    msg_error "No ${APP} Installation Found!"
+  else
+    update_script
+  fi
 fi
 
 if [ "$VERB" == "yes" ]; then set -x; fi
