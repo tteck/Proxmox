@@ -338,6 +338,7 @@ function install_script() {
 ARCH_CHECK
 PVE_CHECK
 NEXTID=$(pvesh get /cluster/nextid)
+timezone=$(cat /etc/timezone)
 header_info
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
