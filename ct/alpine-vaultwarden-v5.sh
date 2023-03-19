@@ -410,6 +410,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
   else
     update_script
   fi
+fi
 
 if [ "$VERB" == "yes" ]; then set -x; fi
 if [ "$CT_TYPE" == "1" ]; then
