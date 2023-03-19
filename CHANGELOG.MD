@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - **Alpine-AdGuard Home LXC** (Thanks @nicedevil007)
   - NEW Script
+- **Alpine-Docker LXC**
+  - NEW Script
+- **Alpine-Zigbee2MQTT LXC**
+  - NEW Script
 
 ## 2023-03-15
 
