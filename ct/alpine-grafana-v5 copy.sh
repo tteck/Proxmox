@@ -8,21 +8,21 @@
 function header_info {
 clear
 cat <<"EOF"
-    ____  ____  _________            __ 
-   / __ \/ __ \/ ____/ (_)__v5____  / /_
-  / / / / / / / /   / / / _ \/ __ \/ __/
- / /_/ / /_/ / /___/ / /  __/ / / / /_  
-/_____/_____/\____/_/_/\___/_/ /_/\__/  
+   ______           ____                 
+  / ____/________ _/ __/___ _____v5____ _
+ / / __/ ___/ __  / /_/ __  / __ \/ __  /
+/ /_/ / /  / /_/ / __/ /_/ / / / / /_/ / 
+\____/_/   \__,_/_/  \__,_/_/ /_/\__,_/  
  Alpine
  
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Alpine-DDClient"
-var_disk="0.2"
+APP="Alpine-Grafana"
+var_disk="0.5"
 var_cpu="1"
-var_ram="128"
+var_ram="256"
 var_os="alpine"
 var_version="3.17"
 NSAPP=$(echo ${APP,,} | tr -d ' ')
@@ -359,10 +359,9 @@ function update_script() {
     fgred=$(echo "\033[31m")
     LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
     printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Update LXC OS + DDClient \n"
-    printf "${menu}**${number} 2)${normal} Scheduled Task every 15min \n"
-    printf "${menu}**${number} 3)${normal} Scheduled Task every hour \n"
-    printf "${menu}**${number} 4)${normal} Scheduled Task every day \n"
+    printf "${menu}**${number} 1)${normal} Update LXC OS + Grafana \n"
+    printf "${menu}**${number} 2)${normal} Allow 0.0.0.0 for listening \n"
+    printf "${menu}**${number} 3)${normal} Allow only ${LXCIP} for listening \n"
     printf "${menu}*********************************************${normal}\n"
     printf "Please choose an option from the menu, or ${fgred}x${normal} to exit."
     read opt
@@ -372,7 +371,7 @@ while [ "$opt" != "" ]; do
         1)
             clear
             echo -e "${fgred}Update LXC OS${normal}"
-            msg_info "Updating LXC OS + DDClient"
+            msg_info "Updating LXC OS + Grafana"
             apk update &>/dev/null
             apk upgrade &>/dev/null
             msg_ok "Update Successfull"
@@ -381,37 +380,23 @@ while [ "$opt" != "" ]; do
             ;;
         2)
             clear
-            echo -e "${fgred}Changing scheduled Task to 15min${normal}"
-            msg_info "Updating DDClient refresh schedule"
-            find /etc/periodic/ -name ddclient.sh -delete
-            echo "#!/bin/sh" > /etc/periodic/15min/ddclient.sh
-            echo "/usr/bin/ddclient -force" >> /etc/periodic/15min/ddclient.sh
-            chmod +x /etc/periodic/15min/ddclient.sh
-            msg_ok "Update Successfull"
+            echo -e "${fgred}Updating Grafana Config with IP: ${LXCIP}${normal}"
+            msg_info "Stopping Grafana"
+            service grafana stop &>/dev/null
+            sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=0.0.0.0/g" /etc/conf.d/grafana
+            msg_ok "Restarted Grafana"
+            service grafana start &>/dev/null
 
             break
             ;;
         3)
             clear
-            echo -e "${fgred}Changing scheduled Task to hourly${normal}"
-            msg_info "Updating DDClient refresh schedule"
-            find /etc/periodic/ -name ddclient.sh -delete
-            echo "#!/bin/sh" > /etc/periodic/hourly/ddclient.sh
-            echo "/usr/bin/ddclient -force" >> /etc/periodic/hourly/ddclient.sh
-            chmod +x /etc/periodic/hourly/ddclient.sh
-            msg_ok "Update Successfull"
-
-            break
-            ;;
-        4)
-            clear
-            echo -e "${fgred}Changing scheduled Task to daily${normal}"
-            msg_info "Updating DDClient refresh schedule"
-            find /etc/periodic/ -name ddclient.sh -delete
-            echo "#!/bin/sh" > /etc/periodic/daily/ddclient.sh
-            echo "/usr/bin/ddclient -force" >> /etc/periodic/daily/ddclient.sh
-            chmod +x /etc/periodic/daily/ddclient.sh
-            msg_ok "Update Successfull"
+            echo -e "${fgred}Updating Grafana Config with host IP: ${LXCIP}${normal}"
+            msg_info "Stopping Grafana"
+            service grafana stop &>/dev/null
+            sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=$LXCIP/g" /etc/conf.d/grafana
+            msg_ok "Restarted Grafana"
+            service grafana start &>/dev/null
 
             break
             ;;
@@ -432,6 +417,7 @@ while [ "$opt" != "" ]; do
             ;;
         esac
 done
+
 
 exit
 }
@@ -492,4 +478,5 @@ pct set $CTID -description "# ${APP} LXC
 ### https://tteck.github.io/Proxmox/
 <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
-echo -e "The schedule for an update is set to: hourly. To configure ${APP} login to its shell. \n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:3000${CL} \n"

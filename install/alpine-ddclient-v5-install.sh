@@ -117,7 +117,9 @@ $STD rc-service ddclient start
 $STD rc-update add ddclient default
 msg_ok "Installed $APPLICATION"
 
-echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
+echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/" > /etc/motd
+echo -e "$APPLICATION can be configured with: ${BL}nano /etc/ddclient/ddclient.conf${CL}\n" >> /etc/motd
+
 if [[ "${SSH_ROOT}" == "yes" ]]; then 
   $STD rc-update add sshd
   $STD /etc/init.d/sshd start
