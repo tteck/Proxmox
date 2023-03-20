@@ -353,10 +353,16 @@ header_info
 
 function update_script() {
 header_info
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_info "Updating $APP"
+systemctl stop sabnzbd.service
+RELEASE=$(curl -s https://api.github.com/repos/sabnzbd/sabnzbd/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+tar zxvf <(curl -fsSL https://github.com/sabnzbd/sabnzbd/releases/download/$RELEASE/SABnzbd-${RELEASE}-src.tar.gz) &>/dev/null
+\cp -r SABnzbd-${RELEASE}/* /opt/sabnzbd &>/dev/null
+rm -rf SABnzbd-${RELEASE}
+cd /opt/sabnzbd
+python3 -m pip install -r requirements.txt &>/dev/null
+systemctl start sabnzbd.service
+msg_ok "Updated $APP"
 exit
 }
 
@@ -375,7 +381,7 @@ if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/sabnzbd ]]; then
 fi
 
 if ! command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
+  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP}.  Proceed?" 10 58); then
     clear
     echo -e "⚠  User exited script \n"
     exit
