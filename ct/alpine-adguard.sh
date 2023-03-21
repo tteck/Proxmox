@@ -53,6 +53,7 @@ function default_settings() {
 
 function update_script() {
     header_info
+    if [[ ! -d /opt/AdGuardHome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
     normal=$(echo "\033[m")
     menu=$(echo "\033[36m")
     number=$(echo "\033[33m")
