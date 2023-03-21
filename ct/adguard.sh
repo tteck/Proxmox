@@ -54,6 +54,7 @@ function default_settings() {
 
 function update_script() {
 header_info
+if [[ ! -d /opt/AdGuardHome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Stopping AdguardHome"
 systemctl stop AdGuardHome
 msg_ok "Stopped AdguardHome"

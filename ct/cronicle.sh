@@ -52,17 +52,13 @@ function default_settings() {
 }
 
 function update_script() {
+if [[ ! -d /opt/cronicle ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
   "1" "Update ${APP}" ON \
   "2" "Install ${APP} Worker" OFF \
   3>&1 1>&2 2>&3)
 
 header_info
-if [ "$UPD" == "1" ]; then
-  if [[ ! -d /opt/cronicle ]]; then
-    msg_error "No ${APP} Installation Found!";
-    exit 
-  fi
 msg_info "Updating ${APP}"
 /opt/cronicle/bin/control.sh upgrade &>/dev/null
 msg_ok "Updated ${APP}"

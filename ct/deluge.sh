@@ -54,6 +54,7 @@ function default_settings() {
 
 function update_script() {
 header_info
+if [[ ! -f /etc/systemd/system/deluged.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 pip3 install deluge[all] --upgrade

@@ -53,6 +53,7 @@ function default_settings() {
 
 function update_script() {
 header_info
+if [[ ! -f /usr/local/bin/esphome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Stopping ESPHome"
 systemctl stop esphomeDashboard
 msg_ok "Stopped ESPHome"

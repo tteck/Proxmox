@@ -53,6 +53,7 @@ function default_settings() {
 
 function update_script() {
 header_info
+if [[ ! -f /etc/apache2/sites-available/grocy.conf ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 bash /var/www/html/update.sh
 msg_ok "Updated ${APP}"

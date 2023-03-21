@@ -53,6 +53,7 @@ function default_settings() {
 
 function update_script() {
 header_info
+if [[ ! -d /dashy/public/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Stopping ${APP}"
 systemctl stop dashy
 msg_ok "Stopped ${APP}"

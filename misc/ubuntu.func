@@ -382,7 +382,7 @@ build_container() {
   bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
 if [ "$CT_TYPE" == "0" ]; then
-  if [[ "$APP" != "emby" && "$APP" != "jellyfin" && "$APP" != "plex" ]]; then
+  if [[ "$APP" != "Emby" && "$APP" != "Jellyfin" && "$APP" != "Plex" ]]; then
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
@@ -399,7 +399,7 @@ EOF
 fi
 
 if [ "$CT_TYPE" == "0" ]; then
- if [[ "$APP" == "emby" || "$APP" == "jellyfin" || "$APP" == "plex" ]]; then
+ if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" ]]; then
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: c 226:0 rwm
