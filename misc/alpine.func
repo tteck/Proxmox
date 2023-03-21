@@ -1,4 +1,4 @@
-varibles() {
+variables() {
   NSAPP=$(echo ${APP,,} | tr -d ' ')
   var_install="${NSAPP}-install"
   INTEGER='^[0-9]+([.][0-9]+)?$'
