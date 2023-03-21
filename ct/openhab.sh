@@ -8,20 +8,22 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+                          __  _____    ____ 
+  ____v5____  ___  ____  / / / /   |  / __ )
+ / __ \/ __ \/ _ \/ __ \/ /_/ / /| | / __  |
+/ /_/ / /_/ /  __/ / / / __  / ___ |/ /_/ / 
+\____/ .___/\___/_/ /_/_/ /_/_/  |_/_____/  
+    /_/                                     
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="openHAB"
+var_disk="8"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +54,12 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
+if [[ ! -f /etc/apt/sources.list.d/openhab.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 
@@ -65,3 +68,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:8080${CL} \n"

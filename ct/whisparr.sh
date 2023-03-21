@@ -8,20 +8,22 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+ _       ____    _                           
+| |     / / /_  (_)________  ____v5__________
+| | /| / / __ \/ / ___/ __ \/ __ `/ ___/ ___/
+| |/ |/ / / / / (__  ) /_/ / /_/ / /  / /    
+|__/|__/_/ /_/_/____/ .___/\__,_/_/  /_/     
+                   /_/                       
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="Whisparr"
+var_disk="4"
+var_cpu="2"
+var_ram="1024"
 var_os="debian"
 var_version="11"
 variables
@@ -52,7 +54,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /var/lib/whisparr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
@@ -65,3 +67,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:6969${CL} \n"

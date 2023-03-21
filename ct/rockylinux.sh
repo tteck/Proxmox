@@ -8,29 +8,31 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    ____             __            __    _                 
+   / __ \____  _____/ /____  __   / /   (_)___v5__  ___  __
+  / /_/ / __ \/ ___/ //_/ / / /  / /   / / __ \/ / / / |/_/
+ / _, _/ /_/ / /__/ ,< / /_/ /  / /___/ / / / / /_/ />  <  
+/_/ |_|\____/\___/_/|_|\__, /  /_____/_/_/ /_/\__,_/_/|_|  
+                      /____/                               
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
+APP="Rocky Linux"
+var_disk="1"
 var_cpu="1"
 var_ram="512"
-var_os="debian"
-var_version="11"
+var_os="rockylinux"
+var_version="9"
 variables
 color
 catch_errors
 
 function default_settings() {
   CT_TYPE="1"
-  PW=""
+  PW="-password rockylinux"
   CT_ID=$NEXTID
   HN=$NSAPP
   DISK_SIZE="$var_disk"
@@ -52,11 +54,11 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+if [[ ! -d /etc/pacman.d ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
+dnf -y update
+dnf -y upgrade
+msg_ok "Update Successfull"
 exit
 }
 

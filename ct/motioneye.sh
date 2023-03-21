@@ -8,20 +8,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    __  ___      __  _                           
+   /  |/  /___  / /_(_)___  ____v5___  __  _____ 
+  / /|_/ / __ \/ __/ / __ \/ __ \/ _ \/ / / / _ \
+ / /  / / /_/ / /_/ / /_/ / / / /  __/ /_/ /  __/
+/_/  /_/\____/\__/_/\____/_/ /_/\___/\__, /\___/ 
+                                    /____/       
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="Motioneye"
+var_disk="8"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +53,11 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+if [[ ! -f /etc/systemd/system/motioneye.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
+pip install motioneye --upgrade &>/dev/null
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 
@@ -65,3 +66,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:8765${CL} \n"

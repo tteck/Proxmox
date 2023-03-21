@@ -8,20 +8,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    ____             __                 _____ ____    __ 
+   / __ \____  _____/ /_____ _________ / ___// __ \  / / 
+  / /_/ / __ \/ ___/ __/ __  / ___/ _ \\__ \/ / / / / /  
+ / ____/ /_/ (__  ) /_/ /_/ / /  /  __/__/ / /_/ / / /___
+/_/    \____/____/\__/\__, /_/v5 \___/____/\___\_\/_____/
+                     /____/                              
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
+APP="PostgreSQL"
+var_disk="4"
 var_cpu="1"
-var_ram="512"
+var_ram="1024"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +53,12 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
+if [[ ! -f /etc/apt/sources.list.d/pgdg.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 

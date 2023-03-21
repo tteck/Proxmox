@@ -8,17 +8,18 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+ _       ____  ______  ____  ________    ______
+| | v5  / / / / / __ \/ __ \/ ____/ /   / ____/
+| | /| / / /_/ / / / / / / / / __/ /   / __/   
+| |/ |/ / __  / /_/ / /_/ / /_/ / /___/ /___   
+|__/|__/_/ /_/\____/\____/\____/_____/_____/   
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
+APP="Whoogle"
 var_disk="2"
 var_cpu="1"
 var_ram="512"
@@ -52,11 +53,11 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+if [[ ! -f /usr/local/bin/whoogle-search ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
+pip3 install whoogle-search --upgrade &>/dev/null
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 
@@ -65,3 +66,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:5000${CL} \n"

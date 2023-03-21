@@ -8,20 +8,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    _       ____             __            
+   (_)___  / __ )_________  / /_____  _____
+  / / __ \/ __  / ___/ __ \/ //_/ _ \/ ___/
+ / / /_/ / /_/ / /  / /_/ / ,< /  __/ /    
+/_/\____/_____/_/ v5\____/_/|_|\___/_/     
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="ioBroker"
+var_disk="8"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +53,12 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
+if [[ ! -d /opt/iobroker ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 
@@ -65,3 +67,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:8081${CL} \n"

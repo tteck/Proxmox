@@ -8,20 +8,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    ____            __                    
+   / __ \____v5____/ /___ ___  ____ _____ 
+  / /_/ / __ \/ __  / __ `__ \/ __ `/ __ \
+ / ____/ /_/ / /_/ / / / / / / /_/ / / / /
+/_/    \____/\__,_/_/ /_/ /_/\__,_/_/ /_/ 
+                                          
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="Podman"
+var_disk="4"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +53,12 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
+if [[ ! -f /etc/containers/registries.conf ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_ok "Updated ${APP} LXC"
+msg_ok "Update Successfull"
 exit
 }
 

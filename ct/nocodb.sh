@@ -8,20 +8,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+
+    _   __                 ____  ____ 
+   / | / /___  ____v5___  / __ \/ __ )
+  /  |/ / __ \/ ___/ __ \/ / / / __  |
+ / /|  / /_/ / /__/ /_/ / /_/ / /_/ / 
+/_/ |_/\____/\___/\____/_____/_____/  
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
+APP="NocoDB"
+var_disk="4"
 var_cpu="1"
-var_ram="512"
+var_ram="1024"
 var_os="debian"
 var_version="11"
 variables
@@ -52,11 +53,14 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+if [[ ! -f /etc/systemd/system/nocodb.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP}"
+cd /opt/nocodb
+npm uninstall -s --save nocodb &>/dev/null
+npm install -s --save nocodb &>/dev/null
+systemctl restart nocodb.service
+msg_ok "Updated ${APP}"
+msg_ok "Update Successfull"
 exit
 }
 
@@ -65,3 +69,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:8080/dashboard${CL} \n"

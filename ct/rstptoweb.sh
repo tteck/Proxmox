@@ -8,20 +8,20 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-    ____       __    _           
-   / __ \___  / /_  (_)___ _____ 
-  / / / / _ \/ __ \/ / __ `/ __ \
- / /_/ /  __/ /_/ / / /_/ / / / /
-/_____/\___/_.___/_/\__,_/_/ /_/ 
-                                 
+    ____  _______________  __      _       ____________ 
+   / __ \/ ___/_  __/ __ \/ /_____| | v5  / / ____/ __ )
+  / /_/ /\__ \ / / / /_/ / __/ __ \ | /| / / __/ / __  |
+ / _, _/___/ // / / ____/ /_/ /_/ / |/ |/ / /___/ /_/ / 
+/_/ |_|/____//_/ /_/    \__/\____/|__/|__/_____/_____/  
+                                                        
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Debian"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="RSTPtoWEB"
+var_disk="4"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="11"
 variables
@@ -65,3 +65,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} Setup should be reachable by going to the following URL.
+         ${BL}http://${IP}:8083 ${CL} \n"
