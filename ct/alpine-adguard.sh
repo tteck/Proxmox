@@ -25,7 +25,7 @@ var_cpu="1"
 var_ram="256"
 var_os="alpine"
 var_version="3.17"
-variables
+varibles
 color
 catch_errors
 
@@ -88,10 +88,7 @@ while [ "$opt" != "" ]; do
             msg_info "Updating AdguardHome to $VER"
             wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
             tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
-            mkdir -p adguard-backup
-            cp -rf /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
             cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
-            cp -r adguard-backup/* /opt/AdGuardHome/
             msg_ok "Updated AdguardHome"
 
             msg_info "Starting AdguardHome"
