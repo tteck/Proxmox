@@ -7,7 +7,8 @@
 
 #echo "$FUNCTIONS_FILE_PATH" | . /dev/stdin
 #eval "$(cat $FUNCTIONS_FILE_PATH)"
-eval "$(cat -- "$FUNCTIONS_FILE_PATH")"
+#eval "$(cat -- "$FUNCTIONS_FILE_PATH")"
+echo "$FUNCTIONS_FILE_PATH" | source /dev/stdin
 
 color
 verb_ip6
