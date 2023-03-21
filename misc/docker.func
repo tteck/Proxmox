@@ -67,7 +67,7 @@ arch_check() {
 }
 
 echo_default() {
-  echo -e "${DGN}Using Container Type: ${BGN}Unprivileged${CL} ${RD}NO DEVICE PASSTHROUGH${CL}"  
+  echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"  
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
@@ -89,13 +89,13 @@ echo_default() {
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 
-function exit-script() {
+exit-script() {
     clear
     echo -e "⚠  User exited script \n"
     exit
 }
 
-function advanced_settings() {
+advanced_settings() {
   if CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 10 58 2 \
       "1" "Unprivileged" ON \
       "0" "Privileged" OFF \
@@ -309,7 +309,7 @@ function advanced_settings() {
   fi
 }
 
-function install_script() {
+install_script() {
   arch_check
   pve_check
   NEXTID=$(pvesh get /cluster/nextid)
