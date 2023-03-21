@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-. /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+echo "$FUNCTIONS_FILE_PATH" | . /dev/stdin
 color
 verb_ip6
 catch_errors
