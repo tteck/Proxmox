@@ -6,7 +6,8 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 #echo "$FUNCTIONS_FILE_PATH" | . /dev/stdin
-eval "$(cat $FUNCTIONS_FILE_PATH)"
+#eval "$(cat $FUNCTIONS_FILE_PATH)"
+eval "$(cat -- "$FUNCTIONS_FILE_PATH")"
 
 color
 verb_ip6
