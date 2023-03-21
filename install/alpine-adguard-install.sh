@@ -4,14 +4,14 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-
+source <(cat $FUNCTIONS_FILE_PATH)
 #echo "$FUNCTIONS_FILE_PATH" | . /dev/stdin
 #eval "$(cat $FUNCTIONS_FILE_PATH)"
 #eval "$(cat -- "$FUNCTIONS_FILE_PATH")"
 #echo "$FUNCTIONS_FILE_PATH" | source /dev/stdin
-source /dev/fd/0 << EOF
-$FUNCTIONS_FILE_PATH
-EOF
+#source /dev/fd/0 << EOF
+#$FUNCTIONS_FILE_PATH
+#EOF
 
 color
 verb_ip6
