@@ -290,6 +290,7 @@ function advanced_settings() {
   else
       FUSE="no"
   fi
+      echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}$FUSE${CL}"
 
   if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
       VERB="yes"
