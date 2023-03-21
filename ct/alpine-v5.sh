@@ -8,7 +8,6 @@
 function header_info {
 clear
 cat <<"EOF"
-
     ___ v5 __      _          
    /   |  / /___  (_)___  ___ 
   / /| | / / __ \/ / __ \/ _ \

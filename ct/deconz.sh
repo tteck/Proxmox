@@ -8,7 +8,6 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/ubunt
 function header_info {
 clear
 cat <<"EOF"
-
        __     __________  _   _______
   ____/ /__  / ____/ __ \/ | / /__  /
  / __  / _ \/ /   / / / /  |/ /  / / 

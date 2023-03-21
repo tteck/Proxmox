@@ -8,7 +8,6 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/docke
 function header_info {
 clear
 cat <<"EOF"
-
     ____             __            
    / __ \____  _____/ /_  __  _____
   / / / / __ \/ ___/ //_/ _ \/ ___/

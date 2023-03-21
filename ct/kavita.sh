@@ -8,9 +8,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 function header_info {
 clear
 cat <<"EOF"
-
     __ __            _ __       
-   / //_/___ __ v5__(_) /_____ _
+   / //_/___ __   __(_) /_____ _
   / ,< / __ `/ | / / / __/ __ `/
  / /| / /_/ /| |/ / / /_/ /_/ / 
 /_/ |_\__,_/ |___/_/\__/\__,_/  
