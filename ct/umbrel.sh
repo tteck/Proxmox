@@ -64,6 +64,7 @@ exit
 start
 build_container
 description
+
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL (reboot is required before apps install).
     ${BL}http://${IP} ${CL} \n"

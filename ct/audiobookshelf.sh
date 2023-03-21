@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/docker.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debian.func)
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
@@ -9,18 +9,18 @@ function header_info {
 clear
 cat <<"EOF"
 
-   ______                 ____  _____
-  / ____/___ __________ _/ __ \/ ___/
- / /   / __ `/ ___/ __ `/ / / /\__ \ 
-/ /___/ /_/ (__  ) /_/ / /_/ /___/ / 
-\____/\__,_/____/\__,_/\____//____/  
-                                     
+                   ___       __                __        __         ______
+  ____ ___  ______/ (_)___  / /_  ____  ____  / /_______/ /_  ___  / / __/
+ / __ `/ / / / __  / / __ \/ __ \/ __ \/ __ \/ //_/ ___/ __ \/ _ \/ / /_  
+/ /_/ / /_/ / /_/ / / /_/ / /_/ / /_/ / /_/ / ,< (__  ) / / /  __/ / __/  
+\__,_/\__,_/\__,_/_/\____/_.___/\____/\____/_/|_/____/_/ /_/\___/_/_/     
+                                                                          
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="CasaOS"
-var_disk="8"
+APP="audiobookshelf"
+var_disk="4"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
@@ -47,17 +47,16 @@ function default_settings() {
   MAC=""
   VLAN=""
   SSH="no"
-  FUSE="no"
   VERB="no"
   echo_default
 }
 
 function update_script() {
 header_info
-msg_info "Updating ${APP} LXC"
+msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
+msg_ok "Updated $APP LXC"
 exit
 }
 
@@ -66,5 +65,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} Setup should be reachable by going to the following URL.
-         ${BL}http://${IP} ${CL} \n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:13378${CL} \n"
