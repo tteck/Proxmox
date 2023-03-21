@@ -346,7 +346,7 @@ build_container() {
   fi
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null 
-  export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debian2.func)
+  export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/install.func)
   export tz=$timezone
   export DISABLEIPV6=$DISABLEIP6
   export APPLICATION=$APP

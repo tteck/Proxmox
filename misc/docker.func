@@ -353,7 +353,7 @@ build_container() {
   fi
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null 
-  export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/docker2.func)
+  export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debian2.func)
   export tz=$timezone
   export ST=$FUSE
   export DISABLEIPV6=$DISABLEIP6
