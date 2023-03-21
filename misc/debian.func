@@ -1,4 +1,4 @@
-varibles() {
+variables() {
   NSAPP=$(echo ${APP,,} | tr -d ' ')
   var_install="${NSAPP}-install"
   timezone=$(cat /etc/timezone)

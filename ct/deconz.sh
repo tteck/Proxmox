@@ -25,7 +25,7 @@ var_cpu="2"
 var_ram="1024"
 var_os="ubuntu"
 var_version="20.04"
-varibles
+variables
 color
 catch_errors
 

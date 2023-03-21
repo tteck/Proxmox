@@ -25,7 +25,7 @@ var_cpu="1"
 var_ram="512"
 var_os="devuan"
 var_version="4.0"
-varibles
+variables
 color
 catch_errors
 
