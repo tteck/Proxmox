@@ -88,13 +88,13 @@ echo_default() {
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 
-function exit-script() {
+exit-script() {
     clear
     echo -e "⚠  User exited script \n"
     exit
 }
 
-function advanced_settings() {
+advanced_settings() {
   if var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 4 \
       "18.04" "Bionic" OFF \
       "20.04" "Focal" ON \
@@ -312,7 +312,7 @@ function advanced_settings() {
   fi
 }
 
-function install_script() {
+install_script() {
   arch_check
   pve_check
   NEXTID=$(pvesh get /cluster/nextid)
@@ -380,7 +380,9 @@ build_container() {
     $PW
   "
   bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+
 if [ "$CT_TYPE" == "0" ]; then
+  if [[ "$APP" != "emby" && "$APP" != "jellyfin" && "$APP" != "plex" ]]; then
 LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
 cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
@@ -393,7 +395,23 @@ lxc.mount.entry: /dev/ttyUSB1       dev/ttyUSB1       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
+  fi
 fi
+
+if [ "$CT_TYPE" == "0" ]; then
+ if [[ "$APP" == "emby" || "$APP" == "jellyfin" || "$APP" == "plex" ]]; then
+LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+cat <<EOF >>$LXC_CONFIG
+lxc.cgroup2.devices.allow: c 226:0 rwm
+lxc.cgroup2.devices.allow: c 226:128 rwm
+lxc.cgroup2.devices.allow: c 29:0 rwm
+lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
+lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
+lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
+EOF
+  fi
+fi
+
   msg_info "Starting LXC Container"
   pct start $CTID
   msg_ok "Started LXC Container"
