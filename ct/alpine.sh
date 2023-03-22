@@ -8,7 +8,7 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 function header_info {
 clear
 cat <<"EOF"
-    ___ v5 __      _          
+    ___    __      _          
    /   |  / /___  (_)___  ___ 
   / /| | / / __ \/ / __ \/ _ \
  / ___ |/ / /_/ / / / / /  __/
