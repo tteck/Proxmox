@@ -42,8 +42,9 @@ exit;
 fi
 
 if [ "$UPD" == "2" ]; then
+  header_info
   cat /etc/conf.d/vaultwarden | grep "ADMIN_TOKEN" | awk '{print substr($2, 7) }'
-exit
+exit;
 fi
 }
 
