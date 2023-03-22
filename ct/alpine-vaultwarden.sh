@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
  _    __            ____                          __         
 | |  / /___ ___  __/ / /__      ______ __________/ /__  ____ 
 | | / / __ `/ / / / / __/ | /| / / __ `/ ___/ __  / _ \/ __ \
@@ -52,29 +52,30 @@ function default_settings() {
 }
 
 function update_script() {
-while true; do
-  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
-    "1" "Update VaultWarden" \
-    "2" "Show Admin Token" 3>&2 2>&1 1>&3
-  )
-  exit_status=$?
-  if [ $exit_status == 1 ] ; then
+  while true; do
+    CHOICE=$(
+      whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
+        "1" "Update VaultWarden" \
+        "2" "Show Admin Token" 3>&2 2>&1 1>&3
+    )
+    exit_status=$?
+    if [ $exit_status == 1 ]; then
       clear
       exit-script
-  fi
-  header_info
-  case $CHOICE in
-    1 )
+    fi
+    header_info
+    case $CHOICE in
+    1)
       apk update && apk upgrade
       exit
       ;;
-    2 )
+    2)
       whiptail --title "ADMIN TOKEN" --msgbox "$(cat /etc/conf.d/vaultwarden | grep ADMIN_TOKEN | awk '{print substr($2, 13) }')" 7 68
       clear
       exit
       ;;
-  esac
-done
+    esac
+  done
 }
 
 start
