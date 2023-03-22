@@ -53,7 +53,7 @@ pve_check() {
     echo -e "Requires PVE Version 7.0 or higher"
     echo -e "Exiting..."
     sleep 2
-  exit
+    exit
   fi
 }
 
@@ -62,12 +62,12 @@ arch_check() {
     echo -e "\n ${CROSS} This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
-  exit
+    exit
   fi
 }
 
 echo_default() {
-  echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"  
+  echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
@@ -89,215 +89,215 @@ echo_default() {
 }
 
 exit-script() {
-    clear
-    echo -e "⚠  User exited script \n"
-    exit
+  clear
+  echo -e "⚠  User exited script \n"
+  exit
 }
 
 advanced_settings() {
   if CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 10 58 2 \
-      "1" "Unprivileged" ON \
-      "0" "Privileged" OFF \
-      3>&1 1>&2 2>&3); then
-      echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
+    "1" "Unprivileged" ON \
+    "0" "Privileged" OFF \
+    3>&1 1>&2 2>&3); then
+    echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if PW1=$(whiptail --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
-      if [ -z $PW1 ]; then
-          PW1="Automatic Login"
-          PW=" "
-      else
-          PW="-password $PW1"
-      fi
-      echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
+    if [ -z $PW1 ]; then
+      PW1="Automatic Login"
+      PW=" "
+    else
+      PW="-password $PW1"
+    fi
+    echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3); then
-      if [ -z "$CT_ID" ]; then
-          CT_ID="$NEXTID"
-          echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
-      else
-          echo -e "${DGN}Container ID: ${BGN}$CT_ID${CL}"
-      fi
+    if [ -z "$CT_ID" ]; then
+      CT_ID="$NEXTID"
+      echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
+    else
+      echo -e "${DGN}Container ID: ${BGN}$CT_ID${CL}"
+    fi
   else
-      exit
+    exit
   fi
 
   if CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3>&1 1>&2 2>&3); then
-      if [ -z "$CT_NAME" ]; then
-          HN="$NSAPP"
-      else
-          HN=$(echo ${CT_NAME,,} | tr -d ' ')
-      fi
-      echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+    if [ -z "$CT_NAME" ]; then
+      HN="$NSAPP"
+    else
+      HN=$(echo ${CT_NAME,,} | tr -d ' ')
+    fi
+    echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3); then
-      if [ -z "$DISK_SIZE" ]; then
-          DISK_SIZE="$var_disk"
-          echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
-          else
-          if ! [[ $DISK_SIZE =~ $INTEGER ]]; then
-            echo -e "${RD}⚠ DISK SIZE MUST BE AN INTEGER NUMBER!${CL}"
-            advanced_settings
-          fi
-          echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+    if [ -z "$DISK_SIZE" ]; then
+      DISK_SIZE="$var_disk"
+      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+    else
+      if ! [[ $DISK_SIZE =~ $INTEGER ]]; then
+        echo -e "${RD}⚠ DISK SIZE MUST BE AN INTEGER NUMBER!${CL}"
+        advanced_settings
       fi
+      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3); then
-      if [ -z "$CORE_COUNT" ]; then
-          CORE_COUNT="$var_cpu"
-          echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
-      else
-          echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
-      fi
+    if [ -z "$CORE_COUNT" ]; then
+      CORE_COUNT="$var_cpu"
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+    else
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3); then
-      if [ -z "$RAM_SIZE" ]; then
-          RAM_SIZE="$var_ram"
-          echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
-      else
-          echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
-      fi
+    if [ -z "$RAM_SIZE" ]; then
+      RAM_SIZE="$var_ram"
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+    else
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3); then
-      if [ -z "$BRG" ]; then
-          BRG="vmbr0"
-          echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
-      else
-          echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
-      fi
+    if [ -z "$BRG" ]; then
+      BRG="vmbr0"
+      echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
+    else
+      echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3); then
-      if [ -z $NET ]; then
-          NET="dhcp"
-          echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
-      else
-          echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
-      fi
+    if [ -z $NET ]; then
+      NET="dhcp"
+      echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+    else
+      echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3); then
-      if [ -z $GATE1 ]; then
-          GATE1="Default"
-          GATE=""
-      else
-          GATE=",gw=$GATE1"
-      fi
-          echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+    if [ -z $GATE1 ]; then
+      GATE1="Default"
+      GATE=""
+    else
+      GATE=",gw=$GATE1"
+    fi
+    echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if (whiptail --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
-      DISABLEIP6="yes"
+    DISABLEIP6="yes"
   else
-      DISABLEIP6="no"
+    DISABLEIP6="no"
   fi
-      echo -e "${DGN}Disable IPv6: ${BGN}$DISABLEIP6${CL}"
+  echo -e "${DGN}Disable IPv6: ${BGN}$DISABLEIP6${CL}"
 
   if MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" 3>&1 1>&2 2>&3); then
-      if [ -z $MTU1 ]; then
-          MTU1="Default"
-          MTU=""
-      else
-          MTU=",mtu=$MTU1"
-      fi
-          echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
+    if [ -z $MTU1 ]; then
+      MTU1="Default"
+      MTU=""
+    else
+      MTU=",mtu=$MTU1"
+    fi
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if SD=$(whiptail --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" 3>&1 1>&2 2>&3); then
-      if [ -z $SD ]; then
-          SX=Host
-          SD=""
-      else
-          SX=$SD
-          SD="-searchdomain=$SD"
-      fi
-          echo -e "${DGN}Using DNS Search Domain: ${BGN}$SX${CL}"
+    if [ -z $SD ]; then
+      SX=Host
+      SD=""
+    else
+      SX=$SD
+      SD="-searchdomain=$SD"
+    fi
+    echo -e "${DGN}Using DNS Search Domain: ${BGN}$SX${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if NX=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" 3>&1 1>&2 2>&3); then
-      if [ -z $NX ]; then
-          NX=Host    
-          NS=""
-      else
-          NS="-nameserver=$NX"
-      fi
-          echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NX${CL}"
+    if [ -z $NX ]; then
+      NX=Host
+      NS=""
+    else
+      NS="-nameserver=$NX"
+    fi
+    echo -e "${DGN}Using DNS Server IP Address: ${BGN}$NX${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" 3>&1 1>&2 2>&3); then
-      if [ -z $MAC1 ]; then
-          MAC1="Default"
-          MAC=""
-      else
-          MAC=",hwaddr=$MAC1"
-          echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
-      fi
+    if [ -z $MAC1 ]; then
+      MAC1="Default"
+      MAC=""
+    else
+      MAC=",hwaddr=$MAC1"
+      echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
+    fi
   else
-      exit-script
+    exit-script
   fi
 
   if VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3); then
-      if [ -z $VLAN1 ]; then
-          VLAN1="Default"
-          VLAN=""
-      else
-          VLAN=",tag=$VLAN1"
-      fi
-          echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
+    if [ -z $VLAN1 ]; then
+      VLAN1="Default"
+      VLAN=""
+    else
+      VLAN=",tag=$VLAN1"
+    fi
+    echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
   else
-      exit-script
+    exit-script
   fi
 
   if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
-      SSH="yes"
+    SSH="yes"
   else
-      SSH="no"
+    SSH="no"
   fi
-      echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
+  echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
 
   if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
-      VERB="yes"
+    VERB="yes"
   else
-      VERB="no"
+    VERB="no"
   fi
-      echo -e "${DGN}Enable Verbose Mode: ${BGN}$VERB${CL}"
+  echo -e "${DGN}Enable Verbose Mode: ${BGN}$VERB${CL}"
 
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
-      echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
+    echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
   else
-      clear
-      header_info
-      echo -e "${RD}Using Advanced Settings${CL}"
-      advanced_settings
+    clear
+    header_info
+    echo -e "${RD}Using Advanced Settings${CL}"
+    advanced_settings
   fi
 }
 
@@ -306,15 +306,15 @@ install_script() {
   pve_check
   NEXTID=$(pvesh get /cluster/nextid)
   header_info
-    if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
-      header_info
-      echo -e "${BL}Using Default Settings${CL}"
-      default_settings
-    else
-      header_info
-      echo -e "${RD}Using Advanced Settings${CL}"
-      advanced_settings
-    fi
+  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
+    header_info
+    echo -e "${BL}Using Default Settings${CL}"
+    default_settings
+  else
+    header_info
+    echo -e "${RD}Using Advanced Settings${CL}"
+    advanced_settings
+  fi
 }
 
 start() {
@@ -322,7 +322,7 @@ start() {
     if ! (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
       clear
       echo -e "⚠  User exited script \n"
-    exit
+      exit
     fi
     install_script
   fi
@@ -345,7 +345,7 @@ build_container() {
     FEATURES="nesting=1"
   fi
   TEMP_DIR=$(mktemp -d)
-  pushd $TEMP_DIR >/dev/null 
+  pushd $TEMP_DIR >/dev/null
   export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/install.func)
   export tz=$timezone
   export DISABLEIPV6=$DISABLEIP6
@@ -369,9 +369,9 @@ build_container() {
     $PW
   "
   bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
-if [ "$CT_TYPE" == "0" ]; then
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >>$LXC_CONFIG
+  if [ "$CT_TYPE" == "0" ]; then
+    LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
+    cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 lxc.cgroup2.devices.allow: c 188:* rwm
@@ -382,7 +382,7 @@ lxc.mount.entry: /dev/ttyUSB1       dev/ttyUSB1       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
-fi
+  fi
   msg_info "Starting LXC Container"
   pct start $CTID
   msg_ok "Started LXC Container"
