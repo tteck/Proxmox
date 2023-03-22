@@ -8,6 +8,7 @@ color() {
   CL=$(echo "\033[m")
   RETRY_NUM=10
   RETRY_EVERY=3
+  i=$RETRY_NUM
   CM="${GN}✓${CL}"
   CROSS="${RD}✗${CL}"
   BFR="\\r\\033[K"
