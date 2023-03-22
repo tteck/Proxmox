@@ -52,22 +52,28 @@ function default_settings() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-  "1" "Update VaultWarden" ON \
-  "2" "Show Admin Token" OFF \
-  3>&1 1>&2 2>&3)
-
-header_info
-if [ "$UPD" == "1" ]; then
-apk update && apk upgrade
-exit;
-fi
-
-if [ "$UPD" == "2" ]; then
+while true; do
+  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
+    "1" "Update VaultWarden" \
+    "2" "Show Admin Token" 3>&2 2>&1 1>&3
+  )
+  exit_status=$?
+  if [ $exit_status == 1 ] ; then
+      clear
+      exit-script
+  fi
   header_info
-  cat /etc/conf.d/vaultwarden | grep "ADMIN_TOKEN" | awk '{print substr($2, 7) }'
-exit;
-fi
+  case $CHOICE in
+    1 )
+      apk update && apk upgrade
+      exit
+      ;;
+    2 )
+      whiptail --title "ADMIN TOKEN" --msgbox "$(cat /etc/conf.d/vaultwarden | grep ADMIN_TOKEN | awk '{print substr($2, 13) }')" 7 68
+      exit
+      ;;
+  esac
+done
 }
 
 start
