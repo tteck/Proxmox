@@ -31,7 +31,7 @@ catch_errors
 
 function default_settings() {
   CT_TYPE="1"
-  PW=""
+  PW="-password alpine"
   CT_ID=$NEXTID
   HN=$NSAPP
   DISK_SIZE="$var_disk"
@@ -118,6 +118,8 @@ while [ "$opt" != "" ]; do
             ;;
         esac
 done
+
+
 exit
 }
 
