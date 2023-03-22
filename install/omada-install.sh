@@ -24,9 +24,9 @@ wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiv
 $STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Omada Controller v5.9.9"
-wget -qL https://static.tp-link.com/upload/software/2023/202302/20230227/Omada_SDN_Controller_v5.9.9_Linux_x64.deb
-$STD dpkg -i Omada_SDN_Controller_v5.9.9_Linux_x64.deb
+msg_info "Installing Omada Controller v5.9.31"
+wget -qL https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb
+$STD dpkg -i Omada_SDN_Controller_v5.9.31_Linux_x64.deb 
 msg_ok "Installed Omada Controller"
 
 motd_ssh
