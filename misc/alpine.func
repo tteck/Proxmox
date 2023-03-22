@@ -386,6 +386,7 @@ fi
   msg_info "Starting LXC Container"
   pct start $CTID
   msg_ok "Started LXC Container"
+  pct exec $CTID -- ash -c "apk add bash"
   lxc-attach -n $CTID -- ash -c "$(wget -qO - https://raw.githubusercontent.com/tteck/Proxmox/next/install/$var_install.sh)" || exit
 
 }
