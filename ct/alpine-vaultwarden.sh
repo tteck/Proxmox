@@ -70,6 +70,7 @@ while true; do
       ;;
     2 )
       whiptail --title "ADMIN TOKEN" --msgbox "$(cat /etc/conf.d/vaultwarden | grep ADMIN_TOKEN | awk '{print substr($2, 13) }')" 7 68
+      clear
       exit
       ;;
   esac
