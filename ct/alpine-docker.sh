@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____             __            
    / __ \____  _____/ /_  __  _____
   / / / / __ \/ ___/ //_/ _ \/ ___/
@@ -52,15 +52,15 @@ function default_settings() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 1 \
-  "1" "Check for Docker Updates" ON \
-  3>&1 1>&2 2>&3)
+  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 1 \
+    "1" "Check for Docker Updates" ON \
+    3>&1 1>&2 2>&3)
 
-header_info
-if [ "$UPD" == "1" ]; then
-apk update && apk upgrade
-exit;
-fi
+  header_info
+  if [ "$UPD" == "1" ]; then
+    apk update && apk upgrade
+    exit
+  fi
 }
 
 start

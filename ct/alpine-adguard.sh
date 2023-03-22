@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ___       __                           __
    /   | ____/ /___ ___  ______ __________/ /
   / /| |/ __  / __  / / / / __  / ___/ __  / 
@@ -52,22 +52,22 @@ function default_settings() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-  "1" "Update LXC OS" ON \
-  "2" "Manually Update $APP" OFF \
-  3>&1 1>&2 2>&3)
+  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+    "1" "Update LXC OS" ON \
+    "2" "Manually Update $APP" OFF \
+    3>&1 1>&2 2>&3)
 
-header_info
-if [ "$UPD" == "1" ]; then
-apk update && apk upgrade
-exit;
-fi
-
-if [ "$UPD" == "2" ]; then
   header_info
-  echo "In the process of creating a method to update"
-exit;
-fi
+  if [ "$UPD" == "1" ]; then
+    apk update && apk upgrade
+    exit
+  fi
+
+  if [ "$UPD" == "2" ]; then
+    header_info
+    echo "In the process of creating a method to update"
+    exit
+  fi
 }
 
 start
