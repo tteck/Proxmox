@@ -52,22 +52,30 @@ function default_settings() {
 }
 
 function update_script() {
-  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-    "1" "Update LXC OS" ON \
-    "2" "Manually Update $APP" OFF \
-    3>&1 1>&2 2>&3)
-
+LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+while true; do
+  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
+    "1" "Update LXC OS" \
+    "2" "Manually Update $APP" 3>&2 2>&1 1>&3
+  )
+  exit_status=$?
+  if [ $exit_status == 1 ] ; then
+      clear
+      exit-script
+  fi
   header_info
-  if [ "$UPD" == "1" ]; then
-    apk update && apk upgrade
-    exit
-  fi
-
-  if [ "$UPD" == "2" ]; then
-    header_info
-    echo "In the process of creating a method to update"
-    exit
-  fi
+  case $CHOICE in
+    1 )
+      apk update && apk upgrade
+      exit
+      ;;
+    2 )
+      header_info
+      echo "In the process of creating a method to update"
+      exit
+      ;;
+  esac
+done
 }
 
 start
