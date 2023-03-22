@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     _   __      _               ____                           __  ___                                 
    / | / /___ _(_)___  _  __   / __ \_________ __  ____  __   /  |/  /___ _____  ____ _____ ____  _____
   /  |/ / __  / / __ \| |/_/  / /_/ / ___/ __ \| |/_/ / / /  / /|_/ / __  / __ \/ __  / __  / _ \/ ___/
@@ -52,91 +52,93 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /lib/systemd/system/npm.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 3, length($2)-4) }') 
-msg_info "Stopping Services"
-systemctl stop openresty
-systemctl stop npm
-msg_ok "Stopped Services"
+  header_info
+  if [[ ! -f /lib/systemd/system/npm.service ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
+    grep "tag_name" |
+    awk '{print substr($2, 3, length($2)-4) }')
+  msg_info "Stopping Services"
+  systemctl stop openresty
+  systemctl stop npm
+  msg_ok "Stopped Services"
 
-msg_info "Cleaning Old Files"
+  msg_info "Cleaning Old Files"
   rm -rf /app \
     /var/www/html \
     /etc/nginx \
     /var/log/nginx \
     /var/lib/nginx \
     /var/cache/nginx &>/dev/null
-msg_ok "Cleaned Old Files"
+  msg_ok "Cleaned Old Files"
 
-msg_info "Downloading NPM v${RELEASE}"
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz &>/dev/null
-cd nginx-proxy-manager-${RELEASE}
-msg_ok "Downloaded NPM v${RELEASE}"
+  msg_info "Downloading NPM v${RELEASE}"
+  wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz &>/dev/null
+  cd nginx-proxy-manager-${RELEASE}
+  msg_ok "Downloaded NPM v${RELEASE}"
 
-msg_info "Setting up Enviroment"
-ln -sf /usr/bin/python3 /usr/bin/python
-ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
-ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
-ln -sf /usr/local/openresty/nginx/ /etc/nginx
-sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
-sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
-sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
-NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
-for NGINX_CONF in $NGINX_CONFS; do
-  sed -i 's+include conf.d+include /etc/nginx/conf.d+g' "$NGINX_CONF"
-done
-mkdir -p /var/www/html /etc/nginx/logs
-cp -r docker/rootfs/var/www/html/* /var/www/html/
-cp -r docker/rootfs/etc/nginx/* /etc/nginx/
-cp docker/rootfs/etc/letsencrypt.ini /etc/letsencrypt.ini
-cp docker/rootfs/etc/logrotate.d/nginx-proxy-manager /etc/logrotate.d/nginx-proxy-manager
-ln -sf /etc/nginx/nginx.conf /etc/nginx/conf/nginx.conf
-rm -f /etc/nginx/conf.d/dev.conf
-mkdir -p /tmp/nginx/body \
-  /run/nginx \
-  /data/nginx \
-  /data/custom_ssl \
-  /data/logs \
-  /data/access \
-  /data/nginx/default_host \
-  /data/nginx/default_www \
-  /data/nginx/proxy_host \
-  /data/nginx/redirection_host \
-  /data/nginx/stream \
-  /data/nginx/dead_host \
-  /data/nginx/temp \
-  /var/lib/nginx/cache/public \
-  /var/lib/nginx/cache/private \
-  /var/cache/nginx/proxy_temp
-chmod -R 777 /var/cache/nginx
-chown root /tmp/nginx
-echo resolver "$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print ($2 ~ ":")? "["$2"]": $2}' /etc/resolv.conf);" >/etc/nginx/conf.d/include/resolvers.conf
-if [ ! -f /data/nginx/dummycert.pem ] || [ ! -f /data/nginx/dummykey.pem ]; then
-  echo -e "${CHECKMARK} \e[1;92m Generating dummy SSL Certificate... \e[0m"
-  openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -subj "/O=Nginx Proxy Manager/OU=Dummy Certificate/CN=localhost" -keyout /data/nginx/dummykey.pem -out /data/nginx/dummycert.pem &>/dev/null
-fi
-mkdir -p /app/global /app/frontend/images
-cp -r backend/* /app
-cp -r global/* /app/global
-msg_ok "Setup Enviroment"
+  msg_info "Setting up Enviroment"
+  ln -sf /usr/bin/python3 /usr/bin/python
+  ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
+  ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
+  ln -sf /usr/local/openresty/nginx/ /etc/nginx
+  sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
+  sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
+  sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
+  NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
+  for NGINX_CONF in $NGINX_CONFS; do
+    sed -i 's+include conf.d+include /etc/nginx/conf.d+g' "$NGINX_CONF"
+  done
+  mkdir -p /var/www/html /etc/nginx/logs
+  cp -r docker/rootfs/var/www/html/* /var/www/html/
+  cp -r docker/rootfs/etc/nginx/* /etc/nginx/
+  cp docker/rootfs/etc/letsencrypt.ini /etc/letsencrypt.ini
+  cp docker/rootfs/etc/logrotate.d/nginx-proxy-manager /etc/logrotate.d/nginx-proxy-manager
+  ln -sf /etc/nginx/nginx.conf /etc/nginx/conf/nginx.conf
+  rm -f /etc/nginx/conf.d/dev.conf
+  mkdir -p /tmp/nginx/body \
+    /run/nginx \
+    /data/nginx \
+    /data/custom_ssl \
+    /data/logs \
+    /data/access \
+    /data/nginx/default_host \
+    /data/nginx/default_www \
+    /data/nginx/proxy_host \
+    /data/nginx/redirection_host \
+    /data/nginx/stream \
+    /data/nginx/dead_host \
+    /data/nginx/temp \
+    /var/lib/nginx/cache/public \
+    /var/lib/nginx/cache/private \
+    /var/cache/nginx/proxy_temp
+  chmod -R 777 /var/cache/nginx
+  chown root /tmp/nginx
+  echo resolver "$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print ($2 ~ ":")? "["$2"]": $2}' /etc/resolv.conf);" >/etc/nginx/conf.d/include/resolvers.conf
+  if [ ! -f /data/nginx/dummycert.pem ] || [ ! -f /data/nginx/dummykey.pem ]; then
+    echo -e "${CHECKMARK} \e[1;92m Generating dummy SSL Certificate... \e[0m"
+    openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -subj "/O=Nginx Proxy Manager/OU=Dummy Certificate/CN=localhost" -keyout /data/nginx/dummykey.pem -out /data/nginx/dummycert.pem &>/dev/null
+  fi
+  mkdir -p /app/global /app/frontend/images
+  cp -r backend/* /app
+  cp -r global/* /app/global
+  msg_ok "Setup Enviroment"
 
-msg_info "Building Frontend"
-cd ./frontend
-export NODE_ENV=development
-yarn install --network-timeout=30000 &>/dev/null
-yarn build &>/dev/null
-cp -r dist/* /app/frontend
-cp -r app-images/* /app/frontend/images
-msg_ok "Built Frontend"
+  msg_info "Building Frontend"
+  cd ./frontend
+  export NODE_ENV=development
+  yarn install --network-timeout=30000 &>/dev/null
+  yarn build &>/dev/null
+  cp -r dist/* /app/frontend
+  cp -r app-images/* /app/frontend/images
+  msg_ok "Built Frontend"
 
-
-msg_info "Initializing Backend"
-rm -rf /app/config/default.json &>/dev/null
-if [ ! -f /app/config/production.json ]; then
-  cat <<'EOF' >/app/config/production.json
+  msg_info "Initializing Backend"
+  rm -rf /app/config/default.json &>/dev/null
+  if [ ! -f /app/config/production.json ]; then
+    cat <<'EOF' >/app/config/production.json
 {
   "database": {
     "engine": "knex-native",
@@ -149,24 +151,24 @@ if [ ! -f /app/config/production.json ]; then
   }
 }
 EOF
-fi
-cd /app
-export NODE_ENV=development
-yarn install --network-timeout=30000 &>/dev/null
-msg_ok "Initialized Backend"
+  fi
+  cd /app
+  export NODE_ENV=development
+  yarn install --network-timeout=30000 &>/dev/null
+  msg_ok "Initialized Backend"
 
-msg_info "Starting Services"
-systemctl enable npm &>/dev/null
-systemctl start openresty
-systemctl start npm
-msg_ok "Started Services"
+  msg_info "Starting Services"
+  systemctl enable npm &>/dev/null
+  systemctl start openresty
+  systemctl start npm
+  msg_ok "Started Services"
 
-msg_info "Cleaning up"
-rm -rf ~/nginx-proxy-manager-*
-msg_ok "Cleaned"
+  msg_info "Cleaning up"
+  rm -rf ~/nginx-proxy-manager-*
+  msg_ok "Cleaned"
 
-msg_ok "Update Successfull"
-exit
+  msg_ok "Update Successfull"
+  exit
 }
 
 start

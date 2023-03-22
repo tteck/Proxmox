@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
 
     ____  __  ______  __________  ____  ____  _________ __  ___
    / __ \/ / / / __ \/_  __/ __ \/ __ \/ __ \/  _/ ___//  |/  /
@@ -52,36 +52,39 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/photoprism ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-echo -e "\n ⚠️  Ensure you set 2vCPU & 3072MiB RAM MIMIMUM!!! \n" 
-msg_info "Stopping PhotoPrism"
-sudo systemctl stop photoprism
-msg_ok "Stopped PhotoPrism"
+  header_info
+  if [[ ! -d /opt/photoprism ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  echo -e "\n ⚠️  Ensure you set 2vCPU & 3072MiB RAM MIMIMUM!!! \n"
+  msg_info "Stopping PhotoPrism"
+  sudo systemctl stop photoprism
+  msg_ok "Stopped PhotoPrism"
 
-msg_info "Cloning PhotoPrism"
-git clone https://github.com/photoprism/photoprism.git &>/dev/null
-cd photoprism
-git checkout release &>/dev/null
-msg_ok "Cloned PhotoPrism"
+  msg_info "Cloning PhotoPrism"
+  git clone https://github.com/photoprism/photoprism.git &>/dev/null
+  cd photoprism
+  git checkout release &>/dev/null
+  msg_ok "Cloned PhotoPrism"
 
-msg_info "Building PhotoPrism"
-sudo make all &>/dev/null
-sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-sudo rm -rf /opt/photoprism/assets 
-sudo cp -r assets/ /opt/photoprism/ &>/dev/null
-msg_ok "Built PhotoPrism"
+  msg_info "Building PhotoPrism"
+  sudo make all &>/dev/null
+  sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
+  sudo rm -rf /opt/photoprism/assets
+  sudo cp -r assets/ /opt/photoprism/ &>/dev/null
+  msg_ok "Built PhotoPrism"
 
-msg_info "Cleaning"
-cd ~
-rm -rf photoprism
-msg_ok "Cleaned"
+  msg_info "Cleaning"
+  cd ~
+  rm -rf photoprism
+  msg_ok "Cleaned"
 
-msg_info "Starting PhotoPrism"
-sudo systemctl start photoprism
-msg_ok "Started PhotoPrism"
-msg_ok "Update Successful"
-exit
+  msg_info "Starting PhotoPrism"
+  sudo systemctl start photoprism
+  msg_ok "Started PhotoPrism"
+  msg_ok "Update Successful"
+  exit
 }
 
 start

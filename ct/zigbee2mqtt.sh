@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
 
  _____   _       __             ___   __  _______  ____________
 /__  /  (_)___ _/ /_  ___  ___ |__ \ /  |/  / __ \/_  __/_  __/
@@ -53,60 +53,78 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/zigbee2mqtt ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-cd /opt/zigbee2mqtt
-
-stop_zigbee2mqtt() {
-  if which systemctl 2> /dev/null > /dev/null; then
-    echo "Shutting down Zigbee2MQTT..."
-    sudo systemctl stop zigbee2mqtt
-  else
-    echo "Skipped stopping Zigbee2MQTT, no systemctl found"
+  header_info
+  if [[ ! -d /opt/zigbee2mqtt ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
   fi
-}
+  cd /opt/zigbee2mqtt
 
-start_zigbee2mqtt() {
-  if which systemctl 2> /dev/null > /dev/null; then
-    echo "Starting Zigbee2MQTT..."
-    sudo systemctl start zigbee2mqtt
-  else
-    echo "Skipped starting Zigbee2MQTT, no systemctl found"
+  stop_zigbee2mqtt() {
+    if which systemctl 2>/dev/null >/dev/null; then
+      echo "Shutting down Zigbee2MQTT..."
+      sudo systemctl stop zigbee2mqtt
+    else
+      echo "Skipped stopping Zigbee2MQTT, no systemctl found"
+    fi
+  }
+
+  start_zigbee2mqtt() {
+    if which systemctl 2>/dev/null >/dev/null; then
+      echo "Starting Zigbee2MQTT..."
+      sudo systemctl start zigbee2mqtt
+    else
+      echo "Skipped starting Zigbee2MQTT, no systemctl found"
+    fi
+  }
+
+  set -e
+
+  if [ -d data-backup ]; then
+    echo "ERROR: Backup directory exists. May be previous restoring was failed?"
+    echo "1. Save 'data-backup' and 'data' dirs to safe location to make possibility to restore config later."
+    echo "2. Manually delete 'data-backup' dir and try again."
+    exit 1
   fi
-}
 
-set -e
+  stop_zigbee2mqtt
 
-if [ -d data-backup ]; then
-  echo "ERROR: Backup directory exists. May be previous restoring was failed?"
-  echo "1. Save 'data-backup' and 'data' dirs to safe location to make possibility to restore config later."
-  echo "2. Manually delete 'data-backup' dir and try again."
-  exit 1
-fi
+  echo "Generating a backup of the configuration..."
+  cp -R data data-backup || {
+    echo "Failed to create backup."
+    exit 1
+  }
 
-stop_zigbee2mqtt
+  echo "Initiating update"
+  if ! git pull; then
+    echo "Update failed, temporarily storing changes and trying again."
+    git stash && git pull || (
+      echo "Update failed even after storing changes. Aborting."
+      exit 1
+    )
+  fi
 
-echo "Generating a backup of the configuration..."
-cp -R data data-backup || { echo "Failed to create backup."; exit 1; }
+  echo "Acquiring necessary components..."
+  npm ci || {
+    echo "Failed to install necessary components."
+    exit 1
+  }
 
-echo "Initiating update"
-if ! git pull; then
-  echo "Update failed, temporarily storing changes and trying again."
-  git stash && git pull || (echo "Update failed even after storing changes. Aborting."; exit 1)
-fi
+  echo "Restoring configuration..."
+  cp -R data-backup/* data || {
+    echo "Failed to restore configuration."
+    exit 1
+  }
 
-echo "Acquiring necessary components..."
-npm ci || { echo "Failed to install necessary components."; exit 1; }
+  rm -rf data-backup || {
+    echo "Failed to remove backup directory."
+    exit 1
+  }
 
-echo "Restoring configuration..."
-cp -R data-backup/* data || { echo "Failed to restore configuration."; exit 1; }
+  start_zigbee2mqtt
 
-rm -rf data-backup || { echo "Failed to remove backup directory."; exit 1; }
-
-start_zigbee2mqtt
-
-echo "Done!"
-exit
+  echo "Done!"
+  exit
 }
 
 start

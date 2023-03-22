@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
 
  _____                                  _______    __  ______
 /__  /_      ______ __   _____         / / ___/   / / / /  _/
@@ -52,28 +52,31 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/zwave-js-ui ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-msg_info "Stopping Z-wave JS UI"
-systemctl stop zwave-js-ui.service
-msg_ok "Stopped Z-wave JS UI"
+  header_info
+  if [[ ! -d /opt/zwave-js-ui ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  RELEASE=$(curl -s https://api.github.com/repos/zwave-js/zwave-js-ui/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+  msg_info "Stopping Z-wave JS UI"
+  systemctl stop zwave-js-ui.service
+  msg_ok "Stopped Z-wave JS UI"
 
-msg_info "Updating Z-wave JS UI"
-wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
-unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
-\cp -R zwave-js-ui-linux /opt/zwave-js-ui
-msg_ok "Updated Z-wave JS UI"
+  msg_info "Updating Z-wave JS UI"
+  wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
+  unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
+  \cp -R zwave-js-ui-linux /opt/zwave-js-ui
+  msg_ok "Updated Z-wave JS UI"
 
-msg_info "Starting Z-wave JS UI"
-systemctl enable --now zwave-js-ui.service
-msg_ok "Started Z-wave JS UI"
+  msg_info "Starting Z-wave JS UI"
+  systemctl enable --now zwave-js-ui.service
+  msg_ok "Started Z-wave JS UI"
 
-msg_info "Cleanup"
-rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
-msg_ok "Cleaned"
-msg_ok "Updated Successfully!\n"
-exit
+  msg_info "Cleanup"
+  rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
+  msg_ok "Cleaned"
+  msg_ok "Updated Successfully!\n"
+  exit
 }
 
 start

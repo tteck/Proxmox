@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/debia
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
 
  _    __            ____ _       __               __         
 | |  / /___ ___  __/ / /| |     / /___ __________/ /__  ____ 
@@ -52,81 +52,84 @@ function default_settings() {
 }
 
 function update_script() {
-if [[ ! -f /etc/systemd/system/vaultwarden.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest |
+  if [[ ! -f /etc/systemd/system/vaultwarden.service ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 2, length($2)-3) }')
-WVRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
+  WVRELEASE=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 2, length($2)-3) }')
-    
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
-  "1" "VaultWarden $VAULT" ON \
-  "2" "Web-Vault $WVRELEASE" OFF \
-  "3" "Show Admin Token" OFF \
-  3>&1 1>&2 2>&3)
 
-header_info
-if [ "$UPD" == "1" ]; then
-echo -e "\n ⚠️  Ensure you set 4vCPU & 4096MiB RAM minimum!!! \n" 
-msg_info "Stopping Vaultwarden"
-systemctl stop vaultwarden.service
-msg_ok "Stopped Vaultwarden"
+  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
+    "1" "VaultWarden $VAULT" ON \
+    "2" "Web-Vault $WVRELEASE" OFF \
+    "3" "Show Admin Token" OFF \
+    3>&1 1>&2 2>&3)
 
-msg_info "Updating VaultWarden to $VAULT (Patience)"
-cd ~ && rm -rf vaultwarden
-git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
-cd vaultwarden
-cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
-DIR=/usr/bin/vaultwarden
-  if [ -d "$DIR" ]; then
+  header_info
+  if [ "$UPD" == "1" ]; then
+    echo -e "\n ⚠️  Ensure you set 4vCPU & 4096MiB RAM minimum!!! \n"
+    msg_info "Stopping Vaultwarden"
+    systemctl stop vaultwarden.service
+    msg_ok "Stopped Vaultwarden"
+
+    msg_info "Updating VaultWarden to $VAULT (Patience)"
+    cd ~ && rm -rf vaultwarden
+    git clone https://github.com/dani-garcia/vaultwarden &>/dev/null
+    cd vaultwarden
+    cargo build --features "sqlite,mysql,postgresql" --release &>/dev/null
+    DIR=/usr/bin/vaultwarden
+    if [ -d "$DIR" ]; then
       cp target/release/vaultwarden /usr/bin/
-  else
+    else
       cp target/release/vaultwarden /opt/vaultwarden/bin/
+    fi
+    msg_ok "Updated VaultWarden"
+
+    msg_info "Cleaning up"
+    cd ~ && rm -rf vaultwarden
+    msg_ok "Cleaned"
+
+    msg_info "Starting Vaultwarden"
+    systemctl start vaultwarden.service
+    msg_ok "Started Vaultwarden"
+
+    msg_ok "$VAULT Update Successful"
+    echo -e "\n ⚠️  Ensure you set resources back to normal settings \n"
+    exit
   fi
-msg_ok "Updated VaultWarden"
+  if [ "$UPD" == "2" ]; then
+    msg_info "Stopping Vaultwarden"
+    systemctl stop vaultwarden.service
+    msg_ok "Stopped Vaultwarden"
 
-msg_info "Cleaning up"
-cd ~ && rm -rf vaultwarden
-msg_ok "Cleaned"
+    msg_info "Updating Web-Vault to $WVRELEASE"
+    curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WVRELEASE/bw_web_$WVRELEASE.tar.gz &>/dev/null
+    tar -zxf bw_web_$WVRELEASE.tar.gz -C /opt/vaultwarden/ &>/dev/null
+    msg_ok "Updated Web-Vault"
 
-msg_info "Starting Vaultwarden"
-systemctl start vaultwarden.service
-msg_ok "Started Vaultwarden"
+    msg_info "Cleaning up"
+    rm bw_web_$WVRELEASE.tar.gz
+    msg_ok "Cleaned"
 
-msg_ok "$VAULT Update Successful"
-echo -e "\n ⚠️  Ensure you set resources back to normal settings \n"
-exit;
-fi
-if [ "$UPD" == "2" ]; then
-msg_info "Stopping Vaultwarden"
-systemctl stop vaultwarden.service
-msg_ok "Stopped Vaultwarden"
-
-msg_info "Updating Web-Vault to $WVRELEASE"
-curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WVRELEASE/bw_web_$WVRELEASE.tar.gz &>/dev/null
-tar -zxf bw_web_$WVRELEASE.tar.gz -C /opt/vaultwarden/ &>/dev/null
-msg_ok "Updated Web-Vault"
-
-msg_info "Cleaning up"
-rm bw_web_$WVRELEASE.tar.gz
-msg_ok "Cleaned"
-
-msg_info "Starting Vaultwarden"
-systemctl start vaultwarden.service
-msg_ok "Started Vaultwarden"
-msg_ok "$WVRELEASE Update Successful"
-exit;
-fi
-if [ "$UPD" == "3" ]; then
-DIR=/usr/bin/vaultwarden
-  if [ -d "$DIR" ]; then
+    msg_info "Starting Vaultwarden"
+    systemctl start vaultwarden.service
+    msg_ok "Started Vaultwarden"
+    msg_ok "$WVRELEASE Update Successful"
+    exit
+  fi
+  if [ "$UPD" == "3" ]; then
+    DIR=/usr/bin/vaultwarden
+    if [ -d "$DIR" ]; then
       cat /etc/vaultwarden.env | grep "ADMIN_TOKEN"
-  else
+    else
       cat /opt/vaultwarden/.env | grep "ADMIN_TOKEN"
+    fi
+    exit
   fi
-exit
-fi
 }
 
 start
