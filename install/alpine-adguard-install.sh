@@ -1,5 +1,5 @@
-#!/bin/sh
-apk add bash
+#!/usr/bin/env bash
+
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
