@@ -29,74 +29,37 @@ variables
 color
 catch_errors
 
-function default_settings() {
-  CT_TYPE="1"
-  PW="-password alpine"
-  CT_ID=$NEXTID
-  HN=$NSAPP
-  DISK_SIZE="$var_disk"
-  CORE_COUNT="$var_cpu"
-  RAM_SIZE="$var_ram"
-  BRG="vmbr0"
-  NET=dhcp
-  GATE=""
-  DISABLEIP6="no"
-  MTU=""
-  SD=""
-  NS=""
-  MAC=""
-  VLAN=""
-  SSH="no"
-  VERB="no"
-  echo_default
-}
-
 function update_script() {
-    normal=$(tput sgr0)
-    menu=$(tput setaf 6)
-    number=$(tput setaf 3)
-    fgred=$(tput setaf 1)
-
     header_info
-    printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Update Vaultwarden\n"
-    printf "${menu}**${number} 2)${normal} View Admin Token\n"
-    printf "\n${menu}*********************************************${normal}\n"
-    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit.\n"
-    read opt
-
-    while true; do
+    PS3="Please choose an option from the menu, or enter q to exit: "
+    options=("Update Vaultwarden" "View Admin Token" "Exit")
+    select opt in "${options[@]}"
+    do
         case $opt in
-        1)
-            clear
-            echo -e "${fgred}Update Vaultwarden${normal}"
-            apk update &>/dev/null
-            apk upgrade &>/dev/null
-            break
-            ;;
-        2)
-            clear
-            echo -e "${fgred}View the Admin Token${normal}"
-            token=$(awk -F'"' '/ADMIN_TOKEN/{print $2}' /etc/conf.d/vaultwarden)
-            if [ -n "$token" ]; then
-                echo "Admin Token: $token"
-            else
-                echo "Failed to retrieve the Admin Token."
-            fi
-            break
-            ;;
-        x|\n)
-            exit
-            ;;
-        *)
-            clear
-            echo -e "${fgred}Invalid option. Please choose an option from the menu.${normal}"
-            ;;
+            "Update Vaultwarden")
+                clear
+                echo "Updating Vaultwarden..."
+                apk update &>/dev/null
+                apk upgrade &>/dev/null
+                break
+                ;;
+            "View Admin Token")
+                clear
+                echo "Viewing the Admin Token..."
+                token=$(awk -F'"' '/ADMIN_TOKEN/{print $2}' /etc/conf.d/vaultwarden)
+                if [ -n "$token" ]; then
+                    echo "Admin Token: $token"
+                else
+                    echo "Failed to retrieve the Admin Token."
+                fi
+                break
+                ;;
+            "Exit")
+                exit
+                ;;
+            *) echo "Invalid option. Please choose an option from the menu.";;
         esac
-        read -p "Press Enter to continue..."
-        update_script
     done
-    exit
 }
 
 start
