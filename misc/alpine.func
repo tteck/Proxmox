@@ -67,7 +67,7 @@ arch_check() {
 
 echo_default() {
   echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"  
-  echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
+  echo -e "${DGN}Using Root Password: ${BGN}alpine${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
   echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
