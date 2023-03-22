@@ -31,7 +31,7 @@ catch_errors
 
 function update_script() {
 UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-  "1" "Update VaultWarden $VAULT" ON \
+  "1" "Update VaultWarden" ON \
   "2" "Show Admin Token" OFF \
   3>&1 1>&2 2>&3)
 
@@ -43,7 +43,6 @@ fi
 
 if [ "$UPD" == "2" ]; then
   cat /etc/conf.d/vaultwarden | grep "ADMIN_TOKEN" | awk '{print substr($2, 7) }'
-fi
 exit
 fi
 }
