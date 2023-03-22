@@ -103,6 +103,5 @@ update_os() {
 motd_ssh() {
 echo "export TERM='xterm-256color'" >>/root/.bashrc
 echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
-chmod -x /etc/update-motd.d/*
 if [[ "${SSH_ROOT}" == "yes" ]]; then $STD rc-update add sshd; $STD /etc/init.d/sshd start; fi
 }
