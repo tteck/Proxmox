@@ -65,67 +65,10 @@ msg_ok "Updated Shinobi LXC"
 exit
 }
 
-if command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
-    clear
-    echo -e "⚠  User exited script \n"
-    exit
-  fi
-  install_script
-fi
+start
+build_container
+description
 
-if ! command -v pveversion >/dev/null 2>&1 && [[ ! -d /opt/Shinobi ]]; then
-  msg_error "No ${APP} Installation Found!"
-  exit 
-fi
-
-if ! command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
-    clear
-    echo -e "⚠  User exited script \n"
-    exit
-  fi
-  update_script
-fi
-
-if [ "$VERB" == "yes" ]; then set -x; fi
-if [ "$CT_TYPE" == "1" ]; then
-  FEATURES="nesting=1,keyctl=1"
-else
-  FEATURES="nesting=1"
-fi
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null 
-export tz=$timezone
-export DISABLEIPV6=$DISABLEIP6
-export APPLICATION=$APP
-export VERBOSE=$VERB
-export SSH_ROOT=${SSH}
-export CTID=$CT_ID
-export PCT_OSTYPE=$var_os
-export PCT_OSVERSION=$var_version
-export PCT_DISK_SIZE=$DISK_SIZE
-export PCT_OPTIONS="
-  -features $FEATURES
-  -hostname $HN
-  $SD
-  $NS
-  -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
-  -onboot 1
-  -cores $CORE_COUNT
-  -memory $RAM_SIZE
-  -unprivileged $CT_TYPE
-  $PW
-"
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
-msg_info "Starting LXC Container"
-pct start $CTID
-msg_ok "Started LXC Container"
-lxc-attach -n $CTID -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
-IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-pct set $CTID -description "# ${APP} LXC
-### https://tteck.github.io/Proxmox/
-<a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} Setup should be reachable by going to the following URL.
          ${BL}http://${IP}:8080/super${CL} \n"
