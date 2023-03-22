@@ -333,6 +333,7 @@ start() {
       echo -e "⚠  User exited script \n"
       exit
     fi
+    set +e
     update_script
   fi
 }
