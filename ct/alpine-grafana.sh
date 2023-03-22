@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    ______           ____                 
   / ____/________ _/ __/___ _____  ____ _
  / / __/ ___/ __  / /_/ __  / __ \/ __  /
@@ -52,36 +52,37 @@ function default_settings() {
 }
 
 function update_script() {
-LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-while true; do
-  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" --cancel-button Exit-Script 11 58 3 \
-    "1" "Check for Grafana Updates" \
-    "2" "Allow 0.0.0.0 for listening" \
-    "3" "Allow only ${LXCIP} for listening" 3>&2 2>&1 1>&3
-  )
-  exit_status=$?
-  if [ $exit_status == 1 ] ; then
+  LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+  while true; do
+    CHOICE=$(
+      whiptail --title "SUPPORT" --menu "Select option" --cancel-button Exit-Script 11 58 3 \
+        "1" "Check for Grafana Updates" \
+        "2" "Allow 0.0.0.0 for listening" \
+        "3" "Allow only ${LXCIP} for listening" 3>&2 2>&1 1>&3
+    )
+    exit_status=$?
+    if [ $exit_status == 1 ]; then
       clear
       exit-script
-  fi
-  header_info
-  case $CHOICE in
-    1 )
+    fi
+    header_info
+    case $CHOICE in
+    1)
       apk update && apk upgrade
       exit
       ;;
-    2 )
+    2)
       sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=0.0.0.0/g" /etc/conf.d/grafana
       service grafana restart
       exit
       ;;
-    3 )
+    3)
       sed -i -e "s/cfg:server.http_addr=.*/cfg:server.http_addr=$LXCIP/g" /etc/conf.d/grafana
       service grafana restart
       exit
       ;;
-  esac
-done
+    esac
+  done
 }
 
 start
