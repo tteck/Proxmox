@@ -52,75 +52,22 @@ function default_settings() {
 }
 
 function update_script() {
-    header_info
-    if [[ ! -d /opt/AdGuardHome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-    printf "\n${BL}*********************************************${CL}\n"
-    printf "${BL}**${YW} 1)${CL} Update LXC OS \n"
-    printf "${BL}**${YW} 2)${CL} Update AdGuardHome\n"
-    printf "${BL}*********************************************${CL}\n"
-    printf "Please choose an option from the menu, or ${RD}x${CL} to exit."
-    read opt
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+  "1" "Update LXC OS" ON \
+  "2" "Manually Update $APP" OFF \
+  3>&1 1>&2 2>&3)
 
-while [ "$opt" != "" ]; do
-        case $opt in
-        1)
-            clear
-            echo -e "${RD}Update LXC OS${CL}"
-            msg_info "Updating LXC OS"
-            apk update &>/dev/null
-            apk upgrade &>/dev/null
-            msg_ok "Update Successfull"
-            
-            break
-            ;;
-        2)
-            clear
-            echo -e "${RD}Update AdGuardHome${CL}"
-            msg_info "Stopping AdguardHome"
-            /opt/AdGuardHome/AdGuardHome -s stop &>/dev/null
-            msg_ok "Stopped AdguardHome"
+header_info
+if [ "$UPD" == "1" ]; then
+apk update && apk upgrade
+exit;
+fi
 
-            VER=$(curl -sqI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
-            msg_info "Updating AdguardHome to $VER"
-            wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
-            tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
-            mkdir -p adguard-backup
-            cp -rf /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
-            cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
-            cp -r adguard-backup/* /opt/AdGuardHome/
-            msg_ok "Updated AdguardHome"
-
-            msg_info "Starting AdguardHome"
-            /opt/AdGuardHome/AdGuardHome -s start &>/dev/null
-            msg_ok "Started AdguardHome"
-
-            msg_info "Cleaning Up"
-            rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
-            msg_ok "Cleaned"
-            msg_ok "Update Successfull"
-            
-            break
-            ;;
-        x)
-            clear
-            echo -e "⚠  User exited script \n"
-            exit
-            ;;
-        \n)
-            clear
-            echo -e "⚠  User exited script \n"
-            exit
-            ;;
-        *)
-            clear
-            echo -e "Please choose an option from the menu"
-            update_script
-            ;;
-        esac
-done
-
-
-exit
+if [ "$UPD" == "2" ]; then
+  header_info
+  echo "In the process of creating a method to update"
+exit;
+fi
 }
 
 start
