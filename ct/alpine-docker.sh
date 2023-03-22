@@ -52,20 +52,21 @@ function default_settings() {
 }
 
 while true; do
-  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
-    "1" "Check for Docker Updates" 3>&2 2>&1 1>&3
+  CHOICE=$(
+    whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
+      "1" "Check for Docker Updates" 3>&2 2>&1 1>&3
   )
   exit_status=$?
-  if [ $exit_status == 1 ] ; then
-      clear
-      exit-script
+  if [ $exit_status == 1 ]; then
+    clear
+    exit-script
   fi
   header_info
   case $CHOICE in
-    1 )
-      apk update && apk upgrade
-      exit
-      ;;
+  1)
+    apk update && apk upgrade
+    exit
+    ;;
   esac
 done
 
