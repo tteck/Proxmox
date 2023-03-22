@@ -30,36 +30,22 @@ color
 catch_errors
 
 function update_script() {
-    header_info
-    PS3="Please choose an option from the menu, or enter q to exit: "
-    options=("Update Vaultwarden" "View Admin Token" "Exit")
-    select opt in "${options[@]}"
-    do
-        case $opt in
-            "Update Vaultwarden")
-                clear
-                echo "Updating Vaultwarden..."
-                apk update &>/dev/null
-                apk upgrade &>/dev/null
-                break
-                ;;
-            "View Admin Token")
-                clear
-                echo "Viewing the Admin Token..."
-                token=$(awk -F'"' '/ADMIN_TOKEN/{print $2}' /etc/conf.d/vaultwarden)
-                if [ -n "$token" ]; then
-                    echo "Admin Token: $token"
-                else
-                    echo "Failed to retrieve the Admin Token."
-                fi
-                break
-                ;;
-            "Exit")
-                exit
-                ;;
-            *) echo "Invalid option. Please choose an option from the menu.";;
-        esac
-    done
+UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+  "1" "Update VaultWarden $VAULT" ON \
+  "2" "Show Admin Token" OFF \
+  3>&1 1>&2 2>&3)
+
+header_info
+if [ "$UPD" == "1" ]; then
+apk update && apk upgrade
+exit;
+fi
+
+if [ "$UPD" == "2" ]; then
+  cat /etc/conf.d/vaultwarden | grep "ADMIN_TOKEN" | awk '{print substr($2, 7) }'
+fi
+exit
+fi
 }
 
 start

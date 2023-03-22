@@ -14,6 +14,7 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
+$STD apk add newt
 $STD apk add wget
 $STD apk add bash
 $STD apk add curl
