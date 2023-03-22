@@ -52,15 +52,23 @@ function default_settings() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 1 \
-  "1" "Check for Zigbee2MQTT Update" ON \
-  3>&1 1>&2 2>&3)
-
-header_info
-if [ "$UPD" == "1" ]; then
-apk update && apk upgrade
-exit;
-fi
+while true; do
+  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
+    "1" "Check for Zigbee2MQTT Updates" 3>&2 2>&1 1>&3
+  )
+  exit_status=$?
+  if [ $exit_status == 1 ] ; then
+      clear
+      exit-script
+  fi
+  header_info
+  case $CHOICE in
+    1 )
+      apk update && apk upgrade
+      exit
+      ;;
+  esac
+done
 }
 
 start
