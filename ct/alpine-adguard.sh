@@ -52,29 +52,30 @@ function default_settings() {
 }
 
 function update_script() {
-while true; do
-  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
-    "1" "Update LXC OS" \
-    "2" "Manually Update AdGuardHome" 3>&2 2>&1 1>&3
-  )
-  exit_status=$?
-  if [ $exit_status == 1 ] ; then
+  while true; do
+    CHOICE=$(
+      whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
+        "1" "Update LXC OS" \
+        "2" "Manually Update AdGuardHome" 3>&2 2>&1 1>&3
+    )
+    exit_status=$?
+    if [ $exit_status == 1 ]; then
       clear
       exit-script
-  fi
-  header_info
-  case $CHOICE in
-    1 )
+    fi
+    header_info
+    case $CHOICE in
+    1)
       apk update && apk upgrade
       exit
       ;;
-    2 )
+    2)
       header_info
       echo "In the process of creating a method to update"
       exit
       ;;
-  esac
-done
+    esac
+  done
 }
 
 start
