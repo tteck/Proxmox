@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpin
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
  _____   _       __             ___   __  _______  ____________
 /__  /  (_)___ _/ /_  ___  ___ |__ \ /  |/  / __ \/_  __/_  __/
   / /  / / __  / __ \/ _ \/ _ \__/ // /|_/ / / / / / /   / /   
@@ -52,23 +52,24 @@ function default_settings() {
 }
 
 function update_script() {
-while true; do
-  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
-    "1" "Check for Zigbee2MQTT Updates" 3>&2 2>&1 1>&3
-  )
-  exit_status=$?
-  if [ $exit_status == 1 ] ; then
+  while true; do
+    CHOICE=$(
+      whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
+        "1" "Check for Zigbee2MQTT Updates" 3>&2 2>&1 1>&3
+    )
+    exit_status=$?
+    if [ $exit_status == 1 ]; then
       clear
       exit-script
-  fi
-  header_info
-  case $CHOICE in
-    1 )
+    fi
+    header_info
+    case $CHOICE in
+    1)
       apk update && apk upgrade
       exit
       ;;
-  esac
-done
+    esac
+  done
 }
 
 start
