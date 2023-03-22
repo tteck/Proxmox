@@ -347,16 +347,16 @@ build_container() {
   fi
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
-  export FUNCTIONS_FILE_PATH=$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpine-install.func)
-  export tz=$timezone
-  export DISABLEIPV6=$DISABLEIP6
-  export APPLICATION=$APP
-  export VERBOSE=$VERB
-  export SSH_ROOT=${SSH}
-  export CTID=$CT_ID
-  export PCT_OSTYPE=$var_os
-  export PCT_OSVERSION=$var_version
-  export PCT_DISK_SIZE=$DISK_SIZE
+  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpine-install.func)"
+  export tz="$timezone"
+  export DISABLEIPV6="$DISABLEIP6"
+  export APPLICATION="$APP"
+  export VERBOSE="$VERB"
+  export SSH_ROOT="${SSH}"
+  export CTID=$CT_ID"
+  export PCT_OSTYPE="$var_os"
+  export PCT_OSVERSION="$var_version"
+  export PCT_DISK_SIZE="$DISK_SIZE"
   export PCT_OPTIONS="
     -features $FEATURES
     -hostname $HN
