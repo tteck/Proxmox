@@ -51,17 +51,23 @@ function default_settings() {
   echo_default
 }
 
-function update_script() {
-  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 1 \
-    "1" "Check for Docker Updates" ON \
-    3>&1 1>&2 2>&3)
-
-  header_info
-  if [ "$UPD" == "1" ]; then
-    apk update && apk upgrade
-    exit
+while true; do
+  CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
+    "1" "Check for Docker Updates" 3>&2 2>&1 1>&3
+  )
+  exit_status=$?
+  if [ $exit_status == 1 ] ; then
+      clear
+      exit-script
   fi
-}
+  header_info
+  case $CHOICE in
+    1 )
+      apk update && apk upgrade
+      exit
+      ;;
+  esac
+done
 
 start
 build_container
