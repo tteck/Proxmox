@@ -1,10 +1,11 @@
 #!/bin/sh
-
+apk add bash
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-source <(cat $FUNCTIONS_FILE_PATH)
+source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+#source <(cat $FUNCTIONS_FILE_PATH)
 #echo "$FUNCTIONS_FILE_PATH" | . /dev/stdin
 #eval "$(cat $FUNCTIONS_FILE_PATH)"
 #eval "$(cat -- "$FUNCTIONS_FILE_PATH")"
