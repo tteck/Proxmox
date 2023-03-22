@@ -52,11 +52,10 @@ function default_settings() {
 }
 
 function update_script() {
-LXCIP=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
 while true; do
   CHOICE=$(whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
     "1" "Update LXC OS" \
-    "2" "Manually Update $APP" 3>&2 2>&1 1>&3
+    "2" "Manually Update AdGuardHome" 3>&2 2>&1 1>&3
   )
   exit_status=$?
   if [ $exit_status == 1 ] ; then
