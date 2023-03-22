@@ -16,9 +16,15 @@ color() {
 }
 
 verb_ip6() {
-  if [ "$VERBOSE" = "yes" ]; then set -x; STD=""; else STD="silent"; fi
-  silent() { "$@" > /dev/null 2>&1; }
-  if [ "$DISABLEIPV6" == "yes" ]; then echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf; $STD sysctl -p; fi
+  if [ "$VERBOSE" = "yes" ]; then
+    set -x
+    STD=""
+  else STD="silent"; fi
+  silent() { "$@" >/dev/null 2>&1; }
+  if [ "$DISABLEIPV6" == "yes" ]; then
+    echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
+    $STD sysctl -p
+  fi
 }
 
 catch_errors() {
@@ -51,21 +57,21 @@ msg_error() {
 
 setting_up_container() {
   msg_info "Setting up Container OS"
-while [ $i -gt 0 ]; do
-  if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d'/' -f1)" != "" ]; then
-    break
-  fi
-  echo 1>&2 -en "${CROSS}${RD} No Network! "
-  sleep $RETRY_EVERY
-  i=$((i-1))
-done
+  while [ $i -gt 0 ]; do
+    if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d'/' -f1)" != "" ]; then
+      break
+    fi
+    echo 1>&2 -en "${CROSS}${RD} No Network! "
+    sleep $RETRY_EVERY
+    i=$((i - 1))
+  done
 
-if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d'/' -f1)" = "" ]; then
-  echo 1>&2 -e "\n${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
-  echo -e " 🖧  Check Network Settings"
-  exit 1
-fi
-cat <<EOF >/etc/apk/repositories
+  if [ "$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d'/' -f1)" = "" ]; then
+    echo 1>&2 -e "\n${CROSS}${RD} No Network After $RETRY_NUM Tries${CL}"
+    echo -e " 🖧  Check Network Settings"
+    exit 1
+  fi
+  cat <<EOF >/etc/apk/repositories
 https://dl-cdn.alpinelinux.org/alpine/edge/main
 https://dl-cdn.alpinelinux.org/alpine/edge/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
@@ -77,7 +83,7 @@ EOF
 network_check() {
   set +e
   trap - ERR
-  if ping -c 1 -W 1 1.1.1.1 &> /dev/null; then msg_ok "Internet Connected"; else
+  if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then msg_ok "Internet Connected"; else
     msg_error "Internet NOT Connected"
     read -r -p "Would you like to continue anyway? <y/N> " prompt
     if echo "$prompt" | grep -Eq "^(y|yes)$"; then
@@ -101,7 +107,10 @@ update_os() {
 }
 
 motd_ssh() {
-echo "export TERM='xterm-256color'" >>/root/.bashrc
-echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" > /etc/motd
-if [[ "${SSH_ROOT}" == "yes" ]]; then $STD rc-update add sshd; $STD /etc/init.d/sshd start; fi
+  echo "export TERM='xterm-256color'" >>/root/.bashrc
+  echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" >/etc/motd
+  if [[ "${SSH_ROOT}" == "yes" ]]; then
+    $STD rc-update add sshd
+    $STD /etc/init.d/sshd start
+  fi
 }
