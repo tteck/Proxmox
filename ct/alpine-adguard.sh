@@ -54,22 +54,18 @@ function default_settings() {
 function update_script() {
     header_info
     if [[ ! -d /opt/AdGuardHome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-    normal=$(echo "\033[m")
-    menu=$(echo "\033[36m")
-    number=$(echo "\033[33m")
-    fgred=$(echo "\033[31m")
-    printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Update LXC OS \n"
-    printf "${menu}**${number} 2)${normal} Update AdGuardHome\n"
-    printf "${menu}*********************************************${normal}\n"
-    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit."
+    printf "\n${BL}*********************************************${CL}\n"
+    printf "${BL}**${YW} 1)${CL} Update LXC OS \n"
+    printf "${BL}**${YW} 2)${CL} Update AdGuardHome\n"
+    printf "${BL}*********************************************${CL}\n"
+    printf "Please choose an option from the menu, or ${RD}x${CL} to exit."
     read opt
 
 while [ "$opt" != "" ]; do
         case $opt in
         1)
             clear
-            echo -e "${fgred}Update LXC OS${normal}"
+            echo -e "${RD}Update LXC OS${CL}"
             msg_info "Updating LXC OS"
             apk update &>/dev/null
             apk upgrade &>/dev/null
@@ -79,7 +75,7 @@ while [ "$opt" != "" ]; do
             ;;
         2)
             clear
-            echo -e "${fgred}Update AdGuardHome${normal}"
+            echo -e "${RD}Update AdGuardHome${CL}"
             msg_info "Stopping AdguardHome"
             /opt/AdGuardHome/AdGuardHome -s stop &>/dev/null
             msg_ok "Stopped AdguardHome"
