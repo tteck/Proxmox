@@ -52,49 +52,51 @@ function default_settings() {
 }
 
 function update_script() {
+    normal=$(tput sgr0)
+    menu=$(tput setaf 6)
+    number=$(tput setaf 3)
+    fgred=$(tput setaf 1)
+
     header_info
-    normal=$(echo "\033[m")
-    menu=$(echo "\033[36m")
-    number=$(echo "\033[33m")
-    fgred=$(echo "\033[31m")
     printf "\n${menu}*********************************************${normal}\n"
-    printf "${menu}**${number} 1)${normal} Update Vaultwarden \n"
+    printf "${menu}**${number} 1)${normal} Update Vaultwarden\n"
     printf "${menu}**${number} 2)${normal} View Admin Token\n"
     printf "\n${menu}*********************************************${normal}\n"
-    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit."
+    printf "Please choose an option from the menu, or ${fgred}x${normal} to exit.\n"
     read opt
 
-while [ "$opt" != "" ]; do
+    while true; do
         case $opt in
         1)
             clear
             echo -e "${fgred}Update Vaultwarden${normal}"
             apk update &>/dev/null
             apk upgrade &>/dev/null
-            
             break
             ;;
         2)
             clear
             echo -e "${fgred}View the Admin Token${normal}"
-            cat /etc/conf.d/vaultwarden | grep "ADMIN_TOKEN" | awk '{print substr($2, 7) }'
-            
+            token=$(awk -F'"' '/ADMIN_TOKEN/{print $2}' /etc/conf.d/vaultwarden)
+            if [ -n "$token" ]; then
+                echo "Admin Token: $token"
+            else
+                echo "Failed to retrieve the Admin Token."
+            fi
             break
             ;;
-        x)
-            exit
-            ;;
-        \n)
+        x|\n)
             exit
             ;;
         *)
             clear
-            echo -e "Please choose an option from the menu"
-            update_script
+            echo -e "${fgred}Invalid option. Please choose an option from the menu.${normal}"
             ;;
         esac
-done
-exit
+        read -p "Press Enter to continue..."
+        update_script
+    done
+    exit
 }
 
 start
