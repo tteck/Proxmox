@@ -21,7 +21,7 @@ $STD apk add mc
 $STD apk add openssh
 msg_ok "Installed Dependencies"
 
-msg_info "Installing $APPLICATION"
+msg_info "Installing Alpine-AdGuard"
 VER=$(curl --silent -qI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');
 $STD wget -q "https://github.com/AdguardTeam/AdGuardHome/releases/download/$VER/AdGuardHome_linux_amd64.tar.gz"
 $STD tar -xvf AdGuardHome_linux_amd64.tar.gz >/dev/null 2>&1
@@ -30,6 +30,6 @@ $STD rm AdGuardHome_linux_amd64.tar.gz
 $STD chmod +x /opt/AdGuardHome/AdGuardHome
 $STD /opt/AdGuardHome/AdGuardHome -s install
 $STD /opt/AdGuardHome/AdGuardHome -s start
-$STD msg_ok "Installed $APPLICATION"
+$STD msg_ok "Installed Alpine-AdGuard"
 
 motd_ssh
