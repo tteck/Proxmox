@@ -2,6 +2,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-22
+
+### Changed
+
+- **The latest iteration of the scripts**
+  - Going forward, versioning will no longer be utilized in order to avoid breaking web-links in blogs and YouTube videos.
+  - The scripts have been made more legible as the repetitive code has been moved to function files, making it simpler to share among the scripts and hopefully easier to maintain. This also makes it simpler to contribute to the project.
+  - When a container is created with privileged mode enabled, the USB passthrough feature is automatically activated.
+
 ## 2023-03-18
 
 ### Changed
