@@ -57,12 +57,13 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
   "2" "Install ${APP} Worker" OFF \
   3>&1 1>&2 2>&3)
 
+if [ "$UPD" == "1" ]; then
 header_info
 msg_info "Updating ${APP}"
 /opt/cronicle/bin/control.sh upgrade &>/dev/null
 msg_ok "Updated ${APP}"
 exit
-
+fi
 if [ "$UPD" == "2" ]; then
 LATEST=$(curl -sL https://api.github.com/repos/jhuckaby/Cronicle/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 IP=$(hostname -I | awk '{print $1}')
