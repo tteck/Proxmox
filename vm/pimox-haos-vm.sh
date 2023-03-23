@@ -6,24 +6,28 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  clear
   cat <<"EOF"
-    __  __                        ___              _      __              __     ____  _____
+                                      ____  _ __  ___                                        
+                                    / __ \(_)  |/  /___  _  __                              
+                                   / /_/ / / /|_/ / __ \| |/_/                              
+                                  / ____/ / /  / / /_/ />  <                                
+    __  __                       /_/_  /_/_/  /_/\____/_/|_|              __     ____  _____
    / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____  / /_   / __ \/ ___/
   / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \ 
  / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ / 
 /_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/  
-
+                                                                                            
 EOF
 }
+clear
 header_info
-echo -e "\n Loading..."
-GEN_MAC=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
+echo -e "Loading..."
+GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
+USEDID=$(pvesh get /cluster/resources --type vm --output-format yaml | egrep -i 'vmid' | awk '{print substr($2, 1, length($2)-0) }')
 NEXTID=$(pvesh get /cluster/nextid)
-VERSIONS=(stable beta dev)
-for version in "${VERSIONS[@]}"; do
-  eval "$version=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/$version.json | grep "ova" | cut -d '"' -f 4)"
-done
+STABLE=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/stable.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
+BETA=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/beta.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
+DEV=$(curl -s https://raw.githubusercontent.com/home-assistant/version/master/dev.json | grep "ova" | awk '{print substr($2, 2, length($2)-3) }')
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
 HA=$(echo "\033[1;34m")
@@ -36,22 +40,29 @@ BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
-THIN="discard=on,ssd=1,"
-set -Eeuo pipefail
-trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+shopt -s expand_aliases
+alias die='EXIT=$? LINE=$LINENO error_exit'
+trap die ERR
 trap cleanup EXIT
-function error_handler() {
-  local exit_code="$?"
-  local line_number="$1"
-  local command="$2"
-  local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
-  echo -e "\n$error_message\n"
-  cleanup_vmid
+function error_exit() {
+  trap - ERR
+  local reason="Unknown failure occurred."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  [ ! -z ${VMID-} ] && cleanup_vmid
+  exit $EXIT
 }
 function cleanup_vmid() {
-  if qm status $VMID &>/dev/null; then
-    qm stop $VMID &>/dev/null
-    qm destroy $VMID &>/dev/null
+  if $(qm status $VMID &>/dev/null); then
+    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
+      qm stop $VMID
+    fi
+    qm destroy $VMID
   fi
 }
 function cleanup() {
@@ -60,12 +71,31 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if whiptail --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58; then
-  :
+if (whiptail --title "PiMox HAOS VM" --yesno "This will create a New PiMox HAOS VM. Proceed?" 10 58); then
+  echo "User selected Yes"
 else
-  header_info && echo -e "⚠ User exited script \n" && exit
+  clear
+  echo -e "⚠ User exited script \n"
+  exit
 fi
-
+function PVE_CHECK() {
+  if [ $(pveversion | grep "pve-manager/7.2\|7.3" | wc -l) -ne 1 ]; then
+    echo "⚠ This version of Proxmox Virtual Environment is not supported"
+    echo "Requires PVE Version: =>7.2"
+    echo "Exiting..."
+    sleep 2
+    exit
+  fi
+}
+function ARCH_CHECK() {
+  ARCH=$(dpkg --print-architecture)
+  if [[ "$ARCH" == "amd64" ]]; then
+    echo -e "\n ❌  This script only works with PiMox! \n"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
@@ -78,88 +108,52 @@ function msg_error() {
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
-function PVE_CHECK() {
-  if [ $(pveversion | grep -c "pve-manager/7\.[2-9]") -eq 0 ]; then
-    echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
-    echo -e "Requires PVE Version 7.2 or higher"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
-}
-function ARCH_CHECK() {
-  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
-    echo -e "Exiting..."
-    sleep 2
-    exit
-  fi
-}
+
 function default_settings() {
-  BRANCH="$stable"
-  VMID="$NEXTID"
-  FORMAT=",efitype=4m"
-  MACHINE=""
-  HN="haos$stable"
+  echo -e "${DGN}Using HAOS Version: ${BGN}${STABLE}${CL}"
+  BRANCH=${STABLE}
+  echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
+  VMID=$NEXTID
+  echo -e "${DGN}Using Hostname: ${BGN}haos${STABLE}${CL}"
+  HN=haos${STABLE}
+  echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
   CORE_COUNT="2"
+  echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
   RAM_SIZE="4096"
+  echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
-  MAC="$GEN_MAC"
-  VLAN=""
-  MTU=""
-  START_VM="yes"
-  echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
-  echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
-  echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
-  echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
-  echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
-  echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
-  echo -e "${DGN}Using Bridge: ${BGN}${BRG}${CL}"
-  echo -e "${DGN}Using MAC Address: ${BGN}${MAC}${CL}"
+  echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
+  MAC=$GEN_MAC
   echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
+  VLAN=""
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+  MTU=""
   echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
+  START_VM="yes"
   echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
   BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
-    "$stable" "Stable  " ON \
-    "$beta" "Beta  " OFF \
-    "$dev" "Dev  " OFF \
+    "$STABLE" "Stable" ON \
+    "$BETA" "Beta" OFF \
+    "$DEV" "Dev" OFF \
     3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"; fi
-  while true; do
-    VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
-    exitstatus=$?
-    if [ -z "$VMID" ]; then
-      VMID="$NEXTID"
-      echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
-      break
-    else
-      if pct status "$VMID" &>/dev/null || qm status "$VMID" &>/dev/null; then
-        echo -e "${CROSS}${RD} ID $VMID is already in use${CL}"
-        sleep 2
-        continue
-      fi
-      echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
-      break
-    fi
-  done
-
-  MACH=$(whiptail --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
-    "i440fx" "Machine i440fx" ON \
-    "q35" "Machine q35" OFF \
-    3>&1 1>&2 2>&3)
+  VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
-  if [ $MACH = q35 ]; then
-    echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-    FORMAT=""
-    MACHINE=" -machine q35"
+  if [ -z $VMID ]; then
+    VMID="$NEXTID"
+    echo -e "${DGN}Virtual Machine: ${BGN}$VMID${CL}"
   else
-    echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-    FORMAT=",efitype=4m"
-    MACHINE=""
+    if echo "$USEDID" | egrep -q "$VMID"; then
+      echo -e "\n🚨  ${RD}ID $VMID is already in use${CL} \n"
+      echo -e "Exiting Script \n"
+      sleep 2
+      exit
+    else
+      if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi
+    fi
   fi
   VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
@@ -239,6 +233,7 @@ function advanced_settings() {
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
   else
+    clear
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
@@ -246,10 +241,12 @@ function advanced_settings() {
 }
 function START_SCRIPT() {
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
+    clear
     header_info
     echo -e "${BL}Using Default Settings${CL}"
     default_settings
   else
+    clear
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
@@ -258,7 +255,6 @@ function START_SCRIPT() {
 ARCH_CHECK
 PVE_CHECK
 START_SCRIPT
-msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
   TYPE=$(echo $line | awk '{printf "%-10s", $2}')
@@ -270,10 +266,9 @@ while read -r line; do
   fi
   STORAGE_MENU+=("$TAG" "$ITEM" "OFF")
 done < <(pvesm status -content images | awk 'NR>1')
-VALID=$(pvesm status -content images | awk 'NR>1')
-if [ -z "$VALID" ]; then
-  msg_error "Unable to detect a valid storage location."
-  exit
+if [ $((${#STORAGE_MENU[@]} / 3)) -eq 0 ]; then
+  echo -e "'Disk image' needs to be selected for at least one storage location."
+  die "Unable to detect valid storage location."
 elif [ $((${#STORAGE_MENU[@]} / 3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
 else
@@ -286,34 +281,22 @@ else
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Retrieving the URL for Home Assistant ${BRANCH} Disk Image"
-if [ "$BRANCH" == "$dev" ]; then
-  URL=https://os-builds.home-assistant.io/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
-else
-  URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
-fi
+msg_info "Getting URL for Home Assistant ${BRANCH} Disk Image"
+URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_generic-aarch64-${BRANCH}.qcow2.xz
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
-msg_info "Extracting KVM Disk Image"
+msg_ok "Downloaded ${CL}${BL}haos_generic-aarch64-${BRANCH}.qcow2.xz${CL}"
+msg_info "Extracting Disk Image"
 unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
 nfs | dir)
-  DISK_EXT=".raw"
+  DISK_EXT=".qcow2"
   DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  THIN=""
-  ;;
-btrfs)
-  DISK_EXT=".raw"
-  DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  FORMAT=",efitype=4m"
-  THIN=""
+  DISK_IMPORT="-format qcow2"
   ;;
 esac
 for i in {0,1}; do
@@ -321,17 +304,18 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-msg_ok "Extracted KVM Disk Image"
+msg_ok "Extracted Disk Image"
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE \
-  -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
+qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN \
+  -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
+pvesm alloc $STORAGE $VMID $DISK0 64M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF}${FORMAT} \
-  -scsi0 ${DISK1_REF},${THIN}size=32G \
-  -boot order=scsi0 \
-  -description "# Home Assistant OS
+  -efidisk0 ${DISK0_REF},efitype=4m,size=64M \
+  -scsi0 ${DISK1_REF},size=32G >/dev/null
+qm set $VMID \
+  -boot order=scsi0 >/dev/null
+qm set $VMID -description "# PiMox HAOS
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
