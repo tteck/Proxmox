@@ -1,7 +1,6 @@
 variables() {
   NSAPP=$(echo ${APP,,} | tr -d ' ')
   var_install="${NSAPP}-install"
-  timezone=$(cat /etc/timezone)
   INTEGER='^[0-9]+([.][0-9]+)?$'
 }
 
@@ -333,6 +332,7 @@ install_script() {
   arch_check
   pve_check
   NEXTID=$(pvesh get /cluster/nextid)
+  timezone=$(cat /etc/timezone)
   header_info
   if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
