@@ -36,8 +36,8 @@ deb https://packages.openmediavault.org/public shaitan main
 # deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan partner
 EOF
 $STD apt-get update
-$STD apt-get -y install openmediavault-keyring
-$STD apt-get --yes --auto-remove --show-upgraded --allow-downgrades --allow-change-held-packages --no-install-recommends install openmediavault
+apt-get -y install openmediavault-keyring &>/dev/null
+DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" install -qqy openmediavault &>/dev/null
 omv-confdbadm populate
 msg_ok "Installed OpenMediaVault"
 
