@@ -8,7 +8,6 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
   clear
   cat <<"EOF"
-
     ____                        __                                     
    / __ \____ _____  ___  _____/ /__  __________    ____  ____ __  __
   / /_/ / __ `/ __ \/ _ \/ ___/ / _ \/ ___/ ___/___/ __ \/ __ `/ |/_/
