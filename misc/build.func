@@ -68,7 +68,7 @@ arch_check() {
 
 echo_default() {
   if [ "$var_os" == "ubuntu" ]; then
-  echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
+    echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
   fi
   echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
@@ -106,8 +106,8 @@ advanced_settings() {
       "22.10" "Kinetic" OFF \
       3>&1 1>&2 2>&3); then
       echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"
-  else
-    exit-script
+    else
+      exit-script
     fi
   fi
 
@@ -385,7 +385,7 @@ build_container() {
     $PW
   "
   bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/ct/create_lxc.sh)" || exit
-  
+
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
   if [ "$CT_TYPE" == "0" ]; then
     if [[ "$APP" != "Emby" && "$APP" != "Jellyfin" && "$APP" != "Plex" ]]; then
