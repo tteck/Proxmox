@@ -67,6 +67,9 @@ arch_check() {
 }
 
 echo_default() {
+  if [ "$var_os" == "ubuntu" ]; then
+  echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
+  fi
   echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
@@ -95,6 +98,19 @@ exit-script() {
 }
 
 advanced_settings() {
+  if [ "$var_os" == "ubuntu" ]; then
+    if var_version=$(whiptail --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 4 \
+      "18.04" "Bionic" OFF \
+      "20.04" "Focal" ON \
+      "22.04" "Jammy" OFF \
+      "22.10" "Kinetic" OFF \
+      3>&1 1>&2 2>&3); then
+      echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"
+  else
+    exit-script
+    fi
+  fi
+
   if CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 10 58 2 \
     "1" "Unprivileged" ON \
     "0" "Privileged" OFF \
@@ -346,7 +362,7 @@ build_container() {
   fi
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
-  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
+  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/dev/misc/install.func)"
   export tz="$timezone"
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
@@ -368,11 +384,12 @@ build_container() {
     -unprivileged $CT_TYPE
     $PW
   "
-  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/ct/create_lxc.sh)" || exit
   
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
   if [ "$CT_TYPE" == "0" ]; then
-    cat <<EOF >>$LXC_CONFIG
+    if [[ "$APP" != "Emby" && "$APP" != "Jellyfin" && "$APP" != "Plex" ]]; then
+      cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
 lxc.cgroup2.devices.allow: c 188:* rwm
@@ -383,16 +400,28 @@ lxc.mount.entry: /dev/ttyUSB1       dev/ttyUSB1       none bind,optional,create=
 lxc.mount.entry: /dev/ttyACM0       dev/ttyACM0       none bind,optional,create=file
 lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=file
 EOF
-  else
-  cat <<EOF >>$LXC_CONFIG
+    fi
+  fi
+
+  if [ "$CT_TYPE" == "0" ]; then
+    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" ]]; then
+      cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
+lxc.cgroup2.devices.allow: c 226:0 rwm
+lxc.cgroup2.devices.allow: c 226:128 rwm
+lxc.cgroup2.devices.allow: c 29:0 rwm
+lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
+lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
+lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
 EOF
+    fi
   fi
+
   msg_info "Starting LXC Container"
   pct start "$CTID"
   msg_ok "Started LXC Container"
-  lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
+  lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/dev/install/$var_install.sh)" || exit
 
 }
 
