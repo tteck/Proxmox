@@ -68,12 +68,12 @@ function update_script() {
     if (whiptail --defaultno --title "SELECT BRANCH" --yesno "Use Beta Branch?" 10 58); then
       clear
       header_info
-      echo -e "${GN}Updating to Version ${BETA}${CL}"
+      echo -e "${GN}Updating to Beta Version${CL}"
       BR="--pre "
     else
       clear
       header_info
-      echo -e "${GN}Updating to Version ${STABLE}${CL}"
+      echo -e "${GN}Updating to Srable Version${CL}"
       BR=""
     fi
     if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
@@ -125,7 +125,7 @@ ExecStart=/usr/local/bin/filebrowser -r /root/.homeassistant
 [Install]
 WantedBy=default.target" >$service_path
 
-    systemctl enable --now filebrowser.service &>/dev/null
+    systemctl enable --now -q filebrowser.service
     msg_ok "Created Service"
 
     msg_ok "Completed Successfully!\n"
