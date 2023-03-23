@@ -51,6 +51,7 @@ function default_settings() {
   echo_default
 }
 
+function update_script() {
 while true; do
   CHOICE=$(
     whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
@@ -69,6 +70,7 @@ while true; do
     ;;
   esac
 done
+}
 
 start
 build_container
