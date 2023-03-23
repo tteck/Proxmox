@@ -347,7 +347,7 @@ build_container() {
   fi
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
-  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/next/misc/alpine-install.func)"
+  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/alpine-install.func)"
   export tz="$timezone"
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
@@ -385,16 +385,16 @@ lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=
 EOF
   fi
   msg_info "Starting LXC Container"
-  pct start $CTID
+  pct start "$CTID"
   msg_ok "Started LXC Container"
-  pct exec $CTID -- ash -c "apk add bash >/dev/null"
-  lxc-attach -n $CTID -- bash -c "$(wget -qO - https://raw.githubusercontent.com/tteck/Proxmox/next/install/$var_install.sh)" || exit
+  pct exec "$CTID" -- ash -c "apk add bash >/dev/null"
+  lxc-attach -n "$CTID" -- bash -c "$(wget -qO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
 
 }
 
 description() {
-  IP=$(pct exec $CTID ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-  pct set $CTID -description "# ${APP} LXC
+  IP=$(pct exec "$CTID" ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+  pct set "$CTID" -description "# ${APP} LXC
   ### https://tteck.github.io/Proxmox/
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
 }
