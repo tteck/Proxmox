@@ -55,7 +55,7 @@ function update_script() {
   while true; do
     CHOICE=$(
       whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
-        "1" "Update VaultWarden" \
+        "1" "Update Vaultwarden" \
         "2" "Show Admin Token" 3>&2 2>&1 1>&3
     )
     exit_status=$?
