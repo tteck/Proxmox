@@ -52,6 +52,9 @@ function default_settings() {
 }
 
 function update_script() {
+  if ! apk -e info newt >/dev/null 2>&1; then
+    apk add newt
+  fi
   while true; do
     CHOICE=$(
       whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
