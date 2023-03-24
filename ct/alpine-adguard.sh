@@ -53,7 +53,7 @@ function default_settings() {
 
 function update_script() {
   if ! apk -e info newt >/dev/null 2>&1; then
-    apk add newt
+    apk add -q newt
   fi
   while true; do
     CHOICE=$(
