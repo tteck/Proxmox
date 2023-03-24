@@ -73,7 +73,7 @@ function update_script() {
     else
       clear
       header_info
-      echo -e "${GN}Updating to Srable Version${CL}"
+      echo -e "${GN}Updating to Stable Version${CL}"
       BR=""
     fi
     if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
