@@ -22,8 +22,11 @@ $STD apk add mc
 $STD apk add git
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Alpine-ESPHome"
+msg_info "Installing pip3 Package Manager"
 $STD apk add py3-pip
+msg_ok "Installed pip3 Package Manager"
+
+msg_info "Installing Alpine-ESPHome"
 $STD pip3 install esphome
 $STD pip3 install tornado esptool
 
