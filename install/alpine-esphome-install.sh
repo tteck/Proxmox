@@ -26,6 +26,7 @@ msg_info "Installing Alpine-ESPHome"
 $STD apk add py3-pip
 $STD pip3 install esphome
 $STD pip3 install tornado esptool
+RC_SVCNAME="esphome"
 cat <<EOF >/etc/init.d/esphome
 #!/sbin/openrc-run
 
