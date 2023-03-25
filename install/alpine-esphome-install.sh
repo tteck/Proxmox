@@ -27,38 +27,21 @@ $STD apk add py3-pip
 $STD pip3 install esphome
 $STD pip3 install tornado esptool
 
-service_path="/etc/init.d/esphome"
 echo "#!/sbin/openrc-run
-name=\"esphome\"
-description=\"ESPHome Dashboard\"
-command=\"/usr/bin/esphome /root/config/ dashboard\"
-command_user=\"root\"
-command_background=true
-pidfile=\"/run/\$name.pid\"
-
-depend() {
-    need net
-}
-
-start_pre() {
-    checkpath --directory --mode 0755 /run/\$name
-}
-
+description=\"ESPHome\"
+pidfile=\"/run/esphome.pid\"
 start() {
-    ebegin \"Starting \$description\"
-    start-stop-daemon --start --quiet --background --exec /usr/bin/esphome -- /root/config/ dashboard
-    eend \$?
+    esphome dashboard /root/esphome/config/ > /dev/null 2>&1 &
+    echo \$! > \$pidfile
 }
-
 stop() {
-    ebegin \"Stopping \$description\"
-    pkill esphome
-    eend \$?
-}" > $service_path
+    kill \$(cat \$pidfile)
+    rm \$pidfile
+}" > /etc/init.d/esphome
 
-chmod 755 $service_path
-$STD rc-update add esphome default
-$STD /etc/init.d/esphome start
+chmod 755 /etc/init.d/esphome
+rc-service -q esphome start
+rc-update add -q esphome default
 msg_ok "Installed Alpine-ESPHome"
 
 motd_ssh
