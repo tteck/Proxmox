@@ -66,9 +66,7 @@ function update_script() {
     header_info
     case $CHOICE in
     1)
-      esphome stop
       pip3 install esphome --upgrade
-      esphome start
       exit
       ;;
     esac
