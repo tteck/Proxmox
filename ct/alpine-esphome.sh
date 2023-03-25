@@ -52,7 +52,10 @@ function default_settings() {
 }
 
 function update_script() {
-  if [[ ! -f /usr/bin/esphome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+  if [[ ! -f /usr/bin/esphome ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
   while true; do
     CHOICE=$(
       whiptail --title "SUPPORT" --menu "Select option" 11 58 1 \
