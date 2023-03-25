@@ -117,7 +117,7 @@ motd_ssh() {
 
 customize() {
   msg_info "Customizing Container"
-  bash -c "/etc/init.d/syslog stop;rc-update del syslog boot;passwd -d root" >/dev/null 2>&1
+  bash -c "passwd -d root" >/dev/null 2>&1
   msg_ok "Customized Container"
 }
 
