@@ -30,7 +30,7 @@ $STD rm AdGuardHome_linux_amd64.tar.gz
 $STD chmod +x /opt/AdGuardHome/AdGuardHome
 $STD /opt/AdGuardHome/AdGuardHome -s install
 $STD /opt/AdGuardHome/AdGuardHome -s start
-$STD msg_ok "Installed Alpine-AdGuard"
+msg_ok "Installed Alpine-AdGuard"
 
 motd_ssh
 root
