@@ -26,22 +26,20 @@ msg_info "Installing Alpine-ESPHome"
 $STD apk add py3-pip
 $STD pip3 install esphome
 $STD pip3 install tornado esptool
-RC_SVCNAME="esphome"
 cat <<EOF >/etc/init.d/esphome
 #!/sbin/openrc-run
 
 name="esphome"
 description="ESPHome Service"
-RC_SVCNAME="esphome"
 command="/usr/bin/esphome /root/config/ dashboard"
-pidfile="/run/$RC_SVCNAME/pid"
+pidfile="/run/esphome/pid"
 
 depend() {
     need net
 }
 
 start_pre() {
-    checkpath --directory --mode 0755 /run/$RC_SVCNAME
+    checkpath --directory --mode 0755 /run/esphome
 }
 
 start() {
