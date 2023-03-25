@@ -66,7 +66,10 @@ function update_script() {
     header_info
     case $CHOICE in
     1)
-      pip3 install esphome --upgrade
+      msg_info "Updating ESPHome"
+      pip3 install esphome --upgrade &>/dev/null
+      rc-service -q esphome restart
+      msg_ok "Updated Successfully!"
       exit
       ;;
     esac
