@@ -4,7 +4,7 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 
 color
 verb_ip6
@@ -40,7 +40,7 @@ start() {
 stop() {
     kill \$(cat \$pidfile)
     rm \$pidfile
-}" > /etc/init.d/esphome
+}" >/etc/init.d/esphome
 
 chmod 755 /etc/init.d/esphome
 rc-service -q esphome start
