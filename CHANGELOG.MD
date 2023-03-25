@@ -2,6 +2,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-25
+
+### Changed
+
+- **Alpine-ESPHome LXC**
+  - NEW Script
+- **Alpine-Whoogle LXC**
+  - NEW Script
+
 ## 2023-03-22
 
 ### Changed
