@@ -31,7 +31,7 @@ catch_errors
 
 function default_settings() {
   CT_TYPE="1"
-  PW="-password alpine"
+  PW=""
   CT_ID=$NEXTID
   HN=$NSAPP
   DISK_SIZE="$var_disk"

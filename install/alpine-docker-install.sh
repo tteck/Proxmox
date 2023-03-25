@@ -59,3 +59,4 @@ if echo "$prompt" | grep -Eq "^(y|yes)$"; then
 fi
 
 motd_ssh
+root

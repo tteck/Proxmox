@@ -33,3 +33,4 @@ $STD /opt/AdGuardHome/AdGuardHome -s start
 $STD msg_ok "Installed Alpine-AdGuard"
 
 motd_ssh
+root

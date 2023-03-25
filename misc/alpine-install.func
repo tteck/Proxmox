@@ -114,3 +114,15 @@ motd_ssh() {
     $STD /etc/init.d/sshd start
   fi
 }
+
+customize() {
+  msg_info "Customizing Container"
+  bash -c "/etc/init.d/syslog stop;rc-update del syslog boot;passwd -d root" >/dev/null 2>&1
+  msg_ok "Customized Container"
+}
+
+root() {
+  if ! getent shadow root | grep -q '^root:[^:]*:\?\$'; then
+    customize
+  fi
+}
