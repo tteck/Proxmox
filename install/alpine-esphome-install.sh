@@ -31,6 +31,7 @@ cat <<EOF >/etc/init.d/esphome
 
 name="esphome"
 description="ESPHome Service"
+RC_SVCNAME="esphome"
 command="/usr/bin/esphome /root/config/ dashboard"
 pidfile="/run/$RC_SVCNAME/pid"
 
