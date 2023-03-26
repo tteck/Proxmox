@@ -65,6 +65,18 @@ arch_check() {
   fi
 }
 
+ssh_check() {
+if command -v pveversion >/dev/null 2>&1; then
+  if [ -n "$SSH_CLIENT" ]; then
+    if whiptail --defaultno --title "SSH DETECTED" --yesno "The scripts suggest using the Proxmox shell instead of SSH, since the latter can create issues while gathering variables. Would you like to proceed with using SSH?" 10 68; then
+      echo "you've been warned"
+    else
+      exit
+    fi  
+  fi
+fi
+}
+
 echo_default() {
   if [ "$var_os" == "ubuntu" ]; then
     echo -e "${DGN}Using ${var_os} Version: ${BGN}${var_version}${CL}"
