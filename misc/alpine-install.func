@@ -106,6 +106,16 @@ update_os() {
   msg_ok "Updated Container OS"
 }
 
+default_packages() {
+  msg_info "Installing Default Packages"
+  $STD apk add newt
+  $STD apk add curl
+  $STD apk add nano
+  $STD apk add mc
+  $STD apk add openssh
+  msg_ok "Installed Default Packages"
+}
+
 motd_ssh() {
   echo "export TERM='xterm-256color'" >>/root/.bashrc
   echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" >/etc/motd

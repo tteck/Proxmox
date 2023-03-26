@@ -12,14 +12,10 @@ catch_errors
 setting_up_container
 network_check
 update_os
+default_packages
 
-msg_info "Installing Dependencies"
-$STD apk add newt
-$STD apk add curl
-$STD apk add nano
-$STD apk add mc
-$STD apk add openssh
-msg_ok "Installed Dependencies"
+#msg_info "Installing Dependencies"
+#msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-AdGuard"
 VER=$(curl --silent -qI https://github.com/AdguardTeam/AdGuardHome/releases/latest | awk -F '/' '/^location/ {print  substr($NF, 1, length($NF)-1)}');

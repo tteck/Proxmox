@@ -12,13 +12,9 @@ catch_errors
 setting_up_container
 network_check
 update_os
+default_packages
 
 msg_info "Installing Dependencies"
-$STD apk add newt
-$STD apk add curl
-$STD apk add openssh
-$STD apk add nano
-$STD apk add mc
 $STD apk add git
 msg_ok "Installed Dependencies"
 
