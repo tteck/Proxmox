@@ -111,6 +111,7 @@ motd_ssh() {
   echo -e "$APPLICATION LXC provided by https://tteck.github.io/Proxmox/\n" >/etc/motd
   if [[ "${SSH_ROOT}" == "yes" ]]; then
     $STD rc-update add sshd
+    sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
     $STD /etc/init.d/sshd start
   fi
 }
