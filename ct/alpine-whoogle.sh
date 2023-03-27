@@ -79,6 +79,7 @@ function update_script() {
   done
 }
 
+ssh_check
 start
 build_container
 description
