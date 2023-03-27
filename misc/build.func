@@ -71,6 +71,7 @@ ssh_check() {
       if whiptail --defaultno --title "SSH DETECTED" --yesno "The scripts suggest using the Proxmox shell instead of SSH, since the latter can create issues while gathering variables. Would you like to proceed with using SSH?" 10 68; then
         echo "you've been warned"
       else
+        clear
         exit
       fi
     fi
