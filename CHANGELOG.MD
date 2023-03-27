@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-27
+
+### Changed
+
+- **Removed Alpine-ESPHome LXC**
+  - Nonoperational
+
 ## 2023-03-25
 
 ### Changed
