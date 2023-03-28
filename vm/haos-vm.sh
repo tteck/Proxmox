@@ -269,7 +269,6 @@ function START_SCRIPT() {
 }
 ARCH_CHECK
 PVE_CHECK
-SSH_CHECK
 START_SCRIPT
 msg_info "Validating Storage"
 while read -r line; do
