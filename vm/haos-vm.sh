@@ -97,7 +97,7 @@ function ARCH_CHECK() {
 }
 function SSH_CHECK() {
   if command -v pveversion >/dev/null 2>&1; then
-    if [ -n "$SSH_CLIENT" ]; then
+    if [ -n "${SSH_CLIENT:+x}" ]; then
       if whiptail --defaultno --title "SSH DETECTED" --yesno "It's suggested to use the Proxmox shell instead of SSH, since SSH can create issues while gathering variables. Would you like to proceed with using SSH?" 10 62; then
         echo "you've been warned"
       else
@@ -269,6 +269,7 @@ function START_SCRIPT() {
 }
 ARCH_CHECK
 PVE_CHECK
+SSH_CHECK
 START_SCRIPT
 msg_info "Validating Storage"
 while read -r line; do

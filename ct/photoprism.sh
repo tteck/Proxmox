@@ -86,6 +86,7 @@ function update_script() {
   exit
 }
 
+ssh_check
 start
 build_container
 description

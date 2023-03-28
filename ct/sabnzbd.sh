@@ -66,6 +66,7 @@ msg_ok "Updated $APP"
 exit
 }
 
+ssh_check
 start
 build_container
 description
