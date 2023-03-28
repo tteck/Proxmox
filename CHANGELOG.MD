@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **Removed Alpine-ESPHome LXC**
   - Nonoperational
+- **All Scripts**
+  - Incorporate code that examines whether SSH is being used and, if yes, offers a suggestion against it without restricting or blocking its usage.
 
 ## 2023-03-25
 
