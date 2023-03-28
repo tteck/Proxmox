@@ -23,10 +23,10 @@ msg_info "Installing Blocky"
 systemctl stop systemd-resolved
 $STD systemctl disable systemd-resolved.service
 RELEASE=$(curl -s https://api.github.com/repos/0xERR0R/blocky/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-wget -q https://github.com/0xERR0R/blocky/releases/download/v$RELEASE/blocky_${RELEASE}_Linux_x86_64.tar.gz
+wget -q https://github.com/0xERR0R/blocky/releases/download/v$RELEASE/blocky_v${RELEASE}_Linux_x86_64.tar.gz
 mkdir -p /opt/blocky
-tar -xf blocky_${RELEASE}_Linux_x86_64.tar.gz -C /opt/blocky
-rm -rf blocky_${RELEASE}_Linux_x86_64.tar.gz
+tar -xf blocky_v${RELEASE}_Linux_x86_64.tar.gz -C /opt/blocky
+rm -rf blocky_v${RELEASE}_Linux_x86_64.tar.gz
 cat <<EOF >/opt/blocky/config.yml
 upstream:
   # these external DNS resolvers will be used. Blocky picks 2 random resolvers from the list for each query
