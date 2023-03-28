@@ -131,7 +131,6 @@ function update_script() {
   fi
 }
 
-ssh_check
 start
 build_container
 description

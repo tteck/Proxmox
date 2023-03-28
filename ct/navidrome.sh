@@ -71,7 +71,6 @@ msg_ok "Update Successfull"
 exit
 }
 
-ssh_check
 start
 build_container
 description
