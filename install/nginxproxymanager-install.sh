@@ -66,10 +66,10 @@ RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-man
   grep "tag_name" |
   awk '{print substr($2, 3, length($2)-4) }')
 
-msg_info "Downloading Nginx Proxy Manager v2.9.22"
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.22 -O - | tar -xz
-cd ./nginx-proxy-manager-2.9.22
-msg_ok "Downloaded Nginx Proxy Manager v2.9.22"
+msg_info "Downloading Nginx Proxy Manager v${RELEASE}"
+wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz
+cd ./nginx-proxy-manager-${RELEASE}
+msg_ok "Downloaded Nginx Proxy Manager v${RELEASE}"
 
 msg_info "Setting up Enviroment"
 ln -sf /usr/bin/python3 /usr/bin/python
@@ -77,8 +77,8 @@ ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
-sed -i "s+0.0.0+2.9.22+g" backend/package.json
-sed -i "s+0.0.0+2.9.22+g" frontend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
 
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
@@ -181,6 +181,7 @@ motd_ssh
 root
 
 msg_info "Starting Services"
+sed -i 's/^pid/#pid/' /usr/local/openresty/nginx/conf/nginx.conf
 $STD systemctl enable --now openresty
 $STD systemctl enable --now npm
 msg_ok "Started Services"
