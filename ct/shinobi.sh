@@ -64,7 +64,6 @@ msg_ok "Updated Shinobi LXC"
 exit
 }
 
-ssh_check
 start
 build_container
 description

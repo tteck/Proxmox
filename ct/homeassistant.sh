@@ -128,7 +128,6 @@ WantedBy=default.target" >$service_path
   fi
 }
 
-ssh_check
 start
 build_container
 description

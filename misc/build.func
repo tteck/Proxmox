@@ -342,6 +342,7 @@ advanced_settings() {
 }
 
 install_script() {
+  ssh_check
   arch_check
   pve_check
   NEXTID=$(pvesh get /cluster/nextid)
