@@ -40,7 +40,7 @@ $STD python3 -m venv /opt/certbot/
 if [ "$(getconf LONG_BIT)" = "32" ]; then
   $STD python3 -m pip install --no-cache-dir -U cryptography==3.3.2
 fi
-$STD python3 -m pip install --no-cache-dir cffi certbot
+$STD python3 -m pip install --no-cache-dir cffi certbot certbot-dns-cloudflare
 msg_ok "Installed Python"
 
 msg_info "Installing Openresty"
