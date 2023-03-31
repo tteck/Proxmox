@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-03-31
+
+### Changed
+
+- **Home Assistant OS VM**
+  - Include a choice within the "Advanced" settings to configure the disk cache.
+
 ## 2023-03-27
 
 ### Changed
