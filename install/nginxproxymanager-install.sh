@@ -181,7 +181,7 @@ motd_ssh
 root
 
 msg_info "Starting Services"
-sed -i 's/^pid/#pid/' /usr/local/openresty/nginx/conf/nginx.conf
+sed -i -e 's/^pid/#pid/' -e 's/^user/#user/' /usr/local/openresty/nginx/conf/nginx.conf
 $STD systemctl enable --now openresty
 $STD systemctl enable --now npm
 msg_ok "Started Services"
