@@ -158,7 +158,7 @@ EOF
   msg_ok "Initialized Backend"
 
   msg_info "Starting Services"
-  sed -i 's/^pid/#pid/' /usr/local/openresty/nginx/conf/nginx.conf
+  sed -i -e 's/^pid/#pid/' -e 's/^user/#user/' /usr/local/openresty/nginx/conf/nginx.conf
   systemctl enable npm &>/dev/null
   systemctl start openresty
   systemctl start npm
