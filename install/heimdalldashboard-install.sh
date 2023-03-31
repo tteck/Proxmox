@@ -23,7 +23,7 @@ msg_info "Installing PHP"
 $STD apt-get install -y php
 $STD apt-get install -y php-sqlite3
 $STD apt-get install -y php-zip
-$STD apt-get install -y php7.4-xml
+$STD apt-get install -y php-xml
 msg_ok "Installed PHP"
 
 RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
