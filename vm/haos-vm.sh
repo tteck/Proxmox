@@ -112,6 +112,7 @@ function default_settings() {
   VMID="$NEXTID"
   FORMAT=",efitype=4m"
   MACHINE=""
+  DISK_CACHE=""
   HN="haos$stable"
   CORE_COUNT="2"
   RAM_SIZE="4096"
@@ -123,6 +124,7 @@ function default_settings() {
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
+  echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
   echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
   echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
@@ -141,6 +143,7 @@ function advanced_settings() {
     3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"; fi
+
   while true; do
     VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
     exitstatus=$?
@@ -173,6 +176,20 @@ function advanced_settings() {
     FORMAT=",efitype=4m"
     MACHINE=""
   fi
+
+  DISK_CACHE1=$(whiptail --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
+    "0" "Default" ON \
+    "1" "Write Through" OFF \
+    3>&1 1>&2 2>&3)
+  exitstatus=$?
+  if [ $DISK_CACHE1 = "1" ]; then
+    echo -e "${DGN}Using Disk Cache: ${BGN}Write Through${CL}"
+    DISK_CACHE="cache=writethrough,"
+  else
+    echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
+    DISK_CACHE=""
+  fi
+
   VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $VM_NAME ]; then
@@ -184,6 +201,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
     fi
   fi
+
   CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $CORE_COUNT ]; then
@@ -192,6 +210,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"; fi
   fi
+
   RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $RAM_SIZE ]; then
@@ -200,6 +219,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"; fi
   fi
+
   BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $BRG ]; then
@@ -208,6 +228,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"; fi
   fi
+
   MAC1=$(whiptail --inputbox "Set a MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $MAC1 ]; then
@@ -219,6 +240,7 @@ function advanced_settings() {
       echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
     fi
   fi
+
   VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
@@ -230,6 +252,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
     fi
   fi
+
   MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
@@ -241,6 +264,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
   fi
+
   if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
     echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
@@ -248,6 +272,7 @@ function advanced_settings() {
     echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
+
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
   else
@@ -342,7 +367,7 @@ pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
-  -scsi0 ${DISK1_REF},${THIN}size=32G \
+  -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=32G \
   -boot order=scsi0 \
   -description "# Home Assistant OS
 ### https://github.com/tteck/Proxmox
