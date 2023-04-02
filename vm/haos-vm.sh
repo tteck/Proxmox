@@ -129,6 +129,7 @@ function default_settings() {
   MACHINE=""
   DISK_CACHE=""
   HN="haos$stable"
+  CPU_TYPE=""
   CORE_COUNT="2"
   RAM_SIZE="4096"
   BRG="vmbr0"
@@ -141,6 +142,7 @@ function default_settings() {
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
   echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
+  echo -e "${DGN}Using CPU Model: ${BGN}Default${CL}"
   echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
   echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
   echo -e "${DGN}Using Bridge: ${BGN}${BRG}${CL}"
@@ -221,6 +223,21 @@ function advanced_settings() {
     else
       HN=$(echo ${VM_NAME,,} | tr -d ' ')
       echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+    fi
+  else
+    exit-script
+  fi
+
+  if CPU_TYPE1=$(whiptail --title "CPU MODEL" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
+    "0" "KVM64 (Default)" ON \
+    "1" "Host" OFF \
+    3>&1 1>&2 2>&3); then
+    if [ $CPU_TYPE1 = "1" ]; then
+      echo -e "${DGN}Using CPU Model: ${BGN}Host${CL}"
+      CPU_TYPE=" -cpu host"
+    else
+      echo -e "${DGN}Using CPU Model: ${BGN}Default${CL}"
+      CPU_TYPE=""
     fi
   else
     exit-script
@@ -396,7 +413,7 @@ for i in {0,1}; do
 done
 msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
-qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE \
+qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} -cores $CORE_COUNT -memory $RAM_SIZE \
   -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
