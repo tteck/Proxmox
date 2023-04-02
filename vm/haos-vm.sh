@@ -116,7 +116,7 @@ function ssh_check() {
   fi
 }
 
-exit-script() {
+function exit-script() {
   clear
   echo -e "⚠  User exited script \n"
   exit
@@ -150,6 +150,7 @@ function default_settings() {
   echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
   echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
+
 function advanced_settings() {
   if BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
     "$stable" "Stable  " ON \
@@ -329,6 +330,7 @@ arch_check
 pve_check
 ssh_check
 start_script
+
 msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
