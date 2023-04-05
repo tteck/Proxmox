@@ -16,9 +16,8 @@ update_os
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
+$STD apt-get install -y gnupg
 $STD apt-get install -y mc
-$STD apt-get install -y apt-transport-https
-$STD apt-get install -y software-properties-common
 msg_ok "Installed Dependencies"
 
 if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
@@ -37,35 +36,27 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   msg_ok "Set Up Hardware Acceleration"
 fi
 
-msg_info "Setting Up Jellyfin Repository"
-$STD add-apt-repository universe -y
-$STD apt-key add <(curl -fsSL https://repo.jellyfin.org/ubuntu/jellyfin_team.gpg.key)
-sh -c 'echo "deb [arch=$(dpkg --print-architecture)] https://repo.jellyfin.org/ubuntu $(lsb_release -c -s) main" > /etc/apt/sources.list.d/jellyfin.list'
-msg_ok "Set Up Jellyfin Repository"
-
 msg_info "Installing Jellyfin"
-$STD apt-get update
-$STD apt install jellyfin-server -y
-$STD apt install jellyfin-ffmpeg5 -y
-msg_ok "Installed Jellyfin"
-
-msg_info "Creating Service"
-cat <<'EOF' >/lib/systemd/system/jellyfin.service
-[Unit]
-Description = Jellyfin Media Server
-After = network.target
-[Service]
-Type = simple
-EnvironmentFile = /etc/default/jellyfin
-User = root
-ExecStart = /usr/bin/jellyfin
-Restart = on-failure
-TimeoutSec = 15
-[Install]
-WantedBy = multi-user.target
+VERSION="$( awk -F'=' '/^UBUNTU_CODENAME=/{ print $NF }' /etc/os-release )"
+# If the keyring directory is absent, create it
+if [[ ! -d /etc/apt/keyrings ]]; then
+    mkdir -p /etc/apt/keyrings
+fi
+# Download the repository signing key and install it to the keyring directory
+curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | gpg --dearmor --yes --output /etc/apt/keyrings/jellyfin.gpg
+# Install the Deb822 format jellyfin.sources entry
+cat <<EOF >/etc/apt/sources.list.d/jellyfin.sources
+Types: deb
+URIs: https://repo.jellyfin.org/${PCT_OSTYPE}
+Suites: ${VERSION}
+Components: main
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/jellyfin.gpg
 EOF
-ln -s /usr/share/jellyfin/web/ /usr/lib/jellyfin/bin/jellyfin-web
-msg_ok "Created Service"
+# Install Jellyfin using the metapackage (which will fetch jellyfin-server, jellyfin-web, and jellyfin-ffmpeg5)
+$STD apt-get update
+$STD apt-get install -y jellyfin
+msg_ok "Installed Jellyfin"
 
 motd_ssh
 root
