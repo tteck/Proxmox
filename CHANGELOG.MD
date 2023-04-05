@@ -2,6 +2,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-05
+
+### Changed
+
+- **Jellyfin LXC**
+  - Set Ubuntu 22.04 as default
+  - Use the Deb822 format jellyfin.sources configuration (jellyfin.list configuration has been obsoleted)
+
 ## 2023-04-02
 
 ### Changed
