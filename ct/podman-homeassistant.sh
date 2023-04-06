@@ -82,7 +82,7 @@ if [ "$UPD" == "1" ]; then
       systemctl restart homeassistant
     fi
   done
-  msg_ok "Updated All Containers"
+  msg_ok "All containers updated."
   exit
 fi
 if [ "$UPD" == "2" ]; then
