@@ -70,13 +70,13 @@ if [ "$UPD" == "1" ]; then
   msg_ok "Updated ${APP} LXC"
   msg_ok "Update os system Successfull"
 
-  msg_info "Updating All Containers"
+  msg_info "Updating All Containers\n"
   CONTAINER_LIST="${1:-$(podman ps -q)}"
   for container in ${CONTAINER_LIST}; do
     CONTAINER_IMAGE="$(podman inspect --format "{{.Config.Image}}" --type container ${container})"
     RUNNING_IMAGE="$(podman inspect --format "{{.Image}}" --type container "${container}")"
     podman pull "docker.io/${CONTAINER_IMAGE}"
-    LATEST_IMAGE="$(docker inspect --format "{{.Id}}" --type image "${CONTAINER_IMAGE}")"
+    LATEST_IMAGE="$(podman inspect --format "{{.Id}}" --type image "${CONTAINER_IMAGE}")"
     if [[ "${RUNNING_IMAGE}" != "${LATEST_IMAGE}" ]]; then
       echo "Updating ${container} image ${CONTAINER_IMAGE}"
       systemctl restart homeassistant
