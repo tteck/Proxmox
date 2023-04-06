@@ -57,18 +57,33 @@ function default_settings() {
 function update_script() {
   if [[ ! -f /etc/systemd/system/homeassistant.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
-  "1" "Update Podman" ON \
+  "1" "Update system and containers" ON \
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \
-  3>&1 1>&2 2>&3)
+  "4" "Remove ALL Unused Images" OFF \
+  4>&1 1>&2 2>&3 3>&4)
 header_info
 if [ "$UPD" == "1" ]; then
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_ok "Update Successfull"
-exit
+  msg_info "Updating ${APP} LXC"
+  apt-get update &>/dev/null
+  apt-get -y upgrade &>/dev/null
+  msg_ok "Updated ${APP} LXC"
+  msg_ok "Update os system Successfull"
+
+  msg_info "Updating All Containers"
+  CONTAINER_LIST="${1:-$(podman ps -q)}"
+  for container in ${CONTAINER_LIST}; do
+    CONTAINER_IMAGE="$(podman inspect --format "{{.Config.Image}}" --type container ${container})"
+    RUNNING_IMAGE="$(podman inspect --format "{{.Image}}" --type container "${container}")"
+    podman pull "docker.io/${CONTAINER_IMAGE}"
+    LATEST_IMAGE="$(docker inspect --format "{{.Id}}" --type image "${CONTAINER_IMAGE}")"
+    if [[ "${RUNNING_IMAGE}" != "${LATEST_IMAGE}" ]]; then
+      echo "Updating ${container} image ${CONTAINER_IMAGE}"
+      systemctl restart homeassistant
+    fi
+  done
+  msg_ok "Updated All Containers"
+  exit
 fi
 if [ "$UPD" == "2" ]; then
 msg_info "Installing Home Assistant Comunity Store (HACS)"
@@ -109,6 +124,13 @@ echo -e "FileBrowser should be reachable by going to the following URL.
          ${BL}http://$IP:8080${CL}   admin|changeme\n"
 exit
 fi
+if [ "$UPD" == "4" ]; then
+  msg_info "Removing ALL Unused Images"
+  podman image prune -a -f
+  msg_ok "Removed ALL Unused Images"
+  exit
+fi
+
 }
 
 start
