@@ -61,7 +61,7 @@ function update_script() {
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \
   "4" "Remove ALL Unused Images" OFF \
-  4>&1 1>&2 2>&3 3>&4)
+  3>&1 1>&2 2>&3)
 header_info
 if [ "$UPD" == "1" ]; then
   msg_info "Updating ${APP} LXC"
