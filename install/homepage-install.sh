@@ -30,7 +30,12 @@ $STD npm install -g pnpm
 msg_ok "Installed Node.js"
 
 msg_info "Installing Homepage (Patience)"
-$STD git clone https://github.com/benphelps/homepage.git /opt/homepage
+RELEASE=$(curl -s https://api.github.com/repos/benphelps/homepage/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q https://github.com/benphelps/homepage/archive/refs/tags/v${RELEASE}.tar.gz
+$STD tar -xvf v${RELEASE}.tar.gz
+mkdir -p /opt/homepage
+cp -r homepage-${RELEASE}/* /opt/homepage
+rm -rf v${RELEASE}.tar.gz homepage-${RELEASE}
 cd /opt/homepage
 mkdir -p config
 cp /opt/homepage/src/skeleton/* /opt/homepage/config
