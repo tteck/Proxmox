@@ -74,10 +74,11 @@ function update_script() {
       ;;
     2)
       NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3)
-      if [[ ! -z "$NEWTOKEN" ]]; then
-        ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
-      else
-        exit-script
+      if [[ -z "$NEWTOKEN" ]]; then exit-script; fi      
+      ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
+      if [[ -f /var/lib/vaultwarden/config.json ]]; then 
+        sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
+        sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
       fi
       cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
@@ -86,10 +87,6 @@ export WEB_VAULT_ENABLED=true
 export ADMIN_TOKEN='$ADMINTOKEN'
 export ROCKET_ADDRESS=0.0.0.0
 EOF
-      if [[ -f /var/lib/vaultwarden/config.json ]]; then 
-        sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
-        sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
-      fi
       rc-service vaultwarden restart
       clear
       exit
