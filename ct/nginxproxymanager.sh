@@ -74,18 +74,18 @@ function update_script() {
     /var/cache/nginx &>/dev/null
   msg_ok "Cleaned Old Files"
 
-  msg_info "Downloading NPM v2.9.22"
-  wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.22 -O - | tar -xz &>/dev/null
-  cd nginx-proxy-manager-2.9.22
-  msg_ok "Downloaded NPM v2.9.22"
+  msg_info "Downloading NPM v2.10.2"
+  wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.10.2 -O - | tar -xz &>/dev/null
+  cd nginx-proxy-manager-2.10.2
+  msg_ok "Downloaded NPM v2.10.2"
 
   msg_info "Setting up Enviroment"
   ln -sf /usr/bin/python3 /usr/bin/python
   ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
   ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
   ln -sf /usr/local/openresty/nginx/ /etc/nginx
-  sed -i "s+0.0.0+2.9.22+g" backend/package.json
-  sed -i "s+0.0.0+2.9.22+g" frontend/package.json
+  sed -i "s+0.0.0+2.10.2+g" backend/package.json
+  sed -i "s+0.0.0+2.10.2+g" frontend/package.json
   sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
   NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
   for NGINX_CONF in $NGINX_CONFS; do
@@ -124,6 +124,11 @@ function update_script() {
   mkdir -p /app/global /app/frontend/images
   cp -r backend/* /app
   cp -r global/* /app/global
+  wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-noarch.tar.xz"
+  wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-x86_64.tar.xz"
+  tar -C / -Jxpf s6-overlay-noarch.tar.xz
+  tar -C / -Jxpf s6-overlay-x86_64.tar.xz
+  python3 -m pip install --no-cache-dir certbot-dns-cloudflare &>/dev/null
   msg_ok "Setup Enviroment"
 
   msg_info "Building Frontend"
@@ -158,13 +163,14 @@ EOF
   msg_ok "Initialized Backend"
 
   msg_info "Starting Services"
+  sed -i -e 's/^pid/#pid/' -e 's/npmuser/root/' /usr/local/openresty/nginx/conf/nginx.conf
   systemctl enable npm &>/dev/null
   systemctl start openresty
   systemctl start npm
   msg_ok "Started Services"
 
   msg_info "Cleaning up"
-  rm -rf ~/nginx-proxy-manager-*
+  rm -rf ~/nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
   msg_ok "Cleaned"
 
   msg_ok "Update Successfull"

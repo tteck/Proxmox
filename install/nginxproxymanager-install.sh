@@ -40,7 +40,7 @@ $STD python3 -m venv /opt/certbot/
 if [ "$(getconf LONG_BIT)" = "32" ]; then
   $STD python3 -m pip install --no-cache-dir -U cryptography==3.3.2
 fi
-$STD python3 -m pip install --no-cache-dir cffi certbot
+$STD python3 -m pip install --no-cache-dir cffi certbot certbot-dns-cloudflare
 msg_ok "Installed Python"
 
 msg_info "Installing Openresty"
@@ -66,10 +66,10 @@ RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-man
   grep "tag_name" |
   awk '{print substr($2, 3, length($2)-4) }')
 
-msg_info "Downloading Nginx Proxy Manager v2.9.22"
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.9.22 -O - | tar -xz
-cd ./nginx-proxy-manager-2.9.22
-msg_ok "Downloaded Nginx Proxy Manager v2.9.22"
+msg_info "Downloading Nginx Proxy Manager v2.10.2"
+wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.10.2 -O - | tar -xz
+cd ./nginx-proxy-manager-2.10.2
+msg_ok "Downloaded Nginx Proxy Manager v2.10.2"
 
 msg_info "Setting up Enviroment"
 ln -sf /usr/bin/python3 /usr/bin/python
@@ -77,8 +77,8 @@ ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
-sed -i "s+0.0.0+2.9.22+g" backend/package.json
-sed -i "s+0.0.0+2.9.22+g" frontend/package.json
+sed -i "s+0.0.0+2.10.2+g" backend/package.json
+sed -i "s+0.0.0+2.10.2+g" frontend/package.json
 
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
@@ -124,6 +124,10 @@ fi
 mkdir -p /app/global /app/frontend/images
 cp -r backend/* /app
 cp -r global/* /app/global
+wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-noarch.tar.xz"
+wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-x86_64.tar.xz"
+tar -C / -Jxpf s6-overlay-noarch.tar.xz
+tar -C / -Jxpf s6-overlay-x86_64.tar.xz
 msg_ok "Set up Enviroment"
 
 msg_info "Building Frontend"
@@ -181,12 +185,13 @@ motd_ssh
 root
 
 msg_info "Starting Services"
+sed -i -e 's/^pid/#pid/' -e 's/npmuser/root/' /usr/local/openresty/nginx/conf/nginx.conf
 $STD systemctl enable --now openresty
 $STD systemctl enable --now npm
 msg_ok "Started Services"
 
 msg_info "Cleaning up"
-rm -rf ../nginx-proxy-manager-*
+rm -rf ../nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
