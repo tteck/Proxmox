@@ -32,7 +32,6 @@ else
   echo -e "►  Can be fixed by running the script inside the LXC! \n"
   exit
 fi
-clear
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
