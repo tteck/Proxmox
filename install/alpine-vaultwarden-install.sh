@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2023 nicedevil007
-# Author: nicedevil007 (nicedevil007ster)
+# Copyright (c) 2021-2023 tteck
+# Author: tteck (tteckster)
 # License: MIT
-# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
 
 color
