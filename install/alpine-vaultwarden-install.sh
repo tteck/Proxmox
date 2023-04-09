@@ -22,12 +22,14 @@ msg_ok "Installed Dependencies"
 if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
   if [[ -z "$NEWTOKEN" ]]; then
     clear
-    echo -e "⚠  User exited script \n"
+    echo -e "⚠  User didn't setup ADMIN-TOKEN, Vaultwarden will not work until setup! \n"
+    echo -e "►  Can be fixed by running the script inside the LXC! \n"
     exit
   fi
 else
   clear
-  echo -e "⚠  User exited script \n"
+  echo -e "⚠  User didn't setup ADMIN-TOKEN, Vaultwarden will not work until setup! \n"
+  echo -e "►  Can be fixed by running the script inside the LXC! \n"
   exit
 fi
 clear
