@@ -20,9 +20,15 @@ $STD apk add argon2
 msg_ok "Installed Dependencies"
 
 if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
-  if [[ -z "$NEWTOKEN" ]]; then exit-script; fi
+  if [[ -z "$NEWTOKEN" ]]; then
+    clear
+    echo -e "⚠  User exited script \n"
+    exit
+  fi
 else
-  exit-script
+  clear
+  echo -e "⚠  User exited script \n"
+  exit
 fi
 clear
 
