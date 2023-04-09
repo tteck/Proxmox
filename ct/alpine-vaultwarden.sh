@@ -59,7 +59,7 @@ function update_script() {
     CHOICE=$(
       whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
         "1" "Update Vaultwarden" \
-        "2" "Show Admin Token" 3>&2 2>&1 1>&3
+        "2" "Reset ADMIN_TOKEN" 3>&2 2>&1 1>&3
     )
     exit_status=$?
     if [ $exit_status == 1 ]; then
@@ -73,7 +73,22 @@ function update_script() {
       exit
       ;;
     2)
-      whiptail --title "ADMIN TOKEN" --msgbox "$(cat /etc/conf.d/vaultwarden | grep ADMIN_TOKEN | awk '{print substr($2, 13) }')" 7 68
+      if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN_TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
+        if [[ -z "$NEWTOKEN" ]]; then exit-script; fi      
+        ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
+        if [[ -f /var/lib/vaultwarden/config.json ]]; then 
+          sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
+          sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
+        fi
+      fi
+      cat <<EOF >/etc/conf.d/vaultwarden
+export DATA_FOLDER=/var/lib/vaultwarden
+export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
+export WEB_VAULT_ENABLED=true
+export ADMIN_TOKEN='$ADMINTOKEN'
+export ROCKET_ADDRESS=0.0.0.0
+EOF
+      rc-service vaultwarden restart
       clear
       exit
       ;;
@@ -88,3 +103,4 @@ description
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8000${CL} \n"
+03713361530
