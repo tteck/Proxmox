@@ -82,15 +82,11 @@ function update_script() {
         if [[ -f /var/lib/vaultwarden/config.json ]]; then 
           sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
           sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"," /var/lib/vaultwarden/config.json
+        else
+          sed -i '/ADMIN_TOKEN/d' /etc/conf.d/vaultwarden
+          sed -i "4i\export ADMIN_TOKEN=\'$ADMINTOKEN\'" /etc/conf.d/vaultwarden
         fi
       fi
-      cat <<EOF >/etc/conf.d/vaultwarden
-export DATA_FOLDER=/var/lib/vaultwarden
-export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
-export WEB_VAULT_ENABLED=true
-export ADMIN_TOKEN='$ADMINTOKEN'
-export ROCKET_ADDRESS=0.0.0.0
-EOF
       rc-service vaultwarden restart
       clear
       exit
