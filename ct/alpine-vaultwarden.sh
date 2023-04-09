@@ -86,8 +86,10 @@ export WEB_VAULT_ENABLED=true
 export ADMIN_TOKEN='$ADMINTOKEN'
 export ROCKET_ADDRESS=0.0.0.0
 EOF
-      sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
-      sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
+      if [[ -f /var/lib/vaultwarden/config.json ]]; then 
+        sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
+        sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
+      fi
       rc-service vaultwarden restart
       clear
       exit
