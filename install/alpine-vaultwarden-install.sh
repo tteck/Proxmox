@@ -14,6 +14,13 @@ network_check
 update_os
 default_packages
 
+NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3)
+if [[ ! -z "$NEWTOKEN" ]]; then
+  ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
+else
+  exit-script
+fi
+
 msg_info "Installing Dependencies"
 $STD apk add openssl
 $STD apk add argon2
@@ -25,9 +32,11 @@ cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
 export WEB_VAULT_ENABLED=true
-export ADMIN_TOKEN:'$(echo -n "MySecretPassword" | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)'
+export ADMIN_TOKEN='$ADMINTOKEN'
 export ROCKET_ADDRESS=0.0.0.0
 EOF
+sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
+sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Alpine-Vaultwarden"
