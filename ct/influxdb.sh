@@ -70,3 +70,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL (${RD}only v2${CL}).
+         ${BL}http://${IP}:8086${CL} \n"
