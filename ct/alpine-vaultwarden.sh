@@ -55,6 +55,9 @@ function update_script() {
   if ! apk -e info newt >/dev/null 2>&1; then
     apk add -q newt
   fi
+  if ! apk -e info argon2 >/dev/null 2>&1; then
+    apk add -q argon2
+  fi
   while true; do
     CHOICE=$(
       whiptail --title "SUPPORT" --menu "Select option" 11 58 2 \
@@ -74,11 +77,11 @@ function update_script() {
       ;;
     2)
       if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN_TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
-        if [[ -z "$NEWTOKEN" ]]; then exit-script; fi      
+        if [[ -z "$NEWTOKEN" ]]; then exit-script; fi
         ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
         if [[ -f /var/lib/vaultwarden/config.json ]]; then 
           sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
-          sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
+          sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"," /var/lib/vaultwarden/config.json
         fi
       fi
       cat <<EOF >/etc/conf.d/vaultwarden
