@@ -25,6 +25,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
+cat <<EOF >/etc/conf.d/vaultwarden
 export DATA_FOLDER=/var/lib/vaultwarden
 export WEB_VAULT_FOLDER=/var/lib/vaultwarden/web-vault
 export WEB_VAULT_ENABLED=true
