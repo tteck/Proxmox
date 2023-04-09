@@ -19,18 +19,14 @@ $STD apk add openssl
 $STD apk add argon2
 msg_ok "Installed Dependencies"
 
-if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
+if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN_TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
   if [[ -z "$NEWTOKEN" ]]; then
     clear
-    echo -e "⚠  User didn't setup ADMIN-TOKEN, Vaultwarden will not work until setup! \n"
-    echo -e "►  Can be fixed by running the script inside the LXC! \n"
-    exit
+    echo -e "⚠  User didn't setup ADMIN_TOKEN, admin panel is disabled! \n"
   fi
 else
   clear
-  echo -e "⚠  User didn't setup ADMIN-TOKEN, Vaultwarden will not work until setup! \n"
-  echo -e "►  Can be fixed by running the script inside the LXC! \n"
-  exit
+  echo -e "⚠  User didn't setup ADMIN_TOKEN, admin panel is disabled! \n"
 fi
 
 msg_info "Installing Alpine-Vaultwarden"

@@ -73,7 +73,7 @@ function update_script() {
       exit
       ;;
     2)
-      if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
+      if NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN_TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3); then
         if [[ -z "$NEWTOKEN" ]]; then exit-script; fi      
         ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
         if [[ -f /var/lib/vaultwarden/config.json ]]; then 
