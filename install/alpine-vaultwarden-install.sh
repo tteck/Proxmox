@@ -14,17 +14,17 @@ network_check
 update_os
 default_packages
 
+msg_info "Installing Dependencies"
+$STD apk add openssl
+$STD apk add argon2
+msg_ok "Installed Dependencies"
+
 NEWTOKEN=$(whiptail --passwordbox "Setup your ADMIN-TOKEN (make it strong)" 10 58 3>&1 1>&2 2>&3)
 if [[ ! -z "$NEWTOKEN" ]]; then
   ADMINTOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -e -id -k 19456 -t 2 -p 1)
 else
   exit-script
 fi
-
-msg_info "Installing Dependencies"
-$STD apk add openssl
-$STD apk add argon2
-msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
