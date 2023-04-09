@@ -25,6 +25,7 @@ if [[ ! -z "$NEWTOKEN" ]]; then
 else
   exit-script
 fi
+clear
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
@@ -35,8 +36,8 @@ export WEB_VAULT_ENABLED=true
 export ADMIN_TOKEN='$ADMINTOKEN'
 export ROCKET_ADDRESS=0.0.0.0
 EOF
-sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
-sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
+#sed -i '/admin_token/d' /var/lib/vaultwarden/config.json
+#sed -i "2i\\  \"admin_token\": \"$ADMINTOKEN\"" /var/lib/vaultwarden/config.json
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Alpine-Vaultwarden"
