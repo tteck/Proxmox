@@ -40,7 +40,7 @@ $STD tar zxvf <(curl -fsSL https://github.com/jhuckaby/Cronicle/archive/${LATEST
 $STD npm install
 $STD node bin/build.js dist
 sed -i "s/localhost:3012/${IP}:3012/g" /opt/cronicle/conf/config.json
-if [[ $SERV == "y" ]]; then $STD /opt/cronicle/bin/control.sh setup; fi
+$STD /opt/cronicle/bin/control.sh setup
 $STD /opt/cronicle/bin/control.sh start
 $STD cp /opt/cronicle/bin/cronicled.init /etc/init.d/cronicled
 chmod 775 /etc/init.d/cronicled
