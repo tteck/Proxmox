@@ -106,4 +106,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} Primary should be reachable by going to the following URL.
-         ${BL}http://${IP}:3012${CL}  admin|admin \n"
+         ${BL}http://${IP}:3012${CL} \n"
