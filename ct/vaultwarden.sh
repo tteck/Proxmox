@@ -65,7 +65,7 @@ function update_script() {
   UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
     "1" "VaultWarden $VAULT" ON \
     "2" "Web-Vault $WVRELEASE" OFF \
-    "3" "Show Admin Token" OFF \
+    "3" "Set Admin Token" OFF \
     3>&1 1>&2 2>&3)
 
   header_info
@@ -121,11 +121,12 @@ function update_script() {
     exit
   fi
   if [ "$UPD" == "3" ]; then
-    DIR=/usr/bin/vaultwarden
-    if [ -d "$DIR" ]; then
-      cat /etc/vaultwarden.env | grep "ADMIN_TOKEN"
-    else
-      cat /opt/vaultwarden/.env | grep "ADMIN_TOKEN"
+    if NEWTOKEN=$(whiptail --passwordbox "Set your ADMIN_TOKEN" 10 58 3>&1 1>&2 2>&3); then
+      if [[ -z "$NEWTOKEN" ]]; then exit; fi
+      if ! command -v argon2 >/dev/null 2>&1; then apt-get install -y argon2 &>/dev/null; fi
+      TOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -t 2 -m 16 -p 4 -l 64 -e)
+      sed -i "s|ADMIN_TOKEN='.*'|ADMIN_TOKEN='${TOKEN}'|" /opt/vaultwarden/.env
+      systemctl restart vaultwarden
     fi
     exit
   fi
