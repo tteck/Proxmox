@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -24,6 +24,7 @@ $STD apt-get -qqy install \
   libpq-dev \
   curl \
   sudo \
+  argon2 \
   mc
 msg_ok "Installed Dependencies"
 
@@ -61,7 +62,7 @@ $STD tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
 cat <<EOF >/opt/vaultwarden/.env
-ADMIN_TOKEN=$(openssl rand -base64 48)
+ADMIN_TOKEN=''
 ROCKET_ADDRESS=0.0.0.0
 DATA_FOLDER=/opt/vaultwarden/data
 DATABASE_MAX_CONNS=10
