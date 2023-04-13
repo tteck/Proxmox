@@ -25,8 +25,9 @@ mkdir -p /opt/tdarr
 cd /opt/tdarr
 wget -q https://f000.backblazeb2.com/file/tdarrs/versions/2.00.15/linux_x64/Tdarr_Updater.zip
 $STD unzip Tdarr_Updater.zip
+rm -rf Tdarr_Updater.zip
 chmod +x Tdarr_Updater
-$STD ./Tdarr_Updater
+./Tdarr_Updater &>/dev/null
 msg_ok "Installed Tdarr"
 
 msg_info "Creating Service"
