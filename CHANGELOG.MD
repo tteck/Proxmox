@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-14
+
+### Changed
+
+- **Cloudflared LXC**
+  - NEW Script
+
 ## 2023-04-05
 
 ### Changed
