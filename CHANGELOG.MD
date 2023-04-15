@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-15
+
+### Changed
+
+- **InfluxDB LXC**
+  - Choosing InfluxDB v1 will result in Chronograf being installed automatically.
+
 ## 2023-04-14
 
 ### Changed
