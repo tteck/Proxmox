@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **InfluxDB LXC**
   - Choosing InfluxDB v1 will result in Chronograf being installed automatically.
+- **[User Submitted Guides](https://github.com/tteck/Proxmox/blob/main/USER_SUBMITTED_GUIDES.md)**
+  -  Informative guides that demonstrate how to install various software packages using Proxmox VE Helper Scripts.
 
 ## 2023-04-14
 
