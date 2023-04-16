@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-16
+
+### Changed
+
+- **Home Assistant Core LXC**
+  - Python 3.11.2
+
 ## 2023-04-15
 
 ### Changed
