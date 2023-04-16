@@ -12,3 +12,4 @@
 
 [Home Assistant: Proxmox Quick Start Guide](https://www.derekseaman.com/2023/04/installing-home-assistant-on-proxmox-quick-start-guide.html)
 
+[Home Assistant: Installing Grafana (LXC) with Let’s Encrypt SSL](https://www.derekseaman.com/2023/04/home-assistant-installing-grafana-lxc.html)
