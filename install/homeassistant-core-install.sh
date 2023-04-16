@@ -64,10 +64,10 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)
 msg_ok "Installed pyenv"
 . ~/.bashrc
 set -e
-msg_info "Installing Python 3.11.1"
-$STD pyenv install 3.11.1
-pyenv global 3.11.1
-msg_ok "Installed Python 3.11.1"
+msg_info "Installing Python 3.11.2"
+$STD pyenv install 3.11.2
+pyenv global 3.11.2
+msg_ok "Installed Python 3.11.2"
 
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
