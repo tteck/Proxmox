@@ -17,6 +17,7 @@ msg_info "Installing Dependencies"
 $STD apt-get -y install software-properties-common apt-utils
 $STD apt-get -y update
 $STD apt-get -y upgrade
+$STD apt-get install -y avahi-daemon
 $STD apt-get -y install \
     build-essential \
     gcc \
