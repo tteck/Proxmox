@@ -66,7 +66,7 @@ wget -q https://download.technitium.com/dns/DnsServerPortable.tar.gz
 tar -zxf DnsServerPortable.tar.gz -C /etc/dns/ &>/dev/null
 rm -rf DnsServerPortable.tar.gz
 systemctl restart dns.service
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

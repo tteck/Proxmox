@@ -64,7 +64,7 @@ msg_ok "Updated ESPHome"
 msg_info "Starting ESPHome"
 systemctl start esphomeDashboard
 msg_ok "Started ESPHome"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

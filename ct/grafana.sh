@@ -59,8 +59,7 @@ wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
 echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | tee /etc/apt/sources.list.d/grafana.list
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

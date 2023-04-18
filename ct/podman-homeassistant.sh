@@ -67,8 +67,7 @@ if [ "$UPD" == "1" ]; then
   msg_info "Updating ${APP} LXC"
   apt-get update &>/dev/null
   apt-get -y upgrade &>/dev/null
-  msg_ok "Updated ${APP} LXC"
-  msg_ok "Update os system Successfull"
+  msg_ok "Updated Successfully"
 
   msg_info "Updating All Containers\n"
   CONTAINER_LIST="${1:-$(podman ps -q)}"

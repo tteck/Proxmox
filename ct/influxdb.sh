@@ -60,8 +60,7 @@ echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https
 rm -f /etc/apt/trusted.gpg.d/influxdb.gpg
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

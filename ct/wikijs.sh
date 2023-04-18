@@ -79,7 +79,7 @@ msg_ok "Restored Data"
 msg_info "Starting ${APP}"
 systemctl start wikijs
 msg_ok "Started ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

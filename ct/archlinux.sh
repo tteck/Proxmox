@@ -356,7 +356,7 @@ msg_info "Updating ${APP} LXC"
 pacman-key --init
 pacman-key --populate archlinux
 pacman -Sy archlinux-keyring && pacman -Su
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

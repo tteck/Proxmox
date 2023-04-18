@@ -74,7 +74,7 @@ msg_ok "Started AdguardHome"
 msg_info "Cleaning Up"
 rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
 msg_ok "Cleaned"
-msg_ok "Update Successful"
+msg_ok "Updated Successfully"
 exit
 }
 

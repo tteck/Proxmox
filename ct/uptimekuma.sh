@@ -74,7 +74,7 @@ msg_ok "Updated ${APP}"
 msg_info "Starting ${APP}"
 sudo systemctl start uptime-kuma &>/dev/null
 msg_ok "Started ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

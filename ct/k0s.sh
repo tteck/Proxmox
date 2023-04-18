@@ -56,8 +56,7 @@ if [[ ! -f /etc/k0s/k0s.yaml ]]; then msg_error "No ${APP} Installation Found!";
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

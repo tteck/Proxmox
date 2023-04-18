@@ -80,7 +80,7 @@ msg_ok "Cleaned"
 msg_info "Starting ${APP}"
 systemctl start homer
 msg_ok "Started ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

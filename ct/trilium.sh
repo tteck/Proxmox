@@ -76,7 +76,7 @@ msg_info "Starting ${APP}"
 systemctl start trilium.service
 sleep 1
 msg_ok "Started ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

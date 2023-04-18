@@ -63,7 +63,7 @@ git pull --force &>/dev/null
 pnpm install &>/dev/null
 pnpm build &>/dev/null
 systemctl start homepage
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

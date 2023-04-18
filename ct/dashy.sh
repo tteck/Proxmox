@@ -82,7 +82,7 @@ msg_ok "Cleaned"
 msg_info "Starting Dashy"
 systemctl start dashy
 msg_ok "Started Dashy"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

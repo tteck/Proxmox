@@ -58,8 +58,7 @@ cd /opt/nocodb
 npm uninstall -s --save nocodb &>/dev/null
 npm install -s --save nocodb &>/dev/null
 systemctl restart nocodb.service
-msg_ok "Updated ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

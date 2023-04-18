@@ -67,7 +67,7 @@ rm Navidrome.tar.gz
 msg_info "${GN} Starting ${APP}"
 systemctl start navidrome.service
 msg_ok "Started ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

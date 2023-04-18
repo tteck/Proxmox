@@ -56,8 +56,7 @@ if [[ ! -d /usr/lib/unifi ]]; then msg_error "No ${APP} Installation Found!"; ex
 msg_info "Updating ${APP}"
 wget -qL https://get.glennr.nl/unifi/update/unifi-update.sh 
 bash unifi-update.sh
-msg_ok "Updated ${APP}"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

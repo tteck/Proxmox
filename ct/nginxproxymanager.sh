@@ -174,7 +174,7 @@ EOF
   rm -rf ~/nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
   msg_ok "Cleaned"
 
-  msg_ok "Update Successfull"
+  msg_ok "Updated Successfully"
   exit
 }
 

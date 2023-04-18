@@ -57,7 +57,7 @@ if [[ ! -d /etc/pacman.d ]]; then msg_error "No ${APP} Installation Found!"; exi
 msg_info "Updating ${APP} LXC"
 dnf -y update
 dnf -y upgrade
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 

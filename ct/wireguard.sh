@@ -61,8 +61,7 @@ if [ "$UPD" == "1" ]; then
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 fi
 if [ "$UPD" == "2" ]; then

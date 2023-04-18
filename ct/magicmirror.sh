@@ -58,8 +58,7 @@ msg_info "Updating ${APP} LXC"
 cd /opt/magicmirror
 git pull &>/dev/null
 npm install --only=prod --omit=dev &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_ok "Update Successfull"
+msg_ok "Updated Successfully"
 exit
 }
 
