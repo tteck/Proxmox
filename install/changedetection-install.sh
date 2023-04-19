@@ -34,6 +34,7 @@ After=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/changedetection
+Environment="WEBDRIVER_URL=http://127.0.0.1:4444/wd/hub"
 ExecStart=changedetection.io -d /opt/changedetection -p 5000
 [Install]
 WantedBy=multi-user.target
