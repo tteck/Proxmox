@@ -23,7 +23,7 @@ msg_info "Installing Kavita"
 cd /opt
 RELEASE=$(curl -s https://api.github.com/repos/Kareadita/Kavita/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 wget -q https://github.com/Kareadita/Kavita/releases/download/$RELEASE/kavita-linux-x64.tar.gz
-$STD tar -xvf kavita-linux-x64.tar.gz
+$STD tar -xvzf kavita-linux-x64.tar.gz
 rm kavita-linux-x64.tar.gz
 msg_ok "Installed Kavita"
 
