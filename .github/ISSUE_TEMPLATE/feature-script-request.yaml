@@ -8,4 +8,13 @@ body:
       value: |
         **NOTICE:** 
         - If you have requests for features or scripts, please share them in the Discussions section.
+  - type: dropdown
+    validations:
+      required: false
+    attributes:
+      label: <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://img.shields.io/badge/%F0%9F%92%AC-Discussions-orange" alt="Discussions" /></a>
+      description: >
+      <a href="https://github.com/tteck/Proxmox/discussions"><img src="https://img.shields.io/badge/%F0%9F%92%AC-Discussions-orange" alt="Discussions" /></a>
+      options:
+        - 
 
