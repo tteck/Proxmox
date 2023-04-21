@@ -13,6 +13,12 @@ body:
     validations:
       required: true
   - type: textarea
+    id: screenshot
+    attributes:
+      label: If applicable, add screenshots to help explain the issue.
+    validations:
+      required: false
+  - type: textarea
     id: expect_to_happen
     attributes:
       label: A clear and concise description of what you expected to happen.
@@ -26,4 +32,3 @@ body:
       placeholder: First do this, then this..
     validations:
       required: false
-
