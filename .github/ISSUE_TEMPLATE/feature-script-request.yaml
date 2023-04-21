@@ -8,6 +8,9 @@ body:
       value: |
         **NOTICE:** 
         - If you have requests for features or scripts, please share them in the Discussions section.
-  - type: dropdown
+  - type: textarea
+    id: feature
+    attributes:
+      label: Please submit feature/script requests in Discussions
     validations:
       required: false
