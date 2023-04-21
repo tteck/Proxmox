@@ -1,0 +1,11 @@
+name: Feature/Script Request
+about: Suggest an idea for this project in Discussions
+title: Please submit feature/script requests in Discussions
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **NOTICE:** 
+        - If you have requests for features or scripts, please share them in the Discussions section.
+
