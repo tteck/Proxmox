@@ -1,4 +1,4 @@
-name: Issue report
+name: Problems with a script.
 description: Generate a report on the issue pertaining specifically to the script in order to aid us in improving it.
 body:
   - type: markdown
