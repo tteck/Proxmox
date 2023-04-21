@@ -20,13 +20,6 @@ body:
     validations:
       required: false
   - type: textarea
-    id: expect_to_happen
-    attributes:
-      label: A clear and concise description of what you expected to happen.
-      placeholder: I expected that ...
-    validations:
-      required: false
-  - type: textarea
     id: reproduce
     attributes:
       label: Please provide detailed steps to reproduce the issue.
