@@ -1,16 +1,16 @@
-name: Bug report
-description: Create a report to help us improve (script related)
+name: Issue report
+description: Generate a report on the issue pertaining specifically to the script in order to aid us in improving it.
 body:
   - type: markdown
     attributes:
       value: |
         **IMPORTANT:** Before submitting:
-        - Please search through the closed issues to see if the bug you are reporting has already been reported and resolved. If you find a closed issue that addresses your problem, please leave a comment on that issue instead of opening a new one.
+        - Please search through the closed issues to see if the issue you are reporting has already been reported and resolved. If you find a closed issue that addresses your problem, please leave a comment on that issue instead of opening a new one.
         - If you have requests for features or scripts, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: textarea
     id: bug
     attributes:
-      label: A clear and concise description of the bug.
+      label: A clear and concise description of the issue.
     validations:
       required: true
   - type: textarea
@@ -30,6 +30,6 @@ body:
     id: reproduce
     attributes:
       label: Please provide detailed steps to reproduce the issue.
-      placeholder: First do this, then this..
+      placeholder: First do this, then this ...
     validations:
       required: false
