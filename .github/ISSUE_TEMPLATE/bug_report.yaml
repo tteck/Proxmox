@@ -15,7 +15,7 @@ body:
   - type: textarea
     id: screenshot
     attributes:
-      label: If applicable, add screenshots to help explain the issue.
+      label: If relevant, including screenshots or a code block can be helpful in clarifying the issue.
     validations:
       required: false
   - type: textarea
