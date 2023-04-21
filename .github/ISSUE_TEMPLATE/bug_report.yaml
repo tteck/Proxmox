@@ -6,7 +6,7 @@ body:
       value: |
         **IMPORTANT:** Before submitting:
         - Please search through the closed issues to see if the bug you are reporting has already been reported and resolved. If you find a closed issue that addresses your problem, please leave a comment on that issue instead of opening a new one.
-        - If you have requests for features or scripts, please share them in the Discussions section.
+        - If you have requests for features or scripts, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: textarea
     id: bug
     attributes:
