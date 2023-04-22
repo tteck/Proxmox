@@ -39,6 +39,7 @@ fi
 msg_info "Setting Up Plex Media Server Repository"
 $STD apt-key add <(curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key)
 sh -c 'echo "deb [arch=$(dpkg --print-architecture)] https://downloads.plex.tv/repo/deb/ public main" > /etc/apt/sources.list.d/plexmediaserver.list'
+mv -f /etc/apt/trusted.gpg /etc/apt/trusted.gpg.d/ &>/dev/null
 msg_ok "Set Up Plex Media Server Repository"
 
 msg_info "Installing Plex Media Server"
