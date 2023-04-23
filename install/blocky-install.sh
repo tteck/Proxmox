@@ -22,7 +22,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Blocky"
 systemctl stop systemd-resolved
 $STD systemctl disable systemd-resolved.service
-RELEASE=$(curl -s https://api.github.com/repos/0xERR0R/blocky/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+RELEASE=0.20 #$(curl -s https://api.github.com/repos/0xERR0R/blocky/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 wget -q https://github.com/0xERR0R/blocky/releases/download/v$RELEASE/blocky_v${RELEASE}_Linux_x86_64.tar.gz
 mkdir -p /opt/blocky
 tar -xf blocky_v${RELEASE}_Linux_x86_64.tar.gz -C /opt/blocky
