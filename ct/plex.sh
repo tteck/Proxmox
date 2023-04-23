@@ -66,6 +66,7 @@ msg_ok "Updated ${APP} LXC"
 exit
 fi
 if [ "$UPD" == "2" ]; then
+set +e
 bash -c "$(wget -qO - https://raw.githubusercontent.com/mrworf/plexupdate/master/extras/installer.sh)"
 exit
 fi
