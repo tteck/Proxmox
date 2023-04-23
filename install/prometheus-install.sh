@@ -60,5 +60,5 @@ root
 msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
-rm -rf /root/prometheus-${RELEASE}.linux-amd64 /root/prometheus-${RELEASE}.linux-amd64.tar.gz
+rm -rf ../prometheus-${RELEASE}.linux-amd64 ../prometheus-${RELEASE}.linux-amd64.tar.gz
 msg_ok "Cleaned"
