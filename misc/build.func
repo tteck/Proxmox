@@ -130,6 +130,7 @@ advanced_settings() {
 
   if [ "$var_os" == "debian" ]; then
     var_version="11"
+    echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
   fi
 
   if [ "$var_os" == "ubuntu" ]; then
@@ -141,7 +142,7 @@ advanced_settings() {
         "22.10" "Kinetic" OFF \
         3>&1 1>&2 2>&3); then
         if [ -n "$var_version" ]; then
-          echo -e "${DGN}Using Ubuntu Version: ${BGN}$var_version${CL}"
+          echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
         fi
       else
         exit-script
