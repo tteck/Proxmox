@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-23
+
+### Changed
+
+- **Non-Alpine LXC's**
+  - Advanced settings provide the option for users to switch between Debian and Ubuntu distributions. However, some applications or services, such as Deconz or Omada, may not be compatible with the selected distribution due to dependencies.
+
 ## 2023-04-16
 
 ### Changed
