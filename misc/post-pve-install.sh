@@ -53,7 +53,7 @@ exit_script() {
 start_routines() {
   header_info    
   CHOICE=$(
-    whiptail --title "Proxmox VE 7 Post Install" --menu "\nDisable Enterprise Repository?" 11 58 2 \
+    whiptail --title "Proxmox VE 7 Post Install" --menu "The 'pve-enterprise' repository is only available to users who have purchased a Proxmox VE subscription.\n \nDisable 'pve-enterprise' repository?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3
   )
@@ -63,17 +63,17 @@ start_routines() {
   fi
   case $CHOICE in
   yes)
-    msg_info "Disabling Enterprise Repository"
+    msg_info "Disabling 'pve-enterprise' repository"
     sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/pve-enterprise.list
-    msg_ok "Disabled Enterprise Repository"
+    msg_ok "Disabled 'pve-enterprise' repository"
     ;;
   no)
-    msg_error "Selected no to Disabling Enterprise Repository"
+    msg_error "Selected no to Disabling 'pve-enterprise' repository"
     ;;
   esac
 
   CHOICE=$(
-    whiptail --title "Proxmox VE 7 Post Install" --menu "\nAdd/Correct PVE7 Sources (sources.list)?" 11 58 2 \
+    whiptail --title "Proxmox VE 7 Post Install" --menu "The package manager will use the correct sources to update and install packages on your Proxmox VE 7 server.\n \nCorrect Proxmox VE 7 sources?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3
   )
@@ -83,21 +83,21 @@ start_routines() {
   fi
   case $CHOICE in
   yes)
-    msg_info "Adding or Correcting PVE7 Sources"
+    msg_info "Correcting Proxmox VE 7 Sources"
     cat <<EOF >/etc/apt/sources.list
 deb http://ftp.debian.org/debian bullseye main contrib
 deb http://ftp.debian.org/debian bullseye-updates main contrib
 deb http://security.debian.org/debian-security bullseye-security main contrib
 EOF
-    msg_ok "Added or Corrected PVE7 Sources"
+    msg_ok "Corrected Proxmox VE 7 Sources"
     ;;
   no)
-    msg_error "Selected no to Correcting PVE7 Sources"
+    msg_error "Selected no to Correcting Proxmox VE 7 Sources"
     ;;
   esac
 
   CHOICE=$(
-    whiptail --title "Proxmox VE 7 Post Install" --menu "\nEnable No-Subscription Repository?" 11 58 2 \
+    whiptail --title "Proxmox VE 7 Post Install" --menu "The 'pve-no-subscription' repository provides access to all of the open-source components of Proxmox VE.\n \nEnable 'pve-no-subscription' repository?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3
   )
@@ -107,19 +107,19 @@ EOF
   fi
   case $CHOICE in
   yes)
-    msg_info "Enabling No-Subscription Repository"
+    msg_info "Enabling 'pve-no-subscription' repository"
     cat <<EOF >>/etc/apt/sources.list
 deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
 EOF
-    msg_ok "Enabled No-Subscription Repository"
+    msg_ok "Enabled 'pve-no-subscription' repository"
     ;;
   no)
-    msg_error "Selected no to Enabling No-Subscription Repository"
+    msg_error "Selected no to Enabling 'pve-no-subscription' repository"
     ;;
   esac
 
   CHOICE=$(
-    whiptail --title "Proxmox VE 7 Post Install" --menu "\nAdd (Disabled) Beta/Test Repository?" 11 58 2 \
+    whiptail --title "Proxmox VE 7 Post Install" --menu "The 'pvetest' repository can give advanced users access to new features and updates before they are officially released.\n \nAdd (Disabled) 'pvetest' repository?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3
   )
@@ -129,19 +129,19 @@ EOF
   fi
   case $CHOICE in
   yes)
-    msg_info "Adding Beta/Test Repository and set disabled"
+    msg_info "Adding 'pvetest' repository and set disabled"
     cat <<EOF >>/etc/apt/sources.list
 # deb http://download.proxmox.com/debian/pve bullseye pvetest
 EOF
-    msg_ok "Added Beta/Test Repository"
+    msg_ok "Added 'pvetest' repository"
     ;;
   no)
-    msg_error "Selected no to Adding Beta/Test Repository"
+    msg_error "Selected no to Adding 'pvetest' repository"
     ;;
   esac
 
   CHOICE=$(
-    whiptail --title "Proxmox VE 7 Post Install" --menu "\nDisable Subscription Nag?" 11 58 2 \
+    whiptail --title "Proxmox VE 7 Post Install" --menu "This will disable the nag message reminding you to purchase a subscription every time you log in to the web interface.\n \nDisable subscription nag?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3
   )
@@ -151,13 +151,13 @@ EOF
   fi
   case $CHOICE in
   yes)
-    msg_info "Disabling Subscription Nag"
+    msg_info "Disabling subscription nag"
     echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxlib\.js$'; if [ \$? -eq 1 ]; then { echo 'Removing subscription nag from UI...'; sed -i '/data\.status.*{/{s/\!//;s/active/NoMoreNagging/}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; }; fi\"; };" >/etc/apt/apt.conf.d/no-nag-script
     apt --reinstall install proxmox-widget-toolkit &>/dev/null
-    msg_ok "Disabled Subscription Nag (Delete browser cache)"
+    msg_ok "Disabled subscription nag (Delete browser cache)"
     ;;
   no)
-    msg_error "Selected no to Disabling Subscription Nag"
+    msg_error "Selected no to Disabling subscription nag"
     ;;
   esac
 
@@ -175,7 +175,7 @@ EOF
     msg_info "Updating Proxmox VE 7 (Patience)"
     apt-get update &>/dev/null
     apt-get -y dist-upgrade &>/dev/null
-    msg_ok "Updated Proxmox VE 7 (Reboot Recommended)"
+    msg_ok "Updated Proxmox VE 7 (Reboot recommended)"
     ;;
   no)
     msg_error "Selected no to Updating Proxmox VE 7"
@@ -208,7 +208,7 @@ EOF
 header_info
 echo -e "\nThis script will Perform Post Install Routines.\n"
 while true; do
-  read -p "Start the PVE7 Post Install Script (y/n)?" yn
+  read -p "Start the Proxmox VE 7 Post Install Script (y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit_script ;;
