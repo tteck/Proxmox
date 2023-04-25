@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Non-Alpine LXC's**
-  - Advanced settings provide the option for users to switch between Debian and Ubuntu distributions. However, some applications or services, such as Deconz or Omada, may not be compatible with the selected distribution due to dependencies.
+  - Advanced settings provide the option for users to switch between Debian and Ubuntu distributions. However, some applications or services, such as Deconz, grocy or Omada, may not be compatible with the selected distribution due to dependencies.
 
 ## 2023-04-16
 
