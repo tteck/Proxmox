@@ -112,10 +112,11 @@ exit-script() {
 }
 
 advanced_settings() {
+  whiptail --msgbox --title "Default distribution for $APP" "${var_os} \n${var_version} \n" 8 58
   if [ "$var_os" != "alpine" ]; then
     var_os=""
     while [ -z "$var_os" ]; do
-      if var_os=$(whiptail --title "DISTRIBUTION" --radiolist "Choose" 10 58 2 \
+      if var_os=$(whiptail --title "DISTRIBUTION" --radiolist "Choose Distribution:" 10 58 2 \
         "debian" "" OFF \
         "ubuntu" "" OFF \
         3>&1 1>&2 2>&3); then
