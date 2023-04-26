@@ -2,6 +2,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-26
+
+### Changed
+
+- **The site can now be accessed through a more memorable URL, which is [helper-scripts.com](http://helper-scripts.com).**
+
 ## 2023-04-23
 
 ### Changed
