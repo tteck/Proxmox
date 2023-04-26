@@ -33,7 +33,7 @@ motd_ssh
 root
 
 msg_info "Cleaning up"
-rm -rf Omada_SDN_Controller_v5.9.9_Linux_x64.deb mongodb-org-server_3.6.23_amd64.deb
+rm -f Omada_SDN_Controller_v5.9.31_Linux_x64.deb mongodb-org-server_3.6.23_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
