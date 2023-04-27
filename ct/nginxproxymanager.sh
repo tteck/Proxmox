@@ -165,9 +165,8 @@ EOF
   msg_info "Starting Services"
   sed -i -e 's/^pid/#pid/' -e 's/npmuser/root/' /usr/local/openresty/nginx/conf/nginx.conf
   sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' /opt/certbot/pyvenv.cfg
-  systemctl enable npm &>/dev/null
-  systemctl start openresty
-  systemctl start npm
+  systemctl enable -q --now openresty
+  systemctl enable -q --now npm
   msg_ok "Started Services"
 
   msg_info "Cleaning up"
