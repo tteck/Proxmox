@@ -11,9 +11,9 @@ clear
 cat <<"EOF"
     __  ___            _ __                __   _  ________
    /  |/  /___  ____  (_) /_____  _____   / /  | |/ / ____/
-  / /|_/ / __ \/ __ \/ / __/ __ \/ ___/  / /   |   / / 
+  / /|_/ / __ \/ __ \/ / __/ __ \/ ___/  / /   |   / /
  / /  / / /_/ / / / / / /_/ /_/ / /     / /___/   / /___
-/_/  /_/\____/_/ /_/_/\__/\____/_/     /_____/_/|_\____/   
+/_/  /_/\____/_/ /_/_/\__/\____/_/     /_____/_/|_\____/
 
 EOF
 
@@ -27,6 +27,11 @@ while true; do
 done
 
 echo '#!/usr/bin/env bash
+
+# Read excluded containers from command line arguments
+excluded_containers=("$@")
+echo "Excluded containers: ${excluded_containers[@]}"
+
 while true
 do
   # Get the list of containers
@@ -34,6 +39,11 @@ do
 
   for container in $containers
   do
+    # Skip excluded containers
+    if [[ " ${excluded_containers[@]} " =~ " ${container} " ]]; then
+      continue
+    fi
+
     # Skip containers based on templates
     template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
     if [ "$template" == "true" ]; then
@@ -46,27 +56,29 @@ do
     # Ping the container
     if ! ping -c 1 $IP >/dev/null 2>&1; then
       # If the container can'\''t be pinged, stop and start it
-      echo -e "$(date): Container $container is not responding, restarting..."
+      echo "$(date): Container $container is not responding, restarting..."
       pct stop $container >/dev/null 2>&1
       sleep 5
       pct start $container >/dev/null 2>&1
     fi
   done
 
-  # Wait for 5 minutes
-  echo -e "$(date): Sleeping for 5 minutes..."
+  # Wait for 5 minutes. (Edit to your needs)
+  echo "$(date): Sleeping for 5 minutes..."
   sleep 300
 done >> /var/log/ping-containers.log 2>&1' >/usr/local/bin/ping-containers.sh
 
-# Change the permissions
+# Change file permissions to executable
 chmod +x /usr/local/bin/ping-containers.sh
 
-# Create service
+# Create ping-containers.service
 echo '[Unit]
 Description=Pings containers every 5 minutes and restarts if necessary
 
 [Service]
 Type=simple
+# Include the container ID at the end of the line where ExecStart=/usr/local/bin/ping-containers.sh is specified,
+# to indicate which container should be excluded. Example: ExecStart=/usr/local/bin/ping-containers.sh 100 102
 ExecStart=/usr/local/bin/ping-containers.sh
 Restart=always
 StandardOutput=file:/var/log/ping-containers.log
