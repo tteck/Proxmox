@@ -17,6 +17,7 @@ cat <<"EOF"
 
 EOF
 
+add() {
 while true; do
   read -p "This script will add Monitor LXC to Proxmox VE. Proceed(y/n)?" yn
   case $yn in
@@ -92,10 +93,22 @@ systemctl daemon-reload
 systemctl enable -q --now ping-containers.service
 clear
 echo -e "\n To view Monitor LXC logs: cat /var/log/ping-containers.log"
+}
 
-# To remove Monitor LXC from Proxmox VE
-# 1) systemctl stop ping-containers.service
-# 2) systemctl disable ping-containers.service
-# 3) rm /etc/systemd/system/ping-containers.service
-# 4) rm /usr/local/bin/ping-containers.sh
-# 5) rm /var/log/ping-containers.log
+remove() {
+  systemctl stop ping-containers.service
+  systemctl disable ping-containers.service &>/dev/null
+  rm /etc/systemd/system/ping-containers.service
+  rm /usr/local/bin/ping-containers.sh
+  rm /var/log/ping-containers.log
+  echo "Removed Monitor LXC from Proxmox VE"
+}
+
+if [ "$1" == "add" ]; then
+    add
+elif [ "$1" == "remove" ]; then
+    remove
+else
+    echo "Usage: $0 [add | remove]"
+    exit 1
+fi
