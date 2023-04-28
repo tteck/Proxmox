@@ -109,6 +109,6 @@ if [ "$1" == "add" ]; then
 elif [ "$1" == "remove" ]; then
     remove
 else
-    echo "Usage: $0 [add | remove]"
+    echo "Usage: $0 [ -s add | -s remove ]"
     exit 1
 fi
