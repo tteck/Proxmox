@@ -51,7 +51,6 @@ function default_settings() {
 }
 
 function update_script() {
-#if [[ ! -d /opt/cronicle ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
   "1" "Update ${APP}" ON \
   "2" "Install ${APP} Worker" OFF \
@@ -59,6 +58,7 @@ UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spaceb
 
 if [ "$UPD" == "1" ]; then
 header_info
+if [[ ! -d /opt/cronicle ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 /opt/cronicle/bin/control.sh upgrade &>/dev/null
 msg_ok "Updated ${APP}"
@@ -94,7 +94,7 @@ sed -i "s/localhost:3012/${IP}:3012/g" /opt/cronicle/conf/config.json
 cp /opt/cronicle/bin/cronicled.init /etc/init.d/cronicled &>/dev/null
 chmod 775 /etc/init.d/cronicled
 update-rc.d cronicled defaults &>/dev/null
-msg_ok "Installed Cronicle Worker on $hostname"
+msg_ok "Installed Cronicle Worker"
 echo -e "\n Add Masters secret key to /opt/cronicle/conf/config.json \n"
 exit
 fi
