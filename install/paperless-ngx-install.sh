@@ -94,7 +94,7 @@ msg_ok "Installed Natural Language Toolkit"
 
 msg_info "Setting up database"
 DB_USER=paperless
-DB_PASS="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13)"
+DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 DB_NAME=paperlessdb
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
@@ -118,11 +118,10 @@ msg_info "Setting up admin Paperless-ngx User & Password"
 cat <<EOF | python3 /opt/paperless/src/manage.py shell
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
-if len(UserModel.objects.all()) == 1:
-    user = UserModel.objects.create_user('admin', password='$DB_PASS')
-    user.is_superuser = True
-    user.is_staff = True
-    user.save()
+user = UserModel.objects.create_user('admin', password='$DB_PASS')
+user.is_superuser = True
+user.is_staff = True
+user.save()
 EOF
 echo "" >>~/paperless.creds
 echo "Paperless-ngx WebUI User" >>~/paperless.creds
