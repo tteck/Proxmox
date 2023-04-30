@@ -4,8 +4,6 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-# Proxmox VE LXC Monitor All
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/monitor-all.sh)" -s add
 
 clear
 cat <<"EOF"
