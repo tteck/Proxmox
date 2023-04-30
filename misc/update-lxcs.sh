@@ -49,7 +49,7 @@ function update_container() {
   esac
 }
 header_info
-for container in $(pct list | tail -n +2 | cut -f1 -d' '); do
+for container in $(pct list | awk '{if(NR>1) print $1}'); do
   excluded=false
   for excluded_container in "${excluded_containers[@]}"; do
     if [ "$container" == "$excluded_container" ]; then
