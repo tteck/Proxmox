@@ -2,6 +2,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-04-30
+
+### Changed
+
+- **Proxmox VE Monitor-All**
+  - NEW Script
+  - Replaces Proxmox VE LXC Monitor
+
 ## 2023-04-28
 
 ### Changed
