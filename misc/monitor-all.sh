@@ -34,14 +34,8 @@ echo "Excluded instances: ${excluded_instances[@]}"
 
 while true
 do
-  # Get the list of containers and virtual machines
-  containers=$(pct list | tail -n +2 | cut -f1 -d" ")
-  virtual_machines=$(qm list | grep -oP "^\s*\K\d+(?=\s)")
 
-  # Combine the container and virtual machine lists
-  all_instances="$containers $virtual_machines"
-
-  for instance in $all_instances
+  for instance in $(pct list | awk '\''{if(NR>1) print $1}'\''; qm list | awk '\''{if(NR>1) print $1}'\'')
   do
     # Skip excluded instances
     if [[ " ${excluded_instances[@]} " =~ " ${instance} " ]]; then
@@ -96,7 +90,7 @@ done >> /var/log/ping-instances.log 2>&1' >/usr/local/bin/ping-instances.sh
 # Change file permissions to executable
 chmod +x /usr/local/bin/ping-instances.sh
 
-# Create ping-containers.service
+# Create ping-instances.service
 echo '[Unit]
 Description=Ping instances every 5 minutes and restarts if necessary
 
@@ -112,7 +106,7 @@ StandardError=file:/var/log/ping-instances.log
 [Install]
 WantedBy=multi-user.target' >/etc/systemd/system/ping-instances.service
 
-# Reload daemon, enable and start ping-containers.service
+# Reload daemon, enable and start ping-instances.service
 systemctl daemon-reload
 systemctl enable -q --now ping-instances.service
 clear
