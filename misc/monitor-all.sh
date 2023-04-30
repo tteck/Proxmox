@@ -32,11 +32,9 @@ echo '#!/usr/bin/env bash
 excluded_instances=("$@")
 echo "Excluded instances: ${excluded_instances[@]}"
 
-while true
-do
+while true; do
 
-  for instance in $(pct list | awk '\''{if(NR>1) print $1}'\''; qm list | awk '\''{if(NR>1) print $1}'\'')
-  do
+  for instance in $(pct list | awk '\''{if(NR>1) print $1}'\''; qm list | awk '\''{if(NR>1) print $1}'\''); do
     # Skip excluded instances
     if [[ " ${excluded_instances[@]} " =~ " ${instance} " ]]; then
       continue
