@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - **OctoPrint LXC**
   - NEW Script
+- **Proxmox VE Intel Processor Microcode**
+  - NEW Script
 
 ## 2023-04-30
 
