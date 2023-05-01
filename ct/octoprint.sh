@@ -53,10 +53,18 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/octoprint ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_info "Stopping OctoPrint"
+systemctl stop octoprint
+msg_ok "Stopped OctoPrint"
+
+msg_info "Updating OctoPrint"
+pip3 install octoprint --upgrade &>/dev/null
+msg_ok "Updated OctoPrint"
+
+msg_info "Starting OctoPrint"
+systemctl start octoprint
+msg_ok "Started OctoPrint"
+msg_ok "Updated Successfully"
 exit
 }
 
