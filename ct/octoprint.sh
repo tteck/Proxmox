@@ -58,6 +58,7 @@ systemctl stop octoprint
 msg_ok "Stopped OctoPrint"
 
 msg_info "Updating OctoPrint"
+source /opt/octoprint/bin/activate
 pip3 install octoprint --upgrade &>/dev/null
 msg_ok "Updated OctoPrint"
 
