@@ -43,6 +43,7 @@ cd /opt/octoprint
 python3 -m venv .
 source bin/activate
 pip install --upgrade pip
+pip install wheel
 pip install octoprint
 EOF
 msg_ok "Installed OctoPrint"
