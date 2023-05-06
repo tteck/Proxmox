@@ -247,16 +247,25 @@ advanced_settings() {
     exit-script
   fi
 
-  if NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3); then
-    if [ -z $NET ]; then
-      NET="dhcp"
-      echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+  while true; do
+    NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address (/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3)
+    exit_status=$?
+    if [ $exit_status -eq 0 ]; then
+      if [ "$NET" = "dhcp" ]; then
+        echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+        break
+      else
+        if [[ "$NET" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$ ]]; then
+          echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+          break
+        else
+          whiptail --msgbox "$NET is an invalid IPv4 CIDR address. Please enter a valid IPv4 CIDR address or 'dhcp'" 8 58
+        fi
+      fi
     else
-      echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
+      exit-script
     fi
-  else
-    exit-script
-  fi
+  done
 
   if GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3); then
     if [ -z $GATE1 ]; then
@@ -376,7 +385,7 @@ install_script() {
   arch_check
   pve_check
   if systemctl is-active -q ping-instances.service; then
-  systemctl stop ping-instances.service
+    systemctl stop ping-instances.service
   fi
   NEXTID=$(pvesh get /cluster/nextid)
   timezone=$(cat /etc/timezone)
@@ -512,6 +521,6 @@ description() {
   ### https://tteck.github.io/Proxmox/
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/☕-Buy me a coffee-red' /></a>"
   if [[ -f /etc/systemd/system/ping-instances.service ]]; then
-  systemctl start ping-instances.service
+    systemctl start ping-instances.service
   fi
 }
