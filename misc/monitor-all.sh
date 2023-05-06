@@ -118,11 +118,24 @@ remove() {
   echo "Removed Monitor All from Proxmox VE"
 }
 
-if [ "$1" == "add" ]; then
+# Define options for the whiptail menu
+OPTIONS=(Add "Add Monitor-All to Proxmox VE" \
+         Remove "Remove Monitor-All from Proxmox VE")
+
+# Show the whiptail menu and save the user's choice
+CHOICE=$(whiptail --title "Monitor-All for Proxmox VE" --menu "Select an option:" 10 58 2 \
+          "${OPTIONS[@]}" 3>&1 1>&2 2>&3)
+
+# Check the user's choice and perform the corresponding action
+case $CHOICE in
+  "Add")
     add
-elif [ "$1" == "remove" ]; then
+    ;;
+  "Remove")
     remove
-else
-    echo "Usage: $0 [ -s add | -s remove ]"
-    exit 1
-fi
+    ;;
+  *)
+    echo "Exiting..."
+    exit 0
+    ;;
+esac
