@@ -267,17 +267,32 @@ advanced_settings() {
     fi
   done
 
-  if GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3); then
-    if [ -z $GATE1 ]; then
-      GATE1="Default"
-      GATE=""
+  while true; do
+    GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3)
+    exit_status=$?
+    if [ $exit_status -eq 0 ]; then
+      if [ -z "$GATE1" ]; then
+        if [ "$NET" = "dhcp" ]; then
+          GATE1="Default"
+          GATE=""
+          echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+          break
+        else
+          whiptail --msgbox "Since a static IP was used, a gateway IP address is mandatory." 8 58
+        fi
+      else
+        if [[ "$GATE1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+          GATE=",gw=$GATE1"
+          echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+          break
+        else
+          whiptail --msgbox "Invalid IP address. Please enter a valid IP address." 8 58
+        fi
+      fi
     else
-      GATE=",gw=$GATE1"
+      exit-script
     fi
-    echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
-  else
-    exit-script
-  fi
+  done
 
   if (whiptail --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
     DISABLEIP6="yes"
