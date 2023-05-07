@@ -23,12 +23,14 @@ cat <<"EOF"
 
 EOF
 
+RD=$(echo "\033[01;31m")
 YW=$(echo "\033[33m")
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
+CROSS="${RD}✗${CL}"
 
 set -euo pipefail
 shopt -s inherit_errexit nullglob
@@ -42,6 +44,20 @@ msg_ok() {
     local msg="$1"
     echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+
+msg_error() {
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
+
+msg_info "Checking CPU Vendor"
+cpu=$(lscpu | grep -oP 'Vendor ID:\s*\K\S+')
+if [ "$cpu" == "GenuineIntel" ]; then
+  msg_ok "${cpu} was detected"
+else
+  msg_error "${cpu} is not supported" 
+  exit
+fi 
 
 msg_info "Installing iucode-tool: a tool for updating Intel processor microcode"
 apt-get install -y iucode-tool &>/dev/null
