@@ -41,7 +41,7 @@ motd_ssh
 root
 
 msg_info "Cleaning up"
-rm -rf dpkg -i mongodb-org-server_3.6.23_amd64.deb
+rm -rf mongodb-org-server_3.6.23_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
