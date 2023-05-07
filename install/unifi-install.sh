@@ -17,24 +17,31 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y apt-transport-https
 msg_ok "Installed Dependencies"
 
-read -r -p "Local Controller? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  LOCAL="--local-controller"
-else
-  LOCAL=""
-fi
+msg_info "Installing OpenJDK"
+$STD apt-get install -y openjdk-11-jre-headless
+$STD apt-mark hold openjdk-11-*
+msg_ok "Installed OpenJDK"
 
-msg_info "Installing UniFi Network Application (Patience)"
-wget -qL https://get.glennr.nl/unifi/install/install_latest/unifi-latest.sh
-$STD bash unifi-latest.sh --skip --add-repository $LOCAL
+msg_info "Installing MongoDB"
+wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiverse/binary-amd64/mongodb-org-server_3.6.23_amd64.deb
+$STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
+msg_ok "Installed MongoDB"
+
+msg_info "Installing UniFi Network Application"
+wget -qO /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
+echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' >/etc/apt/sources.list.d/100-ubnt-unifi.list
+$STD apt-get update
+$STD apt-get install -y unifi
 msg_ok "Installed UniFi Network Application"
 
 motd_ssh
 root
 
 msg_info "Cleaning up"
+rm -rf dpkg -i mongodb-org-server_3.6.23_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
