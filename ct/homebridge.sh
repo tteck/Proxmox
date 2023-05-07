@@ -55,7 +55,7 @@ header_info
 if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
+apt-get install -y homebridge &>/dev/null
 msg_ok "Updated Successfully"
 exit
 }
