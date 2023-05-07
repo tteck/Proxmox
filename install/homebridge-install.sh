@@ -18,23 +18,18 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y avahi-daemon
+$STD apt-get install -y gnupg2
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_16.x)
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-$STD apt-get install -y nodejs gcc g++ make python net-tools
-msg_ok "Installed Node.js"
+msg_info "Setting up Homebridge Repository"
+curl -sSf https://repo.homebridge.io/KEY.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/homebridge.gpg
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/homebridge.gpg] https://repo.homebridge.io stable main' >/etc/apt/sources.list.d/homebridge.list
+msg_ok "Set up Homebridge Repository"
 
 msg_info "Installing Homebridge"
-$STD npm install -g --unsafe-perm homebridge homebridge-config-ui-x
+$STD apt update
+$STD apt-get install -y homebridge
 msg_info "Installed Homebridge"
-
-msg_info "Creating Service"
-$STD hb-service install --user homebridge
-msg_ok "Created Service"
 
 motd_ssh
 root
