@@ -54,8 +54,8 @@ function update_script() {
 header_info
 if [[ ! -d /usr/lib/unifi ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
-wget -qL https://get.glennr.nl/unifi/update/unifi-update.sh 
-bash unifi-update.sh
+apt-get update
+apt-get install -y unifi
 msg_ok "Updated Successfully"
 exit
 }
