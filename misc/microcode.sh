@@ -51,8 +51,11 @@ msg_error() {
 }
 
 intel() {
-  msg_info "Downloading the latest Intel Processor Microcode Package for Linux"
+  msg_info "Installing iucode-tool: a tool for updating Intel processor microcode"
   apt-get install -y iucode-tool &>/dev/null
+  msg_ok "Installed iucode-tool"
+  
+  msg_info "Downloading the latest Intel Processor Microcode Package for Linux"
   wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230214.1_amd64.deb
   msg_ok "Downloaded the latest Intel Processor Microcode Package"
 
