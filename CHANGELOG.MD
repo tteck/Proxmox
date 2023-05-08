@@ -2,6 +2,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-05-08
+
+### Changed
+
+- **Proxmox VE Intel Processor Microcode**
+  - Renamed to **Proxmox VE Processor Microcode**
+  - Automatically identifies the processor vendor (Intel/AMD) and installs the appropriate microcode.
+
 ## 2023-05-07
 
 ### Changed
