@@ -72,7 +72,7 @@ intel() {
 
 amd() {
   msg_info "Installing amd-ucode: a tool for updating AMD processor microcode"
-  apt-get install -y amd-ucode &>/dev/null
+  apt-get install -y amd64-microcode &>/dev/null
   msg_ok "Installed amd-ucode"
 
   msg_info "Downloading the latest AMD Processor Microcode Package for Linux"
