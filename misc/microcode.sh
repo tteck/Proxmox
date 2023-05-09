@@ -76,7 +76,7 @@ amd() {
   msg_ok "Downloaded the latest AMD Processor Microcode Package"
 
   msg_info "Installing the AMD Processor Microcode (Patience)"
-  dpkg -i amd64-microcode_3.20230414.1_amd64.deb
+  dpkg -i amd64-microcode_3.20230414.1_amd64.deb &>/dev/null
   msg_ok "Installed the AMD Processor Microcode"
 
   msg_info "Cleaning up"
