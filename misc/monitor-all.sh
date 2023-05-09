@@ -92,8 +92,9 @@ Description=Ping instances every 5 minutes and restarts if necessary
 
 [Service]
 Type=simple
-# Include the CT/VM ID at the end of the line where ExecStart=/usr/local/bin/ping-instances.sh is specified,
-# to indicate which CT/VM should be excluded. Example: ExecStart=/usr/local/bin/ping-instances.sh 100 102
+# To specify which CT/VM should be excluded, add the CT/VM ID at the end of the line where ExecStart=/usr/local/bin/ping-instances.sh is specified.
+# For example: ExecStart=/usr/local/bin/ping-instances.sh 100 102
+# Virtual machines without the QEMU guest agent installed must be excluded.
 ExecStart=/usr/local/bin/ping-instances.sh
 Restart=always
 StandardOutput=file:/var/log/ping-instances.log
