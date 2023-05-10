@@ -66,10 +66,10 @@ RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-man
   grep "tag_name" |
   awk '{print substr($2, 3, length($2)-4) }')
 
-msg_info "Downloading Nginx Proxy Manager v2.10.2"
-wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.10.2 -O - | tar -xz
-cd ./nginx-proxy-manager-2.10.2
-msg_ok "Downloaded Nginx Proxy Manager v2.10.2"
+msg_info "Downloading Nginx Proxy Manager v${RELEASE}"
+wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v${RELEASE} -O - | tar -xz
+cd ./nginx-proxy-manager-${RELEASE}
+msg_ok "Downloaded Nginx Proxy Manager v${RELEASE}"
 
 msg_info "Setting up Enviroment"
 ln -sf /usr/bin/python3 /usr/bin/python
@@ -77,8 +77,8 @@ ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
-sed -i "s+0.0.0+2.10.2+g" backend/package.json
-sed -i "s+0.0.0+2.10.2+g" frontend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
+sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
 
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
@@ -124,8 +124,8 @@ fi
 mkdir -p /app/global /app/frontend/images
 cp -r backend/* /app
 cp -r global/* /app/global
-wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-noarch.tar.xz"
-wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.4.1/s6-overlay-x86_64.tar.xz"
+wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-noarch.tar.xz"
+wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-x86_64.tar.xz"
 tar -C / -Jxpf s6-overlay-noarch.tar.xz
 tar -C / -Jxpf s6-overlay-x86_64.tar.xz
 msg_ok "Set up Enviroment"
@@ -185,7 +185,7 @@ motd_ssh
 root
 
 msg_info "Starting Services"
-sed -i -e 's/^pid/#pid/' -e 's/npmuser/root/' /usr/local/openresty/nginx/conf/nginx.conf
+sed -i 's/user npm/user root/g; s/^pid/#pid/g' /usr/local/openresty/nginx/conf/nginx.conf
 sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' /opt/certbot/pyvenv.cfg
 $STD systemctl enable --now openresty
 $STD systemctl enable --now npm
