@@ -476,6 +476,7 @@ build_container() {
   export PCT_OPTIONS="
     -features $FEATURES
     -hostname $HN
+    -tags proxmox-helper-scripts
     $SD
     $NS
     -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
