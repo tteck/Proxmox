@@ -268,32 +268,23 @@ advanced_settings() {
     fi
   done
 
+if [ "$NET" != "dhcp" ]; then
   while true; do
-    GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3)
-    exit_status=$?
-    if [ $exit_status -eq 0 ]; then
-      if [ -z "$GATE1" ]; then
-        if [ "$NET" = "dhcp" ]; then
-          GATE1="Default"
-          GATE=""
-          echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
-          break
-        else
-          whiptail --msgbox "Since a static IP was used, a gateway IP address is mandatory." 8 58
-        fi
-      else
-        if [[ "$GATE1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
-          GATE=",gw=$GATE1"
-          echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
-          break
-        else
-          whiptail --msgbox "Invalid IP address. Please enter a valid IP address." 8 58
-        fi
-      fi
+    GATE1=$(whiptail --inputbox "Enter gateway IP address" 8 58 --title "Gateway IP" 3>&1 1>&2 2>&3)
+    if [ -z "$GATE1" ]; then
+      whiptail --msgbox "Gateway IP address cannot be empty" 8 58
+    elif [[ ! "$GATE1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+      whiptail --msgbox "Invalid IP address format" 8 58
     else
-      exit-script
+      GATE=",gw=$GATE1"
+      echo -e "${DGN}Using Gateway IP Address: ${BGN}$GATE1${CL}"
+      break
     fi
   done
+else
+  GATE=""
+  echo -e "${DGN}Using Gateway IP Address: ${BGN}Default${CL}"
+fi
 
   if (whiptail --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
     DISABLEIP6="yes"
@@ -363,12 +354,17 @@ advanced_settings() {
     exit-script
   fi
 
-  if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
-    SSH="yes"
+  if [[ "$PW" == -password* ]]; then
+    if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
+      SSH="yes"
+    else
+      SSH="no"
+    fi
+    echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
   else
     SSH="no"
+    echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
   fi
-  echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
 
   if [[ "$APP" == "Docker" || "$APP" == "Umbrel" || "$APP" == "CasaOS" || "$APP" == "Home Assistant" ]]; then
     if (whiptail --defaultno --title "FUSE OVERLAYFS" --yesno "(ZFS) Enable Fuse Overlayfs?" 10 58); then
