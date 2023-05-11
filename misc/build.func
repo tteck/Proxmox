@@ -112,6 +112,7 @@ exit-script() {
 }
 
 advanced_settings() {
+  whiptail --msgbox --title "Here is an instructional tip:" "To make a selection, use the Spacebar." 8 58
   whiptail --msgbox --title "Default distribution for $APP" "${var_os} \n${var_version} \n" 8 58
   if [ "$var_os" != "alpine" ]; then
     var_os=""
