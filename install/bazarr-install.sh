@@ -37,12 +37,8 @@ cat <<EOF >/etc/systemd/system/bazarr.service
 Description=Bazarr Daemon
 After=syslog.target network.target
 
-# After=syslog.target network.target sonarr.service radarr.service
-
 [Service]
 WorkingDirectory=/opt/bazarr/
-User=your_user(username of your choice)
-Group=your_group(group of your choice)
 UMask=0002
 Restart=on-failure
 RestartSec=5
@@ -64,7 +60,7 @@ motd_ssh
 root
 
 msg_info "Cleaning up"
-rm -rf Bazarr.master.*.tar.gz
+rm -rf Bazarr.zip
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
