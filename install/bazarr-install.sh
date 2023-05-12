@@ -52,6 +52,9 @@ EOF
 systemctl enable -q --now bazarr
 msg_ok "Created Service"
 
+motd_ssh
+root
+
 msg_info "Cleaning up"
 rm -rf bazarr.zip
 $STD apt-get autoremove
