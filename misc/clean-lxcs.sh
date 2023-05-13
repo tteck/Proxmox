@@ -24,7 +24,6 @@ CM='\xE2\x9C\x94\033'
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 header_info
-echo -e "\n ${RD} USE AT YOUR OWN RISK. Deleting logs/cache may result in some apps/services broken!${CL} \n"
 while true; do
   read -p "This Will Clean logs, cache and update apt lists on all LXC Containers. Proceed(y/n)?" yn
   case $yn in
