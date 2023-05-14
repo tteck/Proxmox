@@ -41,7 +41,7 @@ function default_settings() {
   CORE_COUNT="$var_cpu"
   RAM_SIZE="$var_ram"
   BRG="vmbr0"
-  NET=dhcp
+  NET="dhcp"
   GATE=""
   DISABLEIP6="no"
   MTU=""

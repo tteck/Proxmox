@@ -100,7 +100,7 @@ function default_settings() {
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
   echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
-  NET=dhcp
+  NET="dhcp"
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
   GATE=""
   echo -e "${DGN}Disable IPv6: ${BGN}No${CL}"
