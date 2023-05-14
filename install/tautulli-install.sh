@@ -23,7 +23,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Tautulli"
 cd /opt
-git clone https://github.com/Tautulli/Tautulli.git
+$STD git clone https://github.com/Tautulli/Tautulli.git
 python3 -m pip install -q -r /opt/Tautulli/requirements.txt
 msg_ok "Installed Tautulli"
 
