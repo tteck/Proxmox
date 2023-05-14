@@ -20,6 +20,19 @@ $STD apt-get install -y mc
 $STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
+if [[ "$CTTYPE" == "0" ]]; then
+  msg_info "Setting Up Hardware Acceleration"
+  $STD apt-get -y install \
+    va-driver-all \
+    ocl-icd-libopencl1 \
+    intel-opencl-icd
+    
+  /bin/chgrp video /dev/dri
+  /bin/chmod 755 /dev/dri
+  /bin/chmod 660 /dev/dri/*
+  msg_ok "Set Up Hardware Acceleration"
+fi
+
 msg_info "Installing Tdarr"
 mkdir -p /opt/tdarr
 cd /opt/tdarr
