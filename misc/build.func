@@ -467,6 +467,7 @@ build_container() {
   export VERBOSE="$VERB"
   export SSH_ROOT="${SSH}"
   export CTID="$CT_ID"
+  export CTTYPE="$CT_TYPE"
   export PCT_OSTYPE="$var_os"
   export PCT_OSVERSION="$var_version"
   export PCT_DISK_SIZE="$DISK_SIZE"
@@ -487,7 +488,7 @@ build_container() {
 
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
   if [ "$CT_TYPE" == "0" ]; then
-    if [[ "$APP" != "Emby" && "$APP" != "Jellyfin" && "$APP" != "Plex" ]]; then
+    if [[ "$APP" != "Emby" && "$APP" != "Jellyfin" && "$APP" != "Plex" && "$APP" != "Tdarr" ]]; then
       cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
@@ -503,7 +504,7 @@ EOF
   fi
 
   if [ "$CT_TYPE" == "0" ]; then
-    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" ]]; then
+    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Tdarr" ]]; then
       cat <<EOF >>$LXC_CONFIG
 lxc.cgroup2.devices.allow: a
 lxc.cap.drop:
