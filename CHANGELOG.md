@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-05-13
+
+### Changed
+
+- **Tautulli LXC**
+  - NEW Script
+
 ## 2023-05-12
 
 ### Changed
