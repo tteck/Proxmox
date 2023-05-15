@@ -46,7 +46,7 @@ $STD systemctl enable --now n8n
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

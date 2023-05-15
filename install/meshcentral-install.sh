@@ -35,7 +35,7 @@ $STD node node_modules/meshcentral --install
 msg_ok "Installed MeshCentral"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

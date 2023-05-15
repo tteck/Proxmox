@@ -42,7 +42,7 @@ $STD systemctl enable --now whoogle.service
 msg_ok "Installed Whoogle"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

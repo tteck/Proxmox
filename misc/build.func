@@ -169,7 +169,7 @@ advanced_settings() {
   if PW1=$(whiptail --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
     if [ -z $PW1 ]; then
       PW1="Automatic Login"
-      PW=" "
+      PW=""
     else
       PW="-password $PW1"
     fi

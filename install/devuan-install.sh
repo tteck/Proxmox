@@ -20,7 +20,7 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

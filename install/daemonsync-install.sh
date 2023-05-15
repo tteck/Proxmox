@@ -26,7 +26,7 @@ $STD dpkg -i daemonsync_2.2.0.0059_amd64.deb
 msg_ok "Installed Daemon Sync Server"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf daemonsync_2.2.0.0059_amd64.deb

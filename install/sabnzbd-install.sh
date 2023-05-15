@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y unzip
 $STD apt-get install -y par2
 $STD apt-get install -y p7zip-full
 wget -q http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/unrar_6.0.3-1+deb11u1_amd64.deb
@@ -54,7 +53,7 @@ systemctl enable --now -q sabnzbd.service
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

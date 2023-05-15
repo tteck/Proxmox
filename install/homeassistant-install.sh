@@ -84,7 +84,7 @@ $STD docker run -d \
 msg_ok "Installed Home Assistant $CORE_LATEST_VERSION"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

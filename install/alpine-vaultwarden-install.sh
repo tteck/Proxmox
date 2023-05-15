@@ -37,4 +37,4 @@ $STD rc-update add vaultwarden default
 msg_ok "Installed Alpine-Vaultwarden"
 
 motd_ssh
-root
+customize

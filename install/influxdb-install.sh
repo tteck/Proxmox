@@ -55,7 +55,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 fi
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

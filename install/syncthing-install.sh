@@ -33,7 +33,7 @@ systemctl restart syncthing@root.service
 msg_ok "Installed Syncthing"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

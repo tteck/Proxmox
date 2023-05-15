@@ -26,7 +26,7 @@ $STD systemctl enable --now emqx
 msg_ok "Installed EMQX"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 apt-get autoremove >/dev/null

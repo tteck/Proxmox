@@ -35,7 +35,7 @@ systemctl enable --now -q grafana-server.service
 msg_ok "Installed Grafana"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

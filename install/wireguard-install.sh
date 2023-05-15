@@ -41,7 +41,7 @@ $STD bash <(curl -fsSL https://install.pivpn.io) --unattended options.conf
 msg_ok "Installed WireGuard"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

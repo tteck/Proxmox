@@ -38,7 +38,7 @@ $STD systemctl enable --now umbrel-startup.service
 msg_ok "Installed Umbrel"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

@@ -46,7 +46,7 @@ systemctl start esphomeDashboard
 msg_ok "Installed ESPHome Dashboard"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

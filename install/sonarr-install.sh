@@ -29,7 +29,7 @@ DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" inst
 msg_ok "Installed Sonarr"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

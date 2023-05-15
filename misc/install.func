@@ -116,6 +116,7 @@ motd_ssh() {
 }
 
 customize() {
+  if [[ "$PASSWORD" == "" ]]; then
   msg_info "Customizing Container"
   GETTY_OVERRIDE="/etc/systemd/system/container-getty@1.service.d/override.conf"
   mkdir -p $(dirname $GETTY_OVERRIDE)
@@ -127,10 +128,5 @@ EOF
   systemctl daemon-reload
   systemctl restart $(basename $(dirname $GETTY_OVERRIDE) | sed 's/\.d//')
   msg_ok "Customized Container"
-}
-
-root() {
-  if ! getent shadow root | grep -q "^root:[^\!*]"; then
-    customize
   fi
 }

@@ -19,7 +19,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
+if [[ "$CTTYPE" == "0" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   $STD apt-get -y install \
     va-driver-all \
@@ -46,7 +46,7 @@ $STD apt-get -o Dpkg::Options::="--force-confold" install -y plexmediaserver
 msg_ok "Installed Plex Media Server"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

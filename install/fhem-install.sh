@@ -32,7 +32,7 @@ $STD apt-get install -y fhem
 msg_info "Installed Fhem"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

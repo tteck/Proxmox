@@ -31,7 +31,7 @@ $STD systemctl enable --now hyperion@root.service
 msg_ok "Installed Hyperion"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove >/dev/null

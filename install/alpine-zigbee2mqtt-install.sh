@@ -26,4 +26,4 @@ $STD apk add zigbee2mqtt
 msg_ok "Installed Alpine-Zigbee2MQTT"
 
 motd_ssh
-root
+customize

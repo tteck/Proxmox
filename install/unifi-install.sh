@@ -38,7 +38,7 @@ $STD apt-get install -y unifi
 msg_ok "Installed UniFi Network Application"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf mongodb-org-server_3.6.23_amd64.deb

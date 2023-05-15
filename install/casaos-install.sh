@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
 msg_info "Installing CasaOS (Patience)"
@@ -37,7 +36,7 @@ $STD bash <(curl -fsSL https://get.casaos.io)
 msg_ok "Installed CasaOS"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

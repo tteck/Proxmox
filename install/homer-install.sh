@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y unzip
 $STD apt-get install -y pip
 msg_ok "Installed Dependencies"
 
@@ -46,7 +45,7 @@ $STD systemctl enable --now homer
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

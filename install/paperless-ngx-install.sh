@@ -27,7 +27,7 @@ $STD apt-get install -y --no-install-recommends \
 	redis \
 	postgresql \
 	build-essential \
-        imagemagick \
+    imagemagick \
 	fonts-liberation \
 	optipng \
 	gnupg \
@@ -192,7 +192,7 @@ $STD systemctl enable --now paperless-consumer paperless-webserver paperless-sch
 msg_ok "Created Services"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

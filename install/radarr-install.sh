@@ -49,7 +49,7 @@ systemctl enable --now -q radarr
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf Radarr.master.*.tar.gz

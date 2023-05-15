@@ -182,7 +182,7 @@ EOF
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Starting Services"
 sed -i 's/user npm/user root/g; s/^pid/#pid/g' /usr/local/openresty/nginx/conf/nginx.conf

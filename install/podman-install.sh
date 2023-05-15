@@ -26,7 +26,7 @@ echo -e 'unqualified-search-registries=["docker.io"]' >> /etc/containers/registr
 msg_ok "Installed Podman"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

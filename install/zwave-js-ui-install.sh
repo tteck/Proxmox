@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Z-Wave JS UI"
@@ -45,7 +44,7 @@ $STD systemctl enable zwave-js-ui
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm zwave-js-ui-${RELEASE}-linux.zip

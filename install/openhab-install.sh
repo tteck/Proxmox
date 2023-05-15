@@ -41,7 +41,7 @@ $STD systemctl enable --now openhab.service
 msg_ok "Installed openHAB"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

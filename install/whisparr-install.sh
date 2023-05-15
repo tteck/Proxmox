@@ -49,7 +49,7 @@ systemctl enable --now -q whisparr
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf Whisparr.develop.*.tar.gz

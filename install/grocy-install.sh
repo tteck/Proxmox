@@ -18,7 +18,6 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y apache2
-$STD apt-get install -y unzip
 $STD apt-get install -y apt-transport-https
 $STD apt-get install -y lsb-release
 msg_ok "Installed Dependencies"
@@ -63,7 +62,7 @@ systemctl reload apache2
 msg_ok "Installed grocy"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

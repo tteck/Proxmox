@@ -100,7 +100,7 @@ $STD systemctl enable --now homeassistant
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

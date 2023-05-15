@@ -28,7 +28,7 @@ service apache2 restart
 msg_ok "Installed NextCloudPi"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

@@ -46,7 +46,7 @@ $STD bash <(curl -fsSL https://install.pi-hole.net) /dev/stdin --unattended
 msg_ok "Installed Pi-hole"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

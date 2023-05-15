@@ -30,7 +30,7 @@ $STD dpkg -i Omada_SDN_Controller_v5.9.31_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -f Omada_SDN_Controller_v5.9.31_Linux_x64.deb mongodb-org-server_3.6.23_amd64.deb

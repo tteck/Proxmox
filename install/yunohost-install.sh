@@ -30,7 +30,7 @@ $STD bash <(curl -fsSL https://install.yunohost.org) -a
 msg_ok "Installed YunoHost"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

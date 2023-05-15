@@ -82,7 +82,7 @@ $STD pm2 list
 msg_ok "Installed Shinobi"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

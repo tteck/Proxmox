@@ -28,7 +28,7 @@ $STD apt install audiobookshelf
 msg_ok "Installed audiobookshelf"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

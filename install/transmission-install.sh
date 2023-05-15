@@ -28,7 +28,7 @@ systemctl start transmission-daemon
 msg_ok "Installed Transmission"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

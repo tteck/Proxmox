@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y unzip
 $STD apt-get install -y python3-pip
 msg_ok "Installed Dependencies"
 
@@ -53,7 +52,7 @@ systemctl enable -q --now bazarr
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf bazarr.zip

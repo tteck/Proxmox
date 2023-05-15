@@ -31,7 +31,7 @@ $STD apt-get -y install mosquitto-clients
 msg_ok "Installed Mosquitto MQTT Broker"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

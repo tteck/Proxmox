@@ -117,13 +117,9 @@ motd_ssh() {
 }
 
 customize() {
+  if [[ "$PASSWORD" == "" ]]; then
   msg_info "Customizing Container"
   bash -c "passwd -d root" >/dev/null 2>&1
   msg_ok "Customized Container"
-}
-
-root() {
-  if ! getent shadow root | grep -q '^root:[^:]*:\?\$'; then
-    customize
   fi
 }

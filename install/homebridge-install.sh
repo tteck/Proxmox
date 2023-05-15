@@ -32,7 +32,7 @@ $STD apt-get install -y homebridge
 msg_info "Installed Homebridge"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

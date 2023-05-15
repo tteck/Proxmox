@@ -24,7 +24,7 @@ $STD bash <(curl -fsSL https://iobroker.net/install.sh)
 msg_ok "Installed ioBroker"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

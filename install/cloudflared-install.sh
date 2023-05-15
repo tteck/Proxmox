@@ -28,7 +28,7 @@ $STD apt-get install -y cloudflared
 msg_ok "Installed Cloudflared"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

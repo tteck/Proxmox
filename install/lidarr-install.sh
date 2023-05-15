@@ -51,7 +51,7 @@ systemctl enable --now -q lidarr
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 rm -rf Lidarr.master.*.tar.gz

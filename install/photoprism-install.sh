@@ -23,7 +23,6 @@ $STD apt-get install -y git
 $STD apt-get install -y gnupg
 $STD apt-get install -y make
 $STD apt-get install -y zip
-$STD apt-get install -y unzip
 $STD apt-get install -y exiftool
 $STD apt-get install -y ffmpeg
 msg_ok "Installed Dependencies"
@@ -119,7 +118,7 @@ WantedBy=multi-user.target" >$service_path
 msg_ok "Created Service"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

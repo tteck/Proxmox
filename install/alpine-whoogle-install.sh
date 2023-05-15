@@ -49,4 +49,4 @@ rc-update add -q whoogle default
 msg_ok "Installed Alpine-Whoogle"
 
 motd_ssh
-root
+customize

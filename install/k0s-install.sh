@@ -35,7 +35,7 @@ $STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/
 msg_ok "Installed Helm"
 fi
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove

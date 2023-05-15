@@ -42,7 +42,7 @@ omv-confdbadm populate
 msg_ok "Installed OpenMediaVault"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove
