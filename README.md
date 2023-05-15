@@ -4,5 +4,5 @@
 
 <h1><p align="center"><a href="https://tteck.github.io/Proxmox/">Proxmox VE Helper Scripts</a></p></h1>
 <sub><div align="center"> Be cautious and thoroughly evaluate scripts and automation tasks obtained from external sources. </div></sub>
-
+<sub><p align="center"><a href="https://github.com/tteck/Proxmox/blob/main/CODE-AUDIT.md">Be cautious and thoroughly evaluate scripts and automation tasks obtained from external sources.</a></p></sub>
 <sub><div align="center"> Proxmox® is a registered trademark of Proxmox Server Solutions GmbH. </div></sub>
