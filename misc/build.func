@@ -1,9 +1,10 @@
 variables() {
-  NSAPP=$(echo ${APP,,} | tr -d ' ')
-  var_install="${NSAPP}-install"
-  INTEGER='^[0-9]+([.][0-9]+)?$'
+  NSAPP=$(echo ${APP,,} | tr -d ' ')  # This function sets the NSAPP variable by converting the value of the APP variable to lowercase and removing any spaces.
+  var_install="${NSAPP}-install"      # sets the var_install variable by appending "-install" to the value of NSAPP.
+  INTEGER='^[0-9]+([.][0-9]+)?$'      # it defines the INTEGER regular expression pattern.
 }
 
+# This function sets various color variables using ANSI escape codes for formatting text in the terminal.
 color() {
   YW=$(echo "\033[33m")
   BL=$(echo "\033[36m")
@@ -18,11 +19,13 @@ color() {
   HOLD="-"
 }
 
+# This function enables error handling in the script by setting options and defining a trap for the ERR signal.
 catch_errors() {
   set -Eeuo pipefail
   trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 }
 
+# This function is called when an error occurs. It receives the exit code, line number, and command that caused the error, and displays an error message.
 error_handler() {
   local exit_code="$?"
   local line_number="$1"
@@ -31,21 +34,25 @@ error_handler() {
   echo -e "\n$error_message\n"
 }
 
+# This function displays an informational message with a yellow color.
 msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
+# This function displays a success message with a green color.
 msg_ok() {
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
+# This function displays an error message with a red color.
 msg_error() {
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
+# This function checks the version of Proxmox Virtual Environment (PVE) and exits if the version is not supported.
 pve_check() {
   if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
     echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
@@ -56,6 +63,7 @@ pve_check() {
   fi
 }
 
+# This function checks the system architecture and exits if it's not "amd64".
 arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
     echo -e "\n ${CROSS} This script will not work with PiMox! \n"
@@ -65,6 +73,7 @@ arch_check() {
   fi
 }
 
+# This function checks if the script is running through SSH and prompts the user to confirm if they want to proceed or exit.
 ssh_check() {
   if command -v pveversion >/dev/null 2>&1; then
     if [ -n "${SSH_CLIENT:+x}" ]; then
@@ -78,6 +87,7 @@ ssh_check() {
   fi
 }
 
+# This function displays the default values for various settings.
 echo_default() {
   echo -e "${DGN}Using Distribution: ${BGN}$var_os${CL}"
   echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
@@ -105,12 +115,14 @@ echo_default() {
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
 
+# This function is called when the user decides to exit the script. It clears the screen and displays an exit message.
 exit-script() {
   clear
   echo -e "⚠  User exited script \n"
   exit
 }
 
+# This function allows the user to configure advanced settings for the script.
 advanced_settings() {
   whiptail --msgbox --title "Here is an instructional tip:" "To make a selection, use the Spacebar." 8 58
   whiptail --msgbox --title "Default distribution for $APP" "${var_os} \n${var_version} \n" 8 58
@@ -433,6 +445,7 @@ start() {
   fi
 }
 
+# This function collects user settings and integrates all the collected information.
 build_container() {
   if [ "$VERB" == "yes" ]; then set -x; fi
 
@@ -485,6 +498,7 @@ build_container() {
     -unprivileged $CT_TYPE
     $PW
   "
+  # This executes create_lxc.sh and creates the container and .conf file
   bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
@@ -519,6 +533,7 @@ EOF
     fi
   fi
 
+# This starts the container and executes <app>-install.sh
   msg_info "Starting LXC Container"
   pct start "$CTID"
   msg_ok "Started LXC Container"
@@ -530,6 +545,7 @@ EOF
 
 }
 
+# This function sets the description of the container.
 description() {
   IP=$(pct exec "$CTID" ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
   pct set "$CTID" -description "# ${APP} LXC
