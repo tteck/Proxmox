@@ -464,6 +464,7 @@ build_container() {
   fi
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
+  export PASSWORD="$PW"
   export VERBOSE="$VERB"
   export SSH_ROOT="${SSH}"
   export CTID="$CT_ID"
