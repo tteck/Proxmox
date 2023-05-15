@@ -5,7 +5,10 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
+# This sets verbose mode if the global variable is set to "yes"
 if [ "$VERBOSE" == "yes" ]; then set -x; fi
+
+# This function sets color variables for formatting output in the terminal
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
 RD=$(echo "\033[01;31m")
@@ -15,8 +18,12 @@ CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
 HOLD="-"
+
+# This sets error handling options and defines the error_handler function to handle errors
 set -Eeuo pipefail
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
+
+# This function handles errors
 function error_handler() {
   local exit_code="$?"
   local line_number="$1"
@@ -24,20 +31,26 @@ function error_handler() {
   local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
   echo -e "\n$error_message\n"
 }
+
+# This function prints an informational message
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
+# This function prints a success message
 function msg_ok() {
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+
+# This function prints an error message
 function msg_error() {
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
+# This checks for the presence of valid Container Storage and Template Storage locations
 msg_info "Validating Storage"
 VALIDCT=$(pvesm status -content rootdir | awk 'NR>1')
 if [ -z "$VALIDCT" ]; then
@@ -50,6 +63,7 @@ if [ -z "$VALIDTMP" ]; then
   exit 1
 fi
 
+# This function is used to select the storage class and determine the corresponding storage content type and label.
 function select_storage() {
   local CLASS=$1
   local CONTENT
@@ -65,7 +79,8 @@ function select_storage() {
     ;;
   *) false || exit "Invalid storage class." ;;
   esac
-
+  
+  # This Queries all storage locations
   local -a MENU
   while read -r line; do
     local TAG=$(echo $line | awk '{print $1}')
@@ -78,7 +93,8 @@ function select_storage() {
     fi
     MENU+=("$TAG" "$ITEM" "OFF")
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
-
+  
+  # Select storage location
   if [ $((${#MENU[@]} / 3)) -eq 1 ]; then
     printf ${MENU[0]}
   else
@@ -93,32 +109,40 @@ function select_storage() {
   fi
 }
 
+# Test if required variables are set
 [[ "${CTID:-}" ]] || exit "You need to set 'CTID' variable."
 [[ "${PCT_OSTYPE:-}" ]] || exit "You need to set 'PCT_OSTYPE' variable."
 
+# Test if ID is valid
 [ "$CTID" -ge "100" ] || exit "ID cannot be less than 100."
 
+# Test if ID is in use
 if pct status $CTID &>/dev/null; then
   echo -e "ID '$CTID' is already in use."
   unset CTID
   exit "Cannot use ID that is already in use."
 fi
 
+# Get template storage
 TEMPLATE_STORAGE=$(select_storage template) || exit
 msg_ok "Using ${BL}$TEMPLATE_STORAGE${CL} ${GN}for Template Storage."
 
+# Get container storage
 CONTAINER_STORAGE=$(select_storage container) || exit
 msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
 
+# Update LXC template list
 msg_info "Updating LXC Template List"
 pveam update >/dev/null
 msg_ok "Updated LXC Template List"
 
+# Get LXC template string
 TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
 mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
 [ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
 TEMPLATE="${TEMPLATES[-1]}"
 
+# Download LXC template if needed
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_info "Downloading LXC Template"
   pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
@@ -126,12 +150,14 @@ if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
   msg_ok "Downloaded LXC Template"
 fi
 
+# Combine all options
 DEFAULT_PCT_OPTIONS=(
   -arch $(dpkg --print-architecture))
 
 PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
 [[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=(-rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8})
 
+# Create container
 msg_info "Creating LXC Container"
 pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
   exit "A problem occured while trying to create container."
