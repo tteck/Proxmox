@@ -60,7 +60,7 @@ intel() {
   msg_ok "Downloaded the latest Intel Processor Microcode Package"
 
   msg_info "Installing the Intel Processor Microcode (Patience)"
-  dpkg -i intel-microcode_3.20230214.1_amd64.deb &>/dev/null
+  dpkg -i intel-microcode_3.20230512.1_amd64.deb &>/dev/null
   msg_ok "Installed the Intel Processor Microcode"
 
   msg_info "Cleaning up"
