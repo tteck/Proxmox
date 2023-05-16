@@ -64,7 +64,7 @@ intel() {
   msg_ok "Installed the Intel Processor Microcode"
 
   msg_info "Cleaning up"
-  rm intel-microcode_3.20230214.1_amd64.deb
+  rm intel-microcode_3.20230512.1_amd64.deb
   msg_ok "Cleaned"
   
   echo -e "\n To apply the changes, the system will need to be rebooted.\n"
