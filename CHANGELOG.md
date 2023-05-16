@@ -2,6 +2,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-05-16
+
+### Changed
+
+- **Proxmox VE LXC Updater**
+  - Add information about the boot disk, which provides an easy way to determine if you need to expand the disk.
+
 ## 2023-05-13
 
 ### Changed
