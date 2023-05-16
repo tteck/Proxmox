@@ -56,7 +56,7 @@ intel() {
   msg_ok "Installed iucode-tool"
   
   msg_info "Downloading the latest Intel Processor Microcode Package for Linux"
-  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230214.1_amd64.deb
+  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230512.1_amd64.deb
   msg_ok "Downloaded the latest Intel Processor Microcode Package"
 
   msg_info "Installing the Intel Processor Microcode (Patience)"
