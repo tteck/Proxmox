@@ -8,11 +8,11 @@
 function header_info {
     cat <<"EOF"
     __ __                     __   ________               
-   / //_/__  _________  ___  / /  / ____/ /__  ____ _____ 
+   / //_/__  _________  ___  / /  / ____/ /__  ____ _____
   / ,< / _ \/ ___/ __ \/ _ \/ /  / /   / / _ \/ __ `/ __ \
  / /| /  __/ /  / / / /  __/ /  / /___/ /  __/ /_/ / / / /
-/_/ |_\___/_/  /_/ /_/\___/_/   \____/_/\___/\__,_/_/ /_/ 
-                                                          
+/_/ |_\___/_/  /_/ /_/\___/_/   \____/_/\___/\__,_/_/ /_/
+
 EOF
 }
 set -euo pipefail
@@ -69,9 +69,9 @@ function other_kernel() {
         echo -e "\nAn Active PVE Kernel is required to use Kernel Clean\n"
         exit 1
     fi
-    if [[ "$current_kernel" == *"6.1"* ]]; then
+    if [[ "$current_kernel" == *"6.1"* || "$current_kernel" == *"6.2"* ]]; then
         echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
-        echo -e "\nAs 5.15 is the current default kernel in PVE 7.3 the package management directly depends on it, it's not possible to use this script while running 6.1 kernels. (the script tries to remove ALL old kernels) \n"
+        echo -e "\nThe script cannot be used when running opt-in kernels. \nProxmox VE's package management relies directly on the current default kernel, which is 5.15. \nTherefore, it is not possible to utilize this script. In this case, you should use autoremove instead. \n`apt-get autoremove`\n"
         exit 1
     fi
 }
