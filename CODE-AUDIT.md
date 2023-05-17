@@ -1,3 +1,5 @@
+<h3><div align="center">Exploring the Scripts and Steps Involved in an Application LXC Installation</div></h3>
+
 In the case of the AdGuard Home LXC, the process involves running multiple scripts for each application or service.<br>
 Initially, the [adguard.sh](https://github.com/tteck/Proxmox/blob/main/ct/adguard.sh) script is executed to collect system parameters.<br>
 Next, the [build.func](https://github.com/tteck/Proxmox/blob/main/misc/build.func) script adds user settings and integrates all the collected information.<br>
