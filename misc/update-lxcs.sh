@@ -10,10 +10,10 @@ clear
 cat <<"EOF"
    __  __          __      __          __   _  ________
   / / / /___  ____/ /___ _/ /____     / /  | |/ / ____/
- / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /     
-/ /_/ / /_/ / /_/ / /_/ / /_/  __/  / /___/   / /___   
-\____/ .___/\__,_/\__,_/\__/\___/  /_____/_/|_\____/   
-    /_/                                                
+ / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /
+/ /_/ / /_/ / /_/ / /_/ / /_/  __/  / /___/   / /___
+\____/ .___/\__,_/\__,_/\__/\___/  /_____/_/|_\____/
+    /_/
 
 EOF
 }
@@ -39,10 +39,14 @@ function update_container() {
   container=$1
   header_info
   name=$(pct exec "$container" hostname)
-  disk_info=$(pct exec "$container" df /boot | awk 'NR==2{gsub("%","",$5); printf "%s %.1fG %.1fG %.1fG", $5, $3/1024/1024, $2/1024/1024, $4/1024/1024 }')
-  read -ra disk_info_array <<< "$disk_info"
-  echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
   os=$(pct config "$container" | awk '/^ostype/ {print $2}')
+  if [[ "$os" == "ubuntu" || "$os" == "debian" ]]; then
+    disk_info=$(pct exec "$container" df /boot | awk 'NR==2{gsub("%","",$5); printf "%s %.1fG %.1fG %.1fG", $5, $3/1024/1024, $2/1024/1024, $4/1024/1024 }')
+    read -ra disk_info_array <<< "$disk_info"
+    echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
+  else
+    echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} ${YW}[No disk info for ${os}]${CL}\n"
+  fi
   case "$os" in
     alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
     archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
