@@ -2,6 +2,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2023-05-17
+
+### Changed
+
+- **Alpine-AdGuard Home LXC**
+  - Removed, it wasn't installed through the Alpine package manager.
+- **Alpine-Whoogle LXC**
+  - Removed, it wasn't installed through the Alpine package manager.
+
 ## 2023-05-16
 
 ### Changed
