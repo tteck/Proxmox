@@ -45,7 +45,7 @@ function update_container() {
     read -ra disk_info_array <<< "$disk_info"
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
   else
-    echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} ${YW}[No disk info for ${os}]${CL}\n"
+    echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}[No disk info for ${os}]${CL}\n"
   fi
   case "$os" in
     alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
