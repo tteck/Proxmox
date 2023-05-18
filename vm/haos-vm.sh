@@ -10,9 +10,9 @@ function header_info {
   cat <<"EOF"
     __  __                        ___              _      __              __     ____  _____
    / / / /___  ____ ___  ___     /   |  __________(_)____/ /_____ _____  / /_   / __ \/ ___/
-  / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \ 
- / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ / 
-/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/  
+  / /_/ / __ \/ __ `__ \/ _ \   / /| | / ___/ ___/ / ___/ __/ __ `/ __ \/ __/  / / / /\__ \
+ / __  / /_/ / / / / / /  __/  / ___ |(__  |__  ) (__  ) /_/ /_/ / / / / /_   / /_/ /___/ /
+/_/ /_/\____/_/ /_/ /_/\___/  /_/  |_/____/____/_/____/\__/\__,_/_/ /_/\__/   \____//____/
 
 EOF
 }
@@ -168,17 +168,14 @@ function advanced_settings() {
     if VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
       if [ -z "$VMID" ]; then
         VMID="$NEXTID"
-        echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
-        break
-      else
-        if pct status "$VMID" &>/dev/null || qm status "$VMID" &>/dev/null; then
-          echo -e "${CROSS}${RD} ID $VMID is already in use${CL}"
-          sleep 2
-          continue
-        fi
-        echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
-        break
       fi
+      if pct status "$VMID" &>/dev/null || qm status "$VMID" &>/dev/null; then
+        echo -e "${CROSS}${RD} ID $VMID is already in use${CL}"
+        sleep 2
+        continue
+      fi
+      echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
+      break
     else
       exit-script
     fi
