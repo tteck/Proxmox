@@ -1,6 +1,8 @@
 <a href="https://tteck.github.io/Proxmox/"><img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username=tteck&theme=blue-green" height="130"/></a>
 # Change Log
-All notable changes to this project will be documented in this file.
+**All notable changes to this project will be documented in this file.**<br>
+
+- All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
 ## 2023-05-17
 
