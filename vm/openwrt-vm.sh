@@ -209,7 +209,7 @@ function advanced_settings() {
   else
     exit
   fi
-  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 1024 --title "RAM" 3>&1 1>&2 2>&3)
+  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 256 --title "RAM" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
