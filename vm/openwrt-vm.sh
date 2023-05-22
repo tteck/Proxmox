@@ -387,6 +387,7 @@ qm set $VMID \
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "OpenWRT VM ${CL}${BL}(${HN})"
+msg_info "Pre-configuring network interfaces"
 qm start $VMID
 sleep 15
 send_line_to_vm ""
@@ -409,6 +410,7 @@ until qm status $VMID | grep -q "stopped"
 do
   sleep 2
 done
+msg_info "Adding bridge interface"
 qm set $VMID \
   -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
   -net1 virtio,bridge=${LAN_BRG},macaddr=${LAN_MAC}${LAN_VLAN}$MTU >/dev/null 2>/dev/null
