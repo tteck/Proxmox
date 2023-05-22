@@ -66,68 +66,68 @@ function cleanup() {
 }
 function send_line_to_vm() {
   echo -e "${DGN}Sending line: ${YW}$1${CL}"
-  for ((i=0; i<${#1}; i++)); do
+  for ((i = 0; i < ${#1}; i++)); do
     character=${1:i:1}
     case $character in
-      " ") character="spc";;
-      "-") character="minus";;
-      "=") character="equal";;
-      ",") character="comma";;
-      ".") character="dot";;
-      "/") character="slash";;
-      "'") character="apostrophe";;
-      ";") character="semicolon";;
-      '\') character="backslash";;
-      '`') character="grave_accent";;
-      "[") character="bracket_left";;
-      "]") character="bracket_right";;
-      "_") character="shift-minus";;
-      "+") character="shift-equal";;
-      "?") character="shift-slash";;
-      "<") character="shift-comma";;
-      ">") character="shift-dot";;
-      '"') character="shift-apostrophe";;
-      ":") character="shift-semicolon";;
-      "|") character="shift-backslash";;
-      "~") character="shift-grave_accent";;
-      "{") character="shift-bracket_left";;
-      "}") character="shift-bracket_right";;
-      "A") character="shift-a";;
-      "B") character="shift-b";;
-      "C") character="shift-c";;
-      "D") character="shift-d";;
-      "E") character="shift-e";;
-      "F") character="shift-f";;
-      "G") character="shift-g";;
-      "H") character="shift-h";;
-      "I") character="shift-i";;
-      "J") character="shift-j";;
-      "K") character="shift-k";;
-      "L") character="shift-l";;
-      "M") character="shift-m";;
-      "N") character="shift-n";;
-      "O") character="shift-o";;
-      "P") character="shift-p";;
-      "Q") character="shift-q";;
-      "R") character="shift-r";;
-      "S") character="shift-s";;
-      "T") character="shift-t";;
-      "U") character="shift-u";;
-      "V") character="shift-v";;
-      "W") character="shift-w";;
-      "X") character="shift=x";;
-      "Y") character="shift-y";;
-      "Z") character="shift-z";;
-      "!") character="shift-1";;
-      "@") character="shift-2";;
-      "#") character="shift-3";;
-      '$') character="shift-4";;
-      "%") character="shift-5";;
-      "^") character="shift-6";;
-      "&") character="shift-7";;
-      "*") character="shift-8";;
-      "(") character="shift-9";;
-      ")") character="shift-0";;
+    " ") character="spc" ;;
+    "-") character="minus" ;;
+    "=") character="equal" ;;
+    ",") character="comma" ;;
+    ".") character="dot" ;;
+    "/") character="slash" ;;
+    "'") character="apostrophe" ;;
+    ";") character="semicolon" ;;
+    '\') character="backslash" ;;
+    '`') character="grave_accent" ;;
+    "[") character="bracket_left" ;;
+    "]") character="bracket_right" ;;
+    "_") character="shift-minus" ;;
+    "+") character="shift-equal" ;;
+    "?") character="shift-slash" ;;
+    "<") character="shift-comma" ;;
+    ">") character="shift-dot" ;;
+    '"') character="shift-apostrophe" ;;
+    ":") character="shift-semicolon" ;;
+    "|") character="shift-backslash" ;;
+    "~") character="shift-grave_accent" ;;
+    "{") character="shift-bracket_left" ;;
+    "}") character="shift-bracket_right" ;;
+    "A") character="shift-a" ;;
+    "B") character="shift-b" ;;
+    "C") character="shift-c" ;;
+    "D") character="shift-d" ;;
+    "E") character="shift-e" ;;
+    "F") character="shift-f" ;;
+    "G") character="shift-g" ;;
+    "H") character="shift-h" ;;
+    "I") character="shift-i" ;;
+    "J") character="shift-j" ;;
+    "K") character="shift-k" ;;
+    "L") character="shift-l" ;;
+    "M") character="shift-m" ;;
+    "N") character="shift-n" ;;
+    "O") character="shift-o" ;;
+    "P") character="shift-p" ;;
+    "Q") character="shift-q" ;;
+    "R") character="shift-r" ;;
+    "S") character="shift-s" ;;
+    "T") character="shift-t" ;;
+    "U") character="shift-u" ;;
+    "V") character="shift-v" ;;
+    "W") character="shift-w" ;;
+    "X") character="shift=x" ;;
+    "Y") character="shift-y" ;;
+    "Z") character="shift-z" ;;
+    "!") character="shift-1" ;;
+    "@") character="shift-2" ;;
+    "#") character="shift-3" ;;
+    '$') character="shift-4" ;;
+    "%") character="shift-5" ;;
+    "^") character="shift-6" ;;
+    "&") character="shift-7" ;;
+    "*") character="shift-8" ;;
+    "(") character="shift-9" ;;
+    ")") character="shift-0" ;;
     esac
     qm sendkey $VMID "$character"
   done
@@ -406,8 +406,7 @@ send_line_to_vm "uci set firewall.@zone[1].forward='ACCEPT'"
 send_line_to_vm "uci commit"
 send_line_to_vm "halt"
 msg_ok "Pre-configured network interfaces"
-until qm status $VMID | grep -q "stopped"
-do
+until qm status $VMID | grep -q "stopped"; do
   sleep 2
 done
 msg_info "Adding bridge interface"
