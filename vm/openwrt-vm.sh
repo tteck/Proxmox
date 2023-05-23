@@ -8,21 +8,21 @@
 # Based on work from https://i12bretro.github.io/tutorials/0405.html
 
 function header_info {
+  clear
   cat <<"EOF"
-  _______                     ________        __
- |       |.-----.-----.-----.|  |  |  |.----.|  |_
- |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
- |_______||   __|_____|__|__||________||__|  |____|
-          |__| W I R E L E S S   F R E E D O M
- -----------------------------------------------------
+   ____                 _       __     __
+  / __ \____  ___  ____| |     / /____/ /_
+ / / / / __ \/ _ \/ __ \ | /| / / ___/ __/
+/ /_/ / /_/ /  __/ / / / |/ |/ / /  / /_
+\____/ .___/\___/_/ /_/|__/|__/_/   \__/
+    /_/ W I R E L E S S   F R E E D O M
 
 EOF
 }
-clear
 header_info
 echo -e "Loading..."
-GEN_MAC=$(echo '00 60 2f'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
-GEN_MAC_LAN=$(echo '00 60 2e'$(od -An -N3 -t xC /dev/urandom) | sed -e 's/ /:/g' | tr '[:lower:]' '[:upper:]')
+GEN_MAC=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
+GEN_MAC_LAN=02:$(openssl rand -hex 5 | awk '{print toupper($0)}' | sed 's/\(..\)/\1:/g; s/.$//')
 NEXTID=$(pvesh get /cluster/nextid)
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
@@ -35,35 +35,33 @@ CL=$(echo "\033[m")
 BFR="\\r\\033[K"
 HOLD="-"
 CM="${GN}✓${CL}"
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
+CROSS="${RD}✗${CL}"
+set -Eeuo pipefail
+trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 trap cleanup EXIT
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occurred."
-  local msg="${1:-$reason}"
-  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  [ ! -z ${VMID-} ] && cleanup_vmid
-  exit $EXIT
+function error_handler() {
+  local exit_code="$?"
+  local line_number="$1"
+  local command="$2"
+  local error_message="${RD}[ERROR]${CL} in line ${RD}$line_number${CL}: exit code ${RD}$exit_code${CL}: while executing command ${YW}$command${CL}"
+  echo -e "\n$error_message\n"
+  cleanup_vmid
 }
+
 function cleanup_vmid() {
-  if $(qm status $VMID &>/dev/null); then
-    if [ "$(qm status $VMID | awk '{print $2}')" == "running" ]; then
-      qm stop $VMID
-    fi
-    qm destroy $VMID
+  if qm status $VMID &>/dev/null; then
+    qm stop $VMID &>/dev/null
+    qm destroy $VMID &>/dev/null
   fi
 }
+
 function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
+
+TEMP_DIR=$(mktemp -d)
+pushd $TEMP_DIR >/dev/null
 function send_line_to_vm() {
   echo -e "${DGN}Sending line: ${YW}$1${CL}"
   for ((i = 0; i < ${#1}; i++)); do
@@ -136,179 +134,265 @@ function send_line_to_vm() {
 
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [ $(pveversion | grep "pve-manager/7" | wc -l) -ne 1 ]; then
-  echo "⚠ This version of Proxmox Virtual Environment is not supported"
-  echo "Requires PVE Version: 7.XX"
-  echo "Exiting..."
-  sleep 3
-  exit
-fi
-if (whiptail --title "OpenWRT VM" --yesno "This will create a New OpenWRT VM. Proceed?" 10 58); then
-  echo "User selected Yes"
+
+if (whiptail --title "OpenWrt VM" --yesno "This will create a New OpenWrt VM. Proceed?" 10 58); then
+  :
 else
-  clear
-  echo -e "⚠ User exited script \n"
-  exit
+  header_info && echo -e "⚠ User exited script \n" && exit
 fi
 
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
 }
+
 function msg_ok() {
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
+
+function msg_error() {
+  local msg="$1"
+  echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
+}
+
+function pve_check() {
+  if [ $(pveversion | grep -c "pve-manager/7\.[2-9]") -eq 0 ]; then
+    echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+    echo -e "Requires PVE Version 7.2 or higher"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
+
+function arch_check() {
+  if [ "$(dpkg --print-architecture)" != "amd64" ]; then
+    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
+}
+
+function ssh_check() {
+  if command -v pveversion >/dev/null 2>&1; then
+    if [ -n "${SSH_CLIENT:+x}" ]; then
+      if whiptail --defaultno --title "SSH DETECTED" --yesno "It's suggested to use the Proxmox shell instead of SSH, since SSH can create issues while gathering variables. Would you like to proceed with using SSH?" 10 62; then
+        echo "you've been warned"
+      else
+        clear
+        exit
+      fi
+    fi
+  fi
+}
+
+function exit-script() {
+  clear
+  echo -e "⚠  User exited script \n"
+  exit
+}
+
 function default_settings() {
-  echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
   VMID=$NEXTID
-  echo -e "${DGN}Using Hostname: ${BGN}openwrt${CL}"
   HN=openwrt
-  echo -e "${DGN}Allocated Cores: ${BGN}1${CL}"
   CORE_COUNT="1"
-  echo -e "${DGN}Allocated RAM: ${BGN}256${CL}"
   RAM_SIZE="256"
-  echo -e "${DGN}Using WAN Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
-  echo -e "${DGN}Using WAN VLAN: ${BGN}Default${CL}"
   VLAN=""
-  echo -e "${DGN}Using WAN MAC Address: ${BGN}$GEN_MAC${CL}"
   MAC=$GEN_MAC
-  echo -e "${DGN}Using LAN MAC Address: ${BGN}$GEN_MAC_LAN${CL}"
   LAN_MAC=$GEN_MAC_LAN
-  echo -e "${DGN}Using LAN Bridge: ${BGN}vmbr0${CL}"
   LAN_BRG="vmbr0"
-  echo -e "${DGN}Using LAN VLAN: ${BGN}999${CL}"
   LAN_VLAN=",tag=999"
-  echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   MTU=""
-  echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
   START_VM="yes"
+  echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
+  echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
+  echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
+  echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
+  echo -e "${DGN}Using WAN Bridge: ${BGN}${BRG}${CL}"
+  echo -e "${DGN}Using WAN VLAN: ${BGN}Default${CL}"
+  echo -e "${DGN}Using WAN MAC Address: ${BGN}${MAC}${CL}"
+  echo -e "${DGN}Using LAN MAC Address: ${BGN}${LAN_MAC}${CL}"
+  echo -e "${DGN}Using LAN Bridge: ${BGN}${LAN_BRG}${CL}"
+  echo -e "${DGN}Using LAN VLAN: ${BGN}999${CL}"
+  echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
+  echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
   echo -e "${BL}Creating a OpenWRT VM using the above default settings${CL}"
 }
+
 function advanced_settings() {
-  VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Virtual Machine ID: ${BGN}$VMID${CL}"
+  while true; do
+    if VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+      if [ -z "$VMID" ]; then
+        VMID="$NEXTID"
+      fi
+      if pct status "$VMID" &>/dev/null || qm status "$VMID" &>/dev/null; then
+        echo -e "${CROSS}${RD} ID $VMID is already in use${CL}"
+        sleep 2
+        continue
+      fi
+      echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"
+      break
+    else
+      exit-script
+    fi
+  done
+
+  if VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 openwrt --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $VM_NAME ]; then
+      HN="openwrt"
+      echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+    else
+      HN=$(echo ${VM_NAME,,} | tr -d ' ')
+      echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 openwrt --title "HOSTNAME" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    HN=$(echo ${VM_NAME,,} | tr -d ' ')
-    echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+
+  if CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 1 --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $CORE_COUNT ]; then
+      CORE_COUNT="1"
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+    else
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 1 --title "CORE COUNT" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+
+  if RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 256 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $RAM_SIZE ]; then
+      RAM_SIZE="256"
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+    else
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 256 --title "RAM" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+
+  if BRG=$(whiptail --inputbox "Set a WAN Bridge" 8 58 vmbr0 --title "WAN BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $BRG ]; then
+      BRG="vmbr0"
+      echo -e "${DGN}Using WAN Bridge: ${BGN}$BRG${CL}"
+    else
+      echo -e "${DGN}Using WAN Bridge: ${BGN}$BRG${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  BRG=$(whiptail --inputbox "Set a WAN Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
+
+  if LAN_BRG=$(whiptail --inputbox "Set a LAN Bridge" 8 58 vmbr0 --title "LAN BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $LAN_BRG ]; then
+      LAN_BRG="vmbr0"
+      echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
+    else
+      echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  LAN_BRG=$(whiptail --inputbox "Set a LAN Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    echo -e "${DGN}Using Bridge: ${BGN}$LAN_BRG${CL}"
+
+  if MAC1=$(whiptail --inputbox "Set a WAN MAC Address" 8 58 $GEN_MAC --title "WAN MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $MAC1 ]; then
+      MAC="$GEN_MAC"
+      echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC${CL}"
+    else
+      MAC="$MAC1"
+      echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC1${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  MAC1=$(whiptail --inputbox "Set a WAN MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    MAC="$MAC1"
-    echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC1${CL}"
+
+  if MAC2=$(whiptail --inputbox "Set a LAN MAC Address" 8 58 $GEN_MAC_LAN --title "LAN MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $MAC2 ]; then
+      LAN_MAC="$GEN_MAC_LAN"
+      echo -e "${DGN}Using LAN MAC Address: ${BGN}$LAN_MAC${CL}"
+    else
+      LAN_MAC="$MAC2"
+      echo -e "${DGN}Using LAN MAC Address: ${BGN}$MAC2${CL}"
+    fi
   else
-    exit
+    exit-script
   fi
-  MAC2=$(whiptail --inputbox "Set a LAN MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
-    LAN_MAC="$MAC2"
-    echo -e "${DGN}Using LAN MAC Address: ${BGN}$MAC2${CL}"
-  else
-    exit
-  fi
-  VLAN1=$(whiptail --inputbox "Set a WAN VLAN tag(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
+
+  if VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "WAN VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $VLAN1 ]; then
-      VLAN1="Default" VLAN=""
-      echo -e "${DGN}Using WAN VLAN tag: ${BGN}$VLAN1${CL}"
+      VLAN1="Default"
+      VLAN=""
+      echo -e "${DGN}Using WAN Vlan: ${BGN}$VLAN1${CL}"
     else
       VLAN=",tag=$VLAN1"
-      echo -e "${DGN}Using WAN VLAN tag: ${BGN}$VLAN1${CL}"
+      echo -e "${DGN}Using WAN Vlan: ${BGN}$VLAN1${CL}"
     fi
+  else
+    exit-script
   fi
-  VLAN2=$(whiptail --inputbox "Set a LAN VLAN tag(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
+
+  if VLAN2=$(whiptail --inputbox "Set a LAN Vlan" 8 58 999 --title "LAN VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $VLAN2 ]; then
-      VLAN2="Default" LAN_VLAN=""
-      echo -e "${DGN}Using LAN VLAN tag: ${BGN}$VLAN2${CL}"
+      VLAN2="999"
+      LAN_VLAN=",tag=$VLAN2"
+      echo -e "${DGN}Using LAN Vlan: ${BGN}$VLAN2${CL}"
     else
       LAN_VLAN=",tag=$VLAN2"
-      echo -e "${DGN}Using LAN VLAN tag: ${BGN}$VLAN2${CL}"
+      echo -e "${DGN}Using LAN Vlan: ${BGN}$VLAN2${CL}"
     fi
+  else
+    exit-script
   fi
-  MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
-  exitstatus=$?
-  if [ $exitstatus = 0 ]; then
+
+  if MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $MTU1 ]; then
-      MTU1="Default" MTU=""
+      MTU1="Default"
+      MTU=""
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     else
       MTU=",mtu=$MTU1"
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
+  else
+    exit-script
   fi
-  if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start OpenWRT VM when completed?" 10 58); then
-    echo -e "${DGN}Start OpenWRT VM when completed: ${BGN}yes${CL}"
+
+  if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
+    echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
-    echo -e "${DGN}Start OpenWRT VM when completed: ${BGN}no${CL}"
+    echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
-  if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create OpenWRT VM?" 10 58); then
-    echo -e "${RD}Creating OpenWRT VM using the above advanced settings${CL}"
+
+  if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create OpenWrt VM?" --no-button Do-Over 10 58); then
+    echo -e "${RD}Creating a OpenWrt VM using the above advanced settings${CL}"
   else
-    clear
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
   fi
 }
+
 function start_script() {
-  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
-    clear
+  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
     echo -e "${BL}Using Default Settings${CL}"
     default_settings
   else
-    clear
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
   fi
 }
+
+arch_check
+pve_check
+ssh_check
 start_script
+
 msg_info "Validating Storage"
 while read -r line; do
   TAG=$(echo $line | awk '{print $1}')
@@ -331,14 +415,14 @@ elif [ $((${#STORAGE_MENU[@]} / 3)) -eq 1 ]; then
 else
   while [ -z "${STORAGE:+x}" ]; do
     STORAGE=$(whiptail --title "Storage Pools" --radiolist \
-      "Which storage pool you would like to use for the OpenWRT VM?\n\n" \
+      "Which storage pool you would like to use for the OpenWrt VM?\n\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
       "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for OpenWRT Disk Image"
+msg_info "Getting URL for OpenWrt Disk Image"
 
 regex='<strong>Current Stable Release - OpenWrt ([^/]*)<\/strong>' && response=$(curl -s https://openwrt.org) && [[ $response =~ $regex ]] && stableVersion="${BASH_REMATCH[1]}"
 URL=https://downloads.openwrt.org/releases/$stableVersion/targets/x86/64/openwrt-$stableVersion-x86-64-generic-ext4-combined.img.gz
@@ -354,7 +438,7 @@ NEWFILE="${FILE%.*}"
 FILE="$NEWFILE"
 mv $FILE ${FILE%.*}
 qemu-img resize -f raw ${FILE%.*} 512M >/dev/null 2>/dev/null
-msg_ok "Resized ${CL}${BL}$FILE${CL}"
+msg_ok "Extracted & Resized OpenWrt Disk Image ${CL}${BL}$FILE${CL}"
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
 nfs | dir)
@@ -365,7 +449,6 @@ nfs | dir)
 btrfs)
   DISK_EXT=".raw"
   DISK_REF="$VMID/"
-  DISK_FORMAT="subvol"
   DISK_IMPORT="-format raw"
   ;;
 esac
@@ -374,22 +457,24 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-msg_ok "Extracted OpenWRT Disk Image"
-msg_info "Creating OpenWRT VM"
+
+msg_info "Creating OpenWrt VM"
 qm create $VMID -cores $CORE_COUNT -memory $RAM_SIZE -name $HN \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci --tablet 0
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
+  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
   -scsi0 ${DISK1_REF},size=512M \
   -boot order=scsi0 \
-  -description "# OpenWRT VM
+  -description "# OpenWrt VM
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
-msg_ok "OpenWRT VM ${CL}${BL}(${HN})"
-msg_info "Pre-configuring network interfaces"
+msg_ok "OpenWrt VM ${CL}${BL}(${HN})"
+msg_info "OpenWrt is being started in order to configure the network interfaces."
 qm start $VMID
 sleep 15
+msg_ok "Network interfaces are being configured as OpenWrt initiates."
 send_line_to_vm ""
 send_line_to_vm "uci delete network.@device[0]"
 send_line_to_vm "uci set network.wan=interface"
@@ -405,22 +490,22 @@ send_line_to_vm "uci set firewall.@zone[1].input='ACCEPT'"
 send_line_to_vm "uci set firewall.@zone[1].forward='ACCEPT'"
 send_line_to_vm "uci commit"
 send_line_to_vm "halt"
-msg_ok "Pre-configured network interfaces"
+msg_ok "Network interfaces have been successfully configured."
 until qm status $VMID | grep -q "stopped"; do
   sleep 2
 done
-msg_info "Adding bridge interface"
+msg_info "Bridge interfaces are being added."
 qm set $VMID \
-  -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
-  -net1 virtio,bridge=${LAN_BRG},macaddr=${LAN_MAC}${LAN_VLAN}$MTU >/dev/null 2>/dev/null
-msg_ok "Added bridge interface"
+  -net0 virtio,bridge=${BRG},macaddr=${MAC}${VLAN}${MTU} \
+  -net1 virtio,bridge=${LAN_BRG},macaddr=${LAN_MAC}${LAN_VLAN}${MTU} >/dev/null 2>/dev/null
+msg_ok "Bridge interfaces have been successfully added."
 if [ "$START_VM" == "yes" ]; then
-  msg_info "Starting OpenWRT VM"
+  msg_info "Starting OpenWrt VM"
   qm start $VMID
-  msg_ok "Started OpenWRT VM"
+  msg_ok "Started OpenWrt VM"
 fi
 VLAN_FINISH=""
-if [ "$VLAN" == "" ] && [ "$LAN_VLAN" != "999" ]; then
+if [ "$VLAN" == "" ] && [ "$VLAN2" != "999" ]; then
   VLAN_FINISH=" Please remember to adjust the VLAN tags to suit your network."
 fi
-msg_ok "Completed Successfully!\n${VLAN_FINISH:-}"
+msg_ok "Completed Successfully!\n${VLAN_FINISH}"
