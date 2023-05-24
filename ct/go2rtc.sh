@@ -53,11 +53,13 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+if [[ ! -d /opt/go2rtc ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating $APP"
+cd /opt/go2rtc
+rm go2rtc_linux_amd64
+wget -q https://github.com/AlexxIT/go2rtc/releases/latest/download/go2rtc_linux_amd64
+chmod +x go2rtc_linux_amd64
+msg_ok "Updated $APP"
 exit
 }
 
