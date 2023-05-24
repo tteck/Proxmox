@@ -55,10 +55,12 @@ function update_script() {
 header_info
 if [[ ! -d /opt/go2rtc ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP"
+systemctl stop go2rtc
 cd /opt/go2rtc
 rm go2rtc_linux_amd64
 wget -q https://github.com/AlexxIT/go2rtc/releases/latest/download/go2rtc_linux_amd64
 chmod +x go2rtc_linux_amd64
+systemctl start go2rtc
 msg_ok "Updated $APP"
 exit
 }
