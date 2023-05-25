@@ -7,7 +7,7 @@ body:
         **IMPORTANT:** Before submitting:
         - Please search through the closed issues to see if the issue you are reporting has already been reported and resolved. If you find a closed issue that addresses your problem, please leave a comment on that issue instead of opening a new one.
         - Switching Linux distributions without verifying that the default settings function properly, may lead to immediate closure.
-        - Failing to run the script in verbose mode to determine the actual issue, while encountering the error message `[ERROR] in line 22: exit code *: while executing command "$@" > /dev/null 2>&1`, may lead to immediate closure.
+        - Failing to run the script in verbose mode to determine the actual issue, while encountering the error message `[ERROR] in line 24: exit code *: while executing command "$@" > /dev/null 2>&1`, may lead to immediate closure.
         - If you have requests for features or scripts, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: textarea
     id: bug
