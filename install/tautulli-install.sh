@@ -25,6 +25,7 @@ msg_info "Installing Tautulli"
 cd /opt
 $STD git clone https://github.com/Tautulli/Tautulli.git
 python3 -m pip install -q -r /opt/Tautulli/requirements.txt
+$STD pip install pyopenssl
 msg_ok "Installed Tautulli"
 
 msg_info "Creating Service"
