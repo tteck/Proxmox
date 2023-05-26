@@ -4,11 +4,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        **IMPORTANT:** Before submitting:
-        - Please search through the closed issues to see if the issue you are reporting has already been reported and resolved. If you find a closed issue that addresses your problem, please leave a comment on that issue instead of opening a new one.
-        - Switching Linux distributions without verifying that the default settings function properly, may lead to immediate closure.
-        - Failing to run the script in verbose mode to determine the actual issue, while encountering the error message `[ERROR] in line 24: exit code *: while executing command "$@" > /dev/null 2>&1`, may lead to immediate closure.
-        - If you have requests for features or scripts, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
+        **IMPORTANT:** Failure to comply with the following guidelines may result in immediate closure.
+        - Prior to submitting, kindly search the closed issues to check if the problem you are reporting has already been addressed and resolved. If you come across a closed issue that pertains to your problem, please leave a comment on that issue instead of creating a new one.
+        - Changing Linux distributions without confirming the proper functioning of default settings.
+        - When encountering the error message `[ERROR] on line 24: exit code *: while executing command "$@" > /dev/null 2>&1`, make sure to run the script in verbose mode to accurately determine the underlying issue.
+        - For questions or feature/script requests, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: textarea
     id: bug
     attributes:
