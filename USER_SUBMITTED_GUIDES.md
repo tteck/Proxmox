@@ -15,3 +15,5 @@
 [Home Assistant: Installing Grafana (LXC) with Let’s Encrypt SSL](https://www.derekseaman.com/2023/04/home-assistant-installing-grafana-lxc.html)
 
 [Proxmox: Plex LXC with Alder Lake Transcoding](https://www.derekseaman.com/2023/04/proxmox-plex-lxc-with-alder-lake-transcoding.html)
+
+[How To Backup Home Assistant In Proxmox](https://smarthomescene.com/guides/how-to-backup-home-assistant-in-proxmox/)
