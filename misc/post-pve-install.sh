@@ -151,7 +151,7 @@ EOF
       case $CHOICE in
       yes)
         msg_info "Installing Proxmox 6.2 kernel"
-        apt install pve-kernel-6.2
+        apt install pve-kernel-6.2 &>/dev/null
         microcode="need"
         msg_ok "Installed Proxmox 6.2 kernel"
         ;;
