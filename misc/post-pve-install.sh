@@ -144,7 +144,7 @@ EOF
   microcode=""
   cpu=$(lscpu | grep -oP 'Vendor ID:\s*\K\S+')
   if [ "$cpu" == "GenuineIntel" ]; then
-    if lscpu | awk '/Model name:.*N/ {exit 0} END {exit 1}'; then
+    if lscpu | grep -qP 'Model name:.*N'; then
       CHOICE=$(whiptail --title "N-SERIES PROCESSOR DETECTED" --menu "\nTo ensure compatibility with Proxmox VE on systems equipped with N-series processors, it is recommended to install the Proxmox 6.2 kernel.\n\nInstall the Proxmox 6.2 kernel now?" 16 58 2 \
         "yes" " " \
         "no" " " 3>&1 1>&2 2>&3)
