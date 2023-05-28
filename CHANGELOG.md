@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-05-27
+
+### Changed
+
+- **Proxmox VE 7 Post Install**
+  - If an Intel N-series processor is detected, the script provides options to install both the Proxmox 6.2 kernel and the Intel microcode.
+
 ## 2023-05-23
 
 ### Changed
