@@ -15,45 +15,35 @@ update_os
 
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y \
-  make \
+  git \
+  curl \
+  sudo \
+  mc \
   build-essential \
-  libjpeg-dev \
-  libpcap-dev \
   libssl-dev \
   zlib1g-dev \
   libbz2-dev \
   libreadline-dev \
   libsqlite3-dev \
-  libmariadb-dev-compat \
-  autoconf \
-  git \
-  curl \
-  sudo \
-  mc \
-  llvm \
   libncursesw5-dev \
   xz-utils \
-  tzdata \
-  bluez \
   tk-dev \
+  llvm \
   libxml2-dev \
   libxmlsec1-dev \
   libffi-dev \
+  liblzma-dev \
+  bluez \
+  libmariadb-dev-compat \
+  libjpeg-dev \
+  autoconf \
   libopenjp2-7 \
   libtiff5 \
   libturbojpeg0-dev \
-  liblzma-dev
+  liblapack3 \
+  liblapack-dev \
+  libatlas-base-dev
 msg_ok "Installed Dependencies"
-
-msg_info "Installing Linux D-Bus Message Broker"
-cat <<EOF >>/etc/apt/sources.list
-deb http://deb.debian.org/debian bullseye-backports main contrib non-free
-deb-src http://deb.debian.org/debian bullseye-backports main contrib non-free
-EOF
-$STD apt-get update
-$STD apt-get -t bullseye-backports install -y dbus-broker
-$STD systemctl enable --now dbus-broker.service
-msg_ok "Installed Linux D-Bus Message Broker"
 
 msg_info "Installing pyenv"
 $STD git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -64,7 +54,7 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)
 msg_ok "Installed pyenv"
 . ~/.bashrc
 set -e
-msg_info "Installing Python 3.11.2"
+msg_info "Installing Python 3.11.2 (Patience)"
 $STD pyenv install 3.11.2
 pyenv global 3.11.2
 msg_ok "Installed Python 3.11.2"
