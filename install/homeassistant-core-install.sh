@@ -33,6 +33,7 @@ $STD apt-get install -y \
   libxmlsec1-dev \
   libffi-dev \
   liblzma-dev \
+  dbus-broker \
   bluez \
   libmariadb-dev-compat \
   libjpeg-dev \
