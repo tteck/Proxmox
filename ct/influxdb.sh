@@ -52,7 +52,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /etc/apt/sources.list.d/influxdata.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -f /etc/apt/sources.list.d/influxdb.list || ! -f /etc/apt/sources.list.d/influxdata.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 wget -q https://repos.influxdata.com/influxdata-archive_compat.key
 cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
