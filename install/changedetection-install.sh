@@ -151,7 +151,7 @@ systemctl enable -q --now changedetection
 msg_ok "Created Services"
 
 motd_ssh
-root
+customize
 
 msg_info "Cleaning up"
 $STD apt-get autoremove
