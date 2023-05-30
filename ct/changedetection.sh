@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="Change Detection"
 var_disk="8"
 var_cpu="2"
-var_ram="512"
+var_ram="1024"
 var_os="debian"
 var_version="11"
 variables
