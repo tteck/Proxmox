@@ -22,10 +22,6 @@ $STD apt-get install -y \
   build-essential \
   dumb-init \
   gconf-service \
-  ffmpeg \  #can find no need
-  libappindicator1 \  #can find no need
-  libappindicator3-1 \  #can find no need
-  libasound2 \  #can find no need
   libatk-bridge2.0-0 \
   libatk1.0-0 \
   libcairo2 \
