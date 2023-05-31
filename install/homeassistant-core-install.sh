@@ -23,6 +23,7 @@ $STD apt-get install -y \
   libssl-dev \
   zlib1g-dev \
   libbz2-dev \
+  libpcap-dev \
   libreadline-dev \
   libsqlite3-dev \
   libncursesw5-dev \
