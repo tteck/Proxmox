@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-06-02
+
+### Changed
+
+- **Proxmox VE 7 Post Install**
+  - In a non-clustered environment, you can choose to disable high availability, which helps save system resources.
+
 ## 2023-05-27
 
 ### Changed
