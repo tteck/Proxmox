@@ -243,11 +243,10 @@ function advanced_settings() {
   if VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 openwrt --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $VM_NAME ]; then
       HN="openwrt"
-      echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
     else
       HN=$(echo ${VM_NAME,,} | tr -d ' ')
-      echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
     fi
+    echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
   else
     exit-script
   fi
@@ -255,10 +254,8 @@ function advanced_settings() {
   if CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 1 --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $CORE_COUNT ]; then
       CORE_COUNT="1"
-      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
-    else
-      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
     fi
+    echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
   else
     exit-script
   fi
@@ -266,10 +263,8 @@ function advanced_settings() {
   if RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 256 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $RAM_SIZE ]; then
       RAM_SIZE="256"
-      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
-    else
-      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
     fi
+    echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
   else
     exit-script
   fi
@@ -277,10 +272,8 @@ function advanced_settings() {
   if BRG=$(whiptail --inputbox "Set a WAN Bridge" 8 58 vmbr0 --title "WAN BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $BRG ]; then
       BRG="vmbr0"
-      echo -e "${DGN}Using WAN Bridge: ${BGN}$BRG${CL}"
-    else
-      echo -e "${DGN}Using WAN Bridge: ${BGN}$BRG${CL}"
     fi
+    echo -e "${DGN}Using WAN Bridge: ${BGN}$BRG${CL}"
   else
     exit-script
   fi
@@ -288,10 +281,8 @@ function advanced_settings() {
   if LAN_BRG=$(whiptail --inputbox "Set a LAN Bridge" 8 58 vmbr0 --title "LAN BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $LAN_BRG ]; then
       LAN_BRG="vmbr0"
-      echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
-    else
-      echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
     fi
+    echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
   else
     exit-script
   fi
@@ -299,11 +290,10 @@ function advanced_settings() {
   if MAC1=$(whiptail --inputbox "Set a WAN MAC Address" 8 58 $GEN_MAC --title "WAN MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $MAC1 ]; then
       MAC="$GEN_MAC"
-      echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC${CL}"
     else
       MAC="$MAC1"
-      echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC1${CL}"
     fi
+    echo -e "${DGN}Using WAN MAC Address: ${BGN}$MAC${CL}"
   else
     exit-script
   fi
@@ -311,24 +301,22 @@ function advanced_settings() {
   if MAC2=$(whiptail --inputbox "Set a LAN MAC Address" 8 58 $GEN_MAC_LAN --title "LAN MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $MAC2 ]; then
       LAN_MAC="$GEN_MAC_LAN"
-      echo -e "${DGN}Using LAN MAC Address: ${BGN}$LAN_MAC${CL}"
     else
       LAN_MAC="$MAC2"
-      echo -e "${DGN}Using LAN MAC Address: ${BGN}$MAC2${CL}"
     fi
+    echo -e "${DGN}Using LAN MAC Address: ${BGN}$LAN_MAC${CL}"
   else
     exit-script
   fi
 
-  if VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "WAN VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+  if VLAN1=$(whiptail --inputbox "Set a WAN Vlan (leave blank for default)" 8 58 --title "WAN VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $VLAN1 ]; then
       VLAN1="Default"
       VLAN=""
-      echo -e "${DGN}Using WAN Vlan: ${BGN}$VLAN1${CL}"
     else
       VLAN=",tag=$VLAN1"
-      echo -e "${DGN}Using WAN Vlan: ${BGN}$VLAN1${CL}"
     fi
+    echo -e "${DGN}Using WAN Vlan: ${BGN}$VLAN1${CL}"
   else
     exit-script
   fi
@@ -337,11 +325,10 @@ function advanced_settings() {
     if [ -z $VLAN2 ]; then
       VLAN2="999"
       LAN_VLAN=",tag=$VLAN2"
-      echo -e "${DGN}Using LAN Vlan: ${BGN}$VLAN2${CL}"
     else
       LAN_VLAN=",tag=$VLAN2"
-      echo -e "${DGN}Using LAN Vlan: ${BGN}$VLAN2${CL}"
     fi
+    echo -e "${DGN}Using LAN Vlan: ${BGN}$VLAN2${CL}"
   else
     exit-script
   fi
@@ -350,22 +337,20 @@ function advanced_settings() {
     if [ -z $MTU1 ]; then
       MTU1="Default"
       MTU=""
-      echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     else
       MTU=",mtu=$MTU1"
-      echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
+    echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
   else
     exit-script
   fi
 
   if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
-    echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
-    echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
+  echo -e "${DGN}Start VM when completed: ${BGN}$START_VM${CL}"
 
   if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create OpenWrt VM?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a OpenWrt VM using the above advanced settings${CL}"
@@ -478,11 +463,11 @@ msg_ok "Network interfaces are being configured as OpenWrt initiates."
 send_line_to_vm ""
 send_line_to_vm "uci delete network.@device[0]"
 send_line_to_vm "uci set network.wan=interface"
-send_line_to_vm "uci set network.wan.device=eth0"
+send_line_to_vm "uci set network.wan.device=eth1"
 send_line_to_vm "uci set network.wan.proto=dhcp"
 send_line_to_vm "uci delete network.lan"
 send_line_to_vm "uci set network.lan=interface"
-send_line_to_vm "uci set network.lan.device=eth1"
+send_line_to_vm "uci set network.lan.device=eth0"
 send_line_to_vm "uci set network.lan.proto=static"
 send_line_to_vm "uci set network.lan.ipaddr=192.168.2.1"
 send_line_to_vm "uci set network.lan.netmask=255.255.255.0"
@@ -496,8 +481,8 @@ until qm status $VMID | grep -q "stopped"; do
 done
 msg_info "Bridge interfaces are being added."
 qm set $VMID \
-  -net0 virtio,bridge=${BRG},macaddr=${MAC}${VLAN}${MTU} \
-  -net1 virtio,bridge=${LAN_BRG},macaddr=${LAN_MAC}${LAN_VLAN}${MTU} >/dev/null 2>/dev/null
+  -net0 virtio,bridge=${LAN_BRG},macaddr=${LAN_MAC}${LAN_VLAN}${MTU} \
+  -net1 virtio,bridge=${BRG},macaddr=${MAC}${VLAN}${MTU} >/dev/null 2>/dev/null
 msg_ok "Bridge interfaces have been successfully added."
 if [ "$START_VM" == "yes" ]; then
   msg_info "Starting OpenWrt VM"
