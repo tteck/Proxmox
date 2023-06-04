@@ -27,14 +27,14 @@ $STD ln -s /usr/local/go/bin/go /usr/local/bin/go
 rm -rf go1.20.1.linux-amd64.tar.gz
 msg_ok "Installed Golang"
 
-msg_info "Installing RSTPtoWEB"
+msg_info "Installing RTSPtoWwb"
 $STD git clone https://github.com/deepch/RTSPtoWeb /opt/rtsptoweb
 cat <<EOF >>/opt/rtsptoweb/start
 #!/bin/bash
 cd /opt/rtsptoweb && GO111MODULE=on go run *.go
 EOF
 chmod +x /opt/rtsptoweb/start
-msg_ok "Installed RSTPtoWEB"
+msg_ok "Installed RTSPtoWeb"
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/rtsptoweb.service"
