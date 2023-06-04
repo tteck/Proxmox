@@ -27,7 +27,7 @@ $STD ln -s /usr/local/go/bin/go /usr/local/bin/go
 rm -rf go1.20.1.linux-amd64.tar.gz
 msg_ok "Installed Golang"
 
-msg_info "Installing RTSPtoWwb"
+msg_info "Installing RTSPtoWeb"
 $STD git clone https://github.com/deepch/RTSPtoWeb /opt/rtsptoweb
 cat <<EOF >>/opt/rtsptoweb/start
 #!/bin/bash
