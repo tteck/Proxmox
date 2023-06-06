@@ -37,7 +37,7 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 
 msg_info "Installing Jellyfin"
-VERSION="$( awk -F'=' '/^UBUNTU_CODENAME=/{ print $NF }' /etc/os-release )"
+VERSION="$( awk -F'=' '/^(UBUNTU_CODENAME|VERSION_CODENAME)=/{ print $NF }' /etc/os-release )"
 # If the keyring directory is absent, create it
 if [[ ! -d /etc/apt/keyrings ]]; then
     mkdir -p /etc/apt/keyrings
