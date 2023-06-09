@@ -26,7 +26,7 @@ $STD apt-get install -y mariadb-server
 msg_ok "Installed MariaDB"
 
 read -r -p "Would you like to add Adminer? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Adminer"
   $STD apt install -y adminer
   $STD a2enconf adminer

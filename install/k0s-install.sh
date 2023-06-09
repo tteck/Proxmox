@@ -29,7 +29,7 @@ k0s config create > /etc/k0s/k0s.yaml
 msg_ok "Installed k0s Kubernetes"
 
 read -r -p "Would you like to add Helm Package Manager? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 msg_info "Installing Helm"
 $STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3)
 msg_ok "Installed Helm"
