@@ -34,7 +34,7 @@ PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
 DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
 
 read -r -p "Would you like to add Portainer? <y/N> " prompt
-if echo "$prompt" | grep -Eq "^(y|yes)$"; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
   docker volume create portainer_data >/dev/null
  $STD docker run -d \
@@ -49,7 +49,7 @@ if echo "$prompt" | grep -Eq "^(y|yes)$"; then
 fi
 
 read -r -p "Would you like to add Docker Compose? <y/N> " prompt
-if echo "$prompt" | grep -Eq "^(y|yes)$"; then
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Docker Compose $DOCKER_COMPOSE_LATEST_VERSION"
   DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
   mkdir -p $DOCKER_CONFIG/cli-plugins
