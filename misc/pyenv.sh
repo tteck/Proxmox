@@ -69,7 +69,7 @@ pyenv install 3.11.1 &>/dev/null
 pyenv global 3.11.1
 msg_ok "Installed Python 3.11.1"
 read -r -p "Would you like to install Home Assistant Beta? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
 msg_info "Installing Home Assistant Beta"
 cat <<EOF >/etc/systemd/system/homeassistant.service
 [Unit]
@@ -98,7 +98,7 @@ hass
 fi
 
 read -r -p "Would you like to install ESPHome Beta? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
 msg_info "Installing ESPHome Beta"
 mkdir /srv/esphome
 cd /srv/esphome
@@ -140,7 +140,7 @@ exec $SHELL
 fi
 
 read -r -p "Would you like to install Matter-Server (Beta)? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
 msg_info "Installing Matter Server"
 apt-get install -y \
 libcairo2-dev \

@@ -48,7 +48,7 @@ $STD systemctl enable --now influxdb
 msg_ok "Installed InfluxDB"
 
 read -r -p "Would you like to add Telegraf? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+if [[ "${prompt,,}" =~ ^(y|yes|Y)$ ]]; then
   msg_info "Installing Telegraf"
   $STD apt-get install -y telegraf
   msg_ok "Installed Telegraf"
