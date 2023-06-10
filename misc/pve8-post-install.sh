@@ -53,7 +53,9 @@ start_routines() {
   case $CHOICE in
   yes)
     msg_info "Disabling 'pve-enterprise' repository"
-    sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/pve-enterprise.list
+    cat <<EOF >/etc/apt/sources.list.d/pve-enterprise.list
+# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+EOF
     msg_ok "Disabled 'pve-enterprise' repository"
     ;;
   no)
