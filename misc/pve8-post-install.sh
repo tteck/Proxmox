@@ -95,6 +95,23 @@ EOF
     ;;
   esac
 
+  CHOICE=$(whiptail --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories.\n \nEnable 'ceph package repositories?" 14 58 2 \
+    "yes" " " \
+    "no" " " 3>&2 2>&1 1>&3)
+  case $CHOICE in
+  yes)
+    msg_info "Enabling 'ceph package repositories'"
+    cat <<EOF >/etc/apt/sources.list.d/ceph.list
+# deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
+deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
+EOF
+    msg_ok "Enabled 'ceph package repositories'"
+    ;;
+  no)
+    msg_error "Selected no to Enabling 'ceph package repositories'"
+    ;;
+  esac
+
   CHOICE=$(whiptail --title "PVETEST" --menu "The 'pvetest' repository can give advanced users access to new features and updates before they are officially released.\n \nAdd (Disabled) 'pvetest' repository?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
