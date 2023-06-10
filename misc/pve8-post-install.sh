@@ -47,21 +47,6 @@ msg_error() {
 
 start_routines() {
   header_info
-  CHOICE=$(whiptail --title "PVE-ENTERPRISE" --menu "The 'pve-enterprise' repository is only available to users who have purchased a Proxmox VE subscription.\n \nDisable 'pve-enterprise' repository?" 14 58 2 \
-    "yes" " " \
-    "no" " " 3>&2 2>&1 1>&3)
-  case $CHOICE in
-  yes)
-    msg_info "Disabling 'pve-enterprise' repository"
-    cat <<EOF >/etc/apt/sources.list.d/pve-enterprise.list
-# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
-EOF
-    msg_ok "Disabled 'pve-enterprise' repository"
-    ;;
-  no)
-    msg_error "Selected no to Disabling 'pve-enterprise' repository"
-    ;;
-  esac
 
   CHOICE=$(whiptail --title "SOURCES" --menu "The package manager will use the correct sources to update and install packages on your Proxmox VE 8 server.\n \nCorrect Proxmox VE 8 sources?" 14 58 2 \
     "yes" " " \
@@ -81,13 +66,29 @@ EOF
     ;;
   esac
 
+  CHOICE=$(whiptail --title "PVE-ENTERPRISE" --menu "The 'pve-enterprise' repository is only available to users who have purchased a Proxmox VE subscription.\n \nDisable 'pve-enterprise' repository?" 14 58 2 \
+    "yes" " " \
+    "no" " " 3>&2 2>&1 1>&3)
+  case $CHOICE in
+  yes)
+    msg_info "Disabling 'pve-enterprise' repository"
+    cat <<EOF >/etc/apt/sources.list.d/pve-enterprise.list
+# deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+EOF
+    msg_ok "Disabled 'pve-enterprise' repository"
+    ;;
+  no)
+    msg_error "Selected no to Disabling 'pve-enterprise' repository"
+    ;;
+  esac
+
   CHOICE=$(whiptail --title "PVE-NO-SUBSCRIPTION" --menu "The 'pve-no-subscription' repository provides access to all of the open-source components of Proxmox VE.\n \nEnable 'pve-no-subscription' repository?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
   yes)
     msg_info "Enabling 'pve-no-subscription' repository"
-    cat <<EOF >>/etc/apt/sources.list
+    cat <<EOF >/etc/apt/sources.list.d/pve-install-repo.list
 deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
 EOF
     msg_ok "Enabled 'pve-no-subscription' repository"
@@ -120,7 +121,7 @@ EOF
   case $CHOICE in
   yes)
     msg_info "Adding 'pvetest' repository and set disabled"
-    cat <<EOF >>/etc/apt/sources.list
+    cat <<EOF >/etc/apt/sources.list.d/pve-test-repo.list
 # deb http://download.proxmox.com/debian/pve bookworm pvetest
 EOF
     msg_ok "Added 'pvetest' repository"
