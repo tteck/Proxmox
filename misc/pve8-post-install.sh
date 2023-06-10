@@ -137,12 +137,14 @@ EOF
       "no" " " 3>&2 2>&1 1>&3)
     case $CHOICE in
     yes)
+      whiptail --msgbox --title "Support Subscriptions" "Supporting the software's development team is essential. Check their official website's Support Subscriptions for pricing. Without their dedicated work, we wouldn't have this exceptional software." 10 58
       msg_info "Disabling subscription nag"
       echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxlib\.js$'; if [ \$? -eq 1 ]; then { echo 'Removing subscription nag from UI...'; sed -i '/data\.status.*{/{s/\!//;s/active/NoMoreNagging/}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; }; fi\"; };" >/etc/apt/apt.conf.d/no-nag-script
       apt --reinstall install proxmox-widget-toolkit &>/dev/null
       msg_ok "Disabled subscription nag (Delete browser cache)"
       ;;
     no)
+      whiptail --msgbox --title "Support Subscriptions" "Supporting the software's development team is essential. Check their official website's Support Subscriptions for pricing. Without their dedicated work, we wouldn't have this exceptional software." 10 58
       msg_error "Selected no to Disabling subscription nag"
       ;;
     esac
