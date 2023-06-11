@@ -137,8 +137,8 @@ EOF
   case $CHOICE in
   yes)
     msg_info "Updating to Proxmox VE 8 (Patience)"
-    apt-get update &>/dev/null
-    apt-get -y dist-upgrade &>/dev/null
+    apt-get update
+    apt-get -y dist-upgrade
     msg_ok "Updated to Proxmox VE 8"
     ;;
   no)
