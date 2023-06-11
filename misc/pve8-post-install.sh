@@ -121,7 +121,7 @@ EOF
   case $CHOICE in
   yes)
     msg_info "Adding 'pvetest' repository and set disabled"
-    cat <<EOF >/etc/apt/sources.list.d/pve-test-repo.list
+    cat <<EOF >/etc/apt/sources.list.d/pvetest-for-beta.list
 # deb http://download.proxmox.com/debian/pve bookworm pvetest
 EOF
     msg_ok "Added 'pvetest' repository"
