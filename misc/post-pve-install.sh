@@ -8,11 +8,11 @@
 header_info() {
   clear
   cat <<"EOF"
-    ____ _    _____________   ____             __     ____           __        ____
-   / __ \ |  / / ____/__  /  / __ \____  _____/ /_   /  _/___  _____/ /_____ _/ / /
-  / /_/ / | / / __/    / /  / /_/ / __ \/ ___/ __/   / // __ \/ ___/ __/ __  / / /
- / ____/| |/ / /___   / /  / ____/ /_/ (__  ) /_   _/ // / / (__  ) /_/ /_/ / / /
-/_/     |___/_____/  /_/  /_/    \____/____/\__/  /___/_/ /_/____/\__/\__,_/_/_/
+    ____ _    ________   ____             __     ____           __        ____
+   / __ \ |  / / ____/  / __ \____  _____/ /_   /  _/___  _____/ /_____ _/ / /
+  / /_/ / | / / __/    / /_/ / __ \/ ___/ __/   / // __ \/ ___/ __/ __ `/ / /
+ / ____/| |/ / /___   / ____/ /_/ (__  ) /_   _/ // / / (__  ) /_/ /_/ / / /
+/_/     |___/_____/  /_/    \____/____/\__/  /___/_/ /_/____/\__/\__,_/_/_/
 
 EOF
 }
@@ -44,38 +44,44 @@ msg_error() {
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
-
 start_routines() {
   header_info
+  VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
+  if lscpu | grep -qP 'Vendor ID:.*GenuineIntel' && lscpu | grep -qP 'Model name:.*N' && [[ "$VERSION" == "bullseye" ]]; then
+    whiptail --msgbox --title "N-SERIES PROCESSOR DETECTED" "To ensure compatibility with Proxmox VE on systems equipped with N-series processors, it is recommended to install Proxmox Virtual Environment 8" 10 58
+  fi
+
+  CHOICE=$(whiptail --title "SOURCES" --menu "The package manager will use the correct sources to update and install packages on your Proxmox VE server.\n \nCorrect Proxmox VE sources?" 14 58 2 \
+    "yes" " " \
+    "no" " " 3>&2 2>&1 1>&3)
+  case $CHOICE in
+  yes)
+    msg_info "Correcting Proxmox VE Sources"
+    cat <<EOF >/etc/apt/sources.list
+deb http://ftp.debian.org/debian $(VERSION) main contrib
+deb http://ftp.debian.org/debian $(VERSION)-updates main contrib
+deb http://security.debian.org/debian-security $(VERSION)-security main contrib
+EOF
+    msg_ok "Corrected Proxmox VE Sources"
+    ;;
+  no)
+    msg_error "Selected no to Correcting Proxmox VE Sources"
+    ;;
+  esac
+
   CHOICE=$(whiptail --title "PVE-ENTERPRISE" --menu "The 'pve-enterprise' repository is only available to users who have purchased a Proxmox VE subscription.\n \nDisable 'pve-enterprise' repository?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
   yes)
     msg_info "Disabling 'pve-enterprise' repository"
-    sed -i 's/^deb/#deb/g' /etc/apt/sources.list.d/pve-enterprise.list
+    cat <<EOF >/etc/apt/sources.list.d/pve-enterprise.list
+# deb https://enterprise.proxmox.com/debian/pve $(VERSION) pve-enterprise
+EOF
     msg_ok "Disabled 'pve-enterprise' repository"
     ;;
   no)
     msg_error "Selected no to Disabling 'pve-enterprise' repository"
-    ;;
-  esac
-
-  CHOICE=$(whiptail --title "SOURCES" --menu "The package manager will use the correct sources to update and install packages on your Proxmox VE 7 server.\n \nCorrect Proxmox VE 7 sources?" 14 58 2 \
-    "yes" " " \
-    "no" " " 3>&2 2>&1 1>&3)
-  case $CHOICE in
-  yes)
-    msg_info "Correcting Proxmox VE 7 Sources"
-    cat <<EOF >/etc/apt/sources.list
-deb http://ftp.debian.org/debian bullseye main contrib
-deb http://ftp.debian.org/debian bullseye-updates main contrib
-deb http://security.debian.org/debian-security bullseye-security main contrib
-EOF
-    msg_ok "Corrected Proxmox VE 7 Sources"
-    ;;
-  no)
-    msg_error "Selected no to Correcting Proxmox VE 7 Sources"
     ;;
   esac
 
@@ -85,8 +91,8 @@ EOF
   case $CHOICE in
   yes)
     msg_info "Enabling 'pve-no-subscription' repository"
-    cat <<EOF >>/etc/apt/sources.list
-deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+    cat <<EOF >/etc/apt/sources.list.d/pve-install-repo.list
+deb http://download.proxmox.com/debian/pve $(VERSION) pve-no-subscription
 EOF
     msg_ok "Enabled 'pve-no-subscription' repository"
     ;;
@@ -95,14 +101,33 @@ EOF
     ;;
   esac
 
+  if [[ "$(VERSION)" == "bookworm" ]]; then
+    CHOICE=$(whiptail --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories.\n \nEnable 'ceph package repositories?" 14 58 2 \
+      "yes" " " \
+      "no" " " 3>&2 2>&1 1>&3)
+    case $CHOICE in
+    yes)
+      msg_info "Enabling 'ceph package repositories'"
+      cat <<EOF >/etc/apt/sources.list.d/ceph.list
+# deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
+deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
+EOF
+      msg_ok "Enabled 'ceph package repositories'"
+      ;;
+    no)
+      msg_error "Selected no to Enabling 'ceph package repositories'"
+      ;;
+    esac
+  fi
+
   CHOICE=$(whiptail --title "PVETEST" --menu "The 'pvetest' repository can give advanced users access to new features and updates before they are officially released.\n \nAdd (Disabled) 'pvetest' repository?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
   yes)
     msg_info "Adding 'pvetest' repository and set disabled"
-    cat <<EOF >>/etc/apt/sources.list
-# deb http://download.proxmox.com/debian/pve bullseye pvetest
+    cat <<EOF >/etc/apt/sources.list.d/pvetest-for-beta.list
+# deb http://download.proxmox.com/debian/pve $(VERSION) pvetest
 EOF
     msg_ok "Added 'pvetest' repository"
     ;;
@@ -117,12 +142,14 @@ EOF
       "no" " " 3>&2 2>&1 1>&3)
     case $CHOICE in
     yes)
+      whiptail --msgbox --title "Support Subscriptions" "Supporting the software's development team is essential. Check their official website's Support Subscriptions for pricing. Without their dedicated work, we wouldn't have this exceptional software." 10 58
       msg_info "Disabling subscription nag"
       echo "DPkg::Post-Invoke { \"dpkg -V proxmox-widget-toolkit | grep -q '/proxmoxlib\.js$'; if [ \$? -eq 1 ]; then { echo 'Removing subscription nag from UI...'; sed -i '/data\.status.*{/{s/\!//;s/active/NoMoreNagging/}' /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js; }; fi\"; };" >/etc/apt/apt.conf.d/no-nag-script
       apt --reinstall install proxmox-widget-toolkit &>/dev/null
       msg_ok "Disabled subscription nag (Delete browser cache)"
       ;;
     no)
+      whiptail --msgbox --title "Support Subscriptions" "Supporting the software's development team is essential. Check their official website's Support Subscriptions for pricing. Without their dedicated work, we wouldn't have this exceptional software." 10 58
       msg_error "Selected no to Disabling subscription nag"
       ;;
     esac
@@ -149,70 +176,33 @@ EOF
     esac
   fi
 
-  CHOICE=$(whiptail --title "UPDATE" --menu "\nUpdate Proxmox VE 7 now?" 11 58 2 \
+  CHOICE=$(whiptail --title "UPDATE" --menu "\nUpdate Proxmox VE now?" 11 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
   yes)
-    msg_info "Updating Proxmox VE 7 (Patience)"
+    msg_info "Updating Proxmox VE (Patience)"
     apt-get update &>/dev/null
     apt-get -y dist-upgrade &>/dev/null
-    msg_ok "Updated Proxmox VE 7"
+    msg_ok "Updated Proxmox VE"
     ;;
   no)
-    msg_error "Selected no to Updating Proxmox VE 7"
+    msg_error "Selected no to Updating Proxmox VE"
     ;;
   esac
 
-  microcode=""
-  if lscpu | grep -qP 'Vendor ID:.*GenuineIntel' && lscpu | grep -qP 'Model name:.*N'; then
-      CHOICE=$(whiptail --title "N-SERIES PROCESSOR DETECTED" --menu "\nTo ensure compatibility with Proxmox VE on systems equipped with N-series processors, it is recommended to install the Proxmox 6.2 kernel.\n\nInstall the Proxmox 6.2 kernel now?" 16 58 2 \
-        "yes" " " \
-        "no" " " 3>&1 1>&2 2>&3)
-      case $CHOICE in
-      yes)
-        msg_info "Installing Proxmox 6.2 kernel"
-        apt-get install -y pve-kernel-6.2 &>/dev/null
-        microcode="need"
-        msg_ok "Installed Proxmox 6.2 kernel"
-        ;;
-      no)
-        msg_error "Selected no to Installing the Proxmox 6.2 kernel"
-        ;;
-      esac
-  fi
-
-  if [ "$microcode" == "need" ]; then
-    CHOICE=$(whiptail --title "INTEL MICROCODE" --menu "\nMicrocode updates can fix hardware bugs, improve performance, and enhance security features of the processor.\n\nInstall the Intel Microcode now?" 16 58 2 \
-      "yes" " " \
-      "no" " " 3>&2 2>&1 1>&3)
-    case $CHOICE in
-    yes)
-      msg_info "Installing Intel Microcode"
-      apt-get install -y iucode-tool &>/dev/null
-      wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230512.1_amd64.deb
-      dpkg -i intel-microcode_3.20230512.1_amd64.deb &>/dev/null
-      rm intel-microcode_3.20230512.1_amd64.deb
-      msg_ok "Installed Intel Microcode"
-      ;;
-    no)
-      msg_error "Selected no to Installing the Intel Microcode"
-      ;;
-    esac
-  fi
-
-  CHOICE=$(whiptail --title "REBOOT" --menu "\nReboot Proxmox VE 7 now? (recommended)" 11 58 2 \
+  CHOICE=$(whiptail --title "REBOOT" --menu "\nReboot Proxmox VE now? (recommended)" 11 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
   yes)
-    msg_info "Rebooting Proxmox VE 7"
+    msg_info "Rebooting Proxmox VE"
     sleep 2
     msg_ok "Completed Post Install Routines"
     reboot
     ;;
   no)
-    msg_error "Selected no to Rebooting Proxmox VE 7 (Reboot recommended)"
+    msg_error "Selected no to Rebooting Proxmox VE (Reboot recommended)"
     msg_ok "Completed Post Install Routines"
     ;;
   esac
@@ -221,7 +211,7 @@ EOF
 header_info
 echo -e "\nThis script will Perform Post Install Routines.\n"
 while true; do
-  read -p "Start the Proxmox VE 7 Post Install Script (y/n)?" yn
+  read -p "Start the Proxmox VE Post Install Script (y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) clear; exit ;;
@@ -232,15 +222,6 @@ done
 if ! command -v pveversion >/dev/null 2>&1; then
   header_info
   msg_error "\n No PVE Detected!\n"
-  exit
-fi
-
-if [ $(pveversion | grep "pve-manager/7" | wc -l) -ne 1 ]; then
-  header_info
-  msg_error "This version of Proxmox Virtual Environment is not supported"
-  echo -e "  Requires PVE Version: 7.XX"
-  echo -e "\nExiting..."
-  sleep 3
   exit
 fi
 
