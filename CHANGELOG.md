@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-06-11
+
+### Changed
+
+- **Proxmox VE Post Install**
+  - The Proxmox VE Post Install script is now compatible with both Proxmox Virtual Environment 7 (PVE7) and Proxmox Virtual Environment 8 (PVE8). 
+
 ## 2023-06-02
 
 ### Changed
