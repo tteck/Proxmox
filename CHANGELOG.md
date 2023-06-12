@@ -9,7 +9,9 @@
 ### Changed
 
 - **Proxmox VE Edge Kernel**
-  - Removed, with the Proxmox opt-in kernels and the upcoming Proxmox Virtual Environment 8, edge kernels are no longer needed. 
+  - Removed, with the Proxmox opt-in kernels and the upcoming Proxmox Virtual Environment 8, edge kernels are no longer needed.
+- **Proxmox VE Kernel Clean**
+  - Now compatible with PVE8.
 
 ## 2023-06-11
 
