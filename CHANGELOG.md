@@ -9,7 +9,7 @@
 ### Changed
 
 - **Proxmox VE Post Install**
-  - The Proxmox VE Post Install script is now compatible with both Proxmox Virtual Environment 7 (PVE7) and Proxmox Virtual Environment 8 (PVE8). 
+  - Now compatible with both Proxmox Virtual Environment 7 (PVE7) and Proxmox Virtual Environment 8 (PVE8). 
 
 ## 2023-06-02
 
