@@ -58,9 +58,9 @@ start_routines() {
   yes)
     msg_info "Correcting Proxmox VE Sources"
     cat <<EOF >/etc/apt/sources.list
-deb http://ftp.debian.org/debian $(VERSION) main contrib
-deb http://ftp.debian.org/debian $(VERSION)-updates main contrib
-deb http://security.debian.org/debian-security $(VERSION)-security main contrib
+deb http://ftp.debian.org/debian ${VERSION} main contrib
+deb http://ftp.debian.org/debian ${VERSION}-updates main contrib
+deb http://security.debian.org/debian-security ${VERSION}-security main contrib
 EOF
     msg_ok "Corrected Proxmox VE Sources"
     ;;
@@ -76,7 +76,7 @@ EOF
   yes)
     msg_info "Disabling 'pve-enterprise' repository"
     cat <<EOF >/etc/apt/sources.list.d/pve-enterprise.list
-# deb https://enterprise.proxmox.com/debian/pve $(VERSION) pve-enterprise
+# deb https://enterprise.proxmox.com/debian/pve ${VERSION} pve-enterprise
 EOF
     msg_ok "Disabled 'pve-enterprise' repository"
     ;;
@@ -92,7 +92,7 @@ EOF
   yes)
     msg_info "Enabling 'pve-no-subscription' repository"
     cat <<EOF >/etc/apt/sources.list.d/pve-install-repo.list
-deb http://download.proxmox.com/debian/pve $(VERSION) pve-no-subscription
+deb http://download.proxmox.com/debian/pve ${VERSION} pve-no-subscription
 EOF
     msg_ok "Enabled 'pve-no-subscription' repository"
     ;;
@@ -101,7 +101,7 @@ EOF
     ;;
   esac
 
-  if [[ "$(VERSION)" == "bookworm" ]]; then
+  if [[ "${VERSION}" == "bookworm" ]]; then
     CHOICE=$(whiptail --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories.\n \nEnable 'ceph package repositories?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3)
@@ -127,7 +127,7 @@ EOF
   yes)
     msg_info "Adding 'pvetest' repository and set disabled"
     cat <<EOF >/etc/apt/sources.list.d/pvetest-for-beta.list
-# deb http://download.proxmox.com/debian/pve $(VERSION) pvetest
+# deb http://download.proxmox.com/debian/pve ${VERSION} pvetest
 EOF
     msg_ok "Added 'pvetest' repository"
     ;;
