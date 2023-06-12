@@ -17,3 +17,5 @@
 [Proxmox: Plex LXC with Alder Lake Transcoding](https://www.derekseaman.com/2023/04/proxmox-plex-lxc-with-alder-lake-transcoding.html)
 
 [How To Backup Home Assistant In Proxmox](https://smarthomescene.com/guides/how-to-backup-home-assistant-in-proxmox/)
+
+[Frigate VM on Proxmox with PCIe Coral TPU](https://www.derekseaman.com/2023/06/home-assistant-frigate-vm-on-proxmox-with-pcie-coral-tpu.html)
