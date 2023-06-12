@@ -63,7 +63,9 @@ function check_root() {
     fi
 }
 
+  VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
 function other_kernel() {
+  if [[ "${VERSION}" == "bullseye" ]]; then      
     if [[ "$current_kernel" == *"edge"* ]]; then
         echo -e "\n${CROSS} ${RD}ERROR:${CL} Proxmox ${BL}${current_kernel}${CL} Kernel Active"
         echo -e "\nAn Active PVE Kernel is required to use Kernel Clean\n"
@@ -74,6 +76,7 @@ function other_kernel() {
         echo -e "\nThe script cannot be used when running opt-in kernels. \nProxmox VE's package management relies directly on the current default kernel, which is 5.15. \nTherefore, it is not possible to utilize this script. In this case, you should use autoremove instead. \n`apt-get autoremove`\n"
         exit 1
     fi
+  fi
 }
 
 function kernel_info() {
