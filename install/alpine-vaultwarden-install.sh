@@ -35,7 +35,7 @@ msg_ok "Installed Web-Vault"
 msg_info "Starting Alpine-Vaultwarden"
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
-msg_info "Started Alpine-Vaultwarden"
+msg_ok "Started Alpine-Vaultwarden"
 
 motd_ssh
 customize
