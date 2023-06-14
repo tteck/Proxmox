@@ -25,7 +25,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
-sudo sed -i -e 's/# export ADMIN_TOKEN=.*/export ADMIN_TOKEN='\'''\''/' -e '/^# export ROCKET_ADDRESS=0\.0\.0\.0/s/^# //' -e 's|export WEB_VAULT_FOLDER=.*|export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/web-vault/|' -e 's|export WEB_VAULT_ENABLED=.*|export WEB_VAULT_ENABLED=true|' /etc/conf.d/vaultwarden
+sed -i -e 's/# export ADMIN_TOKEN=.*/export ADMIN_TOKEN='\'''\''/' -e '/^# export ROCKET_ADDRESS=0\.0\.0\.0/s/^# //' -e 's|export WEB_VAULT_FOLDER=.*|export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/web-vault/|' -e 's|export WEB_VAULT_ENABLED=.*|export WEB_VAULT_ENABLED=true|' /etc/conf.d/vaultwarden
 msg_ok "Installed Alpine-Vaultwarden"
 
 WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')  
