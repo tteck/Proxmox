@@ -28,7 +28,7 @@ $STD apk add vaultwarden
 cat <<EOF >>/etc/conf.d/vaultwarden
 export ADMIN_TOKEN=''
 export ROCKET_ADDRESS=0.0.0.0
-#EOF
+EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
 msg_ok "Installed Alpine-Vaultwarden"
