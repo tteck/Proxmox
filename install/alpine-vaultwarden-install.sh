@@ -25,12 +25,9 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
-#cat <<EOF >/etc/conf.d/vaultwarden
-#export DATA_FOLDER=/var/lib/vaultwarden
-#export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/
-#export WEB_VAULT_ENABLED=true
-#export ADMIN_TOKEN=''
-#export ROCKET_ADDRESS=0.0.0.0
+cat <<EOF >>/etc/conf.d/vaultwarden
+export ADMIN_TOKEN=''
+export ROCKET_ADDRESS=0.0.0.0
 #EOF
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
