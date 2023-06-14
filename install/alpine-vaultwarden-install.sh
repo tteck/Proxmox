@@ -25,13 +25,23 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Vaultwarden"
 $STD apk add vaultwarden
-cat <<EOF >>/etc/conf.d/vaultwarden
-export ADMIN_TOKEN=''
-export ROCKET_ADDRESS=0.0.0.0
-EOF
+sudo sed -i -e 's/# export ADMIN_TOKEN=.*/export ADMIN_TOKEN='\'''\''/' -e '/^# export ROCKET_ADDRESS=0\.0\.0\.0/s/^# //' -e 's|export WEB_VAULT_FOLDER=.*|export WEB_VAULT_FOLDER=/usr/share/webapps/vaultwarden-web/web-vault/|' -e 's|export WEB_VAULT_ENABLED=.*|export WEB_VAULT_ENABLED=true|' /etc/conf.d/vaultwarden
+msg_ok "Installed Alpine-Vaultwarden"
+
+WEBVAULT=$(curl -s https://api.github.com/repos/dani-garcia/bw_web_builds/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')  
+curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz
+mkdir -p /usr/share/webapps/vaultwarden-web/
+
+msg_info "Downloading Web-Vault ${WEBVAULT}"
+$STD curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBVAULT/bw_web_$WEBVAULT.tar.gz
+$STD tar -xzf bw_web_$WEBVAULT.tar.gz -C /usr/share/webapps/vaultwarden-web/
+rm bw_web_$WEBVAULT.tar.gz
+msg_ok "Downloaded Web-Vault ${WEBVAULT}" 
+
+msg_info "Starting Alpine-Vaultwarden"
 $STD rc-service vaultwarden start
 $STD rc-update add vaultwarden default
-msg_ok "Installed Alpine-Vaultwarden"
+msg_info "Started Alpine-Vaultwarden"
 
 motd_ssh
 customize
