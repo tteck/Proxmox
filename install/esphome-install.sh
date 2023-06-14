@@ -36,7 +36,7 @@ echo "[Unit]
 Description=ESPHome Dashboard
 After=network.target
 [Service]
-ExecStart=/usr/local/bin/esphome /root/config/ dashboard
+ExecStart=/usr/local/bin/esphome dashboard /root/config/
 Restart=always
 User=root
 [Install]
