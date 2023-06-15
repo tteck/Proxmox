@@ -46,7 +46,7 @@ while true; do
     else
       # It is a virtual machine
       config_cmd="qm config"
-      IP=$(qm guest cmd $instance network-get-interfaces | egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -E "192\.|10\.")
+      IP=$(qm guest cmd $instance network-get-interfaces | egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -E "192\.|10\." | head -n 1))
     fi
 
     # Skip instances based on templates
