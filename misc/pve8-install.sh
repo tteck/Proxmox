@@ -138,7 +138,7 @@ EOF
   yes)
     msg_info "Updating to Proxmox VE 8 (Patience)"
     apt-get update
-    apt-get -y dist-upgrade
+    DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" dist-upgrade -y
     msg_ok "Updated to Proxmox VE 8"
     ;;
   no)
