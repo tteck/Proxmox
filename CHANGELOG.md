@@ -39,7 +39,7 @@
 ### Changed
 
 - **Proxmox VE 7 Post Install**
-  - If an Intel N-series processor is detected, the script provides options to install both the Proxmox 6.2 kernel and the Intel microcode.
+  - If an Intel N-series processor is detected, ~the script provides options to install both the Proxmox 6.2 kernel and the Intel microcode.~ and using PVE7, recommend using PVE8
 
 ## 2023-05-23
 
