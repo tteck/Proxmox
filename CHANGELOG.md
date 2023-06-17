@@ -4,6 +4,14 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-06-17
+
+### Changed
+
+- **UniFi Network Application LXC**
+  - Now distribution agnostic.
+- **Omada Controller LXC**
+  - Now distribution agnostic.
 ## 2023-06-16
 
 ### Changed
