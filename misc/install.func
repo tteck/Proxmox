@@ -124,6 +124,9 @@ motd_ssh() {
     sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
     systemctl restart sshd
   fi
+  if [[ "$PCT_OSVERSION" == "12" ]]; then
+    $STD systemctl disable systemd-networkd-wait-online.service
+  fi
 }
 
 # This function customizes the container by modifying the getty service and enabling auto-login for the root user
