@@ -38,7 +38,6 @@ if [[ "$PCT_OSVERSION" == "12" ]]; then
     liblapack3 \
     liblapack-dev \
     libatlas-base-dev
-  $STD systemctl disable systemd-networkd-wait-online.service
   msg_ok "Installed Dependencies"
 else
   msg_info "Installing Dependencies, Bullseye (Patience)"
