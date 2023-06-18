@@ -21,41 +21,41 @@ $STD apt-get -y install \
   curl \
   gnupg \
   make \
-  g++ \
   gcc \
+  g++ \
   ca-certificates \
   apache2-utils \
   logrotate \
   build-essential \
-  python3-dev \
-  git \
-  lsb-release
+  git
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Python"
-$STD apt-get install -y -q --no-install-recommends python3 python3-pip python3-venv
-$STD pip3 install --upgrade setuptools
-$STD pip3 install --upgrade pip
+$STD apt-get install -y \
+python3 \
+python3-dev \
+python3-pip \
+python3-venv \
+python3-cffi \
+python3-certbot \
+python3-certbot-dns-cloudflare
 $STD python3 -m venv /opt/certbot/
-if [ "$(getconf LONG_BIT)" = "32" ]; then
-  $STD python3 -m pip install --no-cache-dir -U cryptography==3.3.2
-fi
-$STD python3 -m pip install --no-cache-dir cffi certbot certbot-dns-cloudflare
 msg_ok "Installed Python"
 
+VERSION="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
+
 msg_info "Installing Openresty"
-$STD apt-key add <(curl -fsSL https://openresty.org/package/pubkey.gpg)
-sh -c 'echo "deb http://openresty.org/package/debian $(lsb_release -cs) openresty" > /etc/apt/sources.list.d/openresty.list'
-$STD apt-get -y update
-$STD apt-get -y install --no-install-recommends openresty
+wget -qO - https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/openresty-archive-keyring.gpg
+echo -e "deb http://openresty.org/package/debian bullseye openresty" >/etc/apt/sources.list.d/openresty.list
+$STD apt-get update
+$STD apt-get -y install openresty
 msg_ok "Installed Openresty"
 
-msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_16.x)
-msg_ok "Set up Node.js Repository"
-
 msg_info "Installing Node.js"
-$STD apt-get install -y nodejs
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh)
+source ~/.bashrc
+$STD nvm install 16
+ln -sf /root/.nvm/versions/node/v16.20.0/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
@@ -117,7 +117,6 @@ chown root /tmp/nginx
 echo resolver "$(awk 'BEGIN{ORS=" "} $1=="nameserver" {print ($2 ~ ":")? "["$2"]": $2}' /etc/resolv.conf);" >/etc/nginx/conf.d/include/resolvers.conf
 
 if [ ! -f /data/nginx/dummycert.pem ] || [ ! -f /data/nginx/dummykey.pem ]; then
-  echo -en "${GN} Generating dummy SSL Certificate... "
   openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -subj "/O=Nginx Proxy Manager/OU=Dummy Certificate/CN=localhost" -keyout /data/nginx/dummykey.pem -out /data/nginx/dummycert.pem &>/dev/null
 fi
 
