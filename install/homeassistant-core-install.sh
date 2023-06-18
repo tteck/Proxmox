@@ -37,6 +37,7 @@ if [[ "$PCT_OSVERSION" == "12" ]]; then
     ffmpeg \
     liblapack3 \
     liblapack-dev \
+    libpcap-dev \
     libatlas-base-dev
   msg_ok "Installed Dependencies"
 else
