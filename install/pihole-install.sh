@@ -22,9 +22,6 @@ $STD apt-get install -y ntp
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Pi-hole"
-systemctl stop systemd-resolved
-echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
-ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 mkdir -p /etc/pihole/
 cat <<EOF >/etc/pihole/setupVars.conf
 PIHOLE_INTERFACE=eth0
@@ -41,8 +38,8 @@ DNSMASQ_LISTENING=local
 WEBPASSWORD=$(openssl rand -base64 48)
 BLOCKING_ENABLED=true
 EOF
-
-$STD bash <(curl -fsSL https://install.pi-hole.net) /dev/stdin --unattended
+# View script https://install.pi-hole.net
+$STD bash <(curl -fsSL https://install.pi-hole.net) --unattended
 msg_ok "Installed Pi-hole"
 
 motd_ssh
