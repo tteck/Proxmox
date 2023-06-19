@@ -36,8 +36,7 @@ msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/openobserve.service
 [Unit]
 Description=OpenObserve
-After=syslog.target network-online.target remote-fs.target nss-lookup.target
-Wants=network-online.target
+After=network.target
 
 [Service]
 Type=simple
