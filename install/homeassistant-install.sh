@@ -20,8 +20,17 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing runlike"
-$STD apt-get install -y python3-pip
-$STD pip3 install runlike
+$STD apt-get install -y \
+python3 \
+python3-dev \
+python3-pip \
+python3-venv
+if [[ "$PCT_OSVERSION" == "12" ]]; then
+  $STD apt-get install -y pipx
+  $STD pipx install runlike
+else
+  $STD pip3 install runlike
+fi
 msg_ok "Installed runlike"
 
 get_latest_release() {
