@@ -49,6 +49,7 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
+systemctl enable -q --now openobserve
 msg_ok "Created Service"
 
 motd_ssh
