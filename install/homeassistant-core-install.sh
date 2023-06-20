@@ -13,33 +13,38 @@ setting_up_container
 network_check
 update_os
 
-  msg_info "Installing Dependencies, (Patience)"
-  $STD apt-get install -y \
-    git \
-    curl \
-    sudo \
-    mc \
-    python3 \
-    python3-dev \
-    python3-venv \
-    python3-pip \
-    bluez \
-    libffi-dev \
-    libssl-dev \
-    libjpeg-dev \
-    zlib1g-dev \
-    autoconf \
-    build-essential \
-    libopenjp2-7 \
-    libturbojpeg0-dev \
-    ffmpeg \
-    liblapack3 \
-    liblapack-dev \
-    dbus-broker \
-    libpcap-dev \
-    libmariadb-dev-compat \
-    libatlas-base-dev
-  msg_ok "Installed Dependencies"
+msg_info "Installing Dependencies, (Patience)"
+$STD apt-get install -y \
+  git \
+  curl \
+  sudo \
+  mc \
+  bluez \
+  libffi-dev \
+  libssl-dev \
+  libjpeg-dev \
+  zlib1g-dev \
+  autoconf \
+  build-essential \
+  libopenjp2-7 \
+  libturbojpeg0-dev \
+  ffmpeg \
+  liblapack3 \
+  liblapack-dev \
+  dbus-broker \
+  libpcap-dev \
+  libmariadb-dev-compat \
+  libatlas-base-dev
+msg_ok "Installed Dependencies"
+
+msg_info "Updating Python3"
+$STD apt-get install -y \
+  python3 \
+  python3-dev \
+  python3-pip \
+  python3-venv
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+msg_ok "Updated Python3"
 
 if [[ "$PCT_OSVERSION" == "11" ]]; then
   msg_info "Installing pyenv"
@@ -63,7 +68,7 @@ if [[ "$PCT_OSVERSION" == "11" ]]; then
   echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >>~/.bashrc
   msg_ok "Installed pyenv"
   . ~/.bashrc
-  
+
   set -e
   msg_info "Installing Python 3.11.3 (Patience)"
   $STD pyenv install 3.11.3
