@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -22,15 +22,15 @@ msg_ok "Installed Dependencies"
 
 msg_info "Updating Python3"
 $STD apt-get install -y \
-python3 \
-python3-dev \
-python3-pip \
-python3-venv
+  python3 \
+  python3-dev \
+  python3-pip \
+  python3-venv
 rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
-  $STD pip install esphome tornado esptool
+$STD pip install esphome tornado esptool
 msg_ok "Installed ESPHome"
 
 msg_info "Creating Service"
