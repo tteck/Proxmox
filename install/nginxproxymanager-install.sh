@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -30,19 +30,20 @@ $STD apt-get -y install \
   git
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Python"
+msg_info "Updating Python"
 $STD apt-get install -y \
-python3 \
-python3-dev \
-python3-pip \
-python3-venv \
-python3-cffi \
-python3-certbot \
-python3-certbot-dns-cloudflare
+  python3 \
+  python3-dev \
+  python3-pip \
+  python3-venv \
+  python3-cffi \
+  python3-certbot \
+  python3-certbot-dns-cloudflare
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 $STD python3 -m venv /opt/certbot/
-msg_ok "Installed Python"
+msg_ok "Updated Python"
 
-VERSION="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
+VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
 
 msg_info "Installing Openresty"
 wget -qO - https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/openresty-archive-keyring.gpg
