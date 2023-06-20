@@ -26,16 +26,11 @@ python3 \
 python3-dev \
 python3-pip \
 python3-venv
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
-if [[ "$PCT_OSVERSION" == "12" ]]; then
-  $STD pip install esphome --break-system-packages
-  $STD pip install tornado esptool --break-system-packages
-else
-  $STD pip install esphome
-  $STD pip install tornado esptool
-fi
+  $STD pip install esphome tornado esptool
 msg_ok "Installed ESPHome"
 
 msg_info "Creating Service"
