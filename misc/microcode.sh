@@ -86,13 +86,11 @@ amd() {
   echo -e "\n To apply the changes, the system will need to be rebooted.\n"
 }
 
-if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
-  echo -e "${CROSS} Proxmox Virtual Environment Not Detected"
-  echo -e "Exiting..."
-  sleep 2
+if ! command -v pveversion >/dev/null 2>&1; then
+  header_info
+  msg_error "\n No PVE Detected!\n"
   exit
 fi
-
 msg_info "Checking CPU Vendor"
 cpu=$(lscpu | grep -oP 'Vendor ID:\s*\K\S+')
 if [ "$cpu" == "GenuineIntel" ]; then
