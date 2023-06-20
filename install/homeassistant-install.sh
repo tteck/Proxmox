@@ -26,10 +26,9 @@ python3-dev \
 python3-pip \
 python3-venv
 if [[ "$PCT_OSVERSION" == "12" ]]; then
-  $STD apt-get install -y pipx
-  $STD pipx install runlike
+  $STD pip install runlike --break-system-packages
 else
-  $STD pip3 install runlike
+  $STD pip install runlike
 fi
 msg_ok "Installed runlike"
 
