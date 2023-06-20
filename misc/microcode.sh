@@ -92,7 +92,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
   exit
 fi
 msg_info "Checking CPU Vendor"
-cpu=$(lscpu | grep -oP 'Vendor ID:\s*\K\S+')
+cpu=$(lscpu | grep -oP 'Vendor ID:\s*\K\S+' | head -n 1)
 if [ "$cpu" == "GenuineIntel" ]; then
   msg_ok "${cpu} was detected"
   intel
