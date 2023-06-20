@@ -20,17 +20,25 @@ $STD apt-get install -y mc
 $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Python3-pip"
-$STD apt-get install -y python3-pip
-msg_ok "Installed Python3-pip"
+msg_info "Updating Python3"
+$STD apt-get install -y \
+python3 \
+python3-dev \
+python3-pip \
+python3-venv
+msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
-$STD pip3 install esphome
+if [[ "$PCT_OSVERSION" == "12" ]]; then
+  $STD pip install esphome --break-system-packages
+  $STD pip install tornado esptool --break-system-packages
+else
+  $STD pip install esphome
+  $STD pip install tornado esptool
+fi
 msg_ok "Installed ESPHome"
 
-msg_info "Installing ESPHome Dashboard"
-$STD pip3 install tornado esptool
-
+msg_info "Creating Service"
 service_path="/etc/systemd/system/esphomeDashboard.service"
 echo "[Unit]
 Description=ESPHome Dashboard
@@ -41,9 +49,8 @@ Restart=always
 User=root
 [Install]
 WantedBy=multi-user.target" >$service_path
-$STD systemctl enable esphomeDashboard.service
-systemctl start esphomeDashboard
-msg_ok "Installed ESPHome Dashboard"
+systemctl enable -q --now esphomeDashboard.service
+msg_ok "Created Service"
 
 motd_ssh
 customize
