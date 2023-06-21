@@ -24,10 +24,14 @@ $STD dpkg -i unrar_6.0.3-1+deb11u1_amd64.deb
 rm unrar_6.0.3-1+deb11u1_amd64.deb
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Python3-pip"
+msg_info "Updating Python3"
+$STD apt-get install -y \
+  python3 \
+  python3-dev \
+  python3-pip
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 $STD apt-get install -y python3-setuptools
-$STD apt-get install -y python3-pip
-msg_ok "Installed Python3-pip"
+msg_ok "Updated Python3"
 
 msg_info "Installing SABnzbd"
 RELEASE=$(curl -s https://api.github.com/repos/sabnzbd/sabnzbd/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
