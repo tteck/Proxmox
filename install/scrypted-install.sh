@@ -58,23 +58,28 @@ msg_info "Installing Node.js"
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Python3"
+msg_info "Updating Python3"
+$STD apt-get install -y \
+  python3 \
+  python3-dev \
+  python3-pip
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+msg_ok "Updated Python3"
+
+msg_info "Installing Python3 Dependencies"
 $STD apt-get -y install \
-    python3 \
-    python3-dev \
     python3-gi \
     python3-gst-1.0 \
     python3-matplotlib \
     python3-numpy \
     python3-opencv \
     python3-pil \
-    python3-pip \
     python3-setuptools \
     python3-skimage \
     python3-wheel
 $STD python3 -m pip install --upgrade pip
 $STD python3 -m pip install aiofiles debugpy typing_extensions typing
-msg_ok "Installed Python3"
+msg_ok "Installed Python3 Dependencies"
 
 read -r -p "Would you like to add Coral Edge TPU support? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
