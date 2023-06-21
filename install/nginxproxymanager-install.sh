@@ -55,7 +55,7 @@ msg_ok "Installed Openresty"
 msg_info "Installing Node.js"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh)
 . ~/.bashrc
-$STD nvm install 16
+$STD nvm install 16.20.0
 ln -sf /root/.nvm/versions/node/v16.20.0/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
