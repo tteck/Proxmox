@@ -89,7 +89,7 @@ EOF
   yes)
     msg_info "Enabling 'pve-no-subscription' repository"
     cat <<EOF >/etc/apt/sources.list.d/pve-install-repo.list
-# deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
 EOF
     msg_ok "Enabled 'pve-no-subscription' repository"
     ;;
@@ -122,7 +122,7 @@ EOF
   yes)
     msg_info "Adding 'pvetest' repository and set disabled"
     cat <<EOF >/etc/apt/sources.list.d/pvetest-for-beta.list
-deb http://download.proxmox.com/debian/pve bookworm pvetest
+# deb http://download.proxmox.com/debian/pve bookworm pvetest
 EOF
     msg_ok "Added 'pvetest' repository"
     ;;
