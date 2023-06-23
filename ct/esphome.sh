@@ -52,13 +52,16 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /usr/local/bin/esphome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -f /etc/systemd/system/esphomeDashboard.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Stopping ESPHome"
 systemctl stop esphomeDashboard
 msg_ok "Stopped ESPHome"
 
 msg_info "Updating ESPHome"
-pip3 install esphome --upgrade &>/dev/null
+if [[ -d /srv/esphome ]]; then
+  source /srv/esphome/bin/activate &>/dev/null
+fi
+pip3 install -U esphome &>/dev/null
 msg_ok "Updated ESPHome"
 
 msg_info "Starting ESPHome"
