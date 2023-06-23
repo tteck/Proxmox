@@ -21,10 +21,9 @@ $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing OpenMediaVault (Patience)"
-wget -q -O "/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc" https://packages.openmediavault.org/public/archive.key
-$STD apt-key add "/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc" &>/dev/null
+wget -qO- https://packages.openmediavault.org/public/archive.key | gpg --dearmor >"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.gpg"
 
-cat <<EOF >>/etc/apt/sources.list.d/openmediavault.list
+cat <<EOF >/etc/apt/sources.list.d/openmediavault.list
 deb https://packages.openmediavault.org/public shaitan main
 # deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan main
 ## Uncomment the following line to add software from the proposed repository.
@@ -35,9 +34,12 @@ deb https://packages.openmediavault.org/public shaitan main
 # deb https://packages.openmediavault.org/public shaitan partner
 # deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan partner
 EOF
+
+export LANG=C.UTF-8
+export DEBIAN_FRONTEND=noninteractive
+export APT_LISTCHANGES_FRONTEND=none
 $STD apt-get update
-apt-get -y install openmediavault-keyring &>/dev/null
-DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" install -qqy openmediavault &>/dev/null
+apt-get -y --auto-remove --show-upgraded --allow-downgrades --allow-change-held-packages --no-install-recommends --option DPkg::Options::="--force-confdef" --option DPkg::Options::="--force-confold" install openmediavault-keyring openmediavault &>/dev/null
 omv-confdbadm populate
 msg_ok "Installed OpenMediaVault"
 
