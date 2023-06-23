@@ -30,20 +30,27 @@ rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
+mkdir /srv/esphome
+cd /srv/esphome
+python3 -m venv .
+source bin/activate
 $STD pip install esphome tornado esptool
 msg_ok "Installed ESPHome"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/esphomeDashboard.service"
-echo "[Unit]
+cat <<EOF >/etc/systemd/system/esphomeDashboard.service
+[Unit]
 Description=ESPHome Dashboard
 After=network.target
+
 [Service]
-ExecStart=/usr/local/bin/esphome dashboard /root/config/
+ExecStart=/srv/esphome/bin/esphome dashboard /root/config/
 Restart=always
 User=root
+
 [Install]
-WantedBy=multi-user.target" >$service_path
+WantedBy=multi-user.target
+EOF
 systemctl enable -q --now esphomeDashboard.service
 msg_ok "Created Service"
 
