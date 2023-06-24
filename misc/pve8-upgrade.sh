@@ -115,7 +115,7 @@ EOF
     ;;
   esac
 
-  CHOICE=$(whiptail --title "PVE8 TEST" --menu "The 'pvetest' repository can give advanced users access to new features and updates before they are officially released.\n \nAdd 'pvetest' repository?" 14 58 2 \
+  CHOICE=$(whiptail --title "PVE8 TEST" --menu "The 'pvetest' repository can give advanced users access to new features and updates before they are officially released.\n \nAdd (Disabled) 'pvetest' repository?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
