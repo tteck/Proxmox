@@ -30,10 +30,10 @@ rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
-mkdir /srv/esphome
-cd /srv/esphome
-python3 -m venv .
-source bin/activate
+#mkdir /srv/esphome
+#cd /srv/esphome
+#python3 -m venv .
+#source bin/activate
 $STD pip install esphome tornado esptool
 msg_ok "Installed ESPHome"
 
@@ -44,7 +44,8 @@ Description=ESPHome Dashboard
 After=network.target
 
 [Service]
-ExecStart=/srv/esphome/bin/esphome dashboard /root/config/
+#ExecStart=/srv/esphome/bin/esphome dashboard /root/config/
+ExecStart=/usr/local/bin/esphome dashboard /root/config/
 Restart=always
 User=root
 
