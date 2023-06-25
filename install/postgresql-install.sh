@@ -21,8 +21,9 @@ $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up PostgreSQL Repository"
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-$STD apt-key add <(curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc)
+VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
+echo "deb http://apt.postgresql.org/pub/repos/apt ${VERSION}-pgdg main" >/etc/apt/sources.list.d/pgdg.list
+curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor --output /etc/apt/trusted.gpg.d/postgresql.gpg
 msg_ok "Setup PostgreSQL Repository"
 
 msg_info "Installing PostgreSQL"
@@ -136,8 +137,8 @@ read -r -p "Would you like to add Adminer? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Adminer"
   $STD apt install -y adminer
-  $STD sudo a2enconf adminer
-  $STD systemctl reload apache2
+  $STD a2enconf adminer
+  systemctl reload apache2
   msg_ok "Installed Adminer"
 fi
 
