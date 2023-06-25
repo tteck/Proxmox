@@ -28,7 +28,7 @@ $STD apt-get install -y \
   python3-dev \
   python3-pip \
   python3-venv
-rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+
 $STD apt-get install -y python3-setuptools
 msg_ok "Updated Python3"
 
