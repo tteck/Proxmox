@@ -29,7 +29,6 @@ $STD apt-get install -y \
   python3 \
   python3-dev \
   python3-pip
-
 $STD apt-get install -y python3-setuptools
 msg_ok "Updated Python3"
 
