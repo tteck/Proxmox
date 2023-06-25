@@ -84,6 +84,7 @@ setting_up_container() {
     exit 1
   fi
   rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+  $STD systemctl disable systemd-networkd-wait-online.service
   msg_ok "Set up Container OS"
   msg_ok "Network Connected: ${BL}$(hostname -I)"
 }
@@ -124,9 +125,6 @@ motd_ssh() {
   if [[ "${SSH_ROOT}" == "yes" ]]; then
     sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
     systemctl restart sshd
-  fi
-  if [[ "$PCT_OSVERSION" == "12" ]]; then
-    $STD systemctl disable systemd-networkd-wait-online.service
   fi
 }
 
