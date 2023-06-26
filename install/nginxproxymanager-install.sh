@@ -53,10 +53,10 @@ $STD apt-get -y install openresty
 msg_ok "Installed Openresty"
 
 msg_info "Installing Node.js"
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh)
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
 . ~/.bashrc
-$STD nvm install 16.20.0
-ln -sf /root/.nvm/versions/node/v16.20.0/bin/node /usr/bin/node
+$STD nvm install 16.20.1
+ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
