@@ -18,14 +18,16 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y git
+$STD apt-get install -y make
+$STD apt-get install -y g++
+$STD apt-get install -y gcc
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_16.x)
-msg_ok "Set up Node.js Repository"
-
 msg_info "Installing Node.js"
-$STD apt-get install -y nodejs git make g++ gcc
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+. ~/.bashrc
+$STD nvm install 16.20.1
+ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
