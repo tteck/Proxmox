@@ -54,7 +54,7 @@ start_routines() {
   yes)
     msg_info "Backing up Proxmox Backup Server 2"
     tar czf "pbs2-etc-backup-$(date -I).tar.gz" -C "/etc" "proxmox-backup"
-    msg_ok "Backed up to Proxmox Backup Server"
+    msg_ok "Backed up Proxmox Backup Server 2"
     ;;
   no)
     msg_error "Selected no to Backing up Proxmox Backup Server 2"
