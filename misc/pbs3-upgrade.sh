@@ -47,7 +47,7 @@ msg_error() {
 
 start_routines() {
   header_info
-  CHOICE=$(whiptail --title "PBS 2 BACKUP" --menu "\nMake a backup of /etc/proxmox-backup to ensure that in the worst case, any relevant configuration can be recovered?" 11 58 2 \
+  CHOICE=$(whiptail --title "PBS 2 BACKUP" --menu "\nMake a backup of /etc/proxmox-backup to ensure that in the worst case, any relevant configuration can be recovered?" 14 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
   case $CHOICE in
