@@ -80,6 +80,7 @@ function update_script() {
     cp -r /opt/paperless/paperless.conf paperless-ngx/
     cp -r paperless-ngx/* /opt/paperless/
     cd /opt/paperless
+    sed -i 's/scipy==1.8.1/scipy==1.10.1/g' requirements.txt
     sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
     pip install -r requirements.txt &>/dev/null
     cd /opt/paperless/src
