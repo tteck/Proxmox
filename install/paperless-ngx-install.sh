@@ -81,6 +81,7 @@ $STD tar -xf paperless-ngx-$Paperlessngx.tar.xz -C /opt/
 mv paperless-ngx paperless
 rm paperless-ngx-$Paperlessngx.tar.xz
 cd /opt/paperless
+sed -i 's/scipy==1.8.1/scipy==1.10.1/g' requirements.txt
 ## python 3.10+ doesn't like the '-e', so we remove it from this the requirements file
 sed -i -e 's|-e git+https://github.com/paperless-ngx/django-q.git|git+https://github.com/paperless-ngx/django-q.git|' /opt/paperless/requirements.txt
 $STD pip install --upgrade pip
