@@ -18,14 +18,13 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y gnupg
-$STD apt-key adv --fetch-keys 'https://packages.sury.org/php/apt.gpg'
 $STD apt-get install -y apt-transport-https
 $STD apt-get install -y lsb-release
 $STD apt-get install -y ca-certificates
 msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
-wget -q -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
 $STD bash <(curl -fsSL https://install.yunohost.org) -a
 msg_ok "Installed YunoHost"
 
