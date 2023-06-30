@@ -52,7 +52,7 @@ $STD apt-get update
 $STD apt-get -y install openresty
 msg_ok "Installed Openresty"
 
-msg_info "Installing Node.js (Patience)"
+msg_info "Installing Node.js"
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
 . ~/.bashrc
 $STD nvm install 16.20.1
