@@ -53,16 +53,14 @@ $STD apt-get -y install openresty
 msg_ok "Installed Openresty"
 
 msg_info "Installing Node.js (Patience)"
-$STD apt-get install -y npm
-$STD npm cache clean -f
-$STD npm install -g n
-$STD n 16.20.1
-ln -sf /usr/local/bin/node /usr/bin/node
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+. ~/.bashrc
+$STD nvm install 16.20.1
+ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
 $STD npm install -g yarn
-ln -sf /usr/local/bin/yarn /usr/bin/yarn
 msg_ok "Installed Yarn"
 
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
