@@ -19,11 +19,12 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
+msg_info "Setting up Node.js Repository"
+$STD bash <(curl -fsSL https://deb.nodesource.com/setup_18.x)
+msg_ok "Set up Node.js Repository"
+
 msg_info "Installing Node.js"
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-. ~/.bashrc
-$STD nvm install 16.20.1
-ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
+$STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
 msg_info "Installing n8n (Patience)"
