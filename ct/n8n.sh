@@ -24,7 +24,7 @@ var_disk="3"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
-var_version="11"
+var_version="12"
 variables
 color
 catch_errors
