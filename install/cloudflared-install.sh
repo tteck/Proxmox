@@ -22,8 +22,8 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Cloudflared"
 mkdir -p --mode=0755 /usr/share/keyrings
 VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
-curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
-echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $VERSION main' | tee /etc/apt/sources.list.d/cloudflared.list >/dev/null
+curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg >/usr/share/keyrings/cloudflare-main.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $VERSION main" >/etc/apt/sources.list.d/cloudflared.list
 $STD apt-get update
 $STD apt-get install -y cloudflared
 msg_ok "Installed Cloudflared"
