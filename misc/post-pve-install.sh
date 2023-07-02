@@ -155,24 +155,6 @@ EOF
     esac
   fi
 
-  if systemctl is-active --quiet pve-ha-lrm; then
-    CHOICE=$(whiptail --title "HIGH AVAILABILITY" --menu "If you plan to utilize a single node instead of a clustered environment, you can disable unnecessary high availability (HA) services, thus reclaiming system resources.\n\nIf HA becomes necessary at a later stage, the services can be re-enabled.\n\nDisable high availability?" 18 58 2 \
-      "yes" " " \
-      "no" " " 3>&2 2>&1 1>&3)
-    case $CHOICE in
-    yes)
-      msg_info "Disabling high availability"
-      systemctl disable -q --now pve-ha-lrm
-      systemctl disable -q --now pve-ha-crm
-      systemctl disable -q --now corosync
-      msg_ok "Disabled high availability"
-      ;;
-    no)
-      msg_error "Selected no to Disabling high availability"
-      ;;
-    esac
-  fi
-
   if ! systemctl is-active --quiet pve-ha-lrm; then
     CHOICE=$(whiptail --title "HIGH AVAILABILITY" --menu "Enable high availability?" 10 58 2 \
       "yes" " " \
@@ -187,6 +169,24 @@ EOF
       ;;
     no)
       msg_error "Selected no to Enabling high availability"
+      ;;
+    esac
+  fi
+  
+  if systemctl is-active --quiet pve-ha-lrm; then
+    CHOICE=$(whiptail --title "HIGH AVAILABILITY" --menu "If you plan to utilize a single node instead of a clustered environment, you can disable unnecessary high availability (HA) services, thus reclaiming system resources.\n\nIf HA becomes necessary at a later stage, the services can be re-enabled.\n\nDisable high availability?" 18 58 2 \
+      "yes" " " \
+      "no" " " 3>&2 2>&1 1>&3)
+    case $CHOICE in
+    yes)
+      msg_info "Disabling high availability"
+      systemctl disable -q --now pve-ha-lrm
+      systemctl disable -q --now pve-ha-crm
+      systemctl disable -q --now corosync
+      msg_ok "Disabled high availability"
+      ;;
+    no)
+      msg_error "Selected no to Disabling high availability"
       ;;
     esac
   fi
