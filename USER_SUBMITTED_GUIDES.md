@@ -2,7 +2,7 @@
 
 <sub> In order to contribute a guide on installing with Proxmox VE Helper Scripts, you should open a pull request that adds the guide to the `USER_SUBMITTED_GUIDES.md` file. </sub>
 
-[Installing Home Assistant OS using Proxmox 7](https://community.home-assistant.io/t/installing-home-assistant-os-using-proxmox-7/201835)
+[Installing Home Assistant OS using Proxmox 8](https://community.home-assistant.io/t/installing-home-assistant-os-using-proxmox-7/201835)
 
 [How To Separate Zigbee2MQTT From Home Assistant In Proxmox](https://smarthomescene.com/guides/how-to-separate-zigbee2mqtt-from-home-assistant-in-proxmox/)
 
