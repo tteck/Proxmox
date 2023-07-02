@@ -23,7 +23,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Sonarr"
 $STD apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2009837CBFFD68F45BC180471F4F90DE2A9B4BF8
-sh -c 'echo "deb https://apt.sonarr.tv/debian testing-main main" > /etc/apt/sources.list.d/sonarr.list'
+echo "deb https://apt.sonarr.tv/debian testing-main main" >/etc/apt/sources.list.d/sonarr.list
 $STD apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" install -qqy sonarr &>/dev/null
 msg_ok "Installed Sonarr"
