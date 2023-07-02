@@ -22,7 +22,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing OpenObserve"
 mkdir -p /opt/openobserve/data
 LATEST=$(curl -sL https://api.github.com/repos/openobserve/openobserve/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-tar zxvf <(curl -fsSL https://github.com/openobserve/openobserve/releases/download/$LATEST/openobserve-${LATEST}-linux-amd64.tar.gz) -C /opt/openobserve &>/dev/null
+$STD tar zxvf <(curl -fsSL https://github.com/openobserve/openobserve/releases/download/$LATEST/openobserve-${LATEST}-linux-amd64.tar.gz) -C /opt/openobserve
 
 cat <<EOF >/opt/openobserve/data/.env
 ZO_ROOT_USER_EMAIL = "admin@example.com"
