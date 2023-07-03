@@ -28,9 +28,6 @@ $STD apt-get install -y aspnetcore-runtime-7.0
 msg_ok "Installed ASP.NET Core Runtime"
 
 msg_info "Installing Technitium DNS"
-systemctl stop systemd-resolved
-echo "DNSStubListener=no" >>/etc/systemd/resolved.conf
-ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 $STD bash <(curl -fsSL https://download.technitium.com/dns/install.sh)
 msg_ok "Installed Technitium DNS"
 
