@@ -23,7 +23,7 @@ var_disk="2"
 var_cpu="1"
 var_ram="512"
 var_os="debian"
-var_version="11"
+var_version="12"
 variables
 color
 catch_errors
@@ -62,10 +62,7 @@ if ! dpkg -s aspnetcore-runtime-7.0 > /dev/null 2>&1; then
     apt-get install -y aspnetcore-runtime-7.0
     rm packages-microsoft-prod.deb
 fi
-wget -q https://download.technitium.com/dns/DnsServerPortable.tar.gz
-tar -zxf DnsServerPortable.tar.gz -C /etc/dns/ &>/dev/null
-rm -rf DnsServerPortable.tar.gz
-systemctl restart dns.service
+$STD bash <(curl -fsSL https://download.technitium.com/dns/install.sh)
 msg_ok "Updated Successfully"
 exit
 }
