@@ -4,6 +4,12 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-07-05
+
+### Changed
+
+- There have been more than 110 commits since June 18th, although not all of them are significant, with a majority focused on ensuring compatibility with Proxmox VE 8 and Debian 12.
+
 ## 2023-06-18
 
 ### Changed
