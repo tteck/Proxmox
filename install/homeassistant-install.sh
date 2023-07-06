@@ -72,7 +72,7 @@ $STD docker run -d \
 msg_ok "Installed Portainer $PORTAINER_LATEST_VERSION"
 
 msg_info "Pulling Home Assistant $CORE_LATEST_VERSION Image"
-$STD docker pull homeassistant/home-assistant:stable
+$STD docker pull ghcr.io/home-assistant/home-assistant:stable
 msg_ok "Pulled Home Assistant $CORE_LATEST_VERSION Image"
 
 msg_info "Installing Home Assistant $CORE_LATEST_VERSION"
@@ -86,7 +86,7 @@ $STD docker run -d \
   -v hass_config:/config \
   -v /etc/localtime:/etc/localtime:ro \
   --net=host \
-  homeassistant/home-assistant:stable
+  ghcr.io/home-assistant/home-assistant:stable
 mkdir /root/hass_config
 msg_ok "Installed Home Assistant $CORE_LATEST_VERSION"
 
