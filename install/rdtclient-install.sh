@@ -21,8 +21,11 @@ $STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
 msg_info "Installing ASP.NET Core Runtime"
-$STD bash -c "$(wget --no-cache -qLO - https://dot.net/v1/dotnet-install.sh)"
-ln -s /root/.dotnet/dotnet /usr/bin/dotnet
+wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb
+$STD dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
+$STD apt-get update
+$STD apt-get install -y dotnet-sdk-6.0
 msg_ok "Installed ASP.NET Core Runtime"
 msg_info "Installing rdtclient"
 wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebridClient.zip
