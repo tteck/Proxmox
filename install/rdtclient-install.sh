@@ -20,16 +20,20 @@ $STD apt-get install -y mc
 $STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
-msg_info "Installing rdtclient"
-wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+msg_info "Installing ASP.NET Core Runtime"
+wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb &>/dev/null
 rm packages-microsoft-prod.deb
 apt-get update &>/dev/null
 apt-get install -y dotnet-sdk-6.0 &>/dev/null
+msg_ok "Installed ASP.NET Core Runtime"
+msg_info "Installing rdtclient"
 wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebridClient.zip
 unzip -qq RealDebridClient.zip -d /opt/rdtc
 mkdir -p /data/db/ # defaults for rdtclient
 mkdir -p /data/downloads # defaults for rdtclient
+msg_info "Installed rdtclient"
+msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/rdtc.service
 [Unit]
 Description=RdtClient Service
@@ -45,9 +49,8 @@ User=root
 WantedBy=multi-user.target
 EOF
 $STD systemctl daemon-reload
-$STD systemctl enable rdtc
-$STD systemctl start rdtc
-msg_ok "Installed rdtclient"
+$STD systemctl enable -q --now rdtc
+msg_ok "Created Service"
 
 motd_ssh
 customize
