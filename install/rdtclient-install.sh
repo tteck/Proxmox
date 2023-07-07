@@ -32,9 +32,10 @@ msg_info "Installing rdtclient"
 wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebridClient.zip
 unzip -qq RealDebridClient.zip -d /opt/rdtc
 rm RealDebridClient.zip
-mkdir -p /data/db/
-mkdir -p /data/downloads
-msg_info "Installed rdtclient"
+cd /opt/rdtc
+mkdir -p /data/db/ /data/downloads
+sed -i 's#/data/db/#/opt/rdtc&#g' /opt/rdtc/appsettings.json
+msg_ok "Installed rdtclient"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/rdtc.service
