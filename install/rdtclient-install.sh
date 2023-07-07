@@ -33,7 +33,7 @@ wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebr
 unzip -qq RealDebridClient.zip -d /opt/rdtc
 rm RealDebridClient.zip
 cd /opt/rdtc
-mkdir -p /data/db/ /data/downloads
+mkdir -p data/db/ data/downloads
 sed -i 's#/data/db/#/opt/rdtc&#g' /opt/rdtc/appsettings.json
 msg_ok "Installed rdtclient"
 
