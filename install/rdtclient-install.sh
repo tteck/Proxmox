@@ -27,20 +27,21 @@ rm packages-microsoft-prod.deb
 $STD apt-get update
 $STD apt-get install -y dotnet-sdk-6.0
 msg_ok "Installed ASP.NET Core Runtime"
+
 msg_info "Installing rdtclient"
 wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebridClient.zip
 unzip -qq RealDebridClient.zip -d /opt/rdtc
 rm RealDebridClient.zip
-mkdir -p /data/db/ # defaults for rdtclient
-mkdir -p /data/downloads # defaults for rdtclient
+mkdir -p /data/db/
+mkdir -p /data/downloads
 msg_info "Installed rdtclient"
+
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/rdtc.service
 [Unit]
 Description=RdtClient Service
 
 [Service]
-
 WorkingDirectory=/opt/rdtc
 ExecStart=/usr/bin/dotnet RdtClient.Web.dll
 SyslogIdentifier=RdtClient
@@ -49,7 +50,6 @@ User=root
 [Install]
 WantedBy=multi-user.target
 EOF
-$STD systemctl daemon-reload
 $STD systemctl enable -q --now rdtc
 msg_ok "Created Service"
 
