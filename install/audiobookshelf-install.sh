@@ -21,8 +21,8 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing audiobookshelf"
-$STD apt-key add <(curl -s --compressed "https://advplyr.github.io/audiobookshelf-ppa/KEY.gpg")
-sh -c 'echo "deb https://advplyr.github.io/audiobookshelf-ppa ./" > /etc/apt/sources.list.d/audiobookshelf.list'
+curl -fsSL https://advplyr.github.io/audiobookshelf-ppa/KEY.gpg >/etc/apt/trusted.gpg.d/audiobookshelf-ppa.asc
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/audiobookshelf-ppa.asc] https://advplyr.github.io/audiobookshelf-ppa ./" >/etc/apt/sources.list.d/audiobookshelf.list
 $STD apt-get update
 $STD apt install audiobookshelf
 msg_ok "Installed audiobookshelf"
