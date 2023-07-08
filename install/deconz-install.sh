@@ -17,22 +17,24 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
 msg_info "Setting Phoscon Repository"
-$STD apt-key add <(curl -fsSL http://phoscon.de/apt/deconz.pub.key)
-sh -c "echo 'deb [arch=amd64] http://phoscon.de/apt/deconz $(lsb_release -cs) main' > /etc/apt/sources.list.d/deconz.list"
+VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
+curl -fsSL http://phoscon.de/apt/deconz.pub.key >/etc/apt/trusted.gpg.d/deconz.pub.asc
+echo "deb [arch=amd64] http://phoscon.de/apt/deconz $VERSION main" >/etc/apt/sources.list.d/deconz.list
 msg_ok "Setup Phoscon Repository"
 
 msg_info "Installing deConz"
+wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
 $STD apt-get update
 $STD apt-get install -y deconz
 msg_ok "Installed deConz"
 
 msg_info "Creating Service"
-service_path="/lib/systemd/system/deconz.service"
-echo "[Unit]
+cat <<EOF >/lib/systemd/system/deconz.service
+[Unit]
 Description=deCONZ: ZigBee gateway -- REST API
 Wants=deconz-init.service deconz-update.service
 StartLimitIntervalSec=0
@@ -45,8 +47,9 @@ RestartSec=30
 AmbientCapabilities=CAP_NET_BIND_SERVICE CAP_KILL CAP_SYS_BOOT CAP_SYS_TIME
 
 [Install]
-WantedBy=multi-user.target" >$service_path
-$STD systemctl enable --now deconz
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now deconz
 msg_ok "Created Service"
 
 motd_ssh
