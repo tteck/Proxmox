@@ -83,8 +83,8 @@ msg_ok "Installed Python3 Dependencies"
 read -r -p "Would you like to add Coral Edge TPU support? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 msg_info "Adding Coral Edge TPU Support"
-$STD apt-key add <(curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg)
-sh -c 'echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" > /etc/apt/sources.list.d/coral-edgetpu.list'
+wget -qO /etc/apt/trusted.gpg.d/coral-repo.asc "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" >/etc/apt/sources.list.d/coral-edgetpu.list
 $STD apt-get -y update
 $STD apt-get -y install libedgetpu1-std
 msg_ok "Coral Edge TPU Support Added"
