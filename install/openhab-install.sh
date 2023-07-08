@@ -22,9 +22,9 @@ $STD apt-get install -y apt-transport-https
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Azul Zulu"
-$STD apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB1998361219BD9C9
+wget -qO /etc/apt/trusted.gpg.d/zulu-repo.asc "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xB1998361219BD9C9"
 wget -q https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-3_all.deb
-$STD apt-get install ./zulu-repo_1.0.0-3_all.deb
+$STD dpkg -i zulu-repo_1.0.0-3_all.deb
 $STD apt-get update
 $STD apt-get -y install zulu11-jdk
 msg_ok "Installed Azul Zulu"
