@@ -56,6 +56,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
+rm -rf libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
