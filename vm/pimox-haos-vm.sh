@@ -118,8 +118,8 @@ function default_settings() {
   HN=haos${STABLE}
   echo -e "${DGN}Allocated Cores: ${BGN}2${CL}"
   CORE_COUNT="2"
-  echo -e "${DGN}Allocated RAM: ${BGN}4096${CL}"
-  RAM_SIZE="4096"
+  echo -e "${DGN}Allocated RAM: ${BGN}2048${CL}"
+  RAM_SIZE="2048"
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
   echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
@@ -174,10 +174,10 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"; fi
   fi
-  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 2048 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $RAM_SIZE ]; then
-    RAM_SIZE="4096"
+    RAM_SIZE="2048"
     echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"; fi
