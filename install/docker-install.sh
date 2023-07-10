@@ -48,7 +48,7 @@ read -r -p "Would you like to add Portainer? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
   docker volume create portainer_data >/dev/null
- $STD docker run -d \
+  $STD docker run -d \
     -p 8000:8000 \
     -p 9000:9000 \
     --name=portainer \
@@ -57,21 +57,20 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
     -v portainer_data:/data \
     portainer/portainer-ce:latest
   msg_ok "Installed Portainer $PORTAINER_LATEST_VERSION"
+else
+  read -r -p "Would you like to add the Portainer Agent? <y/N> " prompt
+  if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+    msg_info "Installing Portainer agent $PORTAINER_AGENT_LATEST_VERSION"
+    $STD docker run -d \
+      -p 9001:9001 \
+      --name portainer_agent \
+      --restart=always \
+      -v /var/run/docker.sock:/var/run/docker.sock \
+      -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+      portainer/agent
+    msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
+  fi
 fi
-
-read -r -p "Would you like to add the Portainer Agent? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  msg_info "Installing Portainer agent $PORTAINER_AGENT_LATEST_VERSION"
- $STD docker run -d \
-    -p 9001:9001 \
-    --name portainer_agent \
-    --restart=always
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /var/lib/docker/volumes:/var/lib/docker/volumes \
-    portainer/agent
-  msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
-fi
-
 read -r -p "Would you like to add Docker Compose? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Docker Compose $DOCKER_COMPOSE_LATEST_VERSION"
