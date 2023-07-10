@@ -25,6 +25,7 @@ get_latest_release() {
 
 DOCKER_LATEST_VERSION=$(get_latest_release "moby/moby")
 PORTAINER_LATEST_VERSION=$(get_latest_release "portainer/portainer")
+PORTAINER_AGENT_LATEST_VERSION=$(get_latest_release "portainer/agent")
 DOCKER_COMPOSE_LATEST_VERSION=$(get_latest_release "docker/compose")
 
 msg_info "Installing Docker $DOCKER_LATEST_VERSION"
@@ -56,6 +57,19 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
     -v portainer_data:/data \
     portainer/portainer-ce:latest
   msg_ok "Installed Portainer $PORTAINER_LATEST_VERSION"
+fi
+
+read -r -p "Would you like to add the Portainer Agent? <y/N> " prompt
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+  msg_info "Installing Portainer agent $PORTAINER_AGENT_LATEST_VERSION"
+ $STD docker run -d \
+    -p 9001:9001 \
+    --name portainer_agent \
+    --restart=always
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+    portainer/agent
+  msg_ok "Installed Portainer Agent $PORTAINER_AGENT_LATEST_VERSION"
 fi
 
 read -r -p "Would you like to add Docker Compose? <y/N> " prompt
