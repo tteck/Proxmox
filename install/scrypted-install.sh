@@ -13,7 +13,7 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 $STD apt-get -y install software-properties-common apt-utils
 $STD apt-get -y update
 $STD apt-get -y upgrade
@@ -36,7 +36,19 @@ $STD apt-get -y install \
     mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing GStreamer"
+if [[ "$CTTYPE" == "0" ]]; then
+  msg_info "Setting Up Hardware Acceleration"
+  $STD apt-get -y install \
+    va-driver-all \
+    ocl-icd-libopencl1 \
+    intel-opencl-icd
+
+  /bin/chgrp video /dev/dri
+  /bin/chmod 755 /dev/dri
+  /bin/chmod 660 /dev/dri/*
+  msg_ok "Set Up Hardware Acceleration"
+fi
+msg_info "Installing GStreamer (Patience)"
 $STD apt-get -y install \
     gstreamer1.0-tools \
     libgstreamer1.0-dev \
@@ -92,7 +104,7 @@ fi
 
 msg_info "Installing Scrypted"
 $STD sudo -u root npx -y scrypted@latest install-server
-msg_info "Installed Scrypted"
+msg_ok "Installed Scrypted"
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/scrypted.service"
