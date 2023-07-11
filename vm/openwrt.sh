@@ -204,6 +204,8 @@ function default_settings() {
   MAC=$GEN_MAC
   LAN_MAC=$GEN_MAC_LAN
   LAN_BRG="vmbr0"
+  LAN_IP_ADDR="192.168.1.1"
+  LAN_NETMASK="255.255.255.0"
   LAN_VLAN=",tag=999"
   MTU=""
   START_VM="yes"
@@ -217,6 +219,8 @@ function default_settings() {
   echo -e "${DGN}Using LAN MAC Address: ${BGN}${LAN_MAC}${CL}"
   echo -e "${DGN}Using LAN Bridge: ${BGN}${LAN_BRG}${CL}"
   echo -e "${DGN}Using LAN VLAN: ${BGN}999${CL}"
+  echo -e "${DGN}Using LAN IP Address: ${BGN}${LAN_IP_ADDR}${CL}"
+  echo -e "${DGN}Using LAN NETMASK: ${BGN}${LAN_NETMASK}${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
   echo -e "${BL}Creating a OpenWRT VM using the above default settings${CL}"
@@ -283,6 +287,24 @@ function advanced_settings() {
       LAN_BRG="vmbr0"
     fi
     echo -e "${DGN}Using LAN Bridge: ${BGN}$LAN_BRG${CL}"
+  else
+    exit-script
+  fi
+
+  if LAN_IP_ADDR=$(whiptail --inputbox "Set a router IP" 8 58 $LAN_IP_ADDR --title "LAN IP ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $LAN_IP_ADDR ]; then
+      LAN_IP_ADDR="192.168.1.1"
+    fi
+    echo -e "${DGN}Using LAN IP ADDRESS: ${BGN}$LAN_IP_ADDR${CL}"
+  else
+    exit-script
+  fi
+
+  if LAN_NETMASK=$(whiptail --inputbox "Set a router netmmask" 8 58 $LAN_NETMASK --title "LAN NETMASK" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $LAN_NETMASK ]; then
+      LAN_NETMASK="255.255.255.0"
+    fi
+    echo -e "${DGN}Using LAN NETMASK: ${BGN}$LAN_NETMASK${CL}"
   else
     exit-script
   fi
@@ -469,8 +491,8 @@ send_line_to_vm "uci delete network.lan"
 send_line_to_vm "uci set network.lan=interface"
 send_line_to_vm "uci set network.lan.device=eth0"
 send_line_to_vm "uci set network.lan.proto=static"
-send_line_to_vm "uci set network.lan.ipaddr=192.168.2.1"
-send_line_to_vm "uci set network.lan.netmask=255.255.255.0"
+send_line_to_vm "uci set network.lan.ipaddr=${LAN_IP_ADDR}"
+send_line_to_vm "uci set network.lan.netmask=${LAN_NETMASK}"
 send_line_to_vm "uci set firewall.@zone[1].input='ACCEPT'"
 send_line_to_vm "uci set firewall.@zone[1].forward='ACCEPT'"
 send_line_to_vm "uci commit"
