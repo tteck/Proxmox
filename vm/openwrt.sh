@@ -291,6 +291,24 @@ function advanced_settings() {
     exit-script
   fi
 
+  if LAN_IP_ADDR=$(whiptail --inputbox "Set a router IP" 8 58 vmbr0 --title "LAN IP ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $LAN_BRG ]; then
+      LAN_BRG="vmbr0"
+    fi
+    echo -e "${DGN}Using LAN IP ADDRESS: ${BGN}$LAN_IP_ADDR${CL}"
+  else
+    exit-script
+  fi
+
+  if LAN_NETMASK=$(whiptail --inputbox "Set a router netmmask" 8 58 vmbr0 --title "LAN NETMASK" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
+    if [ -z $LAN_BRG ]; then
+      LAN_BRG="vmbr0"
+    fi
+    echo -e "${DGN}Using LAN NETMASK: ${BGN}$LAN_NETMASK${CL}"
+  else
+    exit-script
+  fi
+
   if MAC1=$(whiptail --inputbox "Set a WAN MAC Address" 8 58 $GEN_MAC --title "WAN MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
     if [ -z $MAC1 ]; then
       MAC="$GEN_MAC"
