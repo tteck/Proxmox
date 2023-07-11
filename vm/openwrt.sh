@@ -292,8 +292,8 @@ function advanced_settings() {
   fi
 
   if LAN_IP_ADDR=$(whiptail --inputbox "Set a router IP" 8 58 vmbr0 --title "LAN IP ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
-    if [ -z $LAN_BRG ]; then
-      LAN_BRG="vmbr0"
+    if [ -z $LAN_IP_ADDR ]; then
+      LAN_IP_ADDR="192.168.1.1"
     fi
     echo -e "${DGN}Using LAN IP ADDRESS: ${BGN}$LAN_IP_ADDR${CL}"
   else
@@ -301,8 +301,8 @@ function advanced_settings() {
   fi
 
   if LAN_NETMASK=$(whiptail --inputbox "Set a router netmmask" 8 58 vmbr0 --title "LAN NETMASK" --cancel-button Exit-Script 3>&1 1>&2 2>&3); then
-    if [ -z $LAN_BRG ]; then
-      LAN_BRG="vmbr0"
+    if [ -z $LAN_NETMASK ]; then
+      LAN_NETMASK="255.255.255.0"
     fi
     echo -e "${DGN}Using LAN NETMASK: ${BGN}$LAN_NETMASK${CL}"
   else
