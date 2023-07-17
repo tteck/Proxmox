@@ -26,7 +26,8 @@ while true; do
   esac
 done
 
-(crontab -l 2>/dev/null; echo "0 0 * * * bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/update-lxcs-cron.sh)\"") | sed '$!N; /^\(.*\)\n\1$/!P; D' >>/var/log/update-lxcs-cron.log
+sh -c '(crontab -l -u root 2>/dev/null; echo "0 0 * * * bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/update-lxcs-cron.sh)\"") | sed "$!N; /^\(.*\)\n\1$/!P; D" | crontab -u root -' >>/var/log/update-lxcs.log
+
 clear
 echo -e "\n To view Update LXCs Cron logs: cat /var/log/update-lxcs-cron.log"
 }
