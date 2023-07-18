@@ -18,14 +18,14 @@ EOF
 
 add() {
 while true; do
-  read -p "This script will add a cron job to update all LXCs at midnight. Proceed(y/n)?" yn
+  read -p "This script will schedule a cron job that updates all LXCs every Sunday at midnight. Proceed(y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit ;;
   *) echo "Please answer yes or no." ;;
   esac
 done
-sh -c '(crontab -l -u root 2>/dev/null; echo "0 0 * * * PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /bin/bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/update-lxcs-cron.sh)\" >>/var/log/update-lxcs-cron.log 2>/dev/null") | crontab -u root -'
+sh -c '(crontab -l -u root 2>/dev/null; echo "0 0 * * 0 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /bin/bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/update-lxcs-cron.sh)\" >>/var/log/update-lxcs-cron.log 2>/dev/null") | crontab -u root -'
 clear
 echo -e "\n To view Update LXCs Cron logs: cat /var/log/update-lxcs-cron.log"
 }
