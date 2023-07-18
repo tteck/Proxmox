@@ -16,9 +16,6 @@ cat <<"EOF"
                               /_/
 EOF
 
-set -euo pipefail
-shopt -s inherit_errexit nullglob
-
 add() {
   while true; do
     read -p "This script will add a crontab schedule that updates all LXCs every Sunday at midnight. Proceed(y/n)?" yn
@@ -35,7 +32,7 @@ add() {
 
 remove() {
   (crontab -l | grep -v "github.com/tteck/Proxmox/raw/main/misc/update-lxcs-cron.sh") | crontab -
-  rm /var/log/update-lxcs-cron.log
+  rm -rf /var/log/update-lxcs-cron.log
   echo "Removed Crontab Schedule from Proxmox VE"
 }
 
