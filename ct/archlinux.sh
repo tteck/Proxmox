@@ -65,13 +65,13 @@ function msg_error() {
 }
 
 function PVE_CHECK() {
-if [ $(pveversion | grep -c "pve-manager/7\.[0-9]") -eq 0 ]; then
-  echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
-  echo -e "Requires PVE Version 7.0 or higher"
-  echo -e "Exiting..."
-  sleep 2
-exit
-fi
+  if ! pveversion | grep -Eq "pve-manager/(7\.[2-9]|8\.[0-9])"; then
+    echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+    echo -e "Requires PVE Version 7.2 or higher"
+    echo -e "Exiting..."
+    sleep 2
+    exit
+  fi
 }
 function ARCH_CHECK() {
 if [ "$(dpkg --print-architecture)" != "amd64" ]; then
