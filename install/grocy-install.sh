@@ -34,8 +34,9 @@ $STD apt-get install -y php8.1-mbstring
 msg_ok "Installed PHP 8.1"
 
 msg_info "Installing grocy"
-wget -q https://releases.grocy.info/latest
-$STD unzip latest -d /var/www/html
+latest=$(curl -s https://api.github.com/repos/grocy/grocy/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q https://github.com/grocy/grocy/releases/download/v${latest}/grocy_${latest}.zip
+$STD unzip grocy_${latest}.zip -d /var/www/html
 chown -R www-data:www-data /var/www/html
 cp /var/www/html/config-dist.php /var/www/html/data/config.php
 chmod +x /var/www/html/update.sh
@@ -66,5 +67,5 @@ customize
 msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
-rm -rf /root/latest
+rm -rf /root/grocy_${latest}.zip
 msg_ok "Cleaned"
