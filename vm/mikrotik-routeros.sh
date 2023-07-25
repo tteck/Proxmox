@@ -62,9 +62,9 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if [ $(pveversion | grep "pve-manager/7" | wc -l) -ne 1 ]; then
+ if ! pveversion | grep -Eq "pve-manager/(7\.[2-9]|8\.[0-9])"; then
   echo "⚠ This version of Proxmox Virtual Environment is not supported"
-  echo "Requires PVE Version: 7.XX"
+  echo -e "Requires PVE Version 7.2 or higher"
   echo "Exiting..."
   sleep 3
   exit
@@ -234,7 +234,7 @@ msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Mikrotik RouterOS Disk Image"
 
-URL=https://download.mikrotik.com/routeros/7.7/install-image-7.7.zip
+URL=https://download.mikrotik.com/routeros/7.10.2/install-image-7.10.2.zip
 
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
