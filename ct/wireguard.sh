@@ -19,6 +19,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Wireguard"
+var_tags="proxmox-helper-scripts"
 var_disk="2"
 var_cpu="1"
 var_ram="512"
@@ -33,6 +34,7 @@ function default_settings() {
   PW=""
   CT_ID=$NEXTID
   HN=$NSAPP
+  TAGS="$var_tags"
   DISK_SIZE="$var_disk"
   CORE_COUNT="$var_cpu"
   RAM_SIZE="$var_ram"

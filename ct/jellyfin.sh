@@ -20,6 +20,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Jellyfin"
+var_tags="proxmox-helper-scripts"
 var_disk="8"
 var_cpu="2"
 var_ram="2048"
@@ -34,6 +35,7 @@ function default_settings() {
   PW=""
   CT_ID=$NEXTID
   HN=$NSAPP
+  TAGS="$var_tags"
   DISK_SIZE="$var_disk"
   CORE_COUNT="$var_cpu"
   RAM_SIZE="$var_ram"

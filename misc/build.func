@@ -98,6 +98,7 @@ echo_default() {
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
+  echo -e "${DGN}Using Tags: ${BGN}$TAGS${CL}"
   echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
   echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
   echo -e "${DGN}Allocated Ram ${BGN}$var_ram${CL}"
@@ -222,6 +223,17 @@ advanced_settings() {
       HN=$(echo ${CT_NAME,,} | tr -d ' ')
     fi
     echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
+  else
+    exit-script
+  fi
+
+  if TAGS=$(whiptail --inputbox "Set Tags" 8 58 $var_tags --title "TAGS" 3>&1 1>&2 2>&3); then
+    if [ -z "$TAGS" ]; then
+      TAGS="$var_tags"
+    else
+      TAGS=$(echo ${TAGS,,} | tr -d ' ')
+    fi
+    echo -e "${DGN}Using Tags: ${BGN}$TAGS${CL}"
   else
     exit-script
   fi
@@ -502,7 +514,7 @@ build_container() {
   export PCT_OPTIONS="
     -features $FEATURES
     -hostname $HN
-    -tags proxmox-helper-scripts
+    -tags $TAGS
     $SD
     $NS
     -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
@@ -550,7 +562,7 @@ EOF
   pct start "$CTID"
   msg_ok "Started LXC Container"
   if [ "$var_os" == "alpine" ]; then
-    sleep 2
+    sleep 3
     pct exec "$CTID" -- ash -c "apk add bash >/dev/null"
   fi
   lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit

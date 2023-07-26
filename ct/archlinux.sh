@@ -19,6 +19,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Arch Linux"
+var_tags="proxmox-helper-scripts"
 var_disk="1"
 var_cpu="1"
 var_ram="512"
@@ -91,6 +92,8 @@ function default_settings() {
   CT_ID=$NEXTID
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
   HN=$NSAPP
+  echo -e "${DGN}Using Tags: ${BGN}$TAGS${CL}"
+  TAGS="$var_tags"
   echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
   DISK_SIZE="$var_disk"
   echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
@@ -170,6 +173,17 @@ if CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3
     echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
 else
     exit-script
+fi
+
+if TAGS=$(whiptail --inputbox "Set Tags" 8 58 $var_tags --title "TAGS" 3>&1 1>&2 2>&3); then
+  if [ -z "$TAGS" ]; then
+    TAGS="$var_tags"
+  else
+    TAGS=$(echo ${TAGS,,} | tr -d ' ')
+  fi
+  echo -e "${DGN}Using Tags: ${BGN}$TAGS${CL}"
+else
+  exit-script
 fi
 
 if DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3); then
@@ -398,6 +412,7 @@ export PCT_DISK_SIZE=$DISK_SIZE
 export PCT_OPTIONS="
   -features $FEATURES
   -hostname $HN
+  -tags $TAGS
   $SD
   $NS
   -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
