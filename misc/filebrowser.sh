@@ -6,7 +6,7 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-    cat <<"EOF"
+  cat <<"EOF"
     _______ __     ____                                   
    / ____(_) /__  / __ )_________ _      __________  _____
   / /_  / / / _ \/ __  / ___/ __ \ | /| / / ___/ _ \/ ___/
@@ -37,33 +37,33 @@ alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
 
 function error_exit() {
-    trap - ERR
-    local reason="Unknown failure occured."
-    local msg="${1:-$reason}"
-    local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
-    echo -e "$flag $msg" 1>&2
-    exit $EXIT
+  trap - ERR
+  local reason="Unknown failure occured."
+  local msg="${1:-$reason}"
+  local flag="${RD}‼ ERROR ${CL}$EXIT@$LINE"
+  echo -e "$flag $msg" 1>&2
+  exit $EXIT
 }
 clear
 header_info
 while true; do
-    read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
-    case $yn in
-    [Yy]*) break ;;
-    [Nn]*) exit ;;
-    *) echo "Please answer yes or no." ;;
-    esac
+  read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
 done
 clear
 header_info
 function msg_info() {
-    local msg="$1"
-    echo -ne " ${HOLD} ${YW}${msg}..."
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
 function msg_ok() {
-    local msg="$1"
-    echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+  local msg="$1"
+  echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
 msg_info "Installing ${APP}"
