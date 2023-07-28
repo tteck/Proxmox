@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     _   __          __        ____           __
    / | / /___  ____/ /__     / __ \___  ____/ /
   /  |/ / __ \/ __  / _ \   / /_/ / _ \/ __  / 
@@ -51,49 +51,52 @@ function default_settings() {
 }
 
 function update_script() {
-if [[ ! -d /root/.node-red ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-  "1" "Update ${APP}" ON \
-  "2" "Install Themes" OFF \
-  3>&1 1>&2 2>&3)
-header_info
-if [ "$UPD" == "1" ]; then
-msg_info "Stopping ${APP}"
-systemctl stop nodered
-msg_ok "Stopped ${APP}"
-
-msg_info "Updating ${APP}"
-npm install -g --unsafe-perm node-red &>/dev/null
-msg_ok "Updated ${APP}"
-
-msg_info "Starting ${APP}"
-systemctl start nodered
-msg_ok "Started ${APP}"
-msg_ok "Update Successful"
-exit
-fi
-if [ "$UPD" == "2" ]; then
-THEME=$(whiptail --title "NODE-RED THEMES" --radiolist --cancel-button Exit-Script "Choose Theme" 15 58 6 \
-    "dark" "" OFF \
-    "dracula" "" OFF \
-    "midnight-red" "" ON \
-    "oled" "" OFF \
-    "solarized-dark" "" OFF \
-    "solarized-light" "" OFF \
+  if [[ ! -d /root/.node-red ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+    "1" "Update ${APP}" ON \
+    "2" "Install Themes" OFF \
     3>&1 1>&2 2>&3)
-header_info
-msg_info "Installing ${THEME} Theme"    
-cd /root/.node-red
-sed -i 's|//theme: "",|theme: "",|g' /root/.node-red/settings.js
-npm install @node-red-contrib-themes/${THEME} &>/dev/null
-sed -i "{s/theme: ".*"/theme: '${THEME}',/g}" /root/.node-red/settings.js
-msg_ok "Installed ${THEME} Theme"
+  header_info
+  if [ "$UPD" == "1" ]; then
+    msg_info "Stopping ${APP}"
+    systemctl stop nodered
+    msg_ok "Stopped ${APP}"
 
-msg_info "Restarting ${APP}"
-systemctl restart nodered
-msg_ok "Restarted ${APP}"
-exit
-fi
+    msg_info "Updating ${APP}"
+    npm install -g --unsafe-perm node-red &>/dev/null
+    msg_ok "Updated ${APP}"
+
+    msg_info "Starting ${APP}"
+    systemctl start nodered
+    msg_ok "Started ${APP}"
+    msg_ok "Update Successful"
+    exit
+  fi
+  if [ "$UPD" == "2" ]; then
+    THEME=$(whiptail --title "NODE-RED THEMES" --radiolist --cancel-button Exit-Script "Choose Theme" 15 58 6 \
+      "dark" "" OFF \
+      "dracula" "" OFF \
+      "midnight-red" "" ON \
+      "oled" "" OFF \
+      "solarized-dark" "" OFF \
+      "solarized-light" "" OFF \
+      3>&1 1>&2 2>&3)
+    header_info
+    msg_info "Installing ${THEME} Theme"
+    cd /root/.node-red
+    sed -i 's|//theme: "",|theme: "",|g' /root/.node-red/settings.js
+    npm install @node-red-contrib-themes/${THEME} &>/dev/null
+    sed -i "{s/theme: ".*"/theme: '${THEME}',/g}" /root/.node-red/settings.js
+    msg_ok "Installed ${THEME} Theme"
+
+    msg_info "Restarting ${APP}"
+    systemctl restart nodered
+    msg_ok "Restarted ${APP}"
+    exit
+  fi
 }
 
 start

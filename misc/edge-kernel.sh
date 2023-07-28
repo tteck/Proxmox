@@ -7,7 +7,7 @@
 
 # bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
 function header_info {
-cat <<"EOF"
+    cat <<"EOF"
     ____ _    ________   ______    __              __ __                     __    
    / __ \ |  / / ____/  / ____/___/ /___ ____     / //_/__  _________  ___  / /____
   / /_/ / | / / __/    / __/ / __  / __ `/ _ \   / ,< / _ \/ ___/ __ \/ _ \/ / ___/

@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     __  __                         
    / / / /___  ____ ___  ___  _____
   / /_/ / __ \/ __ `__ \/ _ \/ ___/
@@ -51,37 +51,40 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/homer ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping ${APP}"
-systemctl stop homer
-msg_ok "Stopped ${APP}"
+  header_info
+  if [[ ! -d /opt/homer ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Stopping ${APP}"
+  systemctl stop homer
+  msg_ok "Stopped ${APP}"
 
-msg_info "Backing up config.yml"
-cd ~
-cp -R /opt/homer/assets/config.yml config.yml
-msg_ok "Backed up config.yml"
+  msg_info "Backing up config.yml"
+  cd ~
+  cp -R /opt/homer/assets/config.yml config.yml
+  msg_ok "Backed up config.yml"
 
-msg_info "Updating ${APP}"
-rm -rf /opt/homer/*
-cd /opt/homer
-wget -q https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip
-unzip homer.zip &>/dev/null
-msg_ok "Updated ${APP}"
-msg_info "Restoring conf.yml"
-cd ~
-cp -R config.yml /opt/homer/assets
-msg_ok "Restored conf.yml"
+  msg_info "Updating ${APP}"
+  rm -rf /opt/homer/*
+  cd /opt/homer
+  wget -q https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip
+  unzip homer.zip &>/dev/null
+  msg_ok "Updated ${APP}"
+  msg_info "Restoring conf.yml"
+  cd ~
+  cp -R config.yml /opt/homer/assets
+  msg_ok "Restored conf.yml"
 
-msg_info "Cleaning"
-rm -rf config.yml /opt/homer/homer.zip
-msg_ok "Cleaned"
+  msg_info "Cleaning"
+  rm -rf config.yml /opt/homer/homer.zip
+  msg_ok "Cleaned"
 
-msg_info "Starting ${APP}"
-systemctl start homer
-msg_ok "Started ${APP}"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Starting ${APP}"
+  systemctl start homer
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

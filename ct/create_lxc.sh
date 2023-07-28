@@ -79,7 +79,7 @@ function select_storage() {
     ;;
   *) false || exit "Invalid storage class." ;;
   esac
-  
+
   # This Queries all storage locations
   local -a MENU
   while read -r line; do
@@ -93,7 +93,7 @@ function select_storage() {
     fi
     MENU+=("$TAG" "$ITEM" "OFF")
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
-  
+
   # Select storage location
   if [ $((${#MENU[@]} / 3)) -eq 1 ]; then
     printf ${MENU[0]}

@@ -83,7 +83,7 @@ function update_script() {
           sed -i "s|\"admin_token\": .*|\"admin_token\": \"${TOKEN}\",|" /var/lib/vaultwarden/config.json
         fi
         rc-service vaultwarden restart -q
-      fi      
+      fi
       clear
       exit
       ;;

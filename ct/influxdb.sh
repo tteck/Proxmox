@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____      ______           ____  ____ 
    /  _/___  / __/ /_  ___  __/ __ \/ __ )
    / // __ \/ /_/ / / / / |/_/ / / / __  |
@@ -51,17 +51,20 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/apt/sources.list.d/influxdb.list || ! -f /etc/apt/sources.list.d/influxdata.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-wget -q https://repos.influxdata.com/influxdata-archive_compat.key
-cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
-echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
-rm -f /etc/apt/trusted.gpg.d/influxdb.gpg
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -f /etc/apt/sources.list.d/influxdb.list || ! -f /etc/apt/sources.list.d/influxdata.list ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP}"
+  wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+  cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg >/dev/null
+  echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+  rm -f /etc/apt/trusted.gpg.d/influxdb.gpg
+  apt-get update &>/dev/null
+  apt-get -y upgrade &>/dev/null
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

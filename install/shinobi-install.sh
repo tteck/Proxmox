@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -48,7 +48,7 @@ gitVersionNumber=$(git rev-parse HEAD)
 theDateRightNow=$(date)
 touch version.json
 chmod 777 version.json
-echo '{"Product" : "'"Shinobi"'" , "Branch" : "'"master"'" , "Version" : "'"$gitVersionNumber"'" , "Date" : "'"$theDateRightNow"'" , "Repository" : "'"https://gitlab.com/Shinobi-Systems/Shinobi.git"'"}' > version.json
+echo '{"Product" : "'"Shinobi"'" , "Branch" : "'"master"'" , "Version" : "'"$gitVersionNumber"'" , "Date" : "'"$theDateRightNow"'" , "Repository" : "'"https://gitlab.com/Shinobi-Systems/Shinobi.git"'"}' >version.json
 msg_ok "Cloned Shinobi"
 
 msg_info "Installing Database"
@@ -62,7 +62,7 @@ mysql -e "source sql/user.sql" || true
 mysql -e "source sql/framework.sql" || true
 msg_ok "Installed Database"
 cp conf.sample.json conf.json
-cronKey=$(head -c 1024 < /dev/urandom | sha256sum | awk '{print substr($1,1,29)}')
+cronKey=$(head -c 1024 </dev/urandom | sha256sum | awk '{print substr($1,1,29)}')
 sed -i -e 's/Shinobi/'"$cronKey"'/g' conf.json
 cp super.sample.json super.json
 
@@ -73,7 +73,7 @@ $STD npm install pm2@latest -g
 chmod -R 755 .
 touch INSTALL/installed.txt
 ln -s /opt/Shinobi/INSTALL/shinobi /usr/bin/shinobi
-node /opt/Shinobi/tools/modifyConfiguration.js addToConfig="{\"cron\":{\"key\":\"$(head -c 64 < /dev/urandom | sha256sum | awk '{print substr($1,1,60)}')\"}}" &>/dev/null
+node /opt/Shinobi/tools/modifyConfiguration.js addToConfig="{\"cron\":{\"key\":\"$(head -c 64 </dev/urandom | sha256sum | awk '{print substr($1,1,60)}')\"}}" &>/dev/null
 $STD pm2 start camera.js
 $STD pm2 start cron.js
 $STD pm2 startup

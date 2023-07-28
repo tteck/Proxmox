@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -25,7 +25,7 @@ if [[ "$CTTYPE" == "0" ]]; then
     va-driver-all \
     ocl-icd-libopencl1 \
     intel-opencl-icd
-    
+
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
   /bin/chmod 660 /dev/dri/*

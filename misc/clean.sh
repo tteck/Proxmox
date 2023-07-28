@@ -6,8 +6,8 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info() {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    ________                    __   _  ________
   / ____/ /__  ____ _____     / /  | |/ / ____/
  / /   / / _ \/ __ `/ __ \   / /   |   / /     

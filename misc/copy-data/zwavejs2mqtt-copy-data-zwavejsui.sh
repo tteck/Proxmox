@@ -8,7 +8,10 @@
 # Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC
 # run from the Proxmox Shell
 clear
-if ! command -v pveversion >/dev/null 2>&1; then echo -e "⚠️  Run from the Proxmox Shell"; exit; fi
+if ! command -v pveversion >/dev/null 2>&1; then
+  echo -e "⚠️  Run from the Proxmox Shell"
+  exit
+fi
 while true; do
   read -p "Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC. Proceed(y/n)?" yn
   case $yn in

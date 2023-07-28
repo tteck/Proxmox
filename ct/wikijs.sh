@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
  _       ___ __   _     _     
 | |     / (_) /__(_)   (_)____
 | | /| / / / //_/ /   / / ___/
@@ -52,35 +52,38 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/wikijs ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping ${APP}"
-systemctl stop wikijs
-msg_ok "Stopped ${APP}"
+  header_info
+  if [[ ! -d /opt/wikijs ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Stopping ${APP}"
+  systemctl stop wikijs
+  msg_ok "Stopped ${APP}"
 
-msg_info "Backing up Data"
-mkdir -p data-backup
-cp -R /opt/wikijs/{db.sqlite,config.yml,/data} ~/data-backup
-msg_ok "Backed up Data"
+  msg_info "Backing up Data"
+  mkdir -p data-backup
+  cp -R /opt/wikijs/{db.sqlite,config.yml,/data} ~/data-backup
+  msg_ok "Backed up Data"
 
-msg_info "Updating ${APP}"
-rm -rf /opt/wikijs/*
-cd /opt/wikijs
-wget -q https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz
-tar xzf wiki-js.tar.gz 
-msg_ok "Updated ${APP}"
+  msg_info "Updating ${APP}"
+  rm -rf /opt/wikijs/*
+  cd /opt/wikijs
+  wget -q https://github.com/Requarks/wiki/releases/latest/download/wiki-js.tar.gz
+  tar xzf wiki-js.tar.gz
+  msg_ok "Updated ${APP}"
 
-msg_info "Restoring Data"
-cp -R ~/data-backup/* /opt/wikijs
-rm -rf ~/data-backup
-npm rebuild sqlite3 &>/dev/null
-msg_ok "Restored Data"
+  msg_info "Restoring Data"
+  cp -R ~/data-backup/* /opt/wikijs
+  rm -rf ~/data-backup
+  npm rebuild sqlite3 &>/dev/null
+  msg_ok "Restored Data"
 
-msg_info "Starting ${APP}"
-systemctl start wikijs
-msg_ok "Started ${APP}"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Starting ${APP}"
+  systemctl start wikijs
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

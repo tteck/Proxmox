@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
  _       ___           ______                     __
 | |     / (_)_______  / ____/_  ______ __________/ /
 | | /| / / / ___/ _ \/ / __/ / / / __ `/ ___/ __  / 
@@ -51,48 +51,51 @@ function default_settings() {
 }
 
 function update_script() {
-if [[ ! -d /etc/pivpn/wireguard ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
-  "1" "Update ${APP} LXC" ON \
-  "2" "Install WGDashboard" OFF \
-  3>&1 1>&2 2>&3)
-header_info
-if [ "$UPD" == "1" ]; then
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated Successfully"
-exit
-fi
-if [ "$UPD" == "2" ]; then
-  if [[ -f /etc/systemd/system/wg-dashboard.service ]]; then
-    msg_error "Existing WGDashboard Installation Found!";
-    exit 
+  if [[ ! -d /etc/pivpn/wireguard ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
   fi
-IP=$(hostname -I | awk '{print $1}')
-msg_info "Installing Python3-pip"
-apt-get install -y python3-pip &>/dev/null
-pip install flask &>/dev/null
-pip install ifcfg &>/dev/null
-pip install flask_qrcode &>/dev/null
-pip install icmplib &>/dev/null
-msg_ok "Installed Python3-pip"
+  UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+    "1" "Update ${APP} LXC" ON \
+    "2" "Install WGDashboard" OFF \
+    3>&1 1>&2 2>&3)
+  header_info
+  if [ "$UPD" == "1" ]; then
+    msg_info "Updating ${APP} LXC"
+    apt-get update &>/dev/null
+    apt-get -y upgrade &>/dev/null
+    msg_ok "Updated Successfully"
+    exit
+  fi
+  if [ "$UPD" == "2" ]; then
+    if [[ -f /etc/systemd/system/wg-dashboard.service ]]; then
+      msg_error "Existing WGDashboard Installation Found!"
+      exit
+    fi
+    IP=$(hostname -I | awk '{print $1}')
+    msg_info "Installing Python3-pip"
+    apt-get install -y python3-pip &>/dev/null
+    pip install flask &>/dev/null
+    pip install ifcfg &>/dev/null
+    pip install flask_qrcode &>/dev/null
+    pip install icmplib &>/dev/null
+    msg_ok "Installed Python3-pip"
 
-msg_info "Installing WGDashboard"
-WGDREL=$(curl -s https://api.github.com/repos/donaldzou/WGDashboard/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 2, length($2)-3) }')
+    msg_info "Installing WGDashboard"
+    WGDREL=$(curl -s https://api.github.com/repos/donaldzou/WGDashboard/releases/latest |
+      grep "tag_name" |
+      awk '{print substr($2, 2, length($2)-3) }')
 
-git clone -b ${WGDREL} https://github.com/donaldzou/WGDashboard.git /etc/wgdashboard &>/dev/null
-cd /etc/wgdashboard/src
-sudo chmod u+x wgd.sh
-sudo ./wgd.sh install &>/dev/null
-sudo chmod -R 755 /etc/wireguard
-msg_ok "Installed WGDashboard"
+    git clone -b ${WGDREL} https://github.com/donaldzou/WGDashboard.git /etc/wgdashboard &>/dev/null
+    cd /etc/wgdashboard/src
+    sudo chmod u+x wgd.sh
+    sudo ./wgd.sh install &>/dev/null
+    sudo chmod -R 755 /etc/wireguard
+    msg_ok "Installed WGDashboard"
 
-msg_info "Creating Service"
-service_path="/etc/systemd/system/wg-dashboard.service"
-echo "[Unit]
+    msg_info "Creating Service"
+    service_path="/etc/systemd/system/wg-dashboard.service"
+    echo "[Unit]
 After=systemd-networkd.service
 
 [Service]
@@ -103,15 +106,15 @@ Restart=always
 
 [Install]
 WantedBy=default.target" >$service_path
-chmod 664 /etc/systemd/system/wg-dashboard.service
-systemctl daemon-reload
-systemctl enable wg-dashboard.service &>/dev/null
-systemctl start wg-dashboard.service &>/dev/null
-msg_ok "Created Service"
-echo -e "WGDashboard should be reachable by going to the following URL.
+    chmod 664 /etc/systemd/system/wg-dashboard.service
+    systemctl daemon-reload
+    systemctl enable wg-dashboard.service &>/dev/null
+    systemctl start wg-dashboard.service &>/dev/null
+    msg_ok "Created Service"
+    echo -e "WGDashboard should be reachable by going to the following URL.
          ${BL}http://${IP}:10086${CL} admin|admin \n"
-exit
-fi
+    exit
+  fi
 }
 
 start

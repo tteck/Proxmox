@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ___       __                           __
    /   | ____/ /___ ___  ______ __________/ /
   / /| |/ __  / __  / / / / __  / ___/ __  / 
@@ -52,30 +52,33 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/AdGuardHome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-wget -qL https://static.adguard.com/adguardhome/release/AdGuardHome_linux_amd64.tar.gz
-msg_info "Stopping AdguardHome"
-systemctl stop AdGuardHome
-msg_ok "Stopped AdguardHome"
+  header_info
+  if [[ ! -d /opt/AdGuardHome ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  wget -qL https://static.adguard.com/adguardhome/release/AdGuardHome_linux_amd64.tar.gz
+  msg_info "Stopping AdguardHome"
+  systemctl stop AdGuardHome
+  msg_ok "Stopped AdguardHome"
 
-msg_info "Updating AdguardHome"
-tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
-mkdir -p adguard-backup
-cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
-cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
-cp -r adguard-backup/* /opt/AdGuardHome/
-msg_ok "Updated AdguardHome"
+  msg_info "Updating AdguardHome"
+  tar -xvf AdGuardHome_linux_amd64.tar.gz &>/dev/null
+  mkdir -p adguard-backup
+  cp -r /opt/AdGuardHome/AdGuardHome.yaml /opt/AdGuardHome/data adguard-backup/
+  cp AdGuardHome/AdGuardHome /opt/AdGuardHome/AdGuardHome
+  cp -r adguard-backup/* /opt/AdGuardHome/
+  msg_ok "Updated AdguardHome"
 
-msg_info "Starting AdguardHome"
-systemctl start AdGuardHome
-msg_ok "Started AdguardHome"
+  msg_info "Starting AdguardHome"
+  systemctl start AdGuardHome
+  msg_ok "Started AdguardHome"
 
-msg_info "Cleaning Up"
-rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
-msg_ok "Cleaned"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Cleaning Up"
+  rm -rf AdGuardHome_linux_amd64.tar.gz AdGuardHome adguard-backup
+  msg_ok "Cleaned"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

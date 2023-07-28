@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -25,10 +25,10 @@ if [[ "$CTTYPE" == "0" ]]; then
   $STD apt-get -y install \
     va-driver-all \
     ocl-icd-libopencl1
-  if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
-  $STD apt-get install -y beignet-opencl-icd
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then
+    $STD apt-get install -y beignet-opencl-icd
   else
-  $STD apt-get install -y intel-opencl-icd
+    $STD apt-get install -y intel-opencl-icd
   fi
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
@@ -37,10 +37,10 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 
 msg_info "Installing Jellyfin"
-VERSION="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
+VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
 # If the keyring directory is absent, create it
 if [[ ! -d /etc/apt/keyrings ]]; then
-    mkdir -p /etc/apt/keyrings
+  mkdir -p /etc/apt/keyrings
 fi
 # Download the repository signing key and install it to the keyring directory
 curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | gpg --dearmor --yes --output /etc/apt/keyrings/jellyfin.gpg

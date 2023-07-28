@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    ____       __        ____       _       __ 
   / __ \_____/ /_____  / __ \_____(_)___  / /_
  / / / / ___/ __/ __ \/ /_/ / ___/ / __ \/ __/
@@ -51,22 +51,25 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/octoprint ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping OctoPrint"
-systemctl stop octoprint
-msg_ok "Stopped OctoPrint"
+  header_info
+  if [[ ! -d /opt/octoprint ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Stopping OctoPrint"
+  systemctl stop octoprint
+  msg_ok "Stopped OctoPrint"
 
-msg_info "Updating OctoPrint"
-source /opt/octoprint/bin/activate
-pip3 install octoprint --upgrade &>/dev/null
-msg_ok "Updated OctoPrint"
+  msg_info "Updating OctoPrint"
+  source /opt/octoprint/bin/activate
+  pip3 install octoprint --upgrade &>/dev/null
+  msg_ok "Updated OctoPrint"
 
-msg_info "Starting OctoPrint"
-systemctl start octoprint
-msg_ok "Started OctoPrint"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Starting OctoPrint"
+  systemctl start octoprint
+  msg_ok "Started OctoPrint"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

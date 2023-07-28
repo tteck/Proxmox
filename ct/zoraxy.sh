@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
  _____
 /__  /  ____  _________ __  ____  __
   / /  / __ \/ ___/ __ `/ |/_/ / / /
@@ -51,10 +51,13 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/zoraxy/src ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
-exit
+  header_info
+  if [[ ! -d /opt/zoraxy/src ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_error "There is currently no update path available."
+  exit
 }
 
 start

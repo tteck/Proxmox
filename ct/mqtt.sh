@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     __  ___           ____        _ ____________    
    /  |/  /___  _____/ __ \__  __(_)_  __/_  __/___ 
   / /|_/ / __ \/ ___/ / / / / / / / / /   / / / __ \
@@ -51,13 +51,16 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/apt/sources.list.d/mosquitto-bullseye.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -f /etc/apt/sources.list.d/mosquitto-bullseye.list ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP} LXC"
+  apt-get update &>/dev/null
+  apt-get -y upgrade &>/dev/null
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

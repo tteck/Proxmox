@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____             __    ____       __         _     __   ______                           __     _________            __
    / __ \___  ____  / /   / __ \___  / /_  _____(_)___/ /  /_  __/___  _____________  ____  / /_   / ____/ (_)__  ____  / /_
   / /_/ / _ \/ __ `/ /___/ / / / _ \/ __ \/ ___/ / __  /    / / / __ \/ ___/ ___/ _ \/ __ \/ __/  / /   / / / _ \/ __ \/ __/
@@ -51,13 +51,16 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/rdtclient/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
-exit
+  header_info
+  if [[ ! -d /opt/rdtclient/ ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating $APP LXC"
+  apt-get update &>/dev/null
+  apt-get -y upgrade &>/dev/null
+  msg_ok "Updated $APP LXC"
+  exit
 }
 
 start

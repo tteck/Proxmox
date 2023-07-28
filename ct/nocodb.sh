@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     _   __                 ____  ____ 
    / | / /___  ____  ___  / __ \/ __ )
   /  |/ / __ \/ ___/ __ \/ / / / __  |
@@ -51,15 +51,18 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/systemd/system/nocodb.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-cd /opt/nocodb
-npm uninstall -s --save nocodb &>/dev/null
-npm install -s --save nocodb &>/dev/null
-systemctl restart nocodb.service
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -f /etc/systemd/system/nocodb.service ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP}"
+  cd /opt/nocodb
+  npm uninstall -s --save nocodb &>/dev/null
+  npm install -s --save nocodb &>/dev/null
+  systemctl restart nocodb.service
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

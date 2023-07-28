@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -25,14 +25,14 @@ $STD bash <(curl -sSLf https://get.k0s.sh)
 $STD k0s install controller --single
 $STD k0s start
 mkdir -p /etc/k0s
-k0s config create > /etc/k0s/k0s.yaml
+k0s config create >/etc/k0s/k0s.yaml
 msg_ok "Installed k0s Kubernetes"
 
 read -r -p "Would you like to add Helm Package Manager? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-msg_info "Installing Helm"
-$STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3)
-msg_ok "Installed Helm"
+  msg_info "Installing Helm"
+  $STD bash <(curl -sSLf https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3)
+  msg_ok "Installed Helm"
 fi
 motd_ssh
 customize

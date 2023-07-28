@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     __  ___            _      __  ____                     
    /  |/  /___ _____ _(_)____/  |/  (_)_____________  _____
   / /|_/ / __  / __  / / ___/ /|_/ / / ___/ ___/ __ \/ ___/
@@ -52,14 +52,17 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/magicmirror ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-cd /opt/magicmirror
-git pull &>/dev/null
-npm install --only=prod --omit=dev &>/dev/null
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -d /opt/magicmirror ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP} LXC"
+  cd /opt/magicmirror
+  git pull &>/dev/null
+  npm install --only=prod --omit=dev &>/dev/null
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

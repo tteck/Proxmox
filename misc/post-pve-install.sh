@@ -172,7 +172,7 @@ EOF
       ;;
     esac
   fi
-  
+
   if systemctl is-active --quiet pve-ha-lrm; then
     CHOICE=$(whiptail --title "HIGH AVAILABILITY" --menu "If you plan to utilize a single node instead of a clustered environment, you can disable unnecessary high availability (HA) services, thus reclaiming system resources.\n\nIf HA becomes necessary at a later stage, the services can be re-enabled.\n\nDisable high availability?" 18 58 2 \
       "yes" " " \
@@ -190,7 +190,7 @@ EOF
       ;;
     esac
   fi
-  
+
   CHOICE=$(whiptail --title "UPDATE" --menu "\nUpdate Proxmox VE now?" 11 58 2 \
     "yes" " " \
     "no" " " 3>&2 2>&1 1>&3)
@@ -229,7 +229,10 @@ while true; do
   read -p "Start the Proxmox VE Post Install Script (y/n)?" yn
   case $yn in
   [Yy]*) break ;;
-  [Nn]*) clear; exit ;;
+  [Nn]*)
+    clear
+    exit
+    ;;
   *) echo "Please answer yes or no." ;;
   esac
 done

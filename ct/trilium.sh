@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
   ______     _ ___               
  /_  __/____(_) (_)_  ______ ___ 
   / / / ___/ / / / / / / __ `__ \
@@ -51,33 +51,36 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/trilium ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest |
+  header_info
+  if [[ ! -d /opt/trilium ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  RELEASE=$(curl -s https://api.github.com/repos/zadam/trilium/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 3, length($2)-4) }')
-    
-msg_info "Stopping ${APP}"
-systemctl stop trilium.service
-sleep 1
-msg_ok "Stopped ${APP}"
 
-msg_info "Updating to v${RELEASE}"
-wget -q https://github.com/zadam/trilium/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
-tar -xvf trilium-linux-x64-server-$RELEASE.tar.xz &>/dev/null
-cp -r trilium-linux-x64-server/* /opt/trilium/
-msg_ok "Updated to v${RELEASE}"
+  msg_info "Stopping ${APP}"
+  systemctl stop trilium.service
+  sleep 1
+  msg_ok "Stopped ${APP}"
 
-msg_info "Cleaning up"
-rm -rf trilium-linux-x64-server-$RELEASE.tar.xz trilium-linux-x64-server
-msg_ok "Cleaned"
+  msg_info "Updating to v${RELEASE}"
+  wget -q https://github.com/zadam/trilium/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
+  tar -xvf trilium-linux-x64-server-$RELEASE.tar.xz &>/dev/null
+  cp -r trilium-linux-x64-server/* /opt/trilium/
+  msg_ok "Updated to v${RELEASE}"
 
-msg_info "Starting ${APP}"
-systemctl start trilium.service
-sleep 1
-msg_ok "Started ${APP}"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Cleaning up"
+  rm -rf trilium-linux-x64-server-$RELEASE.tar.xz trilium-linux-x64-server
+  msg_ok "Cleaned"
+
+  msg_info "Starting ${APP}"
+  systemctl start trilium.service
+  sleep 1
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

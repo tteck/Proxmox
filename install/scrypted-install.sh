@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -19,21 +19,21 @@ $STD apt-get -y update
 $STD apt-get -y upgrade
 $STD apt-get install -y avahi-daemon
 $STD apt-get -y install \
-    build-essential \
-    gcc \
-    gir1.2-gtk-3.0 \
-    libcairo2-dev \
-    libgirepository1.0-dev \
-    libglib2.0-dev \
-    libjpeg-dev \
-    libgif-dev \
-    libopenjp2-7 \
-    libpango1.0-dev \
-    librsvg2-dev \
-    pkg-config \
-    curl \
-    sudo \
-    mc
+  build-essential \
+  gcc \
+  gir1.2-gtk-3.0 \
+  libcairo2-dev \
+  libgirepository1.0-dev \
+  libglib2.0-dev \
+  libjpeg-dev \
+  libgif-dev \
+  libopenjp2-7 \
+  libpango1.0-dev \
+  librsvg2-dev \
+  pkg-config \
+  curl \
+  sudo \
+  mc
 msg_ok "Installed Dependencies"
 
 if [[ "$CTTYPE" == "0" ]]; then
@@ -50,16 +50,16 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 msg_info "Installing GStreamer (Patience)"
 $STD apt-get -y install \
-    gstreamer1.0-tools \
-    libgstreamer1.0-dev \
-    libgstreamer-plugins-base1.0-dev \
-    libgstreamer-plugins-bad1.0-dev \
-    gstreamer1.0-plugins-base \
-    gstreamer1.0-plugins-good \
-    gstreamer1.0-plugins-bad \
-    gstreamer1.0-plugins-ugly \
-    gstreamer1.0-libav \
-    gstreamer1.0-alsa
+  gstreamer1.0-tools \
+  libgstreamer1.0-dev \
+  libgstreamer-plugins-base1.0-dev \
+  libgstreamer-plugins-bad1.0-dev \
+  gstreamer1.0-plugins-base \
+  gstreamer1.0-plugins-good \
+  gstreamer1.0-plugins-bad \
+  gstreamer1.0-plugins-ugly \
+  gstreamer1.0-libav \
+  gstreamer1.0-alsa
 msg_ok "Installed GStreamer"
 
 msg_info "Setting up Node.js Repository"
@@ -79,27 +79,27 @@ msg_ok "Updated Python3"
 
 msg_info "Installing Python3 Dependencies"
 $STD apt-get -y install \
-    python3-gi \
-    python3-gst-1.0 \
-    python3-matplotlib \
-    python3-numpy \
-    python3-opencv \
-    python3-pil \
-    python3-setuptools \
-    python3-skimage \
-    python3-wheel
+  python3-gi \
+  python3-gst-1.0 \
+  python3-matplotlib \
+  python3-numpy \
+  python3-opencv \
+  python3-pil \
+  python3-setuptools \
+  python3-skimage \
+  python3-wheel
 $STD python3 -m pip install --upgrade pip
 $STD python3 -m pip install aiofiles debugpy typing_extensions typing
 msg_ok "Installed Python3 Dependencies"
 
 read -r -p "Would you like to add Coral Edge TPU support? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-msg_info "Adding Coral Edge TPU Support"
-wget -qO /etc/apt/trusted.gpg.d/coral-repo.asc "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
-echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" >/etc/apt/sources.list.d/coral-edgetpu.list
-$STD apt-get -y update
-$STD apt-get -y install libedgetpu1-std
-msg_ok "Coral Edge TPU Support Added"
+  msg_info "Adding Coral Edge TPU Support"
+  wget -qO /etc/apt/trusted.gpg.d/coral-repo.asc "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+  echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" >/etc/apt/sources.list.d/coral-edgetpu.list
+  $STD apt-get -y update
+  $STD apt-get -y install libedgetpu1-std
+  msg_ok "Coral Edge TPU Support Added"
 fi
 
 msg_info "Installing Scrypted"

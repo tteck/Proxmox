@@ -4,7 +4,7 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 
 color
 verb_ip6
@@ -37,7 +37,7 @@ read -r -p "Would you like to add Portainer? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   msg_info "Installing Portainer $PORTAINER_LATEST_VERSION"
   docker volume create portainer_data >/dev/null
- $STD docker run -d \
+  $STD docker run -d \
     -p 8000:8000 \
     -p 9000:9000 \
     --name=portainer \

@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____             __            __    _                 
    / __ \____  _____/ /____  __   / /   (_)___  __  ___  __
   / /_/ / __ \/ ___/ //_/ / / /  / /   / / __ \/ / / / |/_/
@@ -52,13 +52,16 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /etc/pacman.d ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-dnf -y update
-dnf -y upgrade
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -d /etc/pacman.d ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP} LXC"
+  dnf -y update
+  dnf -y upgrade
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -38,7 +38,7 @@ msg_ok "Installed MongoDB"
 
 msg_info "Installing Omada Controller v5.9.31"
 wget -qL https://static.tp-link.com/upload/software/2023/202303/20230321/Omada_SDN_Controller_v5.9.31_Linux_x64.deb
-$STD dpkg -i Omada_SDN_Controller_v5.9.31_Linux_x64.deb 
+$STD dpkg -i Omada_SDN_Controller_v5.9.31_Linux_x64.deb
 msg_ok "Installed Omada Controller"
 
 motd_ssh

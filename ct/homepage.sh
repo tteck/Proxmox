@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     __  __                                          
    / / / /___  ____ ___  ___  ____  ____ _____ ____ 
   / /_/ / __ \/ __ `__ \/ _ \/ __ \/ __ `/ __ `/ _ \
@@ -51,20 +51,23 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/homepage ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-if ! command -v pnpm >/dev/null 2>&1; then
+  header_info
+  if [[ ! -d /opt/homepage ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP}"
+  if ! command -v pnpm >/dev/null 2>&1; then
     npm install -g pnpm &>/dev/null
-fi
-cd /opt/homepage
-systemctl stop homepage
-git pull --force &>/dev/null
-pnpm install &>/dev/null
-pnpm build &>/dev/null
-systemctl start homepage
-msg_ok "Updated Successfully"
-exit
+  fi
+  cd /opt/homepage
+  systemctl stop homepage
+  git pull --force &>/dev/null
+  pnpm install &>/dev/null
+  pnpm build &>/dev/null
+  systemctl start homepage
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    __  __      _ _____ 
   / / / /__   (_) __(_)
  / / / / __ \/ / /_/ / 
@@ -51,13 +51,16 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /usr/lib/unifi ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-apt-get update
-apt-get install -y unifi
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -d /usr/lib/unifi ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP}"
+  apt-get update
+  apt-get install -y unifi
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

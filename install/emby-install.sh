@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -24,10 +24,10 @@ if [[ "$CTTYPE" == "0" ]]; then
   $STD apt-get -y install \
     va-driver-all \
     ocl-icd-libopencl1
-  if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
-  $STD apt-get install -y beignet-opencl-icd
+  if [[ ${PCT_OSVERSION} == "20.04" ]]; then
+    $STD apt-get install -y beignet-opencl-icd
   else
-  $STD apt-get install -y intel-opencl-icd
+    $STD apt-get install -y intel-opencl-icd
   fi
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri

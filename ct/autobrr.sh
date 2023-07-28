@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ___         __        __             
    /   | __  __/ /_____  / /_  __________
   / /| |/ / / / __/ __ \/ __ \/ ___/ ___/
@@ -51,24 +51,27 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /root/.config/autobrr/config.toml ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping ${APP} LXC"
-systemctl stop autobrr.service
-msg_ok "Stopped ${APP} LXC"
+  header_info
+  if [[ ! -f /root/.config/autobrr/config.toml ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Stopping ${APP} LXC"
+  systemctl stop autobrr.service
+  msg_ok "Stopped ${APP} LXC"
 
-msg_info "Updating ${APP} LXC"
-rm -rf /usr/local/bin/*
-wget -q $(curl -s https://api.github.com/repos/autobrr/autobrr/releases/latest | grep download | grep linux_x86_64 | cut -d\" -f4)
-tar -C /usr/local/bin -xzf autobrr*.tar.gz
-rm -rf autobrr*.tar.gz
-msg_ok "Updated ${APP} LXC"
+  msg_info "Updating ${APP} LXC"
+  rm -rf /usr/local/bin/*
+  wget -q $(curl -s https://api.github.com/repos/autobrr/autobrr/releases/latest | grep download | grep linux_x86_64 | cut -d\" -f4)
+  tar -C /usr/local/bin -xzf autobrr*.tar.gz
+  rm -rf autobrr*.tar.gz
+  msg_ok "Updated ${APP} LXC"
 
-msg_info "Starting ${APP} LXC"
-systemctl start autobrr.service
-msg_ok "Started ${APP} LXC"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Starting ${APP} LXC"
+  systemctl start autobrr.service
+  msg_ok "Started ${APP} LXC"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

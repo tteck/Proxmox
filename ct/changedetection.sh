@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    ________                              ____       __            __  _           
   / ____/ /_  ____ _____  ____ ____     / __ \___  / /____  _____/ /_(_)___  ____ 
  / /   / __ \/ __ `/ __ \/ __ `/ _ \   / / / / _ \/ __/ _ \/ ___/ __/ / __ \/ __ \
@@ -51,12 +51,15 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/systemd/system/changedetection.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-pip3 install changedetection.io --upgrade &>/dev/null
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -f /etc/systemd/system/changedetection.service ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP} LXC"
+  pip3 install changedetection.io --upgrade &>/dev/null
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

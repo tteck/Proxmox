@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    ____ __________  _______  __
   / __  / ___/ __ \/ ___/ / / /
  / /_/ / /  / /_/ / /__/ /_/ / 
@@ -51,12 +51,15 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/apache2/sites-available/grocy.conf ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-bash /var/www/html/update.sh
-msg_ok "Updated Successfully"
-exit
+  header_info
+  if [[ ! -f /etc/apache2/sites-available/grocy.conf ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating ${APP}"
+  bash /var/www/html/update.sh
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

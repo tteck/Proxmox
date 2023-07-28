@@ -6,8 +6,8 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 header_info() {
-clear
-cat <<EOF
+    clear
+    cat <<EOF
    __________  __  __
   / ____/ __ \/ / / /
  / /   / /_/ / / / / 
@@ -34,10 +34,9 @@ show_menu() {
     echo -e "Current CPU Scaling Governor\n\033[36m$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\033[m\n"
     options=""
     i=1
-    for governor in $available_governors
-    do
+    for governor in $available_governors; do
         options+="** ${i}) \033[36m${governor}\033[m CPU Scaling Governor\n"
-        ((i=i+1))
+        ((i = i + 1))
     done
     echo -e "${options}"
     echo -e "\033[31mNOTE: Settings return to default after reboot\033[m\n"

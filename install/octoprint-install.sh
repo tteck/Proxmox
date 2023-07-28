@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -39,7 +39,7 @@ chown -R octoprint:octoprint /opt
 msg_ok "Created user octoprint"
 
 msg_info "Installing OctoPrint"
-$STD sudo -u octoprint bash << EOF
+$STD sudo -u octoprint bash <<EOF
 mkdir /opt/octoprint
 cd /opt/octoprint
 python3 -m venv .

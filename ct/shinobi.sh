@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    _____ __    _             __    _ 
   / ___// /_  (_)___  ____  / /_  (_)
   \__ \/ __ \/ / __ \/ __ \/ __ \/ / 
@@ -52,16 +52,19 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/Shinobi ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating Shinobi LXC"
-cd /opt/Shinobi
-sh UPDATE.sh
-pm2 flush
-pm2 restart camera
-pm2 restart cron
-msg_ok "Updated Shinobi LXC"
-exit
+  header_info
+  if [[ ! -d /opt/Shinobi ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating Shinobi LXC"
+  cd /opt/Shinobi
+  sh UPDATE.sh
+  pm2 flush
+  pm2 restart camera
+  pm2 restart cron
+  msg_ok "Updated Shinobi LXC"
+  exit
 }
 
 start

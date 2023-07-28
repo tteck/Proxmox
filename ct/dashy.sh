@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____             __         
    / __ \____ ______/ /_  __  __
   / / / / __  / ___/ __ \/ / / /
@@ -51,39 +51,42 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /dashy/public/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping ${APP}"
-systemctl stop dashy
-msg_ok "Stopped ${APP}"
+  header_info
+  if [[ ! -d /dashy/public/ ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Stopping ${APP}"
+  systemctl stop dashy
+  msg_ok "Stopped ${APP}"
 
-msg_info "Backing up conf.yml"
-cd ~
-cp -R /dashy/public/conf.yml conf.yml
-msg_ok "Backed up conf.yml"
+  msg_info "Backing up conf.yml"
+  cd ~
+  cp -R /dashy/public/conf.yml conf.yml
+  msg_ok "Backed up conf.yml"
 
-msg_info "Updating Dashy"
-cd /dashy
-git merge &>/dev/null
-git pull origin master &>/dev/null
-yarn &>/dev/null
-yarn build &>/dev/null
-msg_ok "Updated Dashy"
+  msg_info "Updating Dashy"
+  cd /dashy
+  git merge &>/dev/null
+  git pull origin master &>/dev/null
+  yarn &>/dev/null
+  yarn build &>/dev/null
+  msg_ok "Updated Dashy"
 
-msg_info "Restoring conf.yml"
-cd ~
-cp -R conf.yml /dashy/public
-msg_ok "Restored conf.yml"
+  msg_info "Restoring conf.yml"
+  cd ~
+  cp -R conf.yml /dashy/public
+  msg_ok "Restored conf.yml"
 
-msg_info "Cleaning"
-rm -rf conf.yml
-msg_ok "Cleaned"
+  msg_info "Cleaning"
+  rm -rf conf.yml
+  msg_ok "Cleaned"
 
-msg_info "Starting Dashy"
-systemctl start dashy
-msg_ok "Started Dashy"
-msg_ok "Updated Successfully"
-exit
+  msg_info "Starting Dashy"
+  systemctl start dashy
+  msg_ok "Started Dashy"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

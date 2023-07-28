@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     ____       __               
    / __ \___  / /_  ______ ____ 
   / / / / _ \/ / / / / __ `/ _ \
@@ -52,13 +52,16 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -f /etc/systemd/system/deluged.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-pip3 install deluge[all] --upgrade
-msg_ok "Updated $APP LXC"
-exit
+  header_info
+  if [[ ! -f /etc/systemd/system/deluged.service ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  msg_info "Updating $APP LXC"
+  apt-get update &>/dev/null
+  pip3 install deluge[all] --upgrade
+  msg_ok "Updated $APP LXC"
+  exit
 }
 
 start

@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -22,7 +22,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Podman"
 $STD apt-get -y install podman
 $STD systemctl enable --now podman.socket
-echo -e 'unqualified-search-registries=["docker.io"]' >> /etc/containers/registries.conf
+echo -e 'unqualified-search-registries=["docker.io"]' >>/etc/containers/registries.conf
 msg_ok "Installed Podman"
 
 motd_ssh

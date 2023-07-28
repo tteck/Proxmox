@@ -5,7 +5,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
+source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
 catch_errors
@@ -45,7 +45,7 @@ fi
 msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt
 if [[ $DEV == "y" ]]; then
-$STD git checkout dev
+  $STD git checkout dev
 fi
 $STD npm ci
 msg_ok "Installed Zigbee2MQTT"

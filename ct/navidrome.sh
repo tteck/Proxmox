@@ -6,8 +6,8 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
     _   __            _     __                        
    / | / /___ __   __(_)___/ /________  ____ ___  ___ 
   /  |/ / __  / | / / / __  / ___/ __ \/ __  __ \/ _ \
@@ -51,24 +51,27 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/navidrome ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-msg_info "Stopping ${APP}"
-systemctl stop navidrome.service
-msg_ok "Stopped Navidrome"
+  header_info
+  if [[ ! -d /opt/navidrome ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
+  RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+  msg_info "Stopping ${APP}"
+  systemctl stop navidrome.service
+  msg_ok "Stopped Navidrome"
 
-msg_info "Updating to v${RELEASE}"
-wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
-tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
-msg_ok "Updated ${APP}"
-rm Navidrome.tar.gz
+  msg_info "Updating to v${RELEASE}"
+  wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
+  tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
+  msg_ok "Updated ${APP}"
+  rm Navidrome.tar.gz
 
-msg_info "${GN} Starting ${APP}"
-systemctl start navidrome.service
-msg_ok "Started ${APP}"
-msg_ok "Updated Successfully"
-exit
+  msg_info "${GN} Starting ${APP}"
+  systemctl start navidrome.service
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+  exit
 }
 
 start

@@ -6,8 +6,8 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    __  __          __      __          __   _  ________
   / / / /___  ____/ /___ _/ /____     / /  | |/ / ____/
  / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /
@@ -42,16 +42,16 @@ function update_container() {
   os=$(pct config "$container" | awk '/^ostype/ {print $2}')
   if [[ "$os" == "ubuntu" || "$os" == "debian" ]]; then
     disk_info=$(pct exec "$container" df /boot | awk 'NR==2{gsub("%","",$5); printf "%s %.1fG %.1fG %.1fG", $5, $3/1024/1024, $2/1024/1024, $4/1024/1024 }')
-    read -ra disk_info_array <<< "$disk_info"
+    read -ra disk_info_array <<<"$disk_info"
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
   else
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}[No disk info for ${os}]${CL}\n"
   fi
   case "$os" in
-    alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
-    archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
-    fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
-    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt list --upgradable && apt-get -y dist-upgrade" ;;
+  alpine) pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
+  archlinux) pct exec "$container" -- bash -c "pacman -Syyu --noconfirm" ;;
+  fedora | rocky | centos | alma) pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
+  ubuntu | debian | devuan) pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt list --upgradable && apt-get -y dist-upgrade" ;;
   esac
 }
 header_info
