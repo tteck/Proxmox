@@ -15,11 +15,11 @@ update_os
 
 ubuntuversion=$(lsb_release -r | awk '{print $2}' | cut -d . -f1)
 if [ "$ubuntuversion" = "18" ] || [ "$ubuntuversion" -le "18" ]; then
-    apt install sudo wget -y
-    sudo apt install -y software-properties-common
-    sudo add-apt-repository universe -y
-    apt update -y
-    apt update --fix-missing -y
+  apt install sudo wget -y
+  sudo apt install -y software-properties-common
+  sudo add-apt-repository universe -y
+  apt update -y
+  apt update --fix-missing -y
 fi
 
 msg_info "Installing Dependencies"
