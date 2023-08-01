@@ -52,7 +52,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/overseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /opt/jellyseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_error "There is currently no update path available."
 exit
 }
