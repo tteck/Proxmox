@@ -32,12 +32,12 @@ msg_info "Installing Yarn"
 $STD npm install -g yarn
 msg_ok "Installed Yarn"
 
-msg_info "Installing overseerr (Patience)"
+msg_info "Installing Overseerr (Patience)"
 git clone -q https://github.com/sct/overseerr.git /opt/overseerr
 cd /opt/overseerr
 $STD yarn install
 $STD yarn build
-msg_ok "Installed overseerr"
+msg_ok "Installed Overseerr"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/overseerr.service
