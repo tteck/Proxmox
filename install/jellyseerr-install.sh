@@ -34,7 +34,7 @@ msg_ok "Installed Yarn"
 
 msg_info "Installing Jellyseerr (Patience)"
 git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
-cd /opt/lellyseerr
+cd /opt/jellyseerr
 $STD yarn install
 $STD yarn build
 msg_ok "Installed Jellyseerr"
