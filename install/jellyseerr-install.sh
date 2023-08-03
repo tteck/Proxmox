@@ -37,6 +37,12 @@ git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
 cd /opt/jellyseerr
 $STD yarn install
 $STD yarn build
+mkdir -p /etc/jellyseerr/
+cat <<EOF >/etc/jellyseerr/jellyseerr.conf
+PORT=5055
+HOST=0.0.0.0
+# JELLYFIN_TYPE=emby
+EOF
 msg_ok "Installed Jellyseerr"
 
 msg_info "Creating Service"
@@ -46,6 +52,8 @@ Description=jellyseerr Service
 After=network.target
 
 [Service]
+EnvironmentFile=/etc/jellyseerr/jellyseerr.conf
+Environment=NODE_ENV=production
 Type=exec
 WorkingDirectory=/opt/jellyseerr
 ExecStart=/usr/bin/yarn start
