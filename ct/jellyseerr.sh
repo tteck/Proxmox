@@ -53,7 +53,21 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/jellyseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+msg_info "Updating $APP"
+systemctl stop jellyseerr
+cd /opt/jellyseerr
+output=$(git pull)
+git pull &>/dev/null
+if echo "$output" | grep -q "Already up to date."
+then
+  msg_info " $APP is already up to date."
+  systemctl start jellyseerr
+  exit
+fi
+yarn install &>/dev/null
+yarn build &>/dev/null
+systemctl start jellyseerr
+msg_ok "Updated $APP"
 exit
 }
 
