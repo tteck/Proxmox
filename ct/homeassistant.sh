@@ -100,7 +100,8 @@ function update_script() {
   if [ "$UPD" == "4" ]; then
     IP=$(hostname -I | awk '{print $1}')
     msg_info "Installing FileBrowser"
-    curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
+    RELEASE=$(curl -fsSL https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep -o '"tag_name": ".*"' | sed 's/"//g' | sed 's/tag_name: //g')
+    curl -fsSL https://github.com/filebrowser/filebrowser/releases/download/v2.23.0/linux-amd64-filebrowser.tar.gz | tar -xzv -C /usr/local/bin &>/dev/null
     filebrowser config init -a '0.0.0.0' &>/dev/null
     filebrowser config set -a '0.0.0.0' &>/dev/null
     filebrowser users add admin changeme --perm.admin &>/dev/null
