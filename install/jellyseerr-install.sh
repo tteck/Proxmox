@@ -40,7 +40,7 @@ $STD yarn build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
 PORT=5055
-HOST=0.0.0.0
+# HOST=0.0.0.0
 # JELLYFIN_TYPE=emby
 EOF
 msg_ok "Installed Jellyseerr"
