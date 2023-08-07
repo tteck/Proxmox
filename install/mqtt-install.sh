@@ -22,6 +22,12 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Mosquitto MQTT Broker"
 $STD apt-get -y install mosquitto
 $STD apt-get -y install mosquitto-clients
+cat <<EOF >/etc/mosquitto/conf.d/default.conf
+allow_anonymous false
+persistence true
+password_file /etc/mosquitto/passwd
+listener 1883
+EOF
 msg_ok "Installed Mosquitto MQTT Broker"
 
 motd_ssh
