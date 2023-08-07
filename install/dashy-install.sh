@@ -54,10 +54,8 @@ ExecStart=/usr/bin/yarn start
 [Install]
 WantedBy=multi-user.target
 EOF
-$STD systemctl enable dashy
-systemctl start dashy
 
-cat > /etc/systemd/system/dashy-rebuild.service << EOF
+cat <<EOF >/etc/systemd/system/dashy-rebuild.service
 [Unit]
 Description=Rebuild Dashy on Config Changes
 
@@ -66,7 +64,7 @@ Type=oneshot
 ExecStart=/usr/bin/yarn --cwd=/dashy build
 EOF
 
-cat > /etc/systemd/system/dashy-rebuild.path << EOF
+cat <<EOF >/etc/systemd/system/dashy-rebuild.path
 [Unit]
 Description=Monitor Dashy Config for Changes
 
@@ -76,9 +74,8 @@ PathChanged=/dashy/public/conf.yml
 [Install]
 WantedBy=multi-user.target
 EOF
-
-$STD systemctl enable dashy-rebuild
-systemctl start dashy-rebuild
+systemctl -q --now enable dashy
+systemctl -q --now enable dashy-rebuild
 msg_ok "Created Services"
 
 motd_ssh
