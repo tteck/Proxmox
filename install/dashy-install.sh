@@ -42,7 +42,7 @@ export NODE_OPTIONS=--max-old-space-size=1000
 $STD yarn build
 msg_ok "Installed Dashy"
 
-msg_info "Creating Service"
+msg_info "Creating Services"
 cat <<EOF >/etc/systemd/system/dashy.service
 [Unit]
 Description=dashy
@@ -56,7 +56,30 @@ WantedBy=multi-user.target
 EOF
 $STD systemctl enable dashy
 systemctl start dashy
-msg_ok "Created Service"
+
+cat > /etc/systemd/system/dashy-rebuild.service << EOF
+[Unit]
+Description=Rebuild Dashy on Config Changes
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/yarn --cwd=/dashy build
+EOF
+
+cat > /etc/systemd/system/dashy-rebuild.path << EOF
+[Unit]
+Description=Monitor Dashy Config for Changes
+
+[Path]
+PathChanged=/dashy/public/conf.yml
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+$STD systemctl enable dashy-rebuild
+systemctl start dashy-rebuild
+msg_ok "Created Services"
 
 motd_ssh
 customize
