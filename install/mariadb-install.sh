@@ -21,6 +21,8 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing MariaDB"
 $STD apt-get install -y mariadb-server
+sed -i 's/^# *\(port *=.*\)/\1/' /etc/mysql/my.cnf
+sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 msg_ok "Installed MariaDB"
 
 read -r -p "Would you like to add Adminer? <y/N> " prompt
