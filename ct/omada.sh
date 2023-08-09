@@ -54,7 +54,11 @@ function update_script() {
 header_info
 if [[ ! -d /opt/tplink ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 latest_url=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
-latest_version=$(basename "$latest_url" | sed -e 's/.*ller_//;s/_Li.*//')
+latest_version=$(basename "${latest_url}" | sed -e 's/.*ller_//;s/_Li.*//')
+if [ -z "${latest_version}" ]; then
+  echo "It seems that the server (tp-link.com) might be down. Please try again at a later time."
+  exit
+fi
 installed_version=$(dpkg -l | grep omada | awk '{print $3}')
 
 if [ "v${installed_version}" = "${latest_version}" ]; then
