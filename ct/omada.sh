@@ -56,14 +56,15 @@ if [[ ! -d /opt/tplink ]]; then msg_error "No ${APP} Installation Found!"; exit;
 latest_url=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
 latest_version=$(basename "${latest_url}" | sed -e 's/.*ller_//;s/_Li.*//')
 if [ -z "${latest_version}" ]; then
-  echo "It seems that the server (tp-link.com) might be down. Please try again at a later time."
+  msg_error "It seems that the server (tp-link.com) might be down. Please try again at a later time."
   exit
 fi
 installed_version=$(dpkg -l | grep omada | awk '{print $3}')
 
 if [ "v${installed_version}" = "${latest_version}" ]; then
-  echo "Installed version (v${installed_version}) is the same as the latest version (${latest_version})."
-  echo "Omada Controller is already up to date"
+  msg_info "Installed version (v${installed_version}) is the same as the latest version (${latest_version})"
+  sleep 2
+  msg_ok "Omada Controller is already up to date"
   exit
 else
   echo -e "Updating Omada Controller to ${latest_version}"
