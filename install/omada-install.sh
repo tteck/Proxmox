@@ -36,19 +36,19 @@ wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiv
 $STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
 msg_ok "Installed MongoDB"
 
-latesturl=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
-latestversion=$(basename "$latesturl" | sed -e 's/.*ller_v//;s/_Li.*//')
+latest_url=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
+latest_version=$(basename "$latest_url" | sed -e 's/.*ller_//;s/_Li.*//')
 
-msg_info "Installing Omada Controller v${latestversion}"
-wget -qL ${latesturl}
-$STD dpkg -i Omada_SDN_Controller_v${latestversion}_Linux_x64.deb 
-msg_ok "Installed Omada Controller v${latestversion}"
+msg_info "Installing Omada Controller ${latest_version}"
+wget -qL ${latest_url}
+$STD dpkg -i Omada_SDN_Controller_${latest_version}_Linux_x64.deb 
+msg_ok "Installed Omada Controller ${latest_version}"
 
 motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf Omada_SDN_Controller_v${latestversion}_Linux_x64.deb mongodb-org-server_3.6.23_amd64.deb zulu-repo_1.0.0-3_all.deb libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+rm -rf Omada_SDN_Controller_${latest_version}_Linux_x64.deb mongodb-org-server_3.6.23_amd64.deb zulu-repo_1.0.0-3_all.deb libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
