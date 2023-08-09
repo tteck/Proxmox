@@ -53,20 +53,20 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/tplink ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-latesturl=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
-latestversion=$(basename "$latesturl" | sed -e 's/.*ller_v//;s/_Li.*//')
+latest_url=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
+latest_version=$(basename "$latest_url" | sed -e 's/.*ller_//;s/_Li.*//')
 installed_version=$(dpkg -l | grep omada | awk '{print $3}')
 
-if [ "$installed_version" = "$latestversion" ]; then
-  echo "Installed version ($installed_version) is the same as the latest version ($latestversion)."
-  echo "Omada is already up to date"
+if [ "v${installed_version}" = "${latest_version}" ]; then
+  echo "Installed version (v${installed_version}) is the same as the latest version (${latest_version})."
+  echo "Omada Controller is already up to date"
   exit
 else
-  echo -e "Updating Omada Controller to v${latestversion}"
-  wget -qL ${latesturl}
-  dpkg -i Omada_SDN_Controller_v${latestversion}_Linux_x64.deb
-  rm -rf Omada_SDN_Controller_v${latestversion}_Linux_x64.deb
-  echo -e "Updated Omada Controller to v${latestversion}"
+  echo -e "Updating Omada Controller to ${latest_version}"
+  wget -qL ${latest_url}
+  dpkg -i Omada_SDN_Controller_${latest_version}_Linux_x64.deb
+  rm -rf Omada_SDN_Controller_${latest_version}_Linux_x64.deb
+  echo -e "Updated Omada Controller to ${latest_version}"
 exit
 fi
 }
