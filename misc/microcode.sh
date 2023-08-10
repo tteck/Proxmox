@@ -4,15 +4,7 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-clear
-while true; do
-  read -p "Install the latest Processor Microcode (y/n)?" yn
-  case $yn in
-  [Yy]*) break ;;
-  [Nn]*) exit ;;
-  *) echo "Please answer yes or no." ;;
-  esac
-done
+function header_info {
 clear
 cat <<"EOF"
     ____                                               __  ____                                __
@@ -22,6 +14,7 @@ cat <<"EOF"
 /_/   /_/   \____/\___/\___/____/____/\____/_/     /_/  /_/_/\___/_/   \____/\___/\____/\__,_/\___/
 
 EOF
+}
 
 RD=$(echo "\033[01;31m")
 YW=$(echo "\033[33m")
@@ -49,6 +42,23 @@ msg_error() {
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
+
+header_info
+current_microcode=$(dmesg | grep -o 'microcode updated early to revision [^,]*, date = [0-9\-]*')
+while true; do
+  if [ -z "${current_microcode}" ]; then
+    msg_error "Microcode update information not found."
+  else
+    msg_ok "Current ${current_microcode}"
+  fi
+  read -p "Install the latest Processor Microcode (y/n)?" yn
+  case $yn in
+  [Yy]*) break ;;
+  [Nn]*) exit ;;
+  *) echo "Please answer yes or no." ;;
+  esac
+done
+header_info
 
 intel() {
   if ! apt -qq list iucode-tool >/dev/null 2>&1; then
