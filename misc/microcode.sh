@@ -56,15 +56,15 @@ intel() {
   msg_ok "Installed iucode-tool"
   
   msg_info "Downloading the latest Intel Processor Microcode Package for Linux"
-  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230512.1_amd64.deb
+  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/i/intel-microcode/intel-microcode_3.20230808.1_amd64.deb
   msg_ok "Downloaded the latest Intel Processor Microcode Package"
 
   msg_info "Installing the Intel Processor Microcode (Patience)"
-  dpkg -i intel-microcode_3.20230512.1_amd64.deb &>/dev/null
+  dpkg -i intel-microcode_3.20230808.1_amd64.deb &>/dev/null
   msg_ok "Installed the Intel Processor Microcode"
 
   msg_info "Cleaning up"
-  rm intel-microcode_3.20230512.1_amd64.deb
+  rm intel-microcode_3.20230808.1_amd64.deb
   msg_ok "Cleaned"
   
   echo -e "\n To apply the changes, the system will need to be rebooted.\n"
