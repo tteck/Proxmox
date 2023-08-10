@@ -86,15 +86,15 @@ intel() {
 
 amd() {
   msg_info "Downloading the latest AMD Processor Microcode Package for Linux"
-  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/a/amd64-microcode/amd64-microcode_3.20230719.1_amd64.deb
+  wget -q http://ftp.debian.org/debian/pool/non-free-firmware/a/amd64-microcode/amd64-microcode_3.20230808.1.1_amd64.deb
   msg_ok "Downloaded the latest AMD Processor Microcode Package"
 
   msg_info "Installing the AMD Processor Microcode (Patience)"
-  dpkg -i amd64-microcode_3.20230719.1_amd64.deb &>/dev/null
+  dpkg -i amd64-microcode_3.20230808.1.1_amd64.deb &>/dev/null
   msg_ok "Installed the AMD Processor Microcode"
 
   msg_info "Cleaning up"
-  rm amd64-microcode_3.20230719.1_amd64.deb
+  rm amd64-microcode_3.20230808.1.1_amd64.deb
   msg_ok "Cleaned"
   
   echo -e "\n To apply the changes, the system will need to be rebooted.\n"
