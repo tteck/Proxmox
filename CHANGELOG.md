@@ -10,6 +10,8 @@
 
 - **Omada Controller LXC**
   - Update via script
+- **Proxmox VE Processor Microcode**
+  - [Intel microcode-20230808 Release](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20230808)
 
 ## 2023-08-01
 
