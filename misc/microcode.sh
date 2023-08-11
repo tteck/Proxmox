@@ -61,7 +61,7 @@ done
 header_info
 
 intel() {
-  if ! apt -qq list --installed iucode-tool >/dev/null 2>&1; then
+  if ! dpkg -s iucode-tool >/dev/null 2>&1; then
     msg_info "Installing iucode-tool: a tool for updating Intel processor microcode"
     apt-get install -y iucode-tool &>/dev/null
     msg_ok "Installed iucode-tool"
