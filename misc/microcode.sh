@@ -25,8 +25,8 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 
-set -euo pipefail
-shopt -s inherit_errexit nullglob
+#set -euo pipefail
+#shopt -s inherit_errexit nullglob
 
 msg_info() {
   local msg="$1"
