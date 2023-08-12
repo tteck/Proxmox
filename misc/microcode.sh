@@ -25,9 +25,6 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 
-#set -euo pipefail
-#shopt -s inherit_errexit nullglob
-
 msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
