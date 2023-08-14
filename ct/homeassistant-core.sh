@@ -76,7 +76,7 @@ function update_script() {
       echo -e "${GN}Updating to Stable Version${CL}"
       BR=""
     fi
-    if [[ "$PY" == "python3.9" ]]; then echo -e "⚠️  Python 3.9 is deprecated and will be removed in Home Assistant 2023.2"; fi
+    if [[ "$PY" == "python3.10" ]]; then echo -e "⚠️  Home Assistant now requires Python 3.11 to run."; fi
 
     msg_info "Stopping Home Assistant"
     systemctl stop homeassistant
