@@ -62,6 +62,7 @@ function update_script() {
   msg_ok "Stopped PhotoPrism"
 
   msg_info "Cloning PhotoPrism"
+  cd ~
   git clone https://github.com/photoprism/photoprism.git &>/dev/null
   cd photoprism
   git checkout release &>/dev/null
