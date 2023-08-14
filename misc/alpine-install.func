@@ -117,6 +117,7 @@ motd_ssh() {
 }
 
 customize() {
+  $STD sysctl -p
   if [[ "$PASSWORD" == "" ]]; then
   msg_info "Customizing Container"
   bash -c "passwd -d root" >/dev/null 2>&1
