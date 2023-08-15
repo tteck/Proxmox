@@ -22,8 +22,9 @@ verb_ip6() {
   else STD="silent"; fi
   silent() { "$@" >/dev/null 2>&1; }
   if [ "$DISABLEIPV6" == "yes" ]; then
+    $STD sysctl -w net.ipv6.conf.all.disable_ipv6=1
     echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
-    $STD sysctl -p
+    $STD rc-update add sysctl default
   fi
 }
 
@@ -117,7 +118,6 @@ motd_ssh() {
 }
 
 customize() {
-  $STD sysctl -p
   if [[ "$PASSWORD" == "" ]]; then
   msg_info "Customizing Container"
   bash -c "passwd -d root" >/dev/null 2>&1
