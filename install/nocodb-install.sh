@@ -28,6 +28,7 @@ $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/inst
 . ~/.bashrc
 $STD nvm install 16.20.1
 ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
+ln -sf /root/.nvm/versions/node/v16.20.1/bin/npm /usr/bin/npm
 msg_ok "Installed Node.js"
 
 msg_info "Installing NocoDB"
