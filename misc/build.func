@@ -491,6 +491,7 @@ build_container() {
   fi
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
+  export app="$NSAPP"
   export PASSWORD="$PW"
   export VERBOSE="$VERB"
   export SSH_ROOT="${SSH}"
