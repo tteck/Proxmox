@@ -35,6 +35,8 @@ msg_info "Installing ESPHome"
 #python3 -m venv .
 #source bin/activate
 $STD pip install esphome tornado esptool
+echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
+chmod +x /usr/bin/update
 msg_ok "Installed ESPHome"
 
 msg_info "Creating Service"
