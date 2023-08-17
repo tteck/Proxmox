@@ -30,6 +30,14 @@ msg_ok "Installed Node.js"
 
 msg_info "Installing Node-Red"
 $STD npm install -g --unsafe-perm node-red
+echo "journalctl -f -n 100 -u nodered -o cat" >/usr/bin/node-red-log
+chmod +x /usr/bin/node-red-log
+echo "systemctl stop nodered" >/usr/bin/node-red-stop
+chmod +x /usr/bin/node-red-stop
+echo "systemctl start nodered" >/usr/bin/node-red-start
+chmod +x /usr/bin/node-red-start
+echo "systemctl restart nodered" >/usr/bin/node-red-restart
+chmod +x /usr/bin/node-red-restart
 msg_ok "Installed Node-Red"
 
 msg_info "Creating Service"
