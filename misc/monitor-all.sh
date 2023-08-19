@@ -73,12 +73,13 @@ while true; do
       else
         # It is a virtual machine
         if qm status $instance | grep -q "status: running"; then
-          echo "$(date): VM $instance is not responding, resetting..."
-          qm reset $instance >/dev/null 2>&1
+          echo "$(date): VM $instance is not responding, restarting..."
+          qm stop $instance >/dev/null 2>&1
+          sleep 5
         else
-          qm start $instance >/dev/null 2>&1
           echo "$(date): VM $instance is not running, starting..."
         fi
+        qm start $instance >/dev/null 2>&1
       fi
     fi
   done
