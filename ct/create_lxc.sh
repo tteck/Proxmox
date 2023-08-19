@@ -95,15 +95,15 @@ function select_storage() {
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
   
   # Select storage location
-  if [ $((${#MENU[@]} / 3)) -eq 1 ]; then
+  if [ $((${#MENU[@]}/3)) -eq 1 ]; then
     printf ${MENU[0]}
   else
     local STORAGE
     while [ -z "${STORAGE:+x}" ]; do
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
-        "Which storage pool you would like to use for ${APPLICATION}?\nTo make a selection, use the Spacebar.\n" \
-        16 $(($MSG_MAX_LENGTH + 23)) 6 \
-        "${MENU[@]}" 3>&1 1>&2 2>&3) || exit "Menu aborted."
+      "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\nTo make a selection, use the Spacebar.\n" \
+      16 $(($MSG_MAX_LENGTH + 23)) 6 \
+      "${MENU[@]}" 3>&1 1>&2 2>&3) || exit "Menu aborted."
     done
     printf $STORAGE
   fi
