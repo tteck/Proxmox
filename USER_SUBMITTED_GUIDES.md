@@ -18,6 +18,8 @@
 
 [How To Backup Home Assistant In Proxmox](https://smarthomescene.com/guides/how-to-backup-home-assistant-in-proxmox/)
 
+[Running Frigate on Proxmox](https://www.homeautomationguy.io/blog/running-frigate-on-proxmox)
+
 [Frigate VM on Proxmox with PCIe Coral TPU](https://www.derekseaman.com/2023/06/home-assistant-frigate-vm-on-proxmox-with-pcie-coral-tpu.html)
 
 [Moving Home Assistant’s Database To MariaDB On Proxmox](https://smarthomescene.com/guides/moving-home-assistants-database-to-mariadb-on-proxmox/)
