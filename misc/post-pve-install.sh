@@ -102,7 +102,7 @@ EOF
   esac
 
   if [[ "${VERSION}" == "bookworm" ]]; then
-    CHOICE=$(whiptail --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories.\n \nEnable 'ceph package repositories?" 14 58 2 \
+    CHOICE=$(whiptail --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription'(enabled) and 'enterprise'(disabled) repositories.\n \nEnable 'ceph package repositories?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3)
     case $CHOICE in
