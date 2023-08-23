@@ -15,6 +15,13 @@ body:
       label: A clear and concise description of the issue.
     validations:
       required: true
+  - type: input
+    id: distribution
+    attributes:
+      label: Which Linux distribution are you employing?
+      placeholder: 'Debian 11'
+    validations:
+      required: true
   - type: textarea
     id: screenshot
     attributes:
