@@ -40,6 +40,7 @@ body:
     id: screenshot
     attributes:
       label: If relevant, including screenshots or a code block can be helpful in clarifying the issue.
+      placeholder: Code blocks commence and conclude with three backticks (```).
     validations:
       required: false
   - type: textarea
