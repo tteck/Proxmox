@@ -29,6 +29,7 @@ body:
     attributes:
       label: Which Linux distribution are you employing?
       options:
+        - 
         - Default Settings
         - Debian 11
         - Debian 12
