@@ -22,13 +22,19 @@ body:
       label: A clear and concise description of the issue.
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: distribution
-    attributes:
-      label: Which Linux distribution are you employing?
-      placeholder: 'Debian 11'
     validations:
       required: true
+    attributes:
+      label: Which Linux distribution are you employing?
+      options:
+        - Default Settings
+        - Debian 11
+        - Debian 12
+        - Ubuntu 20.04
+        - Ubuntu 22.04
+        - Ubuntu 23.04
   - type: textarea
     id: screenshot
     attributes:
