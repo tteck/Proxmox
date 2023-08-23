@@ -25,6 +25,7 @@ $STD apt-get install -y make
 $STD apt-get install -y zip
 $STD apt-get install -y exiftool
 $STD apt-get install -y ffmpeg
+$STD apt-get install -y libheif1
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Node.js Repository"
