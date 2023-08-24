@@ -9,6 +9,13 @@
 ### Changed
 
 - **qBittorrent LXC**
+  - Added back to repository with UPnP disabled and password changed.
+
+## 2023-08-24
+
+### Changed
+
+- **qBittorrent LXC**
   - Removed from this repository for potential malicious hidden code https://github.com/tteck/Proxmox/discussions/1725
 
 ## 2023-08-16
