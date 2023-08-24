@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-08-24
+
+### Changed
+
+- **qBittorrent LXC**
+  - Removed from this repository for malicious hidden code https://github.com/tteck/Proxmox/discussions/1725
+
 ## 2023-08-16
 
 ### Changed
