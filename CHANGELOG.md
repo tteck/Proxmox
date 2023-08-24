@@ -9,7 +9,7 @@
 ### Changed
 
 - **qBittorrent LXC**
-  - Removed from this repository for malicious hidden code https://github.com/tteck/Proxmox/discussions/1725
+  - Removed from this repository for potential malicious hidden code https://github.com/tteck/Proxmox/discussions/1725
 
 ## 2023-08-16
 
