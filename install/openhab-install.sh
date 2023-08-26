@@ -26,7 +26,7 @@ wget -qO /etc/apt/trusted.gpg.d/zulu-repo.asc "https://keyserver.ubuntu.com/pks/
 wget -q https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-3_all.deb
 $STD dpkg -i zulu-repo_1.0.0-3_all.deb
 $STD apt-get update
-$STD apt-get -y install zulu11-jdk
+$STD apt-get -y install zulu17-jdk
 msg_ok "Installed Azul Zulu"
 
 msg_info "Installing openHAB"
