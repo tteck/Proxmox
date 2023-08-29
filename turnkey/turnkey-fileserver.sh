@@ -73,7 +73,9 @@ function cleanup_ctid() {
     pct destroy $CTID
   fi
 }
-CTID=$(pvesh get /cluster/nextid)
+if systemctl is-active -q ping-instances.service; then
+  systemctl stop ping-instances.service
+fi
 function select_storage() {
   local CLASS=$1
   local CONTENT
@@ -117,6 +119,7 @@ function select_storage() {
 }
 
 # Test if required variables are set
+CTID=$(pvesh get /cluster/nextid)
 [[ "${CTID:-}" ]] || die "You need to set 'CTID' variable."
 
 # Test if ID is valid
@@ -167,6 +170,9 @@ pct start "$CTID"
 info "LXC container '$CTID' was successfully created."
 echo "TurnKey File Server Password" >>~/turnkey-fileserver.creds # file is located in the Proxmox root directory
 echo $PASS >>~/turnkey-fileserver.creds #run `cat turnkey-fileserver.creds` in the Proxmox shell
+if [[ -f /etc/systemd/system/ping-instances.service ]]; then
+  systemctl start ping-instances.service
+fi
 info "Proceed to the LXC console to complete the setup."
 info "login: root"
 info "password: $PASS"
