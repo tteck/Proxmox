@@ -14,8 +14,8 @@ PCT_OPTIONS="
     -hostname turnkey-core
     -tags proxmox-helper-scripts
     -onboot 1
-    -cores 4
-    -memory 4096
+    -cores 2
+    -memory 2048
     -password $PASS
     -net0 name=eth0,bridge=vmbr0,ip=dhcp
     -unprivileged 1
