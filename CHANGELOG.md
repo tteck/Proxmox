@@ -9,7 +9,7 @@
 ### Changed
 
 - **TurnKey LXC Template Scripts**
-  - Primitive [scripts](https://github.com/tteck/Proxmox/tree/main/turnkey) to install [TurnKey LXC templates](https://www.turnkeylinux.org/) using basic settings.
+  - Primitive [scripts](https://github.com/tteck/Proxmox/tree/main/turnkey) to install [TurnKey LXC templates](https://www.turnkeylinux.org/) using basic settings. [More info](https://github.com/tteck/Proxmox/discussions/1742#discussion-5571966)
 
 ## 2023-08-24
 
