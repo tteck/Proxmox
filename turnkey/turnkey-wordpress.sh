@@ -7,11 +7,14 @@
 # bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/turnkey/turnkey-wordpress.sh)"
 
 # Setup script environment
+NAME="wordpress"
 PASS="$(openssl rand -base64 8)"
-TEMPLATE_SEARCH="debian-11-turnkey-wordpress_17.1-1_amd64.tar.gz"
+CTID=$(pvesh get /cluster/nextid)
+TEMPLATE_SEARCH="debian-11-turnkey-${NAME}_17.1-1_amd64.tar.gz"
+PCT_DISK_SIZE="8"
 PCT_OPTIONS="
     -features keyctl=1,nesting=1
-    -hostname turnkey-wordpress
+    -hostname turnkey-${NAME}
     -tags proxmox-helper-scripts
     -onboot 1
     -cores 2
@@ -118,20 +121,6 @@ function select_storage() {
   fi
 }
 
-# Test if required variables are set
-CTID=$(pvesh get /cluster/nextid)
-[[ "${CTID:-}" ]] || die "You need to set 'CTID' variable."
-
-# Test if ID is valid
-[ "$CTID" -ge "100" ] || die "ID cannot be less than 100."
-
-# Test if ID is in use
-if pct status $CTID &>/dev/null; then
-  warn "ID '$CTID' is already in use."
-  unset CTID
-  die "Cannot use ID that is already in use."
-fi
-
 # Get template storage
 TEMPLATE_STORAGE=$(select_storage template) || exit
 info "Using '$TEMPLATE_STORAGE' for template storage."
@@ -168,8 +157,8 @@ pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/
 msg "Starting LXC Container..."
 pct start "$CTID"
 info "LXC container '$CTID' was successfully created."
-echo "TurnKey WordPress Password" >>~/turnkey-wordpress.creds # file is located in the Proxmox root directory
-echo $PASS >>~/turnkey-wordpress.creds #run `cat turnkey-wordpress.creds` in the Proxmox shell
+echo "TurnKey ${NAME} Password" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
+echo $PASS >>~/turnkey-${NAME}.creds
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
   systemctl start ping-instances.service
 fi
