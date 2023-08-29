@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+# A primitive script to install TurnKey LXC templates using basic settings.
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/turnkey-fileserver.sh)"
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/turnkey/turnkey-fileserver.sh)"
 
 # Setup script environment
 PASS="$(openssl rand -base64 8)"
@@ -147,7 +148,7 @@ TEMPLATE="${TEMPLATES[-1]}"
 
 # Download LXC template
 if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
-  msg "Downloading LXC template..."
+  msg "Downloading LXC template (Patience)..."
   pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
     die "A problem occured while downloading the LXC template."
 fi
@@ -165,7 +166,7 @@ msg "Starting LXC Container..."
 pct start "$CTID"
 info "LXC container '$CTID' was successfully created."
 echo "TurnKey File Server Password" >>~/turnkey-fileserver.creds # file is located in the Proxmox root directory
-echo $PASS >>~/turnkey-fileserver.creds #run `cat turnkey-fileserver.creds` in the Proxmox root directory
-info "Proceed to the console to complete the setup."
+echo $PASS >>~/turnkey-fileserver.creds #run `cat turnkey-fileserver.creds` in the Proxmox shell
+info "Proceed to the LXC console to complete the setup."
 info "login: root"
 info "password: $PASS"
