@@ -37,6 +37,7 @@ cat <<"EOF"
 EOF
 }
 header_info
+read -p "Press ENTER to continue..."
 set -o errexit  #Exit immediately if a pipeline returns a non-zero status
 set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
 set -o nounset  #Treat unset variables as an error
