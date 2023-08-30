@@ -10,6 +10,7 @@
 
 - **TurnKey**
   - Introducing a **NEW** Category on the Site.
+  - My intention is to maintain the TurnKey scripts in their simplest form, contained within a single file, and with minimal options, if any.
 - **TurnKey Core LXC**
   - NEW Script
 - **TurnKey File Server LXC**
