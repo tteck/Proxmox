@@ -158,8 +158,8 @@ pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/
 # Success message
 msg "Starting LXC Container..."
 pct start "$CTID"
-sleep 5
-IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+#sleep 5
+#IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
 echo "TurnKey ${NAME} Password" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
 echo $PASS >>~/turnkey-${NAME}.creds
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
@@ -167,7 +167,7 @@ if [[ -f /etc/systemd/system/ping-instances.service ]]; then
 fi
 header_info
 echo
-info "LXC container '$CTID' was successfully created, and its IP address is ${IP}."
+info "LXC container '$CTID' was successfully created."
 echo
 info "Proceed to the LXC console to complete the setup."
 echo
