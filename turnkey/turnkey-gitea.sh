@@ -10,7 +10,7 @@
 NAME="gitea"
 PASS="$(openssl rand -base64 8)"
 CTID=$(pvesh get /cluster/nextid)
-TEMPLATE_SEARCH="debian-11-turnkey-${NAME}_17.2-1_amd64.tar.gz"
+TEMPLATE_SEARCH="debian-11-turnkey-${NAME}"
 PCT_DISK_SIZE="4"
 PCT_OPTIONS="
     -features keyctl=1,nesting=1
