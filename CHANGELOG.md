@@ -4,12 +4,30 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
-## 2023-08-29
+## 2023-08-30
 
 ### Changed
 
-- **TurnKey LXC Template Scripts**
-  - Primitive [scripts](https://github.com/tteck/Proxmox/tree/main/turnkey) to install [TurnKey LXC templates](https://www.turnkeylinux.org/) using basic settings. [More info](https://github.com/tteck/Proxmox/discussions/1742#discussion-5571966)
+- **TurnKey**
+  - Introducing a **NEW** Category on the Site.
+- **TurnKey Core LXC**
+  - NEW Script
+- **TurnKey File Server LXC**
+  - NEW Script
+- **TurnKey Gitea LXC**
+  - NEW Script
+- **TurnKey GitLab LXC**
+  - NEW Script
+- **TurnKey Nextcloud LXC**
+  - NEW Script
+- **TurnKey Observium LXC**
+  - NEW Script
+- **TurnKey ownCloud LXC**
+  - NEW Script
+- **TurnKey Torrent Server LXC**
+  - NEW Script
+- **TurnKey Wordpress LXC**
+  - NEW Script
 
 ## 2023-08-24
 
