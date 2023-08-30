@@ -38,6 +38,7 @@ EOF
 }
 header_info
 read -p "Press ENTER to continue..."
+header_info
 set -o errexit  #Exit immediately if a pipeline returns a non-zero status
 set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
 set -o nounset  #Treat unset variables as an error
@@ -157,12 +158,19 @@ pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/
 # Success message
 msg "Starting LXC Container..."
 pct start "$CTID"
-info "LXC container '$CTID' was successfully created."
+sleep 5
+IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
 echo "TurnKey ${NAME} Password" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
 echo $PASS >>~/turnkey-${NAME}.creds
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
   systemctl start ping-instances.service
 fi
+header_info
+echo
+info "LXC container '$CTID' was successfully created, and its IP address is ${IP}."
+echo
 info "Proceed to the LXC console to complete the setup."
+echo
 info "login: root"
 info "password: $PASS"
+echo
