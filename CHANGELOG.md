@@ -10,6 +10,8 @@
 
 - **TurnKey ZoneMinder LXC**
   - NEW Script
+- **TurnKey OpenVPN LXC**
+  - NEW Script
 
 ## 2023-08-30
 
