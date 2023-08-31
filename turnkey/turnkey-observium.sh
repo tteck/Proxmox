@@ -4,7 +4,6 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/turnkey/turnkey-observium.sh)"
 
 # Setup script environment
 NAME="observium"
@@ -78,6 +77,8 @@ function cleanup_ctid() {
     pct destroy $CTID
   fi
 }
+
+# Stop Proxmox VE Monitor-All if running
 if systemctl is-active -q ping-instances.service; then
   systemctl stop ping-instances.service
 fi
@@ -147,6 +148,7 @@ if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
     die "A problem occured while downloading the LXC template."
 fi
 
+# Create variable for 'pct' options
 PCT_OPTIONS=( ${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}} )
 [[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=( -rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8} )
 
@@ -155,16 +157,41 @@ msg "Creating LXC container..."
 pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
   die "A problem occured while trying to create container."
 
-# Success message
+# Save password
+echo "TurnKey ${NAME} password: ${PASS}" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
+
+# Start container
 msg "Starting LXC Container..."
 pct start "$CTID"
 sleep 5
-IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
-echo "TurnKey ${NAME} Password" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
-echo $PASS >>~/turnkey-${NAME}.creds
+
+# Get container IP
+max_attempts=6
+attempt=1
+IP=""
+
+while [[ $attempt -le $max_attempts ]]; do
+    IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+    if [[ -n $IP ]]; then
+        break
+    else
+        warn "Attempt $attempt: IP address not found. Pausing for 5 seconds..."
+        sleep 5
+        ((attempt++))
+    fi
+done
+
+if [[ -z $IP ]]; then
+    warn "Maximum number of attempts reached. IP address not found."
+    IP="NOT FOUND"
+fi
+
+# Start Proxmox VE Monitor-All if available
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
   systemctl start ping-instances.service
 fi
+
+# Success message
 header_info
 echo
 info "LXC container '$CTID' was successfully created, and its IP address is ${IP}."
