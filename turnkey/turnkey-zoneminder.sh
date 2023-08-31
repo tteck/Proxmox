@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# A primitive script to install TurnKey LXC templates using basic settings.
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
@@ -38,10 +37,7 @@ EOF
 header_info
 read -p "Press ENTER to continue..."
 header_info
-set -o errexit  #Exit immediately if a pipeline returns a non-zero status
-set -o errtrace #Trap ERR from shell functions, command substitutions, and commands from subshell
-set -o nounset  #Treat unset variables as an error
-set -o pipefail #Pipe will exit with last non-zero status if applicable
+set -eEuo pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
@@ -77,9 +73,13 @@ function cleanup_ctid() {
     pct destroy $CTID
   fi
 }
+
+# Stop Proxmox VE Monitor-All if running
 if systemctl is-active -q ping-instances.service; then
   systemctl stop ping-instances.service
 fi
+
+# Set the CONTENT and CONTENT_LABEL variables
 function select_storage() {
   local CLASS=$1
   local CONTENT
@@ -101,22 +101,22 @@ function select_storage() {
     if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
       local MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
     fi
-    MENU+=( "$TAG" "$ITEM" "OFF" )
+    MENU+=("$TAG" "$ITEM" "OFF")
   done < <(pvesm status -content $CONTENT | awk 'NR>1')
 
   # Select storage location
-  if [ $((${#MENU[@]}/3)) -eq 0 ]; then            # No storage locations are detected
+  if [ $((${#MENU[@]} / 3)) -eq 0 ]; then
     warn "'$CONTENT_LABEL' needs to be selected for at least one storage location."
     die "Unable to detect valid storage location."
-  elif [ $((${#MENU[@]}/3)) -eq 1 ]; then          # Only one storage location is detected
+  elif [ $((${#MENU[@]} / 3)) -eq 1 ]; then
     printf ${MENU[0]}
-  else                                             # More than one storage location is detected
+  else
     local STORAGE
-    while [ -z "${STORAGE:+x}" ]; do               # Generate graphical menu
+    while [ -z "${STORAGE:+x}" ]; do
       STORAGE=$(whiptail --title "Storage Pools" --radiolist \
-      "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
-      16 $(($MSG_MAX_LENGTH + 23)) 6 \
-      "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
+        "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
+        16 $(($MSG_MAX_LENGTH + 23)) 6 \
+        "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
     done
     printf $STORAGE
   fi
@@ -146,24 +146,49 @@ if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
     die "A problem occured while downloading the LXC template."
 fi
 
-PCT_OPTIONS=( ${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}} )
-[[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=( -rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8} )
+# Create variable for 'pct' options
+PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
+[[ " ${PCT_OPTIONS[@]} " =~ " -rootfs " ]] || PCT_OPTIONS+=(-rootfs $CONTAINER_STORAGE:${PCT_DISK_SIZE:-8})
 
 # Create LXC
 msg "Creating LXC container..."
 pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
   die "A problem occured while trying to create container."
 
-# Success message
+# Save password
+echo "TurnKey ${NAME} password: ${PASS}" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
+
+# Start container
 msg "Starting LXC Container..."
 pct start "$CTID"
 sleep 5
-IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
-echo "TurnKey ${NAME} Password" >>~/turnkey-${NAME}.creds # file is located in the Proxmox root directory
-echo $PASS >>~/turnkey-${NAME}.creds
+
+# Get container IP
+max_attempts=5
+attempt=1
+IP=""
+while [[ $attempt -le $max_attempts ]]; do
+  IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+  if [[ -n $IP ]]; then
+    break
+  else
+    warn "Attempt $attempt: IP address not found. Pausing for 5 seconds..."
+    sleep 5
+    ((attempt++))
+  fi
+done
+
+if [[ -z $IP ]]; then
+  warn "Maximum number of attempts reached. IP address not found."
+  IP="NOT FOUND"
+fi
+
+# Start Proxmox VE Monitor-All if available
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
   systemctl start ping-instances.service
 fi
+
+# Success message
 header_info
 echo
 info "LXC container '$CTID' was successfully created, and its IP address is ${IP}."
