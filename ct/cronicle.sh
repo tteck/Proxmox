@@ -75,13 +75,7 @@ apt-get install -y g++ &>/dev/null
 apt-get install -y gcc &>/dev/null
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-bash <(curl -fsSL https://deb.nodesource.com/setup_16.x) &>/dev/null
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-apt-get install -y nodejs &>/dev/null
-msg_ok "Installed Node.js"
+install_nodejs 16
 
 msg_info "Installing Cronicle Worker"
 mkdir -p /opt/cronicle

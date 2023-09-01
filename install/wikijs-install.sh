@@ -20,13 +20,7 @@ $STD apt-get install -y mc
 $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_16.x)
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-$STD apt-get install -y nodejs
-msg_ok "Installed Node.js"
+install_nodejs 16
 
 msg_info "Installing Wiki.js"
 mkdir -p /opt/wikijs

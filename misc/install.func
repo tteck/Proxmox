@@ -117,6 +117,22 @@ update_os() {
   msg_ok "Updated Container OS"
 }
 
+# This function sets up the Node.js repository and installs Node.js
+# Takes one argument: the Node.js version to install
+install_nodejs() {
+  local NODE_VERSION="$1"
+  msg_info "Setting up Node.js Repository"
+  $STD apt-get install -y ca-certificates curl gnupg
+  $STD mkdir -p /etc/apt/keyrings
+  $STD curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+  $STD echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+  $STD apt-get update
+  msg_ok "Set up Node.js Repository"
+  msg_info "Installing Node.js"
+  $STD apt-get install -y nodejs
+  msg_ok "Installed Node.js"
+}
+
 # This function modifies the message of the day (motd) and SSH settings
 motd_ssh() {
   echo "export TERM='xterm-256color'" >>/root/.bashrc

@@ -23,13 +23,7 @@ $STD apt-get install -y g++
 $STD apt-get install -y gcc
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_18.x)
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-$STD apt-get install -y nodejs
-msg_ok "Installed Node.js"
+install_nodejs 18
 
 msg_info "Setting up Zigbee2MQTT Repository"
 $STD git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt

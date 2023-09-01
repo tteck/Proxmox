@@ -53,15 +53,7 @@ $STD apt-get install -y \
   python3-pip
 msg_ok "Updated Python3"
 
-msg_info "Setting up Node.js Repository"
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-$STD apt-get update
-$STD apt-get install -y nodejs
-msg_ok "Installed Node.js"
+install_nodejs 18
 
 msg_info "Installing Change Detection"
 mkdir /opt/changedetection
