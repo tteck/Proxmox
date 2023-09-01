@@ -33,7 +33,9 @@ $STD apt-get -y install \
     pkg-config \
     curl \
     sudo \
-    mc
+    mc \
+    ca-certificates \
+    gnupg
 msg_ok "Installed Dependencies"
 
 if [[ "$CTTYPE" == "0" ]]; then
@@ -63,10 +65,12 @@ $STD apt-get -y install \
 msg_ok "Installed GStreamer"
 
 msg_info "Setting up Node.js Repository"
-$STD bash <(curl -fsSL https://deb.nodesource.com/setup_18.x)
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
+$STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
