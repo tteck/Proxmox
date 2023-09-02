@@ -122,11 +122,16 @@ if pct status $CTID &>/dev/null; then
   unset CTID
   exit "Cannot use ID that is already in use."
 fi
-
+if [ "$(dpkg --print-architecture)" = "arm64" ]; then
+  arm64ct="yes"
+else
+  arm64ct="no"
+fi
 # Get template storage
-TEMPLATE_STORAGE=$(select_storage template) || exit
-msg_ok "Using ${BL}$TEMPLATE_STORAGE${CL} ${GN}for Template Storage."
-
+if [ "$arm64ct" != "yes" ]; then
+  TEMPLATE_STORAGE=$(select_storage template) || exit
+  msg_ok "Using ${BL}$TEMPLATE_STORAGE${CL} ${GN}for Template Storage."
+fi
 # Get container storage
 CONTAINER_STORAGE=$(select_storage container) || exit
 msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
@@ -137,13 +142,9 @@ pveam update >/dev/null
 msg_ok "Updated LXC Template List"
 
 
-if [ "$(dpkg --print-architecture)" = "arm64" ]; then
-  arm64ct="yes"
-else
-  arm64ct="no"
-fi
 
-if [ "$(dpkg --print-architecture)" = "yes" ]; then
+
+if [ "$arm64ct" = "yes" ]; then
   msg_info "Arm64 Detected"
   msg_info "Downloading LXC Template"
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp
