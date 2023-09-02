@@ -147,6 +147,7 @@ msg_ok "Updated LXC Template List"
 if [ "$arm64ct" = "yes" ]; then
   msg_info "Arm64 Detected"
   msg_info "Downloading LXC Template $PCT_OSTYPE $PCT_OSVERSION"
+  pvesm remove ctgrabtmp
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp
   bash <(curl -s https://raw.githubusercontent.com/ArchemedIan/Proxmox-Arm64-Container-Fetcher/main/pimox_image_fetcher.sh) ${PCT_OSTYPE} ${PCT_OSVERSION:-} default /tmp/ctgrabtmp/template/cache 1 > /dev/null
   TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
