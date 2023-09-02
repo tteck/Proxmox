@@ -136,20 +136,36 @@ msg_info "Updating LXC Template List"
 pveam update >/dev/null
 msg_ok "Updated LXC Template List"
 
-# Get LXC template string
-TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
-mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
-[ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
-TEMPLATE="${TEMPLATES[-1]}"
-
-# Download LXC template if needed
-if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
+if [ "$arm64ct" = "yes" ]; then
+  msg_info "Arm64 Detected"
   msg_info "Downloading LXC Template"
-  pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
+  pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp
+  bash <(curl -s https://raw.githubusercontent.com/ArchemedIan/Proxmox-Arm64-Container-Fetcher/main/pimox_image_fetcher.sh) ubuntu 22.04 default /tmp/ctgrabtmp/template/cache 1 >/dev/null 
+  TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
+  mapfile -t TEMPLATES < <(ls -l /tmp/ctgrabtmp/template/cache | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
+  [ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
+  TEMPLATE="${TEMPLATES[-1]}"
+  
+  if ! pveam list ctgrabtmp | grep -q $TEMPLATE; then
     exit "A problem occured while downloading the LXC template."
-  msg_ok "Downloaded LXC Template"
-fi
+  fi
+  
+else
 
+  # Get LXC template string
+  TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
+  mapfile -t TEMPLATES < <(pveam available -section system | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
+  [ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
+  TEMPLATE="${TEMPLATES[-1]}"
+
+  # Download LXC template if needed
+  if ! pveam list $TEMPLATE_STORAGE | grep -q $TEMPLATE; then
+    msg_info "Downloading LXC Template"
+    pveam download $TEMPLATE_STORAGE $TEMPLATE >/dev/null ||
+      exit "A problem occured while downloading the LXC template."
+    msg_ok "Downloaded LXC Template"
+  fi
+fi
 # Combine all options
 DEFAULT_PCT_OPTIONS=(
   -arch $(dpkg --print-architecture))
@@ -159,6 +175,10 @@ PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
 
 # Create container
 msg_info "Creating LXC Container"
-pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null ||
-  exit "A problem occured while trying to create container."
+if [ "$arm64ct" = "yes" ]; then
+  pct create $CTID ctgrabtmp:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null || exit "A problem occured while trying to create container."
+  pvesm remove ctgrabtmp
+else
+  pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null || exit "A problem occured while trying to create container."
+fi
 msg_ok "LXC Container ${BL}$CTID${CL} ${GN}was successfully created."
