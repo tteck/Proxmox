@@ -69,10 +69,11 @@ pve_check() {
 # This function checks the system architecture and exits if it's not "amd64".
 arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
-    echo -e "Exiting..."
-    sleep 2
-    exit
+    echo -e "\n ${CROSS} Expiramental arm64 support enabled \n"
+    #echo -e "Exiting..."
+    sleep 5
+    #exit
+    arm64ct="yes"
   fi
 }
 
