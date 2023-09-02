@@ -136,7 +136,14 @@ msg_info "Updating LXC Template List"
 pveam update >/dev/null
 msg_ok "Updated LXC Template List"
 
-if [ "$arm64ct" = "yes" ]; then
+
+if [ "$(dpkg --print-architecture)" = "arm64" ]; then
+  arm64ct="yes"
+else
+  arm64ct="no"
+fi
+
+if [ "$(dpkg --print-architecture)" = "yes" ]; then
   msg_info "Arm64 Detected"
   msg_info "Downloading LXC Template"
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp
