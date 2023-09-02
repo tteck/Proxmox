@@ -41,4 +41,4 @@ echo -e "${CM}${CL} \r"
 IP=$(hostname -I | cut -f1 -d ' ')
 echo -e "Successfully Installed!! Webmin should be reachable by going to https://${IP}:10000"
 
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/ArchemedIan/Proxmox/arm64/misc/webmin.sh)"

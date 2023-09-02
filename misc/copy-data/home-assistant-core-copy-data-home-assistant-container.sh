@@ -121,4 +121,4 @@ info "Successfully Transferred Data."
 
 # Use to copy all data from a Home Assistant Core LXC to a Home Assistant Container LXC
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/hacore2hacontainer-data.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/ArchemedIan/Proxmox/arm64/misc/hacore2hacontainer-data.sh)"
