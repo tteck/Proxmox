@@ -143,6 +143,7 @@ msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
 
 if [ "$arm64ct" = "yes" ]; then
   msg_info "Downloading And Building LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION"
+  msg_ok "Downloading And Building LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION..."
   sudo pvesm status | grep ctgrabtmp >/dev/null 2>&1&& pvesm remove ctgrabtmp >/dev/null 2>&1
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp>/dev/null 2>&1
   

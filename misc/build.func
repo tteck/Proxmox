@@ -69,14 +69,15 @@ pve_check() {
 # This function checks the system architecture and exits if it's not "amd64".
 arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    #echo -e "\n ${CROSS} Expiramental arm64 support enabled \n"
-	msg_info "Experimental Arm64 Support Enabled"
-	sleep 3
-	msg_ok "Experimental Arm64 Support Enabled"
-    #echo -e "Exiting..."
-    sleep 2
-    #exit
-    arm64ct="yes"
+    if [ "$(dpkg --print-architecture)" = "arm64" ]; then
+      msg_info "Experimental Arm64 Support Enabled"
+      sleep 2
+      arm64ct="yes"
+      msg_ok "Experimental Arm64 Support Enabled"
+    else
+      echo -e "\n ${CROSS} No support for $(dpkg --print-architecture) \n"
+      exit 1
+    fi
   fi
 }
 
