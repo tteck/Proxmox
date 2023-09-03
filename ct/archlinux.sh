@@ -407,7 +407,7 @@ export PCT_OPTIONS="
   -unprivileged $CT_TYPE
   $PW
 "
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/ArchemedIan/Proxmox/arm64/ct/create_lxc.sh)" || exit
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
 msg_info "Starting LXC Container"
 pct start $CTID
 msg_ok "Started LXC Container"
