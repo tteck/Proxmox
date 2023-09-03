@@ -189,8 +189,8 @@ PCT_OPTIONS=(${PCT_OPTIONS[@]:-${DEFAULT_PCT_OPTIONS[@]}})
 # Create container
 msg_info "Creating LXC Container"
 if [ "$arm64ct" = "yes" ]; then
-  pct create $CTID ctgrabtmp:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null || exit "A problem occured while trying to create container."
-  pvesm remove ctgrabtmp
+  pct create $CTID ctgrabtmp:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null 2>&1 || exit "A problem occured while trying to create container."
+  pvesm remove ctgrabtmp>/dev/null 2>&1
 else
   pct create $CTID ${TEMPLATE_STORAGE}:vztmpl/${TEMPLATE} ${PCT_OPTIONS[@]} >/dev/null || exit "A problem occured while trying to create container."
 fi
