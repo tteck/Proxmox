@@ -19,20 +19,27 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-if [[ "$CTTYPE" == "0" ]]; then
-  msg_info "Setting Up Hardware Acceleration"
-  $STD apt-get -y install \
-    va-driver-all \
-    ocl-icd-libopencl1
-  if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
-  $STD apt-get install -y beignet-opencl-icd
-  else
-  $STD apt-get install -y intel-opencl-icd
+
+if [ "$(dpkg --print-architecture)" = "amd64" ]; then
+  if [[ "$CTTYPE" == "0" ]]; then
+    msg_info "Setting Up Hardware Acceleration"
+    $STD apt-get -y install \
+      va-driver-all \
+      ocl-icd-libopencl1
+    if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
+    $STD apt-get install -y beignet-opencl-icd
+    else
+    $STD apt-get install -y intel-opencl-icd
+    fi
+    /bin/chgrp video /dev/dri
+    /bin/chmod 755 /dev/dri
+    /bin/chmod 660 /dev/dri/*
+    msg_ok "Set Up Hardware Acceleration"
   fi
-  /bin/chgrp video /dev/dri
-  /bin/chmod 755 /dev/dri
-  /bin/chmod 660 /dev/dri/*
-  msg_ok "Set Up Hardware Acceleration"
+else
+  msg_info "Skipping Arm64 Hardware Acceleration"
+  sleep 3
+  msg_ok "Skipped Arm64 Hardware Acceleration"
 fi
 
 LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releases/latest | grep '"tag_name":' | cut -d'"' -f4)

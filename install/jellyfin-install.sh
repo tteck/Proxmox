@@ -20,22 +20,28 @@ $STD apt-get install -y gnupg
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-if [[ "$CTTYPE" == "0" ]]; then
-  msg_info "Setting Up Hardware Acceleration"
-  $STD apt-get -y install \
-    va-driver-all \
-    ocl-icd-libopencl1
-  if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
-  $STD apt-get install -y beignet-opencl-icd
-  else
-  $STD apt-get install -y intel-opencl-icd
-  fi
-  /bin/chgrp video /dev/dri
-  /bin/chmod 755 /dev/dri
-  /bin/chmod 660 /dev/dri/*
-  msg_ok "Set Up Hardware Acceleration"
-fi
 
+if [ "$(dpkg --print-architecture)" = "amd64" ]; then
+  if [[ "$CTTYPE" == "0" ]]; then
+    msg_info "Setting Up Hardware Acceleration"
+    $STD apt-get -y install \
+      va-driver-all \
+      ocl-icd-libopencl1
+    if [[ ${PCT_OSVERSION} == "20.04" ]]; then 
+    $STD apt-get install -y beignet-opencl-icd
+    else
+    $STD apt-get install -y intel-opencl-icd
+    fi
+    /bin/chgrp video /dev/dri
+    /bin/chmod 755 /dev/dri
+    /bin/chmod 660 /dev/dri/*
+    msg_ok "Set Up Hardware Acceleration"
+  fi
+else
+  msg_info "Skipping Arm64 Hardware Acceleration"
+  sleep 3
+  msg_ok "Skipped Arm64 Hardware Acceleration"
+fi
 msg_info "Installing Jellyfin"
 VERSION="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
 # If the keyring directory is absent, create it

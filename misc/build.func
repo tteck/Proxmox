@@ -70,8 +70,11 @@ pve_check() {
 arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
     echo -e "\n ${CROSS} Expiramental arm64 support enabled \n"
+	msg_info "Experimental Arm64 Support Enabled"
+	sleep 3
+	msg_ok "Experimental Arm64 Support Enabled"
     #echo -e "Exiting..."
-    sleep 5
+    sleep 2
     #exit
     arm64ct="yes"
   fi
@@ -533,8 +536,9 @@ lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=
 EOF
   fi
 
+if [ "$(dpkg --print-architecture)" = "amd64" ]; then
   if [ "$CT_TYPE" == "0" ]; then
-    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" ]]; then
+      if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" ]]; then
       cat <<EOF >>$LXC_CONFIG
 # VAAPI hardware transcoding
 lxc.cgroup2.devices.allow: c 226:0 rwm
@@ -544,8 +548,13 @@ lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
 lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
 lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
 EOF
+      fi
     fi
-  fi
+else
+  msg_info "Skipping Arm64 Hardware Acceleration"
+  sleep 3
+  msg_ok "Skipped Arm64 Hardware Acceleration"
+fi
 
   # This starts the container and executes <app>-install.sh
   msg_info "Starting LXC Container"
