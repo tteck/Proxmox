@@ -142,14 +142,13 @@ msg_ok "Using ${BL}$CONTAINER_STORAGE${CL} ${GN}for Container Storage."
 
 
 if [ "$arm64ct" = "yes" ]; then
-  msg_info "Downloading And Building LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION"
-  msg_ok "Downloading And Building LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION..."
+  msg_info "Downloading And Prepping LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION"
+  msg_ok "Downloading And Prepping LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION..."
   sudo pvesm status | grep ctgrabtmp >/dev/null 2>&1&& pvesm remove ctgrabtmp >/dev/null 2>&1
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp>/dev/null 2>&1
   
   echo -e "${PCT_OSTYPE} ${PCT_OSVERSION:-} default /tmp/ctgrabtmp/template/cache 5" |xargs bash <(curl -s https://raw.githubusercontent.com/ArchemedIan/Proxmox-Arm64-Container-Fetcher/main/pimox_image_fetcher.sh)
   
-  msg_ok "Downloaded And Built LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION"
   TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
   mapfile -t TEMPLATES < <(ls -l /tmp/ctgrabtmp/template/cache | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
   [ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
