@@ -146,7 +146,7 @@ if [ "$arm64ct" = "yes" ]; then
   sudo pvesm status | grep ctgrabtmp && pvesm remove ctgrabtmp
   pvesm add dir ctgrabtmp -content vztmpl -path /tmp/ctgrabtmp
   bash <(curl -s https://raw.githubusercontent.com/ArchemedIan/Proxmox-Arm64-Container-Fetcher/main/pimox_image_fetcher.sh) ${PCT_OSTYPE} ${PCT_OSVERSION:-} default /tmp/ctgrabtmp/template/cache 1 > /dev/null
-  msg_ok "Template Built"
+  msg_ok "Downloaded And Built LXC Template for Arm64 $PCT_OSTYPE $PCT_OSVERSION"
   TEMPLATE_SEARCH=${PCT_OSTYPE}-${PCT_OSVERSION:-}
   mapfile -t TEMPLATES < <(ls -l /tmp/ctgrabtmp/template/cache | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
   [ ${#TEMPLATES[@]} -gt 0 ] || exit "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
