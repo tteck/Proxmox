@@ -59,7 +59,7 @@ systemctl stop wikijs
 msg_ok "Stopped ${APP}"
 
 msg_info "Backing up Data"
-mkdir -p data-backup
+mkdir -p ~/data-backup
 cp -R /opt/wikijs/{db.sqlite,config.yml,/data} ~/data-backup
 msg_ok "Backed up Data"
 
