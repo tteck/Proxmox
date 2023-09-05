@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-09-05
+
+### Changed
+
+- **Proxmox VE LXC Updater**
+  - Added a new menu that allows you to choose which containers you want to exclude from the update process.
+
 ## 2023-09-01
 
 ### Changed
