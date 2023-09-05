@@ -124,3 +124,7 @@ rsync ${RSYNC_OPTIONS[*]} ${CTID_FROM_PATH}${DATA_PATH} ${CTID_TO_PATH}${DATA_PA
 echo -en "\e[1A\e[0K\e[1A\e[0K"
 
 info "Successfully Transferred Data."
+
+# Use to copy all data from a Zwavejs2MQTT LXC to a Z-wave JS UI LXC
+# run from the Proxmox Shell
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/copy-data/zwavejs2mqtt-copy-data-zwavejsui.sh)"
