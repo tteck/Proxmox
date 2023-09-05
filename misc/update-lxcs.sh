@@ -26,7 +26,7 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 header_info
 while true; do
-  read -p "This Will Update All LXC Containers. Proceed(y/n)?" yn
+  read -p "This Will Update Selected LXC Containers. Proceed(y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit ;;
@@ -34,7 +34,20 @@ while true; do
   esac
 done
 clear
-excluded_containers=("$@")
+TITLE="Containers on node"
+while read -r line; do
+  TAG=$(echo "$line" | awk '{print $1}')
+  ITEM=$(echo "$line" | awk '{print substr($0,36)}')
+  OFFSET=2
+  if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
+    MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
+  fi
+  CTID_MENU+=("$TAG" "$ITEM " "OFF")
+done < <(pct list | awk 'NR>1')
+excluded_containers=$(whiptail --title "$TITLE" --checklist \
+  "\nSelect containers to skip from updates:\n" \
+  16 $(($MSG_MAX_LENGTH + 23)) 6 \
+  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
 function update_container() {
   container=$1
   header_info
@@ -56,14 +69,7 @@ function update_container() {
 }
 header_info
 for container in $(pct list | awk '{if(NR>1) print $1}'); do
-  excluded=false
-  for excluded_container in "${excluded_containers[@]}"; do
-    if [ "$container" == "$excluded_container" ]; then
-      excluded=true
-      break
-    fi
-  done
-  if [ "$excluded" == true ]; then
+  if [[ " ${excluded_containers[@]} " =~ " $container " ]]; then
     header_info
     echo -e "${BL}[Info]${GN} Skipping ${BL}$container${CL}"
     sleep 1
@@ -85,4 +91,4 @@ for container in $(pct list | awk '{if(NR>1) print $1}'); do
 done
 wait
 header_info
-echo -e "${GN} Finished, All Containers Updated. ${CL} \n"
+echo -e "${GN} Finished, Selected Containers Updated. ${CL} \n"
