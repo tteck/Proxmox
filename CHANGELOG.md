@@ -10,6 +10,8 @@
 
 - **Proxmox VE LXC Updater**
   - Added a new menu that allows you to choose which containers you want to exclude from the update process.
+- **Proxmox VE LXC Cleaner**
+  - Added a new menu that allows you to choose which containers you want to exclude from the clean process.
 
 ## 2023-09-01
 
