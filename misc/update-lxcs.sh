@@ -34,7 +34,7 @@ while true; do
   esac
 done
 clear
-TITLE="Containers on node"
+NODE=$(hostname)
 while read -r line; do
   TAG=$(echo "$line" | awk '{print $1}')
   ITEM=$(echo "$line" | awk '{print substr($0,36)}')
@@ -44,7 +44,7 @@ while read -r line; do
   fi
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
-excluded_containers=$(whiptail --title "$TITLE" --checklist \
+excluded_containers=$(whiptail --title "Containers on $NODE" --checklist \
   "\nSelect containers to skip from updates:\n" \
   16 $(($MSG_MAX_LENGTH + 23)) 6 \
   "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
