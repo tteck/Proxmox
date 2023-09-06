@@ -11,7 +11,7 @@
 - **Proxmox VE LXC Cleaner**
   - Added a new menu that allows you to choose which containers you want to exclude from the clean process.
 - **Tailscale**
-  - Added a menu that enables you to choose the specific container where you want to install Tailscale..
+  - Added a menu that enables you to choose the specific container where you want to install Tailscale.
 
 ## 2023-09-05
 
