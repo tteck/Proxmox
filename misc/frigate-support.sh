@@ -5,55 +5,43 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-echo -e "\e[1;33m This script will Prepare a LXC Container for Frigate \e[0m"
+function header_info {
+    clear
+cat <<"EOF"
+   ____    _           __        ____                        __
+  / __/___(_)__ ____ _/ /____   / __/_ _____  ___  ___  ____/ /_
+ / _// __/ / _ `/ _ `/ __/ -_) _\ \/ // / _ \/ _ \/ _ \/ __/ __/
+/_/ /_/ /_/\_, /\_,_/\__/\__/ /___/\_,_/ .__/ .__/\___/_/  \__/
+          /___/                       /_/  /_/
+EOF
+}
+header_info
 while true; do
-  read -p "Did you replace 106 with your LXC ID? Proceed (y/n)?" yn
+  read -p "This will Prepare a LXC Container for Frigate. Proceed (y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit ;;
   *) echo "Please answer yes or no." ;;
   esac
 done
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-trap cleanup EXIT
+header_info
 
-function error_exit() {
-  trap - ERR
-  local DEFAULT='Unknown failure occured.'
-  local REASON="\e[97m${1:-$DEFAULT}\e[39m"
-  local FLAG="\e[91m[ERROR] \e[93m$EXIT@$LINE"
-  msg "$FLAG $REASON"
-  exit $EXIT
-}
-function msg() {
-  local TEXT="$1"
-  echo -e "$TEXT"
-}
-function cleanup() {
-  popd >/dev/null
-  rm -rf $TEMP_DIR
-}
-TEMP_DIR=$(mktemp -d)
-pushd $TEMP_DIR >/dev/null
+# The array of device types
+# CHAR_DEVS+=(major:minor)
+CHAR_DEVS+=("1:1") # mem
+CHAR_DEVS+=("29:0") # fb0
+CHAR_DEVS+=("188:.*") # ttyUSB*
+CHAR_DEVS+=("189:.*") # bus/usb/*
+CHAR_DEVS+=("226:0") # card0
+CHAR_DEVS+=("226:128") # renderD128
 
-CHAR_DEVS+=("1:1")
-CHAR_DEVS+=("29:0")
-CHAR_DEVS+=("188:.*")
-CHAR_DEVS+=("189:.*")
-CHAR_DEVS+=("226:0")
-CHAR_DEVS+=("226:128")
-
+# Proccess char device string
 for char_dev in ${CHAR_DEVS[@]}; do
   [ ! -z "${CHAR_DEV_STRING-}" ] && CHAR_DEV_STRING+=" -o"
   CHAR_DEV_STRING+=" -regex \".*/${char_dev}\""
 done
 
+# Store autodev hook script in a variable
 read -r -d '' HOOK_SCRIPT <<-EOF || true
 for char_dev in \$(find /sys/dev/char -regextype sed $CHAR_DEV_STRING); do
   dev="/dev/\$(sed -n "/DEVNAME/ s/^.*=\(.*\)$/\1/p" \${char_dev}/uevent)";
@@ -65,9 +53,31 @@ for char_dev in \$(find /sys/dev/char -regextype sed $CHAR_DEV_STRING); do
   cp -dpR \$dev \${LXC_ROOTFS_MOUNT}\${dev};
 done;
 EOF
+
+# Remove newline char from the variable
 HOOK_SCRIPT=${HOOK_SCRIPT//$'\n'/}
 
-CTID=$1
+# Generate menu of LXC containers in current node
+NODE=$(hostname)
+while read -r line; do
+  TAG=$(echo "$line" | awk '{print $1}')
+  ITEM=$(echo "$line" | awk '{print substr($0,36)}')
+  OFFSET=2
+  if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
+    MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
+  fi
+  CTID_MENU+=("$TAG" "$ITEM " "OFF")
+done < <(pct list | awk 'NR>1')
+
+# Selection menu for LXC containers
+while [ -z "${CTID:+x}" ]; do
+  CTID=$(whiptail --title "Containers on $NODE" --radiolist \
+    "\nSelect a container to add support:\n" \
+    16 $(($MSG_MAX_LENGTH + 23)) 6 \
+    "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
+done
+
+# Add autodev settings
 CTID_CONFIG_PATH=/etc/pve/lxc/${CTID}.conf
 sed '/autodev/d' $CTID_CONFIG_PATH >CTID.conf
 cat CTID.conf >$CTID_CONFIG_PATH
@@ -76,8 +86,8 @@ cat <<EOF >>$CTID_CONFIG_PATH
 lxc.autodev: 1
 lxc.hook.autodev: bash -c '$HOOK_SCRIPT'
 EOF
-echo -e "\e[1;33m Finished....Reboot ${CTID} LXC to apply the changes \e[0m"
+echo -e "\e[1;33m \nFinished....Reboot ${CTID} LXC to apply the changes.\n \e[0m"
 
-# In the Proxmox web shell run (replace 106 with your LXC ID)
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/frigate-support.sh)" -s 106
+# In the Proxmox web shell run
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/frigate-support.sh)"
 # Reboot the LXC to apply the changes
