@@ -37,12 +37,12 @@ while read -r dir; do
     MSG_MAX_LENGTH=$((${#DIRNAME} + $OFFSET))
   fi
   CTID_MENU+=("$DIRNAME" "$dir " "OFF")
-done < <(ls -d /etc/*/)
+done < <(ls -d /etc/*)
 
 while [ -z "${HOST_BACKUP:+x}" ]; do
   HOST_BACKUP=$(whiptail --title "Select Directories" --checklist \
     "\nSelect what directories to backup:\n" \
-    16 $(($MSG_MAX_LENGTH + 38)) 6 \
+    16 $(($MSG_MAX_LENGTH + 58)) 6 \
     "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 
   for selected_dir in ${HOST_BACKUP//\"}; do
