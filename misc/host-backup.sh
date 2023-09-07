@@ -17,7 +17,7 @@ EOF
 }
 header_info
 while true; do
-  read -p "This will Backup Selected Directories. Proceed (y/n)?" yn
+  read -p "This will backup specific files and directories within the 'etc' directory. Proceed (y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit ;;
@@ -40,8 +40,8 @@ while read -r dir; do
 done < <(ls -d /etc/*)
 
 while [ -z "${HOST_BACKUP:+x}" ]; do
-  HOST_BACKUP=$(whiptail --title "Select Directories" --checklist \
-    "\nSelect what directories to backup:\n" \
+  HOST_BACKUP=$(whiptail --title "SELECTIONS" --checklist \
+    "\nSelect what files/directories to backup:\n" \
     16 $(($MSG_MAX_LENGTH + 58)) 6 \
     "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 
