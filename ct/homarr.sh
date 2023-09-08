@@ -58,22 +58,22 @@ systemctl stop homarr
 cd /opt/homarr
 output=$(git pull 2>&1)
 if echo "$output" | grep -q "Already up to date."
-then
-  msg_ok "$APP is already up to date."
-  systemctl start homarr
-else
-  if ! git pull; then
-    echo "Update failed, temporarily storing changes and trying again."
-    git stash && git pull || (
+  then
+    msg_ok "$APP is already up to date."
+    systemctl start homarr
+  else
+    if ! git pull; then
+      echo "Update failed, temporarily storing changes and trying again."
+      git stash && git pull || (
       echo "Update failed even after storing changes. Aborting."
       exit 1
     )
-  fi
+      yarn install &>/dev/null
+      yarn build &>/dev/null
+      systemctl start homarr
+      msg_ok "Updated $APP"
+    fi
 fi
-yarn install &>/dev/null
-yarn build &>/dev/null
-systemctl start homarr
-msg_ok "Updated $APP"
 exit
 }
 
