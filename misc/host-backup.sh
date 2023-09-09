@@ -63,12 +63,13 @@ start() {
   echo -e "This will create a backup in\e[1;33m $BACKUP_PATH \e[0mfor these files and directories\e[1;33m ${selected_directories_string% } \e[0m"
   read -p "Press ENTER to continue..."
   header_info
+  echo "Working..."
   tar -czf "$BACKUP_PATH$BACKUP_FILE-$(date +%Y_%m_%d).tar.gz" --absolute-names ${selected_directories_string% }
-
+  header_info
   echo -e "\nFinished"
+  echo -e "\e[1;33m \nA backup is rendered ineffective when it remains stored on the host.\n \e[0m"
 }
 
 if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE Host Backup" --yesno "This will create backups for particular files and directories located within a designated directory. Proceed?" 10 88); then
   start
 fi
-echo -e "\e[1;33m \nA backup is rendered ineffective when it remains stored on the host.\n \e[0m"
