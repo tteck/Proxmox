@@ -26,16 +26,16 @@ start() {
     BACKUP_PATH="$BACKUP_PATH"
   fi
 
-  DIR=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to etc\ne.g. root, var/lib/pve-cluster etc." 11 68 --title "Directory to work in (No leading or trailing slashes):" 3>&1 1>&2 2>&3)
+  DIR=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to /etc/\ne.g. /root/, /var/lib/pve-cluster/ etc." 11 68 --title "Directory to work in:" 3>&1 1>&2 2>&3)
 
   if [ -z "$DIR" ]; then
-    DIR="etc"
+    DIR="/etc/"
   else
     DIR="$DIR"
   fi
 
   DIR_DASH=$(echo "$DIR" | tr '/' '-')
-  BACKUP_FILE="$(hostname)-${DIR_DASH}-backup"
+  BACKUP_FILE="$(hostname)${DIR_DASH}backup"
   selected_directories=()
 
   while read -r dir; do
@@ -45,7 +45,7 @@ start() {
       MSG_MAX_LENGTH=$((${#DIRNAME} + $OFFSET))
     fi
     CTID_MENU+=("$DIRNAME" "$dir " "OFF")
-  done < <(ls -d /${DIR}/*)
+  done < <(ls -d ${DIR}*)
 
   while [ -z "${HOST_BACKUP:+x}" ]; do
     HOST_BACKUP=$(whiptail --backtitle "Proxmox VE Host Backup" --title "Working in the ${DIR} directory " --checklist \
@@ -54,17 +54,17 @@ start() {
       "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 
     for selected_dir in ${HOST_BACKUP//\"/}; do
-      selected_directories+=("/${DIR}/$selected_dir")
+      selected_directories+=("${DIR}${selected_dir}")
     done
   done
 
   selected_directories_string=$(printf "%s " "${selected_directories[@]}")
   header_info
-  echo -e "This will create a backup in\e[1;33m $BACKUP_PATH \e[0mfor these files and directories\e[1;33m ${selected_directories_string% } \e[0m"
+  echo -e "This will create a backup in\e[1;33m ${BACKUP_PATH} \e[0mfor these files and directories\e[1;33m ${selected_directories_string% } \e[0m"
   read -p "Press ENTER to continue..."
   header_info
   echo "Working..."
-  tar -czf "$BACKUP_PATH$BACKUP_FILE-$(date +%Y_%m_%d).tar.gz" --absolute-names ${selected_directories_string% }
+  tar -czf "${BACKUP_PATH}${BACKUP_FILE}-$(date +%Y_%m_%d).tar.gz" --absolute-names ${selected_directories_string% }
   header_info
   echo -e "\nFinished"
   echo -e "\e[1;33m \nA backup is rendered ineffective when it remains stored on the host.\n \e[0m"
