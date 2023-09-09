@@ -68,13 +68,13 @@ while read -r line; do
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
 while [ -z "${CTID_FROM:+x}" ]; do
-  CTID_FROM=$(whiptail --title "$TITLE" --radiolist \
+  CTID_FROM=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "$TITLE" --radiolist \
     "\nWhich Zigbee2MQTT LXC would you like to copy FROM?\n" \
     16 $(($MSG_MAX_LENGTH + 23)) 6 \
     "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
 done
 while [ -z "${CTID_TO:+x}" ]; do
-  CTID_TO=$(whiptail --title "$TITLE" --radiolist \
+  CTID_TO=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "$TITLE" --radiolist \
     "\nWhich Zigbee2MQTT LXC would you like to copy TO?\n" \
     16 $(($MSG_MAX_LENGTH + 23)) 6 \
     "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit
@@ -85,7 +85,7 @@ for i in ${!CTID_MENU[@]}; do
   [ "${CTID_MENU[$i]}" == "$CTID_TO" ] &&
     CTID_TO_HOSTNAME=$(sed 's/[[:space:]]*$//' <<<${CTID_MENU[$i + 1]})
 done
-whiptail --defaultno --title "$TITLE" --yesno \
+whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "$TITLE" --yesno \
   "Are you sure you want to copy data between the following LXCs?
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: 2022.01.23" 13 50 || exit

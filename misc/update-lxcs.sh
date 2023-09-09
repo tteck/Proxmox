@@ -44,7 +44,7 @@ while read -r line; do
   fi
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
-excluded_containers=$(whiptail --title "Containers on $NODE" --checklist \
+excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist \
   "\nSelect containers to skip from updates:\n" \
   16 $(($MSG_MAX_LENGTH + 23)) 6 \
   "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit

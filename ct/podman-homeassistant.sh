@@ -56,7 +56,7 @@ function default_settings() {
 
 function update_script() {
   if [[ ! -f /etc/systemd/system/homeassistant.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+  UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
   "1" "Update system and containers" ON \
   "2" "Install HACS" OFF \
   "3" "Install FileBrowser" OFF \

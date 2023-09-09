@@ -40,7 +40,7 @@ while read -r dir; do
 done < <(ls -d /etc/*)
 
 while [ -z "${HOST_BACKUP:+x}" ]; do
-  HOST_BACKUP=$(whiptail --title "SELECTIONS" --checklist \
+  HOST_BACKUP=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SELECTIONS" --checklist \
     "\nSelect what files/directories to backup:\n" \
     16 $(($MSG_MAX_LENGTH + 58)) 6 \
     "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || exit

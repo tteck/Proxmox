@@ -51,7 +51,7 @@ function default_settings() {
 }
 
 function update_script() {
-UPD=$(whiptail --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
+UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 2 \
   "1" "Update ${APP}" ON \
   "2" "Install ${APP} Worker" OFF \
   3>&1 1>&2 2>&3)

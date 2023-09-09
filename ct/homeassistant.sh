@@ -56,7 +56,7 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
-  UPD=$(whiptail --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+  UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "UPDATE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
     "1" "Update ALL Containers" ON \
     "2" "Remove ALL Unused Images" OFF \
     "3" "Install HACS" OFF \

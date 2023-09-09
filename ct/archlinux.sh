@@ -129,7 +129,7 @@ function exit-script() {
 }
 
 function advanced_settings() {
-if CT_TYPE=$(whiptail --title "CONTAINER TYPE" --radiolist "Choose Type" 10 58 2 \
+if CT_TYPE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CONTAINER TYPE" --radiolist "Choose Type" 10 58 2 \
     "1" "Unprivileged" ON \
     "0" "Privileged" OFF \
     3>&1 1>&2 2>&3); then
@@ -138,7 +138,7 @@ else
     exit-script
 fi
 
-if PW1=$(whiptail --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
+if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
     if [ -z $PW1 ]; then
         PW1="Automatic Login"
         PW=" "
@@ -150,7 +150,7 @@ else
     exit-script
 fi
 
-if CT_ID=$(whiptail --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3); then
+if CT_ID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3); then
     if [ -z "$CT_ID" ]; then
         CT_ID="$NEXTID"
         echo -e "${DGN}Using Container ID: ${BGN}$CT_ID${CL}"
@@ -161,7 +161,7 @@ else
     exit
 fi
 
-if CT_NAME=$(whiptail --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3>&1 1>&2 2>&3); then
+if CT_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 $NSAPP --title "HOSTNAME" 3>&1 1>&2 2>&3); then
     if [ -z "$CT_NAME" ]; then
         HN="$NSAPP"
     else
@@ -172,7 +172,7 @@ else
     exit-script
 fi
 
-if DISK_SIZE=$(whiptail --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3); then
+if DISK_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3); then
     if [ -z "$DISK_SIZE" ]; then
         DISK_SIZE="$var_disk"
         echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
@@ -187,7 +187,7 @@ else
     exit-script
 fi
 
-if CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3); then
+if CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3); then
     if [ -z "$CORE_COUNT" ]; then
         CORE_COUNT="$var_cpu"
         echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
@@ -198,7 +198,7 @@ else
     exit-script
 fi
 
-if RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3); then
+if RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3); then
     if [ -z "$RAM_SIZE" ]; then
         RAM_SIZE="$var_ram"
         echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
@@ -209,7 +209,7 @@ else
     exit-script
 fi
 
-if BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3); then
+if BRG=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" 3>&1 1>&2 2>&3); then
     if [ -z "$BRG" ]; then
         BRG="vmbr0"
         echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"
@@ -220,7 +220,7 @@ else
     exit-script
 fi
 
-if NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3); then
+if NET=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --title "IP ADDRESS" 3>&1 1>&2 2>&3); then
     if [ -z $NET ]; then
         NET="dhcp"
         echo -e "${DGN}Using IP Address: ${BGN}$NET${CL}"
@@ -230,7 +230,7 @@ if NET=$(whiptail --inputbox "Set a Static IPv4 CIDR Address(/24)" 8 58 dhcp --t
 else
     exit-script
 fi
-if GATE1=$(whiptail --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3); then
+if GATE1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Gateway IP (mandatory if Static IP was used)" 8 58 --title "GATEWAY IP" 3>&1 1>&2 2>&3); then
     if [ -z $GATE1 ]; then
         GATE1="Default"
         GATE=""
@@ -242,14 +242,14 @@ else
     exit-script
 fi
 
-if (whiptail --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
     DISABLEIP6="yes"
 else
     DISABLEIP6="no"
 fi
     echo -e "${DGN}Disable IPv6: ${BGN}$DISABLEIP6${CL}"
 
-if MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" 3>&1 1>&2 2>&3); then
+if MTU1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" 3>&1 1>&2 2>&3); then
     if [ -z $MTU1 ]; then
         MTU1="Default"
         MTU=""
@@ -261,7 +261,7 @@ else
     exit-script
 fi
 
-if SD=$(whiptail --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" 3>&1 1>&2 2>&3); then
+if SD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a DNS Search Domain (leave blank for HOST)" 8 58 --title "DNS Search Domain" 3>&1 1>&2 2>&3); then
     if [ -z $SD ]; then
         SX=Host
         SD=""
@@ -274,7 +274,7 @@ else
     exit-script
 fi
 
-if NX=$(whiptail --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" 3>&1 1>&2 2>&3); then
+if NX=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a DNS Server IP (leave blank for HOST)" 8 58 --title "DNS SERVER IP" 3>&1 1>&2 2>&3); then
     if [ -z $NX ]; then
         NX=Host    
         NS=""
@@ -286,7 +286,7 @@ else
     exit-script
 fi
 
-if MAC1=$(whiptail --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" 3>&1 1>&2 2>&3); then
+if MAC1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a MAC Address(leave blank for default)" 8 58 --title "MAC ADDRESS" 3>&1 1>&2 2>&3); then
     if [ -z $MAC1 ]; then
         MAC1="Default"
         MAC=""
@@ -298,7 +298,7 @@ else
     exit-script
 fi
 
-if VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3); then
+if VLAN1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3); then
     if [ -z $VLAN1 ]; then
         VLAN1="Default"
         VLAN=""
@@ -310,21 +310,21 @@ else
     exit-script
 fi
 
-if (whiptail --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "SSH ACCESS" --yesno "Enable Root SSH Access?" 10 58); then
     SSH="yes"
 else
     SSH="no"
 fi
     echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
 
-if (whiptail --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
     VERB="yes"
 else
     VERB="no"
 fi
     echo -e "${DGN}Enable Verbose Mode: ${BGN}$VERB${CL}"
 
-if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
 else
     clear
@@ -339,7 +339,7 @@ ARCH_CHECK
 PVE_CHECK
 NEXTID=$(pvesh get /cluster/nextid)
 header_info
-  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
     echo -e "${BL}Using Default Settings${CL}"
     default_settings
@@ -361,7 +361,7 @@ exit
 }
 
 if command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
+  if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
     clear
     echo -e "⚠  User exited script \n"
     exit
@@ -370,7 +370,7 @@ if command -v pveversion >/dev/null 2>&1; then
 fi
 
 if ! command -v pveversion >/dev/null 2>&1; then
-  if ! (whiptail --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
+  if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC UPDATE" --yesno "This will update ${APP} LXC.  Proceed?" 10 58); then
     clear
     echo -e "⚠  User exited script \n"
     exit

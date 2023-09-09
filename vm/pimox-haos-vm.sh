@@ -71,7 +71,7 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if (whiptail --title "PiMox HAOS VM" --yesno "This will create a New PiMox HAOS VM. Proceed?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "PiMox HAOS VM" --yesno "This will create a New PiMox HAOS VM. Proceed?" 10 58); then
   echo "User selected Yes"
 else
   clear
@@ -133,14 +133,14 @@ function default_settings() {
   echo -e "${BL}Creating a HAOS VM using the above default settings${CL}"
 }
 function advanced_settings() {
-  BRANCH=$(whiptail --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
+  BRANCH=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "HAOS VERSION" --radiolist "Choose Version" --cancel-button Exit-Script 10 58 3 \
     "$STABLE" "Stable" ON \
     "$BETA" "Beta" OFF \
     "$DEV" "Dev" OFF \
     3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then echo -e "${DGN}Using HAOS Version: ${BGN}$BRANCH${CL}"; fi
-  VMID=$(whiptail --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  VMID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $VMID ]; then
     VMID="$NEXTID"
@@ -155,7 +155,7 @@ function advanced_settings() {
       if [ $exitstatus = 0 ]; then echo -e "${DGN}Virtual Machine ID: ${BGN}$VMID${CL}"; fi
     fi
   fi
-  VM_NAME=$(whiptail --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  VM_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 haos${BRANCH} --title "HOSTNAME" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $VM_NAME ]; then
     HN="haos${BRANCH}"
@@ -166,7 +166,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Hostname: ${BGN}$HN${CL}"
     fi
   fi
-  CORE_COUNT=$(whiptail --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $CORE_COUNT ]; then
     CORE_COUNT="2"
@@ -174,7 +174,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"; fi
   fi
-  RAM_SIZE=$(whiptail --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 4096 --title "RAM" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $RAM_SIZE ]; then
     RAM_SIZE="4096"
@@ -182,7 +182,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"; fi
   fi
-  BRG=$(whiptail --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  BRG=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Bridge" 8 58 vmbr0 --title "BRIDGE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $BRG ]; then
     BRG="vmbr0"
@@ -190,7 +190,7 @@ function advanced_settings() {
   else
     if [ $exitstatus = 0 ]; then echo -e "${DGN}Using Bridge: ${BGN}$BRG${CL}"; fi
   fi
-  MAC1=$(whiptail --inputbox "Set a MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  MAC1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a MAC Address" 8 58 $GEN_MAC --title "MAC ADDRESS" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ -z $MAC1 ]; then
     MAC="$GEN_MAC"
@@ -201,7 +201,7 @@ function advanced_settings() {
       echo -e "${DGN}Using MAC Address: ${BGN}$MAC1${CL}"
     fi
   fi
-  VLAN1=$(whiptail --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  VLAN1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $VLAN1 ]; then
@@ -212,7 +212,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Vlan: ${BGN}$VLAN1${CL}"
     fi
   fi
-  MTU1=$(whiptail --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
+  MTU1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Interface MTU Size (leave blank for default)" 8 58 --title "MTU SIZE" --cancel-button Exit-Script 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     if [ -z $MTU1 ]; then
@@ -223,14 +223,14 @@ function advanced_settings() {
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
   fi
-  if (whiptail --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start VM when completed?" 10 58); then
     echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
     echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
-  if (whiptail --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" --no-button Do-Over 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create HAOS ${BRANCH} VM?" --no-button Do-Over 10 58); then
     echo -e "${RD}Creating a HAOS VM using the above advanced settings${CL}"
   else
     clear
@@ -240,7 +240,7 @@ function advanced_settings() {
   fi
 }
 function START_SCRIPT() {
-  if (whiptail --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     clear
     header_info
     echo -e "${BL}Using Default Settings${CL}"
@@ -273,7 +273,7 @@ elif [ $((${#STORAGE_MENU[@]} / 3)) -eq 1 ]; then
   STORAGE=${STORAGE_MENU[0]}
 else
   while [ -z "${STORAGE:+x}" ]; do
-    STORAGE=$(whiptail --title "Storage Pools" --radiolist \
+    STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Storage Pools" --radiolist \
       "Which storage pool you would like to use for the HAOS VM?\n\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
       "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
