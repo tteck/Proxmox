@@ -18,7 +18,7 @@ EOF
 header_info
 
 start() {
-  BACKUP_PATH=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to root\ne.g. /mnt/backups/" 9 68 --title "Directory to backup to:" 3>&1 1>&2 2>&3)
+  BACKUP_PATH=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to /root/\ne.g. /mnt/backups/" 11 68 --title "Directory to backup to:" 3>&1 1>&2 2>&3)
 
   if [ -z "$BACKUP_PATH" ]; then
     BACKUP_PATH="/root/"
@@ -26,7 +26,7 @@ start() {
     BACKUP_PATH="$BACKUP_PATH"
   fi
 
-  DIR=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to etc\ne.g. root, var/lib/pve-cluster etc." 9 68 --title "Directory to work in (No leading or trailing slashes):" 3>&1 1>&2 2>&3)
+  DIR=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nDefaults to etc\ne.g. root, var/lib/pve-cluster etc." 11 68 --title "Directory to work in (No leading or trailing slashes):" 3>&1 1>&2 2>&3)
 
   if [ -z "$DIR" ]; then
     DIR="etc"
