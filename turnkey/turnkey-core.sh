@@ -164,6 +164,7 @@ pct start "$CTID"
 sleep 5
 
 # Get container IP
+set +e
 max_attempts=5
 attempt=1
 IP=""
@@ -183,6 +184,7 @@ if [[ -z $IP ]]; then
   IP="NOT FOUND"
 fi
 
+set -e
 # Start Proxmox VE Monitor-All if available
 if [[ -f /etc/systemd/system/ping-instances.service ]]; then
   systemctl start ping-instances.service
