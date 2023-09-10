@@ -168,7 +168,7 @@ max_attempts=5
 attempt=1
 IP=""
 while [[ $attempt -le $max_attempts ]]; do
-  IP=$(pct exec $CTID ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+  IP=$(pct exec $CTID ip a show dev eth0 | grep -oP 'inet \K[^/]+')
   if [[ -n $IP ]]; then
     break
   else
