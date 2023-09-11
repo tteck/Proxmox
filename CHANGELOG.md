@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-09-11
+
+### Changed
+
+- **Paperless-ngx LXC**
+  - Modify the script to incorporate Redis and PostgreSQL, while also introducing an option to include Adminer during installation.
+
 ## 2023-09-10
 
 ### Changed
