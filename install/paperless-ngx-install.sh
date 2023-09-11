@@ -93,10 +93,11 @@ msg_info "Installing Natural Language Toolkit (Patience)"
 $STD python3 -m nltk.downloader -d /usr/share/nltk_data all
 msg_ok "Installed Natural Language Toolkit"
 
-msg_info "Setting up database"
+msg_info "Setting up PostgreSQL database"
+DB_NAME=paperlessdb
 DB_USER=paperless
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-DB_NAME=paperlessdb
+SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
 echo "Paperless-ngx Database User" >>~/paperless.creds
@@ -106,13 +107,16 @@ echo $DB_PASS >>~/paperless.creds
 echo "Paperless-ngx Database Name" >>~/paperless.creds
 echo $DB_NAME >>~/paperless.creds
 mkdir -p {consume,media}
-sed -i -e 's|#PAPERLESS_DBNAME=paperless|PAPERLESS_DBNAME=paperlessdb|' /opt/paperless/paperless.conf
+sed -i -e 's|#PAPERLESS_REDIS=redis://localhost:6379|PAPERLESS_REDIS=redis://localhost:6379|' /opt/paperless/paperless.conf
+sed -i -e 's|#PAPERLESS_DBHOST=localhost|PAPERLESS_DBHOST=localhost|' /opt/paperless/paperless.conf
+sed -i -e 's|#PAPERLESS_DBPORT=5432|PAPERLESS_DBPORT=5432|' /opt/paperless/paperless.conf
+sed -i -e "s|#PAPERLESS_DBNAME=paperless|PAPERLESS_DBNAME=$DB_NAME|" /opt/paperless/paperless.conf
+sed -i -e "s|#PAPERLESS_DBUSER=paperless|PAPERLESS_DBUSER=$DB_USER|" /opt/paperless/paperless.conf
 sed -i -e "s|#PAPERLESS_DBPASS=paperless|PAPERLESS_DBPASS=$DB_PASS|" /opt/paperless/paperless.conf
-SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 sed -i -e "s|#PAPERLESS_SECRET_KEY=change-me|PAPERLESS_SECRET_KEY=$SECRET_KEY|" /opt/paperless/paperless.conf
 cd /opt/paperless/src
 $STD python3 manage.py migrate
-msg_ok "Set up database"
+msg_ok "Set up PostgreSQL database"
 
 msg_info "Setting up admin Paperless-ngx User & Password"
 ## From https://github.com/linuxserver/docker-paperless-ngx/blob/main/root/etc/cont-init.d/99-migrations
