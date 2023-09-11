@@ -100,12 +100,10 @@ DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
-echo "Paperless-ngx Database User" >>~/paperless.creds
-echo $DB_USER >>~/paperless.creds
-echo "Paperless-ngx Database Password" >>~/paperless.creds
-echo $DB_PASS >>~/paperless.creds
-echo "Paperless-ngx Database Name" >>~/paperless.creds
-echo $DB_NAME >>~/paperless.creds
+echo "" >>~/paperless.creds
+echo -e "Paperless-ngx Database User: \e[32m$DB_USER\e[0m" >>~/paperless.creds
+echo -e "Paperless-ngx Database Password: \e[32m$DB_PASS\e[0m" >>~/paperless.creds
+echo -e "Paperless-ngx Database Name: \e[32m$DB_NAME\e[0m" >>~/paperless.creds
 mkdir -p {consume,media}
 sed -i -e 's|#PAPERLESS_REDIS=redis://localhost:6379|PAPERLESS_REDIS=redis://localhost:6379|' /opt/paperless/paperless.conf
 sed -i -e 's|#PAPERLESS_DBHOST=localhost|PAPERLESS_DBHOST=localhost|' /opt/paperless/paperless.conf
@@ -126,18 +124,12 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   systemctl reload apache2
   IP=$(hostname -I | awk '{print $1}')
   echo "" >>~/paperless.creds
-  echo "Adminer Interface" >>~/paperless.creds
-  echo $IP/adminer/ >>~/paperless.creds
-  echo "Adminer System" >>~/paperless.creds
-  echo PostgreSQL >>~/paperless.creds
-  echo "Adminer Server" >>~/paperless.creds
-  echo localhost:5432 >>~/paperless.creds
-  echo "Adminer Username" >>~/paperless.creds
-  echo $DB_USER >>~/paperless.creds
-  echo "Adminer Password" >>~/paperless.creds
-  echo $DB_PASS >>~/paperless.creds
-  echo "Adminer Database" >>~/paperless.creds
-  echo $DB_NAME >>~/paperless.creds
+  echo -e "Adminer Interface: \e[32m$IP/adminer/\e[0m" >>~/paperless.creds
+  echo -e "Adminer System: \e[32mPostgreSQL\e[0m" >>~/paperless.creds
+  echo -e "Adminer Server: \e[32mlocalhost:5432\e[0m" >>~/paperless.creds
+  echo -e "Adminer Username: \e[32m$DB_USER\e[0m" >>~/paperless.creds
+  echo -e "Adminer Password: \e[32m$DB_PASS\e[0m" >>~/paperless.creds
+  echo -e "Adminer Database: \e[32m$DB_NAME\e[0m" >>~/paperless.creds
   msg_ok "Installed Adminer"
 fi
 
@@ -152,10 +144,9 @@ user.is_staff = True
 user.save()
 EOF
 echo "" >>~/paperless.creds
-echo "Paperless-ngx WebUI User" >>~/paperless.creds
-echo admin >>~/paperless.creds
-echo "Paperless-ngx WebUI Password" >>~/paperless.creds
-echo $DB_PASS >>~/paperless.creds
+echo -e "Paperless-ngx WebUI User: \e[32madmin\e[0m" >>~/paperless.creds
+echo -e "Paperless-ngx WebUI Password: \e[32m$DB_PASS\e[0m" >>~/paperless.creds
+echo "" >>~/paperless.creds
 msg_ok "Set up admin Paperless-ngx User & Password"
 
 msg_info "Creating Services"
