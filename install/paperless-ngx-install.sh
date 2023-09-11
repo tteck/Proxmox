@@ -124,6 +124,19 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   $STD apt install -y adminer
   $STD a2enconf adminer
   systemctl reload apache2
+  echo "" >>~/paperless.creds
+  echo "Adminer Interface" >>~/paperless.creds
+  echo $IP/adminer/ >>~/paperless.creds
+  echo "Adminer System" >>~/paperless.creds
+  echo PostgreSQL >>~/paperless.creds
+  echo "Adminer Server" >>~/paperless.creds
+  echo localhost:5432 >>~/paperless.creds
+  echo "Adminer Username" >>~/paperless.creds
+  echo $DB_USER >>~/paperless.creds
+  echo "Adminer Password" >>~/paperless.creds
+  echo $DB_PASS >>~/paperless.creds
+  echo "Adminer Database" >>~/paperless.creds
+  echo $DB_NAME >>~/paperless.creds
   msg_ok "Installed Adminer"
 fi
 
