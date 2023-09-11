@@ -124,6 +124,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   $STD apt install -y adminer
   $STD a2enconf adminer
   systemctl reload apache2
+  IP=$(hostname -I)
   echo "" >>~/paperless.creds
   echo "Adminer Interface" >>~/paperless.creds
   echo $IP/adminer/ >>~/paperless.creds
