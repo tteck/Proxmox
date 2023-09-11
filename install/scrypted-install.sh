@@ -108,7 +108,7 @@ msg_ok "Coral Edge TPU Support Added"
 fi
 
 msg_info "Installing Scrypted"
-$STD sudo -u root npx -y scrypted@latest install-server
+$STD npx -y scrypted@latest install-server
 msg_ok "Installed Scrypted"
 
 msg_info "Creating Service"
