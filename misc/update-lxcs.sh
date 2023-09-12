@@ -6,8 +6,8 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-clear
-cat <<"EOF"
+  clear
+  cat <<"EOF"
    __  __          __      __          __   _  ________
   / / / /___  ____/ /___ _/ /____     / /  | |/ / ____/
  / / / / __ \/ __  / __ `/ __/ _ \   / /   |   / /
@@ -25,29 +25,18 @@ CM='\xE2\x9C\x94\033'
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 header_info
-while true; do
-  read -p "This Will Update Selected LXC Containers. Proceed(y/n)?" yn
-  case $yn in
-  [Yy]*) break ;;
-  [Nn]*) exit ;;
-  *) echo "Please answer yes or no." ;;
-  esac
-done
-clear
+echo "Loading..."
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Updater" --yesno "This Will Update Selected LXC Containers. Proceed?" 10 58 || exit
 NODE=$(hostname)
-while read -r line; do
-  TAG=$(echo "$line" | awk '{print $1}')
-  ITEM=$(echo "$line" | awk '{print substr($0,36)}')
+while read -r TAG ITEM; do
   OFFSET=2
-  if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
-    MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
-  fi
+  ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
 excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist \
   "\nSelect containers to skip from updates:\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+  16 $((MSG_MAX_LENGTH + 23)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+
 function update_container() {
   container=$1
   header_info
@@ -55,16 +44,16 @@ function update_container() {
   os=$(pct config "$container" | awk '/^ostype/ {print $2}')
   if [[ "$os" == "ubuntu" || "$os" == "debian" ]]; then
     disk_info=$(pct exec "$container" df /boot | awk 'NR==2{gsub("%","",$5); printf "%s %.1fG %.1fG %.1fG", $5, $3/1024/1024, $2/1024/1024, $4/1024/1024 }')
-    read -ra disk_info_array <<< "$disk_info"
+    read -ra disk_info_array <<<"$disk_info"
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
   else
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}[No disk info for ${os}]${CL}\n"
   fi
   case "$os" in
-    alpine)  pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
-    archlinux)  pct exec "$container" -- bash -c "pacman -Syyu --noconfirm";;
-    fedora|rocky|centos|alma)  pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
-    ubuntu|debian|devuan)  pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt list --upgradable && apt-get -y dist-upgrade" ;;
+  alpine) pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
+  archlinux) pct exec "$container" -- bash -c "pacman -Syyu --noconfirm" ;;
+  fedora | rocky | centos | alma) pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
+  ubuntu | debian | devuan) pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt list --upgradable && apt-get -y dist-upgrade" ;;
   esac
 }
 header_info
