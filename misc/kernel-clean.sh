@@ -40,7 +40,7 @@ function msg_ok() {
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE Kernel Clean" --yesno "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed?" 10 68 || exit
 
 if [ -z "$available_kernels" ]; then
-  whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Other Kernels" --msgbox "It appears there are no old Kernels on your system. \nCurrent kernel ($current_kernel)." 10 68
+  whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Old Kernels" --msgbox "It appears there are no old Kernels on your system. \nCurrent kernel ($current_kernel)." 10 68
   msg_info "Exiting"
   sleep 2
   msg_ok "Done"
