@@ -56,7 +56,7 @@ done < <(echo "$available_kernels")
 remove_kernels=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current Kernel $current_kernel" --checklist "\nSelect Kernels to remove:\n" \
   16 $((MSG_MAX_LENGTH + 58)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
 
-whiptail --backtitle "Proxmox VE Helper Scripts" --title "Remove Kernels" --yesno "Would you like to remove the selected Kernels\n $remove_kernels\n Proceed?" 10 68 || exit
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Remove Kernels" --yesno "Would you like to remove the previously selected Kernels?" 10 68 || exit
 
 msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels${CL}"
 /usr/bin/apt purge -y $remove_kernels >/dev/null 2>&1
