@@ -16,38 +16,23 @@ function header_info() {
 
 EOF
 }
-set -e
-YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
 RD=$(echo "\033[01;31m")
 CM='\xE2\x9C\x94\033'
 GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 header_info
-while true; do
-  read -p "This Will Clean logs, cache and update apt lists on selected LXC Containers. Proceed(y/n)?" yn
-  case $yn in
-  [Yy]*) break ;;
-  [Nn]*) exit ;;
-  *) echo "Please answer yes or no." ;;
-  esac
-done
-clear
+echo "Loading..."
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Updater" --yesno "This Will Clean logs, cache and update apt lists on selected LXC Containers. Proceed?" 10 58 || exit
 NODE=$(hostname)
-while read -r line; do
-  TAG=$(echo "$line" | awk '{print $1}')
-  ITEM=$(echo "$line" | awk '{print substr($0,36)}')
+while read -r TAG ITEM; do
   OFFSET=2
-  if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
-    MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
-  fi
+  ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
-excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist \
-  "\nSelect containers to skip from cleaning:\n" \
-  16 $(($MSG_MAX_LENGTH + 23)) 6 \
-  "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
-  
+excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist "\nSelect containers to skip from cleaning:\n" \
+  16 $((MSG_MAX_LENGTH + 23)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit  
+
 function clean_container() {
   container=$1
   header_info
@@ -87,4 +72,4 @@ done
 
 wait
 header_info
-echo -e "${GN} Finished, Containers Cleaned. ${CL} \n"
+echo -e "${GN} Finished, Selected Containers Cleaned. ${CL} \n"
