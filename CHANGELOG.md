@@ -11,7 +11,7 @@
 - **Pi.Alert LXC**
   - NEW Script
 - **Proxmox VE Kernel Clean**
-  - Code overhaul with a fresh start.
+  - Code overhaul with a fresh start. This script offers the flexibility to select specific kernels for removal, unlike the previous version, which was an all-or-nothing approach.
 
 ## 2023-09-11
 
