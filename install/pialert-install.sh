@@ -52,7 +52,7 @@ $STD pip3 install fritzconnection
 $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
-msg_info "Installing Pi.Alert (Patience)"
+msg_info "Installing Pi.Alert"
 curl -sL https://github.com/leiweibau/Pi.Alert/raw/main/tar/pialert_latest.tar | tar xvf - -C /opt >/dev/null 2>&1
 
 rm /var/www/html/index.html
@@ -82,7 +82,7 @@ ln -s "/opt/pialert/log/pialert.webservices.log" "/opt/pialert/front/php/server/
 sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
 msg_ok "Installed Pi.Alert"
 
-msg_info "Start Pi.Alert Scan"
+msg_info "Start Pi.Alert Scan (Patience)"
 $STD python3 /opt/pialert/back/pialert.py update_vendors
 $STD python3 /opt/pialert/back/pialert.py internet_IP
 $STD python3 /opt/pialert/back/pialert.py 1
