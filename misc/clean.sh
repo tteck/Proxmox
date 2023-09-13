@@ -27,7 +27,6 @@ if [[ -z "$cache" ]]; then
   echo -e "It appears there are no cached files on your system. \n"
   sleep 2
 else
-  echo "Removing Cache"
   find /var/cache -type f -delete
   echo "Successfully Removed Cache"
   sleep 2
@@ -39,7 +38,6 @@ if [[ -z "$logs" ]]; then
   echo -e "It appears there are no logs on your system. \n"
   sleep 2
 else
-  echo "Removing Logs"
   find /var/log -type f -delete
   echo "Successfully Removed Logs"
   sleep 2
