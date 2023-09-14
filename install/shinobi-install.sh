@@ -13,15 +13,6 @@ setting_up_container
 network_check
 update_os
 
-ubuntuversion=$(lsb_release -r | awk '{print $2}' | cut -d . -f1)
-if [ "$ubuntuversion" = "18" ] || [ "$ubuntuversion" -le "18" ]; then
-    apt install sudo wget -y
-    sudo apt install -y software-properties-common
-    sudo add-apt-repository universe -y
-    apt update -y
-    apt update --fix-missing -y
-fi
-
 msg_info "Installing Dependencies"
 $STD apt-get install -y curl sudo git mc
 $STD apt-get install -y make zip net-tools
@@ -57,21 +48,20 @@ echo '{"Product" : "'"Shinobi"'" , "Branch" : "'"master"'" , "Version" : "'"$git
 msg_ok "Cloned Shinobi"
 
 msg_info "Installing Database"
-sqlpass=""
+sqluser="root"
+sqlpass="root"
 echo "mariadb-server mariadb-server/root_password password $sqlpass" | debconf-set-selections
 echo "mariadb-server mariadb-server/root_password_again password $sqlpass" | debconf-set-selections
 $STD apt-get install -y mariadb-server
 service mysql start
-sqluser="root"
-mysql -e "source sql/user.sql" || true
-mysql -e "source sql/framework.sql" || true
+mysql -u "$sqluser" -p"$sqlpass" -e "source sql/user.sql" || true
 msg_ok "Installed Database"
+
+msg_info "Installing Shinobi"
 cp conf.sample.json conf.json
 cronKey=$(head -c 1024 < /dev/urandom | sha256sum | awk '{print substr($1,1,29)}')
 sed -i -e 's/Shinobi/'"$cronKey"'/g' conf.json
 cp super.sample.json super.json
-
-msg_info "Installing Shinobi"
 $STD npm i npm -g
 $STD npm install --unsafe-perm
 $STD npm install pm2@latest -g
