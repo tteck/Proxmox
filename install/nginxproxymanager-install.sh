@@ -40,6 +40,7 @@ $STD apt-get install -y \
   python3-certbot \
   python3-certbot-dns-cloudflare
 $STD pip3 install certbot_dns_porkbun
+$STD pip3 install certbot-dns-duckdns
 $STD python3 -m venv /opt/certbot/
 msg_ok "Installed Python Dependencies"
 
