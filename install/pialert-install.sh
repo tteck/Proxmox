@@ -18,6 +18,7 @@ $STD apt-get -y install \
   sudo \
   mc \
   curl \
+  git \
   apt-utils \
   lighttpd \
   sqlite3 \
@@ -52,8 +53,8 @@ $STD pip3 install fritzconnection
 $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
-msg_info "Installing Pi.Alert"
-curl -sL https://github.com/leiweibau/Pi.Alert/raw/main/tar/pialert_latest.tar | tar xvf - -C /opt >/dev/null 2>&1
+msg_info "Installing Pi.Alert (Patience)"
+git clone -q https://github.com/leiweibau/Pi.Alert.git /opt/pialert
 mkdir -p /opt/pialert/front/reports
 rm -rf /var/www/html/index.html /opt/pialert/{docs,install,tar}
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
