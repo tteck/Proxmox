@@ -54,31 +54,20 @@ msg_ok "Installed Python Dependencies"
 
 msg_info "Installing Pi.Alert"
 curl -sL https://github.com/leiweibau/Pi.Alert/raw/main/tar/pialert_latest.tar | tar xvf - -C /opt >/dev/null 2>&1
-
-rm /var/www/html/index.html
+mkdir -p /opt/pialert/front/reports
+rm -rf /var/www/html/index.html /opt/pialert/{docs,install,tar}
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
 ln -s /opt/pialert/install/index.html /var/www/html/index.html
 ln -s /opt/pialert/front /var/www/html/pialert
-chmod go+x /opt/pialert
-chgrp -R www-data /opt/pialert/db
-chmod -R 775 /opt/pialert/db
-chmod -R 775 /opt/pialert/db/temp
-chgrp www-data /opt/pialert/config
-chmod -R 775 /opt/pialert/config
-chgrp www-data /opt/pialert/config/pialert.conf
-chmod -R 775 /opt/pialert/front/reports
-chgrp -R www-data /opt/pialert/front/reports
-chmod +x /opt/pialert/back/shoutrrr/x86/shoutrrr
-touch "/opt/pialert/log/pialert.vendors.log"
-touch "/opt/pialert/log/pialert.IP.log"
-touch "/opt/pialert/log/pialert.1.log"
-touch "/opt/pialert/log/pialert.cleanup.log"
-touch "/opt/pialert/log/pialert.webservices.log"
-ln -s "/opt/pialert/log/pialert.vendors.log" "/opt/pialert/front/php/server/pialert.vendors.log"
-ln -s "/opt/pialert/log/pialert.IP.log" "/opt/pialert/front/php/server/pialert.IP.log"
-ln -s "/opt/pialert/log/pialert.1.log" "/opt/pialert/front/php/server/pialert.1.log"
-ln -s "/opt/pialert/log/pialert.cleanup.log" "/opt/pialert/front/php/server/pialert.cleanup.log"
-ln -s "/opt/pialert/log/pialert.webservices.log" "/opt/pialert/front/php/server/pialert.webservices.log"
+chmod go+x /opt/pialert /opt/pialert/back/shoutrrr/x86/shoutrrr
+chgrp -R www-data /opt/pialert/db /opt/pialert/front/reports /opt/pialert/config /opt/pialert/config/pialert.conf
+chmod -R 775 /opt/pialert/db /opt/pialert/db/temp /opt/pialert/config /opt/pialert/front/reports
+touch /opt/pialert/log/pialert.vendors.log /opt/pialert/log/pialert.IP.log /opt/pialert/log/pialert.1.log /opt/pialert/log/pialert.cleanup.log /opt/pialert/log/pialert.webservices.log
+src_dir="/opt/pialert/log"
+dest_dir="/opt/pialert/front/php/server"
+for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log pialert.webservices.log; do
+    ln -s "$src_dir/$file" "$dest_dir/$file"
+done
 sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
 msg_ok "Installed Pi.Alert"
 
