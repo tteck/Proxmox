@@ -70,6 +70,12 @@ for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log
     ln -s "$src_dir/$file" "$dest_dir/$file"
 done
 sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
+echo "python3 /opt/pialert/back/pialert.py 1" >/usr/bin/scan
+chmod +x /usr/bin/scan
+echo "/opt/pialert/back/pialert-cli set_permissions --lxc" >/usr/bin/permissions
+chmod +x /usr/bin/permissions
+echo "/opt/pialert/back/pialert-cli set_sudoers --lxc" >/usr/bin/sudoers
+chmod +x /usr/bin/sudoers
 msg_ok "Installed Pi.Alert"
 
 msg_info "Start Pi.Alert Scan (Patience)"
