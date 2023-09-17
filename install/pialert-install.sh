@@ -56,7 +56,7 @@ msg_ok "Installed Python Dependencies"
 msg_info "Installing Pi.Alert (Patience)"
 git clone -q https://github.com/leiweibau/Pi.Alert.git /opt/pialert
 mkdir -p /opt/pialert/front/reports
-rm -rf /var/www/html/index.html /opt/pialert/{docs,install,tar}
+rm -rf /var/www/html/index.html
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
 ln -s /opt/pialert/install/index.html /var/www/html/index.html
 ln -s /opt/pialert/front /var/www/html/pialert
