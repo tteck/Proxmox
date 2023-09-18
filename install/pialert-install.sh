@@ -71,7 +71,7 @@ for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log
 done
 git config --global --add safe.directory /opt/pialert
 sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
-sed -i 's/~/\/opt/g' /opt/pialert/install/pialert.cron
+sed -i -e 's/0 2 \* \* \*\/4/0 2 * * 3/g' -e 's/~/\/opt/g' /opt/pialert/install/pialert.cron
 set +e
 (crontab -l 2>/dev/null; cat /opt/pialert/install/pialert.cron) | crontab -
 set -e
