@@ -53,8 +53,8 @@ $STD pip3 install fritzconnection
 $STD pip3 install cryptography
 msg_ok "Installed Python Dependencies"
 
-msg_info "Installing Pi.Alert (Patience)"
-git clone -q https://github.com/leiweibau/Pi.Alert.git /opt/pialert
+msg_info "Installing Pi.Alert"
+curl -sL https://github.com/leiweibau/Pi.Alert/raw/main/tar/pialert_latest.tar | tar xvf - -C /opt >/dev/null 2>&1
 mkdir -p /opt/pialert/front/reports
 rm -rf /var/www/html/index.html
 mv /var/www/html/index.lighttpd.html /var/www/html/index.lighttpd.html.old
@@ -69,9 +69,13 @@ dest_dir="/opt/pialert/front/php/server"
 for file in pialert.vendors.log pialert.IP.log pialert.1.log pialert.cleanup.log pialert.webservices.log; do
     ln -s "$src_dir/$file" "$dest_dir/$file"
 done
+git config --global --add safe.directory /opt/pialert
 sed -i 's#PIALERT_PATH\s*=\s*'\''/home/pi/pialert'\''#PIALERT_PATH           = '\''/opt/pialert'\''#' /opt/pialert/config/pialert.conf
 sed -i 's/~/\/opt/g' /opt/pialert/install/pialert.cron
 (crontab -l 2>/dev/null; cat /opt/pialert/install/pialert.cron) | crontab -
+cp -R /opt/pialert/install/pialert_update.sh /usr/bin/update
+sed -i 's/~/\/opt/g' /usr/bin/update
+chmod +x /usr/bin/update
 echo "python3 /opt/pialert/back/pialert.py 1" >/usr/bin/scan
 chmod +x /usr/bin/scan
 echo "/opt/pialert/back/pialert-cli set_permissions --lxc" >/usr/bin/permissions
