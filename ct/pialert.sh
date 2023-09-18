@@ -55,6 +55,7 @@ header_info
 if [[ ! -d /opt/pialert ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 update
 msg_ok "Updated $APP"
+exit
 }
 
 start
