@@ -53,7 +53,6 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/pialert ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP"
 update
 msg_ok "Updated $APP"
 }
