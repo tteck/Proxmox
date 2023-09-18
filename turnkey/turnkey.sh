@@ -66,6 +66,7 @@ while read -r TAG ITEM; do
 done < <(
   cat <<EOF
 core Core
+faveo-helpdesk Faveo Helpdesk
 fileserver File Server
 gallery Gallery
 gameserver Game Server
@@ -75,9 +76,12 @@ invoice-ninja Invoice Ninja
 mediaserver Media Server
 nextcloud Nextcloud
 observium Observium
+odoo Odoo
 openvpn OpenVPN
 owncloud ownCloud
+phpbb phpBB
 torrentserver Torrent Server
+wireguard WireGuard
 wordpress Wordpress
 zoneminder ZoneMinder
 EOF
