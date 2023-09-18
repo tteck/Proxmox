@@ -19,7 +19,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="PiAlert"
-var_disk="6"
+var_disk="3"
 var_cpu="1"
 var_ram="512"
 var_os="debian"
