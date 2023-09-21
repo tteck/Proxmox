@@ -35,6 +35,7 @@ while true; do
   for instance in $(pct list | awk '\''{if(NR>1) print $1}'\''; qm list | awk '\''{if(NR>1) print $1}'\''); do
     # Skip excluded instances
     if [[ " ${excluded_instances[@]} " =~ " ${instance} " ]]; then
+      echo "Skipping $instance because it is excluded"
       continue
     fi
 
