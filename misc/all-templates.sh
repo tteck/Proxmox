@@ -140,7 +140,7 @@ function select_storage() {
     printf $STORAGE
   fi
 }
-
+header_info
 # Get template storage
 TEMPLATE_STORAGE=$(select_storage template) || exit
 info "Using '$TEMPLATE_STORAGE' for template storage."
