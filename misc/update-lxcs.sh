@@ -17,7 +17,7 @@ function header_info {
 
 EOF
 }
-set -e
+set -eEuo pipefail
 YW=$(echo "\033[33m")
 BL=$(echo "\033[36m")
 RD=$(echo "\033[01;31m")
@@ -26,8 +26,10 @@ GN=$(echo "\033[1;92m")
 CL=$(echo "\033[m")
 header_info
 echo "Loading..."
-whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Updater" --yesno "This Will Update LXC Containers. Proceed?" 10 58 || exit
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Updater" --yesno "This Will Update LXC Containers. Proceed?" 10 58 || clear; exit
 NODE=$(hostname)
+CTID_MENU=()
+MSG_MAX_LENGTH=0
 while read -r TAG ITEM; do
   OFFSET=2
   ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
@@ -35,7 +37,7 @@ while read -r TAG ITEM; do
 done < <(pct list | awk 'NR>1')
 excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist \
   "\nSelect containers to skip from updates:\n" \
-  16 $((MSG_MAX_LENGTH + 23)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+  16 $((MSG_MAX_LENGTH + 23)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || clear; exit
 
 function update_container() {
   container=$1
