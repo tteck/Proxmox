@@ -85,7 +85,7 @@ PCT_OPTIONS="
     -cores 2
     -memory 2048
     -password $PASS
-    -net0 name=eth0,bridge=vmbr0,hwaddr=AE:1A:60:07:B7:59,ip=dhcp
+    -net0 name=eth0,bridge=vmbr0,ip=dhcp
     -unprivileged 1
   "
 DEFAULT_PCT_OPTIONS=(
