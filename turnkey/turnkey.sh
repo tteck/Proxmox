@@ -65,6 +65,7 @@ while read -r TAG ITEM; do
   CTID_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(
   cat <<EOF
+ansible Ansible
 core Core
 faveo-helpdesk Faveo Helpdesk
 fileserver File Server
