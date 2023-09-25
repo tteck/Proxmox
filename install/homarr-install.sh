@@ -35,13 +35,14 @@ msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
 $STD npm install -g yarn
+$STD npm install next react react-dom
 msg_ok "Installed Yarn"
 
 msg_info "Installing Homarr (Patience)"
 git clone -q https://github.com/ajnart/homarr.git /opt/homarr
 cd /opt/homarr
 $STD yarn install
-NEXTAUTH_URL=http://localhost:3000 yarn build &>/dev/null
+$STD yarn build
 msg_ok "Installed Homarr"
 
 msg_info "Creating Service"
