@@ -41,7 +41,7 @@ msg_info "Installing Homarr (Patience)"
 git clone -q https://github.com/ajnart/homarr.git /opt/homarr
 cd /opt/homarr
 $STD yarn install
-$STD NEXTAUTH_URL=http://localhost:3000 yarn build
+NEXTAUTH_URL=http://localhost:3000 yarn build &>/dev/null
 msg_ok "Installed Homarr"
 
 msg_info "Creating Service"
