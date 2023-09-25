@@ -102,6 +102,7 @@ Type=simple
 # To specify which CT/VM should be excluded, add the CT/VM ID at the end of the line where ExecStart=/usr/local/bin/ping-instances.sh is specified.
 # For example: ExecStart=/usr/local/bin/ping-instances.sh 100 102
 # Virtual machines without the QEMU guest agent installed must be excluded.
+ExecStartPre=/usr/bin/sleep 300   # Sleep for 300 seconds (5 minutes)
 ExecStart=/usr/local/bin/ping-instances.sh
 Restart=always
 StandardOutput=file:/var/log/ping-instances.log
