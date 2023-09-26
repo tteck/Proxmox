@@ -48,7 +48,7 @@ $STD rc-update add torrserver
 msg_ok "Created Service"
 
 msg_info "Starting Service"
-$STD /sbin/rc-service torrserver start
+$STD rc-service torrserver start
 msg_ok "Started Service"
 
 motd_ssh
