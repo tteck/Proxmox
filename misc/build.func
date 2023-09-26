@@ -53,6 +53,7 @@ msg_error() {
 }
 
 # Run as root only
+check_root() {
 if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
   clear
   msg_error "Please run this script as root."
@@ -60,6 +61,7 @@ if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
   sleep 2
   exit
 fi
+}
 
 # This function checks the version of Proxmox Virtual Environment (PVE) and exits if the version is not supported.
 pve_check() {
@@ -428,6 +430,7 @@ advanced_settings() {
 }
 
 install_script() {
+  check_root
   ssh_check
   arch_check
   pve_check
