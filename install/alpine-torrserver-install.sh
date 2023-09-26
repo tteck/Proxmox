@@ -31,11 +31,11 @@ msg_info "Creating Service"
 cat <<EOF >/etc/init.d/torrserver
 #!/sbin/openrc-run
 
-name="busybox $RC_SVCNAME"
+name="busybox \$RC_SVCNAME"
 command="/opt/torrserver/TorrServer-linux-amd64"
 command_args="--port 8090 --logpath /var/log/torrserver.log --path /opt/torrserver"
 command_user="torrserver:torrserver"
-pidfile="/run/$SVCNAME.pid"
+pidfile="/run/\$SVCNAME.pid"
 command_background=true
 
 depend() {
