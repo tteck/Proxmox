@@ -31,7 +31,7 @@ msg_info "Creating Service"
 cat <<EOF >/etc/init.d/torrserver
 #!/sbin/openrc-run
 
-name="busybox \$RC_SVCNAME"
+name="TorrServer"
 command="/opt/torrserver/TorrServer-linux-amd64"
 command_args="--port 8090 --logpath /var/log/torrserver.log --path /opt/torrserver"
 command_user="torrserver:torrserver"
@@ -45,6 +45,10 @@ EOF
 $STD chmod a+x /etc/init.d/torrserver
 $STD rc-update add torrserver
 msg_info "Created Service"
+
+msg_info "Starting Service"
+$STD rc-service torrservice start
+msg_info "Started Service"
 
 motd_ssh
 customize
