@@ -21,11 +21,12 @@ msg_ok "Installed Dependencies"
 
 msg_info "Creating User"
 $STD adduser -D -h /opt/torrserver torrserver
+msg_ok "Created User"
 
 msg_info "Donwloading TorrServer"
 $STD curl -sL https://github.com/YouROK/TorrServer/releases/download/MatriX.125/TorrServer-linux-amd64 -o /opt/torrserver/TorrServer-linux-amd64
 $STD chmod a+x /opt/torrserver/TorrServer-linux-amd64
-msg_info "Donwloaded TorrServer"
+msg_ok "Donwloaded TorrServer"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/init.d/torrserver
@@ -44,11 +45,11 @@ depend() {
 EOF
 $STD chmod a+x /etc/init.d/torrserver
 $STD rc-update add torrserver
-msg_info "Created Service"
+msg_ok "Created Service"
 
 msg_info "Starting Service"
-$STD rc-service torrserver start
-msg_info "Started Service"
+$STD /sbin/rc-service torrserver start
+msg_ok "Started Service"
 
 motd_ssh
 customize
