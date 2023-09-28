@@ -183,7 +183,6 @@ fi
 EOF
 sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
 $STD chmod +x /etc/periodic/5min/nextcloud_cron
-$STD su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ background:cron'
 msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
@@ -238,6 +237,7 @@ $STD rc-service nginx start
 $STD rc-service nextcloud start
 $STD rc-update add nginx default
 $STD rc-update add nextcloud default
+$STD su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ background:cron'
 msg_ok "Started Alpine-Nextcloud"
 
 motd_ssh
