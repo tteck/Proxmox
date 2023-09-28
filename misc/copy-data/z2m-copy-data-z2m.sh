@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 # Use to copy all data from one Zigbee2MQTT LXC to another
 # run from the Proxmox Shell
@@ -125,4 +125,4 @@ info "Successfully Transferred Data."
 
 # Use to copy all data from one Zigbee2MQTT LXC to another
 # run from the Proxmox Shell
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/nicedevil007/Proxmox/main/misc/copy-data/z2m-copy-data-z2m.sh)"
+# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/copy-data/z2m-copy-data-z2m.sh)"

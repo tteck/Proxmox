@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
   cat <<"EOF"
@@ -316,7 +316,7 @@ qm set $VMID \
 qm set $VMID \
   -boot order=scsi0 >/dev/null
 qm set $VMID -description "# PiMox HAOS
-### https://github.com/nicedevil007/Proxmox
+### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
