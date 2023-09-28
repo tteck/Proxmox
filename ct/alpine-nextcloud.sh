@@ -80,7 +80,7 @@ function update_script() {
         su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ upgrade'
         su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
       else
-        msg_error "${APP} not initialized for the first time, go to the WebUI first."
+        msg_error "${APP} not initialized, go to the WebUI and run the Setup-Wizard first.\n"
       fi
       exit
       ;;
