@@ -20,9 +20,9 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Alpine-Nextcloud"
-var_disk="5"
+var_disk="2"
 var_cpu="2"
-var_ram="1024"
+var_ram="512"
 var_os="alpine"
 var_version="3.18"
 variables
