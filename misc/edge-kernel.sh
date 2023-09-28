@@ -3,9 +3,9 @@
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/tteck/Proxmox/raw/main/LICENSE
+# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
 
-# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/edge-kernel.sh)"
+# bash -c "$(wget -qLO - https://github.com/nicedevil007/Proxmox/raw/main/misc/edge-kernel.sh)"
 function header_info {
 cat <<"EOF"
     ____ _    ________   ______    __              __ __                     __    
