@@ -155,7 +155,6 @@ sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=
 sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /etc/php81/php.ini
 sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php81/php.ini
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php81/php.ini
-rc-service php-fpm81 restart
 rc-update add redis
 rc-service redis start
 msg_ok "Set up PHP-opcache + Redis"
@@ -219,6 +218,7 @@ msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
 $STD chown -R nextcloud:www-data /var/log/nextcloud/
+$STD rc-service php-fpm81 restart
 $STD rc-service nginx start
 $STD rc-service nextcloud start
 $STD rc-update add nginx default
