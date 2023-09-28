@@ -69,8 +69,8 @@ function update_script() {
     case $CHOICE in
     1)
       apk update && apk upgrade
-      su nextcloud -s /bin/sh -c 'php81 /usr/share/webapps/nextcloud/occ upgrade'
-      su nextcloud -s /bin/sh -c 'php81 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
+      su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ upgrade'
+      su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
       exit
       ;;
     esac
@@ -83,8 +83,5 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}https://${IP}${CL} \n\n
-         Database Name: ${DB_NAME}
-         Database User: ${DB_USER}
-         Database Password: ${DB_PASS}
-         MySQL Root Password: ${ROOT_PASS}"
+         ${BL}https://${IP}${CL} \n"
+pct exec 101 cat ~/nextcloud.creds
