@@ -61,11 +61,10 @@ function update_script() {
   fi
   RELEASE=$(curl -s https://api.github.com/repos/nextcloud/server/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
   while true; do
-    CHOICE=$(
-      whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --menu "Select option" 11 58 2 \
+    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select"  11 58 2 \
       "1" "Update Nextcloud to $RELEASE" ON \
-      "2" "Nextcloud Credentials" OFF 3>&1 1>&2 2>&3
-    )
+      "2" "Nextcloud Credentials" OFF \
+      3>&1 1>&2 2>&3)      
     exit_status=$?
     if [ $exit_status == 1 ]; then
       clear
@@ -93,6 +92,7 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "To get the randomized Credentials for initial setup,
-         run the script again inside the LXC Container \n
-         ${APP} should be reachable by going to the following URL.
+run the script again inside the LXC Container \n
+
+${APP} should be reachable by going to the following URL.
          ${BL}https://${IP}${CL} \n"
