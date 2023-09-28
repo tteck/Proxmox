@@ -74,7 +74,7 @@ function update_script() {
     header_info
     case $CHOICE in
     1)
-      INSTALLED=$(grep -Rnw '/usr/share/webapps/nextcloud/config/config.php' -e '\'installed\'' => false,')
+      INSTALLED=$(grep -Rnw '/usr/share/webapps/nextcloud/config/config.php' -e ''\'installed\'' => false,')
       if [ -z "$INSTALLED" ]
       then
         apk update && apk upgrade
