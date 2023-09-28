@@ -162,9 +162,9 @@ $STD apk add php82-apcu
 $STD apk add redis
 sed -i -e 's|;opcache.enable=1|opcache.enable=1|' /etc/php82/php.ini
 sed -i -e 's|;opcache.enable_cli=1|opcache.enable_cli=1|' /etc/php82/php.ini
-sed -i -e 's|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=8|' /etc/php82/php.ini
+sed -i -e 's|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=16|' /etc/php82/php.ini
 sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=10000|' /etc/php82/php.ini
-sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /etc/php82/php.ini
+sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=256|' /etc/php82/php.ini
 sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.ini
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
 $STD rc-update add redis
@@ -226,14 +226,16 @@ $CONFIG = array (
   'installed' => false,
 );
 EOF
-$STD rc-service php-fpm82 start
-$STD chown -R nextcloud:www-data /var/log/nextcloud/
-$STD rc-update add nginx default
-$STD rc-update add nextcloud default
 msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
-$STD reboot
+$STD rc-service php-fpm82 start
+$STD chown -R nextcloud:www-data /var/log/nextcloud/
+$STD rc-service php-fpm82 restart
+$STD rc-service nginx start
+$STD rc-service nextcloud start
+$STD rc-update add nginx default
+$STD rc-update add nextcloud default
 msg_ok "Started Alpine-Nextcloud"
 
 motd_ssh
