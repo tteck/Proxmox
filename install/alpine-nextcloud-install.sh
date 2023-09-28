@@ -116,11 +116,12 @@ server {
         location ^~ /.well-known/nodeinfo { return 301 /index.php/.well-known/nodeinfo; }
 }
 EOF
-sed -i -e 's|client_max_body_size 1m;|client_max_body_size 0;|' /etc/nginx/nginx.conf
+sed -i -e 's|client_max_body_size 1m;|client_max_body_size 5120m;|' /etc/nginx/nginx.conf
 sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
+sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
 msg_ok "Set up Web-Server"
 
 msg_info "Adding additional Nextcloud Packages"
