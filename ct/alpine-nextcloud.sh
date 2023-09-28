@@ -85,7 +85,7 @@ function update_script() {
       exit
       ;;
     2)
-      cat paperless.creds
+      cat nextcloud.creds
       exit
       ;;
     esac
