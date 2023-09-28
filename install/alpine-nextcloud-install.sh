@@ -166,8 +166,8 @@ sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=
 sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /etc/php82/php.ini
 sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.ini
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
-rc-update add redis
-rc-service redis start > /dev/null 2>&1
+$STD rc-update add redis
+$STD rc-service redis start
 msg_ok "Set up PHP-opcache + Redis"
 
 msg_info "Setting up Nextcloud-Cron"
@@ -230,8 +230,6 @@ $STD chown -R nextcloud:www-data /var/log/nextcloud/
 $STD rc-update add nginx default
 $STD rc-update add nextcloud default
 msg_ok "Set up Nextcloud-Config"
-
-cat ~/nextcloud.creds
 
 msg_info "Starting Alpine-Nextcloud"
 $STD reboot
