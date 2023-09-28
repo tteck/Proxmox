@@ -30,7 +30,7 @@ $STD service mariadb start
 $STD rc-update add mariadb
 msg_ok "Installed Alpine-Nextcloud"
 
-msg_info "Setting up MariaDB database"
+msg_info "Setting up MySQL database"
 DB_NAME=nextcloud
 DB_USER=nextcloud
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
@@ -50,7 +50,7 @@ echo -e "Nextcloud Database User: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds
 $STD apk del mariadb-client
-msg_ok "Set up MariaDB database"
+msg_ok "Set up MySQL database"
 
 msg_info "Installing Web-Server"
 $STD apk add nextcloud-initscript

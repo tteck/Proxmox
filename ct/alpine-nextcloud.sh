@@ -97,8 +97,8 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "To get the randomized Credentials for initial setup,
-run the script again inside the LXC Container \n
+echo -e "To get the randomized credentials for Setup-Wizard,
+run the script again inside the LXC Container. \n
 
 ${APP} should be reachable by going to the following URL.
          ${BL}https://${IP}${CL} \n"
