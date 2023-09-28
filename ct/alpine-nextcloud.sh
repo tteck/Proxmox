@@ -52,13 +52,19 @@ function default_settings() {
 }
 
 function update_script() {
+  if [[ ! -d /usr/share/webapps/nextcloud ]]; then
+    msg_error "No ${APP} Installation Found!"
+    exit
+  fi
   if ! apk -e info newt >/dev/null 2>&1; then
     apk add -q newt
   fi
+  RELEASE=$(curl -s https://api.github.com/repos/nextcloud/server/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
   while true; do
     CHOICE=$(
-      whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --menu "Select option" 11 58 1 \
-        "1" "Check for Nextcloud Updates" 3>&2 2>&1 1>&3
+      whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --menu "Select option" 11 58 2 \
+      "1" "Update Nextcloud to $RELEASE" ON \
+      "2" "Nextcloud Credentials" OFF 3>&1 1>&2 2>&3
     )
     exit_status=$?
     if [ $exit_status == 1 ]; then
@@ -73,6 +79,10 @@ function update_script() {
       su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
       exit
       ;;
+    2)
+      cat paperless.creds
+      exit
+      ;;
     esac
   done
 }
@@ -82,7 +92,6 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-cat ~/nextcloud.creds
 echo -e "\n
          ${APP} should be reachable by going to the following URL.
          ${BL}https://${IP}${CL} \n"
