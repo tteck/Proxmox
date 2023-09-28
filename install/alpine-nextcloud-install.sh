@@ -229,11 +229,10 @@ msg_ok "Set up Nextcloud-Config"
 msg_info "Starting Alpine-Nextcloud"
 $STD rc-service php-fpm82 start
 $STD chown -R nextcloud:www-data /var/log/nextcloud/
-$STD rc-service php-fpm82 restart
-$STD rc-service nginx start
-$STD rc-service nextcloud start
 $STD rc-update add nginx default
 $STD rc-update add nextcloud default
+cat ~/nextcloud.creds
+$STD reboot
 msg_ok "Started Alpine-Nextcloud"
 
 motd_ssh
