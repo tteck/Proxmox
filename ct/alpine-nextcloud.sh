@@ -61,9 +61,10 @@ function update_script() {
   fi
   RELEASE=$(curl -s https://api.github.com/repos/nextcloud/server/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
   while true; do
-    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select"  11 58 2 \
+    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select"  11 58 3 \
       "1" "Update Nextcloud to $RELEASE" ON \
       "2" "Nextcloud Credentials" OFF \
+      "3" "Renew selfsigned Certificate" OFF \
       3>&1 1>&2 2>&3)      
     exit_status=$?
     if [ $exit_status == 1 ]; then
@@ -86,6 +87,10 @@ function update_script() {
       ;;
     2)
       cat nextcloud.creds
+      exit
+      ;;
+    3)
+      $STD openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nextcloud-selfsigned.key -out /etc/ssl/certs/nextcloud-selfsigned.crt -subj "/C=US/O=Nextcloud/OU=Domain Control Validated/CN=nextcloud.local"
       exit
       ;;
     esac

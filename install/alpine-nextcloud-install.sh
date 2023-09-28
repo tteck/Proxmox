@@ -171,7 +171,7 @@ $STD rc-update add redis
 $STD rc-service redis start
 msg_ok "Set up PHP-opcache + Redis"
 
-msg_info "Setting up Nextcloud-Cron"
+msg_info "Setting up Nextcloud-Cronjob"
 mkdir -p /etc/periodic/5min
 cat <<'EOF' >/etc/periodic/5min/nextcloud_cron
 #!/bin/sh
@@ -182,7 +182,7 @@ if rc-service nextcloud -q status >/dev/null 2>&1; then
 fi
 EOF
 sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
-msg_ok "Set up Nextcloud-Cron"
+msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
 cat <<'EOF' >/usr/share/webapps/nextcloud/config/config.php
