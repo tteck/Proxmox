@@ -73,9 +73,15 @@ function update_script() {
     header_info
     case $CHOICE in
     1)
-      apk update && apk upgrade
-      su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ upgrade'
-      su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
+      INSTALLED=$(grep -Rnw '/usr/share/webapps/nextcloud/config/config.php' -e '\'installed\'' => false,')
+      if [ -z "$INSTALLED" ]
+      then
+        apk update && apk upgrade
+        su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ upgrade'
+        su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
+      else
+        msg_error "${APP} not initialized for the first time, go to the WebUI first."
+      fi
       exit
       ;;
     2)
