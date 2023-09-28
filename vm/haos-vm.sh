@@ -84,9 +84,19 @@ function msg_error() {
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
+function check_root() {
+  if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
+    clear
+    msg_error "Please run this script as root."
+    echo -e "\nExiting..."
+    sleep 2
+    exit
+  fi
+}
+
 function pve_check() {
   if ! pveversion | grep -Eq "pve-manager/(7\.[2-9]|8\.[0-9])"; then
-    echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
+    msg_error "This version of Proxmox Virtual Environment is not supported"
     echo -e "Requires PVE Version 7.2 or higher"
     echo -e "Exiting..."
     sleep 2
@@ -96,7 +106,7 @@ function pve_check() {
 
 function arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
-    echo -e "\n ${CROSS} This script will not work with PiMox! \n"
+    msg_error "This script will not work with PiMox! \n"
     echo -e "Exiting..."
     sleep 2
     exit
@@ -127,9 +137,9 @@ function default_settings() {
   VMID="$NEXTID"
   FORMAT=",efitype=4m"
   MACHINE=""
-  DISK_CACHE=""
+  DISK_CACHE="cache=writethrough,"
   HN="haos$stable"
-  CPU_TYPE=""
+  CPU_TYPE=" -cpu host"
   CORE_COUNT="2"
   RAM_SIZE="4096"
   BRG="vmbr0"
@@ -140,9 +150,9 @@ function default_settings() {
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
-  echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
+  echo -e "${DGN}Using Disk Cache: ${BGN}Write Through${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
-  echo -e "${DGN}Using CPU Model: ${BGN}Default${CL}"
+  echo -e "${DGN}Using CPU Model: ${BGN}Host${CL}"
   echo -e "${DGN}Allocated Cores: ${BGN}${CORE_COUNT}${CL}"
   echo -e "${DGN}Allocated RAM: ${BGN}${RAM_SIZE}${CL}"
   echo -e "${DGN}Using Bridge: ${BGN}${BRG}${CL}"
@@ -199,14 +209,14 @@ function advanced_settings() {
   fi
 
   if DISK_CACHE1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
-    "0" "Default" ON \
-    "1" "Write Through" OFF \
+    "0" "None" OFF \
+    "1" "Write Through (Default)" ON \
     3>&1 1>&2 2>&3); then
     if [ $DISK_CACHE1 = "1" ]; then
       echo -e "${DGN}Using Disk Cache: ${BGN}Write Through${CL}"
       DISK_CACHE="cache=writethrough,"
     else
-      echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
+      echo -e "${DGN}Using Disk Cache: ${BGN}None${CL}"
       DISK_CACHE=""
     fi
   else
@@ -226,14 +236,14 @@ function advanced_settings() {
   fi
 
   if CPU_TYPE1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU MODEL" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
-    "0" "KVM64 (Default)" ON \
-    "1" "Host" OFF \
+    "0" "KVM64" OFF \
+    "1" "Host (Default)" ON \
     3>&1 1>&2 2>&3); then
     if [ $CPU_TYPE1 = "1" ]; then
       echo -e "${DGN}Using CPU Model: ${BGN}Host${CL}"
       CPU_TYPE=" -cpu host"
     else
-      echo -e "${DGN}Using CPU Model: ${BGN}Default${CL}"
+      echo -e "${DGN}Using CPU Model: ${BGN}KVM64${CL}"
       CPU_TYPE=""
     fi
   else
@@ -340,6 +350,7 @@ function start_script() {
   fi
 }
 
+check_root
 arch_check
 pve_check
 ssh_check
