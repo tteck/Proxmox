@@ -36,7 +36,10 @@ DB_USER=nextcloud
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 ROOT_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 $STD mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ROOT_PASS' WITH GRANT OPTION;FLUSH PRIVILEGES;"
-printf "$ROOT_PASS\n n\n n\n y\n y\n y\n y\n" | mysql_secure_installation
+$STD mysql -uroot -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User='';"
+$STD mysql -uroot -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+$STD mysql -uroot -p$ROOT_PASS -e "DROP DATABASE test;"
+$STD mysql -uroot -p$ROOT_PASS -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';"
 $STD mysql -uroot -p$ROOT_PASS -e "CREATE DATABASE $DB_NAME;"
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost.localdomain' IDENTIFIED BY '$DB_PASS';"
