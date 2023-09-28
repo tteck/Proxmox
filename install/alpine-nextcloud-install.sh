@@ -124,7 +124,7 @@ sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82
 sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
 msg_ok "Set up Web-Server"
 
-msg_info "Adding additional Nextcloud Packages"
+msg_info "Adding Additional Nextcloud Packages"
 $STD apk add nextcloud-activity
 $STD apk add nextcloud-admin_audit
 $STD apk add nextcloud-comments
@@ -153,7 +153,7 @@ $STD apk add nextcloud-systemtags
 $STD apk add nextcloud-text
 $STD apk add nextcloud-user_status
 $STD apk add nextcloud-weather_status
-msg_ok "Added additional Nextcloud Packages"
+msg_ok "Added Additional Nextcloud Packages"
 
 msg_info "Setting up PHP-opcache + Redis"
 $STD apk add php82-opcache
