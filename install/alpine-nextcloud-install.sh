@@ -23,6 +23,13 @@ $STD apk add mc
 $STD apk add argon2
 msg_ok "Installed Dependencies"
 
+msg_info "Switching to latest-stable Alpine-Release"
+cat <<EOF >/etc/apk/repositories
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
+EOF
+msg_ok "Switched to latest-stable Alpine-Release"
+
 msg_info "Installing Alpine-Nextcloud"
 $STD apk add nextcloud-mysql mariadb mariadb-client
 $STD mysql_install_db --user=mysql --datadir=/var/lib/mysql
