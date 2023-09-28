@@ -45,6 +45,7 @@ $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localh
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost.localdomain' IDENTIFIED BY '$DB_PASS';"
 $STD mysql -uroot -p$ROOT_PASS -e "FLUSH PRIVILEGES;"
 echo "" >>~/nextcloud.creds
+echo -e "MySQL Root Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database User: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds
@@ -166,7 +167,7 @@ sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /e
 sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.ini
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
 rc-update add redis
-rc-service redis start
+rc-service redis start > /dev/null 2>&1
 msg_ok "Set up PHP-opcache + Redis"
 
 msg_info "Setting up Nextcloud-Cron"
@@ -224,14 +225,15 @@ $CONFIG = array (
   'installed' => false,
 );
 EOF
-msg_ok "Set up Nextcloud-Config"
-
-msg_info "Starting Alpine-Nextcloud"
 $STD rc-service php-fpm82 start
 $STD chown -R nextcloud:www-data /var/log/nextcloud/
 $STD rc-update add nginx default
 $STD rc-update add nextcloud default
+msg_ok "Set up Nextcloud-Config"
+
 cat ~/nextcloud.creds
+
+msg_info "Starting Alpine-Nextcloud"
 $STD reboot
 msg_ok "Started Alpine-Nextcloud"
 
