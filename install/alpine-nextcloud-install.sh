@@ -45,6 +45,7 @@ $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localh
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost.localdomain' IDENTIFIED BY '$DB_PASS';"
 $STD mysql -uroot -p$ROOT_PASS -e "FLUSH PRIVILEGES;"
 echo "" >>~/nextcloud.creds
+echo -e "MySQL Root Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database User: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds

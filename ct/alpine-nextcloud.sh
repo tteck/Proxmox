@@ -83,4 +83,8 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}https://${IP}:443${CL} \n"
+         ${BL}https://${IP}${CL} \n\n
+         Database Name: ${DB_NAME}
+         Database User: ${DB_USER}
+         Database Password: ${DB_PASS}
+         MySQL Root Password: ${ROOT_PASS}"
