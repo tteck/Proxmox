@@ -82,6 +82,7 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable by going to the following URL.
+cat ~/nextcloud.creds
+echo -e "\n
+         ${APP} should be reachable by going to the following URL.
          ${BL}https://${IP}${CL} \n"
-pct exec 101 cat ~/nextcloud.creds
