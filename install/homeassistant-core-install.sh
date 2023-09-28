@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/tteck/Proxmox/raw/main/LICENSE
+# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
 
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
@@ -87,7 +87,7 @@ $STD pip install homeassistant
 $STD pip install mysqlclient
 $STD pip install psycopg2-binary
 mkdir -p /root/.homeassistant
-echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
+echo "bash -c \"\$(wget -qLO - https://github.com/nicedevil007/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
 chmod +x /usr/bin/update
 msg_ok "Installed Home Assistant-Core"
 
