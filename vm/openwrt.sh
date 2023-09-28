@@ -4,7 +4,7 @@
 # Author: tteck (tteckster)
 #         Jon Spriggs (jontheniceguy)
 # License: MIT
-# https://github.com/tteck/Proxmox/raw/main/LICENSE
+# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
 # Based on work from https://i12bretro.github.io/tutorials/0405.html
 
 function header_info {
@@ -475,7 +475,7 @@ qm set $VMID \
   -scsi0 ${DISK1_REF},size=512M \
   -boot order=scsi0 \
   -description "# OpenWrt VM
-### https://github.com/tteck/Proxmox
+### https://github.com/nicedevil007/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
 msg_ok "OpenWrt VM ${CL}${BL}(${HN})"
 msg_info "OpenWrt is being started in order to configure the network interfaces."

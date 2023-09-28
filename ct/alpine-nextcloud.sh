@@ -8,20 +8,20 @@ source <(curl -s https://raw.githubusercontent.com/nicedevil007/Proxmox/main/mis
 function header_info {
   clear
   cat <<"EOF"
-    ____             __            
-   / __ \____  _____/ /_  __  _____
-  / / / / __ \/ ___/ //_/ _ \/ ___/
- / /_/ / /_/ / /__/ ,< /  __/ /    
-/_____/\____/\___/_/|_|\___/_/     
- Alpine
- 
+    _   __          __  ________                __
+   / | / /__  _  __/ /_/ ____/ /___  __  ______/ /
+  /  |/ / _ \| |/_/ __/ /   / / __ \/ / / / __  /
+ / /|  /  __/>  </ /_/ /___/ / /_/ / /_/ / /_/ /
+/_/ |_/\___/_/|_|\__/\____/_/\____/\__,_/\__,_/
+Alpine
+
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Alpine-Docker"
-var_disk="2"
-var_cpu="1"
+APP="Alpine-Nextcloud"
+var_disk="5"
+var_cpu="2"
 var_ram="1024"
 var_os="alpine"
 var_version="3.18"
@@ -58,7 +58,7 @@ function update_script() {
   while true; do
     CHOICE=$(
       whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --menu "Select option" 11 58 1 \
-        "1" "Check for Docker Updates" 3>&2 2>&1 1>&3
+        "1" "Check for Nextcloud Updates" 3>&2 2>&1 1>&3
     )
     exit_status=$?
     if [ $exit_status == 1 ]; then
@@ -69,6 +69,8 @@ function update_script() {
     case $CHOICE in
     1)
       apk update && apk upgrade
+      su nextcloud -s /bin/sh -c 'php81 /usr/share/webapps/nextcloud/occ upgrade'
+      su nextcloud -s /bin/sh -c 'php81 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
       exit
       ;;
     esac
@@ -80,3 +82,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}https://${IP}:443${CL} \n"
