@@ -25,8 +25,9 @@ msg_ok "Installed Dependencies"
 
 msg_info "Switching to latest-stable Alpine-Release"
 cat <<EOF >/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
-https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
+https://dl-cdn.alpinelinux.org/alpine/edge/main
+https://dl-cdn.alpinelinux.org/alpine/edge/community
+https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 msg_ok "Switched to latest-stable Alpine-Release"
 
@@ -61,9 +62,10 @@ msg_ok "Set up MariaDB database"
 msg_info "Installing Web-Server"
 $STD apk add nextcloud-initscript
 $STD apk add nginx
-$STD apk add php81-fpm
-$STD apk add php81-sysvsem
-$STD apk add php81-pecl-imagick
+$STD apk add php82-fpm
+$STD apk add php82-sysvsem
+$STD apk add php82-pecl-imagick
+$STD apk add php82-exif
 msg_ok "Installed Web-Server"
 
 msg_info "Setting up Web-Server"
@@ -122,46 +124,55 @@ server {
 }
 EOF
 sed -i -e 's|client_max_body_size 1m;|client_max_body_size 0;|' /etc/nginx/nginx.conf
-sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php81/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php81/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php81/php-fpm.d/nextcloud.conf
-sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php81/php.ini
+sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
 msg_ok "Set up Web-Server"
 
 msg_info "Adding additional Nextcloud Packages"
 $STD apk add nextcloud-activity
+$STD apk add nextcloud-admin_audit
+$STD apk add nextcloud-comments
+$STD apk add nextcloud-dashboard
 $STD apk add nextcloud-default-apps
 $STD apk add nextcloud-doc
 $STD apk add nextcloud-encryption
+$STD apk add nextcloud-federation
 $STD apk add nextcloud-files_external
 $STD apk add nextcloud-files_pdfviewer
 $STD apk add nextcloud-files_rightclick
+$STD apk add nextcloud-files_sharing
 $STD apk add nextcloud-files_trashbin
 $STD apk add nextcloud-files_versions
-$STD apk add nextcloud-files_videoplayer
 $STD apk add nextcloud-logreader
 $STD apk add nextcloud-notifications
 $STD apk add nextcloud-password_policy
+$STD apk add nextcloud-photos
 $STD apk add nextcloud-privacy
+$STD apk add nextcloud-recommendations
 $STD apk add nextcloud-serverinfo
 $STD apk add nextcloud-sharebymail
 $STD apk add nextcloud-suspicious_login
-$STD apk add nextcloud-recommendations
+$STD apk add nextcloud-support
+$STD apk add nextcloud-systemtags
 $STD apk add nextcloud-text
+$STD apk add nextcloud-user_status
+$STD apk add nextcloud-weather_status
 msg_ok "Added additional Nextcloud Packages"
 
 msg_info "Setting up PHP-opcache + Redis"
-$STD apk add php81-opcache
-$STD apk add php81-redis
-$STD apk add php81-apcu
+$STD apk add php82-opcache
+$STD apk add php82-redis
+$STD apk add php82-apcu
 $STD apk add redis
-sed -i -e 's|;opcache.enable=1|opcache.enable=1|' /etc/php81/php.ini
-sed -i -e 's|;opcache.enable_cli=1|opcache.enable_cli=1|' /etc/php81/php.ini
-sed -i -e 's|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=8|' /etc/php81/php.ini
-sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=10000|' /etc/php81/php.ini
-sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /etc/php81/php.ini
-sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php81/php.ini
-sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php81/php.ini
+sed -i -e 's|;opcache.enable=1|opcache.enable=1|' /etc/php82/php.ini
+sed -i -e 's|;opcache.enable_cli=1|opcache.enable_cli=1|' /etc/php82/php.ini
+sed -i -e 's|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=8|' /etc/php82/php.ini
+sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=10000|' /etc/php82/php.ini
+sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=128|' /etc/php82/php.ini
+sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.ini
+sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
 rc-update add redis
 rc-service redis start
 msg_ok "Set up PHP-opcache + Redis"
@@ -173,7 +184,7 @@ cat <<'EOF' >/etc/periodic/5min/nextcloud_cron
 
 # Run only when nextcloud service is started.
 if rc-service nextcloud -q status >/dev/null 2>&1; then
-        su nextcloud -s /bin/sh -c 'php81 -f /usr/share/webapps/nextcloud/cron.php'
+        su nextcloud -s /bin/sh -c 'php82 -f /usr/share/webapps/nextcloud/cron.php'
 fi
 EOF
 sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
@@ -225,7 +236,8 @@ msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
 $STD chown -R nextcloud:www-data /var/log/nextcloud/
-$STD rc-service php-fpm81 restart
+$STD rc-service php-fpm82 stop
+$STD rc-service php-fpm82 start
 $STD rc-service nginx start
 $STD rc-service nextcloud start
 $STD rc-update add nginx default
