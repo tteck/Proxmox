@@ -4,6 +4,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-09-28
+
+### Changed
+
+- **Alpine Nextcloud Hub LXC**
+  - NEW Script (Thanks to @nicedevil007)
+
 ## 2023-09-14
 
 ### Changed
