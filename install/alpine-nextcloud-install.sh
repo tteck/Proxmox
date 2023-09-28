@@ -235,9 +235,9 @@ EOF
 msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
-$STD chown -R nextcloud:www-data /var/log/nextcloud/
-$STD rc-service php-fpm82 stop
 $STD rc-service php-fpm82 start
+chown -R nextcloud:www-data /var/log/nextcloud/
+$STD rc-service php-fpm82 restart
 $STD rc-service nginx start
 $STD rc-service nextcloud start
 $STD rc-update add nginx default
