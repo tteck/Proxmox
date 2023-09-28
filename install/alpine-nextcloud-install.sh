@@ -3,7 +3,7 @@
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/tteck/Proxmox/raw/main/LICENSE
+# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
 source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
 
 color
@@ -182,6 +182,8 @@ if rc-service nextcloud -q status >/dev/null 2>&1; then
 fi
 EOF
 sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
+$STD chmod +x /etc/periodic/5min/nextcloud_cron
+$STD su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ background:cron'
 msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
