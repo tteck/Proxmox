@@ -23,14 +23,6 @@ $STD apk add mc
 $STD apk add argon2
 msg_ok "Installed Dependencies"
 
-msg_info "Switching to latest-stable Alpine-Release"
-cat <<EOF >/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/edge/main
-https://dl-cdn.alpinelinux.org/alpine/edge/community
-https://dl-cdn.alpinelinux.org/alpine/edge/testing
-EOF
-msg_ok "Switched to latest-stable Alpine-Release"
-
 msg_info "Installing Alpine-Nextcloud"
 $STD apk add nextcloud-mysql mariadb mariadb-client
 $STD mysql_install_db --user=mysql --datadir=/var/lib/mysql
@@ -236,7 +228,7 @@ msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
 $STD rc-service php-fpm82 start
-chown -R nextcloud:www-data /var/log/nextcloud/
+$STD chown -R nextcloud:www-data /var/log/nextcloud/
 $STD rc-service php-fpm82 restart
 $STD rc-service nginx start
 $STD rc-service nextcloud start
