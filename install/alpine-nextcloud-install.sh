@@ -220,10 +220,6 @@ $CONFIG = array (
     'dbindex' => 0,
     'timeout' => 1.5,
   ),
-  'trusted_domains' => 
-  array (
-    0 => 'localhost',
-  ),
   'installed' => false,
 );
 EOF
@@ -240,7 +236,6 @@ $STD rc-update add nextcloud default
 msg_ok "Started Alpine-Nextcloud"
 
 msg_info "Start Setup-Wizard"
-#$STD chown -R www-data:www-data /usr/share/webapps/nextcloud
 $STD cd /usr/share/webapps/nextcloud
 $STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
 --database='mysql' --database-name $DB_NAME \
