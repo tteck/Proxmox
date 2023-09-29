@@ -31,6 +31,7 @@ $STD apk add php82-apcu
 $STD apk add php82-fpm
 $STD apk add php82-sysvsem
 $STD apk add php82-pecl-imagick
+$STD apk add php82-pecl-smbclient
 $STD apk add php82-exif
 $STD apk add redis
 sed -i -e 's|;opcache.enable=1|opcache.enable=1|' /etc/php82/php.ini
@@ -107,7 +108,8 @@ $CONFIG = array (
   'check_for_working_htaccess' => false,
 
   // Uncomment to enable Zend OPcache.
-  'memcache.local' => '\\OC\\Memcache\\Redis',
+  'memcache.local' => '\\OC\\Memcache\\APCu',
+  'memcache.distributed' => '\\OC\\Memcache\\Redis',
 
   // Uncomment this and add user nextcloud to the redis group to enable Redis
   // cache for file locking. This is highly recommended, see
@@ -182,6 +184,7 @@ sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_s
 sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
 sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
+sed -i -e '$aapc.enable_cli=1' /etc/php82/php.ini
 msg_ok "Installed Nextcloud"
 
 msg_info "Adding Additional Nextcloud Packages"
@@ -224,6 +227,7 @@ $STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
 --admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
 --data-dir '/var/lib/nextcloud/data'"
 $STD su nextcloud -s /bin/sh -c 'php82 occ background:cron'
+$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable serverinfo'
 IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
 su nextcloud -s /bin/sh -c 'php82 -f /usr/share/webapps/nextcloud/cron.php'
