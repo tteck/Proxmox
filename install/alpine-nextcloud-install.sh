@@ -62,7 +62,6 @@ msg_ok "Set up MySQL Database"
 msg_info "Installing Web-Server"
 $STD apk add nextcloud-initscript
 $STD apk add nginx
-$STD apk add smbclient
 $STD apk add php82-fpm
 $STD apk add php82-sysvsem
 $STD apk add php82-pecl-smbclient
@@ -129,9 +128,15 @@ sed -i -e 's|client_max_body_size 1m;|client_max_body_size 5120m;|' /etc/nginx/n
 sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_flag\[opcache.enable\] = true|;php_admin_flag\[opcache.enable\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_flag\[opcache.enable_cli\] = true|;php_admin_flag\[opcache.enable_cli\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_flag\[opcache.save_comments\] = true|;php_admin_flag\[opcache.save_comments\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[opcache.interned_strings_buffer\] = 8|;php_admin_value\[opcache.interned_strings_buffer\] = 8|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[opcache.max_accelerated_files\] = 10000|;php_admin_value\[opcache.max_accelerated_files\] = 10000|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[opcache.memory_consumption\] = 128|;php_admin_value\[opcache.memory_consumption\] = 128|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -e 's|php_admin_value\[opcache.revalidate_freq\] = 1|;php_admin_value\[opcache.revalidate_freq\] = 1|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
-sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
-sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
+sed -i -e 's|memory_limit = 128M|memory_limit = 1024M|' /etc/php82/php.ini
 sed -i -e '$aapc.enable_cli=1' /etc/php82/php.ini
 msg_ok "Set up Web-Server"
 
@@ -162,7 +167,7 @@ $STD apk add php82-redis
 $STD apk add php82-apcu
 $STD apk add redis
 sed -i -e 's|;opcache.enable=1|opcache.enable=1|' /etc/php82/php.ini
-sed -i -e 's|;opcache.enable_cli=1|opcache.enable_cli=1|' /etc/php82/php.ini
+sed -i -e 's|;opcache.enable_cli=0|opcache.enable_cli=1|' /etc/php82/php.ini
 sed -i -e 's|;opcache.interned_strings_buffer=8|opcache.interned_strings_buffer=16|' /etc/php82/php.ini
 sed -i -e 's|;opcache.max_accelerated_files=10000|opcache.max_accelerated_files=10000|' /etc/php82/php.ini
 sed -i -e 's|;opcache.memory_consumption=128|opcache.memory_consumption=256|' /etc/php82/php.ini
@@ -248,7 +253,7 @@ $STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
 --admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
 --data-dir '/var/lib/nextcloud/data'"
 $STD su nextcloud -s /bin/sh -c 'php82 occ background:cron'
-$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard'
+$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard serverinfo'
 IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
 msg_ok "Run Setup-Wizard"
