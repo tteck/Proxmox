@@ -128,13 +128,7 @@ sed -i -e 's|client_max_body_size 1m;|client_max_body_size 5120m;|' /etc/nginx/n
 sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_flag\[opcache.enable\] = true|;php_admin_flag\[opcache.enable\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_flag\[opcache.enable_cli\] = true|;php_admin_flag\[opcache.enable_cli\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_flag\[opcache.save_comments\] = true|;php_admin_flag\[opcache.save_comments\] = true|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[opcache.interned_strings_buffer\] = 8|;php_admin_value\[opcache.interned_strings_buffer\] = 8|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[opcache.max_accelerated_files\] = 10000|;php_admin_value\[opcache.max_accelerated_files\] = 10000|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[opcache.memory_consumption\] = 128|;php_admin_value\[opcache.memory_consumption\] = 128|' /etc/php82/php-fpm.d/nextcloud.conf
-sed -i -e 's|php_admin_value\[opcache.revalidate_freq\] = 1|;php_admin_value\[opcache.revalidate_freq\] = 1|' /etc/php82/php-fpm.d/nextcloud.conf
+sed -i -E '/^php_admin_(flag|value)\[opcache/s/^/;/' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
 sed -i -e 's|memory_limit = 128M|memory_limit = 1024M|' /etc/php82/php.ini
 sed -i -e '$aapc.enable_cli=1' /etc/php82/php.ini
