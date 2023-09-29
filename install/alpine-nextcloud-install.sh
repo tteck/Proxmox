@@ -178,8 +178,8 @@ if rc-service nextcloud -q status >/dev/null 2>&1; then
         su nextcloud -s /bin/sh -c 'php82 -f /usr/share/webapps/nextcloud/cron.php'
 fi
 EOF
-#sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
-#chmod +x /etc/periodic/5min/nextcloud_cron
+(crontab -l ; echo "*/5     *       *       *       *       run-parts /etc/periodic/5min") | crontab -
+chmod +x /etc/periodic/5min/nextcloud_cron
 msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
@@ -243,7 +243,6 @@ $STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
 --admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
 --data-dir '/var/lib/nextcloud/data'"
 $STD su nextcloud -s /bin/sh -c 'php82 occ background:cron'
-#$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard'
 IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
 msg_ok "Finished Setup-Wizard"
