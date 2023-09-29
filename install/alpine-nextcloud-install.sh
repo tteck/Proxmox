@@ -228,7 +228,7 @@ $CONFIG = array (
 );
 EOF
 IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
-sed "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
+sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
 msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
