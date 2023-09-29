@@ -175,6 +175,7 @@ server {
         location ^~ /.well-known/nodeinfo { return 301 /index.php/.well-known/nodeinfo; }
 }
 EOF
+sed -i -E '/^php_admin_(flag|value)\[opcache/s/^/;/' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|client_max_body_size 1m;|client_max_body_size 5120m;|' /etc/nginx/nginx.conf
 sed -i -e 's|php_admin_value\[memory_limit\] = 512M|php_admin_value\[memory_limit\] = 5120M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_size\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
