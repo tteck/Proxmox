@@ -220,10 +220,15 @@ $CONFIG = array (
     'dbindex' => 0,
     'timeout' => 1.5,
   ),
-
+  'trusted_domains' => 
+  array (
+    0 => 'localhost',
+  ),
   'installed' => false,
 );
 EOF
+IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+sed "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
 msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
@@ -239,10 +244,11 @@ msg_ok "Started Alpine-Nextcloud"
 msg_info "Start Setup-Wizard"
 #$STD chown -R www-data:www-data /usr/share/webapps/nextcloud
 $STD cd /usr/share/webapps/nextcloud
-$STD su -u nextcloud php82 occ maintenance:install \
---database='mysql' --database-name=$DB_NAME \
---database-user='$DB_USER' --database-pass='$DB_PASS' \
---admin-user='$ADMIN_USER' --admin-pass='$ADMIN_PASS'
+$STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
+--database='mysql' --database-name $DB_NAME \
+--database-user '$DB_USER' --database-pass '$DB_PASS' \
+--admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
+--data-dir '/var/lib/nextcloud/data'"
 $STD su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ background:cron'
 msg_ok "Run Setup-Wizard"
 
