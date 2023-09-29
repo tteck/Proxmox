@@ -62,8 +62,10 @@ msg_ok "Set up MySQL Database"
 msg_info "Installing Web-Server"
 $STD apk add nextcloud-initscript
 $STD apk add nginx
+$STD apk add smbclient
 $STD apk add php82-fpm
 $STD apk add php82-sysvsem
+$STD apk add php82-pecl-smbclient
 $STD apk add php82-pecl-imagick
 $STD apk add php82-exif
 msg_ok "Installed Web-Server"
@@ -129,6 +131,8 @@ sed -i -e 's|php_admin_value\[post_max_size\] = 513M|php_admin_value\[post_max_s
 sed -i -e 's|php_admin_value\[upload_max_filesize\] = 513M|php_admin_value\[upload_max_filesize\] = 5121M|' /etc/php82/php-fpm.d/nextcloud.conf
 sed -i -e 's|upload_max_filesize = 513M|upload_max_filesize = 5121M|' /etc/php82/php.ini
 sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
+sed -i -e 's|memory_limit = 128M|memory_limit = 512M|' /etc/php82/php.ini
+sed -i -e '$aapc.enable_cli=1' /etc/php82/php.ini
 msg_ok "Set up Web-Server"
 
 msg_info "Adding Additional Nextcloud Packages"
@@ -208,7 +212,8 @@ $CONFIG = array (
   'check_for_working_htaccess' => false,
 
   // Uncomment to enable Zend OPcache.
-  'memcache.local' => '\\OC\\Memcache\\Redis',
+  'memcache.local' => '\OC\Memcache\APCu',
+  'memcache.distributed' => '\OC\Memcache\Redis',
 
   // Uncomment this and add user nextcloud to the redis group to enable Redis
   // cache for file locking. This is highly recommended, see
