@@ -23,18 +23,30 @@ $STD apk add mc
 $STD apk add argon2
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Alpine-Nextcloud"
-$STD apk add nextcloud-mysql mariadb mariadb-client
-$STD mysql_install_db --user=mysql --datadir=/var/lib/mysql
-$STD service mariadb start
-$STD rc-update add mariadb
-msg_ok "Installed Alpine-Nextcloud"
-
-msg_info "Setting up MySQL database"
+msg_info "Creating Credentials"
 DB_NAME=nextcloud
 DB_USER=nextcloud
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 ROOT_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+ADMIN_USER=ncAdmin
+ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+echo "" >>~/nextcloud.creds
+echo -e "Nextcloud Database Username: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
+echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
+echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds
+echo -e "Nextcloud Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/nextcloud.creds
+echo -e "Nextcloud Admin Username: \e[32m$ADMIN_USER\e[0m" >>~/nextcloud.creds
+echo -e "MySQL Root Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
+msg_ok "Created Credentials"
+
+msg_info "Installing MySQL Database"
+$STD apk add nextcloud-mysql mariadb mariadb-client
+$STD mysql_install_db --user=mysql --datadir=/var/lib/mysql
+$STD service mariadb start
+$STD rc-update add mariadb
+msg_ok "Installed MySQL Database"
+
+msg_info "Setting up MySQL Database"
 $STD mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ROOT_PASS' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 $STD mysql -uroot -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User='';"
 $STD mysql -uroot -p$ROOT_PASS -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
@@ -44,13 +56,8 @@ $STD mysql -uroot -p$ROOT_PASS -e "CREATE DATABASE $DB_NAME;"
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
 $STD mysql -uroot -p$ROOT_PASS -e "GRANT ALL ON $DB_NAME.* TO '$DB_USER'@'localhost.localdomain' IDENTIFIED BY '$DB_PASS';"
 $STD mysql -uroot -p$ROOT_PASS -e "FLUSH PRIVILEGES;"
-echo "" >>~/nextcloud.creds
-echo -e "MySQL Root Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
-echo -e "Nextcloud Database User: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
-echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
-echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds
 $STD apk del mariadb-client
-msg_ok "Set up MySQL database"
+msg_ok "Set up MySQL Database"
 
 msg_info "Installing Web-Server"
 $STD apk add nextcloud-initscript
@@ -129,33 +136,23 @@ $STD apk add nextcloud-activity
 $STD apk add nextcloud-admin_audit
 $STD apk add nextcloud-comments
 $STD apk add nextcloud-dashboard
-$STD apk add nextcloud-default-apps
 $STD apk add nextcloud-doc
 $STD apk add nextcloud-encryption
 $STD apk add nextcloud-federation
 $STD apk add nextcloud-files_external
-$STD apk add nextcloud-files_pdfviewer
-$STD apk add nextcloud-files_rightclick
 $STD apk add nextcloud-files_sharing
 $STD apk add nextcloud-files_trashbin
 $STD apk add nextcloud-files_versions
-$STD apk add nextcloud-logreader
 $STD apk add nextcloud-notifications
-$STD apk add nextcloud-password_policy
-$STD apk add nextcloud-photos
-$STD apk add nextcloud-privacy
-$STD apk add nextcloud-recommendations
-$STD apk add nextcloud-serverinfo
 $STD apk add nextcloud-sharebymail
 $STD apk add nextcloud-suspicious_login
 $STD apk add nextcloud-support
 $STD apk add nextcloud-systemtags
-$STD apk add nextcloud-text
 $STD apk add nextcloud-user_status
 $STD apk add nextcloud-weather_status
 msg_ok "Added Additional Nextcloud Packages"
 
-msg_info "Setting up PHP-opcache + Redis"
+msg_info "Setting up Cache"
 $STD apk add php82-opcache
 $STD apk add php82-redis
 $STD apk add php82-apcu
@@ -169,7 +166,7 @@ sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.i
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
 $STD rc-update add redis
 $STD rc-service redis start
-msg_ok "Set up PHP-opcache + Redis"
+msg_ok "Set up Cache"
 
 msg_info "Setting up Nextcloud-Cronjob"
 mkdir -p /etc/periodic/5min
@@ -182,6 +179,7 @@ if rc-service nextcloud -q status >/dev/null 2>&1; then
 fi
 EOF
 sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
+$STD chmod +x /etc/periodic/5min/nextcloud_cron
 msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
@@ -222,7 +220,6 @@ $CONFIG = array (
     'dbindex' => 0,
     'timeout' => 1.5,
   ),
-
   'installed' => false,
 );
 EOF
@@ -237,6 +234,19 @@ $STD rc-service nextcloud start
 $STD rc-update add nginx default
 $STD rc-update add nextcloud default
 msg_ok "Started Alpine-Nextcloud"
+
+msg_info "Start Setup-Wizard"
+$STD cd /usr/share/webapps/nextcloud
+$STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
+--database='mysql' --database-name $DB_NAME \
+--database-user '$DB_USER' --database-pass '$DB_PASS' \
+--admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
+--data-dir '/var/lib/nextcloud/data'"
+$STD su nextcloud -s /bin/sh -c 'php82 occ background:cron'
+$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard'
+IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
+msg_ok "Run Setup-Wizard"
 
 motd_ssh
 customize
