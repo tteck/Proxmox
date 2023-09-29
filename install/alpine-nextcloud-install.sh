@@ -31,12 +31,12 @@ ROOT_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 ADMIN_USER=ncAdmin
 ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 echo "" >>~/nextcloud.creds
+echo -e "MySQL Admin Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Username: \e[32m$DB_USER\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Password: \e[32m$DB_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Database Name: \e[32m$DB_NAME\e[0m" >>~/nextcloud.creds
-echo -e "Nextcloud Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/nextcloud.creds
 echo -e "Nextcloud Admin Username: \e[32m$ADMIN_USER\e[0m" >>~/nextcloud.creds
-echo -e "MySQL Root Password: \e[32m$ROOT_PASS\e[0m" >>~/nextcloud.creds
+echo -e "Nextcloud Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/nextcloud.creds
 msg_ok "Created Credentials"
 
 msg_info "Installing MySQL Database"
@@ -70,7 +70,7 @@ msg_ok "Installed Web-Server"
 
 msg_info "Setting up Web-Server"
 $STD openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nextcloud-selfsigned.key -out /etc/ssl/certs/nextcloud-selfsigned.crt -subj "/C=US/O=Nextcloud/OU=Domain Control Validated/CN=nextcloud.local"
-$STD rm /etc/nginx/http.d/default.conf
+rm /etc/nginx/http.d/default.conf
 cat <<'EOF' >/etc/nginx/http.d/nextcloud.conf
 server {
         listen       [::]:80;
@@ -152,7 +152,7 @@ $STD apk add nextcloud-user_status
 $STD apk add nextcloud-weather_status
 msg_ok "Added Additional Nextcloud Packages"
 
-msg_info "Setting up Cache"
+msg_info "Setting up PHP/Redis"
 $STD apk add php82-opcache
 $STD apk add php82-redis
 $STD apk add php82-apcu
@@ -166,7 +166,7 @@ sed -i -e 's|;opcache.save_comments=1|opcache.save_comments=1|' /etc/php82/php.i
 sed -i -e 's|;opcache.revalidate_freq=1|opcache.revalidate_freq=1|' /etc/php82/php.ini
 $STD rc-update add redis
 $STD rc-service redis start
-msg_ok "Set up Cache"
+msg_ok "Set up PHP/Redis"
 
 msg_info "Setting up Nextcloud-Cronjob"
 mkdir -p /etc/periodic/5min
@@ -178,8 +178,8 @@ if rc-service nextcloud -q status >/dev/null 2>&1; then
         su nextcloud -s /bin/sh -c 'php82 -f /usr/share/webapps/nextcloud/cron.php'
 fi
 EOF
-sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
-$STD chmod +x /etc/periodic/5min/nextcloud_cron
+#sed -i '/monthly/a */5     *       *       *       *       run-parts /etc/periodic/5min' /etc/crontabs/root
+#chmod +x /etc/periodic/5min/nextcloud_cron
 msg_ok "Set up Nextcloud-Cronjob"
 
 msg_info "Setting up Nextcloud-Config"
@@ -227,7 +227,7 @@ msg_ok "Set up Nextcloud-Config"
 
 msg_info "Starting Alpine-Nextcloud"
 $STD rc-service php-fpm82 start
-$STD chown -R nextcloud:www-data /var/log/nextcloud/
+chown -R nextcloud:www-data /var/log/nextcloud/
 $STD rc-service php-fpm82 restart
 $STD rc-service nginx start
 $STD rc-service nextcloud start
@@ -236,17 +236,17 @@ $STD rc-update add nextcloud default
 msg_ok "Started Alpine-Nextcloud"
 
 msg_info "Start Setup-Wizard"
-$STD cd /usr/share/webapps/nextcloud
+cd /usr/share/webapps/nextcloud
 $STD su nextcloud -s /bin/sh -c "php82 occ maintenance:install \
 --database='mysql' --database-name $DB_NAME \
 --database-user '$DB_USER' --database-pass '$DB_PASS' \
 --admin-user '$ADMIN_USER' --admin-pass '$ADMIN_PASS' \
 --data-dir '/var/lib/nextcloud/data'"
 $STD su nextcloud -s /bin/sh -c 'php82 occ background:cron'
-$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard'
+#$STD su nextcloud -s /bin/sh -c 'php82 occ app:disable dashboard'
 IP4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 sed -i "/0 => \'localhost\',/a \    \1 => '$IP4'," /usr/share/webapps/nextcloud/config/config.php
-msg_ok "Run Setup-Wizard"
+msg_ok "Finished Setup-Wizard"
 
 motd_ssh
 customize
