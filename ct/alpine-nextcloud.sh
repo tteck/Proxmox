@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/nicedevil007/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
 # License: MIT
-# https://github.com/nicedevil007/Proxmox/raw/main/LICENSE
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
   clear
@@ -97,6 +97,7 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "To retrieve the database credentials required for the Setup-Wizard, execute the same script within the LXC Console.\n
+For advanced configuration use this file: /usr/share/webapps/nextcloud/config/config.php \n
 
 ${APP} should be reachable by going to the following URL.
          ${BL}https://${IP}${CL} \n"
