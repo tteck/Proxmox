@@ -38,6 +38,7 @@ $STD apt-get -y install \
   php-cgi \
   php-fpm \
   php-curl \
+  php-xml \
   php-sqlite3
 $STD lighttpd-enable-mod fastcgi-php
 service lighttpd force-reload
