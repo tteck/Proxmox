@@ -31,6 +31,7 @@ $STD apk add php82-fpm
 $STD apk add php82-sysvsem
 $STD apk add php82-pecl-smbclient
 $STD apk add php82-pecl-imagick
+$STD apk add php82-pecl-vips
 $STD apk add php82-exif
 $STD apk add redis
 msg_ok "Installed PHP/Redis"
