@@ -29,6 +29,7 @@ $STD apk add php82-redis
 $STD apk add php82-apcu
 $STD apk add php82-fpm
 $STD apk add php82-sysvsem
+$STD apk add php82-ftp
 $STD apk add php82-pecl-smbclient
 $STD apk add php82-pecl-imagick
 $STD apk add php82-pecl-vips
