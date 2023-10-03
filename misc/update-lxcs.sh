@@ -41,7 +41,7 @@ function update_container() {
   header_info
   name=$(pct exec "$container" hostname)
   os=$(pct config "$container" | awk '/^ostype/ {print $2}')
-  if [[ "$os" == "ubuntu" || "$os" == "debian" ]]; then
+  if [[ "$os" == "ubuntu" || "$os" == "debian" || "$os" == "fedora" ]]; then
     disk_info=$(pct exec "$container" df /boot | awk 'NR==2{gsub("%","",$5); printf "%s %.1fG %.1fG %.1fG", $5, $3/1024/1024, $2/1024/1024, $4/1024/1024 }')
     read -ra disk_info_array <<<"$disk_info"
     echo -e "${BL}[Info]${GN} Updating ${BL}$container${CL} : ${GN}$name${CL} - ${YW}Boot Disk: ${disk_info_array[0]}% full [${disk_info_array[1]}/${disk_info_array[2]} used, ${disk_info_array[3]} free]${CL}\n"
