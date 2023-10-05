@@ -52,8 +52,26 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+if [[ ! -d /opt/pingvin-share ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Stopping Pingvin Share"
+pm2 stop pingvin-share-backend pingvin-share-frontend &>/dev/null
+msg_ok "Stopped Pingvin Share"
+
+msg_info "Updating Pingvin Share"
+cd /opt/pingvin-share
+git fetch --tags
+git checkout $(git describe --tags `git rev-list --tags --max-count=1`) &>/dev/null
+cd backend
+npm run build &>/dev/null
+cd ../frontend
+npm run build &>/dev/null
+msg_ok "Updated Pingvin Share"
+
+msg_info "Starting Pingvin Share"
+pm2 start pingvin-share-backend pingvin-share-frontend &>/dev/null
+msg_ok "Started Pingvin Share"
+
+msg_ok "Updated Successfully"
 exit
 }
 
