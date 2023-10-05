@@ -47,8 +47,6 @@ $STD npm install
 $STD npm run build
 $STD pm2 start --name="pingvin-share-frontend" npm -- run start
 $STD pm2 startup
-echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
-chmod +x /usr/bin/update
 msg_ok "Installed Pingvin Share"
 
 motd_ssh

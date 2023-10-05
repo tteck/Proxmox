@@ -43,8 +43,6 @@ echo "systemctl start nodered" >/usr/bin/node-red-start
 chmod +x /usr/bin/node-red-start
 echo "systemctl restart nodered" >/usr/bin/node-red-restart
 chmod +x /usr/bin/node-red-restart
-echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
-chmod +x /usr/bin/update
 msg_ok "Installed Node-Red"
 
 msg_info "Creating Service"

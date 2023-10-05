@@ -87,8 +87,6 @@ $STD pip install homeassistant
 $STD pip install mysqlclient
 $STD pip install psycopg2-binary
 mkdir -p /root/.homeassistant
-echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
-chmod +x /usr/bin/update
 msg_ok "Installed Home Assistant-Core"
 
 msg_info "Creating Service"

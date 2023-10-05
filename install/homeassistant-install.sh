@@ -88,8 +88,6 @@ $STD docker run -d \
   --net=host \
   ghcr.io/home-assistant/home-assistant:stable
 mkdir /root/hass_config
-echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
-chmod +x /usr/bin/update
 msg_ok "Installed Home Assistant $CORE_LATEST_VERSION"
 
 motd_ssh
