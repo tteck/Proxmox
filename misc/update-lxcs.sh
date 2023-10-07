@@ -28,14 +28,14 @@ header_info
 echo "Loading..."
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Updater" --yesno "This Will Update LXC Containers. Proceed?" 10 58 || exit
 NODE=$(hostname)
-CTID_MENU=()
+EXCLUDE_MENU=()
 MSG_MAX_LENGTH=0
 while read -r TAG ITEM; do
   OFFSET=2
   ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
-  CTID_MENU+=("$TAG" "$ITEM " "OFF")
+  EXCLUDE_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(pct list | awk 'NR>1')
-excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist "\nSelect containers to skip from updates:\n" 16 $((MSG_MAX_LENGTH + 23)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Containers on $NODE" --checklist "\nSelect containers to skip from updates:\n" 16 $((MSG_MAX_LENGTH + 23)) 6 "${EXCLUDE_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
 function update_container() {
   container=$1
   header_info
