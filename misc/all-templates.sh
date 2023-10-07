@@ -59,14 +59,14 @@ header_info
 echo "Loading..."
 pveam update >/dev/null 2>&1
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "All Templates" --yesno "This will allow for the creation of one of the many Template LXC Containers. Proceed?" 10 68 || exit
-CTID_MENU=()
+TEMPLATE_MENU=()
 MSG_MAX_LENGTH=0
 while read -r TAG ITEM; do
   OFFSET=2
   ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
-  CTID_MENU+=("$ITEM" "$TAG " "OFF")
+  TEMPLATE_MENU+=("$ITEM" "$TAG " "OFF")
 done < <(pveam available)
-TEMPLATE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "All Template LXCs" --radiolist "\nSelect a Template LXC to create:\n" 16 $((MSG_MAX_LENGTH + 58)) 10 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+TEMPLATE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "All Template LXCs" --radiolist "\nSelect a Template LXC to create:\n" 16 $((MSG_MAX_LENGTH + 58)) 10 "${TEMPLATE_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
 [ -z "$TEMPLATE" ] && {
   whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Template LXC Selected" --msgbox "It appears that no Template LXC container was selected" 10 68
   msg "Done"
