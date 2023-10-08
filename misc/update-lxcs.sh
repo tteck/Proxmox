@@ -95,7 +95,7 @@ for container in $(pct list | awk '{if(NR>1) print $1}'); do
     if pct exec "$container" -- [ -e "/var/run/reboot-required" ]; then
         # Get the container's hostname and add it to the list
         container_hostname=$(pct exec "$container" hostname)
-        containers_needing_reboot+=("$container - $container_hostname")
+        containers_needing_reboot+=("$container ($container_hostname)")
     fi
   fi
 done
