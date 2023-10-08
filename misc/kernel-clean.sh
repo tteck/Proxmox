@@ -38,24 +38,29 @@ function msg_ok() {
 }
 
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE Kernel Clean" --yesno "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed?" 10 68 || exit
-
 if [ -z "$available_kernels" ]; then
   whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Old Kernels" --msgbox "It appears there are no old Kernels on your system. \nCurrent kernel ($current_kernel)." 10 68
-  msg_info "Exiting"
+  echo "Exiting..."
   sleep 2
-  msg_ok "Done"
+  clear
   exit
 fi
-
+  KERNEL_MENU=()
+  MSG_MAX_LENGTH=0
 while read -r TAG ITEM; do
   OFFSET=2
   ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
-  CTID_MENU+=("$TAG" "$ITEM " "OFF")
+  KERNEL_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(echo "$available_kernels")
 
-remove_kernels=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current Kernel $current_kernel" --checklist "\nSelect Kernels to remove:\n" \
-  16 $((MSG_MAX_LENGTH + 58)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
-
+remove_kernels=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current Kernel $current_kernel" --checklist "\nSelect Kernels to remove:\n" 16 $((MSG_MAX_LENGTH + 58)) 6 "${KERNEL_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+[ -z "$remove_kernels" ] && {
+  whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Kernel Selected" --msgbox "It appears that no Kernel was selected" 10 68
+  echo "Exiting..."
+  sleep 2
+  clear
+  exit
+}
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "Remove Kernels" --yesno "Would you like to remove the $(echo $remove_kernels | awk '{print NF}') previously selected Kernels?" 10 68 || exit
 
 msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels${CL}"
@@ -67,4 +72,4 @@ msg_info "Updating GRUB"
 msg_ok "Successfully Updated GRUB"
 msg_info "Exiting"
 sleep 2
-msg_ok "Done"
+msg_ok "Finished"
