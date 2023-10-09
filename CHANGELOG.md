@@ -11,6 +11,9 @@
 
 - **Proxmox VE LXC Updater**
   - Now displays which containers require a reboot.
+- **File Browser**
+  - Uninstall by re-executing the script
+  - Option to use No Authentication
 
 ## 2023-10-05
 
