@@ -51,6 +51,7 @@ $STD apt-get -y install \
 $STD pip3 install mac-vendor-lookup
 $STD pip3 install fritzconnection
 $STD pip3 install cryptography
+$STD pip3 install pyunifi
 msg_ok "Installed Python Dependencies"
 
 msg_info "Installing Pi.Alert"
