@@ -5,6 +5,14 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-10-11
+
+### Changed
+
+- **Proxmox VE CPU Scaling Governor**
+  - A full code overhaul.
+  - Include an option to configure a crontab for ensuring that the CPU Scaling Governor configuration persists across reboots.
+
 ## 2023-10-08
 
 ### Changed
