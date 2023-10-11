@@ -8,51 +8,45 @@
 header_info() {
 clear
 cat <<EOF
-   __________  __  __
-  / ____/ __ \/ / / /
- / /   / /_/ / / / / 
-/ /___/ ____/ /_/ /  
-\____/_/    \____/   
-Scaling Governors
+  ________  __  __  _____
+ / ___/ _ \/ / / / / ___/__ _  _____ _______  ___  _______
+/ /__/ ___/ /_/ / / (_ / _ \ |/ / -_) __/ _ \/ _ \/ __(_-<
+\___/_/   \____/  \___/\___/___/\__/_/ /_//_/\___/_/ /___/
 EOF
 }
-while true; do
-    header_info
-    read -p "View CPU Scaling Governors. Proceed(y/n)?" yn
-    case $yn in
-    [Yy]*) break ;;
-    [Nn]*) exit ;;
-    *) echo "Please answer yes or no." ;;
-    esac
-done
-show_menu() {
-    header_info
-    echo -e "\nProxmox IP \033[36m$(hostname -I)\033[m"
-    echo -e "Current Kernel \033[36m$(uname -r)\033[m\n"
-    available_governors=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
-    echo -e "Available CPU Scaling Governors\n\033[36m${available_governors}\033[m\n"
-    echo -e "Current CPU Scaling Governor\n\033[36m$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)\033[m\n"
-    options=""
-    i=1
-    for governor in $available_governors
-    do
-        options+="** ${i}) \033[36m${governor}\033[m CPU Scaling Governor\n"
-        ((i=i+1))
-    done
-    echo -e "${options}"
-    echo -e "\033[31mNOTE: Settings return to default after reboot\033[m\n"
-    read -p "Please choose an option from the menu and press [ENTER] or x to exit." opt
-}
-show_menu
-while [[ "$opt" != "" ]]; do
-    num_governors=$(echo "$available_governors" | wc -w)
-    if [[ $opt -gt 0 ]] && [[ $opt -le $num_governors ]]; then
-        governor=$(echo "$available_governors" | cut -d' ' -f $opt)
-        echo "${governor}" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-    elif [[ $opt == "x" ]] || [[ $opt == "\n" ]]; then
-        exit
-    else
-        show_menu
+header_info
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU Scaling Governors" --yesno "View/Change CPU Scaling Governors. Proceed?" 10 58 || exit
+current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+GOVERNORS_MENU=()
+MSG_MAX_LENGTH=0
+while read -r TAG ITEM; do
+  OFFSET=2
+  ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
+  GOVERNORS_MENU+=("$TAG" "$ITEM " "OFF")
+done < <(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors | tr ' ' '\n' | grep -v "$current_governor")
+scaling_governor=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current CPU Scaling Governor is set to $current_governor" --checklist "\nSelect the Scaling Governor to use:\n" 16 $((MSG_MAX_LENGTH + 58)) 6 "${GOVERNORS_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+echo "${scaling_governor}" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor >/dev/null
+current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Current CPU Scaling Governor" "\nCurrent CPU Scaling Governor has been set to $current_governor\n" 10 60
+CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU Scaling Governor" --menu "This will establish a crontab to maintain the CPU Scaling Governor configuration across reboots.\n \nSetup a crontab?" 14 68 2 \
+  "yes" " " \
+  "no" " " 3>&2 2>&1 1>&3)
+
+case $CHOICE in
+  yes)
+    NEW_CRONTAB_COMMAND="(sleep 60 && echo \"$current_governor\" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)"
+    EXISTING_CRONTAB=$(crontab -l 2>/dev/null)
+    if [[ -n "$EXISTING_CRONTAB" ]]; then
+      TEMP_CRONTAB_FILE=$(mktemp)
+      echo "$EXISTING_CRONTAB" | grep -v "@reboot (sleep 60 && echo*" > "$TEMP_CRONTAB_FILE"
+      crontab "$TEMP_CRONTAB_FILE"
+      rm "$TEMP_CRONTAB_FILE"
     fi
-    show_menu
-done
+    (crontab -l 2>/dev/null; echo "@reboot $NEW_CRONTAB_COMMAND") | crontab -
+    echo -e "\nCrontab Set (use 'crontab -e' to check)"
+    ;;
+  no)
+    echo -e "\n\033[31mNOTE: Settings return to default after reboot\033[m\n"
+    ;;
+esac
+echo -e "Current CPU Scaling Governor is set to \033[36m$current_governor\033[m\n"
