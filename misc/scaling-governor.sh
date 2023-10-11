@@ -4,7 +4,7 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-
+set -e
 header_info() {
 clear
 cat <<EOF
@@ -25,6 +25,11 @@ while read -r TAG ITEM; do
   GOVERNORS_MENU+=("$TAG" "$ITEM " "OFF")
 done < <(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors | tr ' ' '\n' | grep -v "$current_governor")
 scaling_governor=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current CPU Scaling Governor is set to $current_governor" --checklist "\nSelect the Scaling Governor to use:\n" 16 $((MSG_MAX_LENGTH + 58)) 6 "${GOVERNORS_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+[ -z "$scaling_governor" ] && {
+    whiptail --backtitle "Proxmox VE Helper Scripts" --title "No CPU Scaling Governor Selected" --msgbox "It appears that no CPU Scaling Governor was selected" 10 68
+    clear
+    exit
+}
 echo "${scaling_governor}" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor >/dev/null
 current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
 whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Current CPU Scaling Governor" "\nCurrent CPU Scaling Governor has been set to $current_governor\n" 10 60
@@ -34,6 +39,7 @@ CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU Scaling G
 
 case $CHOICE in
   yes)
+    set +e
     NEW_CRONTAB_COMMAND="(sleep 60 && echo \"$current_governor\" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)"
     EXISTING_CRONTAB=$(crontab -l 2>/dev/null)
     if [[ -n "$EXISTING_CRONTAB" ]]; then
