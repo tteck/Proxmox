@@ -117,6 +117,7 @@ Type=simple
 # Virtual machines without the QEMU guest agent installed must be excluded.
 
 ExecStart=/usr/local/bin/ping-instances.sh
+Restart=always
 StandardOutput=file:/var/log/ping-instances.log
 StandardError=file:/var/log/ping-instances.log
 
