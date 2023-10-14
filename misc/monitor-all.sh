@@ -103,7 +103,7 @@ Type=simple
 # For example: ExecStart=/usr/local/bin/ping-instances.sh 100 102
 # Virtual machines without the QEMU guest agent installed must be excluded.
 # Sleep for 300 seconds (5 minutes)
-ExecStartPre=/usr/bin/sleep 300
+# ExecStartPre=/usr/bin/sleep 300
 ExecStart=/usr/local/bin/ping-instances.sh
 Restart=always
 StandardOutput=file:/var/log/ping-instances.log
