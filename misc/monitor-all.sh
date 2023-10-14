@@ -88,43 +88,54 @@ while true; do
   # Wait for 5 minutes. (Edit to your needs)
   echo "$(date): Pausing for 5 minutes..."
   sleep 300
-done >> /var/log/ping-instances.log 2>&1' >/usr/local/bin/ping-instances.sh
-
+done >/var/log/ping-instances.log 2>&1' >/usr/local/bin/ping-instances.sh
+touch /var/log/ping-instances.log
 # Change file permissions to executable
 chmod +x /usr/local/bin/ping-instances.sh
+cat <<EOF >/etc/systemd/system/ping-instances.timer
+[Unit]
+Description=Delay ping-instances.service by 5 minutes
+
+[Timer]
+OnBootSec=300
+OnUnitActiveSec=300
+
+[Install]
+WantedBy=timers.target
+EOF
 
 # Create ping-instances.service
-echo '[Unit]
+cat <<EOF >/etc/systemd/system/ping-instances.service
+[Unit]
 Description=Ping instances every 5 minutes and restarts if necessary
-
+After=ping-instances.timer
+Requires=ping-instances.timer
 [Service]
 Type=simple
 # To specify which CT/VM should be excluded, add the CT/VM ID at the end of the line where ExecStart=/usr/local/bin/ping-instances.sh is specified.
 # For example: ExecStart=/usr/local/bin/ping-instances.sh 100 102
 # Virtual machines without the QEMU guest agent installed must be excluded.
-# Sleep for 300 seconds (5 minutes)
-# ExecStartPre=/usr/bin/sleep 300
+
 ExecStart=/usr/local/bin/ping-instances.sh
-Restart=always
 StandardOutput=file:/var/log/ping-instances.log
 StandardError=file:/var/log/ping-instances.log
 
 [Install]
-WantedBy=multi-user.target' >/etc/systemd/system/ping-instances.service
+WantedBy=multi-user.target
+EOF
 
 # Reload daemon, enable and start ping-instances.service
 systemctl daemon-reload
+systemctl enable -q --now ping-instances.timer
 systemctl enable -q --now ping-instances.service
 clear
 echo -e "\n To view Monitor All logs: cat /var/log/ping-instances.log"
 }
 
 remove() {
-  systemctl stop ping-instances.service
-  systemctl disable ping-instances.service &>/dev/null
-  rm /etc/systemd/system/ping-instances.service
-  rm /usr/local/bin/ping-instances.sh
-  rm /var/log/ping-instances.log
+  systemctl disable -q --now ping-instances.timer
+  systemctl disable -q --now ping-instances.service
+  rm /etc/systemd/system/ping-instances.service /etc/systemd/system/ping-instances.timer /usr/local/bin/ping-instances.sh /var/log/ping-instances.log
   echo "Removed Monitor All from Proxmox VE"
 }
 
