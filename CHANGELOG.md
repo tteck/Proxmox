@@ -5,6 +5,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-10-14
+
+### Changed
+
+- **Sonarr LXC**
+  - Include an option to install v4 (experimental)
+
 ## 2023-10-11
 
 ### Changed
