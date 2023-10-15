@@ -435,7 +435,7 @@ install_script() {
   arch_check
   pve_check
   if systemctl is-active -q ping-instances.service; then
-    systemctl stop ping-instances.service
+    systemctl -q stop ping-instances.service
   fi
   NEXTID=$(pvesh get /cluster/nextid)
   timezone=$(cat /etc/timezone)
