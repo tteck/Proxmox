@@ -34,6 +34,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   cp -r Sonarr/* /usr/lib/sonarr/bin
   rm -rf Sonarr Sonarr.develop.4.0.0.697.linux-x64.tar.gz
   sed -i 's|ExecStart=/usr/bin/mono --debug /usr/lib/sonarr/bin/Sonarr.exe -nobrowser -data=/var/lib/sonarr|ExecStart=/usr/lib/sonarr/bin/Sonarr -nobrowser -data=/var/lib/sonarr|' /lib/systemd/system/sonarr.service
+  sed -i 's/\(User=\|Group=\).*/\1root/' /lib/systemd/system/sonarr.service
   systemctl daemon-reload
   systemctl start sonarr.service
 fi
