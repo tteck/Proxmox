@@ -452,4 +452,4 @@ if [ "$START_VM" == "yes" ]; then
     msg_ok "Started Home Assistant OS VM"
   fi
 fi
-msg_ok "Completed Successfully!\n
+msg_ok "Completed Successfully!\n"
