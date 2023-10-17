@@ -51,7 +51,7 @@ function error_handler() {
 function cleanup_vmid() {
   if qm status $VMID &>/dev/null; then
     qm stop $VMID &>/dev/null
-    qm destroy $VMID &>/dev/null
+    qm destroy $VMID --destroy-unreferenced-disks &>/dev/null
   fi
 }
 
