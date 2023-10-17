@@ -39,7 +39,6 @@ CROSS="${RD}✗${CL}"
 THIN="discard=on,ssd=1,"
 set -Eeuo pipefail
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
-trap cleanup EXIT
 function error_handler() {
   local exit_code="$?"
   local line_number="$1"
@@ -61,7 +60,8 @@ function cleanup() {
   rm -rf $TEMP_DIR
 }
 
-TEMP_DIR=$(mktemp -d)
+TEMP_DIR="/tmp/haos-install"
+mkdir -p $TEMP_DIR
 pushd $TEMP_DIR >/dev/null
 if whiptail --backtitle "Proxmox VE Helper Scripts" --title "HOME ASSISTANT OS VM" --yesno "This will create a New Home Assistant OS VM. Proceed?" 10 58; then
   :
@@ -390,18 +390,19 @@ if [ "$BRANCH" == "$dev" ]; then
 else
   URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 fi
-if ! [ -f ./haos_ova-${BRANCH}.qcow2.xz ]; then
+
+FILE=$(basename $URL)
+if ! [ -f $TEMP_DIR/${FILE%.*} ]; then
   sleep 2
   msg_ok "${CL}${BL}${URL}${CL}"
   wget -q --show-progress $URL
   echo -en "\e[1A\e[0K"
-  FILE=$(basename $URL)
   msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
+  msg_info "Extracting KVM Disk Image"
+  unxz $FILE
 else
-  msg_ok "File already dwnloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
+  msg_ok "File already downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
 fi
-msg_info "Extracting KVM Disk Image"
-unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
 nfs | dir)
@@ -430,11 +431,12 @@ for i in {0,1}; do
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 msg_ok "Extracted KVM Disk Image"
+
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} -cores $CORE_COUNT -memory $RAM_SIZE \
   -name $HN -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
-qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
+qm importdisk $VMID $TEMP_DIR/${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=32G \
@@ -445,7 +447,9 @@ qm set $VMID \
 msg_ok "Created HAOS VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
   msg_info "Starting Home Assistant OS VM"
-  qm start $VMID
-  msg_ok "Started Home Assistant OS VM"
+  if qm start $VMID; then
+    trap cleanup EXIT
+    msg_ok "Started Home Assistant OS VM"
+  fi
 fi
-msg_ok "Completed Successfully!\n"
+msg_ok "Completed Successfully!\n
