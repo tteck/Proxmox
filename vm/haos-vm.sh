@@ -390,12 +390,16 @@ if [ "$BRANCH" == "$dev" ]; then
 else
   URL=https://github.com/home-assistant/operating-system/releases/download/${BRANCH}/haos_ova-${BRANCH}.qcow2.xz
 fi
-sleep 2
-msg_ok "${CL}${BL}${URL}${CL}"
-wget -q --show-progress $URL
-echo -en "\e[1A\e[0K"
-FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
+if ! [ -f ./haos_ova-${BRANCH}.qcow2.xz ]; then
+  sleep 2
+  msg_ok "${CL}${BL}${URL}${CL}"
+  wget -q --show-progress $URL
+  echo -en "\e[1A\e[0K"
+  FILE=$(basename $URL)
+  msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
+else
+  msg_ok "File already dwnloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
+fi
 msg_info "Extracting KVM Disk Image"
 unxz $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
@@ -413,6 +417,12 @@ btrfs)
   FORMAT=",efitype=4m"
   THIN=""
   ;;
+local-zfs)
+  DISK_EXT=".raw"
+  DISK_REF="$VMID/"
+  DISK_IMPORT="-format raw"
+  FORMAT=",efitype=4m"
+  THIN=""
 esac
 for i in {0,1}; do
   disk="DISK$i"
