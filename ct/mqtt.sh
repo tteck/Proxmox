@@ -52,7 +52,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /etc/apt/sources.list.d/mosquitto-bullseye.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -f /etc/mosquitto/conf.d/default.conf ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
