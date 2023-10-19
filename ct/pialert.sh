@@ -53,7 +53,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/pialert ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-update
+bash -c "$(wget -qLO - https://github.com/leiweibau/Pi.Alert/raw/main/install/pialert_update.sh)" -s --lxc
 msg_ok "Updated $APP"
 exit
 }
