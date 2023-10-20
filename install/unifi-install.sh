@@ -48,7 +48,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf mongodb-org-server_3.6.23_amd64.deb libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+rm -rf mongodb-org-server_3.6.23_amd64.deb libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb /etc/apt/sources.list.d/openjdk-11-jre-headless.list
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
