@@ -59,21 +59,7 @@ cd /opt/nocodb
 rm -rf nocodb
 curl -s http://get.nocodb.com/linux-x64 -o nocodb -L
 chmod +x nocodb
-service_path="/etc/systemd/system/nocodb.service"
-echo "[Unit]
-Description=nocodb
-
-[Service]
-Type=simple
-Restart=always
-User=root
-WorkingDirectory=/opt/nocodb
-ExecStart=/opt/nocodb/./nocodb
-
-[Install]
-WantedBy=multi-user.target" >$service_path
-systemctl -q daemon-reload
-systemctl start -q nocodb.service
+systemctl start nocodb.service
 msg_ok "Updated Successfully"
 exit
 }
