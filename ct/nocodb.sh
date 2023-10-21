@@ -56,9 +56,24 @@ if [[ ! -f /etc/systemd/system/nocodb.service ]]; then msg_error "No ${APP} Inst
 msg_info "Updating ${APP}"
 systemctl stop nocodb.service
 cd /opt/nocodb
-rm nocodb
+rm -rf nocodb
 curl -s http://get.nocodb.com/linux-x64 -o nocodb -L
 chmod +x nocodb
+cat <<EOF >/etc/systemd/system/nocodb.service"
+echo "[Unit]
+Description=nocodb
+
+[Service]
+Type=simple
+Restart=always
+User=root
+WorkingDirectory=/opt/nocodb
+ExecStart=/opt/nocodb/./nocodb
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
 systemctl start nocodb.service
 msg_ok "Updated Successfully"
 exit
