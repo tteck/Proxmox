@@ -60,7 +60,7 @@ rm -rf nocodb
 curl -s http://get.nocodb.com/linux-x64 -o nocodb -L
 chmod +x nocodb
 cat <<EOF >/etc/systemd/system/nocodb.service"
-echo [Unit]
+[Unit]
 Description=nocodb
 
 [Service]
