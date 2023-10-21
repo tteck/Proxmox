@@ -73,7 +73,7 @@ ExecStart=/opt/nocodb/./nocodb
 [Install]
 WantedBy=multi-user.target" >$service_path
 systemctl daemon-reload
-systemctl start nocodb.service
+systemctl start -q nocodb.service
 msg_ok "Updated Successfully"
 exit
 }
