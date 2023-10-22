@@ -21,8 +21,12 @@ $STD apt-get install -y gunicorn
 msg_ok "Installed Dependencies"
 
 msg_info "Installing WireGuard (using pivpn.io)"
+msg_ok "Installing WireGuard (using pivpn.io)"
+
 OPTIONS_PATH='/options.conf'
-cat >$OPTIONS_PATH <<'EOF'
+read -r -p "Would you like to use Advanced settings? <y/N> " prompt
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+    cat >$OPTIONS_PATH <<'EOF'
 IPv4dev=eth0
 install_user=root
 VPN=wireguard
@@ -37,7 +41,29 @@ pivpnHOST=
 pivpnPERSISTENTKEEPALIVE=25
 UNATTUPG=1
 EOF
-$STD bash <(curl -fsSL https://install.pivpn.io) --unattended options.conf
+    nano $OPTIONS_PATH; clear
+    msg_info "Installing WireGuard (using pivpn.io) with advanced settings"
+
+    $STD bash <(curl -fsSL https://install.pivpn.io) --unattended options.conf
+else
+    msg_info "Using default settings"
+    cat >$OPTIONS_PATH <<'EOF'
+IPv4dev=eth0
+install_user=root
+VPN=wireguard
+pivpnNET=10.6.0.0
+subnetClass=24
+ALLOWED_IPS="0.0.0.0/0, ::0/0"
+pivpnMTU=1420
+pivpnPORT=51820
+pivpnDNS1=1.1.1.1
+pivpnDNS2=8.8.8.8
+pivpnHOST=
+pivpnPERSISTENTKEEPALIVE=25
+UNATTUPG=1
+EOF
+    $STD bash <(curl -fsSL https://install.pivpn.io) --unattended options.conf
+fi
 msg_ok "Installed WireGuard"
 
 motd_ssh
