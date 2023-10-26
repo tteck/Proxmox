@@ -31,8 +31,8 @@ $STD apt-mark hold openjdk-11-*
 msg_ok "Installed OpenJDK"
 
 msg_info "Installing MongoDB"
-wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
-$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
+$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
 wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiverse/binary-amd64/mongodb-org-server_3.6.23_amd64.deb
 $STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
 msg_ok "Installed MongoDB"
@@ -48,7 +48,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf mongodb-org-server_3.6.23_amd64.deb libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb /etc/apt/sources.list.d/openjdk-11-jre-headless.list
+rm -rf mongodb-org-server_3.6.23_amd64.deb libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb /etc/apt/sources.list.d/openjdk-11-jre-headless.list
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
