@@ -5,40 +5,57 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-YW=$(echo "\033[33m")
-RD=$(echo "\033[01;31m")
-BL=$(echo "\033[36m")
-CM='\xE2\x9C\x94\033'
-GN=$(echo "\033[1;92m")
-CL=$(echo "\033[m")
-while true; do
-    read -p "This will Install Webmin, Proceed(y/n)?" yn
-    case $yn in
-    [Yy]*) break ;;
-    [Nn]*) exit ;;
-    *) echo "Please answer yes or no." ;;
-    esac
-done
-clear
+function header_info {
+  clear
+  cat <<"EOF"
+  _      __    __         _
+ | | /| / /__ / /  __ _  (_)__
+ | |/ |/ / -_) _ \/  ' \/ / _ \
+ |__/|__/\__/_.__/_/_/_/_/_//_/
 
-echo -en "${GN} Installing Prerequisites... "
+EOF
+}
+set -eEuo pipefail
+YW=$(echo "\033[33m")
+BL=$(echo "\033[36m")
+BGN=$(echo "\033[4;92m")
+GN=$(echo "\033[1;92m")
+DGN=$(echo "\033[32m")
+CL=$(echo "\033[m")
+CM="${GN}✓${CL}"
+BFR="\\r\\033[K"
+HOLD="-"
+
+msg_info() {
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}..."
+}
+
+msg_ok() {
+  local msg="$1"
+  echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
+}
+
+header_info
+
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Webmin Installer" --yesno "This Will Install Webmin on this LXC Container. Proceed?" 10 58 || exit
+
+msg_info "Installing Prerequisites"
 apt update &>/dev/null
 apt-get -y install libnet-ssleay-perl libauthen-pam-perl libio-pty-perl unzip shared-mime-info &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_ok "Installed Prerequisites"
 
-echo -en "${GN} Downloading Webmin... "
-wget http://prdownloads.sourceforge.net/webadmin/webmin_2.021_all.deb &>/dev/null
-echo -e "${CM}${CL} \r"
+LATEST=$(curl -sL https://api.github.com/repos/webmin/webmin/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 
-echo -en "${GN} Installing Webmin... "
-dpkg --install webmin_2.021_all.deb &>/dev/null
-echo -e "${CM}${CL} \r"
+msg_info "Downloading Webmin"
+wget -q https://github.com/webmin/webmin/releases/download/$LATEST/webmin_${LATEST}_all.deb
+msg_ok "Downloaded Webmin"
 
-echo -en "${GN} Setting Default Webmin usermame & password to root... "
+msg_info "Installing Webmin"
+dpkg -i webmin_${LATEST}_all.deb &>/dev/null
 /usr/share/webmin/changepass.pl /etc/webmin root root &>/dev/null
-rm -rf /root/webmin_2.021_all.deb
-echo -e "${CM}${CL} \r"
-IP=$(hostname -I | cut -f1 -d ' ')
-echo -e "Successfully Installed!! Webmin should be reachable by going to https://${IP}:10000"
+rm -rf /root/webmin_${LATEST}_all.deb
+msg_ok "Installed Webmin"
 
-# bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/misc/webmin.sh)"
+IP=$(hostname -I | cut -f1 -d ' ')
+echo -e "Successfully Installed!! Webmin should be reachable by going to ${BL}https://${IP}:10000${CL}"
