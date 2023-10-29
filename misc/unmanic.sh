@@ -44,7 +44,7 @@ while [ -z "${CTID:+x}" ]; do
 done
 
 echo "Installing Unmanic..."
-lxc-attach -n $CTID -- bash -c "apt-get -y install python3-pip && python3 -m pip install unmanic && cat << EOF >/etc/systemd/system/unmanic.service
+lxc-attach -n $CTID -- bash -c "apt-get -y install python3-pip && python3 -m pip install unmanic && apt-get -y install ffmpeg && cat << EOF >/etc/systemd/system/unmanic.service
 [Unit]
 Description=Unmanic - Library Optimiser
 After=network-online.target
