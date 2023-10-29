@@ -545,7 +545,7 @@ EOF
   fi
 
   if [ "$CT_TYPE" == "0" ]; then
-    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" ]]; then
+    if [[ "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" || "$APP" == "Unmanic" ]]; then
       cat <<EOF >>$LXC_CONFIG
 # VAAPI hardware transcoding
 lxc.cgroup2.devices.allow: c 226:0 rwm
