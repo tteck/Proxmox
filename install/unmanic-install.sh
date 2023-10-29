@@ -27,10 +27,10 @@ if [[ "$CTTYPE" == "0" ]]; then
     va-driver-all \
     ocl-icd-libopencl1 \
     intel-opencl-icd
-    
-  /bin/chgrp video /dev/dri
-  /bin/chmod 755 /dev/dri
-  /bin/chmod 660 /dev/dri/*
+  mkdir /dev/dri >/dev/null 2>&1  
+  chgrp video /dev/dri
+  chmod 755 /dev/dri
+  chmod 660 /dev/dri/*
   msg_ok "Set Up Hardware Acceleration"
 fi
 
