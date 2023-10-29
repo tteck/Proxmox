@@ -27,7 +27,7 @@ if [[ "$CTTYPE" == "0" ]]; then
     va-driver-all \
     ocl-icd-libopencl1 \
     intel-opencl-icd
-  mkdir /dev/dri >/dev/null 2>&1  
+
   chgrp video /dev/dri
   chmod 755 /dev/dri
   chmod 660 /dev/dri/*
