@@ -62,7 +62,7 @@ function update_script() {
   while true; do
     CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radiolist --cancel-button Exit-Script "Spacebar = Select"  11 58 3 \
       "1" "Update Nextcloud to $RELEASE" OFF \
-      "2" "Nextcloud Database Credentials" ON \
+      "2" "Nextcloud Login Credentials" ON \
       "3" "Renew Self-signed Certificate" OFF \
       3>&1 1>&2 2>&3)      
     exit_status=$?
