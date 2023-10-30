@@ -5,6 +5,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-10-29
+
+### Changed
+
+- **Unmanic LXC**
+  - NEW Script
+
 ## 2023-10-27
 
 ### Changed
