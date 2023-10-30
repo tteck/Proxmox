@@ -29,7 +29,7 @@ $STD apt-get install -y \
 msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
-mkdir config
+mkdir /root/config
 $STD pip install esphome tornado esptool
 msg_ok "Installed ESPHome"
 
