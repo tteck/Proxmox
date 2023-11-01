@@ -74,7 +74,7 @@ if [ "$UPD" == "1" ]; then
   for container in ${CONTAINER_LIST}; do
     CONTAINER_IMAGE="$(podman inspect --format "{{.Config.Image}}" --type container ${container})"
     RUNNING_IMAGE="$(podman inspect --format "{{.Image}}" --type container "${container}")"
-    podman pull "docker.io/${CONTAINER_IMAGE}"
+    podman pull "${CONTAINER_IMAGE}"
     LATEST_IMAGE="$(podman inspect --format "{{.Id}}" --type image "${CONTAINER_IMAGE}")"
     if [[ "${RUNNING_IMAGE}" != "${LATEST_IMAGE}" ]]; then
       echo "Updating ${container} image ${CONTAINER_IMAGE}"
