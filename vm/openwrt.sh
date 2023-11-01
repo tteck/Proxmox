@@ -478,7 +478,7 @@ qm set $VMID \
   -description "# OpenWrt VM
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
-msg_ok "OpenWrt VM ${CL}${BL}(${HN})"
+msg_ok "Created OpenWrt VM ${CL}${BL}(${HN})"
 msg_info "OpenWrt is being started in order to configure the network interfaces."
 qm start $VMID
 sleep 15
