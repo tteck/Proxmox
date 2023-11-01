@@ -13,7 +13,7 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
@@ -24,7 +24,7 @@ msg_info "Installing Owncast"
 mkdir /opt/owncast
 cd /opt/owncast
 wget -q $(curl -s https://api.github.com/repos/owncast/owncast/releases/latest | grep download | grep linux-64bit | cut -d\" -f4)
-unzip owncast*.zip
+$STD unzip owncast*.zip
 rm owncast*.zip
 msg_ok "Installed Owncast"
 
