@@ -5,6 +5,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-11-2
+
+### Changed
+
+- **PhotoPrism LXC**
+  - Transitioned to PhotoPrism's latest installation package, featuring Linux binaries.
+
 ## 2023-11-1
 
 ### Changed
