@@ -17,96 +17,41 @@ msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y gcc
-$STD apt-get install -y g++
-$STD apt-get install -y git
-$STD apt-get install -y make
-$STD apt-get install -y zip
 $STD apt-get install -y exiftool
 $STD apt-get install -y ffmpeg
 $STD apt-get install -y libheif1
-$STD apt-get install -y ca-certificates
-$STD apt-get install -y gnupg
+$STD apt-get install -y libpng-dev
+$STD apt-get install -y libjpeg-dev
+$STD apt-get install -y libtiff-dev
+$STD apt-get install -y imagemagick
+$STD apt-get install -y darktable
+
 msg_ok "Installed Dependencies"
 
-msg_info "Setting up Node.js Repository"
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
-msg_ok "Set up Node.js Repository"
-
-msg_info "Installing Node.js"
-$STD apt-get update
-$STD apt-get install -y nodejs
-msg_ok "Installed Node.js"
-
-msg_info "Installing Golang"
-set +o pipefail
-RELEASE=$(curl -s https://go.dev/dl/ | grep -o "go.*\linux-amd64.tar.gz" | head -n 1)
-wget -q https://golang.org/dl/$RELEASE
-$STD tar -xzf $RELEASE -C /usr/local
-$STD ln -s /usr/local/go/bin/go /usr/local/bin/go
-msg_ok "Installed Golang"
-
-msg_info "Installing Go Dependencies"
-$STD go install github.com/tianon/gosu@latest
-$STD go install golang.org/x/tools/cmd/goimports@latest
-$STD go install github.com/psampaz/go-mod-outdated@latest
-$STD go install github.com/dsoprea/go-exif/v3/command/exif-read-tool@latest
-$STD go install github.com/mikefarah/yq/v4@latest
-$STD go install github.com/kyoh86/richgo@latest
-cp /root/go/bin/* /usr/local/go/bin/
-cp /usr/local/go/bin/richgo /usr/local/bin/richgo
-cp /usr/local/go/bin/gosu /usr/local/sbin/gosu
-chown root:root /usr/local/sbin/gosu
-chmod 755 /usr/local/sbin/gosu
-msg_ok "Installed Go Dependencies"
-
-msg_info "Installing Tensorflow"
-if grep -q avx2 /proc/cpuinfo; then
-  suffix="avx2-"
-elif grep -q avx /proc/cpuinfo; then
-  suffix="avx-"
+msg_info "Installing PhotoPrism (Patience)"
+mkdir -p /opt/photoprism/{cache,photos/originals,photos/import,storage,temp}
+wget -q -cO - https://dl.photoprism.app/pkg/linux/amd64.tar.gz | tar -xz -C /opt/photoprism --strip-components=1
+if [[ ${PCT_OSTYPE} == "ubuntu" ]]; then 
+  wget -q -cO - https://dl.photoprism.app/dist/libheif/libheif-jammy-amd64-v1.17.1.tar.gz | tar -xzf - -C /usr/local --strip-components=1
 else
-  suffix="1"
+  wget -q -cO - https://dl.photoprism.app/dist/libheif/libheif-bookworm-amd64-v1.17.1.tar.gz | tar -xzf - -C /usr/local --strip-components=1
 fi
-version=$(curl -s https://dl.photoprism.org/tensorflow/amd64/ | grep -o "libtensorflow-amd64-$suffix.*\\.tar.gz" | head -n 1)
-wget -q https://dl.photoprism.org/tensorflow/amd64/$version
-tar -C /usr/local -xzf $version
 ldconfig
-set -o pipefail
-msg_ok "Installed Tensorflow"
-
-msg_info "Cloning PhotoPrism"
-mkdir -p /opt/photoprism/bin
-mkdir -p /var/lib/photoprism/storage
-$STD git clone https://github.com/photoprism/photoprism.git
-cd photoprism
-$STD git checkout release
-msg_ok "Cloned PhotoPrism"
-
-msg_info "Building PhotoPrism (Patience)"
-$STD make -B
-$STD ./scripts/build.sh prod /opt/photoprism/bin/photoprism
-$STD cp -r assets/ /opt/photoprism/
-msg_ok "Built PhotoPrism"
-
-env_path="/var/lib/photoprism/.env"
-echo " 
+cat <<EOF >/opt/photoprism/config/.env
 PHOTOPRISM_AUTH_MODE='password'
 PHOTOPRISM_ADMIN_PASSWORD='changeme'
 PHOTOPRISM_HTTP_HOST='0.0.0.0'
 PHOTOPRISM_HTTP_PORT='2342'
 PHOTOPRISM_SITE_CAPTION='https://tteck.github.io/Proxmox/'
-PHOTOPRISM_STORAGE_PATH='/var/lib/photoprism/storage'
-PHOTOPRISM_ORIGINALS_PATH='/var/lib/photoprism/photos/Originals'
-PHOTOPRISM_IMPORT_PATH='/var/lib/photoprism/photos/Import'
-" >$env_path
+PHOTOPRISM_STORAGE_PATH='/opt/photoprism/storage'
+PHOTOPRISM_ORIGINALS_PATH='/opt/photoprism/photos/originals'
+PHOTOPRISM_IMPORT_PATH='/opt/photoprism/photos/import'
+EOF
+msg_ok "Installed PhotoPrism"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/photoprism.service"
-
-echo "[Unit]
+cat <<EOF >/etc/systemd/system/photoprism.service
+[Unit]
 Description=PhotoPrism service
 After=network.target
 
@@ -114,12 +59,14 @@ After=network.target
 Type=forking
 User=root
 WorkingDirectory=/opt/photoprism
-EnvironmentFile=/var/lib/photoprism/.env
+EnvironmentFile=/opt/photoprism/config/.env
 ExecStart=/opt/photoprism/bin/photoprism up -d
 ExecStop=/opt/photoprism/bin/photoprism down
 
 [Install]
-WantedBy=multi-user.target" >$service_path
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now photoprism
 msg_ok "Created Service"
 
 motd_ssh
@@ -128,12 +75,4 @@ customize
 msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
-rm -rf /var/{cache,log}/* \
-  /photoprism \
-  /$RELEASE \
-  /$version
 msg_ok "Cleaned"
-
-msg_info "Starting PhotoPrism"
-systemctl enable -q --now photoprism
-msg_ok "Started PhotoPrism"
