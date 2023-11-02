@@ -20,8 +20,8 @@ header_info
 echo -e "Loading..."
 APP="PhotoPrism"
 var_disk="8"
-var_cpu="4"
-var_ram="4096"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="12"
 variables
@@ -61,24 +61,9 @@ function update_script() {
   sudo systemctl stop photoprism
   msg_ok "Stopped PhotoPrism"
 
-  msg_info "Cloning PhotoPrism"
-  cd ~
-  git clone https://github.com/photoprism/photoprism.git &>/dev/null
-  cd photoprism
-  git checkout release &>/dev/null
-  msg_ok "Cloned PhotoPrism"
-
-  msg_info "Building PhotoPrism"
-  sudo make all &>/dev/null
-  sudo ./scripts/build.sh prod /opt/photoprism/bin/photoprism &>/dev/null
-  sudo rm -rf /opt/photoprism/assets
-  sudo cp -r assets/ /opt/photoprism/ &>/dev/null
-  msg_ok "Built PhotoPrism"
-
-  msg_info "Cleaning"
-  cd ~
-  rm -rf photoprism
-  msg_ok "Cleaned"
+  msg_info "Updating PhotoPrism"
+  wget -q -cO - https://dl.photoprism.app/pkg/linux/amd64.tar.gz | tar -xzf - -C /opt/photoprism --strip-components=1
+  msg_ok "Updated PhotoPrism"
 
   msg_info "Starting PhotoPrism"
   sudo systemctl start photoprism
@@ -91,9 +76,6 @@ start
 build_container
 description
 
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 2048
-msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:2342${CL} \n"
