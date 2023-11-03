@@ -29,7 +29,7 @@ $STD apt-get install -y darktable
 msg_ok "Installed Dependencies"
 
 msg_info "Installing PhotoPrism (Patience)"
-mkdir -p /opt/photoprism/{cache,photos/originals,photos/import,storage,temp}
+mkdir -p /opt/photoprism/{cache,config,photos/originals,photos/import,storage,temp}
 wget -q -cO - https://dl.photoprism.app/pkg/linux/amd64.tar.gz | tar -xz -C /opt/photoprism --strip-components=1
 if [[ ${PCT_OSTYPE} == "ubuntu" ]]; then 
   wget -q -cO - https://dl.photoprism.app/dist/libheif/libheif-jammy-amd64-v1.17.1.tar.gz | tar -xzf - -C /usr/local --strip-components=1
