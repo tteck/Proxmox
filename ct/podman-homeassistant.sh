@@ -85,12 +85,12 @@ if [ "$UPD" == "1" ]; then
   exit
 fi
 if [ "$UPD" == "2" ]; then
-  msg_info "Installing Home Assistant Comunity Store (HACS)"
+  msg_info "Installing Home Assistant Community Store (HACS)"
   apt update &>/dev/null
   apt install unzip &>/dev/null
   cd /var/lib/containers/storage/volumes/hass_config/_data
   bash <(curl -fsSL https://get.hacs.xyz) &>/dev/null
-  msg_ok "Installed Home Assistant Comunity Store (HACS)"
+  msg_ok "Installed Home Assistant Community Store (HACS)"
   echo -e "\n Reboot Home Assistant and clear browser cache then Add HACS integration.\n"
   exit
 fi
