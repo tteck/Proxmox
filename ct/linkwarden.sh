@@ -63,4 +63,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP}${CL} should be reachable by going to the following URL.
-         ${BL}https://${IP}:3000${CL} \n"
+         ${BL}http://${IP}:3000${CL} \n"
