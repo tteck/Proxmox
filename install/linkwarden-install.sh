@@ -77,7 +77,7 @@ env_path="/opt/linkwarden/.env"
 echo " 
 NEXTAUTH_SECRET=${SECRET_KEY}
 NEXTAUTH_URL=http://${IP}:3000
-DATABASE_URL=postgresql://linkwarden:password@localhost:5432/linkwardendb
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}
 " >$env_path
 $STD yarn build
 $STD yarn prisma migrate deploy
