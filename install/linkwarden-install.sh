@@ -37,7 +37,7 @@ msg_ok "Installed Node.js/Yarn"
 msg_info "Clone Linkwarden Repository"
 $STD git clone https://github.com/linkwarden/linkwarden.git /opt/linkwarden
 cd /opt/linkwarden
-msg_info "Cloned Linkwarden Repository"
+msg_ok "Cloned Linkwarden Repository"
 
 msg_info "Setting up PostgreSQL DB"
 DB_NAME=linkwardendb
