@@ -29,10 +29,10 @@ $STD apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" install -qqy sonarr &>/dev/null
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   systemctl stop sonarr.service
-  wget -q https://download.sonarr.tv/v4/develop/4.0.0.697/Sonarr.develop.4.0.0.697.linux-x64.tar.gz
-  tar -xzf Sonarr.develop.4.0.0.697.linux-x64.tar.gz
+  wget -q -O SonarrV4.tar.gz 'https://services.sonarr.tv/v1/download/develop/latest?version=4&os=linux'
+  tar -xzf SonarrV4.tar.gz
   cp -r Sonarr/* /usr/lib/sonarr/bin
-  rm -rf Sonarr Sonarr.develop.4.0.0.697.linux-x64.tar.gz
+  rm -rf Sonarr SonarrV4.tar.gz
   sed -i 's|ExecStart=/usr/bin/mono --debug /usr/lib/sonarr/bin/Sonarr.exe -nobrowser -data=/var/lib/sonarr|ExecStart=/usr/lib/sonarr/bin/Sonarr -nobrowser -data=/var/lib/sonarr|' /lib/systemd/system/sonarr.service
   sed -i 's/\(User=\|Group=\).*/\1root/' /lib/systemd/system/sonarr.service
   systemctl daemon-reload
