@@ -32,7 +32,7 @@ wget -q $RELEASE
 $STD unzip Agent_Linux64*.zip
 rm -rf Agent_Linux64*.zip
 chmod +x ./Agent
-msg_info "Installed AgentDVR"
+msg_ok "Installed AgentDVR"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/agentdvr.service
