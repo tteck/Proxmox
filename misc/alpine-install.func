@@ -72,7 +72,7 @@ setting_up_container() {
     echo -e " 🖧  Check Network Settings"
     exit 1
   fi
-  cat <<EOF >/etc/apk/repositories
+  cat <<EOF >>/etc/apk/repositories
 https://dl-cdn.alpinelinux.org/alpine/edge/main
 https://dl-cdn.alpinelinux.org/alpine/edge/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
