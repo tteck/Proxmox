@@ -55,12 +55,14 @@ header_info
 if [[ ! -f /etc/apt/sources.list.d/sonarr.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 read -r -p "Are you updating Sonarr v4? <y/N> " prompt
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+  msg_info "Updating $APP v4"
   systemctl stop sonarr.service
   wget -q -O SonarrV4.tar.gz 'https://services.sonarr.tv/v1/download/develop/latest?version=4&os=linux'
   tar -xzf SonarrV4.tar.gz
   cp -r Sonarr/* /usr/lib/sonarr/bin
   rm -rf Sonarr SonarrV4.tar.gz
   systemctl start sonarr.service
+  msg_ok "Updated $APP v4"
   exit
 fi  
 msg_info "Updating $APP LXC"
