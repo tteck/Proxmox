@@ -31,12 +31,8 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js/Yarn"
 $STD apt-get update
 $STD apt-get install -y nodejs
-npm install -g npm@latest
+$STD npm install -g npm@latest
 $STD npm install -g yarn
-#$STD yarn global add prisma
-# npm install next
-#$STD npm install react
-#$STD npm install react-dom
 msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
