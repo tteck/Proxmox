@@ -28,18 +28,16 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dea
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
-msg_info "Installing Node.js"
+msg_info "Installing Node.js/Yarn"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD npm install next
-$STD npm instal react
-$STD npm instal react-dom
-msg_ok "Installed Node.js"
-
-msg_info "Installing Yarn"
+npm install -g npm@latest
 $STD npm install -g yarn
 $STD yarn global add prisma
-msg_ok "Installed Yarn"
+npm install next
+$STD npm instal react
+$STD npm instal react-dom
+msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
 git clone -q https://github.com/ajnart/homarr.git /opt/homarr
