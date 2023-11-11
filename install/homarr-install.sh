@@ -34,7 +34,7 @@ $STD apt-get install -y nodejs
 npm install -g npm@latest
 $STD npm install -g yarn
 $STD yarn global add prisma
-npm install next
+# npm install next
 $STD npm instal react
 $STD npm instal react-dom
 msg_ok "Installed Node.js/Yarn"
