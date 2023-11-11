@@ -71,6 +71,7 @@ NEXTAUTH_SECRET="1234"
 EOF
 $STD yarn install
 $STD yarn build
+$STD yarn db:migrate
 msg_ok "Installed Homarr"
 
 msg_info "Creating Service"
