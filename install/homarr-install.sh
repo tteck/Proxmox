@@ -25,7 +25,7 @@ msg_ok "Installed Dependencies"
 msg_info "Setting up Node.js Repository"
 mkdir -p /etc/apt/keyrings
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
@@ -44,33 +44,10 @@ msg_ok "Installed Yarn"
 msg_info "Installing Homarr (Patience)"
 git clone -q https://github.com/ajnart/homarr.git /opt/homarr
 cd /opt/homarr
-cat <<EOF >/opt/homarr/.env
-# Since the ".env" file is gitignored, you can use the ".env.example" file to
-# build a new ".env" file when you clone the repo. Keep this file up-to-date
-# when you add new variables to `.env`.
-
-# This file will be committed to version control, so make sure not to have any
-# secrets in it. If you are cloning this repo, create a copy of this file named
-# ".env" and populate it with your secrets.
-
-# When adding additional environment variables, the schema in "/src/env.js"
-# should be updated accordingly.
-
-# Prisma
-# https://www.prisma.io/docs/reference/database-reference/connection-urls#env
-DATABASE_URL="file:../database/db.sqlite"
-
-# Next Auth
-# You can generate a new secret on the command line with:
-# openssl rand -base64 32
-# https://next-auth.js.org/configuration/options#secret
-# NEXTAUTH_SECRET=""
-NEXTAUTH_URL="http://localhost:3000"
-
-NEXTAUTH_SECRET="1234"
-EOF
 $STD yarn install
 $STD yarn build
+cp -p /opt/homarr/.env.example /opt/homarr/.env
+sed -i 's/NEXTAUTH_SECRET="[^"]*"/NEXTAUTH_SECRET="'"$(openssl rand -base64 32)"'"/' /opt/homarr/.env
 $STD yarn db:migrate
 msg_ok "Installed Homarr"
 
