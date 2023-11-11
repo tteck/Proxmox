@@ -36,7 +36,7 @@ msg_info "Installing FFMPEG"
 $STD apt-get install -y ffmpeg
 msg_ok "Installed FFMPEG"
 
-msg_info "Clonning Shinobi"
+msg_info "Cloning Shinobi"
 cd /opt
 $STD git clone https://gitlab.com/Shinobi-Systems/Shinobi.git -b master Shinobi
 cd Shinobi
