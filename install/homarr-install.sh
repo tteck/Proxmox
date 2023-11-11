@@ -44,10 +44,10 @@ msg_ok "Installed Yarn"
 msg_info "Installing Homarr (Patience)"
 git clone -q https://github.com/ajnart/homarr.git /opt/homarr
 cd /opt/homarr
-$STD yarn install
-$STD yarn build
 cp -p /opt/homarr/.env.example /opt/homarr/.env
 sed -i 's/NEXTAUTH_SECRET="[^"]*"/NEXTAUTH_SECRET="'"$(openssl rand -base64 32)"'"/' /opt/homarr/.env
+$STD yarn install
+$STD yarn build
 $STD yarn db:migrate
 msg_ok "Installed Homarr"
 
