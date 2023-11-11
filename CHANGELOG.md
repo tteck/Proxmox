@@ -10,7 +10,7 @@
 ### Changed
 
 - **Homarr LXC**
-  - Returns
+  - Returns with v0.14.0 (The authentication update).
 
 ## 2023-11-9
 
