@@ -33,10 +33,10 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 npm install -g npm@latest
 $STD npm install -g yarn
-$STD yarn global add prisma
+#$STD yarn global add prisma
 # npm install next
-$STD npm instal react
-$STD npm instal react-dom
+#$STD npm install react
+#$STD npm install react-dom
 msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
