@@ -19,9 +19,9 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y par2
 $STD apt-get install -y p7zip-full
-wget -q http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/unrar_7.0.2-1_amd64.deb
-$STD dpkg -i unrar_7.0.2-1_amd64.deb
-rm unrar_7.0.2-1_amd64.deb
+wget -q http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/unrar_7.0.3-1_amd64.deb
+$STD dpkg -i unrar*.deb
+rm unrar*.deb
 msg_ok "Installed Dependencies"
 
 msg_info "Updating Python3"
