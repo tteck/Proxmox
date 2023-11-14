@@ -53,6 +53,8 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/homarr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_error "There is currently no update path available."
+exit
 msg_info "Updating $APP"
 systemctl stop homarr
 cd /opt/homarr
