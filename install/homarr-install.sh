@@ -36,7 +36,9 @@ $STD npm install -g yarn
 msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
-git clone -q https://github.com/ajnart/homarr.git /opt/homarr
+mkdir -p /opt/homarr
+RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -O- https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.tar.gz | tar -xz -C /opt && mv /opt/homarr-${RELEASE} /opt/homarr
 cd /opt/homarr
 cp -p /opt/homarr/.env.example /opt/homarr/.env
 sed -i 's|NEXTAUTH_SECRET="[^"]*"|NEXTAUTH_SECRET="'"$(openssl rand -base64 32)"'"|' /opt/homarr/.env
