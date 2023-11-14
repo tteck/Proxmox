@@ -97,7 +97,6 @@ turnkey=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "TurnKey LXCs
 # Setup script environment
 PASS="$(openssl rand -base64 8)"
 CTID=$(pvesh get /cluster/nextid)
-TEMPLATE_SEARCH="debian-11-turnkey-${turnkey}"
 PCT_OPTIONS="
     -features keyctl=1,nesting=1
     -hostname turnkey-${turnkey}
@@ -175,8 +174,8 @@ msg "Updating LXC template list..."
 pveam update >/dev/null
 
 # Get LXC template string
-mapfile -t TEMPLATES < <(pveam available -section turnkeylinux | sed -n "s/.*\($TEMPLATE_SEARCH.*\)/\1/p" | sort -t - -k 2 -V)
-[ ${#TEMPLATES[@]} -gt 0 ] || die "Unable to find a template when searching for '$TEMPLATE_SEARCH'."
+mapfile -t TEMPLATES < <(pveam available -section turnkeylinux | awk -v turnkey="${turnkey}" '$0 ~ turnkey {print $2}' | sort -t - -k 2 -V)
+[ ${#TEMPLATES[@]} -gt 0 ] || die "Unable to find a template when searching for '${turnkey}'."
 TEMPLATE="${TEMPLATES[-1]}"
 
 # Download LXC template
