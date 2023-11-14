@@ -19,7 +19,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Homarr"
-var_disk="6"
+var_disk="8"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
