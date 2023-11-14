@@ -53,18 +53,18 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/homarr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
-exit
-msg_info "Updating $APP"
+msg_info "Updating $APP (Patience)"
 systemctl stop homarr
+cp -Rf /opt/homarr/data /opt/homarr/data-backup
+cp -Rf /opt/homarr/database /opt/homarr/data-backup
+RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q -O- https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.tar.gz | tar -xz -C /opt
+cp -Rf /opt/homarr-${RELEASE}/* /opt/homarr/
+cp -Rf /opt/homarr/data-backup/* /opt/homarr/
+rm -rf /opt/homarr-${RELEASE} /opt/homarr/data-backup
 cd /opt/homarr
-cp -R data data-backup
-git stash &>/dev/null
-git pull &>/dev/null
 yarn install &>/dev/null
 yarn build &>/dev/null
-cp -R data-backup/* data
-rm -rf data-backup
 systemctl start homarr
 msg_ok "Updated $APP"
 exit
