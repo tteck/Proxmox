@@ -94,7 +94,13 @@ function update_script() {
     exit 1
   }
 
-  echo "Initiating update"
+  echo "Checking if any changes were made to package-lock.json..."
+  git checkout package-lock.json || {
+    echo "Failed to check package-lock.json."
+    exit 1
+  }
+
+  echo "Initiating update..."
   if ! git pull; then
     echo "Update failed, temporarily storing changes and trying again."
     git stash && git pull || (
@@ -106,6 +112,12 @@ function update_script() {
   echo "Acquiring necessary components..."
   npm ci || {
     echo "Failed to install necessary components."
+    exit 1
+  }
+
+  echo "Building..."
+  npm run build || {
+    echo "Failed to build new version."
     exit 1
   }
 
