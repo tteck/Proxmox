@@ -409,6 +409,7 @@ qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=2G \
   -boot order=scsi0 \
+  -serial0 socket \
   -description "# Debian 12 VM
 ### https://github.com/tteck/Proxmox
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D7EP4GF)" >/dev/null
@@ -419,3 +420,4 @@ if [ "$START_VM" == "yes" ]; then
   msg_ok "Started Debian 12 VM"
 fi
 msg_ok "Completed Successfully!\n"
+echo "More Info at https://github.com/tteck/Proxmox/discussions/1988"
