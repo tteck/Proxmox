@@ -154,7 +154,7 @@ function default_settings() {
   echo -e "${DGN}Using MAC Address: ${BGN}${MAC}${CL}"
   echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
-  echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
+  echo -e "${DGN}Start VM when completed: ${BGN}yes${CL}"
   echo -e "${BL}Creating a Debian 12 VM using the above default settings${CL}"
 }
 
