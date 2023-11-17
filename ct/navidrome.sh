@@ -59,7 +59,7 @@ systemctl stop navidrome.service
 msg_ok "Stopped Navidrome"
 
 msg_info "Updating to v${RELEASE}"
-wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz &>/dev/null
+wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_linux_amd64.tar.gz -O Navidrome.tar.gz &>/dev/null
 tar -xvzf Navidrome.tar.gz -C /opt/navidrome/ &>/dev/null
 msg_ok "Updated ${APP}"
 rm Navidrome.tar.gz
