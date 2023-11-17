@@ -20,14 +20,12 @@ $STD apt-get install -y mc
 $STD apt-get install -y ffmpeg
 msg_ok "Installed Dependencies"
 
-RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 3, length($2)-4) }')
+RELEASE=$(curl -s https://api.github.com/repos/navidrome/navidrome/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 
 msg_info "Installing Navidrome"
 install -d -o root -g root /opt/navidrome
 install -d -o root -g root /var/lib/navidrome
-$STD wget https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_Linux_x86_64.tar.gz -O Navidrome.tar.gz
+wget -q https://github.com/navidrome/navidrome/releases/download/v${RELEASE}/navidrome_${RELEASE}_linux_amd64.tar.gz -O Navidrome.tar.gz
 $STD tar -xvzf Navidrome.tar.gz -C /opt/navidrome/
 chown -R root:root /opt/navidrome
 mkdir -p /music
