@@ -155,7 +155,7 @@ function default_settings() {
   echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
-  echo -e "${BL}Creating a Ubuntu 22.04 VM using the above default settings${CL}"
+  echo -e "${BL}Creating an Ubuntu 22.04 VM using the above default settings${CL}"
 }
 
 function advanced_settings() {
@@ -314,8 +314,8 @@ function advanced_settings() {
     START_VM="no"
   fi
 
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create a Ubuntu 22.04 VM?" --no-button Do-Over 10 58); then
-    echo -e "${RD}Creating a Ubuntu 22.04 VM using the above advanced settings${CL}"
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create an Ubuntu 22.04 VM?" --no-button Do-Over 10 58); then
+    echo -e "${RD}Creating an Ubuntu 22.04 VM using the above advanced settings${CL}"
   else
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
@@ -421,4 +421,5 @@ if [ "$START_VM" == "yes" ]; then
   msg_ok "Started Ubuntu 22.04 VM"
 fi
 msg_ok "Completed Successfully!\n"
-echo "Setup Cloud-Init before starting"
+echo -e "Setup Cloud-Init before starting \n
+More info at https://github.com/tteck/Proxmox/discussions/2072 \n"
