@@ -67,7 +67,6 @@ msg_ok "Installed Node.js"
 msg_info "Installing Change Detection"
 mkdir /opt/changedetection
 $STD pip3 install changedetection.io
-$STD python3 -m pip install dnspython==2.2.1
 msg_ok "Installed Change Detection"
 
 msg_info "Installing Browserless & Playwright"
