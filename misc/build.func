@@ -109,9 +109,14 @@ echo_default() {
   echo -e "${DGN}Using Root Password: ${BGN}Automatic Login${CL}"
   echo -e "${DGN}Using Container ID: ${BGN}$NEXTID${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}$NSAPP${CL}"
-  echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL}${DGN}GB${CL}"
-  echo -e "${DGN}Allocated Cores ${BGN}$var_cpu${CL}"
-  echo -e "${DGN}Allocated Ram ${BGN}$var_ram${CL}"
+  echo -e "${DGN}Using Disk Size: ${BGN}$var_disk${CL} ${DGN}GB${CL}"
+  if [ "$var_cpu" -gt 1 ]; then
+    core_msg="Cores"
+  else
+    core_msg="Core"
+  fi
+  echo -e "${DGN}Allocated CPU: ${BGN}$var_cpu${CL} ${DGN}${core_msg}${CL}"
+  echo -e "${DGN}Allocated Ram ${BGN}$var_ram${CL} ${CL}${DGN}MB${CL}"
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
@@ -240,13 +245,13 @@ advanced_settings() {
   if DISK_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3); then
     if [ -z "$DISK_SIZE" ]; then
       DISK_SIZE="$var_disk"
-      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL} ${DGN}GB${CL}"
     else
       if ! [[ $DISK_SIZE =~ $INTEGER ]]; then
         echo -e "${RD}⚠ DISK SIZE MUST BE AN INTEGER NUMBER!${CL}"
         advanced_settings
       fi
-      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL}"
+      echo -e "${DGN}Using Disk Size: ${BGN}$DISK_SIZE${CL} ${DGN}GB${CL}"
     fi
   else
     exit-script
@@ -254,10 +259,20 @@ advanced_settings() {
 
   if CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3); then
     if [ -z "$CORE_COUNT" ]; then
+      if [ "$var_cpu" -gt 1 ]; then
+        core_msg="Cores"
+      else
+        core_msg="Core"
+      fi
       CORE_COUNT="$var_cpu"
-      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL} ${DGN}${core_msg}${CL}"
     else
-      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
+      if [ "$CORE_COUNT" -gt 1 ]; then
+        core_msg="Cores"
+      else
+        core_msg="Core"
+      fi
+      echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL} ${DGN}${core_msg}${CL}"
     fi
   else
     exit-script
@@ -266,9 +281,9 @@ advanced_settings() {
   if RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3); then
     if [ -z "$RAM_SIZE" ]; then
       RAM_SIZE="$var_ram"
-      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL} ${CL}${DGN}MB${CL}"
     else
-      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
+      echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL} ${CL}${DGN}MB${CL}"
     fi
   else
     exit-script
