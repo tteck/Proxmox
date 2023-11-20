@@ -53,7 +53,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   mkdir -p /opt/stacks/immich
   wget -q -O /opt/stacks/immich/compose.yaml https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
   wget -q -O /opt/stacks/immich/.env https://github.com/immich-app/immich/releases/latest/download/example.env
-  wget -q -O /opt/stacks/immich/hwaccel.yaml https://github.com/immich-app/immich/releases/latest/download/hwaccel.yml
+  wget -q -O /opt/stacks/immich/hwaccel.yml https://github.com/immich-app/immich/releases/latest/download/hwaccel.yml
   msg_ok "Added Immich compose.yaml"
 fi
 
