@@ -41,9 +41,9 @@ chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 msg_ok "Installed Docker Compose $DOCKER_COMPOSE_LATEST_VERSION"
 
 msg_info "Installing Dockge"
-mkdir -p /opt/stacks /opt/dockge
+mkdir -p /opt/{dockge,stacks}
+wget -q -O /opt/dockge/compose.yaml https://raw.githubusercontent.com/louislam/dockge/master/compose.yaml
 cd /opt/dockge
-$STD curl https://raw.githubusercontent.com/louislam/dockge/master/compose.yaml --output compose.yaml
 $STD docker compose up -d
 msg_ok "Installed Dockge"
 
