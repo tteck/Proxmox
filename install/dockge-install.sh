@@ -47,6 +47,16 @@ $STD curl https://raw.githubusercontent.com/louislam/dockge/master/compose.yaml 
 $STD docker compose up -d
 msg_ok "Installed Dockge"
 
+read -r -p "Would you like to add Immich? <y/N> " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  msg_info "Adding Immich compose.yaml"
+  mkdir -p /opt/stacks/immich
+  wget -q -O /opt/stacks/immich/compose.yaml https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+  wget -q -O /opt/stacks/immich/.env https://github.com/immich-app/immich/releases/latest/download/example.env
+  wget -q -O /opt/stacks/immich/hwaccel.yaml https://github.com/immich-app/immich/releases/latest/download/hwaccel.yml
+  msg_ok "Added Immich compose.yaml"
+fi
+
 read -r -p "Would you like to add Home Assistant? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Adding Home Assistant compose.yaml"
@@ -61,6 +71,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /dev:/dev
+      - /etc/localtime:/etc/localtime:ro
       - ha_config:/config
     network_mode: host
     image: ghcr.io/home-assistant/home-assistant:stable
