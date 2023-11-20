@@ -51,7 +51,7 @@ while true; do
     fi
 
     # Skip instances based on onboot and templates
-    onboot=$($config_cmd $instance | grep onboot | grep -q "onboot: 0" && echo "true" || echo "false")
+    onboot=$($config_cmd $instance | grep -q "onboot: 0" || ( ! $config_cmd $instance | grep -q "onboot" ) && echo "true" || echo "false")
     template=$($config_cmd $instance | grep template | grep -q "template:" && echo "true" || echo "false")
 
     if [ "$onboot" == "true" ]; then
