@@ -53,11 +53,12 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
+if [[ ! -d /opt/dockge ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP}"
+cd /opt/dockge
+docker compose pull
+docker compose up -d
+msg_ok "Updated ${APP}"
 exit
 }
 
