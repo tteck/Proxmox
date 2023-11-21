@@ -10,7 +10,7 @@
 
 [Home Assistant: Installing InfluxDB (LXC)](https://www.derekseaman.com/2023/04/home-assistant-installing-influxdb-lxc.html)
 
-[Home Assistant: Proxmox Quick Start Guide](https://www.derekseaman.com/2023/04/installing-home-assistant-on-proxmox-quick-start-guide.html)
+[Home Assistant: Proxmox Quick Start Guide](https://www.derekseaman.com/2023/10/home-assistant-proxmox-ve-8-0-quick-start-guide-2.html)
 
 [Home Assistant: Installing Grafana (LXC) with Let’s Encrypt SSL](https://www.derekseaman.com/2023/04/home-assistant-installing-grafana-lxc.html)
 
