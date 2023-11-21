@@ -53,10 +53,16 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/rdtc/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_info "Updating $APP"
+systemctl stop rdtc
+mkdir -p rdtc-backup
+cp -R /opt/rdtc/appsettings.json rdtc-backup/
+wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebridClient.zip
+unzip -oqq RealDebridClient.zip -d /opt/rdtc
+cp -R rdtc-backup/appsettings.json /opt/rdtc/
+rm -rf rdtc-backup RealDebridClient.zip
+systemctl start rdtc
+msg_ok "Updated $APP"
 exit
 }
 
