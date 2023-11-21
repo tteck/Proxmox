@@ -21,11 +21,11 @@ $STD apt-get install -y unzip
 msg_ok "Installed Dependencies"
 
 msg_info "Installing ASP.NET Core Runtime"
-wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb
+wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
 $STD dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 $STD apt-get update
-$STD apt-get install -y dotnet-sdk-6.0
+$STD apt-get install -y dotnet-sdk-8.0
 msg_ok "Installed ASP.NET Core Runtime"
 
 msg_info "Installing rdtclient"
@@ -33,7 +33,7 @@ wget -q https://github.com/rogerfar/rdt-client/releases/latest/download/RealDebr
 unzip -qq RealDebridClient.zip -d /opt/rdtc
 rm RealDebridClient.zip
 cd /opt/rdtc
-mkdir -p data/db/ data/downloads
+mkdir -p data/{db,downloads}
 sed -i 's#/data/db/#/opt/rdtc&#g' /opt/rdtc/appsettings.json
 msg_ok "Installed rdtclient"
 
