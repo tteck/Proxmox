@@ -29,7 +29,7 @@ msg_ok "Set up Homebridge Repository"
 msg_info "Installing Homebridge"
 $STD apt update
 $STD apt-get install -y homebridge
-msg_info "Installed Homebridge"
+msg_ok "Installed Homebridge"
 
 motd_ssh
 customize
