@@ -57,7 +57,7 @@ msg_info "Updating $APP"
 systemctl stop linkwarden
 cd /opt/linkwarden
 if git pull | grep 'Already up to date'; then
-  echo "Exiting script."
+  echo "Exiting script.${CL}"
   systemctl start linkwarden
   exit
 fi
