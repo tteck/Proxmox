@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://helper-scripts.com/">Visit the project website</a> | 
-  <a href="https://github.com/tteck/Proxmox/blob/main/.github/CONTRIBUTING.md">Contribute to Proxmox VE Helper Scripts</a>
+  <a href="https://github.com/tteck/Proxmox/blob/main/.github/CONTRIBUTING.md">Contribute to Helper Scripts</a>
 </p>
 
 ---
