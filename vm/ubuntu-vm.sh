@@ -408,7 +408,7 @@ qm importdisk $VMID ${FILE} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=2G \
-  -ide2 local-lvm:cloudinit \
+  -ide2 ${STORAGE}:cloudinit \
   -boot order=scsi0 \
   -serial0 socket \
   -description "# Ubuntu 22.04 VM
