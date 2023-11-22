@@ -53,7 +53,21 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/linkwarden ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+msg_info "Updating $APP"
+systemctl stop linkwarden
+cd /opt/linkwarden
+if git pull | grep 'Already up to date'; then
+  echo "Exiting script."
+  systemctl start linkwarden
+  exit
+fi
+git pull
+yarn
+npx playwright install-deps
+yarn build
+yarn prisma migrate deploy
+systemctl start linkwarden
+msg_ok "Updated $APP"
 exit
 }
 
