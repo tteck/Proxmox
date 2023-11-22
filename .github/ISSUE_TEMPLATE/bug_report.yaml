@@ -6,7 +6,7 @@ body:
       value: |
         **IMPORTANT:** Failure to comply with the following guidelines may result in immediate closure.
         - Prior to submitting, kindly search the closed issues to check if the problem you are reporting has already been addressed and resolved. If you come across a closed issue that pertains to your problem, please leave a comment on that issue instead of creating a new one.
-        - Changing Linux distributions without confirming the proper functioning of default settings.
+        - Switching Linux distributions without verifying that the default distribution is working correctly.
         - When encountering the error message `[ERROR] in line 24: exit code *: while executing command "$@" > /dev/null 2>&1`, make sure to run the script in verbose mode to accurately determine the underlying issue.
         - For suggestions, questions or feature/script requests, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: input
