@@ -56,8 +56,8 @@ if [[ ! -d /opt/linkwarden ]]; then msg_error "No ${APP} Installation Found!"; e
 msg_info "Updating $APP"
 systemctl stop linkwarden
 cd /opt/linkwarden
-if git pull | grep 'Already up to date'; then
-  echo -e "Exiting script.${CL}"
+if git pull | grep -q 'Already up to date'; then
+  msg_ok "Already up to date"
   systemctl start linkwarden
   exit
 fi
