@@ -1,5 +1,5 @@
 name: Problems with a script.
-description: Generate a report on the issue pertaining specifically to the script in order to aid us in improving it.
+description: Generate a report on an issue pertaining specifically to the script. For other inquires please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions) 
 body:
   - type: markdown
     attributes:
