@@ -1,5 +1,5 @@
 name: Problems with a script.
-description: Generate a report on an issue pertaining specifically to the script. For other inquires please share them in the Discussions section. 
+description: Generate a report on an issue pertaining specifically to the script. For other inquires please share them in the Discussions section. Blank issues will be closed.
 body:
   - type: markdown
     attributes:
