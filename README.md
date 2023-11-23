@@ -1,8 +1,11 @@
 <h1 align="center">Proxmox VE Helper Scripts</h1>
 
 <p align="center">
-  <a href="https://helper-scripts.com/">Visit the project website</a> | 
-  <a href="https://github.com/tteck/Proxmox/blob/main/.github/CONTRIBUTING.md">Contribute to Helper Scripts</a>
+  <a href="https://helper-scripts.com/">Website</a> | 
+  <a href="https://github.com/tteck/Proxmox/blob/main/.github/CONTRIBUTING.md">Contribute</a> |
+  <a href="https://github.com/tteck/Proxmox/blob/main/.github/USER_SUBMITTED_GUIDES.md">Guides</a> |
+  <a href="https://github.com/tteck/Proxmox/blob/main/.github/CHANGELOG.md">Changelog</a> |
+  <a href="https://ko-fi.com/D1D7EP4GF">Support</a>
 </p>
 
 ---
