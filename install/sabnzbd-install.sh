@@ -19,7 +19,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y par2
 $STD apt-get install -y p7zip-full
-RELEASE=$(curl -s http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/ | grep -oP 'href="\K[^"]*unrar_7\.\d+\.\d+-\d+_amd64\.deb')
+RELEASE=$(curl -s http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/ | grep -oP 'href="\K[^"]*unrar_7\.\d+\.\d+-\d+_amd64\.deb' | head -1)
 wget -q http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/$RELEASE
 $STD dpkg -i unrar*.deb
 rm unrar*.deb
