@@ -66,6 +66,7 @@ while read -r TAG ITEM; do
 done < <(
   cat <<EOF
 ansible Ansible
+bookstack BookStack
 core Core
 faveo-helpdesk Faveo Helpdesk
 fileserver File Server
