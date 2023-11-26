@@ -22,10 +22,8 @@ $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing OpenJDK"
-#$STD apt-get install -y openjdk-17-jre-headless
-#$STD apt-mark hold openjdk-17-*
-wget -qO- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | tee /etc/apt/trusted.gpg.d/adoptium.gpg >/dev/null 2>&1
-echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/adoptium.gpg] https://packages.adoptium.net/artifactory/deb bookworm main' > /etc/apt/sources.list.d/adoptium.list
+wget -qO- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor >/etc/apt/trusted.gpg.d/adoptium.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/adoptium.gpg] https://packages.adoptium.net/artifactory/deb bookworm main' >/etc/apt/sources.list.d/adoptium.list
 $STD apt-get update
 $STD apt-get install -y temurin-17-jre
 msg_ok "Installed OpenJDK"
@@ -33,7 +31,7 @@ msg_ok "Installed OpenJDK"
 msg_info "Installing MongoDB"
 wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
 $STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
-wget -qO- https://pgp.mongodb.com/server-4.4.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg >/dev/null 2>&1
+wget -qO- https://pgp.mongodb.com/server-4.4.asc | gpg --dearmor >/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg
 echo 'deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main' >/etc/apt/sources.list.d/mongodb-org-4.4.list
 $STD apt-get update
 $STD apt-get install -y mongodb-org
