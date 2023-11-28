@@ -72,12 +72,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /dev:/dev
       - /etc/localtime:/etc/localtime:ro
-      - ha_config:/config
+      - ./config:/config
     network_mode: host
     image: ghcr.io/home-assistant/home-assistant:stable
-volumes:
-  ha_config: {}
-networks: {}
 EOF
 msg_ok "Added Home Assistant compose.yaml"
 fi
