@@ -74,6 +74,7 @@ function update_script() {
     msg_ok "Stopped Paperless-ngx"
 
     msg_info "Updating to ${RELEASE}"
+    cd ~
     if [ "$(dpkg -l | awk '/libmariadb-dev-compat/ {print }' | wc -l)" != 1 ]; then apt-get install -y libmariadb-dev-compat; fi &>/dev/null
     wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz &>/dev/null
     tar -xf paperless-ngx-$RELEASE.tar.xz &>/dev/null
