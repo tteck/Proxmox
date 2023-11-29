@@ -22,11 +22,12 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing WireGuard (using pivpn.io)"
 OPTIONS_PATH='/options.conf'
-cat >$OPTIONS_PATH <<'EOF'
+SUBNET=$(printf %d.%d.%d.%d 10 $((RANDOM % 256)) $((RANDOM % 256)) 0)
+cat >$OPTIONS_PATH <<EOF
 IPv4dev=eth0
 install_user=root
 VPN=wireguard
-pivpnNET=10.6.0.0
+pivpnNET=$SUBNET
 subnetClass=24
 ALLOWED_IPS="0.0.0.0/0, ::0/0"
 pivpnMTU=1420
