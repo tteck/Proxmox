@@ -139,7 +139,7 @@ exit-script() {
 # This function allows the user to configure advanced settings for the script.
 advanced_settings() {
   whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Here is an instructional tip:" "To make a selection, use the Spacebar." 8 58
-  whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Default distribution for $APP" "${var_os} \n${var_version} \n" 8 58
+  whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Default distribution for $APP" "${var_os} \n${var_version} \n \nIf the default Linux distribution is not adhered to, script support will be discontinued. \n" 11 58
   if [ "$var_os" != "alpine" ]; then
     var_os=""
     while [ -z "$var_os" ]; do
