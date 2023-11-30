@@ -20,6 +20,7 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Channels DVR Server (Patience)"
+cd /opt
 $STD bash <(curl -fsSL https://getchannels.com/dvr/setup.sh)
 # adduser $(id -u -n) video && adduser $(id -u -n) render
 msg_ok "Installed Channels DVR Server"
