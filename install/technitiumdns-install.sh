@@ -13,19 +13,14 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies"
-$STD apt-get install -y curl
-$STD apt-get install -y sudo
-$STD apt-get install -y mc
-msg_ok "Installed Dependencies"
 
-msg_info "Installing ASP.NET Core Runtime"
-wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+msg_info "Installing Dependencies and ASP.NET Core Runtime"
+wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 $STD dpkg -i packages-microsoft-prod.deb
 rm -rf packages-microsoft-prod.deb
 $STD apt-get update
-$STD apt-get install -y aspnetcore-runtime-7.0
-msg_ok "Installed ASP.NET Core Runtime"
+$STD apt-get install -y aspnetcore-runtime-7.0 curl sudo mc libmsquic
+msg_ok "Installed Dependencies and ASP.NET Core Runtime"
 
 msg_info "Installing Technitium DNS"
 $STD bash <(curl -fsSL https://download.technitium.com/dns/install.sh)
