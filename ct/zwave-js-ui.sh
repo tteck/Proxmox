@@ -83,7 +83,7 @@ function update_script() {
   msg_ok "Started Z-wave JS UI"
 
   msg_info "Cleanup"
-  rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
+  rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui store
   msg_ok "Cleaned"
   msg_ok "Updated Successfully!\n"
   exit
