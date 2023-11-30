@@ -65,18 +65,17 @@ function update_script() {
   wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
   unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
   \cp -R zwave-js-ui /opt/zwave-js-ui
-cat <<EOF >/etc/systemd/system/zwave-js-ui.service
-[Unit]
-Description=zwave-js-ui
-Wants=network-online.target
-After=network-online.target
-[Service]
-User=root
-WorkingDirectory=/opt/zwave-js-ui
-ExecStart=/opt/zwave-js-ui/zwave-js-ui
-[Install]
-WantedBy=multi-user.target
-EOF
+  service_path="/etc/systemd/system/zwave-js-ui.service"
+  echo "[Unit]
+  Description=zwave-js-ui
+  Wants=network-online.target
+  After=network-online.target
+  [Service]
+  User=root
+  WorkingDirectory=/opt/zwave-js-ui
+  ExecStart=/opt/zwave-js-ui/zwave-js-ui
+  [Install]
+  WantedBy=multi-user.target" >$service_path
   msg_ok "Updated Z-wave JS UI"
 
   msg_info "Starting Z-wave JS UI"
