@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Channels DVR Server"
+APP="Channels"
 var_disk="8"
 var_cpu="2"
 var_ram="2048"
