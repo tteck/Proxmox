@@ -4,13 +4,6 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
-## 2023-11-29
-
-### Changed
-
-- **CasaOS LXC**
-  - Broken, temporarily removed from the website.
-
 ## 2023-11-19
 
 ### Changed
