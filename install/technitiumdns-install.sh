@@ -17,10 +17,11 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y libmsquic
 msg_ok "Installed Dependencies"
 
 msg_info "Installing ASP.NET Core Runtime"
-wget -q https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 $STD dpkg -i packages-microsoft-prod.deb
 rm -rf packages-microsoft-prod.deb
 $STD apt-get update
