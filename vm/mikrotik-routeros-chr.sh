@@ -2,6 +2,7 @@
 
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
+# Adapted from x86 RouterOS script: NiccyB
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -92,8 +93,8 @@ function default_settings() {
   HN=mikrotik-routeros
   echo -e "${DGN}Allocated Cores: ${BGN}1${CL}"
   CORE_COUNT="1"
-  echo -e "${DGN}Allocated RAM: ${BGN}1024${CL}"
-  RAM_SIZE="1024"
+  echo -e "${DGN}Allocated RAM: ${BGN}256${CL}"
+  RAM_SIZE="256"
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
   echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
@@ -232,9 +233,9 @@ else
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for Mikrotik RouterOS Disk Image"
+msg_info "Getting URL for Mikrotik RouterOS CHR Disk Image"
 
-URL=https://download.mikrotik.com/routeros/7.12.1/install-image-7.12.1.zip
+URL=https://download.mikrotik.com/routeros/6.49.10/chr-6.49.10.img.zip
 
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
@@ -242,7 +243,7 @@ wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
 msg_ok "Downloaded ${CL}${BL}$FILE${CL}"
-msg_info "Extracting Mikrotik RouterOS Disk Image"
+msg_info "Extracting Mikrotik RouterOS CHR Disk Image"
 gunzip -f -S .zip $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
@@ -263,15 +264,15 @@ for i in {0,1}; do
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
-msg_ok "Extracted Mikrotik RouterOS Disk Image"
-msg_info "Creating Mikrotik RouterOS VM"
+msg_ok "Extracted Mikrotik RouterOS CHR Disk Image"
+msg_info "Creating Mikrotik RouterOS CHR VM"
 qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
-  -scsi0 ${DISK1_REF},size=2G \
+  -scsi0 ${DISK1_REF},size=512M \
   -boot order=scsi0 \
   -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
