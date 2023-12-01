@@ -564,7 +564,7 @@ EOF
   msg_ok "Started LXC Container"
   if [ "$var_os" == "alpine" ]; then
     sleep 2
-    pct exec "$CTID" -- ash -c "apk add bash >/dev/null"
+    pct exec "$CTID" -- bash -c "apk add bash >/dev/null"
   fi
   lxc-attach -n "$CTID" -- bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/install/$var_install.sh)" || exit
 
