@@ -2,7 +2,7 @@
 
 # Copyright (c) 2021-2023 tteck
 # Author: tteck (tteckster)
-# Adapted from x86 RouterOS script: NiccyB
+# Adapted from x86 RouterOS script using Mikrotik reference script: NiccyB
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -70,7 +70,7 @@ pushd $TEMP_DIR >/dev/null
   sleep 3
   exit
 fi
-if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Mikrotik RouterOS VM" --yesno "This will create a New Mikrotik RouterOS VM. Proceed?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Mikrotik RouterOS VM" --yesno "This will create a New Mikrotik RouterOS CHR VM. Proceed?" 10 58); then
   echo "User selected Yes"
 else
   clear
@@ -90,7 +90,7 @@ function default_settings() {
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
   VMID=$NEXTID
   echo -e "${DGN}Using Hostname: ${BGN}mikrotik-routeros${CL}"
-  HN=mikrotik-routeros
+  HN=mikrotik-routeros-chr
   echo -e "${DGN}Allocated Cores: ${BGN}1${CL}"
   CORE_COUNT="1"
   echo -e "${DGN}Allocated RAM: ${BGN}256${CL}"
@@ -115,7 +115,7 @@ function advanced_settings() {
   else
     exit
   fi
-  VM_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 Mikrotik-RouterOS --title "HOSTNAME" 3>&1 1>&2 2>&3)
+  VM_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 Mikrotik-RouterOS-CHR --title "HOSTNAME" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     HN=$(echo ${VM_NAME,,} | tr -d ' ')
@@ -130,7 +130,7 @@ function advanced_settings() {
   else
     exit
   fi
-  RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 1024 --title "RAM" 3>&1 1>&2 2>&3)
+  RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 256 --title "RAM" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
@@ -235,7 +235,7 @@ msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Getting URL for Mikrotik RouterOS CHR Disk Image"
 
-URL=https://download.mikrotik.com/routeros/6.49.10/chr-6.49.10.img.zip
+URL=https://download.mikrotik.com/routeros/7.12.1/chr-7.12.1.img.zip
 
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
@@ -259,31 +259,29 @@ btrfs)
   DISK_IMPORT="-format raw"
   ;;
 esac
-for i in {0,1}; do
-  disk="DISK$i"
-  eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
-  eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
-done
+
+disk="DISK0"
+eval DISK0=vm-${VMID}-disk-0${DISK_EXT:-}
+eval DISK0_REF=${STORAGE}:${DISK_REF:-}${!disk}
+
 msg_ok "Extracted Mikrotik RouterOS CHR Disk Image"
 msg_info "Creating Mikrotik RouterOS CHR VM"
-qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
-  -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
+qm create $VMID -bios seabios -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
+  -onboot 1 -ostype l26
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
-  -scsi0 ${DISK1_REF},size=512M \
-  -boot order=scsi0 \
+  -virtio0 ${DISK0_REF} \
+  -boot order=virtio0 \
   -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
   # Mikrotik RouterOS
 
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/&#x2615;-Buy me a coffee-blue' /></a>
   </div>" >/dev/null
-msg_ok "Mikrotik RouterOS VM ${CL}${BL}(${HN})"
+msg_ok "Mikrotik RouterOS CHR VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
-  msg_info "Starting Mikrotik RouterOS VM"
+  msg_info "Starting Mikrotik RouterOS CHR VM"
   qm start $VMID
-  msg_ok "Started Mikrotik RouterOS VM"
+  msg_ok "Started Mikrotik RouterOS CHR VM"
 fi
 msg_ok "Completed Successfully!\n"
