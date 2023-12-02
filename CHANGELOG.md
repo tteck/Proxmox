@@ -13,6 +13,8 @@
   - code refactoring
   - update to CHR
   - thanks to @NiccyB
+- **Channels DVR Server LXC**
+  - NEW Script
 
 ## 2023-11-19
 
