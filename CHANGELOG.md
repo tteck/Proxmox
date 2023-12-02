@@ -4,6 +4,16 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2023-12-01
+
+### Changed
+
+- **Mikrotik RouterOS VM**
+  - Now Mikrotik RouterOS CHR VM
+  - code refactoring
+  - update to CHR
+  - thanks to @NiccyB
+
 ## 2023-11-19
 
 ### Changed
