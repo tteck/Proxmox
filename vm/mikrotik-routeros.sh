@@ -7,12 +7,12 @@
 
 function header_info {
   cat <<"EOF"
-    __  ____ __              __  _ __      ____              __            ____  _____
-   /  |/  (_) /___________  / /_(_) /__   / __ \____  __  __/ /____  _____/ __ \/ ___/
-  / /|_/ / / //_/ ___/ __ \/ __/ / //_/  / /_/ / __ \/ / / / __/ _ \/ ___/ / / /\__ \ 
- / /  / / /  < / /  / /_/ / /_/ /  <    / _  _/ /_/ / /_/ / /_/  __/ /  / /_/ /___/ / 
-/_/  /_/_/_/|_/_/   \____/\__/_/_/|_|  /_/ |_|\____/\__,_/\__/\___/_/   \____//____/  
- 
+    __  ____ __              __  _ __      ____              __            ____  _____    ________  ______
+   /  |/  (_) /___________  / /_(_) /__   / __ \____  __  __/ /____  _____/ __ \/ ___/   / ____/ / / / __ \
+  / /|_/ / / //_/ ___/ __ \/ __/ / //_/  / /_/ / __ \/ / / / __/ _ \/ ___/ / / /\__ \   / /   / /_/ / /_/ /
+ / /  / / / ,< / /  / /_/ / /_/ / ,<    / _, _/ /_/ / /_/ / /_/  __/ /  / /_/ /___/ /  / /___/ __  / _, _/
+/_/  /_/_/_/|_/_/   \____/\__/_/_/|_|  /_/ |_|\____/\__,_/\__/\___/_/   \____//____/   \____/_/ /_/_/ |_|
+
 EOF
 }
 clear
@@ -69,7 +69,7 @@ pushd $TEMP_DIR >/dev/null
   sleep 3
   exit
 fi
-if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Mikrotik RouterOS VM" --yesno "This will create a New Mikrotik RouterOS VM. Proceed?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Mikrotik RouterOS CHR VM" --yesno "This will create a New Mikrotik RouterOS CHR VM. Proceed?" 10 58); then
   echo "User selected Yes"
 else
   clear
@@ -88,12 +88,12 @@ function msg_ok() {
 function default_settings() {
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}$NEXTID${CL}"
   VMID=$NEXTID
-  echo -e "${DGN}Using Hostname: ${BGN}mikrotik-routeros${CL}"
-  HN=mikrotik-routeros
+  echo -e "${DGN}Using Hostname: ${BGN}mikrotik-routeros-chr${CL}"
+  HN=mikrotik-routeros-chr
   echo -e "${DGN}Allocated Cores: ${BGN}1${CL}"
-  CORE_COUNT="1"
-  echo -e "${DGN}Allocated RAM: ${BGN}1024${CL}"
-  RAM_SIZE="1024"
+  CORE_COUNT="2"
+  echo -e "${DGN}Allocated RAM: ${BGN}256${CL}"
+  RAM_SIZE="512"
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   BRG="vmbr0"
   echo -e "${DGN}Using MAC Address: ${BGN}$GEN_MAC${CL}"
@@ -104,7 +104,7 @@ function default_settings() {
   MTU=""
   echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
   START_VM="no"
-  echo -e "${BL}Creating a Mikrotik RouterOS VM using the above default settings${CL}"
+  echo -e "${BL}Creating a Mikrotik RouterOS CHR VM using the above default settings${CL}"
 }
 function advanced_settings() {
   VMID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" 3>&1 1>&2 2>&3)
@@ -114,7 +114,7 @@ function advanced_settings() {
   else
     exit
   fi
-  VM_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 Mikrotik-RouterOS --title "HOSTNAME" 3>&1 1>&2 2>&3)
+  VM_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Hostname" 8 58 mikrotik-routeros-chr --title "HOSTNAME" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     HN=$(echo ${VM_NAME,,} | tr -d ' ')
@@ -122,14 +122,14 @@ function advanced_settings() {
   else
     exit
   fi
-  CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 1 --title "CORE COUNT" 3>&1 1>&2 2>&3)
+  CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 2 --title "CORE COUNT" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated Cores: ${BGN}$CORE_COUNT${CL}"
   else
     exit
   fi
-  RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 1024 --title "RAM" 3>&1 1>&2 2>&3)
+  RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB" 8 58 512 --title "RAM" 3>&1 1>&2 2>&3)
   exitstatus=$?
   if [ $exitstatus = 0 ]; then
     echo -e "${DGN}Allocated RAM: ${BGN}$RAM_SIZE${CL}"
@@ -173,15 +173,15 @@ function advanced_settings() {
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
   fi
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start Mikrotik RouterOS VM when completed?" 10 58); then
-    echo -e "${DGN}Start Mikrotik RouterOS VM when completed: ${BGN}yes${CL}"
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start Mikrotik RouterOS CHR VM when completed?" 10 58); then
+    echo -e "${DGN}Start Mikrotik RouterOS CHR VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
-    echo -e "${DGN}Start Mikrotik RouterOS VM when completed: ${BGN}no${CL}"
+    echo -e "${DGN}Start Mikrotik RouterOS CHR VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create Mikrotik RouterOS VM?" 10 58); then
-    echo -e "${RD}Creating Mikrotik RouterOS VM using the above advanced settings${CL}"
+    echo -e "${RD}Creating Mikrotik RouterOS CHR VM using the above advanced settings${CL}"
   else
     clear
     header_info
@@ -190,7 +190,7 @@ function advanced_settings() {
   fi
 }
 function start_script() {
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "SETTINGS" --yesno "Use Default Settings?" 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     clear
     header_info
     echo -e "${BL}Using Default Settings${CL}"
@@ -225,16 +225,16 @@ elif [ $((${#STORAGE_MENU[@]} / 3)) -eq 1 ]; then
 else
   while [ -z "${STORAGE:+x}" ]; do
     STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Storage Pools" --radiolist \
-      "Which storage pool you would like to use for the Mikrotik RouterOS VM?\n\n" \
+      "Which storage pool you would like to use for the Mikrotik RouterOS CHR VM?\n\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
       "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for Mikrotik RouterOS Disk Image"
+msg_info "Getting URL for Mikrotik RouterOS CHR Disk Image"
 
-URL=https://download.mikrotik.com/routeros/7.11.2/install-image-7.11.2.zip
+URL=https://download.mikrotik.com/routeros/7.12.1/chr-7.12.1.img.zip
 
 sleep 2
 msg_ok "${CL}${BL}${URL}${CL}"
@@ -242,7 +242,7 @@ wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
 FILE=$(basename $URL)
 msg_ok "Downloaded ${CL}${BL}$FILE${CL}"
-msg_info "Extracting Mikrotik RouterOS Disk Image"
+msg_info "Extracting Mikrotik RouterOS CHR Disk Image"
 gunzip -f -S .zip $FILE
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
@@ -258,31 +258,29 @@ btrfs)
   DISK_IMPORT="-format raw"
   ;;
 esac
-for i in {0,1}; do
-  disk="DISK$i"
-  eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
-  eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
-done
-msg_ok "Extracted Mikrotik RouterOS Disk Image"
-msg_info "Creating Mikrotik RouterOS VM"
-qm create $VMID -bios ovmf -cores $CORE_COUNT -memory $RAM_SIZE -name $HN -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
+
+DISK_VAR="vm-${VMID}-disk-0${DISK_EXT:-}"
+DISK_REF="${STORAGE}:${DISK_VAR:-}"
+
+msg_ok "Extracted Mikrotik RouterOS CHR Disk Image"
+msg_info "Creating Mikrotik RouterOS CHR VM"
+qm create $VMID -tablet 0 -localtime 1 -cores $CORE_COUNT -memory $RAM_SIZE -name $HN \
+  -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
-  -efidisk0 ${DISK0_REF},efitype=4m,size=4M \
-  -scsi0 ${DISK1_REF},size=2G \
+  -scsi0 "$DISK_REF" \
   -boot order=scsi0 \
   -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
-  # Mikrotik RouterOS
+  # Mikrotik RouterOS CHR
 
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/&#x2615;-Buy me a coffee-blue' /></a>
   </div>" >/dev/null
-msg_ok "Mikrotik RouterOS VM ${CL}${BL}(${HN})"
+msg_ok "Mikrotik RouterOS CHR VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
-  msg_info "Starting Mikrotik RouterOS VM"
+  msg_info "Starting Mikrotik RouterOS CHR VM"
   qm start $VMID
-  msg_ok "Started Mikrotik RouterOS VM"
+  msg_ok "Started Mikrotik RouterOS CHR VM"
 fi
 msg_ok "Completed Successfully!\n"
