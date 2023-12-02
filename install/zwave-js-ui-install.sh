@@ -36,7 +36,7 @@ After=network-online.target
 [Service]
 User=root
 WorkingDirectory=/opt/zwave-js-ui
-ExecStart=/opt/zwave-js-ui/zwave-js-ui
+ExecStart=/opt/zwave-js-ui/zwave-js-ui-linux
 [Install]
 WantedBy=multi-user.target" >$service_path
 systemctl start zwave-js-ui
