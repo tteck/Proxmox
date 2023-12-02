@@ -64,7 +64,7 @@ function update_script() {
   msg_info "Updating Z-wave JS UI"
   wget https://github.com/zwave-js/zwave-js-ui/releases/download/${RELEASE}/zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
   unzip zwave-js-ui-${RELEASE}-linux.zip &>/dev/null
-  \cp -R zwave-js-ui /opt/zwave-js-ui
+  \cp -R zwave-js-ui-linux /opt/zwave-js-ui
   service_path="/etc/systemd/system/zwave-js-ui.service"
   echo "[Unit]
   Description=zwave-js-ui
@@ -73,7 +73,7 @@ function update_script() {
   [Service]
   User=root
   WorkingDirectory=/opt/zwave-js-ui
-  ExecStart=/opt/zwave-js-ui/zwave-js-ui
+  ExecStart=/opt/zwave-js-ui/zwave-js-ui-linux
   [Install]
   WantedBy=multi-user.target" >$service_path
   msg_ok "Updated Z-wave JS UI"
@@ -83,7 +83,7 @@ function update_script() {
   msg_ok "Started Z-wave JS UI"
 
   msg_info "Cleanup"
-  rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui store
+  rm -rf zwave-js-ui-${RELEASE}-linux.zip zwave-js-ui-linux store
   msg_ok "Cleaned"
   msg_ok "Updated Successfully!\n"
   exit
