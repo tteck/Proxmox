@@ -40,9 +40,9 @@ mkdir -p $(dirname $DOCKER_CONFIG_PATH)
 $STD sh <(curl -sSL https://get.docker.com)
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
-msg_info "Pulling Rhasspy $CORE_LATEST_VERSION Image"
+msg_info "Pulling Rhasspy $RHASSPY_LATEST_VERSION Image"
 $STD docker rhasspy/rhasspy:latest
-msg_ok "Pulled Rhasspy $CORE_LATEST_VERSION Image"
+msg_ok "Pulled Rhasspy $RHASSPY_LATEST_VERSION Image"
 
 msg_info "Installing Rhasspy"
 $STD docker volume create rhasspy_profiles
