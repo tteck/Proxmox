@@ -37,7 +37,7 @@ HOLD="-"
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 THIN="discard=on,ssd=1,"
-set -euo pipefail
+set -e
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 trap cleanup EXIT
 function error_handler() {
