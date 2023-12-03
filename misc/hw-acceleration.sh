@@ -43,7 +43,7 @@ lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
 lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
 lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
 EOF
-pct exec $privileged_container -- bash -c "apt-get -y install va-driver-all && apt-get -y install ocl-icd-libopencl1 && apt-get install -y intel-opencl-icd"
+pct exec $privileged_container -- bash -c "apt-get -y install va-driver-all && apt-get -y install ocl-icd-libopencl1 && apt-get install -y intel-opencl-icd && chgrp video /dev/dri && chmod 755 /dev/dri && chmod 660 /dev/dri/* && adduser \$(id -u -n) video && adduser \$(id -u -n) render"
 header_info
 echo -e "Completed Successfully!\n"
 echo -e "Reboot container $privileged_container to apply the new settings\n"
