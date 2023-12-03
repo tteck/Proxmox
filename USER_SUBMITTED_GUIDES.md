@@ -25,3 +25,5 @@
 [Moving Home Assistant’s Database To MariaDB On Proxmox](https://smarthomescene.com/guides/moving-home-assistants-database-to-mariadb-on-proxmox/)
 
 [How-to: Proxmox VE 7.4 to 8.0 Upgrade](https://www.derekseaman.com/2023/06/how-to-proxmox-7-4-to-8-0-upgrade.html)
+
+[iGPU Transcoding In Proxmox with Jellyfin](https://www.youtube.com/watch?v=XAa_qpNmzZs)
