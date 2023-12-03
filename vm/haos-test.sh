@@ -417,13 +417,12 @@ esac
 
 DISK_VAR="vm-${VMID}-disk-0${DISK_EXT:-}"
 DISK_REF="${STORAGE}:${DISK_VAR:-}"
-NODE=$(hostname)
 
 msg_ok "Extracted KVM Disk Image"
 msg_info "Creating HAOS VM"
 qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} -cores $CORE_COUNT -memory $RAM_SIZE \
   -name $HN -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
-lvcreate -L 4G -n vm-${VMID}-disk-1 ${NODE} 1>&/dev/null
+lvcreate -L 4G -n vm-${VMID}-disk-1 pve 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} ${STORAGE} ${DISK_IMPORT:-} 1>&/dev/null
 qm set $VMID \
   -efidisk0 ${STORAGE}:vm-${VMID}-disk-1,efitype=4m \
