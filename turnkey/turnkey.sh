@@ -15,7 +15,7 @@ function header_info {
 EOF
 }
 
-set -eEuo pipefail
+set -euo pipefail
 shopt -s expand_aliases
 alias die='EXIT=$? LINE=$LINENO error_exit'
 trap die ERR
