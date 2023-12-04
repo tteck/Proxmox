@@ -52,7 +52,7 @@ $STD docker run -d \
     --restart=always \
     -v "rhasspy_profiles:/profiles" \
     -v "/etc/localtime:/etc/localtime:ro" \
-    --device /dev/snd:/dev/snd \
+    # --device /dev/snd:/dev/snd \
     rhasspy/rhasspy:latest \
     --user-profiles /profiles \
     --profile en
