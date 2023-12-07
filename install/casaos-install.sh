@@ -22,16 +22,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing CasaOS (Patience)"
 DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
 mkdir -p $(dirname $DOCKER_CONFIG_PATH)
-if [ "$ST" == "yes" ]; then
-VER=$(curl -s https://api.github.com/repos/containers/fuse-overlayfs/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-cd /usr/local/bin
-curl -sSL -o fuse-overlayfs https://github.com/containers/fuse-overlayfs/releases/download/$VER/fuse-overlayfs-x86_64
-chmod 755 /usr/local/bin/fuse-overlayfs
-cd ~
-echo -e '{\n  "storage-driver": "fuse-overlayfs",\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
-else
 echo -e '{\n  "log-driver": "journald"\n}' > /etc/docker/daemon.json
-fi
 $STD bash <(curl -fsSL https://get.casaos.io/v0.4.1)
 msg_ok "Installed CasaOS"
 

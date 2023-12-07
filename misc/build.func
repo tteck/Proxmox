@@ -122,9 +122,6 @@ echo_default() {
   echo -e "${DGN}Using MAC Address: ${BGN}Default${CL}"
   echo -e "${DGN}Using VLAN Tag: ${BGN}Default${CL}"
   echo -e "${DGN}Enable Root SSH Access: ${BGN}No${CL}"
-  if [[ "$APP" == "Docker" || "$APP" == "Umbrel" || "$APP" == "CasaOS" || "$APP" == "Home Assistant" ]]; then
-    echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}No${CL}"
-  fi
   echo -e "${DGN}Enable Verbose Mode: ${BGN}No${CL}"
   echo -e "${BL}Creating a ${APP} LXC using the above default settings${CL}"
 }
@@ -403,15 +400,6 @@ advanced_settings() {
     echo -e "${DGN}Enable Root SSH Access: ${BGN}$SSH${CL}"
   fi
 
-  if [[ "$APP" == "Docker" || "$APP" == "Umbrel" || "$APP" == "CasaOS" || "$APP" == "Home Assistant" ]]; then
-    if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "FUSE OVERLAYFS" --yesno "(ZFS) Enable Fuse Overlayfs?" 10 58); then
-      FUSE="yes"
-    else
-      FUSE="no"
-    fi
-    echo -e "${DGN}Enable Fuse Overlayfs (ZFS): ${BGN}$FUSE${CL}"
-  fi
-
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "VERBOSE MODE" --yesno "Enable Verbose Mode?" 10 58); then
     VERB="yes"
   else
@@ -475,20 +463,12 @@ start() {
 build_container() {
   if [ "$VERB" == "yes" ]; then set -x; fi
 
-  if [[ "$APP" == "Docker" || "$APP" == "Umbrel" || "$APP" == "CasaOS" || "$APP" == "Home Assistant" ]]; then
-    if [ "$FUSE" == "yes" ]; then
-      FEATURES="fuse=1,keyctl=1,nesting=1"
-    else
-      FEATURES="keyctl=1,nesting=1"
-    fi
+  if [ "$CT_TYPE" == "1" ]; then
+    FEATURES="keyctl=1,nesting=1"
+  else
+    FEATURES="nesting=1"
   fi
-  if [[ "$APP" != "Docker" && "$APP" != "Umbrel" && "$APP" != "CasaOS" && "$APP" != "Home Assistant" ]]; then
-    if [ "$CT_TYPE" == "1" ]; then
-      FEATURES="keyctl=1,nesting=1"
-    else
-      FEATURES="nesting=1"
-    fi
-  fi
+
 
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
@@ -498,9 +478,6 @@ build_container() {
     export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
   fi
   export tz="$timezone"
-  if [[ "$APP" == "Docker" || "$APP" == "Umbrel" || "$APP" == "CasaOS" || "$APP" == "Home Assistant" ]]; then
-    export ST="$FUSE"
-  fi
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
   export app="$NSAPP"
