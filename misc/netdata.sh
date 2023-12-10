@@ -25,20 +25,20 @@ while true; do
   esac
 done
 
-useradd -r -s /bin/false netdata
-curl -fsSL https://repo.netdata.cloud/netdatabot.gpg.key >/usr/share/keyrings/netdata.gpg
+curl -sSL --fail --connect-timeout 10 --retry 3 -o /root/netdata-repo-edge_2-1+debian12_all.deb https://repo.netdata.cloud/repos/repoconfig/debian/bookworm/netdata-repo-edge_2-1+debian12_all.deb
 cat <<EOF >/etc/apt/sources.list.d/netdata.list
 deb http://repo.netdata.cloud/repos/stable/debian/ bookworm/
 deb http://repo.netdata.cloud/repos/repoconfig/debian/ bookworm/
 EOF
+rm -rf /etc/apt/sources.list.d/netdata-edge.list
 apt-get update && apt-get -y upgrade
 apt-get install -y netdata
 echo -e "\nInstalled NetData (http://$(hostname -I | awk '{print $1}'):19999)\n"
 }
 
 uninstall() {
-apt remove -y netdata --purge
-rm -rf /var/log/netdata /var/lib/netdata /var/cache/netdata /etc/apt/sources.list.d/netdata.list
+apt purge -y netdata netdata-core
+rm -rf /var/log/netdata /var/lib/netdata /var/cache/netdata /etc/apt/sources.list.d/netdata.list /usr/share/keyrings/netdata.gpg
 apt autoremove -y
 userdel netdata
   echo -e "\nRemoved NetData from Proxmox VE\n"
