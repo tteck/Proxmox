@@ -25,6 +25,8 @@ while true; do
   esac
 done
 
+useradd -r -s /bin/false netdata
+wget -q https://repo.netdata.cloud/netdatabot.gpg.key -O - | gpg --dearmor >/usr/share/keyrings/netdata-archive-keyring.gpg
 cat <<EOF >/etc/apt/sources.list.d/netdata.list
 deb http://repo.netdata.cloud/repos/stable/debian/ bookworm/
 deb http://repo.netdata.cloud/repos/repoconfig/debian/ bookworm/
