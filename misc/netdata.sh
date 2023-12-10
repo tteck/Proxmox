@@ -25,13 +25,15 @@ while true; do
   esac
 done
 
-curl -sSL --fail --connect-timeout 10 --retry 3 -o netdata-repo-edge_2-1+debian12_all.deb https://repo.netdata.cloud/repos/repoconfig/debian/bookworm/netdata-repo-edge_2-1+debian12_all.deb
+curl -sSL --fail --connect-timeout 10 --retry 3 -o /root/netdata-repo-edge_2-1+debian12_all.deb https://repo.netdata.cloud/repos/repoconfig/debian/bookworm/netdata-repo-edge_2-1+debian12_all.deb
+apt-get install -y /root/netdata-repo-edge_2-1+debian12_all.deb
 cat <<EOF >/etc/apt/sources.list.d/netdata.list
 deb http://repo.netdata.cloud/repos/stable/debian/ bookworm/
 deb http://repo.netdata.cloud/repos/repoconfig/debian/ bookworm/
 EOF
 rm -rf /etc/apt/sources.list.d/netdata-edge.list netdata-repo-edge_2-1+debian12_all.deb
-apt-get update && apt-get -y upgrade
+apt-get update &>/dev/null
+apt-get -y upgrade
 apt-get install -y netdata
 echo -e "\nInstalled NetData (http://$(hostname -I | awk '{print $1}'):19999)\n"
 }
