@@ -19,7 +19,7 @@ EOF
 }
 header_info
 echo "Loading..."
-whiptail --backtitle "Proxmox VE Helper Scripts" --title "Add HW Acceleration" --yesno "This Will Add HW Acceleration to an exixting LXC Container. Proceed?" 10 68 || exit
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Add HW Acceleration" --yesno "This Will Add HW Acceleration to an existing LXC Container. Proceed?" 10 68 || exit
 NODE=$(hostname)
 PREV_MENU=()
 MSG_MAX_LENGTH=0
