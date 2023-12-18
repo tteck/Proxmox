@@ -53,17 +53,19 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/homepage ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP}"
-if ! command -v pnpm >/dev/null 2>&1; then
-    npm install -g pnpm &>/dev/null
-fi
-cd /opt/homepage
+RELEASE=$(curl -s https://api.github.com/repos/gethomepage/homepage/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+msg_info "Updating Homepage to v${RELEASE} (Patience)"
 systemctl stop homepage
-git pull --force &>/dev/null
-pnpm install &>/dev/null
-pnpm build &>/dev/null
+wget -q https://github.com/gethomepage/homepage/archive/refs/tags/v${RELEASE}.tar.gz
+tar -xzf v${RELEASE}.tar.gz
+cp -r homepage-${RELEASE}/* /opt/homepage/
+rm -rf mv homepage-${RELEASE}
+cd /opt/homepage
+npx update-browserslist-db@latest
+pnpm install
+pnpm build
 systemctl start homepage
-msg_ok "Updated Successfully"
+msg_ok "Updated Homepage to v${RELEASE}"
 exit
 }
 
