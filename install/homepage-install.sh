@@ -43,7 +43,7 @@ wget -q https://github.com/gethomepage/homepage/archive/refs/tags/v${RELEASE}.ta
 $STD tar -xzf v${RELEASE}.tar.gz
 mkdir -p /opt/homepage/config
 mv homepage-${RELEASE}/* /opt/homepage
-rm -rf mv homepage-${RELEASE}
+rm -rf homepage-${RELEASE}
 cd /opt/homepage
 cp /opt/homepage/src/skeleton/* /opt/homepage/config
 $STD pnpm install
