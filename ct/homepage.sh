@@ -59,7 +59,7 @@ systemctl stop homepage
 wget -q https://github.com/gethomepage/homepage/archive/refs/tags/v${RELEASE}.tar.gz
 tar -xzf v${RELEASE}.tar.gz
 cp -r homepage-${RELEASE}/* /opt/homepage/
-rm -rf mv homepage-${RELEASE}
+rm -rf homepage-${RELEASE}
 cd /opt/homepage
 npx update-browserslist-db@latest
 pnpm install
