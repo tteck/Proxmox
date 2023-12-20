@@ -74,6 +74,12 @@ function update_script() {
     case $CHOICE in
     1)
       apk update && apk upgrade
+      if ! apk -e info php82-sodium >/dev/null 2>&1; then
+        apk add -q php82-sodium
+      fi
+      if ! apk -e info php82-bz2 >/dev/null 2>&1; then
+        apk add -q php82-bz2
+      fi
       su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ upgrade'
       su nextcloud -s /bin/sh -c 'php82 /usr/share/webapps/nextcloud/occ db:add-missing-indices'
       exit
