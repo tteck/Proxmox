@@ -18,7 +18,6 @@ color() {
 # This function enables IPv6 if it's not disabled and sets verbose mode if the global variable is set to "yes"
 verb_ip6() {
   if [ "$VERBOSE" = "yes" ]; then
-    set -x
     STD=""
   else STD="silent"; fi
   silent() { "$@" >/dev/null 2>&1; }
