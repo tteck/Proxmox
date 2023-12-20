@@ -17,7 +17,7 @@ EOF
 
 install() {
 while true; do
-  read -p "This script will install NetData on Proxmox VE. Proceed(y/n)?" yn
+  read -p "This script will install NetData on Proxmox VE 8+. Proceed(y/n)?" yn
   case $yn in
   [Yy]*) break ;;
   [Nn]*) exit ;;
@@ -45,16 +45,17 @@ userdel netdata
   echo -e "\nRemoved NetData from Proxmox VE\n"
 }
 
-if ! command -v pveversion >/dev/null 2>&1; then
-  clear
-  echo -e "\n No PVE Detected!\n"
+if ! pveversion | grep -Eq "pve-manager/(8\.[0-9])"; then
+  msg_error "This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 8.0 or higher"
+  echo -e "Exiting..."
+  sleep 2
   exit
 fi
 
 OPTIONS=(Install "Install NetData on Proxmox VE" \
          Uninstall "Uninstall NetData from Proxmox VE")
 
-# Show the whiptail menu and save the user's choice
 CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "NetData" --menu "Select an option:" 10 58 2 \
           "${OPTIONS[@]}" 3>&1 1>&2 2>&3)
 
