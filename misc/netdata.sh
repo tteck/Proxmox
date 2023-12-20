@@ -36,7 +36,7 @@ echo -e "\nInstalled NetData (http://$(hostname -I | awk '{print $1}'):19999)\n"
 
 uninstall() {
 systemctl stop netdata
-apt-get remove -y --purge netdata netdata-repo
+apt-get remove --purge -y netdata netdata-repo
 rm -rf /var/log/netdata /var/lib/netdata /var/cache/netdata /etc/apt/sources.list.d/netdata.list
 rm -rf /etc/apt/trusted.gpg.d/netdata-archive-keyring.gpg
 systemctl daemon-reload
