@@ -39,6 +39,14 @@ function msg_ok() {
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
+if ! pveversion | grep -Eq "pve-manager/(8\.[0-9])"; then
+  msg_error "This version of Proxmox Virtual Environment is not supported"
+  echo -e "Requires PVE Version 8.0 or higher"
+  echo -e "Exiting..."
+  sleep 2
+  exit
+fi
+
 whiptail --backtitle "Proxmox VE Helper Scripts" --title "Add Intel HW Acceleration" --yesno "This Will Add Intel HW Acceleration to an existing LXC Container. Proceed?" 8 72 || exit
 NODE=$(hostname)
 PREV_MENU=()
