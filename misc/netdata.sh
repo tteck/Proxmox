@@ -28,7 +28,7 @@ CM="${GN}✓${CL}"
 silent() { "$@" >/dev/null 2>&1; }
 set -e
 header_info
-
+echo "Loading..."
 function msg_info() {
   local msg="$1"
   echo -ne " ${HOLD} ${YW}${msg}..."
@@ -40,6 +40,7 @@ function msg_ok() {
 }
 
 install() {
+  header_info
   while true; do
     read -p "Are you sure you want to install NetData on Proxmox VE host. Proceed(y/n)?" yn
     case $yn in
@@ -48,7 +49,7 @@ install() {
     *) echo "Please answer yes or no." ;;
     esac
   done
-
+  header_info
   read -r -p "Verbose mode? <y/N> " prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   STD=""
@@ -56,7 +57,7 @@ install() {
   STD="silent"
   fi
   header_info
-  
+
   msg_info "Setting up repository"
   wget -q https://repo.netdata.cloud/repos/repoconfig/debian/bookworm/netdata-repo_2-2+debian12_all.deb
   $STD dpkg -i netdata-repo_2-2+debian12_all.deb
@@ -66,12 +67,13 @@ install() {
   msg_info "Installing Netdata"
   $STD apt-get update
   $STD apt-get install -y netdata
-  msg_ok "Installed Netdata\n"
+  msg_ok "Installed Netdata"
   msg_ok "Completed Successfully!\n"
   echo -e "\n Netdata should be reachable at${BL} http://$(hostname -I | awk '{print $1}'):19999 ${CL}\n"
 }
 
 uninstall() {
+  header_info
   read -r -p "Verbose mode? <y/N> " prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   STD=""
@@ -79,8 +81,8 @@ uninstall() {
   STD="silent"
   fi
   header_info
-  
-  msg_info "Uninstalling Netdata"  
+
+  msg_info "Uninstalling Netdata"
   systemctl stop netdata
   rm -rf /var/log/netdata /var/lib/netdata /var/cache/netdata /etc/netdata/go.d
   rm -rf /etc/apt/trusted.gpg.d/netdata-archive-keyring.gpg /etc/apt/sources.list.d/netdata.list
@@ -88,7 +90,7 @@ uninstall() {
   systemctl daemon-reload
   $STD apt autoremove -y
   $STD userdel netdata
-  msg_ok "Uninstalled Netdata\n"
+  msg_ok "Uninstalled Netdata"
   msg_ok "Completed Successfully!\n"
 }
 
