@@ -6,6 +6,7 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
+clear
 cat <<"EOF"
   ______      _ __                __        
  /_  __/___ _(_) /_____________ _/ /__
@@ -15,8 +16,8 @@ cat <<"EOF"
 
 EOF
 }
-clear
 header_info
+set-e
 while true; do
   read -p "This will add Tailscale to an existing LXC Container ONLY. Proceed(y/n)?" yn
   case $yn in
@@ -25,23 +26,7 @@ while true; do
   *) echo "Please answer yes or no." ;;
   esac
 done
-
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-shopt -s expand_aliases
-alias die='EXIT=$? LINE=$LINENO error_exit'
-trap die ERR
-
-function error_exit() {
-  trap - ERR
-  local reason="Unknown failure occured."
-  local msg="${1:-$reason}"
-  local flag="\e[1;31m‼ ERROR\e[0m $EXIT@$LINE"
-  echo -e "$flag $msg" 1>&2
-  exit $EXIT
-}
+header_info
 function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
