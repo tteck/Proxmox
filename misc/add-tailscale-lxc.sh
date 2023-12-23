@@ -8,7 +8,7 @@
 function header_info {
 clear
 cat <<"EOF"
-  ______      _ __                __        
+  ______      _ __                __
  /_  __/___ _(_) /_____________ _/ /__
   / / / __ `/ / / ___/ ___/ __ `/ / _ \
  / / / /_/ / / (__  ) /__/ /_/ / /  __/
@@ -27,6 +27,7 @@ while true; do
   esac
 done
 header_info
+echo "Loading..."
 function msg() {
   local TEXT="$1"
   echo -e "$TEXT"
@@ -56,7 +57,7 @@ cat <<EOF >>$CTID_CONFIG_PATH
 lxc.cgroup2.devices.allow: c 10:200 rwm
 lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
 EOF
-
+header_info
 msg "Installing Tailscale..."
 lxc-attach -n $CTID -- bash -c "$(curl -fsSL https://tailscale.com/install.sh)" &>/dev/null || exit
 msg "Installed Tailscale"
