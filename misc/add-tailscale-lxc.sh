@@ -17,7 +17,7 @@ cat <<"EOF"
 EOF
 }
 header_info
-set-e
+set -e
 while true; do
   read -p "This will add Tailscale to an existing LXC Container ONLY. Proceed(y/n)?" yn
   case $yn in
