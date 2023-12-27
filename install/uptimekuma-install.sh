@@ -33,6 +33,10 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
+msg_info "Installing npm"
+$STD apt-get install -y npm
+msg_ok "Installed npm"
+
 msg_info "Installing Uptime Kuma"
 $STD git clone https://github.com/louislam/uptime-kuma.git
 mv uptime-kuma /opt/uptime-kuma
