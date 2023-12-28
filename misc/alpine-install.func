@@ -72,10 +72,9 @@ setting_up_container() {
     echo -e " 🖧  Check Network Settings"
     exit 1
   fi
-  cat <<EOF >>/etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/edge/main
-https://dl-cdn.alpinelinux.org/alpine/edge/community
-https://dl-cdn.alpinelinux.org/alpine/edge/testing
+  cat <<EOF >/etc/apk/repositories
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
 EOF
   msg_ok "Set up Container OS"
   msg_ok "Network Connected: ${BL}$(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | tail -n1)${CL}"
