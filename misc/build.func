@@ -200,22 +200,17 @@ advanced_settings() {
     fi
   done
 
-  while true; do
-    if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
-      if [ -z "$PW1" ]; then
-        PW1="Automatic Login"
-        PW=""
-      elif [[ $PW1 == -* ]]; then
-        whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Invalid Password" "Passwords cannot start with a hyphen. Please try again." 8 59
-      else
-        PW="-password $PW1"
-        echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
-        break
-      fi
+  if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
+    if [ -z $PW1 ]; then
+      PW1="Automatic Login"
+      PW=""
     else
-      exit-script
+      PW="-password $PW1"
     fi
-  done
+    echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
+  else
+    exit-script
+  fi
 
   if CT_ID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3); then
     if [ -z "$CT_ID" ]; then
