@@ -81,19 +81,38 @@ exit
 fi
 if [ "$UPD" == "2" ]; then
 THEME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "NODE-RED THEMES" --radiolist --cancel-button Exit-Script "Choose Theme" 15 58 6 \
+    "aurora" "" OFF \
+    "cobalt2" "" OFF \
     "dark" "" OFF \
     "dracula" "" OFF \
+    "espresso-libre" "" OFF \
+    "github-dark" "" OFF \
+    "github-dark-default" "" OFF \
+    "github-dark-dimmed" "" OFF \
     "midnight-red" "" ON \
+    "monoindustrial" "" OFF \
+    "monokai" "" OFF \
+    "monokai-dimmed" "" OFF \
+    "noctis" "" OFF \
+    "oceanic-next" "" OFF \
     "oled" "" OFF \
+    "one-dark-pro" "" OFF \
+    "one-dark-pro-darker" "" OFF \
     "solarized-dark" "" OFF \
     "solarized-light" "" OFF \
+    "tokyo-night" "" OFF \
+    "tokyo-night-light" "" OFF \
+    "tokyo-night-storm" "" OFF \
+    "totallyinformation" "" OFF \
+    "zenburn" "" OFF \
     3>&1 1>&2 2>&3)
 header_info
 msg_info "Installing ${THEME} Theme"    
 cd /root/.node-red
-sed -i 's|//theme: "",|theme: "",|g' /root/.node-red/settings.js
-npm install @node-red-contrib-themes/${THEME} &>/dev/null
+sed -i 's|// theme: ".*",|theme: "",|g' /root/.node-red/settings.js
+npm install @node-red-contrib-themes/theme-collection &>/dev/null
 sed -i "{s/theme: ".*"/theme: '${THEME}',/g}" /root/.node-red/settings.js
+systemctl restart nodered
 msg_ok "Installed ${THEME} Theme"
 
 msg_info "Restarting ${APP}"
