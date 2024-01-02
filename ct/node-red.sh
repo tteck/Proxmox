@@ -114,10 +114,6 @@ npm install @node-red-contrib-themes/theme-collection &>/dev/null
 sed -i "{s/theme: ".*"/theme: '${THEME}',/g}" /root/.node-red/settings.js
 systemctl restart nodered
 msg_ok "Installed ${THEME} Theme"
-
-msg_info "Restarting ${APP}"
-systemctl restart nodered
-msg_ok "Restarted ${APP}"
 exit
 fi
 }
