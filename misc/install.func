@@ -113,7 +113,7 @@ network_check() {
 update_os() {
   msg_info "Updating Container OS"
   $STD apt-get update
-  $STD apt-get -y upgrade
+  $STD apt-get -o Dpkg::Options::="--force-confold" -y dist-upgrade
   msg_ok "Updated Container OS"
 }
 
