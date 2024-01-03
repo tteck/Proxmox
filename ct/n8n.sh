@@ -54,6 +54,13 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -f /etc/systemd/system/n8n.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+  if [[ "$(node -v | cut -d 'v' -f 2)" == "18."* ]]; then
+    if ! command -v npm >/dev/null 2>&1; then
+      echo "Installing NPM..."
+      apt-get install -y npm >/dev/null 2>&1
+      echo "Installed NPM..."
+    fi
+  fi
 msg_info "Updating ${APP} LXC"
 npm update -g n8n &>/dev/null
 msg_ok "Updated Successfully"
