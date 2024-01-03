@@ -4,6 +4,15 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-01-03
+
+### Changed
+
+- **Sonarr LXC**
+  - Breaking Change
+  - Complete recode
+  - https://github.com/tteck/Proxmox/discussions/1738#discussioncomment-8005107
+
 ## 2024-01-01
 
 ### Changed
