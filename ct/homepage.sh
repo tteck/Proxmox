@@ -53,6 +53,13 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/homepage ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+  if [[ "$(node -v | cut -d 'v' -f 2)" == "18."* ]]; then
+    if ! command -v npm >/dev/null 2>&1; then
+      echo "Installing NPM..."
+      apt-get install -y npm >/dev/null 2>&1
+      echo "Installed NPM..."
+    fi
+  fi
 RELEASE=$(curl -s https://api.github.com/repos/gethomepage/homepage/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 msg_info "Updating Homepage to v${RELEASE} (Patience)"
 systemctl stop homepage
