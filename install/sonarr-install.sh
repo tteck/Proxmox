@@ -19,6 +19,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y gnupg 
 $STD apt-get install -y ca-certificates
+$STD apt-get install -y sqlite3
 msg_ok "Installed Dependencies"
 
 read -r -p "Would you like to install v4 (experimental)? <y/N> " prompt
