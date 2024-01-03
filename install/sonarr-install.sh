@@ -17,29 +17,41 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y gnupg 
-$STD apt-get install -y ca-certificates
 $STD apt-get install -y sqlite3
 msg_ok "Installed Dependencies"
 
-read -r -p "Would you like to install v4 (experimental)? <y/N> " prompt
-msg_info "Installing Sonarr"
-wget -qO /etc/apt/trusted.gpg.d/sonarr-repo.asc "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2009837cbffd68f45bc180471f4f90de2a9b4bf8"
-echo "deb https://apt.sonarr.tv/debian testing-main main" >/etc/apt/sources.list.d/sonarr.list
-$STD apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" install -qqy sonarr &>/dev/null
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  systemctl stop sonarr.service
-  wget -q -O SonarrV4.tar.gz 'https://services.sonarr.tv/v1/download/develop/latest?version=4&os=linux'
-  tar -xzf SonarrV4.tar.gz
-  cp -r Sonarr/* /usr/lib/sonarr/bin
-  rm -rf Sonarr SonarrV4.tar.gz
-  sed -i 's|ExecStart=/usr/bin/mono --debug /usr/lib/sonarr/bin/Sonarr.exe -nobrowser -data=/var/lib/sonarr|ExecStart=/usr/lib/sonarr/bin/Sonarr -nobrowser -data=/var/lib/sonarr|' /lib/systemd/system/sonarr.service
-  sed -i 's/\(User=\|Group=\).*/\1root/' /lib/systemd/system/sonarr.service
-  systemctl daemon-reload
-  systemctl start sonarr.service
-fi
-msg_ok "Installed Sonarr"
+msg_info "Installing Sonarr v4"
+$STD groupadd media
+$STD adduser --system --no-create-home --ingroup media sonarr
+mkdir -p /var/lib/sonarr/
+chown -R sonarr:media /var/lib/sonarr/
+chmod 775 /var/lib/sonarr/
+wget -q -O SonarrV4.tar.gz 'https://services.sonarr.tv/v1/download/main/latest?version=4&os=linux&arch=x64'
+tar -xzf SonarrV4.tar.gz
+mv Sonarr /opt
+rm -rf SonarrV4.tar.gz
+
+msg_ok "Installed Sonarr v4"
+
+msg_info "Creating Service"
+cat <<EOF >/etc/systemd/system/sonarr.service
+[Unit]
+Description=Sonarr Daemon
+After=syslog.target network.target
+[Service]
+User=sonarr
+Group=media
+UMask=0002
+Type=simple
+ExecStart=/opt/Sonarr/Sonarr -nobrowser -data=/var/lib/sonarr/
+TimeoutStopSec=20
+KillMode=process
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now sonarr.service
+msg_ok "Created Service"
 
 motd_ssh
 customize
