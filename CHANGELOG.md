@@ -8,7 +8,7 @@
 
 ### Changed
 
-- **Commafeed LXC**
+- **CommaFeed LXC**
   - NEW Script
 
 ## 2024-01-03
