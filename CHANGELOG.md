@@ -1,6 +1,9 @@
+<div align="center">
+<img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo.png" height="100px" />
+</div>
+<h1 align="center">Change Log</h1>
 
-# Change Log
-**All notable changes to this project will be documented in this file.**<br>
+<h3 align="center">All notable changes to this project will be documented in this file.</h3>
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
