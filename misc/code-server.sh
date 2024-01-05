@@ -67,8 +67,7 @@ function msg_ok() {
 }
 
 msg_info "Installing Dependencies"
-apt-get install -y curl &>/dev/null
-apt-get install -y sudo &>/dev/null
+apt-get update &>/dev/null
 apt-get install -y git &>/dev/null
 msg_ok "Installed Dependencies"
 
