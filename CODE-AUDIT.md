@@ -3,7 +3,7 @@
 </div>
 <h2><div align="center">Exploring the Scripts and Steps Involved in an Application LXC Installation</div></h2>
 
-1) [adguard.sh](https://github.com/tteck/Proxmox/blob/main/ct/adguard.sh): This script collects system parameters.
+1) [adguard.sh](https://github.com/tteck/Proxmox/blob/main/ct/adguard.sh): This script collects system parameters. (Also holds the function to update the application.)
 2) [build.func](https://github.com/tteck/Proxmox/blob/main/misc/build.func): Adds user settings and integrates collected information.
 3) [create_lxc.sh](https://github.com/tteck/Proxmox/blob/main/ct/create_lxc.sh): Constructs the LXC container.
 4) [adguard-install.sh](https://github.com/tteck/Proxmox/blob/main/install/adguard-install.sh): Executes functions from [install.func](https://github.com/tteck/Proxmox/blob/main/misc/install.func), and installs the application.
