@@ -40,7 +40,10 @@ THIN="discard=on,ssd=1,"
 set -Eeuo pipefail
 trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 trap cleanup EXIT
+
 function error_handler() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local exit_code="$?"
   local line_number="$1"
   local command="$2"
@@ -69,17 +72,33 @@ else
   header_info && echo -e "⚠ User exited script \n" && exit
 fi
 
+function spinner() {
+  printf "\e[?25l"
+  spinner="/-\\|/-\\|"
+  spin_i=0
+  while true; do
+    printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
+    sleep 0.1
+  done
+}
+
 function msg_info() {
   local msg="$1"
-  echo -ne " ${HOLD} ${YW}${msg}..."
+  echo -ne " ${HOLD} ${YW}${msg}   "
+  spinner &
+  SPINNER_PID=$!
 }
 
 function msg_ok() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
 function msg_error() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
@@ -146,7 +165,7 @@ function default_settings() {
   MAC="$GEN_MAC"
   VLAN=""
   MTU=""
-  START_VM="yes"
+  START_VM="yws"
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
