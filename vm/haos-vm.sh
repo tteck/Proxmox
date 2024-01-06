@@ -165,7 +165,7 @@ function default_settings() {
   MAC="$GEN_MAC"
   VLAN=""
   MTU=""
-  START_VM="yws"
+  START_VM="yes"
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
