@@ -25,6 +25,8 @@ trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 
 # This function handles errors
 function error_handler() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local exit_code="$?"
   local line_number="$1"
   local command="$2"
@@ -32,20 +34,37 @@ function error_handler() {
   echo -e "\n$error_message\n"
 }
 
-# This function prints an informational message
-function msg_info() {
-  local msg="$1"
-  echo -ne " ${HOLD} ${YW}${msg}..."
+# This function displays a spinner.
+function spinner() {
+  printf "\e[?25l"
+  spinner="/-\\|/-\\|"
+  spin_i=0
+  while true; do
+    printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
+    sleep 0.1
+  done
 }
 
-# This function prints a success message
+# This function displays an informational message with a yellow color.
+function msg_info() {
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}   "
+  spinner &
+  SPINNER_PID=$!
+}
+
+# This function displays a success message with a green color.
 function msg_ok() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local msg="$1"
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-# This function prints an error message
+# This function displays a error message with a red color.
 function msg_error() {
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID; fi
+  printf "\e[?25h"
   local msg="$1"
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
