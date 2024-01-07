@@ -27,21 +27,24 @@ $STD apt-get install -y \
   zlib1g-dev \
   make \
   g++ \
-  python3 \
-  python3-pip \
   libreoffice-writer \
   libreoffice-calc \
   libreoffice-impress \
   unpaper \
   ocrmypdf
+msg_ok "Installed Dependencies"
 
+msg_info "Installing Python Dependencies"
+$STD apt-get install -y \
+  python3 \
+  python3-pip
 $STD pip3 install \
   uno \
   opencv-python-headless \
   unoconv \
   pngquant \
   WeasyPrint 
-msg_ok "Installed Dependencies"
+msg_ok "Installed Python Dependencies"
 
 msg_info "Installing Azul Zulu"
 wget -qO /etc/apt/trusted.gpg.d/zulu-repo.asc "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xB1998361219BD9C9"
@@ -60,16 +63,15 @@ $STD make
 $STD make install
 msg_ok "Installed JBIG2"
 
-msg_info "Installing Language Pack"
+msg_info "Installing Language Packs (All)"
 $STD apt-get install -y 'tesseract-ocr-*'
 msg_ok "Installed Language Pack"
 
-msg_info "Install Stirling-PDF"
+msg_info "Installing Stirling-PDF"
 $STD git clone https://github.com/Stirling-Tools/Stirling-PDF.git
 cd Stirling-PDF
 chmod +x ./gradlew
 $STD ./gradlew build
-
 mkdir -p /opt/Stirling-PDF
 touch /opt/Stirling-PDF/.env
 mv ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
@@ -92,7 +94,7 @@ Type=simple
 EnvironmentFile=/opt/Stirling-PDF/.env
 WorkingDirectory=/opt/Stirling-PDF
 ExecStart=/usr/bin/java -jar Stirling-PDF-0.19.0.jar
-ExecStop=/bin/kill -15 $MAINPID
+ExecStop=/bin/kill -15 %n
 
 [Install]
 WantedBy=multi-user.target
