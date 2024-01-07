@@ -65,7 +65,7 @@ msg_ok "Installed JBIG2"
 
 msg_info "Installing Language Packs (All)"
 $STD apt-get install -y 'tesseract-ocr-*'
-msg_ok "Installed Language Pack"
+msg_ok "Installed Language Packs"
 
 msg_info "Installing Stirling-PDF"
 $STD git clone https://github.com/Stirling-Tools/Stirling-PDF.git
