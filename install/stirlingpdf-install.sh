@@ -13,7 +13,7 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies"
+msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y \
   curl \
   sudo \
@@ -27,12 +27,16 @@ $STD apt-get install -y \
   zlib1g-dev \
   make \
   g++ \
-  libreoffice-writer \
-  libreoffice-calc \
-  libreoffice-impress \
   unpaper \
   ocrmypdf
 msg_ok "Installed Dependencies"
+
+msg_info "Installing LibreOffice Components"
+$STD apt-get install -y \
+  libreoffice-writer \
+  libreoffice-calc \
+  libreoffice-impress
+msg_ok "Installed LibreOffice Components"
 
 msg_info "Installing Python Dependencies"
 $STD apt-get install -y \
@@ -63,11 +67,11 @@ $STD make
 $STD make install
 msg_ok "Installed JBIG2"
 
-msg_info "Installing Language Packs (All)"
+msg_info "Installing Language Packs (Patience)"
 $STD apt-get install -y 'tesseract-ocr-*'
 msg_ok "Installed Language Packs"
 
-msg_info "Installing Stirling-PDF"
+msg_info "Installing Stirling-PDF (Additional Patience)"
 $STD git clone https://github.com/Stirling-Tools/Stirling-PDF.git
 cd Stirling-PDF
 chmod +x ./gradlew
