@@ -83,7 +83,7 @@ mv scripts /opt/Stirling-PDF/
 latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
 ln -s "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
 current_version=$(echo "$latest_version" | grep -oP '(?<=Stirling-PDF-)\d+(\.\d+)+(?=\.jar)')
-msg_ok "Installed Stirling-PDF version $current_version"
+msg_ok "Installed Stirling-PDF v$current_version"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/stirlingpdf.service
@@ -113,7 +113,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-# cd ~ && rm -rf Stirling-PDF  configs  customFiles  logs  zulu-repo_1.0.0-3_all.deb
+rm -rf /zulu-repo_1.0.0-3_all.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
