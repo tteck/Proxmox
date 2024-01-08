@@ -11,6 +11,8 @@
 
 ### Changed
 
+- **Stirling-PDF LXC**
+  - NEW Script
 - **SFTPGo LXC**
   - NEW Script
 
