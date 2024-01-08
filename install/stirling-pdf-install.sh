@@ -82,8 +82,7 @@ mkdir -p /opt/Stirling-PDF
 touch /opt/Stirling-PDF/.env
 mv ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
 mv scripts /opt/Stirling-PDF/
-latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
-ln -s "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
+ln -s /opt/Stirling-PDF/Stirling-PDF-$RELEASE.jar /opt/Stirling-PDF/Stirling-PDF.jar
 msg_ok "Installed Stirling-PDF v$RELEASE"
 
 msg_info "Creating Service"
