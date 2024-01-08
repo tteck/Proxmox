@@ -65,8 +65,7 @@ cp -r ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
 cp -r scripts /opt/Stirling-PDF/
 cd ~
 rm -rf Stirling-PDF-$RELEASE v$RELEASE.tar.gz
-latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
-ln -sf "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
+ln -sf /opt/Stirling-PDF/Stirling-PDF-$RELEASE.jar /opt/Stirling-PDF/Stirling-PDF.jar
 systemctl start stirlingpdf
 msg_ok "Updated ${APP} to v$RELEASE"
 exit
