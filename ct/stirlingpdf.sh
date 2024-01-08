@@ -64,7 +64,7 @@ cp -r scripts /opt/Stirling-PDF/
 cd ~
 rm -rf Stirling-PDF
 latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
-ln -s "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
+ln -sf "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
 new_version=$(echo "$latest_version" | grep -oP '(?<=Stirling-PDF-)\d+(\.\d+)+(?=\.jar)')
 systemctl start stirlingpdf
 msg_ok "Updated ${APP} to v$new_version"
