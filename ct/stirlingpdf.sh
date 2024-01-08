@@ -53,7 +53,21 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/Stirling-PDF ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+msg_info "Updating ${APP}"
+systemctl stop stirlingpdf
+git clone https://github.com/Stirling-Tools/Stirling-PDF.git
+cd Stirling-PDF
+chmod +x ./gradlew
+./gradlew build
+cp -r ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
+cp -r scripts /opt/Stirling-PDF/
+cd ~
+rm -rf Stirling-PDF
+latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
+ln -s "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
+new_version=$(echo "$latest_version" | grep -oP '(?<=Stirling-PDF-)\d+(\.\d+)+(?=\.jar)')
+systemctl start stirlingpdf
+msg_ok "Updated ${APP} to v$new_version"
 exit
 }
 
