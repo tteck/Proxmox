@@ -72,8 +72,10 @@ $STD apt-get install -y 'tesseract-ocr-*'
 msg_ok "Installed Language Packs"
 
 msg_info "Installing Stirling-PDF (Additional Patience)"
-$STD git clone https://github.com/Stirling-Tools/Stirling-PDF.git
-cd Stirling-PDF
+RELEASE=$(curl -s https://api.github.com/repos/Stirling-Tools/Stirling-PDF/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q https://github.com/Stirling-Tools/Stirling-PDF/archive/refs/tags/v$RELEASE.tar.gz
+tar -xzf v$RELEASE.tar.gz
+cd Stirling-PDF-$RELEASE
 chmod +x ./gradlew
 $STD ./gradlew build
 mkdir -p /opt/Stirling-PDF
@@ -82,8 +84,7 @@ mv ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
 mv scripts /opt/Stirling-PDF/
 latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
 ln -s "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
-current_version=$(echo "$latest_version" | grep -oP '(?<=Stirling-PDF-)\d+(\.\d+)+(?=\.jar)')
-msg_ok "Installed Stirling-PDF v$current_version"
+msg_ok "Installed Stirling-PDF v$RELEASE"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/stirlingpdf.service
@@ -113,7 +114,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf /zulu-repo_1.0.0-3_all.deb
+rm -rf v$RELEASE.tar.gz /zulu-repo_1.0.0-3_all.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
