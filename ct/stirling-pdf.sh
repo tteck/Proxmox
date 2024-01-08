@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="StirlingPDF"
+APP="Stirling-PDF"
 var_disk="8"
 var_cpu="2"
 var_ram="2048"
@@ -55,19 +55,20 @@ header_info
 if [[ ! -d /opt/Stirling-PDF ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 systemctl stop stirlingpdf
-git clone https://github.com/Stirling-Tools/Stirling-PDF.git
-cd Stirling-PDF
+RELEASE=$(curl -s https://api.github.com/repos/Stirling-Tools/Stirling-PDF/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+wget -q https://github.com/Stirling-Tools/Stirling-PDF/archive/refs/tags/v$RELEASE.tar.gz
+tar -xzf v$RELEASE.tar.gz
+cd Stirling-PDF-$RELEASE
 chmod +x ./gradlew
-./gradlew build
+./gradlew build &>/dev/null
 cp -r ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
 cp -r scripts /opt/Stirling-PDF/
 cd ~
-rm -rf Stirling-PDF
+rm -rf Stirling-PDF-$RELEASE v$RELEASE.tar.gz
 latest_version=$(ls -1 /opt/Stirling-PDF/Stirling-PDF-*.jar | sort -V | tail -n 1)
 ln -sf "$latest_version" /opt/Stirling-PDF/Stirling-PDF.jar
-new_version=$(echo "$latest_version" | grep -oP '(?<=Stirling-PDF-)\d+(\.\d+)+(?=\.jar)')
 systemctl start stirlingpdf
-msg_ok "Updated ${APP} to v$new_version"
+msg_ok "Updated ${APP} to v$RELEASE"
 exit
 }
 
