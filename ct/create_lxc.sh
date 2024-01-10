@@ -6,7 +6,7 @@
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 # This sets verbose mode if the global variable is set to "yes"
-if [ "$VERBOSE" == "yes" ]; then set -x; fi
+# if [ "$VERBOSE" == "yes" ]; then set -x; fi
 
 # This function sets color variables for formatting output in the terminal
 YW=$(echo "\033[33m")

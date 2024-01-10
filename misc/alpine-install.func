@@ -17,7 +17,6 @@ color() {
 
 verb_ip6() {
   if [ "$VERBOSE" = "yes" ]; then
-    set -x
     STD=""
   else STD="silent"; fi
   silent() { "$@" >/dev/null 2>&1; }

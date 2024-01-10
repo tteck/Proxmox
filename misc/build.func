@@ -481,7 +481,7 @@ start() {
 
 # This function collects user settings and integrates all the collected information.
 build_container() {
-  if [ "$VERB" == "yes" ]; then set -x; fi
+#  if [ "$VERB" == "yes" ]; then set -x; fi
 
   if [ "$CT_TYPE" == "1" ]; then
     FEATURES="keyctl=1,nesting=1"
