@@ -22,6 +22,7 @@ $STD apt-get install -y apt-transport-https
 $STD apt-get install -y alsa-utils
 $STD apt-get install -y libxext-dev
 $STD apt-get install -y fontconfig
+$STD apt-get install -y libva-drm2
 msg_ok "Installed Dependencies"
 
 msg_info "Installing AgentDVR"
