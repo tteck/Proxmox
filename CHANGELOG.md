@@ -14,7 +14,7 @@
 - **Apt-Cacher-NG LXC**
   - NEW Script
 - **New Feature**
-  - The option to utilize Apt-Cacher-NG (Advanced settings) when creating LXCs. The added functionality is expected to decrease bandwidth usage and expedite package installation and updates.
+  - The option to utilize Apt-Cacher-NG (Advanced settings) when creating LXCs. The added functionality is expected to decrease bandwidth usage and expedite package installation and updates. https://github.com/tteck/Proxmox/discussions/2332
 
 ## 2024-01-09
 
