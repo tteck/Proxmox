@@ -124,6 +124,7 @@ ssh_check() {
 # This function displays the default values for various settings.
 echo_default() {
   APT_CACHER=""
+  APT_CACHER_IP=""
   echo -e "${DGN}Using Distribution: ${BGN}$var_os${CL}"
   echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
   echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
@@ -511,11 +512,9 @@ build_container() {
     export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/alpine-install.func)"
   else
     export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
-  fi
-  if [ "$APT_CACHER" == "yes" ]; then
+
   export CACHER="$APT_CACHER"
   export CACHER_IP="$APT_CACHER_IP"
-  fi
   export tz="$timezone"
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
