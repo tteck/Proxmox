@@ -14,7 +14,7 @@
 - **Apt-Cacher-NG LXC**
   - NEW Script
 - **New Feature**
-  - The option to utilize Apt-Cacher-NG (Advanced settings) when creating LXCs. The added functionality is expected to reduce bandwidth usage and provide faster operating system updates.
+  - The option to utilize Apt-Cacher-NG (Advanced settings) when creating LXCs. The added functionality is expected to decrease bandwidth usage and expedite package installation and updates.
 
 ## 2024-01-09
 
