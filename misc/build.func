@@ -475,6 +475,7 @@ start() {
       echo -e "⚠  User exited script \n"
       exit
     fi
+    SPINNER_PID=""
     update_script
   fi
 }
