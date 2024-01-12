@@ -135,6 +135,7 @@ echo_default() {
   echo -e "${DGN}Using Bridge: ${BGN}vmbr0${CL}"
   echo -e "${DGN}Using Static IP Address: ${BGN}dhcp${CL}"
   echo -e "${DGN}Using Gateway Address: ${BGN}Default${CL}"
+  echo -e "${DGN}APT-Cacher IP: ${BGN}None${CL}"
   echo -e "${DGN}Disable IPv6: ${BGN}No${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   echo -e "${DGN}Using DNS Search Domain: ${BGN}Host${CL}"
@@ -340,6 +341,18 @@ advanced_settings() {
     echo -e "${DGN}Using Gateway IP Address: ${BGN}Default${CL}"
   fi
 
+  if APT_CACHER_IP=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set APT-Cacher IP (leave blank for default)" 8 58 --title "APT-Cacher IP" 3>&1 1>&2 2>&3); then
+    if [ -z "$APT_CACHER_IP" ]; then
+      APT_CACHER="no"
+      APT_CACHER_IP="None"
+    else
+      APT_CACHER="yes"
+    fi
+    echo -e "${DGN}Using APT-Cacher IP: ${BGN}$APT_CACHER_IP${CL}"
+  else
+    exit-script
+  fi
+
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
     DISABLEIP6="yes"
   else
@@ -498,6 +511,8 @@ build_container() {
   else
     export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
   fi
+  export CACHER="$APT_CACHER"
+  export CACHER_IP="$APT_CACHER_IP"
   export tz="$timezone"
   export DISABLEIPV6="$DISABLEIP6"
   export APPLICATION="$APP"
