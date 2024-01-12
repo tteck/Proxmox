@@ -131,9 +131,6 @@ network_check() {
 # This function updates the Container OS by running apt-get update and upgrade
 update_os() {
   msg_info "Updating Container OS"
-  if [[ "$CACHER" == "yes" ]]; then
-    echo "Acquire::http { Proxy \"http://${CACHER_IP}:3142\"; };" >/etc/apt/apt.conf.d/00aptproxy
-  fi
   $STD apt-get update
   $STD apt-get -o Dpkg::Options::="--force-confold" -y dist-upgrade
   msg_ok "Updated Container OS"
