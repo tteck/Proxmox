@@ -40,6 +40,8 @@ function default_settings() {
   BRG="vmbr0"
   NET="dhcp"
   GATE=""
+  APT_CACHER="no"
+  APT_CACHER_IP="none"
   DISABLEIP6="no"
   MTU=""
   SD=""
