@@ -123,8 +123,6 @@ ssh_check() {
 
 # This function displays the default values for various settings.
 echo_default() {
-  APT_CACHER=""
-  APT_CACHER_IP=""
   echo -e "${DGN}Using Distribution: ${BGN}$var_os${CL}"
   echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
   echo -e "${DGN}Using Container Type: ${BGN}$CT_TYPE${CL}"
