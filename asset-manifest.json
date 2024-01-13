@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Proxmox/static/css/main.bd770673.css",
+    "main.css": "/Proxmox/static/css/main.46c147fc.css",
     "main.js": "/Proxmox/static/js/main.6467e417.js",
     "index.html": "/Proxmox/index.html",
-    "main.bd770673.css.map": "/Proxmox/static/css/main.bd770673.css.map",
+    "main.46c147fc.css.map": "/Proxmox/static/css/main.46c147fc.css.map",
     "main.6467e417.js.map": "/Proxmox/static/js/main.6467e417.js.map"
   },
   "entrypoints": [
-    "static/css/main.bd770673.css",
+    "static/css/main.46c147fc.css",
     "static/js/main.6467e417.js"
   ]
 }
