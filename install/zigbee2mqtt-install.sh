@@ -37,7 +37,7 @@ $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
 msg_info "Setting up Zigbee2MQTT Repository"
-$STD git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
+$STD git clone --depth 1 https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
 msg_ok "Set up Zigbee2MQTT Repository"
 
 read -r -p "Switch to Edge/dev branch? (y/N) " prompt
