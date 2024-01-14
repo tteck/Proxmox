@@ -474,6 +474,7 @@ start() {
       echo -e "⚠  User exited script \n"
       exit
     fi
+    SPINNER_PID=""
     install_script
   fi
 
