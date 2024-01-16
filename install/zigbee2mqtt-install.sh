@@ -50,7 +50,9 @@ fi
 msg_info "Installing Zigbee2MQTT"
 cd /opt/zigbee2mqtt
 if [[ $DEV == "y" ]]; then
+$STD git fetch origin dev
 $STD git checkout dev
+$STD git pull
 fi
 $STD npm ci
 msg_ok "Installed Zigbee2MQTT"
