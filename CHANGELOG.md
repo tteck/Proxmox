@@ -7,6 +7,18 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-01-16
+
+### Changed
+
+- **Website Improvements**
+  - Refine and correct pointers.
+  - Change hover colors to intuitively indicate categories/items.
+  - Implement opening links in new tabs for better navigation.
+  - Enhance the Copy button to better indicate that the command has been successfully copied.
+  - Introduce a Clear Search button.
+  - While not directly related to the website, it's worth mentioning that the logo in newly created LXC notes now serves as a link to the website, conveniently opening in a new tab.
+
 ## 2024-01-12
 
 ### Changed
