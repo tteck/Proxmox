@@ -21,10 +21,7 @@ $STD apt-get install -y sqlite3
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Sonarr v4"
-$STD groupadd media
-$STD adduser --system --no-create-home --ingroup media sonarr
 mkdir -p /var/lib/sonarr/
-chown -R sonarr:media /var/lib/sonarr/
 chmod 775 /var/lib/sonarr/
 wget -q -O SonarrV4.tar.gz 'https://services.sonarr.tv/v1/download/main/latest?version=4&os=linux&arch=x64'
 tar -xzf SonarrV4.tar.gz
@@ -39,9 +36,6 @@ cat <<EOF >/etc/systemd/system/sonarr.service
 Description=Sonarr Daemon
 After=syslog.target network.target
 [Service]
-User=sonarr
-Group=media
-UMask=0002
 Type=simple
 ExecStart=/opt/Sonarr/Sonarr -nobrowser -data=/var/lib/sonarr/
 TimeoutStopSec=20
