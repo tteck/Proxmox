@@ -28,6 +28,24 @@ $STD apt-get update
 $STD apt-get install -y hyperhdr
 msg_ok "Installed HyperHDR"
 
+msg_info "Creating Service"
+cat <<EOF >/etc/systemd/system/hyperhdr.service
+[Unit]
+Description=HyperHDR Service
+After=syslog.target network.target
+
+[Service]
+Restart=on-failure
+RestartSec=5
+Type=simple
+ExecStart=/usr/bin/hyperhdr
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now hyperhdr
+msg_ok "Created Service"
+
 motd_ssh
 customize
 
