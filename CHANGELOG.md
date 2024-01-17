@@ -13,6 +13,8 @@
 
 - **ntfy LXC**
   - NEW Script
+- **HyperHDR LXC**
+  - NEW Script
 
 ## 2024-01-16
 
