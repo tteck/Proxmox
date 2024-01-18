@@ -17,8 +17,14 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y openjdk-8-jdk
 msg_ok "Installed Dependencies"
+
+msg_info "Installing OpenJDK"
+wget -qO- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor >/etc/apt/trusted.gpg.d/adoptium.gpg
+echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/adoptium.gpg] https://packages.adoptium.net/artifactory/deb bookworm main' >/etc/apt/sources.list.d/adoptium.list
+$STD apt-get update
+$STD apt-get install -y temurin-8-jdk
+msg_ok "Installed OpenJDK"
 
 
 msg_info "Installing Cassandra"
