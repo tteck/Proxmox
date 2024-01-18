@@ -797,7 +797,7 @@ ssl_storage_port: 7001
 #
 # Setting listen_address to 0.0.0.0 is always wrong.
 #
-listen_address: 0.0.0.0
+listen_address: 
 
 # Set listen_address OR listen_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
@@ -893,7 +893,7 @@ native_transport_allow_older_protocols: true
 # set broadcast_rpc_address to a value other than 0.0.0.0.
 #
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
-rpc_address: localhost
+rpc_address: 0.0.0.0
 
 # Set rpc_address OR rpc_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
@@ -1880,3 +1880,8 @@ msg_ok "Created Service"
 
 motd_ssh
 customize
+
+msg_info "Cleaning up"
+$STD apt-get autoremove
+$STD apt-get autoclean
+msg_ok "Cleaned"
