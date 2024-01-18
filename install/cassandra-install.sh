@@ -811,7 +811,7 @@ listen_address:
 
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address
-broadcast_address: 1.2.3.4
+#broadcast_address: 1.2.3.4
 
 # When using multiple physical network interfaces, set this
 # to true to listen on broadcast_address in addition to
@@ -909,7 +909,7 @@ rpc_address: 0.0.0.0
 # be set to 0.0.0.0. If left blank, this will be set to the value of
 # rpc_address. If rpc_address is set to 0.0.0.0, broadcast_rpc_address must
 # be set.
-# broadcast_rpc_address: 1.2.3.4
+broadcast_rpc_address: 1.2.3.4
 
 # enable or disable keepalive on rpc/native connections
 rpc_keepalive: true
