@@ -811,7 +811,7 @@ listen_address:
 
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address
-# broadcast_address: 1.2.3.4
+broadcast_address: 1.2.3.4
 
 # When using multiple physical network interfaces, set this
 # to true to listen on broadcast_address in addition to
