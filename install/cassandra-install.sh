@@ -19,9 +19,10 @@ msg_ok "Installed Dependencies"
 
 
 msg_info "Installing Cassandra"
-mkdir /opt/cassandra && cd /opt/cassandra
+cd /opt
 wget -q https://dlcdn.apache.org/cassandra/4.1.3/apache-cassandra-4.1.3-bin.tar.gz
 $STD tar -xvzf apache-cassandra-4.1.3-bin.tar.gz
+mv apache-cassandra-4.1.3 cassandra
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/cassandra.service
 [Unit]
