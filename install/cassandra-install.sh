@@ -34,8 +34,7 @@ cd /opt
 wget -q https://dlcdn.apache.org/cassandra/4.1.3/apache-cassandra-4.1.3-bin.tar.gz
 $STD tar -xvzf apache-cassandra-4.1.3-bin.tar.gz
 mv apache-cassandra-4.1.3 cassandra
-cat <<EOF > /opt/cassandra/conf/cassandra.yaml
-
+cat <<EOF >/opt/cassandra/conf/cassandra.yaml
 # Cassandra storage config YAML
 
 # NOTE:
