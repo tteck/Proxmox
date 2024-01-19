@@ -75,7 +75,7 @@ fi
 
 function spinner() {
   printf "\e[?25l"
-  spinner="/-\\|/-\\|"
+  spinner="◐◓◑◒"
   spin_i=0
   while true; do
     printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
