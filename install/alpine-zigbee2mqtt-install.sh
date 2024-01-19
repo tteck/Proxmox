@@ -23,7 +23,11 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Alpine-Zigbee2MQTT"
 $STD apk add zigbee2mqtt
-sed -i -e 's/#datadir="\/var\/lib\/zigbee2mqtt"/datadir="\/etc\/zigbee2mqtt"/' -e 's/#command_user="zigbee2mqtt"/command_user="zigbee2mqtt"/' /etc/conf.d/zigbee2mqtt
+mkdir -p /root/.z2m
+ln -s /etc/zigbee2mqtt/ /root/.z2m
+chown -R root:root /etc/zigbee2mqtt /root/.z2m
+sed -i -e 's/#datadir="\/var\/lib\/zigbee2mqtt"/datadir="\/etc\/zigbee2mqtt"/' -e 's/#command_user="zigbee2mqtt"/command_user="root"/' /etc/conf.d/zigbee2mqtt
+$STD rc-update add zigbee2mqtt
 $STD rc-service zigbee2mqtt restart
 msg_ok "Installed Alpine-Zigbee2MQTT"
 
