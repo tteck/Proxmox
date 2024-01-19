@@ -136,6 +136,7 @@ function update_script() {
   msg_info "Building Frontend"
   cd ./frontend
   export NODE_ENV=development
+  yarn add -D sass-loader@10.5.2 &>/dev/null
   yarn install --network-timeout=30000 &>/dev/null
   yarn build &>/dev/null
   cp -r dist/* /app/frontend
