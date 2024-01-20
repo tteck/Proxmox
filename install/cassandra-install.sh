@@ -29,10 +29,14 @@ $STD apt-get install -y temurin-8-jdk
 msg_ok "Installed OpenJDK"
 
 msg_info "Installing Cassandra"
-release=$(curl -s https://cassandra.apache.org/_/download.html | grep -oP '(?<=/cassandra/)[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
-wget -qO- https://dlcdn.apache.org/cassandra/$release/apache-cassandra-${release}-bin.tar.gz | tar -xz -C /opt
-mv /opt/apache-cassandra-${release} /opt/cassandra
-sed -i -e 's/^rpc_address: localhost/#rpc_address: localhost/g' -e 's/^# rpc_interface: eth1/rpc_interface: eth0/g' /opt/cassandra/conf/cassandra.yaml
+#release=$(curl -s https://cassandra.apache.org/_/download.html | grep -oP '(?<=/cassandra/)[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
+#wget -qO- https://dlcdn.apache.org/cassandra/$release/apache-cassandra-${release}-bin.tar.gz | tar -xz -C /opt
+#mv /opt/apache-cassandra-${release} /opt/cassandra
+#sed -i -e 's/^rpc_address: localhost/#rpc_address: localhost/g' -e 's/^# rpc_interface: eth1/rpc_interface: eth0/g' /opt/cassandra/conf/cassandra.yaml
+wget -qO- https://downloads.apache.org/cassandra/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/cassandra.gpg
+echo "deb https://debian.cassandra.apache.org 41x main" >/etc/apt/sources.list.d/cassandra.sources.list
+$STD apt-get update
+$STD apt-get cassandra cassandra-tools
 msg_ok "Installed Cassandra"
 
 msg_info "Creating Service"
