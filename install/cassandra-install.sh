@@ -893,11 +893,11 @@ native_transport_allow_older_protocols: true
 # set broadcast_rpc_address to a value other than 0.0.0.0.
 #
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
-rpc_address: 0.0.0.0
+# rpc_address: 0.0.0.0
 
 # Set rpc_address OR rpc_interface, not both. Interfaces must correspond
 # to a single address, IP aliasing is not supported.
-# rpc_interface: eth1
+rpc_interface: eth0
 
 # If you choose to specify the interface by name and the interface has an ipv4 and an ipv6 address
 # you can specify which should be chosen using rpc_interface_prefer_ipv6. If false the first ipv4
@@ -909,7 +909,7 @@ rpc_address: 0.0.0.0
 # be set to 0.0.0.0. If left blank, this will be set to the value of
 # rpc_address. If rpc_address is set to 0.0.0.0, broadcast_rpc_address must
 # be set.
-broadcast_rpc_address: 1.2.3.4
+#broadcast_rpc_address: 0.0.0.0
 
 # enable or disable keepalive on rpc/native connections
 rpc_keepalive: true
