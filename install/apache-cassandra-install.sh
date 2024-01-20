@@ -28,13 +28,13 @@ $STD apt-get update
 $STD apt-get install -y temurin-11-jdk
 msg_ok "Installed OpenJDK"
 
-msg_info "Installing Cassandra"
+msg_info "Installing Apache Cassandra"
 wget -qO- https://downloads.apache.org/cassandra/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/cassandra.gpg
 echo "deb https://debian.cassandra.apache.org 41x main" >/etc/apt/sources.list.d/cassandra.sources.list
 $STD apt-get update
 $STD apt-get install -y cassandra cassandra-tools
 sed -i -e 's/^rpc_address: localhost/#rpc_address: localhost/g' -e 's/^# rpc_interface: eth1/rpc_interface: eth0/g' /etc/cassandra/cassandra.yaml
-msg_ok "Installed Cassandra"
+msg_ok "Installed Apache Cassandra"
 
 motd_ssh
 customize
