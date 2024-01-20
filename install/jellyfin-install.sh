@@ -31,6 +31,7 @@ if [[ "$CTTYPE" == "0" ]]; then
   $STD apt-get install -y intel-opencl-icd
   fi
   chgrp video /dev/dri
+  chgrp render /dev/dri/renderD128
   chmod 755 /dev/dri
   chmod 660 /dev/dri/*
   $STD adduser $(id -u -n) video
