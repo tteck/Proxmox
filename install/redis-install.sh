@@ -27,7 +27,9 @@ curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyr
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 $STD apt-get update
 $STD apt-get install -y redis
-systemctl enable -q --now redis.service
+sed -i 's/^bind .*/bind 0.0.0.0/' /etc/redis/redis.conf
+systemctl enable -q redis-server.service
+systemctl restart -q redis-server.service
 msg_ok "Installed Redis"
 
 motd_ssh
