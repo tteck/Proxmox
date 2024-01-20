@@ -37,25 +37,8 @@ sed -i -e 's/^rpc_address: localhost/#rpc_address: localhost/g' -e 's/^# rpc_int
 msg_ok "Installed Cassandra"
 
 msg_info "Creating Service"
-cat <<EOF >/etc/systemd/system/cassandra.service
-[Unit]
-Description=Cassandra
-After=network.target
 
-[Service]
-PIDFile=/tmp/cassandra.pid
-ExecStart=/opt/cassandra/bin/cassandra -p /tmp/cassandra.pid -R
-StandardOutput=append:/tmp/cassandra.log
-StandardError=append:/tmp/cassandra-error.log
-LimitNOFILE=100000
-LimitMEMLOCK=infinity
-LimitNPROC=32768
-LimitAS=infinity
-
-[Install]
-WantedBy=default.target
-EOF
-systemctl enable -q --now cassandra.service
+#systemctl enable -q --now cassandra.service
 msg_ok "Created Service"
 
 motd_ssh
