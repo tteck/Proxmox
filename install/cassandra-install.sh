@@ -18,7 +18,7 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y apt-transport-https
-$STD apt-get install -y gnupg
+$STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing OpenJDK"
@@ -35,11 +35,6 @@ $STD apt-get update
 $STD apt-get install -y cassandra cassandra-tools
 sed -i -e 's/^rpc_address: localhost/#rpc_address: localhost/g' -e 's/^# rpc_interface: eth1/rpc_interface: eth0/g' /etc/cassandra/cassandra.yaml
 msg_ok "Installed Cassandra"
-
-msg_info "Creating Service"
-
-#systemctl enable -q --now cassandra.service
-msg_ok "Created Service"
 
 motd_ssh
 customize
