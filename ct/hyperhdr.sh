@@ -8,18 +8,19 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-   ____                      __     
-  / __ \____ ___  ____ _____/ /___ _
- / / / / __  __ \/ __  / __  / __  /
-/ /_/ / / / / / / /_/ / /_/ / /_/ / 
-\____/_/ /_/ /_/\__,_/\__,_/\__,_/  
- 
+    __  __                      __  ______  ____
+   / / / /_  ______  ___  _____/ / / / __ \/ __ \
+  / /_/ / / / / __ \/ _ \/ ___/ /_/ / / / / /_/ /
+ / __  / /_/ / /_/ /  __/ /  / __  / /_/ / _, _/
+/_/ /_/\__, / .___/\___/_/  /_/ /_/_____/_/ |_|
+      /____/_/
+
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Omada"
-var_disk="8"
+APP="HyperHDR"
+var_disk="4"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
@@ -39,8 +40,6 @@ function default_settings() {
   BRG="vmbr0"
   NET="dhcp"
   GATE=""
-  APT_CACHER=""
-  APT_CACHER_IP=""
   DISABLEIP6="no"
   MTU=""
   SD=""
@@ -54,18 +53,11 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/tplink ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-latest_url=$(curl -fsSL "https://www.tp-link.com/us/support/download/omada-software-controller/" | grep -o 'https://.*x64.deb' | head -n1)
-latest_version=$(basename "${latest_url}")
-if [ -z "${latest_version}" ]; then
-  msg_error "It seems that the server (tp-link.com) might be down. Please try again at a later time."
-  exit
-fi
-echo -e "Updating Omada Controller"
-wget -qL ${latest_url}
-dpkg -i ${latest_version}
-rm -rf ${latest_version}
-echo -e "Updated Omada Controller"
+if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating $APP LXC"
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
+msg_ok "Updated $APP LXC"
 exit
 }
 
@@ -75,4 +67,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}https://${IP}:8043${CL} \n"
+         ${BL}http://${IP}:8090${CL} \n"

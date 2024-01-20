@@ -95,7 +95,7 @@ uninstall() {
 }
 
 if ! pveversion | grep -Eq "pve-manager/(8\.[0-9])"; then
-  msg_error "This version of Proxmox Virtual Environment is not supported"
+  echo -e "This version of Proxmox Virtual Environment is not supported"
   echo -e "Requires PVE Version 8.0 or higher"
   echo -e "Exiting..."
   sleep 2

@@ -134,6 +134,7 @@ msg_ok "Set up Enviroment"
 msg_info "Building Frontend"
 cd ./frontend
 export NODE_ENV=development
+$STD yarn add -D sass-loader@10.5.2
 $STD yarn install --network-timeout=30000
 $STD yarn build
 cp -r dist/* /app/frontend
