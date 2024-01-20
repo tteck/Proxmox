@@ -29,7 +29,6 @@ $STD apt-get install -y temurin-8-jdk
 msg_ok "Installed OpenJDK"
 
 msg_info "Installing Cassandra"
-cd /opt
 release=$(curl -s https://cassandra.apache.org/_/download.html | grep -oP '(?<=/cassandra/)[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
 wget -qO- https://dlcdn.apache.org/cassandra/$release/apache-cassandra-${release}-bin.tar.gz | tar -xz -C /opt
 mv /opt/apache-cassandra-${release} /opt/cassandra
