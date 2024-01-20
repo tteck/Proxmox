@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/madhur/Proxmox/redis/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
@@ -13,7 +13,6 @@ cat <<"EOF"
   / /_/ / _ \/ __  / / ___/
  / _, _/  __/ /_/ / (__  ) 
 /_/ |_|\___/\__,_/_/____/  
-                           
 
 EOF
 }
@@ -56,7 +55,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /etc/systemd/system/redis.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -f /lib/systemd/system/redis-server.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_error "There is currently no update path available."
 exit
 }
