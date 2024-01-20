@@ -21,12 +21,12 @@ $STD apt-get install -y apt-transport-https
 $STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
-msg_info "Installing OpenJDK"
+msg_info "Installing Eclipse Temurin"
 wget -qO- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor >/etc/apt/trusted.gpg.d/adoptium.gpg
 echo 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/adoptium.gpg] https://packages.adoptium.net/artifactory/deb bookworm main' >/etc/apt/sources.list.d/adoptium.list
 $STD apt-get update
-$STD apt-get install -y temurin-11-jdk
-msg_ok "Installed OpenJDK"
+$STD apt-get install -y temurin-11-jdk-headless
+msg_ok "Installed Eclipse Temurin"
 
 msg_info "Installing Apache Cassandra"
 wget -qO- https://downloads.apache.org/cassandra/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/cassandra.gpg
