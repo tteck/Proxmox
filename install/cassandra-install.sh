@@ -36,7 +36,7 @@ msg_info "Installing Cassandra"
 wget -qO- https://downloads.apache.org/cassandra/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/cassandra.gpg
 echo "deb https://debian.cassandra.apache.org 41x main" >/etc/apt/sources.list.d/cassandra.sources.list
 $STD apt-get update
-$STD apt-get cassandra cassandra-tools
+$STD apt-get install cassandra cassandra-tools
 msg_ok "Installed Cassandra"
 
 msg_info "Creating Service"
