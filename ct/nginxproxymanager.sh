@@ -129,11 +129,17 @@ function update_script() {
   python3 -m pip install --no-cache-dir certbot-dns-cloudflare &>/dev/null
   msg_ok "Setup Enviroment"
 
+  if ! command -v pnpm &> /dev/null; then  
+    msg_info "Installing pnpm"
+    npm install -g pnpm &>/dev/null
+    msg_ok "Installed pnpm"
+  fi
+  
   msg_info "Building Frontend"
   cd ./frontend
-  yarn install &>/dev/null
-  yarn upgrade &>/dev/null
-  yarn build &>/dev/null
+  pnpm install &>/dev/null
+  pnpm upgrade &>/dev/null
+  pnpm run build &>/dev/null
   cp -r dist/* /app/frontend
   cp -r app-images/* /app/frontend/images
   msg_ok "Built Frontend"
@@ -156,8 +162,7 @@ function update_script() {
 EOF
   fi
   cd /app
-  export NODE_ENV=development
-  yarn install --network-timeout=30000 &>/dev/null
+  pnpm install &>/dev/null
   msg_ok "Initialized Backend"
 
   msg_info "Starting Services"
@@ -168,7 +173,7 @@ EOF
   msg_ok "Started Services"
 
   msg_info "Cleaning up"
-  rm -rf ~/nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
+  rm -rf ~/nginx-proxy-manager-*
   msg_ok "Cleaned"
 
   msg_ok "Updated Successfully"
