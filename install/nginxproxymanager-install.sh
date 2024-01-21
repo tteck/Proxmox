@@ -54,15 +54,15 @@ $STD apt-get -y install openresty
 msg_ok "Installed Openresty"
 
 msg_info "Installing Node.js"
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
 source ~/.bashrc
-$STD nvm install 16.20.1
-ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
+$STD nvm install 16.20.2
+ln -sf /root/.nvm/versions/node/v16.20.2/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
-msg_info "Installing Yarn"
-$STD npm install -g yarn
-msg_ok "Installed Yarn"
+msg_info "Installing pnpm"
+$STD npm install -g pnpm
+msg_ok "Installed pnpm"
 
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
   grep "tag_name" |
@@ -129,9 +129,9 @@ msg_ok "Set up Enviroment"
 
 msg_info "Building Frontend"
 cd ./frontend
-$STD yarn install
-$STD yarn upgrade
-$STD yarn build
+$STD pnpm install
+$STD pnpm upgrade
+$STD pnpm run build
 cp -r dist/* /app/frontend
 cp -r app-images/* /app/frontend/images
 msg_ok "Built Frontend"
@@ -154,8 +154,7 @@ if [ ! -f /app/config/production.json ]; then
 EOF
 fi
 cd /app
-export NODE_ENV=development
-$STD yarn install --network-timeout=30000
+$STD pnpm install
 msg_ok "Initialized Backend"
 
 msg_info "Creating Service"
@@ -189,7 +188,7 @@ systemctl enable -q --now npm
 msg_ok "Started Services"
 
 msg_info "Cleaning up"
-rm -rf ../nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
+rm -rf ../nginx-proxy-manager-*
 systemctl restart openresty
 $STD apt-get autoremove
 $STD apt-get autoclean
