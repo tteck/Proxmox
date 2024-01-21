@@ -86,8 +86,8 @@ function update_script() {
   ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
   ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
   ln -sf /usr/local/openresty/nginx/ /etc/nginx
-  sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
-  sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
+  sed -i "s|\"version\": \"0.0.0\"|\"version\": \"$RELEASE\"|" backend/package.json
+  sed -i "s|\"version\": \"0.0.0\"|\"version\": \"$RELEASE\"|" frontend/package.json
   sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
   NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
   for NGINX_CONF in $NGINX_CONFS; do
@@ -126,18 +126,13 @@ function update_script() {
   mkdir -p /app/global /app/frontend/images
   cp -r backend/* /app
   cp -r global/* /app/global
-  wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-noarch.tar.xz"
-  wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-x86_64.tar.xz"
-  tar -C / -Jxpf s6-overlay-noarch.tar.xz
-  tar -C / -Jxpf s6-overlay-x86_64.tar.xz
   python3 -m pip install --no-cache-dir certbot-dns-cloudflare &>/dev/null
   msg_ok "Setup Enviroment"
 
   msg_info "Building Frontend"
   cd ./frontend
-  export NODE_ENV=development
-  yarn add -D sass-loader@10.5.2 &>/dev/null
-  yarn install --network-timeout=30000 &>/dev/null
+  yarn install &>/dev/null
+  yarn upgrade &>/dev/null
   yarn build &>/dev/null
   cp -r dist/* /app/frontend
   cp -r app-images/* /app/frontend/images
@@ -186,5 +181,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:81${CL} 
-         ${RD}Reboot LXC if no GUI${CL}\n"
+         ${BL}http://${IP}:81${CL}\n"
