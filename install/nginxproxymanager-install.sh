@@ -79,8 +79,8 @@ ln -sf /usr/bin/certbot /opt/certbot/bin/certbot
 ln -sf /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx
 ln -sf /usr/local/openresty/nginx/ /etc/nginx
 
-sed -i "s+0.0.0+${RELEASE}+g" backend/package.json
-sed -i "s+0.0.0+${RELEASE}+g" frontend/package.json
+sed -i "s|\"version\": \"0.0.0\"|\"version\": \"$RELEASE\"|" backend/package.json
+sed -i "s|\"version\": \"0.0.0\"|\"version\": \"$RELEASE\"|" frontend/package.json
 
 sed -i 's+^daemon+#daemon+g' docker/rootfs/etc/nginx/nginx.conf
 NGINX_CONFS=$(find "$(pwd)" -type f -name "*.conf")
@@ -125,17 +125,12 @@ fi
 mkdir -p /app/global /app/frontend/images
 cp -r backend/* /app
 cp -r global/* /app/global
-wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-noarch.tar.xz"
-wget -q "https://github.com/just-containers/s6-overlay/releases/download/v3.1.5.0/s6-overlay-x86_64.tar.xz"
-tar -C / -Jxpf s6-overlay-noarch.tar.xz
-tar -C / -Jxpf s6-overlay-x86_64.tar.xz
 msg_ok "Set up Enviroment"
 
 msg_info "Building Frontend"
 cd ./frontend
-export NODE_ENV=development
-$STD yarn add -D sass-loader@10.5.2
-$STD yarn install --network-timeout=30000
+$STD yarn install
+$STD yarn upgrade
 $STD yarn build
 cp -r dist/* /app/frontend
 cp -r app-images/* /app/frontend/images
@@ -189,12 +184,13 @@ customize
 msg_info "Starting Services"
 sed -i 's/user npm/user root/g; s/^pid/#pid/g' /usr/local/openresty/nginx/conf/nginx.conf
 sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' /opt/certbot/pyvenv.cfg
-$STD systemctl enable --now openresty
-$STD systemctl enable --now npm
+systemctl enable -q --now openresty
+systemctl enable -q --now npm
 msg_ok "Started Services"
 
 msg_info "Cleaning up"
 rm -rf ../nginx-proxy-manager-* s6-overlay-noarch.tar.xz s6-overlay-x86_64.tar.xz
+systemctl restart openresty
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
