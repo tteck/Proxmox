@@ -55,7 +55,19 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/commafeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+msg_info "Stopping CommaFeed"
+systemctl stop commafeed
+msg_ok "Stopped CommaFeed"
+
+msg_info "Updating CommaFeed"
+cd /opt/commafeed
+rm commafeed.jar
+wget -q https://github.com/Athou/commafeed/releases/latest/download/commafeed.jar
+msg_ok "Updated CommaFeed"
+
+msg_info "Starting CommaFeed"
+systemctl start commafeed
+msg_ok "Update Completed Successfully"
 exit
 }
 
