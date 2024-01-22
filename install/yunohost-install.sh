@@ -24,6 +24,7 @@ $STD apt-get install -y ca-certificates
 msg_ok "Installed Dependencies"
 
 msg_info "Installing YunoHost (Patience)"
+touch /etc/.pve-ignore.resolv.conf
 curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
 $STD bash <(curl -fsSL https://install.yunohost.org) -a
 msg_ok "Installed YunoHost"
