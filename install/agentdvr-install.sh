@@ -36,7 +36,7 @@ chmod +x ./Agent
 msg_ok "Installed AgentDVR"
 
 msg_info "Creating Service"
-cat <<EOF >/etc/systemd/system/agentdvr.service
+cat <<EOF >/etc/systemd/system/AgentDVR.service
 [Unit]
 Description=AgentDVR
 
@@ -51,7 +51,7 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable -q --now agentdvr.service
+systemctl enable -q --now AgentDVR.service
 msg_ok "Created Service"
 
 motd_ssh
