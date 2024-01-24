@@ -7,7 +7,7 @@ body:
         **IMPORTANT:** Failure to comply with the following guidelines may result in immediate closure.
         - Prior to submitting, kindly search the closed issues to check if the problem you are reporting has already been addressed and resolved. If you come across a closed issue that pertains to your problem, please leave a comment on that issue instead of creating a new one.
         - If the default Linux distribution is not adhered to, script support will be discontinued.
-        - When encountering the error message `[ERROR] in line 24: exit code *: while executing command "$@" > /dev/null 2>&1`, make sure to run the script in verbose mode to accurately determine the underlying issue.
+        - When encountering the error message `[ERROR] in line 23: exit code *: while executing command "$@" > /dev/null 2>&1`, make sure to run the script in verbose mode to accurately determine the underlying issue.
         - For suggestions, questions or feature/script requests, please share them in the [Discussions section.](https://github.com/tteck/Proxmox/discussions)
   - type: input
     id: guidelines
