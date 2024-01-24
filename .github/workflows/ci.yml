@@ -21,11 +21,3 @@ jobs:
         registry-url: https://registry.npmjs.org/
         cache: npm
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build and test
-      run: npm run build
-
-    - name: Deploy to GitHub Pages
-      run: npm run deploy -- -m "Update GitHub Pages"
