@@ -2,12 +2,13 @@ name: CI
 
 on:
   push:
-    branches:
-      - gh-pages
+    branches: [ "gh-pages" ]
+
+  workflow_dispatch:
 
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v3
