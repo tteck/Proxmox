@@ -25,9 +25,9 @@ mkdir -p "$(dirname "$DOCKER_CONFIG_PATH")"
 echo -e '{\n  "log-driver": "journald"\n}' > "$DOCKER_CONFIG_PATH"
 cd /opt
 wget -q https://raw.githubusercontent.com/runtipi/runtipi/master/scripts/install.sh
-sed -i -e '/newgrp docker/d' -e '/exit 0/d' install.sh
 chmod +x install.sh
 $STD ./install.sh
+chmod 666 /opt/runtipi/state/settings.json
 msg_ok "Installed Runtipi"
 
 motd_ssh
