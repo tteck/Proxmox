@@ -28,6 +28,7 @@ curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
 echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/7.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 $STD apt-get update
 $STD apt install -y mongodb-org
+sed -i 's/127\.0\.0\.1/0.0.0.0/g' /etc/mongod.conf
 systemctl enable -q --now mongod.service
 msg_ok "Installed MongoDB"
 
