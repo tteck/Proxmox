@@ -57,6 +57,8 @@ header_info
 if [[ ! -f /etc/systemd/system/changedetection.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP} LXC"
 pip3 install changedetection.io --upgrade &>/dev/null
+# https://github.com/dgtlmoon/changedetection.io/blob/d31a45d49a3d50aff4c103aee47f75c598ca3ad4/Dockerfile#L28
+pip3 install playwright~=1.40 --upgrade &>/dev/null
 msg_ok "Updated Successfully"
 exit
 }
