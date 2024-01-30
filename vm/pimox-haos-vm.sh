@@ -71,6 +71,11 @@ function cleanup() {
 }
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
+if ! command -v whiptail &> /dev/null; then
+    echo "Installing whiptail..."
+    apt-get update &>/dev/null
+    apt-get install -y whiptail &>/dev/null
+fi
 if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "PiMox HAOS VM" --yesno "This will create a New PiMox HAOS VM. Proceed?" 10 58); then
   echo "User selected Yes"
 else
