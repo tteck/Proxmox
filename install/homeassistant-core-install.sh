@@ -13,7 +13,7 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies, (Patience)"
+msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y \
   git \
   curl \
@@ -43,38 +43,35 @@ $STD apt-get install -y \
   python3-dev \
   python3-pip \
   python3-venv
-
 msg_ok "Updated Python3"
 
-if [[ "$PCT_OSVERSION" == "11" ]]; then
-  msg_info "Installing pyenv"
-  $STD apt-get install -y \
-    make \
-    libreadline-dev \
-    libsqlite3-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    xz-utils \
-    tk-dev \
-    llvm \
-    libbz2-dev \
-    libxml2-dev \
-    libxmlsec1-dev \
-    liblzma-dev
-  $STD git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  set +e
-  echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.bashrc
-  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.bashrc
-  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >>~/.bashrc
-  msg_ok "Installed pyenv"
-  . ~/.bashrc
+msg_info "Installing pyenv"
+$STD apt-get install -y \
+  make \
+  libreadline-dev \
+  libsqlite3-dev \
+  libncurses5-dev \
+  libncursesw5-dev \
+  xz-utils \
+  tk-dev \
+  llvm \
+  libbz2-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  liblzma-dev
+$STD git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+set +e
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >>~/.bashrc
+msg_ok "Installed pyenv"
+. ~/.bashrc
 
-  set -e
-  msg_info "Installing Python 3.11.3 (Patience)"
-  $STD pyenv install 3.11.3
-  pyenv global 3.11.3
-  msg_ok "Installed Python 3.11.3"
-fi
+set -e
+msg_info "Installing Python 3.12.1 (Patience)"
+$STD pyenv install 3.12.1
+pyenv global 3.12.1
+msg_ok "Installed Python 3.12.1"
 
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
