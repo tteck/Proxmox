@@ -112,21 +112,50 @@ setting_up_container() {
 network_check() {
   set +e
   trap - ERR
-  if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then msg_ok "Internet Connected"; else
-    msg_error "Internet NOT Connected"
-    read -r -p "Would you like to continue anyway? <y/N> " prompt
-    if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-      echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
+
+  while true; do
+    if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then
+      msg_ok "Internet Connected"
+      break
     else
-      echo -e " 🖧  Check Network Settings"
-      exit 1
+      msg_error "Internet NOT Connected"
+      echo "Choose an option:"
+      echo "1) Continue without internet"
+      echo "2) Retest for internet connection"
+      echo "3) Abort"
+      read -r -p "Enter your choice (1/2/3): " choice
+
+      case $choice in
+        1)
+          echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
+          break
+          ;;
+        2)
+          echo "Retesting internet connection..."
+          continue
+          ;;
+        3)
+          echo -e " 🖧  Check Network Settings"
+          exit 1
+          ;;
+        *)
+          echo "Invalid option. Please enter 1, 2, or 3."
+          ;;
+      esac
     fi
-  fi
+  done
+
   RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
-  if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
+  if [[ -z "$RESOLVEDIP" ]]; then
+    msg_error "DNS Lookup Failure"
+  else
+    msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"
+  fi
+
   set -e
   trap 'error_handler $LINENO "$BASH_COMMAND"' ERR
 }
+
 
 # This function updates the Container OS by running apt-get update and upgrade
 update_os() {
