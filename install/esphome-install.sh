@@ -30,7 +30,7 @@ msg_ok "Updated Python3"
 
 msg_info "Installing ESPHome"
 mkdir /root/config
-$STD pip install esphome tornado esptool
+$STD pip install --break-system-packages esphome tornado esptool
 msg_ok "Installed ESPHome"
 
 msg_info "Creating Service"
