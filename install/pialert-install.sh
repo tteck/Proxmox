@@ -19,12 +19,14 @@ $STD apt-get -y install \
   mc \
   curl \
   apt-utils \
+  avahi-utils \
   lighttpd \
   sqlite3 \
   mmdb-bin \
   arp-scan \
   dnsutils \
   net-tools \
+  nbtscan \
   libwww-perl \
   nmap \
   zip \
