@@ -33,6 +33,11 @@ $STD apt-get install -y \
   liblapack-dev \
   dbus-broker \
   libpcap-dev \
+  libavdevice-dev \
+  libavformat-dev \
+  libavcodec-dev \
+  libavutil-dev \
+  libavfilter-dev \
   libmariadb-dev-compat \
   libatlas-base-dev
 msg_ok "Installed Dependencies"
