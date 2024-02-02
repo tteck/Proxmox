@@ -112,16 +112,38 @@ setting_up_container() {
 network_check() {
   set +e
   trap - ERR
-  if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then msg_ok "Internet Connected"; else
-    msg_error "Internet NOT Connected"
-    read -r -p "Would you like to continue anyway? <y/N> " prompt
-    if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-      echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
+# Check if IPv4 is being used
+  if ip -o -4 addr show | grep -q "scope global"; then
+    if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then 
+        msg_ok "IPv4 Internet Connected"; 
     else
-      echo -e " 🖧  Check Network Settings"
-      exit 1
+        msg_error "IPv4 Internet Not Connected";
+        read -r -p "Would you like to continue anyway? <y/N> " prompt
+        if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+            echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
+        else
+            echo -e " 🖧  Check Network Settings"
+            exit 1
+        fi
     fi
   fi
+
+# Check if IPv6 is being used
+  if ip -o -6 addr show | grep -q "scope global"; then
+    if ping6 -c 1 -W 1 2606:4700:4700::1111 &>/dev/null; then
+        msg_ok "IPv6 Internet Connected";
+    else
+        msg_error "IPv6 Internet Not Connected";
+        read -r -p "Would you like to continue anyway? <y/N> " prompt
+        if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+            echo -e " ⚠️  ${RD}Expect Issues Without Internet${CL}"
+        else
+            echo -e " 🖧  Check Network Settings"
+            exit 1
+        fi
+    fi
+  fi
+
   RESOLVEDIP=$(getent hosts github.com | awk '{ print $1 }')
   if [[ -z "$RESOLVEDIP" ]]; then msg_error "DNS Lookup Failure"; else msg_ok "DNS Resolved github.com to ${BL}$RESOLVEDIP${CL}"; fi
   set -e
