@@ -62,19 +62,18 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Adding Home Assistant compose.yaml"
   mkdir -p /opt/stacks/homeassistant
   cat <<EOF >/opt/stacks/homeassistant/compose.yaml
-version: "3.3"
+version: "3"
 services:
-  home-assistant:
+  homeassistant:
     container_name: homeassistant
-    privileged: true
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev:/dev
-      - /etc/localtime:/etc/localtime:ro
-      - ./config:/config
-    network_mode: host
     image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
 EOF
 msg_ok "Added Home Assistant compose.yaml"
 fi
