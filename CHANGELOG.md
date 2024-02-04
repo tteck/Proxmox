@@ -9,6 +9,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-02-04
+
+### Changed
+
+- **Pi-hole LXC**
+  - Option to add Unbound
+
 ## 2024-02-02
 
 ### Changed
