@@ -51,6 +51,8 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   --restart unless-stopped \
   -v /var/run/docker.sock:/var/run/docker.sock \
   containrrr/watchtower
+  msg_ok "Installed Watchtower"
+fi
 
 motd_ssh
 customize
