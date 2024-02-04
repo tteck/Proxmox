@@ -21,6 +21,41 @@ $STD apt-get install -y ufw
 $STD apt-get install -y ntp
 msg_ok "Installed Dependencies"
 
+read -r -p "Would you like to add Unbound? <y/N> " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  msg_info "Installing Unbound"
+  $STD apt-get install -y unbound
+  cat <<EOF >/etc/unbound/unbound.conf.d/pi-hole.conf
+server:
+  verbosity: 0
+  interface: 0.0.0.0
+  port: 5335
+  do-ip4: yes
+  do-udp: yes
+  do-tcp: yes
+  do-ip6: no
+  prefer-ip6: no
+  harden-glue: yes
+  harden-dnssec-stripped: yes
+  use-caps-for-id: no
+  edns-buffer-size: 1232
+  prefetch: yes
+  num-threads: 1
+  private-address: 192.168.0.0/24
+  private-address: 169.254.0.0/16
+  private-address: 172.16.0.0/12
+  private-address: 10.0.0.0/8
+  private-address: fd00::/8
+  private-address: fe80::/10
+EOF
+  cat <<EOF >/etc/dnsmasq.d/99-edns.conf
+edns-packet-max=1232
+EOF
+  wget -q https://www.internic.net/domain/named.root >/var/lib/unbound/root.hints
+  systemctl enable -q --now unbound
+  msg_ok "Installed Unbound"
+fi
+
 msg_info "Installing Pi-hole"
 mkdir -p /etc/pihole/
 cat <<EOF >/etc/pihole/setupVars.conf
