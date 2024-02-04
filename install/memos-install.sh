@@ -35,7 +35,7 @@ msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
 msg_info "Installing Memos"
 mkdir /memos/
-docker run -d \
+  $STD docker run -d \
   --init \
   --name memos \
   --publish 80:5230 \
@@ -46,7 +46,7 @@ msg_ok "Installed Memos"
 
 read -r -p "Would you like to add Watchtower? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-docker run -d \
+  $STD docker run -d \
   --name watchtower \
   --restart unless-stopped \
   -v /var/run/docker.sock:/var/run/docker.sock \
