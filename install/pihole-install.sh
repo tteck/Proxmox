@@ -48,7 +48,7 @@ server:
   private-address: fd00::/8
   private-address: fe80::/10
 EOF
-  touch /etc/dnsmasq.d/99-edns.conf
+  mkdir -p /etc/dnsmasq.d/ && sudo touch /etc/dnsmasq.d/99-edns.conf
   cat <<EOF >/etc/dnsmasq.d/99-edns.conf
 edns-packet-max=1232
 EOF
