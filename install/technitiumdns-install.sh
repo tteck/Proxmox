@@ -24,7 +24,7 @@ wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.
 $STD dpkg -i packages-microsoft-prod.deb
 rm -rf packages-microsoft-prod.deb
 $STD apt-get update
-$STD apt-get install -y aspnetcore-runtime-7.0
+$STD apt-get install -y aspnetcore-runtime-8.0
 msg_ok "Installed ASP.NET Core Runtime"
 
 msg_info "Installing Technitium DNS"
