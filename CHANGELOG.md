@@ -16,6 +16,8 @@
 
 - **Gokapi LXC**
   - NEW Script
+- **Nginx Proxy Manager LXC**
+  - Option to install v2.10.4
 
 ## 2024-02-04
 
