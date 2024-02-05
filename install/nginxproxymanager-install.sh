@@ -68,7 +68,7 @@ RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-man
   grep "tag_name" |
   awk '{print substr($2, 3, length($2)-4) }')
 
-read -r -p "Would you like to install an older version (v2.20.4)? <y/N> " prompt
+read -r -p "Would you like to install an older version (v2.10.4)? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Downloading Nginx Proxy Manager v2.10.4"
   wget -q https://codeload.github.com/NginxProxyManager/nginx-proxy-manager/tar.gz/v2.10.4 -O - | tar -xz
