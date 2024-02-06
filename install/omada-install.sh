@@ -30,8 +30,8 @@ $STD apt-get -y install zulu8-jdk
 msg_ok "Installed Azul Zulu"
 
 msg_info "Installing MongoDB"
-wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
-$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
+wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
+$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
 wget -qL https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/3.6/multiverse/binary-amd64/mongodb-org-server_3.6.23_amd64.deb
 $STD dpkg -i mongodb-org-server_3.6.23_amd64.deb
 msg_ok "Installed MongoDB"
@@ -48,7 +48,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf ${latest_version} mongodb-org-server_3.6.23_amd64.deb zulu-repo_1.0.0-3_all.deb libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
+rm -rf ${latest_version} mongodb-org-server_3.6.23_amd64.deb zulu-repo_1.0.0-3_all.deb libssl1.1_1.1.1f-1ubuntu2.21_amd64.deb
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
