@@ -29,8 +29,8 @@ $STD apt-get install -y temurin-17-jdk
 msg_ok "Installed OpenJDK"
 
 msg_info "Installing MongoDB"
-wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1f-1ubuntu2.21_amd64.deb
-$STD dpkg -i libssl-dev_1.1.1f-1ubuntu2.21_amd64.deb
+#wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1f-1ubuntu2.21_amd64.deb
+#$STD dpkg -i libssl-dev_1.1.1f-1ubuntu2.21_amd64.deb
 wget -qO- https://pgp.mongodb.com/server-4.4.asc | gpg --dearmor >/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg
 echo 'deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main' >/etc/apt/sources.list.d/mongodb-org-4.4.list
 $STD apt-get update
