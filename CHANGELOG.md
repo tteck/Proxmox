@@ -15,7 +15,7 @@
 ### Changed
 
 - **All Scripts**
-  - The scripts will only work with PVE versions 7.4-13 or higher.
+  - The scripts will only work with PVE7 Version 7.4-13 or later, or PVE8 Version 8.1.1 or later.
 
 ## 2024-02-05
 
