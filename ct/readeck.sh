@@ -56,8 +56,7 @@ function update_script() {
 header_info
 if [[ ! -d /opt/readeck ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
-LATEST=$(curl -s https://codeberg.org/readeck/readeck/releases/ | grep -oP '(?<=Version )\d+\.\d+\.\d+' | head -1
-)
+LATEST=$(curl -s https://codeberg.org/readeck/readeck/releases/ | grep -oP '(?<=Version )\d+\.\d+\.\d+' | head -1)
 systemctl stop readeck.service
 rm -rf /opt/readeck/readeck
 cd /opt/readeck
