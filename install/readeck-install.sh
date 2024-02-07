@@ -20,9 +20,10 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Readeck"
+LATEST=$(curl -s https://codeberg.org/readeck/readeck/releases/ | grep -oP '(?<=Version )\d+\.\d+\.\d+' | head -1)
 mkdir -p /opt/readeck
 cd /opt/readeck
-wget -q -O readeck https://codeberg.org/readeck/readeck/releases/download/0.11.2/readeck-0.11.2-linux-amd64
+wget -q -O readeck https://codeberg.org/readeck/readeck/releases/download/${LATEST}/readeck-${LATEST}-linux-amd64
 chmod a+x readeck
 msg_ok "Installed Readeck"
 
