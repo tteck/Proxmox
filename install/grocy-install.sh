@@ -20,18 +20,18 @@ $STD apt-get install -y mc
 $STD apt-get install -y apt-transport-https
 msg_ok "Installed Dependencies"
 
-msg_info "Installing PHP 8.1"
+msg_info "Installing PHP 8.2"
 VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
 curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
 echo -e "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $VERSION main" >/etc/apt/sources.list.d/php.list
 $STD apt-get update
-$STD apt-get install -y php8.1
-$STD apt-get install -y libapache2-mod-php8.1
-$STD apt-get install -y php8.1-sqlite3
-$STD apt-get install -y php8.1-gd
-$STD apt-get install -y php8.1-intl
-$STD apt-get install -y php8.1-mbstring
-msg_ok "Installed PHP 8.1"
+$STD apt-get install -y php8.2
+$STD apt-get install -y libapache2-mod-php8.2
+$STD apt-get install -y php8.2-sqlite3
+$STD apt-get install -y php8.2-gd
+$STD apt-get install -y php8.2-intl
+$STD apt-get install -y php8.2-mbstring
+msg_ok "Installed PHP 8.2"
 
 msg_info "Installing grocy"
 latest=$(curl -s https://api.github.com/repos/grocy/grocy/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
