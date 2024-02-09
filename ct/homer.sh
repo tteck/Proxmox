@@ -62,7 +62,8 @@ msg_ok "Stopped ${APP}"
 msg_info "Backing up config.yml"
 cd ~
 cp -R /opt/homer/assets/config.yml config.yml
-msg_ok "Backed up config.yml"
+cp -R /opt/homer/assets/tools tools
+msg_ok "Backed up config.yml and tools directory"
 
 msg_info "Updating ${APP}"
 rm -rf /opt/homer/*
@@ -73,10 +74,11 @@ msg_ok "Updated ${APP}"
 msg_info "Restoring conf.yml"
 cd ~
 cp -R config.yml /opt/homer/assets
-msg_ok "Restored conf.yml"
+cp -R tools /opt/homer/assets
+msg_ok "Restored config.yml and tools directory"
 
 msg_info "Cleaning"
-rm -rf config.yml /opt/homer/homer.zip
+rm -rf config.yml tools /opt/homer/homer.zip
 msg_ok "Cleaned"
 
 msg_info "Starting ${APP}"
