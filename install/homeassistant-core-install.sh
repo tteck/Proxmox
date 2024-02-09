@@ -42,41 +42,30 @@ $STD apt-get install -y \
   libatlas-base-dev
 msg_ok "Installed Dependencies"
 
-msg_info "Updating Python3"
-$STD apt-get install -y \
-  python3 \
-  python3-dev \
-  python3-pip \
-  python3-venv
-msg_ok "Updated Python3"
+RELEASE=$(curl -s https://www.python.org/downloads/ | grep -oP 'Download Python \K\d+\.\d+\.\d+' | head -1)
 
-msg_info "Installing pyenv"
+msg_info "Compiling Python ${RELEASE} from its source (Additional Patience)"
+$STD apt-get remove -y python3
 $STD apt-get install -y \
-  make \
+  checkinstall \
   libreadline-dev \
-  libsqlite3-dev \
-  libncurses5-dev \
   libncursesw5-dev \
-  xz-utils \
+  libssl-dev \
+  libsqlite3-dev \
   tk-dev \
-  llvm \
-  libbz2-dev \
-  libxml2-dev \
-  libxmlsec1-dev \
-  liblzma-dev
-$STD git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-set +e
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >>~/.bashrc
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >>~/.bashrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init --path)"\nfi' >>~/.bashrc
-msg_ok "Installed pyenv"
-. ~/.bashrc
+  libgdbm-dev \
+  libc6-dev \
+  libbz2-dev
 
-set -e
-msg_info "Installing Python 3.12.1 (Patience)"
-$STD pyenv install 3.12.1
-pyenv global 3.12.1
-msg_ok "Installed Python 3.12.1"
+wget -qO- https://www.python.org/ftp/python/${RELEASE}/Python-${RELEASE}.tar.xz | tar -xJ
+cd Python-${RELEASE}
+$STD ./configure --enable-optimizations
+$STD make -j $(nproc)
+$STD make altinstall
+$STD update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.12 1
+cd ~
+rm -rf Python-${RELEASE}
+msg_ok "Installed Python ${RELEASE}"
 
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
