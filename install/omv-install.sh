@@ -50,6 +50,8 @@ omv-confdbadm populate
 omv-salt deploy run hosts
 cat /etc/issue
 
+# Change basic settings after fresh install.
+omv-firstaid
 
 motd_ssh
 customize
