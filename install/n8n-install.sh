@@ -33,6 +33,7 @@ $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
 msg_info "Installing n8n (Patience)"
+$STD npm install --global patch-package
 $STD npm install --global n8n
 msg_ok "Installed n8n"
 
