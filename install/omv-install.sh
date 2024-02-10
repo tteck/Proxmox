@@ -24,15 +24,15 @@ msg_info "Installing OpenMediaVault (Patience)"
 wget -qO- https://packages.openmediavault.org/public/archive.key | gpg --dearmor >"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.gpg"
 
 cat <<EOF >/etc/apt/sources.list.d/openmediavault.list
-deb https://packages.openmediavault.org/public shaitan main
-# deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan main
+deb https://packages.openmediavault.org/public sandworm main
+# deb https://downloads.sourceforge.net/project/openmediavault/packages sandworm main
 ## Uncomment the following line to add software from the proposed repository.
-# deb https://packages.openmediavault.org/public shaitan-proposed main
-# deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan-proposed main
+# deb https://packages.openmediavault.org/public sandworm-proposed main
+# deb https://downloads.sourceforge.net/project/openmediavault/packages sandworm-proposed main
 ## This software is not part of OpenMediaVault, but is offered by third-party
 ## developers as a service to OpenMediaVault users.
-# deb https://packages.openmediavault.org/public shaitan partner
-# deb https://downloads.sourceforge.net/project/openmediavault/packages shaitan partner
+# deb https://packages.openmediavault.org/public sandworm partner
+# deb https://downloads.sourceforge.net/project/openmediavault/packages sandworm partner
 EOF
 
 export LANG=C.UTF-8
