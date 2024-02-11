@@ -16,6 +16,8 @@
 
 - **HiveMQ CE LXC**
   - NEW Script
+- **Apache-CouchDB LXC**
+  - NEW Script
 
 ## 2024-02-06
 
