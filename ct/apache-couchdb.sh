@@ -66,5 +66,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable by going to the following URL. Use the credentials saved to ~/CouchDB.creds during setup.
+echo -e "${APP} should be reachable by going to the following URL.
 ${BL}http://${IP}:5984/_utils/${CL} \n"
