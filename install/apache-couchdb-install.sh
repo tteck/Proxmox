@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2024 tteck
-# Author: tteck (tteckster), JamborJan
+# Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -23,6 +23,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Apache CouchDB"
 wget -qO- https://downloads.apache.org/couchdb/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/couchdb.gpg
+source /etc/os-release
 echo "deb https://apache.jfrog.io/artifactory/couchdb-deb/ ${VERSION_CODENAME} main" >/etc/apt/sources.list.d/couchdb.sources.list
 $STD apt-get update
 $STD apt-get install -y couchdb
