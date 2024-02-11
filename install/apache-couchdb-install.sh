@@ -36,7 +36,7 @@ $STD apt-get update
 $STD apt-get install -y couchdb
 echo -e "CouchDB Erlang Cookie: \e[32m$ERLANG_COOKIE\e[0m" >>~/CouchDB.creds
 echo -e "CouchDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/CouchDB.creds
-msg_ok "Installed Apache CouchDB. Credentials saved to ~/CouchDB.creds"
+msg_ok "Installed Apache CouchDB."
 
 motd_ssh
 customize
@@ -45,3 +45,5 @@ msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
+
+msg_ok "Login to the WebUI via http://<ip>:5984/_utils/ with the credentials saved to ~/CouchDB.creds during setup."
