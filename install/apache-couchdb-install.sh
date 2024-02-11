@@ -22,17 +22,11 @@ $STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Apache CouchDB"
-wget -qO- https://downloads.apache.org/couchdb/KEYS | gpg --dearmor >/etc/apt/trusted.gpg.d/couchdb.gpg
+curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
 source /etc/os-release
 echo "deb https://apache.jfrog.io/artifactory/couchdb-deb/ ${VERSION_CODENAME} main" >/etc/apt/sources.list.d/couchdb.sources.list
 $STD apt-get update
 $STD apt-get install -y couchdb
-# Change the bind address to make CouchDB accessible from other machines
-sed -i 's/;bind_address = 127.0.0.1/bind_address = 0.0.0.0/g' /opt/couchdb/etc/local.ini
-# Add an admin user (replace 'myadmin' and 'mypassword' with your desired admin username and password)
-echo "[admins]" >> /opt/couchdb/etc/local.ini
-echo "myadmin = mypassword" >> /opt/couchdb/etc/local.ini
-msg_ok "Installed Apache CouchDB"
 
 motd_ssh
 customize
