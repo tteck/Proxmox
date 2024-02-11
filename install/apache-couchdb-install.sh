@@ -22,11 +22,12 @@ $STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Apache CouchDB"
-curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1
+curl -fsSL https://couchdb.apache.org/repo/keys.asc | gpg --dearmor -o /etc/apt/keyrings/couchdb-archive-keyring.gpg
 source /etc/os-release
 echo "deb https://apache.jfrog.io/artifactory/couchdb-deb/ ${VERSION_CODENAME} main" >/etc/apt/sources.list.d/couchdb.sources.list
 $STD apt-get update
 $STD apt-get install -y couchdb
+msg_ok "Installed Apache CouchDB"
 
 motd_ssh
 customize
