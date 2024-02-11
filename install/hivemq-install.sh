@@ -37,6 +37,8 @@ useradd -d /opt/hivemq hivemq
 chown -R hivemq:hivemq /opt/hivemq
 chmod +x /opt/hivemq/bin/run.sh
 cp /opt/hivemq/bin/init-script/hivemq.service /etc/systemd/system/hivemq.service
+rm /opt/hivemq/conf/config.xml
+mv /opt/hivemq/conf/examples/configuration/config-sample-tcp-and-websockets.xml /opt/hivemq/conf/config.xml
 systemctl enable -q --now hivemq
 msg_ok "Installed HiveMQ CE"
 
