@@ -68,7 +68,7 @@ function msg_ok() {
 
 msg_info "Installing Dependencies"
 apt-get update &>/dev/null
-apt-get install -y git &>/dev/null
+apt-get install -y git curl sudo &>/dev/null
 msg_ok "Installed Dependencies"
 
 VERSION=$(curl -s https://api.github.com/repos/coder/code-server/releases/latest |
