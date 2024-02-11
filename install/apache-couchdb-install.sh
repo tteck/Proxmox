@@ -24,7 +24,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Apache CouchDB"
 ERLANG_COOKIE=$(openssl rand -base64 32)
 ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-debconf-set-selections <<< "couchdb couchdb/erlang_cookie string $ERLANG_COOKIE"
+debconf-set-selections <<< "couchdb couchdb/cookie string $ERLANG_COOKIE"
 debconf-set-selections <<< "couchdb couchdb/mode select standalone"
 debconf-set-selections <<< "couchdb couchdb/bindaddress string 0.0.0.0"
 debconf-set-selections <<< "couchdb couchdb/adminpass password $ADMIN_PASS"
