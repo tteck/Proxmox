@@ -55,7 +55,6 @@ msg_info() {
   SPINNER_PID=$!
 }
 
-
 # This function displays a success message with a green color.
 msg_ok() {
   if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
