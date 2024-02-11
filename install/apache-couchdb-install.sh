@@ -45,5 +45,3 @@ msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
-
-msg_ok "Login to the WebUI via http://<ip>:5984/_utils/ with the credentials saved to ~/CouchDB.creds during setup."
