@@ -22,7 +22,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Apache-Cassandra"
+APP="Apache-CouchDB"
 var_disk="10"
 var_cpu="2"
 var_ram="4096"
