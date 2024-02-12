@@ -342,6 +342,7 @@ advanced_settings() {
 
   if [ "$var_os" == "alpine" ]; then
     APT_CACHER=""
+    APT_CACHER_IP=""
   else
     if APT_CACHER_IP=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set APT-Cacher IP (leave blank for default)" 8 58 --title "APT-Cacher IP" 3>&1 1>&2 2>&3); then
       APT_CACHER="${APT_CACHER_IP:+yes}"
