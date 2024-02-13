@@ -104,17 +104,17 @@ EOF
       "no" " " 3>&2 2>&1 1>&3)
     case $CHOICE in
     yes)
-      msg_info "Enabling 'ceph package repositories'"
+      msg_info "Correcting 'ceph package repositories'"
       cat <<EOF >/etc/apt/sources.list.d/ceph.list
 # deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
 # deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
 # deb http://download.proxmox.com/debian/ceph-reef bookworm enterprise
 # deb http://download.proxmox.com/debian/ceph-reef bookworm no-subscription
 EOF
-      msg_ok "Enabled 'ceph package repositories'"
+      msg_ok "Corrected 'ceph package repositories'"
       ;;
     no)
-      msg_error "Selected no to Enabling 'ceph package repositories'"
+      msg_error "Selected no to Correcting 'ceph package repositories'"
       ;;
     esac
   fi
