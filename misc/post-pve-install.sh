@@ -99,7 +99,7 @@ EOF
   esac
 
   if [[ "${VERSION}" == "bookworm" ]]; then
-    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription'(enabled) and 'enterprise'(disabled) repositories.\n \nCorrect 'ceph package sources?" 14 58 2 \
+    CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CEPH PACKAGE REPOSITORIES" --menu "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories.\n \nCorrect 'ceph package sources?" 14 58 2 \
       "yes" " " \
       "no" " " 3>&2 2>&1 1>&3)
     case $CHOICE in
@@ -107,7 +107,9 @@ EOF
       msg_info "Enabling 'ceph package repositories'"
       cat <<EOF >/etc/apt/sources.list.d/ceph.list
 # deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
-deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
+# deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
+# deb http://download.proxmox.com/debian/ceph-reef bookworm enterprise
+# deb http://download.proxmox.com/debian/ceph-reef bookworm no-subscription
 EOF
       msg_ok "Enabled 'ceph package repositories'"
       ;;
