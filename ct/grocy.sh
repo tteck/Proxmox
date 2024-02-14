@@ -56,6 +56,11 @@ function update_script() {
 header_info
 if [[ ! -f /etc/apache2/sites-available/grocy.conf ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
+php_version=$(php -v | head -n 1 | awk '{print $2}')
+if [[ ! $php_version == "8.3"* ]]; then
+    apt-get install -y php8.3
+    update-alternatives --set php /usr/bin/php8.3
+fi
 bash /var/www/html/update.sh
 msg_ok "Updated Successfully"
 exit
