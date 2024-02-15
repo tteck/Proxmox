@@ -58,6 +58,7 @@ if [[ ! -f /etc/apache2/sites-available/grocy.conf ]]; then msg_error "No ${APP}
 msg_info "Updating ${APP}"
 php_version=$(php -v | head -n 1 | awk '{print $2}')
 if [[ ! $php_version == "8.3"* ]]; then
+    apt-get update
     apt-get install -y php8.3
     update-alternatives --set php /usr/bin/php8.3
 fi
