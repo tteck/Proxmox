@@ -122,8 +122,7 @@ function update_script() {
       filebrowser config init -a '0.0.0.0' &>/dev/null
       filebrowser config set -a '0.0.0.0' &>/dev/null
       filebrowser users add admin changeme --perm.admin &>/dev/null
-    fi  
-  fi
+    fi
     msg_ok "Installed FileBrowser"
 
     msg_info "Creating Service"
