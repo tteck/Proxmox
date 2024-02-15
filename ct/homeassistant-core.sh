@@ -107,6 +107,7 @@ function update_script() {
     exit
   fi
   if [ "$UPD" == "3" ]; then
+    set +Eeuo pipefail
     read -r -p "Would you like to use No Authentication? <y/N> " prompt
     msg_info "Installing FileBrowser"
     RELEASE=$(curl -fsSL https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep -o '"tag_name": ".*"' | sed 's/"//g' | sed 's/tag_name: //g')
