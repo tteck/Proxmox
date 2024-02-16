@@ -10,6 +10,13 @@
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 - 🚨 **The scripts in the repository will no longer provide support for Proxmox VE 7 starting from July 2024 (scripts will not execute on PVE7). Subsequent <a href='https://forum.proxmox.com/threads/proxmox-ve-support-lifecycle.35755/' target='_blank' rel='noopener noreferrer'>Proxmox VE - Support Lifecycle</a>**
 
+## 2024-02-16
+
+### Changed
+
+- **Proxmox VE LXC Filesystem Trim**
+  - NEW Script ([more info](https://github.com/tteck/Proxmox/discussions/2505#discussion-6226037))
+
 ## 2024-02-11
 
 ### Changed
