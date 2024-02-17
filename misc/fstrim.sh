@@ -44,7 +44,7 @@ excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "
 
 function trim_container() {
   local container=$1
-  local name=$(pct exec "$container" hostname)
+  local name=$(pct exec "$container" hostname 2>/dev/null || echo "No hostname because the container is not running")
   header_info
   echo -e "${BL}[Info]${GN} Trimming ${name} ${CL} \n"
   local before_trim=$(lvs | awk -F '[[:space:]]+' 'NR>1 && (/Data%|'"$container"'/) {gsub(/%/, "", $7); print $7}')
