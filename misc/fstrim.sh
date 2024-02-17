@@ -47,8 +47,12 @@ function trim_container() {
   local name=$(pct exec "$container" hostname)
   header_info
   echo -e "${BL}[Info]${GN} Trimming ${name} ${CL} \n"
+  local before_trim=$(lvs | awk -F '[[:space:]]+' 'NR>1 && (/Data%|'"$container"'/) {gsub(/%/, "", $7); print $7}')
+  echo -e "${RD}Data before trim $before_trim%${CL}"
   pct fstrim $container
-  sleep 1
+  local after_trim=$(lvs | awk -F '[[:space:]]+' 'NR>1 && (/Data%|'"$container"'/) {gsub(/%/, "", $7); print $7}')
+  echo -e "${GN}Data after trim $after_trim%${CL}"
+  sleep 1.5
 }
 
 for container in $(pct list | awk '{if(NR>1) print $1}'); do
