@@ -30,7 +30,7 @@ if [ "$ROOT_FS" != "ext4" ]; then
     exit 1
 fi
 
-whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Filesystem Trim" --yesno "The selected containers will undergo the fstrim command. Proceed?" 10 58 || exit
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE LXC Filesystem Trim" --yesno "The LXC containers will undergo the fstrim command. Proceed?" 10 58 || exit
 NODE=$(hostname)
 EXCLUDE_MENU=()
 MSG_MAX_LENGTH=0
@@ -70,4 +70,4 @@ done
 
 wait
 header_info
-echo -e "${GN} Finished, Selected Containers Trimmed. ${CL} \n"
+echo -e "${GN} Finished, LXC Containers Trimmed. ${CL} \n"
