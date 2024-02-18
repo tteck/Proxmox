@@ -17,15 +17,15 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y apt-transport-https
 msg_ok "Installed Dependencies"
 
-msg_info "Installing PHP"
-$STD apt-get install -y php
-$STD apt-get install -y php-sqlite3
-$STD apt-get install -y php-zip
-$STD apt-get install -y php-xml
-$STD apt-get install -y php-intl
-msg_ok "Installed PHP"
+msg_info "Installing PHP8.3"
+curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ bookworm main" >/etc/apt/sources.list.d/php.list
+$STD apt-get update
+$STD apt-get install -y php8.3 php8.3-cli php8.3-{bz2,curl,mbstring,intl,sqlite3,zip,xml}
+msg_ok "Installed PHP8.3"
 
 #RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
 RELEASE=V2.5.8
