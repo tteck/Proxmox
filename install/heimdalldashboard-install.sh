@@ -32,9 +32,8 @@ RELEASE=v2.5.8
 msg_info "Installing Heimdall Dashboard ${RELEASE}"
 $STD curl --silent -o ${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz"
 $STD tar xvzf ${RELEASE}.tar.gz
-VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 3, length($2)-4) }')
+#VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+VER=2.5.8
 rm -rf ${RELEASE}.tar.gz
 mv Heimdall-${VER} /opt/Heimdall
 msg_ok "Installed Heimdall Dashboard ${RELEASE}"
