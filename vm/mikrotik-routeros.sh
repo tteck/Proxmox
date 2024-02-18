@@ -251,7 +251,7 @@ nfs | dir)
   DISK_REF="$VMID/"
   DISK_IMPORT="-format qcow2"
   ;;
-btrfs)
+btrfs | zfspool)
   DISK_EXT=".raw"
   DISK_REF="$VMID/"
   DISK_FORMAT="subvol"
