@@ -26,7 +26,7 @@ curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/ph
 echo -e "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $VERSION main" >/etc/apt/sources.list.d/php.list
 $STD apt-get update
 $STD apt-get install -y php8.3 php8.3-{cli,bz2,curl,mbstring,intl,sqlite3,fpm,gd,zip,xml}
-a2enconf php8.3-fpm
+$STD a2enconf php8.3-fpm
 systemctl reload apache2
 msg_ok "Installed PHP8.3"
 
