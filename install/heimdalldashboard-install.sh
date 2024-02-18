@@ -28,10 +28,10 @@ $STD apt-get install -y php-intl
 msg_ok "Installed PHP"
 
 #RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
-RELEASE=v2.5.8
+RELEASE=V2.5.8
 msg_info "Installing Heimdall Dashboard ${RELEASE}"
-$STD curl --silent -o ${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz"
-$STD tar xvzf ${RELEASE}.tar.gz
+wget -q https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz
+tar xzf ${RELEASE}.tar.gz
 #VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 VER=2.5.8
 rm -rf ${RELEASE}.tar.gz
@@ -55,7 +55,7 @@ TimeoutStopSec=30
 
 [Install]
 WantedBy=multi-user.target" >$service_path
-$STD sudo systemctl enable --now heimdall.service
+systemctl enable -q --now heimdall.service
 msg_ok "Created Service"
 
 motd_ssh
