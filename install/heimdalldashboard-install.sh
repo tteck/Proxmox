@@ -27,7 +27,8 @@ $STD apt-get install -y php-xml
 $STD apt-get install -y php-intl
 msg_ok "Installed PHP"
 
-RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
+#RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
+RELEASE=v2.5.8
 msg_info "Installing Heimdall Dashboard ${RELEASE}"
 $STD curl --silent -o ${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz"
 $STD tar xvzf ${RELEASE}.tar.gz
