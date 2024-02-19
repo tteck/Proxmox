@@ -55,6 +55,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/Heimdall ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "WARNING" "Currently, v2.6.0 breaks the application." 8 58
 msg_info "Stopping ${APP}"
 systemctl disable heimdall.service &>/dev/null
 systemctl stop heimdall
