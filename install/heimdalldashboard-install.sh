@@ -27,15 +27,14 @@ $STD apt-get update
 $STD apt-get install -y php8.3 php8.3-cli php8.3-{bz2,curl,mbstring,intl,sqlite3,zip,xml}
 msg_ok "Installed PHP8.3"
 
-#RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
-RELEASE=V2.5.8
+RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
 msg_info "Installing Heimdall Dashboard ${RELEASE}"
 wget -q https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz
 tar xzf ${RELEASE}.tar.gz
-#VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-VER=2.5.8
+VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 rm -rf ${RELEASE}.tar.gz
 mv Heimdall-${VER} /opt/Heimdall
+$STD apt-get install -y composer
 msg_ok "Installed Heimdall Dashboard ${RELEASE}"
 
 msg_info "Creating Service"
@@ -56,6 +55,9 @@ TimeoutStopSec=30
 [Install]
 WantedBy=multi-user.target" >$service_path
 systemctl enable -q --now heimdall.service
+cd /opt/Heimdall
+COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload &>/dev/null
+systemctl restart heimdall.service
 msg_ok "Created Service"
 
 motd_ssh
