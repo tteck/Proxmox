@@ -44,9 +44,8 @@ excluded_containers=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "
 
 function trim_container() {
   local container=$1
-  local name=$(pct exec "$container" hostname 2>/dev/null || echo "No hostname because the container is not running")
   header_info
-  echo -e "${BL}[Info]${GN} Trimming ${name} ${CL} \n"
+  echo -e "${BL}[Info]${GN} Trimming ${container} ${CL} \n"
   local before_trim=$(lvs | awk -F '[[:space:]]+' 'NR>1 && (/Data%|'"vm-$container"'/) {gsub(/%/, "", $7); print $7}')
   echo -e "${RD}Data before trim $before_trim%${CL}"
   pct fstrim $container
@@ -66,7 +65,7 @@ for container in $(pct list | awk '{if(NR>1) print $1}'); do
     template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
     if [ "$template" == "true" ]; then
       header_info
-      echo -e "${BL}[Info]${GN} Skipping ${name} ${RD}$container is a template ${CL} \n"
+      echo -e "${BL}[Info]${GN} Skipping ${container} ${RD}$container is a template ${CL} \n"
       sleep 1
       continue
     fi
