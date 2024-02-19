@@ -55,82 +55,36 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/Heimdall ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if ! whiptail --backtitle "Proxmox VE Helper Scripts" --title "WARNING" --yesno "Currently, v2.6.0 breaks the application. Proceed?" 10 58; then
-  clear
-  echo -e "⚠  User exited script \n"
-  exit
-fi
 msg_info "Stopping ${APP}"
-systemctl disable heimdall.service &>/dev/null
 systemctl stop heimdall
 sleep 1
 msg_ok "Stopped ${APP}"
 
 msg_info "Backing up Data"
-if [ -d "/opt/Heimdall-2.4.6" ]; then
-  cp -R /opt/Heimdall-2.4.6/database database-backup
-  cp -R /opt/Heimdall-2.4.6/public public-backup
-elif [[ -d "/opt/Heimdall-2.4.7b" ]]; then
-  cp -R /opt/Heimdall-2.4.7b/database database-backup
-  cp -R /opt/Heimdall-2.4.7b/public public-backup
-elif [[ -d "/opt/Heimdall-2.4.8" ]]; then
-  cp -R /opt/Heimdall-2.4.8/database database-backup
-  cp -R /opt/Heimdall-2.4.8/public public-backup
-else
-  cp -R /opt/Heimdall/database database-backup
-  cp -R /opt/Heimdall/public public-backup
-fi
+cp -R /opt/Heimdall/database database-backup
+cp -R /opt/Heimdall/public public-backup
 sleep 1
 msg_ok "Backed up Data"
 
 RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
 msg_info "Updating Heimdall Dashboard to ${RELEASE}"
-curl --silent -o ${RELEASE}.tar.gz -L "https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz" &>/dev/null
-tar xvzf ${RELEASE}.tar.gz &>/dev/null
-VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest |
-  grep "tag_name" |
-  awk '{print substr($2, 3, length($2)-4) }')
-
-if [ ! -d "/opt/Heimdall" ]; then
-  mv Heimdall-${VER} /opt/Heimdall
-else
-  cp -R Heimdall-${VER}/* /opt/Heimdall
-fi
-
-service_path="/etc/systemd/system/heimdall.service"
-echo "[Unit]
-Description=Heimdall
-After=network.target
-[Service]
-Restart=always
-RestartSec=5
-Type=simple
-User=root
-WorkingDirectory=/opt/Heimdall
-ExecStart="/usr/bin/php" artisan serve --port 7990 --host 0.0.0.0
-TimeoutStopSec=30
-[Install]
-WantedBy=multi-user.target" >$service_path
+wget -q https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz
+tar xzf ${RELEASE}.tar.gz
+VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+cp -R Heimdall-${VER}/* /opt/Heimdall
+cd /opt/Heimdall
+apt-get install -y composer &>/dev/null
+COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload &>/dev/null
 msg_ok "Updated Heimdall Dashboard to ${RELEASE}"
 
 msg_info "Restoring Data"
+cd ~
 cp -R database-backup/* /opt/Heimdall/database
 cp -R public-backup/* /opt/Heimdall/public
 sleep 1
 msg_ok "Restored Data"
 
 msg_info "Cleanup"
-if [ -d "/opt/Heimdall-2.4.6" ]; then
-  rm -rf /opt/Heimdall-2.4.6
-  rm -rf /opt/v2.4.6.tar.gz
-elif [[ -d "/opt/Heimdall-2.4.7b" ]]; then
-  rm -rf /opt/Heimdall-2.4.7b
-  rm -rf /opt/v2.4.7b.tar.gz
-elif [[ -d "/opt/Heimdall-2.4.8" ]]; then
-  rm -rf /opt/Heimdall-2.4.8
-  rm -rf /opt/v2.4.8.tar.gz
-fi
-
 rm -rf ${RELEASE}.tar.gz
 rm -rf Heimdall-${VER}
 rm -rf public-backup
@@ -140,7 +94,7 @@ sleep 1
 msg_ok "Cleaned"
 
 msg_info "Starting ${APP}"
-systemctl enable --now heimdall.service &>/dev/null
+systemctl start heimdall.service
 sleep 2
 msg_ok "Started ${APP}"
 msg_ok "Updated Successfully"
