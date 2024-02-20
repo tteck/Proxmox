@@ -18,14 +18,9 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y apt-transport-https
+$STD apt-get install -y composer
+$STD apt-get install -y php8.2-{bz2,curl,sqlite3,zip,xml}
 msg_ok "Installed Dependencies"
-
-msg_info "Installing PHP8.3"
-curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
-echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ bookworm main" >/etc/apt/sources.list.d/php.list
-$STD apt-get update
-$STD apt-get install -y php8.3 php8.3-cli php8.3-{bz2,curl,mbstring,intl,sqlite3,zip,xml}
-msg_ok "Installed PHP8.3"
 
 RELEASE=$(curl -sX GET "https://api.github.com/repos/linuxserver/Heimdall/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]')
 msg_info "Installing Heimdall Dashboard ${RELEASE}"
@@ -34,7 +29,6 @@ tar xzf ${RELEASE}.tar.gz
 VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 rm -rf ${RELEASE}.tar.gz
 mv Heimdall-${VER} /opt/Heimdall
-$STD apt-get install -y composer
 msg_ok "Installed Heimdall Dashboard ${RELEASE}"
 
 msg_info "Creating Service"
