@@ -42,6 +42,7 @@ LATEST=$(curl -sL https://api.github.com/repos/MediaBrowser/Emby.Releases/releas
 msg_info "Installing Emby"
 wget -q https://github.com/MediaBrowser/Emby.Releases/releases/download/${LATEST}/emby-server-deb_${LATEST}_amd64.deb
 $STD dpkg -i emby-server-deb_${LATEST}_amd64.deb
+sed -i '/^render:x:108:root,emby$/d; s/^ssl-cert:x:104:$/render:x:104:root,emby/' /etc/group
 msg_ok "Installed Emby"
 
 motd_ssh
