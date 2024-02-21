@@ -38,7 +38,7 @@ fi
 msg_info "Installing Channels DVR Server (Patience)"
 cd /opt
 $STD bash <(curl -fsSL https://getchannels.com/dvr/setup.sh)
-# adduser $(id -u -n) video && adduser $(id -u -n) render
+sed -i -e 's/^sgx:x:104:$/render:x:104:root/' -e 's/^render:x:106:root$/sgx:x:106:/' /etc/group
 msg_ok "Installed Channels DVR Server"
 
 motd_ssh
