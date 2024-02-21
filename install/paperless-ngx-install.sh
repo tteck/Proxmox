@@ -97,6 +97,7 @@ $STD python3 -m nltk.downloader -d /usr/share/nltk_data all
 msg_ok "Installed Natural Language Toolkit"
 
 msg_info "Setting up PostgreSQL database"
+export LC_ALL=C.UTF-8
 DB_NAME=paperlessdb
 DB_USER=paperless
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
