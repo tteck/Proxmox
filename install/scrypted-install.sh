@@ -110,6 +110,7 @@ fi
 
 msg_info "Installing Scrypted"
 $STD npx -y scrypted@latest install-server
+sed -i -e 's/^sgx:x:104:$/render:x:104:root/' -e 's/^render:x:106:root$/sgx:x:106:/' /etc/group
 msg_ok "Installed Scrypted"
 
 msg_info "Creating Service"
