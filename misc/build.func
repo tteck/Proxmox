@@ -72,7 +72,7 @@ msg_error() {
 }
 
 # Run as root only
-check_root() {
+root_check() {
   if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
     clear
     msg_error "Please run this script as root."
@@ -83,7 +83,7 @@ check_root() {
 }
 
 # Check if the shell is using bash
-check_shell() {
+shell_check() {
   if [[ "$(basename "$SHELL")" != "bash" ]]; then
     msg_error "Your current shell is not Bash. To utilize these scripts, please switch to the Bash shell.
     echo -e "\nExiting..."
@@ -460,10 +460,11 @@ advanced_settings() {
 }
 
 install_script() {
-  check_root
-  ssh_check
-  arch_check
   pve_check
+  shell_check
+  root_check
+  arch_check
+  ssh_check
   if systemctl is-active -q ping-instances.service; then
     systemctl -q stop ping-instances.service
   fi
