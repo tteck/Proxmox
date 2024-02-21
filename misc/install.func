@@ -130,7 +130,7 @@ network_check() {
 
 # Check if IPv6 is being used
   if ip -o -6 addr show | grep -q "scope global"; then
-    if ping6 -c 1 -W 1 2606:4700:4700::1111 &>/dev/null; then
+    if ping -6 google.com &>/dev/null; then
         msg_ok "IPv6 Internet Connected";
     else
         msg_error "IPv6 Internet Not Connected";
