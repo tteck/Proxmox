@@ -25,7 +25,7 @@ if [[ "$CTTYPE" == "0" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   $STD apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 \ 
+    ocl-icd-libopencl1 \
     intel-opencl-icd
   chgrp video /dev/dri
   chmod 755 /dev/dri
