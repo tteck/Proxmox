@@ -45,7 +45,7 @@ msg_ok "Set Up Plex Media Server Repository"
 msg_info "Installing Plex Media Server"
 $STD apt-get update
 $STD apt-get -o Dpkg::Options::="--force-confold" install -y plexmediaserver
-sed -i '/^render:x:108:root$/d; s/^ssl-cert:x:104:plex$/render:x:104:root,plex/' /etc/group
+sed -i -e 's/^ssl-cert:x:104:plex$/render:x:104:root,plex/' -e 's/^render:x:108:root$/ssl-cert:x:108:plex/' /etc/group
 msg_ok "Installed Plex Media Server"
 
 motd_ssh

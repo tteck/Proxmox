@@ -58,7 +58,7 @@ EOF
 # Install Jellyfin using the metapackage (which will fetch jellyfin-server, jellyfin-web, and jellyfin-ffmpeg5)
 $STD apt-get update
 $STD apt-get install -y jellyfin
-sed -i '/^render:x:108:root,jellyfin$/d; s/^ssl-cert:x:104:$/render:x:104:root,jellyfin/' /etc/group
+sed -i -e 's/^ssl-cert:x:104:$/render:x:104:root,jellyfin/' -e 's/^render:x:108:root,jellyfin$/ssl-cert:x:108:/' /etc/group
 msg_ok "Installed Jellyfin"
 
 motd_ssh
