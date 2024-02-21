@@ -82,6 +82,16 @@ check_root() {
   fi
 }
 
+# Check if the shell is using bash
+shell_check() {
+  if [[ "$(basename "$SHELL")" != "bash" ]]; then
+    msg_error "Your current shell is not Bash. To utilize these scripts, please switch to the Bash shell.
+    echo -e "\nExiting..."
+    sleep 2
+    exit
+  fi
+}
+
 # This function checks the version of Proxmox Virtual Environment (PVE) and exits if the version is not supported.
 pve_check() {
   if [ $(pveversion | grep "pve-manager/8" | wc -l) -ne 1 ]; then
@@ -450,6 +460,7 @@ advanced_settings() {
 }
 
 install_script() {
+  shell_check
   check_root
   ssh_check
   arch_check
