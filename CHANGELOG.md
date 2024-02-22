@@ -14,6 +14,13 @@
 
 ### Changed
 
+- **All scripts**
+  - As of today, the scripts require the Bash shell specifically. ([more info](https://github.com/tteck/Proxmox/discussions/2536))
+
+## 2024-02-19
+
+### Changed
+
 - **PairDrop LXC**
   - Removed from the website ([more info](https://github.com/tteck/Proxmox/discussions/2516))
 
