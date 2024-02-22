@@ -83,6 +83,7 @@ touch /opt/Stirling-PDF/.env
 mv ./build/libs/Stirling-PDF-*.jar /opt/Stirling-PDF/
 mv scripts /opt/Stirling-PDF/
 ln -s /opt/Stirling-PDF/Stirling-PDF-$RELEASE.jar /opt/Stirling-PDF/Stirling-PDF.jar
+ln -s /usr/share/tesseract-ocr/5/tessdata/ /usr/share/tessdata
 msg_ok "Installed Stirling-PDF v$RELEASE"
 
 msg_info "Creating Service"
