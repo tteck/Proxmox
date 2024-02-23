@@ -119,14 +119,13 @@ arch_check() {
 
 # This function checks if the script is running through SSH and prompts the user to confirm if they want to proceed or exit.
 ssh_check() {
-  if command -v pveversion >/dev/null 2>&1; then
-    if [ -n "${SSH_CLIENT:+x}" ]; then
-      if whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "SSH DETECTED" --yesno "It's suggested to use the Proxmox shell instead of SSH, since SSH can create issues while gathering variables. Would you like to proceed with using SSH?" 10 62; then
-        echo "you've been warned"
-      else
-        clear
-        exit
-      fi
+  if command -v pveversion >/dev/null 2>&1 && [ -n "${SSH_CLIENT:+x}" ]; then
+    if whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "SSH DETECTED" --yesno "It's advisable to utilize the Proxmox shell rather than SSH, as there may be potential complications with variable retrieval. Proceed using SSH?" 10 72; then
+      whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Proceed using SSH" "You've chosen to proceed using SSH. If any issues arise, please run the script in the Proxmox shell before creating a repository issue." 10 72
+    else
+      clear
+      echo "Exiting due to SSH usage. Please consider using the Proxmox shell."
+      exit
     fi
   fi
 }
