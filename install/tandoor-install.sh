@@ -61,29 +61,23 @@ cd /opt/tandoor/vue
 $STD yarn install
 $STD yarn build
 wget -q https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O /opt/tandoor/.env
-DB_NAME=djangodb
-DB_USER=djangouser
+DB_NAME=db_recipes
+DB_USER=tandoor
 DB_ENCODING=utf8
 DB_TIMEZONE=UTC
 secret_key=$(openssl rand -base64 45 | sed 's/\//\\\//g')
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 sed -i -e "s|SECRET_KEY=.*|SECRET_KEY=$secret_key|g" \
-       -e "s|POSTGRES_HOST=.*|POSTGRES_HOST=127.0.0.1|g" \
+       -e "s|POSTGRES_HOST=.*|POSTGRES_HOST=localhost|g" \
        -e "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$DB_PASS|g" \
        -e "s|POSTGRES_DB=.*|POSTGRES_DB=$DB_NAME|g" \
        -e "s|POSTGRES_USER=.*|POSTGRES_USER=$DB_USER|g" \
-       -e "\$a\\STATIC_URL=/staticfiles/\nMEDIA_URL=/mediafiles/" /opt/tandoor/.env
+       -e "\$a\STATIC_URL=/staticfiles/" /opt/tandoor/.env
 msg_ok "Installed Tandoor"
 
 msg_info "Setting up PostgreSQL database"
-$STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
-$STD sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASS';"
-$STD sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;" 
-$STD sudo -u postgres psql -c "ALTER DATABASE $DB_NAME OWNER TO $DB_USER;"
-$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO $DB_ENCODING;"
-$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET default_transaction_isolation TO 'read committed';"
-$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET timezone TO $DB_TIMEZONE;"
-$STD sudo -u postgres psql -c "ALTER USER $DB_USER WITH SUPERUSER;"
+$STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
+$STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
 echo "" >>~/tandoor.creds
 echo -e "Tandoor Database Name: \e[32m$DB_NAME\e[0m" >>~/tandoor.creds
 echo -e "Tandoor Database User: \e[32m$DB_USER\e[0m" >>~/tandoor.creds
