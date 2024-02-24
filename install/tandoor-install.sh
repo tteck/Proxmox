@@ -61,8 +61,8 @@ cd /opt/tandoor/vue
 $STD yarn install
 $STD yarn build
 wget -q https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O /opt/tandoor/.env
-DB_NAME=tandordb
-DB_USER=tandoor
+DB_NAME=djangodb
+DB_USER=djangouser
 DB_ENCODING=utf8
 DB_TIMEZONE=UTC
 secret_key=$(openssl rand -base64 45 | sed 's/\//\\\//g')
