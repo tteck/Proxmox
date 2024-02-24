@@ -16,7 +16,6 @@ update_os
 
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
-  postgresql \
   build-essential \
   libpq-dev \
   libmagic-dev \
@@ -72,11 +71,14 @@ sed -i -e "s|SECRET_KEY=.*|SECRET_KEY=$secret_key|g" \
        -e "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$DB_PASS|g" \
        -e "s|POSTGRES_DB=.*|POSTGRES_DB=$DB_NAME|g" \
        -e "s|POSTGRES_USER=.*|POSTGRES_USER=$DB_USER|g" \
-       -e "\$a\STATIC_URL=/staticfiles/" \
-       -e "\$a\# DEBUG=0" /opt/tandoor/.env
+       -e "\$a\STATIC_URL=/staticfiles/" /opt/tandoor/.env
 msg_ok "Installed Tandoor"
 
-msg_info "Setting up PostgreSQL database"
+msg_info "Install/Set up PostgreSQL Database"
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+echo "deb https://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" >/etc/apt/sources.list.d/pgdg.list
+$STD apt-get update
+$STD apt-get install -y postgresql-16
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
 echo "" >>~/tandoor.creds
@@ -87,7 +89,7 @@ export $(cat /opt/tandoor/.env |grep "^[^#]" | xargs)
 /usr/bin/python3 /opt/tandoor/manage.py migrate >/dev/null 2>&1
 /usr/bin/python3 /opt/tandoor/manage.py collectstatic --no-input >/dev/null 2>&1
 /usr/bin/python3 /opt/tandoor/manage.py collectstatic_js_reverse >/dev/null 2>&1
-msg_ok "Set up PostgreSQL database"
+msg_ok "Set up PostgreSQL Database"
 
 msg_info "Creating Services"
 cat <<EOF >/etc/systemd/system/gunicorn_tandoor.service
