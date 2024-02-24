@@ -61,16 +61,21 @@ cd /opt/tandoor/vue
 $STD yarn install
 $STD yarn build
 wget -q https://raw.githubusercontent.com/vabene1111/recipes/develop/.env.template -O /opt/tandoor/.env
+DB_NAME=tandordb
+DB_USER=tandoor
+DB_ENCODING=utf8
+DB_TIMEZONE=UTC
 secret_key=$(openssl rand -base64 45 | sed 's/\//\\\//g')
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-sed -i "s|SECRET_KEY=.*|SECRET_KEY=$secret_key|; s|POSTGRES_HOST=.*|POSTGRES_HOST=127.0.0.1|; s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$DB_PASS|; s|STATIC_URL=.*|STATIC_URL=/staticfiles/|; s|MEDIA_URL=.*|MEDIA_URL=/mediafiles/|" /opt/tandoor/.env
+sed -i -e "s|SECRET_KEY=.*|SECRET_KEY=$secret_key|g" \
+       -e "s|POSTGRES_HOST=.*|POSTGRES_HOST=127.0.0.1|g" \
+       -e "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$DB_PASS|g" \
+       -e "s|POSTGRES_DB=.*|POSTGRES_DB=$DB_NAME|g" \
+       -e "s|POSTGRES_USER=.*|POSTGRES_USER=$DB_USER|g" \
+       -e "\$a\STATIC_URL=/staticfiles\\nMEDIA_URL=/mediafiles" /opt/tandoor/.env
 msg_ok "Installed Tandoor"
 
 msg_info "Setting up PostgreSQL database"
-DB_NAME=djangodb
-DB_USER=djangouser
-DB_ENCODING=utf8
-DB_TIMEZONE=UTC
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
 $STD sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;" 
