@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
-# Author: MickLesk (Canbiz)
+# Author: tteck
+# Co-Author: MickLesk (Canbiz)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -11,9 +12,9 @@ cat <<"EOF"
   ______                __                
  /_  __/___ _____  ____/ /___  ____  _____
   / / / __ `/ __ \/ __  / __ \/ __ \/ ___/
- / / / /_/ / / / / /_/ / /_/ / /_/ / /    
-/_/  \__,_/_/ /_/\__,_/\____/\____/_/     
-                                        
+ / / / /_/ / / / / /_/ / /_/ / /_/ / /
+/_/  \__,_/_/ /_/\__,_/\____/\____/_/
+
 EOF
 }
 header_info
@@ -21,7 +22,7 @@ echo -e "Loading..."
 APP="Tandoor"
 var_disk="10"
 var_cpu="2"
-var_ram="1024"
+var_ram="2048"
 var_os="debian"
 var_version="12"
 variables
