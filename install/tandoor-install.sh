@@ -72,7 +72,8 @@ sed -i -e "s|SECRET_KEY=.*|SECRET_KEY=$secret_key|g" \
        -e "s|POSTGRES_PASSWORD=.*|POSTGRES_PASSWORD=$DB_PASS|g" \
        -e "s|POSTGRES_DB=.*|POSTGRES_DB=$DB_NAME|g" \
        -e "s|POSTGRES_USER=.*|POSTGRES_USER=$DB_USER|g" \
-       -e "\$a\STATIC_URL=/staticfiles/" /opt/tandoor/.env
+       -e "\$a\STATIC_URL=/staticfiles/" \
+       -e "\$a\DEBUG=0" /opt/tandoor/.env
 msg_ok "Installed Tandoor"
 
 msg_info "Setting up PostgreSQL database"
