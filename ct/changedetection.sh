@@ -58,6 +58,7 @@ if [[ ! -f /etc/systemd/system/changedetection.service ]]; then msg_error "No ${
 msg_info "Updating ${APP} LXC"
 pip3 install changedetection.io --upgrade &>/dev/null
 pip3 install playwright --upgrade &>/dev/null
+systemctl restart changedetection
 msg_ok "Updated Successfully"
 exit
 }
