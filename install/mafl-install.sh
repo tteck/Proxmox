@@ -41,6 +41,7 @@ msg_info "Installing Mafl v${RELEASE}"
 wget -q https://github.com/hywax/mafl/archive/refs/tags/v${RELEASE}.tar.gz
 $STD tar -xzf v${RELEASE}.tar.gz
 mkdir -p /opt/mafl/data
+touch /opt/mafl/data/config.yml
 mv mafl-${RELEASE}/* /opt/mafl
 rm -rf mafl-${RELEASE}
 cd /opt/mafl
