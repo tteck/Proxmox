@@ -33,7 +33,8 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD npm install -g pnpm
+$STD npm install -g npm@latest
+$STD npm install -g yarn
 msg_ok "Installed Node.js"
 
 RELEASE=$(curl -s https://api.github.com/repos/hywax/mafl/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
@@ -45,8 +46,8 @@ touch /opt/mafl/data/config.yml
 mv mafl-${RELEASE}/* /opt/mafl
 rm -rf mafl-${RELEASE}
 cd /opt/mafl
-$STD pnpm install
-$STD pnpm build
+$STD yarn install
+$STD yarn build
 msg_ok "Installed Mafl v${RELEASE}"
 
 msg_info "Creating Service"
@@ -61,7 +62,7 @@ Restart=always
 RestartSec=1
 User=root
 WorkingDirectory=/opt/mafl/
-ExecStart=pnpm preview
+ExecStart=yarn preview
 [Install]
 WantedBy=multi-user.target" >$service_path
 $STD systemctl enable --now malf
