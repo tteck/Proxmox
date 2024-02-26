@@ -1,27 +1,28 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
-# Author: MickLesk (Canbiz)
+# Author: tteck
+# Co-Author: MickLesk (Canbiz)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"
-  ______                __                
- /_  __/___ _____  ____/ /___  ____  _____
-  / / / __ `/ __ \/ __  / __ \/ __ \/ ___/
- / / / /_/ / / / / /_/ / /_/ / /_/ / /    
-/_/  \__,_/_/ /_/\__,_/\____/\____/_/     
-                                        
+  ______                __                    ____            _
+ /_  __/___ _____  ____/ /___  ____  _____   / __ \___  _____(_)___  ___  _____
+  / / / __ `/ __ \/ __  / __ \/ __ \/ ___/  / /_/ / _ \/ ___/ / __ \/ _ \/ ___/
+ / / / /_/ / / / / /_/ / /_/ / /_/ / /     / _, _/  __/ /__/ / /_/ /  __(__  )
+/_/  \__,_/_/ /_/\__,_/\____/\____/_/     /_/ |_|\___/\___/_/ .___/\___/____/
+                                                           /_/
 EOF
 }
 header_info
 echo -e "Loading..."
 APP="Tandoor"
 var_disk="10"
-var_cpu="2"
-var_ram="1024"
+var_cpu="4"
+var_ram="4096"
 var_os="debian"
 var_version="12"
 variables
@@ -78,6 +79,11 @@ exit
 start
 build_container
 description
+
+msg_info "Setting Container to Normal Resources"
+pct set $CTID -memory 2048
+pct set $CTID -cores 2
+msg_ok "Set Container to Normal Resources"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} Setup should be reachable by going to the following URL.
