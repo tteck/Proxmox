@@ -35,4 +35,4 @@
 
 [Proxmox + NetData](<https://dbt3ch.com/books/proxmox-netdata-for-better-insights-and-notifications/page/proxmox-netdata-for-better-insights-and-notifications>)
 
-[Proxmox Homelab Series](<https://blog.kye.dev/proxmox-series)https://blog.kye.dev/proxmox-series>)
+[Proxmox Homelab Series](<https://blog.kye.dev/proxmox-series>)
