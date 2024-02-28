@@ -31,7 +31,7 @@ msg_ok "Installed OpenJDK"
 msg_info "Installing MongoDB"
 libssl=$(curl -fsSL "http://security.ubuntu.com/ubuntu/pool/main/o/openssl/" | grep -o 'libssl1\.1_1\.1\.1f-1ubuntu2\.2[^"]*amd64\.deb' | head -n1)
 wget -qL http://security.ubuntu.com/ubuntu/pool/main/o/openssl/$libssl
-$STD dpkg -i libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb
+$STD dpkg -i $libssl
 wget -qO- https://pgp.mongodb.com/server-4.4.asc | gpg --dearmor >/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg
 echo 'deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main' >/etc/apt/sources.list.d/mongodb-org-4.4.list
 $STD apt-get update
@@ -49,7 +49,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb
+rm -rf $libssl
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
