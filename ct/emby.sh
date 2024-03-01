@@ -61,9 +61,9 @@ systemctl stop emby-server
 msg_ok "Stopped ${APP}"
 
 msg_info "Updating ${APP}"
-wget https://github.com/MediaBrowser/Emby.Releases/releases/download/${LATEST}/emby-server-deb_${LATEST}_amd64.deb &>/dev/null
-dpkg -i emby-server-deb_${LATEST}_amd64.deb &>/dev/null
-rm emby-server-deb_${LATEST}_amd64.deb
+wget https://github.com/MediaBrowser/Emby.Releases/releases/download/4.8.1.0/emby-server-deb_4.8.1.0_amd64.deb &>/dev/null
+dpkg -i emby-server-deb_4.8.1.0_amd64.deb &>/dev/null
+rm emby-server-deb_4.8.1.0_amd64.deb
 msg_ok "Updated ${APP}"
 
 msg_info "Starting ${APP}"
