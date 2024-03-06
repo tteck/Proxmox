@@ -25,6 +25,7 @@ $STD apt-get install -y libjpeg-dev
 $STD apt-get install -y libtiff-dev
 $STD apt-get install -y imagemagick
 $STD apt-get install -y darktable
+$STD apt-get install -y rawtherapee
 
 msg_ok "Installed Dependencies"
 
