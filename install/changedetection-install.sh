@@ -23,6 +23,8 @@ $STD apt-get install -y \
   dumb-init \
   gconf-service \
   libatk-bridge2.0-0 \
+  jpeg-dev \
+  libjpeg \
   libasound2 \
   libatk1.0-0 \
   libcairo2 \
