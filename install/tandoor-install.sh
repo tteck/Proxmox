@@ -127,7 +127,6 @@ server {
     location / {
         proxy_set_header Host $http_host;
         proxy_pass http://unix:/opt/tandoor/tandoor.sock;
-        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 EOF
