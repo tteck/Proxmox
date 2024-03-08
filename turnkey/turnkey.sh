@@ -98,8 +98,10 @@ turnkey=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "TurnKey LXCs
 # Setup script environment
 PASS="$(openssl rand -base64 8)"
 CTID=$(pvesh get /cluster/nextid)
+#Recommended default for unprivileged containers is to leave keyctl off
+#https://forum.proxmox.com/threads/how-does-keyctl-works-in-virtual-environments.116414/
 PCT_OPTIONS="
-    -features keyctl=1,nesting=1
+    -features nesting=1
     -hostname turnkey-${turnkey}
     -tags proxmox-helper-scripts
     -onboot 1
