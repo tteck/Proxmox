@@ -29,7 +29,7 @@ fi
 done
 
 #Fail2ban option
-if (whiptail --backtitle "Proxmox VE Helper Scripts" --defaultyes --title "Fail2ban" --yesno "Configure fail2ban?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Fail2ban" --yesno "Configure fail2ban?" 10 58); then
   ENABLE_F2B=1
 else
   ENABLE_F2B=0
@@ -84,7 +84,10 @@ curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBV
 tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
-admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
+#debugging...
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1 > testy
+
+$STD admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
 
 #Local server IP
 $STD vw_ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
