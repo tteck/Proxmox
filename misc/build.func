@@ -417,6 +417,13 @@ advanced_settings() {
   else
     exit-script
   fi
+  
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Enable firewall" --yesno "Enable firewall?" 10 58); then
+    FW=1
+  else
+    FW=0
+  fi
+  echo -e "${DGN}Enable Firewall: ${BGN}$FW${CL}"
 
   if VLAN1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set a Vlan(leave blank for default)" 8 58 --title "VLAN" 3>&1 1>&2 2>&3); then
     if [ -z $VLAN1 ]; then
@@ -543,7 +550,7 @@ build_container() {
     -tags proxmox-helper-scripts
     $SD
     $NS
-    -net0 name=eth0,bridge=$BRG$MAC,ip=$NET$GATE$VLAN$MTU
+    -net0 name=eth0,bridge=$BRG$MAC,firewall=$FW,ip=$NET$GATE$VLAN$MTU
     -onboot 1
     -cores $CORE_COUNT
     -memory $RAM_SIZE
