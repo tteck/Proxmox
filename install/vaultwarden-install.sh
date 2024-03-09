@@ -231,6 +231,6 @@ $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
 
-msg_info "Important! Save the following admin token:"
-msg_info "${admintoken}"
+msg_info "Important! Save the following admin token:\n"
+msg_info "${admintoken}\n"
 msg_info "Admin panel accessible at $vw_ip4:8000/admin"
