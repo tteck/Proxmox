@@ -220,7 +220,9 @@ findtime = 14400" > $vaultwardenfail2banadminjail
 
   #In case of debian os, need to explicitly set the backend for fail2ban
   #see https://github.com/fail2ban/fail2ban/issues/3292
-  if [ "$var_os" == "debian" ]; then
+  os=$(less /etc/os-release | grep "^ID=")
+  os="${os:3}"
+  if [ "$os" == "debian" ]; then
     echo "backend = systemd" >> /etc/fail2ban/jail.d/defaults-debian.conf
   fi
 
