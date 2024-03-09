@@ -218,6 +218,12 @@ maxretry = 5
 bantime = 14400
 findtime = 14400" > $vaultwardenfail2banadminjail
 
+  #In case of debian os, need to explicitly set the backend for fail2ban
+  #see https://github.com/fail2ban/fail2ban/issues/3292
+  if [ "$var_os" == "debian" ]; then
+    echo "backend = systemd" >> /etc/fail2ban/jail.d/defaults-debian.conf
+  fi
+
   systemctl daemon-reload
   $STD systemctl restart fail2ban
   msg_info "Configured fail2ban"
@@ -231,6 +237,6 @@ $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
 
-msg_info "Important! Save the following admin token:\n"
-msg_info "${admintoken}\n"
+msg_info "Important! Save the following admin token:"
+echo "${admintoken}"
 msg_info "Admin panel accessible at $vw_ip4:8000/admin"
