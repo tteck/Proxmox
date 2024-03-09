@@ -209,5 +209,5 @@ generate_token() {
   
   #For some reason, the /dev/urandom approach does not work inside an install script
   #tr -dc A-Za-z0-9 </dev/urandom | head -c$token_len
-  openssl rand -base64 $token_len
+  openssl rand -hex $token_len
 }
