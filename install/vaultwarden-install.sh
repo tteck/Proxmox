@@ -118,6 +118,7 @@ if [ "$DB_ENGINE" == "postgresql" ]; then
   sudo -u postgres psql -c "CREATE DATABASE vaultwarden;"
   sudo -u postgres psql -c "CREATE USER vaultwarden WITH ENCRYPTED PASSWORD '${postgresql_pwd}';"
   sudo -u postgres psql -c "GRANT all privileges ON database vaultwarden TO vaultwarden;"
+  sudo -u postgres psql -c "GRANT all ON SCHEMA public TO vaultwarden;"
   #echo "Successfully setup PostgreSQL DB vaultwarden with user vaultwarden and password ${postgresql_pwd}"
 
   echo "DATABASE_URL=postgresql://vaultwarden:${postgresql_pwd}@localhost:5432/vaultwarden" >> /opt/vaultwarden/.env
