@@ -86,6 +86,7 @@ msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
 #admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
 admintoken=$(generate_token)
+admintoken_hash=$(echo -n ${admintoken} | argon2 "$(openssl rand -base64 32)" -t 2 -m 16 -p 4 -l 64 -e)
 
 #Local server IP
 vw_ip4=$(hostname -I | awk '{print $1}')
@@ -94,7 +95,7 @@ vw_ip4=$(hostname -I | awk '{print $1}')
 #echo "Local IP:$ip4"
 
 cat <<EOF >/opt/vaultwarden/.env
-ADMIN_TOKEN=${admintoken}
+ADMIN_TOKEN=${admintoken_hash}
 ROCKET_ADDRESS=${vw_ip4}
 DATA_FOLDER=/opt/vaultwarden/data
 DATABASE_MAX_CONNS=10
