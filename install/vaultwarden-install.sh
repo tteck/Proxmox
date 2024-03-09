@@ -85,7 +85,7 @@ tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
 #admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
-admintoken=$(generate_token 50)
+admintoken=$(generate_token)
 
 #Local server IP
 vw_ip4=$(hostname -I | awk '{print $1}')
@@ -219,6 +219,7 @@ maxretry = 5
 bantime = 14400
 findtime = 14400" > $vaultwardenfail2banadminjail
 
+  systemctl daemon-reload
   $STD systemctl restart fail2ban
   msg_info "Configured fail2ban"
 fi
