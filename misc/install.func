@@ -197,3 +197,17 @@ EOF
   echo "bash -c \"\$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/ct/${app}.sh)\"" >/usr/bin/update
   chmod +x /usr/bin/update
 }
+
+# This function generates a token. The length of the token needs to be passed as the first parameter, otherwise defaults to 30
+generate_token() {
+  token_len=30
+  
+  #check if first parameter was passed and it's an integer
+  if [ $# -ge 1 ] && [ ! -z "$1" ] && [[ $1 =~ ^[-+]?[0-9]+$ ]]; then
+    token_len=$1
+  fi
+  
+  #For some reason, the /dev/urandom approach does not work inside an install script
+  #tr -dc A-Za-z0-9 </dev/urandom | head -c$token_len
+  openssl rand -base64 $token_len
+}
