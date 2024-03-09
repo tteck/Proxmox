@@ -84,10 +84,8 @@ curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/$WEBV
 tar -xzf bw_web_$WEBVAULT.tar.gz -C /opt/vaultwarden/
 msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 
-#debugging...
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1 > testy
-
-$STD admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
+#admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
+admintoken=$(generate_token 50)
 
 #Local server IP
 $STD vw_ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
@@ -112,7 +110,8 @@ if [ "$DB_ENGINE" == "postgresql" ]; then
 
   ### Configure PostgreSQL DB
   # Random password
-  postgresql_pwd=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
+  #postgresql_pwd=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 24 | head -n 1)
+  postgresql_pwd=$(generate_token)
   sudo -u postgres psql -c "CREATE DATABASE vaultwarden;"
   sudo -u postgres psql -c "CREATE USER vaultwarden WITH ENCRYPTED PASSWORD '${postgresql_pwd}';"
   sudo -u postgres psql -c "GRANT all privileges ON database vaultwarden TO vaultwarden;"
