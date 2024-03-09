@@ -46,6 +46,7 @@ function default_settings() {
   SD=""
   NS=""
   MAC=""
+  FW=1
   VLAN=""
   SSH="no"
   VERB="no"
