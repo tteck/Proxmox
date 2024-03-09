@@ -230,4 +230,6 @@ $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
 
-msg_info "Enter ${admintoken} to gain access to admin panel, please save this somewhere! Admin panel accessible at $vw_ip4:8000/admin"
+msg_info "Important! Save the following admin token:"
+msg_info "${admintoken}"
+msg_info "Admin panel accessible at $vw_ip4:8000/admin"
