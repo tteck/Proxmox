@@ -88,7 +88,9 @@ msg_ok "Downloaded Web-Vault ${WEBVAULT}"
 admintoken=$(generate_token 50)
 
 #Local server IP
-$STD vw_ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+vw_ip4=$(hostname -I | awk '{print $1}')
+#vw_ip4=$(ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+#$STD vw_ip4=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 #echo "Local IP:$ip4"
 
 cat <<EOF >/opt/vaultwarden/.env
