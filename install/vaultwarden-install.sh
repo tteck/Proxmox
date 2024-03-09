@@ -193,7 +193,6 @@ enabled = true
 port = 80,443,8081
 filter = vaultwarden
 action = iptables-allports[name=vaultwarden]
-logpath = /var/log/vaultwarden/error.log
 maxretry = 3
 bantime = 14400
 findtime = 14400" > $vaultwardenfail2banjail
@@ -214,7 +213,6 @@ enabled = true
 port = 80,443
 filter = vaultwarden-admin
 action = iptables-allports[name=vaultwarden]
-logpath = /var/log/vaultwarden/error.log
 maxretry = 5
 bantime = 14400
 findtime = 14400" > $vaultwardenfail2banadminjail
