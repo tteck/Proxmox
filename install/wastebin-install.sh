@@ -17,7 +17,6 @@ update_os
 
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
-  unzip \
   build-essential \
   curl \
   sudo \
@@ -27,17 +26,17 @@ $STD apt-get install -y --no-install-recommends \
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Rust (Patience)" 
-$STD bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
-$STD source ~/.cargo/env
+bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
+source ~/.cargo/env
 msg_ok "Installed Rust" 
 
 RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-$STD wget -q "https://github.com/matze/wastebin/archive/refs/tags/${RELEASE}.zip"
-$STD unzip -q ${RELEASE}.zip
+wget -q "https://github.com/matze/wastebin/archive/refs/tags/${RELEASE}.zip"
+unzip -q ${RELEASE}.zip
 mv wastebin-${RELEASE} /opt/wastebin
 rm -R ${RELEASE}.zip 
 cd /opt/wastebin
-$STD cargo build -q --release
+cargo build -q --release
 msg_ok "Installed Wastebin"
 
 msg_info "Creating Service"
@@ -54,7 +53,6 @@ ExecStart=/root/.cargo/bin/cargo run --release --quiet
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl daemon-reload
 systemctl enable -q --now wastebin.service
 msg_ok "Created Service"
 
