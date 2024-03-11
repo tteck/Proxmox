@@ -26,7 +26,7 @@ $STD apt-get install -y --no-install-recommends \
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Rust (Patience)" 
-bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
+$STD bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
 source ~/.cargo/env
 msg_ok "Installed Rust" 
 
