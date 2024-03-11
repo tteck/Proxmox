@@ -18,6 +18,7 @@ update_os
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
   build-essential \
+  unzip \
   curl \
   sudo \
   git \
