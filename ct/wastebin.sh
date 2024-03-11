@@ -67,14 +67,14 @@ systemctl stop wastebin
 msg_ok "Wastebin Stopped"
 
 msg_info "Updating Wastebin"
-RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }') &>/dev/null
+RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 cd /opt
 if [ -d wastebin_bak ]; then
   rm -rf wastebin_bak
 fi
 mv wastebin wastebin_bak
 wget -q "https://github.com/matze/wastebin/archive/refs/tags/${RELEASE}.zip"
-unzip -q ${RELEASE}.zip &>/dev/null
+unzip -q ${RELEASE}.zip
 mv wastebin-${RELEASE} /opt/wastebin
 cd /opt/wastebin
 cargo update -q 
