@@ -31,6 +31,7 @@ $STD bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
 source ~/.cargo/env
 msg_ok "Installed Rust" 
 
+msg_info "Installing Wastebin (Patience)"
 RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 wget -q "https://github.com/matze/wastebin/archive/refs/tags/${RELEASE}.zip"
 unzip -q ${RELEASE}.zip
