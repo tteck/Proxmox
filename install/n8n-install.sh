@@ -44,6 +44,7 @@ Description=n8n
 
 [Service]
 Type=simple
+Environment="N8N_SECURE_COOKIE=false"
 ExecStart=n8n start
 [Install]
 WantedBy=multi-user.target
