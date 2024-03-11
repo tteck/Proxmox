@@ -20,7 +20,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="n8n"
-var_disk="3"
+var_disk="6"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
