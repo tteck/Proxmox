@@ -44,7 +44,7 @@ msg_ok "Installed Dependencies"
 
 RELEASE=$(curl -s https://www.python.org/downloads/ | grep -oP 'Download Python \K\d+\.\d+\.\d+' | head -1)
 
-msg_info "Compiling Python ${RELEASE} from its source (Additional Patience)"
+msg_info "Compiling Python 3.12 from its source (Additional Patience)"
 $STD apt-get remove -y python3
 $STD apt-get install -y \
   checkinstall \
@@ -57,15 +57,16 @@ $STD apt-get install -y \
   libc6-dev \
   libbz2-dev
 
-wget -qO- https://www.python.org/ftp/python/${RELEASE}/Python-${RELEASE}.tar.xz | tar -xJ
-cd Python-${RELEASE}
+#wget -qO- https://www.python.org/ftp/python/${RELEASE}/Python-${RELEASE}.tar.xz | tar -xJ
+wget -qO- https://www.python.org/ftp/python/3.12.2/Python-3.12.2.tar.xz | tar -xJ
+cd Python-3.12.2
 $STD ./configure --enable-optimizations
 $STD make -j $(nproc)
 $STD make altinstall
 $STD update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.12 1
 cd ~
-rm -rf Python-${RELEASE}
-msg_ok "Installed Python ${RELEASE}"
+rm -rf Python-3.12.2
+msg_ok "Installed Python 3.12"
 
 msg_info "Installing Home Assistant-Core"
 mkdir /srv/homeassistant
