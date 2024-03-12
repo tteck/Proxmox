@@ -42,7 +42,7 @@ $STD apt-get install -y \
   libatlas-base-dev
 msg_ok "Installed Dependencies"
 
-RELEASE=$(curl -s https://www.python.org/downloads/ | grep -oP 'Download Python \K\d+\.\d+\.\d+' | head -1)
+#RELEASE=$(curl -s https://www.python.org/downloads/ | grep -oP 'Download Python \K\d+\.\d+\.\d+' | head -1)
 
 msg_info "Compiling Python 3.12 from its source (Additional Patience)"
 $STD apt-get remove -y python3
