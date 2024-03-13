@@ -20,8 +20,8 @@ header_info
 echo -e "Loading..."
 APP="Home Assistant-Core"
 var_disk="8"
-var_cpu="4"
-var_ram="2048"
+var_cpu="2"
+var_ram="1024"
 var_os="debian"
 var_version="12"
 variables
@@ -150,11 +150,6 @@ WantedBy=default.target" >$service_path
 start
 build_container
 description
-
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 1024
-pct set $CTID -cores 2
-msg_ok "Set Container to Normal Resources"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
