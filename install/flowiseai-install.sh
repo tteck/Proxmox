@@ -30,6 +30,8 @@ msg_ok "Installed Node.js"
 
 msg_info "Installing FlowiseAI (Patience)"
 $STD npm install -g flowise
+mkdir -p /opt/flowiseai
+wget -q https://raw.githubusercontent.com/FlowiseAI/Flowise/main/packages/server/.env.example -O /opt/flowiseai/.env
 msg_ok "Installed FlowiseAI"
 
 msg_info "Creating Service"
@@ -39,6 +41,7 @@ Description=FlowiseAI
 After=network.target
 
 [Service]
+EnvironmentFile=/opt/flowiseai/.env
 ExecStart=npx flowise start
 Restart=always
 
