@@ -63,11 +63,11 @@ msg_ok "Stopped ${APP}"
 
 msg_info "Backing up conf.yml"
 cd ~
-cp -R /dashy/public/conf.yml conf.yml
+cp -R /opt/dashy/public/conf.yml conf.yml
 msg_ok "Backed up conf.yml"
 
 msg_info "Updating Dashy"
-cd /dashy
+cd /opt/dashy
 git merge &>/dev/null
 git pull origin master &>/dev/null
 yarn &>/dev/null
@@ -76,7 +76,7 @@ msg_ok "Updated Dashy"
 
 msg_info "Restoring conf.yml"
 cd ~
-cp -R conf.yml /dashy/public
+cp -R conf.yml /opt/dashy/public
 msg_ok "Restored conf.yml"
 
 msg_info "Cleaning"
