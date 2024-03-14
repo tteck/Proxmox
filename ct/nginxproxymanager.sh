@@ -61,7 +61,7 @@ function update_script() {
   fi
   if ! command -v pnpm &> /dev/null; then  
     msg_info "Installing pnpm"
-    npm install -g pnpm &>/dev/null
+    npm install -g pnpm@8.15 &>/dev/null
     msg_ok "Installed pnpm"
   fi
   RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
