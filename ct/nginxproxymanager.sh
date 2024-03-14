@@ -59,6 +59,11 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
+  if ! command -v pnpm &> /dev/null; then  
+    msg_info "Installing pnpm"
+    npm install -g pnpm &>/dev/null
+    msg_ok "Installed pnpm"
+  fi
   RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 3, length($2)-4) }')
@@ -130,12 +135,6 @@ function update_script() {
   python3 -m pip install --no-cache-dir certbot-dns-cloudflare &>/dev/null
   msg_ok "Setup Enviroment"
 
-  if ! command -v pnpm &> /dev/null; then  
-    msg_info "Installing pnpm"
-    npm install -g pnpm &>/dev/null
-    msg_ok "Installed pnpm"
-  fi
-  
   msg_info "Building Frontend"
   cd ./frontend
   pnpm install &>/dev/null
