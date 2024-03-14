@@ -54,18 +54,20 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /dashy/public/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /opt/dashy/public/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_error "There is currently no update path available."
+exit
 msg_info "Stopping ${APP}"
 systemctl stop dashy
 msg_ok "Stopped ${APP}"
 
 msg_info "Backing up conf.yml"
 cd ~
-cp -R /dashy/public/conf.yml conf.yml
+cp -R /opt/dashy/public/conf.yml conf.yml
 msg_ok "Backed up conf.yml"
 
 msg_info "Updating Dashy"
-cd /dashy
+cd /opt/dashy
 git merge &>/dev/null
 git pull origin master &>/dev/null
 yarn &>/dev/null
@@ -74,7 +76,7 @@ msg_ok "Updated Dashy"
 
 msg_info "Restoring conf.yml"
 cd ~
-cp -R conf.yml /dashy/public
+cp -R conf.yml /opt/dashy/public
 msg_ok "Restored conf.yml"
 
 msg_info "Cleaning"

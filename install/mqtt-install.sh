@@ -17,15 +17,10 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Mosquitto MQTT Broker"
-if [ "$PCT_OSTYPE" == "debian" ]; then
-  VERSION="$(awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release)"
-  wget -qO- http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key >/etc/apt/trusted.gpg.d/mosquitto-repo.asc
-  wget -qO /etc/apt/sources.list.d/mosquitto-${VERSION}.list http://repo.mosquitto.org/debian/mosquitto-${VERSION}.list
-  $STD apt-get update
-fi
 $STD apt-get -y install mosquitto
 $STD apt-get -y install mosquitto-clients
 cat <<EOF >/etc/mosquitto/conf.d/default.conf

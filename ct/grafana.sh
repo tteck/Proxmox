@@ -56,9 +56,6 @@ function update_script() {
 header_info
 if [[ ! -f /etc/apt/sources.list.d/grafana.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
-apt-key del 4E40DDF6D76E284A4A6780E48C8C34C524098CB6
-wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
-echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | tee /etc/apt/sources.list.d/grafana.list
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated Successfully"

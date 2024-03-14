@@ -54,26 +54,25 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
-if [[ ! -d /opt/tandoor ]]; then 
-	msg_error "No ${APP} Installation Found!"; 
-	exit; 
-fi
-msg_info "Updating ${APP} LXC"
-if cd /opt/tandoor && git pull | grep -q 'Already up to date'; then
-    msg_error "There is currently no update path available."
-else
+  header_info
+  if [[ ! -d /opt/tandoor ]]; then msg_error "No ${APP} Installation Found!"; exit; fi 
+  if cd /opt/tandoor && git pull | grep -q 'Already up to date'; then
+    msg_ok "There is currently no update available."
+  else
+    msg_info "Updating ${APP} (Patience)"
     export $(cat /opt/tandoor/.env | grep "^[^#]" | xargs)
-    /opt/tandoor/bin/pip3 install -r requirements.txt >/dev/null 2>&1
-    /opt/tandoor/bin/python3 manage.py migrate >/dev/null 2>&1
-    /opt/tandoor/bin/python3 manage.py collectstatic --no-input >/dev/null 2>&1
-    /opt/tandoor/bin/python3 manage.py collectstatic_js_reverse >/dev/null 2>&1
+    cd /opt/tandoor/
+    pip3 install -r requirements.txt >/dev/null 2>&1
+    /usr/bin/python3 /opt/tandoor/manage.py migrate >/dev/null 2>&1
+    /usr/bin/python3 /opt/tandoor/manage.py collectstatic --no-input >/dev/null 2>&1
+    /usr/bin/python3 /opt/tandoor/manage.py collectstatic_js_reverse >/dev/null 2>&1
     cd /opt/tandoor/vue
     yarn install >/dev/null 2>&1
     yarn build >/dev/null 2>&1
-    sudo systemctl restart gunicorn_tandoor
-fi
-exit
+    systemctl restart gunicorn_tandoor
+    msg_ok "Updated ${APP}"
+  fi
+  exit
 }
 
 start

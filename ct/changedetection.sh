@@ -56,8 +56,13 @@ function update_script() {
 header_info
 if [[ ! -f /etc/systemd/system/changedetection.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP} LXC"
+if ! dpkg -s libjpeg-dev >/dev/null 2>&1; then
+  apt-get update
+  apt-get install -y libjpeg-dev
+fi
 pip3 install changedetection.io --upgrade &>/dev/null
 pip3 install playwright --upgrade &>/dev/null
+systemctl restart changedetection
 msg_ok "Updated Successfully"
 exit
 }

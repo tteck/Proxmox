@@ -25,7 +25,10 @@ $STD apt-get install -y libjpeg-dev
 $STD apt-get install -y libtiff-dev
 $STD apt-get install -y imagemagick
 $STD apt-get install -y darktable
+$STD apt-get install -y rawtherapee
 
+echo 'export PATH=/usr/local:$PATH' >>~/.bashrc
+export PATH=/usr/local:$PATH
 msg_ok "Installed Dependencies"
 
 msg_info "Installing PhotoPrism (Patience)"

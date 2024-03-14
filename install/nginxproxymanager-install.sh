@@ -61,7 +61,7 @@ ln -sf /root/.nvm/versions/node/v16.20.2/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing pnpm"
-$STD npm install -g pnpm
+$STD npm install -g pnpm@8.15
 msg_ok "Installed pnpm"
 
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |

@@ -83,6 +83,10 @@ whiptail --backtitle "Proxmox VE Helper Scripts" --defaultno --title "$TITLE" --
 $CTID_FROM (${CTID_FROM_HOSTNAME}) -> $CTID_TO (${CTID_TO_HOSTNAME})
 Version: 2022.10.03" 13 50 || exit
 info "Home Assistant Data from '$CTID_FROM' to '$CTID_TO'"
+if [ $(pct status $CTID_FROM | sed 's/.* //') == 'running' ]; then
+  msg "Stopping '$CTID_FROM'..."
+  pct stop $CTID_FROM
+fi
 if [ $(pct status $CTID_TO | sed 's/.* //') == 'running' ]; then
   msg "Stopping '$CTID_TO'..."
   pct stop $CTID_TO

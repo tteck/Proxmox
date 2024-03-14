@@ -6,20 +6,20 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-  clear
-  cat <<"EOF"
-    __  ___      ______
-   /  |/  /___ _/ __/ /
-  / /|_/ / __ `/ /_/ /
- / /  / / /_/ / __/ /
-/_/  /_/\__,_/_/ /_/
+clear
+cat <<"EOF"
+    ________              _           ___    ____
+   / ____/ /___ _      __(_)_______  /   |  /  _/
+  / /_  / / __ \ | /| / / / ___/ _ \/ /| |  / /
+ / __/ / / /_/ / |/ |/ / (__  )  __/ ___ |_/ /
+/_/   /_/\____/|__/|__/_/____/\___/_/  |_/___/
 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Mafl"
-var_disk="6"
+APP="FlowiseAI"
+var_disk="10"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
@@ -53,20 +53,19 @@ function default_settings() {
 }
 
 function update_script() {
-  header_info
-  if [[ ! -d /opt/mafl ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  msg_error "There is currently no update path available."
-  exit
+header_info
+if [[ ! -f /etc/systemd/system/flowise.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP}"
+systemctl stop flowise
+npm install -g flowise --upgrade
+systemctl start flowise
+msg_ok "Updated ${APP}"
+exit
 }
 
 start
 build_container
 description
-
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 1024
-pct set $CTID -cores 1
-msg_ok "Set Container to Normal Resources"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.

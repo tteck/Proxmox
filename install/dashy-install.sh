@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Node.js (Patience)"
@@ -35,10 +34,12 @@ ln -sf /usr/local/bin/yarn /usr/bin/yarn
 msg_ok "Installed Yarn"
 
 msg_info "Installing Dashy (Patience)"
-$STD git clone https://github.com/Lissy93/dashy.git
-cd /dashy
+mkdir -p /opt/dashy
+#RELEASE=$(curl -s https://api.github.com/repos/Lissy93/dashy/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+#wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
+wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/2.1.1.tar.gz | tar -xz -C /opt/dashy --strip-components=1
+cd /opt/dashy
 $STD yarn
-export NODE_OPTIONS=--max-old-space-size=1000
 $STD yarn build
 msg_ok "Installed Dashy"
 
@@ -49,7 +50,7 @@ Description=dashy
 
 [Service]
 Type=simple
-WorkingDirectory=/dashy
+WorkingDirectory=/opt/dashy
 ExecStart=/usr/bin/yarn start
 [Install]
 WantedBy=multi-user.target

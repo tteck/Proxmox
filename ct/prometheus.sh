@@ -55,10 +55,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -f /etc/systemd/system/prometheus.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated Successfully"
+msg_error "There is currently no update path available."
 exit
 }
 
