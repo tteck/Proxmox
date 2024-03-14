@@ -55,7 +55,19 @@ function default_settings() {
 function update_script() {
   header_info
   if [[ ! -d /opt/mafl ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  msg_error "There is currently no update path available."
+
+  RELEASE=$(curl -s https://api.github.com/repos/hywax/mafl/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+  msg_info "Updating Mafl to v${RELEASE} (Patience)"
+  systemctl stop mafl
+  wget -q https://github.com/hywax/mafl/archive/refs/tags/v${RELEASE}.tar.gz
+  tar -xzf v${RELEASE}.tar.gz
+  cp -r mafl-${RELEASE}/* /opt/mafl/
+  rm -rf mafl-${RELEASE}
+  cd /opt/mafl
+  yarn install
+  yarn build
+  systemctl start mafl
+  msg_ok "Updated Mafl to v${RELEASE}"
   exit
 }
 
