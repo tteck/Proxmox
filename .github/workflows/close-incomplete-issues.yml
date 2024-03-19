@@ -13,7 +13,7 @@ jobs:
         uses: lucasbento/auto-close-issues@v1.0.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          closed-issues-label: '🙁 Auto-Closed'
+          closed-issues-label: 'Non-conforming Issue'
           issue-close-message: |
             Hello @${issue.user.login}
             Unfortunately your issue does not follow the format outlined in the template, and has therefore been auto-closed.
