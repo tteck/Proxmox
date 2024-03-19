@@ -23,7 +23,7 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: distribution
+    id: settings
     validations:
       required: true
     attributes:
