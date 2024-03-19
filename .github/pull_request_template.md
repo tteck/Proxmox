@@ -10,7 +10,9 @@ Fixes # (issue)
 
 Please delete options that are not relevant.
 
-- [ ] Bug fix 
-- [ ] New feature 
-- [ ] New Script
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] New Script (Develop a new script or set of scripts that are fully functional and thoroughly tested)
+- [ ] I have performed a self-review of my code, adhering to established codebase patterns and conventions.
 - [ ] This change requires a documentation update
