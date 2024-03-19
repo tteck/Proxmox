@@ -32,6 +32,9 @@ body:
         - 
         - Default Settings
         - Advanced Settings
+  - type: markdown
+    attributes:
+      value: (if Advanced Settings, please try Default Settings before creating an issue)
   - type: dropdown
     id: distribution
     validations:
