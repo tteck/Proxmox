@@ -27,10 +27,19 @@ body:
     validations:
       required: true
     attributes:
-      label: Which Linux distribution are you employing?
+      label: What settings are you currently utilizing?
       options:
         - 
         - Default Settings
+        - Advanced Settings
+  - type: dropdown
+    id: distribution
+    validations:
+      required: true
+    attributes:
+      label: Which Linux distribution are you employing?
+      options:
+        - 
         - Debian 11
         - Debian 12
         - Ubuntu 20.04
