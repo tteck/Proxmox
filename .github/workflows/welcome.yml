@@ -1,0 +1,25 @@
+name: Welcome
+on:
+  pull_request:
+    types: [opened, closed]
+  issues:
+    types: [opened]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wow-actions/welcome@v1
+        with:
+          FIRST_ISSUE: |
+            👋 @{{ author }}
+             Thanks for opening your first issue here! Be sure to follow the issue template!
+
+          FIRST_PR: |
+            👋 @{{ author }}
+            Thanks for opening this pull request! Please check out our contributing guidelines.
+
+          FIRST_PR_MERGED: |
+            🎉 @{{ author }}
+            Congrats on merging your first pull request! We here at behaviorbot are proud of you!
+
+          STAR_MESSAGE: If you like this project, please ⭐ our repo.
