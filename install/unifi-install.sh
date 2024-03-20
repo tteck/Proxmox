@@ -35,12 +35,12 @@ $STD apt-get update
 $STD apt-get install -y mongodb-org
 msg_ok "Installed MongoDB"
 
-msg_info "Installing UniFi Network Application"
+msg_info "Installing UniFi Network Server"
 wget -qO /etc/apt/trusted.gpg.d/unifi-repo.gpg https://dl.ui.com/unifi/unifi-repo.gpg
 echo "deb [ arch=amd64 signed-by=/etc/apt/trusted.gpg.d/unifi-repo.gpg] https://www.ui.com/downloads/unifi/debian stable ubiquiti" >/etc/apt/sources.list.d/100-ubnt-unifi.list
 $STD apt-get update
 $STD apt-get install -y unifi
-msg_ok "Installed UniFi Network Application"
+msg_ok "Installed UniFi Network Server"
 
 motd_ssh
 customize
