@@ -114,7 +114,7 @@ server {
     listen 8002;
     #access_log /var/log/nginx/access.log;
     #error_log /var/log/nginx/error.log;
-
+    client_max_body_size 128M;
     # serve media files
     location /static/ {
         alias /opt/tandoor/staticfiles/;
