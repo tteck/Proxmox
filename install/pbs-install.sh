@@ -20,7 +20,7 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Proxmox Backup Server"
-wget https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
+wget -q https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bookworm.gpg
 cat <<EOF >>/etc/apt/sources.list
 deb http://download.proxmox.com/debian/pbs bookworm pbs-no-subscription
 EOF
