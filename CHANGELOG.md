@@ -17,6 +17,8 @@
 - **Proxmox VE Post Install**
   - ~Requires Proxmox Virtual Environment Version 8.1.1 or later.~
   - Requires Proxmox Virtual Environment Version 8.0 or later.
+- **Proxmox Backup Server LXC**
+  - NEW Script
 
 ## 2024-03-24
 
