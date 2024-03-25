@@ -20,7 +20,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="MediaMTX"
-var_disk="2"
+var_disk="4"
 var_cpu="2"
 var_ram="2048"
 var_os="debian"
