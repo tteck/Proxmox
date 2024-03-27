@@ -201,8 +201,8 @@ msg_ok "Frigate docker compose file created at /opt/frigate/docker-compose.yml"
 
 msg_info "Downloading Frigate containers"
 cd /opt/frigate
-docker compose pull -q
-docker compose up -d -q
+docker compose pull --quiet
+docker compose up -d --quiet-pull
 msg_ok "Frigate downloaded and started"
 
 motd_ssh
