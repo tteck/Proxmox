@@ -161,14 +161,12 @@ msg_ok "Frigate media folder created at /media/frigate"
 
 msg_info "Downloading sample video file"
 cd /media/frigate
-wget https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
+wget -q https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
 msg_ok "Sample video file downloaded"
-
 
 msg_info "Creating Frigate docker compose file"
 mkdir -p /opt/frigate
 cat >/opt/frigate/docker-compose.yml <<'EOL'
-version: "3.9"
 services:
   frigate:
     container_name: frigate
@@ -203,8 +201,8 @@ msg_ok "Frigate docker compose file created at /opt/frigate/docker-compose.yml"
 
 msg_info "Downloading Frigate containers"
 cd /opt/frigate
-docker compose pull
-docker compose up -d
+docker compose pull -q
+docker compose up -d -q
 msg_ok "Frigate downloaded and started"
 
 motd_ssh

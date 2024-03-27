@@ -58,8 +58,8 @@ header_info
 if [[ ! -d /opt/frigate ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating Frigate LXC"
 cd /opt/frigate
-docker compose pull
-docker compose up -d
+docker compose pull -q
+docker compose up -d -q
 msg_ok "Updated Frigate LXC"
 exit
 }
