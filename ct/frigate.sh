@@ -60,7 +60,7 @@ msg_info "Updating Frigate LXC"
 cd /opt/frigate
 docker compose pull
 docker compose up -d
-msg_ok "Updated Shinobi LXC"
+msg_ok "Updated Frigate LXC"
 exit
 }
 
@@ -69,5 +69,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} Setup should be reachable by going to the following URL.
-         ${BL}http://${IP}:8080/super${CL} \n"
+echo -e "${APP} should be reachable by going to the following URL.
+         ${BL}http://${IP}:5000/${CL} \n"
