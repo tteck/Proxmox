@@ -35,8 +35,6 @@ echo -e '{\n  "log-driver": "journald"\n}' >/etc/docker/daemon.json
 $STD sh <(curl -sSL https://get.docker.com)
 msg_ok "Installed Docker $DOCKER_LATEST_VERSION"
 
-msg_ok "Installed Docker"
-
 msg_info "Creating Frigate configuration file"
 mkdir -p /config
 cat >/config/config.yml <<'EOL'
