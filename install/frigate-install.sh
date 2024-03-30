@@ -88,6 +88,7 @@ export CCACHE_DIR=/root/.ccache
 export CCACHE_MAXSIZE=2G
 wget -q https://github.com/libusb/libusb/archive/v1.0.26.zip
 unzip -q v1.0.26.zip
+rm v1.0.26.zip
 cd libusb-1.0.26
 $STD ./bootstrap.sh
 $STD ./configure --disable-udev --enable-shared
