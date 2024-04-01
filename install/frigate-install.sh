@@ -84,6 +84,7 @@ model:
 cameras:
   test:
     ffmpeg:
+      #hwaccel_args: preset-vaapi
       inputs:
         - path: /media/frigate/person-bicycle-car-detection.mp4
           input_args: -re -stream_loop -1 -fflags +genpts
