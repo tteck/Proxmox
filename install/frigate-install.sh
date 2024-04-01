@@ -132,6 +132,7 @@ wget -q https://github.com/openvinotoolkit/open_model_zoo/raw/master/data/datase
 sed -i 's/truck/car/g' openvino-model/coco_91cl_bkgr.txt
 wget -qO cpu_audio_model.tflite https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite
 cp /opt/frigate/audio-labelmap.txt /audio-labelmap.txt
+mkdir -p /media/frigate
 wget -qO /media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
 msg_ok "Installed Object Detection Models"
 
