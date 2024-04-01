@@ -97,9 +97,6 @@ cameras:
       fps: 5
 EOF
 ln -sf /config/config.yml /opt/frigate/config/config.yml
-mkdir -p /dev/shm/logs/{frigate,go2rtc,nginx}
-touch /dev/shm/logs/{frigate/current,go2rtc/current,nginx/current}
-chmod -R 777 /dev/shm
 sed -i -e 's/^kvm:x:104:$/render:x:104:root,frigate/' -e 's/^render:x:105:root$/kvm:x:105:/' /etc/group
 msg_ok "Installed Frigate $RELEASE"
 
@@ -145,10 +142,24 @@ sed -i 's/access_log \/dev\/stdout main\;/access_log nginx\.log main\;/' /usr/lo
 msg_ok "Built Nginx"
 
 msg_info "Creating Services"
+cat <<EOF >/etc/systemd/system/create_directories.service
+[Unit]
+Description=Create necessary directories for logs
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/bin/mkdir -p /dev/shm/logs/{frigate,go2rtc,nginx} && /bin/touch /dev/shm/logs/{frigate/current,go2rtc/current,nginx/current} && /bin/chmod -R 777 /dev/shm/logs'
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now create_directories
+sleep 3
 cat <<EOF >/etc/systemd/system/go2rtc.service
 [Unit]
 Description=go2rtc service
 After=network.target
+After=create_directories.service
 StartLimitIntervalSec=0
 
 [Service]
@@ -157,6 +168,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/go2rtc/run
+StandardOutput=file:/dev/shm/logs/go2rtc/current
+StandardError=file:/dev/shm/logs/go2rtc/current
 
 [Install]
 WantedBy=multi-user.target
@@ -167,6 +180,7 @@ cat <<EOF >/etc/systemd/system/frigate.service
 [Unit]
 Description=Frigate service
 After=go2rtc.service
+After=create_directories.service
 StartLimitIntervalSec=0
 
 [Service]
@@ -175,6 +189,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
+StandardOutput=file:/dev/shm/logs/frigate/current
+StandardError=file:/dev/shm/logs/frigate/current
 
 [Install]
 WantedBy=multi-user.target
@@ -185,6 +201,7 @@ cat <<EOF >/etc/systemd/system/nginx.service
 [Unit]
 Description=Nginx service
 After=frigate.service
+After=create_directories.service
 StartLimitIntervalSec=0
 
 [Service]
@@ -193,6 +210,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
+StandardOutput=file:/dev/shm/logs/nginx/current
+StandardError=file:/dev/shm/logs/nginx/current
 
 [Install]
 WantedBy=multi-user.target
