@@ -76,6 +76,34 @@ $STD npm run build
 cp -r /opt/frigate/web/dist/* /opt/frigate/web/
 cp -r /opt/frigate/config/. /config
 sed -i '/^s6-svc -O \.$/s/^/#/' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
+wget -qO /media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
+cat <<EOF >/config/config.yml
+mqtt:
+  enabled: false
+model:
+  path: /root/cpu_model.tflite
+cameras:
+  test:
+    ffmpeg:
+      inputs:
+        - path: /media/frigate/person-bicycle-car-detection.mp4
+          input_args: -re -stream_loop -1 -fflags +genpts
+          roles:
+            - detect
+            - rtmp
+    detect:
+      height: 1080
+      width: 1920
+      fps: 5
+EOF
+
+ln -sf /config/config.yml /opt/frigate/config/config.yml
+
+mkdir -p /dev/shm/logs/{frigate,go2rtc,nginx}
+touch /dev/shm/logs/{frigate/current,go2rtc/current,nginx/current}
+chmod -R 777 /dev/shm
+
+sed -i -e 's/^kvm:x:104:$/render:x:104:root,frigate/' -e 's/^render:x:105:root$/kvm:x:105:/' /etc/group
 msg_ok "Installed Frigate $RELEASE"
 
 msg_info "Installing Object Detection Models (Resilience)"
