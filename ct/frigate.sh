@@ -69,3 +69,5 @@ msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:5000${CL} \n"
+echo -e "go2rtc should be reachable by going to the following URL.
+         ${BL}http://${IP}:1984${CL} \n"
