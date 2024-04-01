@@ -76,7 +76,6 @@ $STD npm run build
 cp -r /opt/frigate/web/dist/* /opt/frigate/web/
 cp -r /opt/frigate/config/. /config
 sed -i '/^s6-svc -O \.$/s/^/#/' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
-wget -qO /root/media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
 cat <<EOF >/config/config.yml
 mqtt:
   enabled: false
@@ -133,6 +132,7 @@ wget -q https://github.com/openvinotoolkit/open_model_zoo/raw/master/data/datase
 sed -i 's/truck/car/g' openvino-model/coco_91cl_bkgr.txt
 wget -qO cpu_audio_model.tflite https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite
 cp /opt/frigate/audio-labelmap.txt /audio-labelmap.txt
+wget -qO /root/media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
 msg_ok "Installed Object Detection Models"
 
 msg_info "Building Nginx with Custom Modules"
