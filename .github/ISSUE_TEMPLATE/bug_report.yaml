@@ -43,6 +43,7 @@ body:
       label: Which Linux distribution are you employing?
       options:
         - 
+        - Alpine
         - Debian 11
         - Debian 12
         - Ubuntu 20.04
