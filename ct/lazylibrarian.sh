@@ -55,7 +55,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/lazylibrarian/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /opt/LazyLibrarian/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP LXC"
 git -C /opt/LazyLibrarian pull origin master &>/dev/null
 msg_ok "Updated $APP LXC"
