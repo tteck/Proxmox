@@ -24,7 +24,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing LazyLibrarian"
 mkdir -p /opt/LazyLibrarian/
 chmod 775 /opt/LazyLibrarian/
-$STD git clone https://gitlab.com/LazyLibrarian/LazyLibrarian /opt
+$STD git clone https://gitlab.com/LazyLibrarian/LazyLibrarian /opt/LazyLibrarian
 msg_ok "Installed LazyLibrarian"
 
 msg_info "Creating Service"
