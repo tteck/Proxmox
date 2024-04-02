@@ -19,6 +19,11 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y git
 $STD apt-get install -y python3
+$STD apt-get install -y pip
+$STD apt-get install -y python3-irc
+$STD pip install jaraco.stream
+$STD pip install python-Levenshtein
+$STD pip install soupsieve
 msg_ok "Installed Dependencies"
 
 msg_info "Installing LazyLibrarian"
