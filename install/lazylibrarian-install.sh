@@ -43,6 +43,9 @@ systemctl -q daemon-reload
 systemctl enable --now -q lazylibrarian
 msg_ok "Created Service"
 
+motd_ssh
+customize
+
 msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
