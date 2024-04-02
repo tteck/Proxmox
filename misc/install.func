@@ -54,7 +54,7 @@ spinner() {
   spin_i=0
   while true; do
     printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
-    sleep 0.1
+    sleep 0.2
   done
 }
 
