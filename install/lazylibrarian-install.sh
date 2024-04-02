@@ -14,6 +14,9 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
+$STD apt-get install -y curl
+$STD apt-get install -y sudo
+$STD apt-get install -y mc
 $STD apt-get install -y git
 $STD apt-get install -y python3
 msg_ok "Installed Dependencies"
