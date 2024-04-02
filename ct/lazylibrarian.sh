@@ -56,9 +56,19 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/LazyLibrarian/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Stopping LazyLibrarian"
+systemctl stop lazylibrarian
+msg_ok "LazyLibrarian Stopped"
+
 msg_info "Updating $APP LXC"
 git -C /opt/LazyLibrarian pull origin master &>/dev/null
 msg_ok "Updated $APP LXC"
+
+msg_info "Starting LazyLibrarian"
+systemctl start lazylibrarian
+msg_ok "Started LazyLibrarian"
+
+msg_ok "Updated Successfully"
 exit
 }
 
