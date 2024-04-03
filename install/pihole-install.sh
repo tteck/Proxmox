@@ -73,6 +73,7 @@ server:
   infra-cache-slabs: 8
   key-cache-slabs: 8
   serve-expired: yes
+  root-hints: /var/lib/unbound/root.hints
   serve-expired-ttl: 3600
   edns-buffer-size: 1232
   prefetch: yes
