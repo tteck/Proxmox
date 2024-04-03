@@ -30,8 +30,6 @@ $STD pip install soupsieve
 msg_ok "Installed Python3 Dependencies"
 
 msg_info "Installing LazyLibrarian"
-mkdir -p /opt/LazyLibrarian/
-chmod 775 /opt/LazyLibrarian/
 $STD git clone https://gitlab.com/LazyLibrarian/LazyLibrarian /opt/LazyLibrarian
 msg_ok "Installed LazyLibrarian"
 
