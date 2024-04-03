@@ -47,7 +47,6 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl -q daemon-reload
 systemctl enable --now -q lazylibrarian
 msg_ok "Created Service"
 
