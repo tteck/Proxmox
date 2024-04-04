@@ -28,9 +28,9 @@ $STD apt-get install -y unrar
 rm /etc/apt/sources.list.d/non-free.list
 msg_ok "Installed Dependencies"
 
-msg_info "Installing MiroTalk"
+msg_info "Installing Medusa"
 $STD git clone https://github.com/pymedusa/Medusa.git /opt/medusa
-msg_ok "Installed MiroTalk"
+msg_ok "Installed Medusa"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/medusa.service
