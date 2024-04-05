@@ -121,7 +121,7 @@ $STD /bin/bash ../libtool  --mode=install /usr/bin/install -c libusb-1.0.la '/us
 mkdir -p /usr/local/include/libusb-1.0
 $STD /usr/bin/install -c -m 644 libusb.h '/usr/local/include/libusb-1.0'
 ldconfig
-cd ~
+cd /
 wget -qO edgetpu_model.tflite https://github.com/google-coral/test_data/raw/release-frogfish/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite
 wget -qO cpu_model.tflite https://github.com/google-coral/test_data/raw/release-frogfish/ssdlite_mobiledet_coco_qat_postprocess.tflite
 cp /opt/frigate/labelmap.txt /labelmap.txt
