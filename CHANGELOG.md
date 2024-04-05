@@ -16,6 +16,8 @@
 
 - **Medusa LXC**
   - NEW Script
+- **WatchYourLAN LXC**
+  - NEW Script
 
 ## 2024-04-04
 
