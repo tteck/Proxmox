@@ -19,10 +19,12 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y par2
 $STD apt-get install -y p7zip-full
-RELEASE=$(curl -s http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/ | grep -oP 'href="\K[^"]*unrar_7\.\d+\.\d+-\d+_amd64\.deb' | head -1)
-wget -q http://http.us.debian.org/debian/pool/non-free/u/unrar-nonfree/$RELEASE
-$STD dpkg -i unrar*.deb
-rm unrar*.deb
+cat <<EOF >/etc/apt/sources.list.d/non-free.list
+deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+EOF
+$STD apt-get update
+$STD apt-get install -y unrar
+rm /etc/apt/sources.list.d/non-free.list
 msg_ok "Installed Dependencies"
 
 msg_info "Updating Python3"
