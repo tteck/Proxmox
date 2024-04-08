@@ -102,7 +102,8 @@ msg_info "Installing Object Detection Models (Resilience)"
 $STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
 cd /opt/frigate/models
 export ENABLE_ANALYTICS=NO
-$STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2
+$STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2 --num_attempts 2
+$STD /usr/local/bin/omz_converter --name ssdlite_mobilenet_v2 --precision FP16 --mo /usr/local/bin/mo
 cd ..
 export CCACHE_DIR=/root/.ccache
 export CCACHE_MAXSIZE=2G
