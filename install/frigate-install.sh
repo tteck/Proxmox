@@ -18,9 +18,7 @@ $STD apt-get install -y {curl,sudo,mc,git,gpg,automake,build-essential,xz-utils,
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Python3 Dependencies"
-$STD apt-get install -y {python3,python3-dev,python3-setuptools,python3-distutils}
-wget -q https://bootstrap.pypa.io/get-pip.py -O get-pip.py
-$STD python3 get-pip.py --quiet "pip"
+$STD apt-get install -y {python3,python3-dev,python3-setuptools,python3-distutils,python3-pip}
 msg_ok "Installed Python3 Dependencies"
 
 msg_info "Installing Node.js"
