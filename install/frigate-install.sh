@@ -80,7 +80,7 @@ cat <<EOF >/config/config.yml
 mqtt:
   enabled: false
 model:
-  path: /root/cpu_model.tflite
+  path: /cpu_model.tflite
 cameras:
   test:
     ffmpeg:
