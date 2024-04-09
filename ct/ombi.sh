@@ -55,7 +55,25 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/ombi ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "There is currently no update path available."
+RELEASE=$(curl -sL https://api.github.com/repos/Ombi-app/Ombi/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  msg_info "Stopping ${APP}"
+  systemctl stop ombi
+  msg_ok "Stopped ${APP}"
+
+  msg_info "Updating ${APP} to ${RELEASE}"
+  wget -q https://github.com/Ombi-app/Ombi/releases/download/${RELEASE}/linux-x64.tar.gz
+  tar -xzf linux-x64.tar.gz -C /opt/ombi
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
+
+  msg_info "Starting ${APP}"
+  systemctl start ombi
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+else
+  msg_ok "No update required.  ${APP} ia already at ${RELEASE}."
+fi
 exit
 }
 
