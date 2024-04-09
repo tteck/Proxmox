@@ -66,6 +66,7 @@ fi
 git pull
 yarn
 npx playwright install-deps
+yarn prisma generate
 yarn build
 yarn prisma migrate deploy
 systemctl start linkwarden
