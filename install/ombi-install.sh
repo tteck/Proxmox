@@ -20,9 +20,9 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Ombi"
-LATEST=$(curl -sL https://api.github.com/repos/Ombi-app/Ombi/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-# wget -q https://github.com/Ombi-app/Ombi/releases/download/${LATEST}/linux-x64.tar.gz
-wget -q https://github.com/Ombi-app/Ombi/releases/download/v4.43.2/linux-x64.tar.gz
+RELEASE=$(curl -sL https://api.github.com/repos/Ombi-app/Ombi/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+wget -q https://github.com/Ombi-app/Ombi/releases/download/${RELEASE}/linux-x64.tar.gz
+#wget -q https://github.com/Ombi-app/Ombi/releases/download/v4.43.2/linux-x64.tar.gz
 mkdir -p /opt/ombi
 tar -xzf linux-x64.tar.gz -C /opt/ombi
 msg_ok "Installed Ombi"
