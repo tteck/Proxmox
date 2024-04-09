@@ -77,8 +77,18 @@ sed -i '/^s6-svc -O \.$/s/^/#/' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s
 cat <<EOF >/config/config.yml
 mqtt:
   enabled: false
+detectors:
+  ov:
+    type: openvino
+    device: AUTO
+    model:
+      path: /openvino-model/FP16/ssdlite_mobilenet_v2.xml
 model:
-  path: /cpu_model.tflite
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
 cameras:
   test:
     ffmpeg:
