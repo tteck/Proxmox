@@ -55,22 +55,31 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/linkwarden ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP"
-systemctl stop linkwarden
-cd /opt/linkwarden
-if git pull | grep -q 'Already up to date'; then
-  msg_ok "Already up to date"
+
+RELEASE=$(curl -s https://api.github.com/repos/linkwarden/linkwarden/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  msg_info "Stopping ${APP}"
+  systemctl stop linkwarden
+  msg_ok "Stopped ${APP}"
+
+  msg_info "Updating ${APP} to ${RELEASE}"
+  cd /opt/linkwarden
+  git pull
+  yarn
+  npx playwright install-deps
+  yarn prisma generate
+  yarn build
+  yarn prisma migrate deploy
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
+
+  msg_info "Starting ${APP}"
   systemctl start linkwarden
-  exit
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+else
+  msg_ok "No update required.  ${APP} is already at ${RELEASE}."
 fi
-git pull
-yarn
-npx playwright install-deps
-yarn prisma generate
-yarn build
-yarn prisma migrate deploy
-systemctl start linkwarden
-msg_ok "Updated $APP"
 exit
 }
 
