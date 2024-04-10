@@ -69,7 +69,6 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   msg_ok "Backed up Data"
 
   msg_info "Updating Heimdall Dashboard to ${RELEASE}"
-  echo "${RELEASE}" >/opt/${APP}_version.txt
   wget -q https://github.com/linuxserver/Heimdall/archive/${RELEASE}.tar.gz
   tar xzf ${RELEASE}.tar.gz
   VER=$(curl -s https://api.github.com/repos/linuxserver/Heimdall/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
@@ -77,6 +76,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   cd /opt/Heimdall
   apt-get install -y composer &>/dev/null
   COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload &>/dev/null
+  echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated Heimdall Dashboard to ${RELEASE}"
 
   msg_info "Restoring Data"
