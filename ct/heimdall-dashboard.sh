@@ -97,7 +97,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   msg_ok "Started ${APP}"
   msg_ok "Updated Successfully"
 else
-  msg_ok "No update required.  ${APP} ia already at ${RELEASE}."
+  msg_ok "No update required.  ${APP} is already at ${RELEASE}."
 fi
 exit
 }
