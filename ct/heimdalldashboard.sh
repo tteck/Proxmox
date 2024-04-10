@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Heimdall Dashboard"
+APP="Heimdall-Dashboard"
 var_disk="2"
 var_cpu="1"
 var_ram="512"
