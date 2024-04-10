@@ -64,6 +64,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   msg_info "Updating ${APP} to ${RELEASE}"
   wget -q https://github.com/Ombi-app/Ombi/releases/download/${RELEASE}/linux-x64.tar.gz
   tar -xzf linux-x64.tar.gz -C /opt/ombi
+  rm -rf linux-x64.tar.gz
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
