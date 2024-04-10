@@ -70,6 +70,8 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 fi
 
 msg_info "Installing Linkwarden (Patience)"
+RELEASE=$(curl -s https://api.github.com/repos/linkwarden/linkwarden/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 $STD yarn
 $STD npx playwright install-deps
 IP=$(hostname -I | awk '{print $1}')
