@@ -65,6 +65,7 @@ function msg_ok() {
 
 read -r -p "Would you like to use No Authentication? <y/N> " prompt
 msg_info "Installing ${APP}"
+apt-get install -y curl &>/dev/null
 RELEASE=$(curl -fsSL https://api.github.com/repos/filebrowser/filebrowser/releases/latest | grep -o '"tag_name": ".*"' | sed 's/"//g' | sed 's/tag_name: //g')
 curl -fsSL https://github.com/filebrowser/filebrowser/releases/download/$RELEASE/linux-amd64-filebrowser.tar.gz | tar -xzv -C /usr/local/bin &>/dev/null
 
