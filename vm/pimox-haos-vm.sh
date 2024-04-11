@@ -84,9 +84,8 @@ else
   exit
 fi
 function PVE_CHECK() {
-  if ! pveversion | grep -Eq "pve-manager/(7.4-[1][3-9]|8.1.[1-9])"; then
+  if ! pveversion | grep -Eq "pve-manager/7.[0-4]"; then
     echo -e "${CROSS} This version of Proxmox Virtual Environment is not supported"
-    echo -e "Requires PVE7 Version 7.4-13 or later, or PVE8 Version 8.1.1 or later."
     echo -e "Exiting..."
     sleep 2
     exit
