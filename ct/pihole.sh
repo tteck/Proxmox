@@ -60,7 +60,6 @@ set +e
 pihole -up
 msg_ok "Updated ${APP}"
 exit
-fi
 }
 
 start
