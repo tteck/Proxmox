@@ -5,7 +5,7 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-app=$1   
+app=$1
 installdir="/opt/$1"
 
 branch="master"
