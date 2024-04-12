@@ -22,7 +22,7 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated Dependencies"
 
 msg_info "Updating $app"
-wget -q "$dlbase"
+wget -q --content-disposition "$dlbase"
 rm -rf "$installdir"
 tar -xzf ${app^}.*.tar.gz -C "/opt"
 msg_ok "Updated $app"
