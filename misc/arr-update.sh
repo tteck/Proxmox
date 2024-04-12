@@ -5,26 +5,27 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-app=$1
+APP=$1
 installdir="/opt/$1"
 
 branch="master"
-dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
+dlbase="https://$APP.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
 
-msg_info "Stopping $app"
-systemctl stop $app
+msg_info "Stopping $APP"
+systemctl stop $APP
+msg_ok "Stopped $APP"
 
 msg_info "Updating Dependencies"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated Dependencies"
 
-msg_info "Updating $app"
+msg_info "Updating $APP"
 wget -q --content-disposition "$dlbase"
 rm -rf "$installdir"
-tar -xzf ${app^}.*.tar.gz -C "/opt"
+tar -xzf ${APP^}.*.tar.gz -C "/opt"
 msg_ok "Updated $app"
-rm -rf "${app^}.*.tar.gz"
+rm -rf "${APP^}.*.tar.gz"
 
-systemctl start $app
-msg_ok "Started $app"
+systemctl start $APP
+msg_ok "Started $APP"
