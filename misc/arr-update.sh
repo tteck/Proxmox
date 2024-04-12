@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
@@ -10,8 +10,6 @@ installdir="/opt/$1"
 
 branch="master"
 dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
-
-echo "$dlbase"
 
 msg_info "Stopping $app"
 systemctl stop $app
@@ -26,7 +24,7 @@ wget -q --content-disposition "$dlbase"
 rm -rf "$installdir"
 tar -xzf ${app^}.*.tar.gz -C "/opt"
 msg_ok "Updated $app"
-rm -rf "${app^}.master.*.tar.gz"
+rm -rf "${app^}.*.tar.gz"
 
 systemctl start $app
 msg_ok "Started $app"
