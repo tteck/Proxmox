@@ -9,7 +9,9 @@ app=$1
 installdir="/opt/$1"
 
 branch="master"
-dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore"
+dlbase="https://$app.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
+
+echo "$dlbase"
 
 msg_info "Stopping $app"
 systemctl stop $app
@@ -20,7 +22,7 @@ apt-get -y upgrade &>/dev/null
 msg_ok "Updated Dependencies"
 
 msg_info "Updating $app"
-wget -q "$DLURL"
+wget -q "$dlbase"
 rm -rf "$installdir"
 tar -xzf ${app^}.*.tar.gz -C "/opt"
 msg_ok "Updated $app"
