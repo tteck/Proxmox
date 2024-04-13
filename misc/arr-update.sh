@@ -31,7 +31,7 @@ if [[ "$APP" == "Prowlarr" ]]; then
 branch="develop"
 fi
 
-dlbase="https://$APP.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
+dlbase="https://${APP,,}.servarr.com/v1/update/$branch/updatefile?os=linux&runtime=netcore&arch=x64"
 
 #Sonarr
 if [[ "$APP" == "Sonarr" ]]; then
@@ -39,7 +39,7 @@ dlbase="https://services.sonarr.tv/v1/download/main/latest?version=4&os=linux&ar
 fi
 
 msg_info "Stopping $APP"
-#systemctl stop $APP
+systemctl stop ${APP,,}
 msg_ok "Stopped $APP"
 
 msg_info "Updating Dependencies"
@@ -56,5 +56,5 @@ rm -rf ${APP^}.*.tar.gz
 msg_ok "Updated $APP"
 
 
-#systemctl start $APP
+systemctl start ${APP,,}
 msg_ok "Started $APP"
