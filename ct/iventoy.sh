@@ -70,7 +70,7 @@ rm -rf iventoy*.tar.gz
 msg_ok "Updated ${APP} LXC"
 
 msg_info "Starting ${APP} LXC"
-systemctl start autobrr.service
+systemctl start iventoy.service
 msg_ok "Started ${APP} LXC"
 msg_ok "Updated Successfully"
 exit
