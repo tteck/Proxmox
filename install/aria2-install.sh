@@ -23,7 +23,6 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Aria2"
 DEBIAN_FRONTEND=noninteractive $STD apt-get -o Dpkg::Options::="--force-confold" install -y aria2
-systemctl enable -q --now apt-cacher-ng
 msg_ok "Installed Aria2"
 
 read -r -p "Would you like to add ar? <y/N> " prompt
@@ -46,10 +45,13 @@ RestartSec=120
 
 [Install]
 WantedBy=multi-user.target' >$service_path
+  systemctl enable --now -q aria2.service
   msg_ok "Installed AriaNG"
 fi
+
 msg_info "Creating Service"
-  service_path="/etc/systemd/system/aria2.service"
+
+service_path="/etc/systemd/system/aria2.service"
 echo '[Unit]
 Description=Aria2c download manager
 After=network.target
@@ -65,7 +67,22 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target' >$service_path
+
+conf_path="/root/aria2.daemon"
+echo 'continue
+dir=/var/www/downloads
+file-allocation=falloc
+max-connection-per-server=4
+max-concurrent-downloads=2
+max-overall-download-limit=0
+min-split-size=25M
+rpc-allow-origin-all=true
+rpc-secret=YouShouldChangeThis
+input-file=/var/tmp/aria2c.session
+save-session=/var/tmp/aria2c.session' >$conf_path
 systemctl enable --now -q aria2.service
+
+msg_ok "Created Service"
 
 motd_ssh
 customize
