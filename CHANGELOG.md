@@ -18,6 +18,8 @@
   - Add back to website
 - **Umbrel LXC**
   - Add back to website
+- **OpenMediaVault LXC**
+  - Add back to website
 
 ## 2024-04-12
 
