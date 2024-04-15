@@ -36,13 +36,15 @@ $STD npm install -g yarn
 msg_ok "Installed Node.js/Yarn"
 
 msg_info "Installing Homarr (Patience)"
-mkdir -p /opt/homarr
-RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-wget -q -O- https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.tar.gz | $STD tar -xz -C /opt && mv /opt/homarr-${RELEASE}/* /opt/homarr
-rm -rf /opt/homarr-${RELEASE}
+$STD git clone -b dev https://github.com/ajnart/homarr.git /opt/homarr
+cat <<EOF >/opt/homarr/.env
+DATABASE_URL="file:./database/db.sqlite"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="$(openssl rand -base64 32)"
+NEXT_PUBLIC_DISABLE_ANALYTICS="true"
+DEFAULT_COLOR_SCHEME="dark"
+EOF
 cd /opt/homarr
-wget -q -O /opt/homarr/.env https://raw.githubusercontent.com/ajnart/homarr/dev/.env.example
-sed -i 's|NEXTAUTH_SECRET="[^"]*"|NEXTAUTH_SECRET="'"$(openssl rand -base64 32)"'"|' /opt/homarr/.env
 $STD yarn install
 $STD yarn build
 $STD yarn db:migrate
