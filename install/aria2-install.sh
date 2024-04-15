@@ -25,11 +25,11 @@ msg_info "Installing Aria2"
 DEBIAN_FRONTEND=noninteractive $STD apt-get -o Dpkg::Options::="--force-confold" install -y aria2
 msg_ok "Installed Aria2"
 
-read -r -p "Would you like to add ar? <y/N> " prompt
+read -r -p "Would you like to add AriaNG? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing AriaNG"
   mkdir -p /var/www
-  wget -q $(curl -s https://api.github.com/repos/maywind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)
+  wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)"
   ZIP="$(ls -l /root | grep zip$ | awk '{print $9}')"
   unzip $FILENAME -d /var/www
   service_path="/etc/systemd/system/ariang.service"
