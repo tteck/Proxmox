@@ -19,6 +19,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y wget
 $STD apt-get install -y unzip
+$STD apt-get install -y caddy
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Aria2"
@@ -31,7 +32,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
   ZIP="$(ls -l /root | grep zip$ | awk '{print $9}')"
-  unzip $FILENAME -d /var/www
+  unzip $ZIP -d /var/www
   service_path="/etc/systemd/system/ariang.service"
 echo '[Unit]
 Description=AriaNG
