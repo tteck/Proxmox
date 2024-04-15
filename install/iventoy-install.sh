@@ -21,11 +21,10 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing iVentoy"
 mkdir -p /opt/iventoy/
-
 wget -q $(curl -s https://api.github.com/repos/ventoy/pxe/releases/latest | grep download | grep linux-free | cut -d\" -f4)      
-tar -C /opt/iventoy -xzf iventoy*.tar.gz
+tar -xzf iventoy*.tar.gz
+mv iventoy-* /opt/iventoy
 rm -rf iventoy*.tar.gz
-
 msg_ok "Installed iVentoy"
 
 msg_info "Creating Service"
