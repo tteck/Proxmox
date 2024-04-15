@@ -14,6 +14,13 @@
 
 ### Changed
 
+- **Homarr LXC**
+  - Add back to website
+
+## 2024-04-12
+
+### Changed
+
 - **OpenMediaVault LXC**
   - Removed from website
 
