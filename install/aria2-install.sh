@@ -32,7 +32,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
   ZIP="$(ls -l /root | grep zip$ | awk '{print $9}')"
-  unzip $ZIP -d /var/www
+  unzip /root/$ZIP -d /var/www
   service_path="/etc/systemd/system/ariang.service"
 echo '[Unit]
 Description=AriaNG
@@ -89,7 +89,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm $ZIP
+rm /root/$ZIP
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
