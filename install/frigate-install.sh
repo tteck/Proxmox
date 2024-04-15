@@ -106,6 +106,7 @@ cameras:
 EOF
 ln -sf /config/config.yml /opt/frigate/config/config.yml
 sed -i -e 's/^kvm:x:104:$/render:x:104:root,frigate/' -e 's/^render:x:105:root$/kvm:x:105:/' /etc/group
+echo "tmpfs   /tmp/cache      tmpfs   defaults        0       0" >> /etc/fstab
 msg_ok "Installed Frigate $RELEASE"
 
 msg_info "Installing Object Detection Models (Resilience)"
