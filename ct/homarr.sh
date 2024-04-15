@@ -57,19 +57,15 @@ header_info
 if [[ ! -d /opt/homarr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP (Patience)"
 systemctl stop homarr
-rm -rf /root/data-homarr-backup
-rm -rf /root/database-homarr-backup
-cp -R /opt/homarr/data /root/data-homarr-backup
-cp -R /opt/homarr/database /root/database-homarr-backup
-RELEASE=$(curl -s https://api.github.com/repos/ajnart/homarr/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-wget -q -O- https://github.com/ajnart/homarr/archive/refs/tags/v${RELEASE}.tar.gz | tar -xz -C /opt
-cp -R /opt/homarr-${RELEASE}/* /opt/homarr
-cp -R /root/data-homarr-backup/* /opt/homarr/data
-cp -R /root/database-homarr-backup/* /opt/homarr/database
-rm -rf /opt/homarr-${RELEASE}
 cd /opt/homarr
-yarn install &>/dev/null
-yarn build &>/dev/null
+if ! git pull; then
+  echo "Already up to date."
+  systemctl start homarr
+  echo "No update required."
+  exit
+fi
+yarn install
+yarn build
 systemctl start homarr
 msg_ok "Updated $APP"
 exit
