@@ -29,8 +29,7 @@ rm -rf iventoy*.tar.gz
 msg_ok "Installed iVentoy"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/iventoy.service"
-echo "# /etc/systemd/system/iventoy.service
+cat <<EOF >/etc/systemd/system/iventoy.service
 [Unit]
 Description=iVentoy PXE Booter
 Documentation=https://www.iventoy.com
@@ -47,8 +46,9 @@ WorkingDirectory=/opt/iventoy
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target" >$service_path
-systemctl enable --now -q iventoy.service
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now iventoy.service
 msg_ok "Created Service"
 
 motd_ssh
