@@ -29,7 +29,7 @@ read -r -p "Would you like to add AriaNG? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing AriaNG"
   mkdir -p /var/www
-  wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)"
+  wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
   ZIP="$(ls -l /root | grep zip$ | awk '{print $9}')"
   unzip $FILENAME -d /var/www
   service_path="/etc/systemd/system/ariang.service"
@@ -88,6 +88,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
+rm $ZIP
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
