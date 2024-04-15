@@ -77,18 +77,6 @@ sed -i '/^s6-svc -O \.$/s/^/#/' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s
 cat <<EOF >/config/config.yml
 mqtt:
   enabled: false
-detectors:
-  ov:
-    type: openvino
-    device: AUTO
-    model:
-      path: /openvino-model/FP16/ssdlite_mobilenet_v2.xml
-model:
-  width: 300
-  height: 300
-  input_tensor: nhwc
-  input_pixel_format: bgr
-  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
 cameras:
   test:
     ffmpeg:
@@ -109,13 +97,38 @@ sed -i -e 's/^kvm:x:104:$/render:x:104:root,frigate/' -e 's/^render:x:105:root$/
 echo "tmpfs   /tmp/cache      tmpfs   defaults        0       0" >> /etc/fstab
 msg_ok "Installed Frigate $RELEASE"
 
-msg_info "Installing Object Detection Models (Resilience)"
-$STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
-cd /opt/frigate/models
-export ENABLE_ANALYTICS=NO
-$STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2 --num_attempts 2
-$STD /usr/local/bin/omz_converter --name ssdlite_mobilenet_v2 --precision FP16 --mo /usr/local/bin/mo
-cd ..
+if grep -q -o -m1 'avx[^ ]*' /proc/cpuinfo; then
+  echo -e "AVX support detected"
+  msg_info "Installing Openvino Object Detection Model (Resilience)"
+  $STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
+  cd /opt/frigate/models
+  export ENABLE_ANALYTICS=NO
+  $STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2 --num_attempts 2
+  $STD /usr/local/bin/omz_converter --name ssdlite_mobilenet_v2 --precision FP16 --mo /usr/local/bin/mo
+  cat <<EOF >>/config/config.yml
+detectors:
+  ov:
+    type: openvino
+    device: AUTO
+    model:
+      path: /openvino-model/FP16/ssdlite_mobilenet_v2.xml
+model:
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+EOF
+  msg_ok "Installed Openvino Object Detection Model (Resilience)"
+else
+  cat <<EOF >>/config/config.yml
+model:
+  path: /cpu_model.tflite
+EOF
+fi
+
+msg_info "Installing Coral Object Detection Model (Resilience)"
+cd /opt/frigate
 export CCACHE_DIR=/root/.ccache
 export CCACHE_MAXSIZE=2G
 wget -q https://github.com/libusb/libusb/archive/v1.0.26.zip
@@ -142,7 +155,7 @@ wget -qO cpu_audio_model.tflite https://tfhub.dev/google/lite-model/yamnet/class
 cp /opt/frigate/audio-labelmap.txt /audio-labelmap.txt
 mkdir -p /media/frigate
 wget -qO /media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
-msg_ok "Installed Object Detection Models"
+msg_ok "Installed Coral Object Detection Model"
 
 msg_info "Building Nginx with Custom Modules"
 $STD /opt/frigate/docker/main/build_nginx.sh
