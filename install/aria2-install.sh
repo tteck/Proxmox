@@ -46,7 +46,7 @@ RestartSec=120
 
 [Install]
 WantedBy=multi-user.target' >$service_path
-  systemctl enable --now -q aria2.service
+  systemctl enable --now -q ariang.service
   msg_ok "Installed AriaNG"
 fi
 
