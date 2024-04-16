@@ -105,6 +105,10 @@ if grep -q -o -m1 'avx[^ ]*' /proc/cpuinfo; then
   export ENABLE_ANALYTICS=NO
   $STD /usr/local/bin/omz_downloader --name ssdlite_mobilenet_v2 --num_attempts 2
   $STD /usr/local/bin/omz_converter --name ssdlite_mobilenet_v2 --precision FP16 --mo /usr/local/bin/mo
+  cd /
+  cp -r /opt/frigate/models/public/ssdlite_mobilenet_v2 openvino-model
+  wget -q https://github.com/openvinotoolkit/open_model_zoo/raw/master/data/dataset_classes/coco_91cl_bkgr.txt -O openvino-model/coco_91cl_bkgr.txt
+  sed -i 's/truck/car/g' openvino-model/coco_91cl_bkgr.txt
   cat <<EOF >>/config/config.yml
 detectors:
   ov:
@@ -148,9 +152,6 @@ cd /
 wget -qO edgetpu_model.tflite https://github.com/google-coral/test_data/raw/release-frogfish/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite
 wget -qO cpu_model.tflite https://github.com/google-coral/test_data/raw/release-frogfish/ssdlite_mobiledet_coco_qat_postprocess.tflite
 cp /opt/frigate/labelmap.txt /labelmap.txt
-cp -r /opt/frigate/models/public/ssdlite_mobilenet_v2 openvino-model
-wget -q https://github.com/openvinotoolkit/open_model_zoo/raw/master/data/dataset_classes/coco_91cl_bkgr.txt -O openvino-model/coco_91cl_bkgr.txt
-sed -i 's/truck/car/g' openvino-model/coco_91cl_bkgr.txt
 wget -qO cpu_audio_model.tflite https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite
 cp /opt/frigate/audio-labelmap.txt /audio-labelmap.txt
 mkdir -p /media/frigate
