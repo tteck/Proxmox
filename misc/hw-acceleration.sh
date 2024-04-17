@@ -4,6 +4,8 @@
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
+# Execute within the Proxmox shell
+# bash -c "$(wget -qLO - https://github.com/tteck/Proxmox/raw/main/misc/hw-acceleration.sh)"
 
 set -e
 function header_info {
@@ -39,9 +41,9 @@ function msg_ok() {
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-if ! pveversion | grep -Eq "pve-manager/(8\.[0-9])"; then
+if ! pveversion | grep -Eq "pve-manager/(8\.[1-3])"; then
   msg_error "This version of Proxmox Virtual Environment is not supported"
-  echo -e "Requires PVE Version 8.0 or higher"
+  echo -e "Requires PVE Version 8.1 or higher"
   echo -e "Exiting..."
   sleep 2
   exit
@@ -83,11 +85,11 @@ lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
 lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
 EOF
 
-read -r -p "Do you need the intel-media-va-driver-non-free driver (Sources change)? <y/N> " prompt
+read -r -p "Do you need the intel-media-va-driver-non-free driver (Non-free Sources Added)? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   header_info
   msg_info "Installing Hardware Acceleration (non-free)"
-  pct exec ${privileged_container} -- bash -c "cat <<EOF >/etc/apt/sources.list
+  pct exec ${privileged_container} -- bash -c "cat <<EOF >/etc/apt/sources.list.d/non-free.list
 
 deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
 deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
@@ -99,7 +101,7 @@ deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free
 deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
 EOF"
 
-  pct exec ${privileged_container} -- bash -c "silent() { \"\$@\" >/dev/null 2>&1; } && $STD apt-get update && $STD apt-get install -y intel-media-va-driver-non-free ocl-icd-libopencl1 intel-opencl-icd vainfo intel-gpu-tools && chgrp video /dev/dri && chmod 755 /dev/dri && $STD adduser \$(id -u -n) video && $STD adduser \$(id -u -n) render"
+  pct exec ${privileged_container} -- bash -c "silent() { \"\$@\" >/dev/null 2>&1; } && $STD apt-get update && $STD apt-get install -y intel-media-va-driver-non-free ocl-icd-libopencl1 intel-opencl-icd vainfo intel-gpu-tools && $STD adduser \$(id -u -n) video && $STD adduser \$(id -u -n) render"
   msg_ok "Installed Hardware Acceleration (non-free)"
 else
   header_info
