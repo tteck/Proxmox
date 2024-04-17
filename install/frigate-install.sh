@@ -212,6 +212,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
+SupplementaryGroups=video render
 ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
 StandardOutput=file:/dev/shm/logs/frigate/current
 StandardError=file:/dev/shm/logs/frigate/current
