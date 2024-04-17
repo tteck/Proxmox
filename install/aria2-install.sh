@@ -19,7 +19,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y wget
 $STD apt-get install -y unzip
-$STD apt-get install -y caddy
+$STD apt-get install -y nginx
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Aria2"
@@ -31,22 +31,24 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing AriaNG"
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
-  ZIP="$(ls -l /root | grep zip$ | awk '{print $9}')"
-  unzip /root/$ZIP -d /var/www
+  unzip "$(ls -l /root | grep zip$ | awk '{print $9}')" -d /var/www
   service_path="/etc/systemd/system/ariang.service"
-echo '[Unit]
-Description=AriaNG
-ConditionFileIsExecutable=/usr/local/bin/caddy
-After=network.target
+cat <<EOF >/etc/nginx/conf.d/ariang.conf
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-[Service]
-ExecStart=/usr/local/bin/caddy "-root /var/www "browse"
-Restart=always
-RestartSec=120
+    server_name _;
 
-[Install]
-WantedBy=multi-user.target' >$service_path
-  systemctl enable --now -q ariang.service
+    root /var/www;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+EOF
+  systemctl restart nginx
   msg_ok "Installed AriaNG"
 fi
 
@@ -69,8 +71,8 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target' >$service_path
 
-conf_path="/root/aria2.daemon"
-echo 'continue
+cat <<EOF >/root/aria2.daemon
+continue
 dir=/var/www/downloads
 file-allocation=falloc
 max-connection-per-server=4
@@ -80,7 +82,8 @@ min-split-size=25M
 rpc-allow-origin-all=true
 rpc-secret=YouShouldChangeThis
 input-file=/var/tmp/aria2c.session
-save-session=/var/tmp/aria2c.session' >$conf_path
+save-session=/var/tmp/aria2c.session
+EOF
 systemctl enable --now -q aria2.service
 
 msg_ok "Created Service"
@@ -89,7 +92,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm /root/$ZIP
+rm /root/"$(ls -l /root | grep zip$ | awk '{print $9}')"
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
