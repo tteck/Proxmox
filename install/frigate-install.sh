@@ -156,6 +156,8 @@ wget -qO cpu_audio_model.tflite https://tfhub.dev/google/lite-model/yamnet/class
 cp /opt/frigate/audio-labelmap.txt /audio-labelmap.txt
 mkdir -p /media/frigate
 wget -qO /media/frigate/person-bicycle-car-detection.mp4 https://github.com/intel-iot-devkit/sample-videos/raw/master/person-bicycle-car-detection.mp4
+$STD groupadd -g 1200 apex
+$STD adduser $(id -u -n) apex
 msg_ok "Installed Coral Object Detection Model"
 
 msg_info "Building Nginx with Custom Modules"
