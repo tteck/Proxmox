@@ -85,7 +85,7 @@ lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
 lxc.mount.entry: /dev/dri/renderD128 dev/dri/renderD128 none bind,optional,create=file
 EOF
 
-read -r -p "Do you need the intel-media-va-driver-non-free driver (Non-free Sources Added)? <y/N> " prompt
+read -r -p "Do you need the intel-media-va-driver-non-free driver (Debian 12 only)? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   header_info
   msg_info "Installing Hardware Acceleration (non-free)"
