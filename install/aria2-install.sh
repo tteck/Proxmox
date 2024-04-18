@@ -17,9 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y wget
-$STD apt-get install -y unzip
-$STD apt-get install -y nginx
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Aria2"
@@ -29,11 +26,13 @@ msg_ok "Installed Aria2"
 read -r -p "Would you like to add AriaNG? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing AriaNG"
+  $STD apt-get install -y nginx
+  $STD apt-get install -y unzip
   cd /root
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
   $STD unzip "$(ls -l /root | grep zip$ | awk '{print $9}')" -d /var/www
-cat <<EOF >/etc/nginx/conf.d/ariang.conf
+  cat <<EOF >/etc/nginx/conf.d/ariang.conf
 server {
     listen 6880 default_server;
     listen [::]:6880 default_server;
