@@ -35,8 +35,8 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   service_path="/etc/systemd/system/ariang.service"
 cat <<EOF >/etc/nginx/conf.d/ariang.conf
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+    listen 6880 default_server;
+    listen [::]:6880 default_server;
 
     server_name _;
 
@@ -48,13 +48,29 @@ server {
     }
 }
 EOF
+  rm /etc/nginx/sites-enabled/*
   systemctl restart nginx
   msg_ok "Installed AriaNG"
 fi
 
 msg_info "Creating Service"
 
-service_path="/etc/systemd/system/aria2.service"
+mkdir /root/downloads
+cat <<EOF >/root/aria2.daemon
+continue
+dir=/root/downloads
+file-allocation=falloc
+max-connection-per-server=4
+max-concurrent-downloads=2
+max-overall-download-limit=0
+min-split-size=25M
+rpc-allow-origin-all=true
+rpc-secret=YouShouldChangeThis
+input-file=/var/tmp/aria2c.session
+save-session=/var/tmp/aria2c.session
+EOF
+
+cat <<EOF >/etc/systemd/system/aria2.service
 echo '[Unit]
 Description=Aria2c download manager
 After=network.target
@@ -69,20 +85,7 @@ TimeoutStopSec=20
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target' >$service_path
-
-cat <<EOF >/root/aria2.daemon
-continue
-dir=/var/www/downloads
-file-allocation=falloc
-max-connection-per-server=4
-max-concurrent-downloads=2
-max-overall-download-limit=0
-min-split-size=25M
-rpc-allow-origin-all=true
-rpc-secret=YouShouldChangeThis
-input-file=/var/tmp/aria2c.session
-save-session=/var/tmp/aria2c.session
+WantedBy=multi-user.target'
 EOF
 systemctl enable --now -q aria2.service
 
