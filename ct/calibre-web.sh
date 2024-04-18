@@ -54,7 +54,7 @@ function default_settings() {
 }
 
 function update_script() {
-  if [[ ! -f /etc/systemd/system/vaultwarden.service ]]; then
+  if [[ ! -f /etc/systemd/system/cps.service ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
