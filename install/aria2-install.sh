@@ -96,7 +96,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm /root/"$(ls -l /root | grep zip$ | awk '{print $9}')"
+rm /root/ariang.zip
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
