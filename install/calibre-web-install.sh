@@ -19,8 +19,6 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y python3 python3-pip imagemagick
-#$STD pip3 install --upgrade pip
-#apt-get install python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev libmariadb-dev libjpeg-dev libpq-dev liblcms2-dev libblas-dev libatlas-base-dev
 msg_ok "Installed Dependencies"
 
 msg_info "Installing calibre-web"
@@ -30,6 +28,7 @@ curl -fsSLO https://github.com/pgaskin/kepubify/releases/latest/download/kepubif
 chmod +x kepubify-linux-64bit
 mkdir -p /opt/calibre-web
 wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
+if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
 CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 \
   "1" "Enables gdrive as storage backend for your ebooks" OFF \
   "2" "Enables sending emails via a googlemail account without enabling insecure apps" OFF \
@@ -39,6 +38,8 @@ CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB 
   "6" "Enables extracting of metadata from epub, fb2, pdf files, and also extraction of covers from cbr, cbz, cbt files" OFF \
   "7" "Enables extracting of metadata from cbr, cbz, cbt files" OFF \
   "8" "Enables syncing with your kobo reader" OFF 3>&1 1>&2 2>&3)
+spinner &
+SPINNER_PID=$!
 if [ ! -z "$CHOICES" ]; then
   declare -a options
   for CHOICE in $CHOICES; do
@@ -54,7 +55,7 @@ if [ ! -z "$CHOICES" ]; then
       ;;
     "4")
       options+=( ldap )
-      apt-get install -qqy libldap2-dev
+      apt-get install -qqy libldap2-dev libsasl2-dev
       ;;
     "5")
       options+=( oauth )
@@ -78,9 +79,9 @@ fi
 if [ ! -z "$options" ] && [ ${#options[@]} -gt 0 ]; then
   cps_options=$(IFS=, ; echo "${options[*]}")
   echo $cps_options > /opt/calibre-web/options.txt
-  pip install calibreweb[$cps_options]
+  $STD pip install calibreweb[$cps_options]
 else
-  pip install calibreweb
+  $STD pip install calibreweb
 fi
 msg_ok "Installed calibre-web"
 
