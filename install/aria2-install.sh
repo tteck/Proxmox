@@ -32,8 +32,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   cd /root
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
-  unzip "$(ls -l /root | grep zip$ | awk '{print $9}')" -d /var/www
-  service_path="/etc/systemd/system/ariang.service"
+  $STD unzip "$(ls -l /root | grep zip$ | awk '{print $9}')" -d /var/www
 cat <<EOF >/etc/nginx/conf.d/ariang.conf
 server {
     listen 6880 default_server;
@@ -50,7 +49,9 @@ server {
 }
 EOF
   rm /etc/nginx/sites-enabled/*
-  systemctl restart nginx
+  $STD systemctl disable --now nginx
+  $STD cp /lib/systemd/system/nginx.service /lib/systemd/system/ariang.service
+  $STD systemctl enable --now ariang
   msg_ok "Installed AriaNG"
 fi
 

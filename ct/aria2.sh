@@ -20,7 +20,7 @@ EOF
 header_info
 echo -e "Loading..."
 APP="Aria2"
-var_disk="6"
+var_disk="8"
 var_cpu="2"
 var_ram="1028"
 var_os="debian"
@@ -68,5 +68,7 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} maintenance page should be reachable by going to the following URL.
-         ${BL}http://${IP}:6800 \n"
+echo -e "${APP} should be accessible via the following IP.
+         ${BL}http://${IP}:6800${CL}"
+echo -e "AriaNG should be reachable by going to the following URL.
+         ${BL}http://${IP}:6880${CL} \n"
