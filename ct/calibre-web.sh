@@ -69,8 +69,8 @@ function update_script() {
   wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
   if [ -f "/opt/calibre-web/options.txt" ]; then
     echo "$FILE exists."
-	cps_options="$(cat /opt/calibre-web/options.txt)"
-	pip install --upgrade calibreweb[$cps_options]
+    cps_options="$(cat /opt/calibre-web/options.txt)"
+    pip install --upgrade calibreweb[$cps_options]
   else
     pip install --upgrade calibreweb
   fi
