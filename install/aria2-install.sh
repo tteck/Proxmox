@@ -29,6 +29,7 @@ msg_ok "Installed Aria2"
 read -r -p "Would you like to add AriaNG? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   msg_info "Installing AriaNG"
+  cd /root
   mkdir -p /var/www
   wget -q "$(curl -s https://api.github.com/repos/mayswind/ariang/releases/latest | grep download | grep AllInOne.zip | cut -d\" -f4)" -O /root/ariang.zip
   unzip "$(ls -l /root | grep zip$ | awk '{print $9}')" -d /var/www
