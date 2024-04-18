@@ -55,7 +55,7 @@ if [ ! -z "$CHOICES" ]; then
       ;;
     "4")
       options+=( ldap )
-      apt-get install -qqy libldap2-dev libsasl2-dev
+      $STD apt-get install -qqy libldap2-dev libsasl2-dev
       ;;
     "5")
       options+=( oauth )
@@ -112,5 +112,6 @@ $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
 
-msg_ok "Default login user: admin"
-msg_ok "Default login password: admin123"
+echo -e "Default login for ${APP}:
+    user: ${BL}admin${CL} \n
+    password: ${BL}admin123${CL} \n"
