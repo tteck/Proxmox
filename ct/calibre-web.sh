@@ -67,12 +67,85 @@ function update_script() {
   chmod +x kepubify-linux-64bit
   rm /opt/calibre-web/metadata.db
   wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
+  menu_array=("1" "Enables gdrive as storage backend for your ebooks" OFF \
+    "2" "Enables sending emails via a googlemail account without enabling insecure apps" OFF \
+    "3" "Enables displaying of additional author infos on the authors page" OFF \
+    "4" "Enables login via LDAP server" OFF \
+    "5" "Enables login via google or github oauth" OFF \
+    "6" "Enables extracting of metadata from epub, fb2, pdf files, and also extraction of covers from cbr, cbz, cbt files" OFF \
+    "7" "Enables extracting of metadata from cbr, cbz, cbt files" OFF \
+    "8" "Enables syncing with your kobo reader" OFF )
   if [ -f "/opt/calibre-web/options.txt" ]; then
-    echo "$FILE exists."
     cps_options="$(cat /opt/calibre-web/options.txt)"
-    pip install --upgrade calibreweb[$cps_options]
+    IFS=',' read -ra ADDR <<< "$cps_options"
+    for i in "${ADDR[@]}"; do
+      # process "$i"
+	  if [ $i == "gdrive" ]; then
+	    line=0
+	  elif [ $i == "gmail" ]; then
+	    line=1
+      elif [ $i == "goodreads" ]; then
+	    line=2
+	  elif [ $i == "ldap" ]; then
+	    line=3
+	  elif [ $i == "oauth" ]; then
+	    line=4
+	  elif [ $i == "metadata" ]; then
+	    line=5
+	  elif [ $i == "comics" ]; then
+	    line=6
+	  elif [ $i == "kobo" ]; then
+	    line=7
+	  fi
+	  line=3
+      array_index=$(( 3*line + 2 ))
+      menu_array[$array_index]=ON
+    done
+  fi
+  CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 "${array[@]}"	3>&1 1>&2 2>&3)
+  if [ ! -z "$CHOICES" ]; then
+    declare -a options
+    for CHOICE in $CHOICES; do
+      case "$CHOICE" in
+      "1")
+        options+=( gdrive )
+        ;;
+      "2")
+        options+=( gmail )
+        ;;
+      "3")
+        options+=( goodreads )
+        ;;
+      "4")
+        options+=( ldap )
+        $STD apt-get install -qqy libldap2-dev libsasl2-dev
+        ;;
+      "5")
+        options+=( oauth )
+        ;;
+      "6")
+        options+=( metadata )
+        ;;
+      "7")
+        options+=( comics )
+        ;;
+      "8")
+        options+=( kobo )
+        ;;
+      *)
+        echo "Unsupported item $CHOICE!" >&2
+        exit 1
+        ;;
+      esac
+    done
+  fi
+  if [ ! -z "$options" ] && [ ${#options[@]} -gt 0 ]; then
+    cps_options=$(IFS=, ; echo "${options[*]}")
+    echo $cps_options > /opt/calibre-web/options.txt
+    $STD pip install --upgrade calibreweb[$cps_options]
   else
-    pip install --upgrade calibreweb
+    rm /opt/calibre-web/options.txt 2> /dev/null
+    $STD pip install --upgrade calibreweb
   fi
   systemctl start cps
   msg_ok "Updated $APP LXC"

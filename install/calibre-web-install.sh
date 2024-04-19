@@ -28,61 +28,7 @@ curl -fsSLO https://github.com/pgaskin/kepubify/releases/latest/download/kepubif
 chmod +x kepubify-linux-64bit
 mkdir -p /opt/calibre-web
 wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
-if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
-CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 \
-  "1" "Enables gdrive as storage backend for your ebooks" OFF \
-  "2" "Enables sending emails via a googlemail account without enabling insecure apps" OFF \
-  "3" "Enables displaying of additional author infos on the authors page" OFF \
-  "4" "Enables login via LDAP server" OFF \
-  "5" "Enables login via google or github oauth" OFF \
-  "6" "Enables extracting of metadata from epub, fb2, pdf files, and also extraction of covers from cbr, cbz, cbt files" OFF \
-  "7" "Enables extracting of metadata from cbr, cbz, cbt files" OFF \
-  "8" "Enables syncing with your kobo reader" OFF 3>&1 1>&2 2>&3)
-spinner &
-SPINNER_PID=$!
-if [ ! -z "$CHOICES" ]; then
-  declare -a options
-  for CHOICE in $CHOICES; do
-    case "$CHOICE" in
-    "1")
-      options+=( gdrive )
-      ;;
-    "2")
-      options+=( gmail )
-      ;;
-    "3")
-      options+=( goodreads )
-      ;;
-    "4")
-      options+=( ldap )
-      $STD apt-get install -qqy libldap2-dev libsasl2-dev
-      ;;
-    "5")
-      options+=( oauth )
-      ;;
-    "6")
-      options+=( metadata )
-      ;;
-    "7")
-      options+=( comics )
-      ;;
-    "8")
-      options+=( kobo )
-      ;;
-    *)
-      echo "Unsupported item $CHOICE!" >&2
-      exit 1
-      ;;
-    esac
-  done
-fi
-if [ ! -z "$options" ] && [ ${#options[@]} -gt 0 ]; then
-  cps_options=$(IFS=, ; echo "${options[*]}")
-  echo $cps_options > /opt/calibre-web/options.txt
-  $STD pip install calibreweb[$cps_options]
-else
-  $STD pip install calibreweb
-fi
+$STD pip install calibreweb
 msg_ok "Installed calibre-web"
 
 msg_info "Creating Service"
