@@ -60,5 +60,5 @@ msg_ok "Cleaned"
 
 echo -e "Default login for Calibre-web:
     user: ${BL}admin${CL}
-    password: ${BL}admin123${CL} \n"
+    password: ${BL}admin123${CL}"
 echo -e "${YW}Run the update script inside the container to install calibre-web optional dependencies (such as ldap or kobo support).${CL}"

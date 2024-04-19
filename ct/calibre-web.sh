@@ -79,7 +79,6 @@ function update_script() {
     cps_options="$(cat /opt/calibre-web/options.txt)"
     IFS=',' read -ra ADDR <<< "$cps_options"
     for i in "${ADDR[@]}"; do
-      # process "$i"
 	  if [ $i == "gdrive" ]; then
 	    line=0
 	  elif [ $i == "gmail" ]; then
@@ -97,7 +96,6 @@ function update_script() {
 	  elif [ $i == "kobo" ]; then
 	    line=7
 	  fi
-	  line=3
       array_index=$(( 3*line + 2 ))
       menu_array[$array_index]=ON
     done
