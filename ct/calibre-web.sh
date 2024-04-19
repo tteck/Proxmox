@@ -121,7 +121,7 @@ function update_script() {
         ;;
       "4")
         options+=( ldap )
-        $STD apt-get install -qqy libldap2-dev libsasl2-dev
+        apt-get install -qqy libldap2-dev libsasl2-dev
         ;;
       "5")
         options+=( oauth )
@@ -145,10 +145,10 @@ function update_script() {
   if [ ! -z "$options" ] && [ ${#options[@]} -gt 0 ]; then
     cps_options=$(IFS=, ; echo "${options[*]}")
     echo $cps_options > /opt/calibre-web/options.txt
-    $STD pip install --upgrade calibreweb[$cps_options]
+    pip install --upgrade calibreweb[$cps_options]
   else
     rm /opt/calibre-web/options.txt 2> /dev/null
-    $STD pip install --upgrade calibreweb
+    pip install --upgrade calibreweb
   fi
   systemctl start cps
   msg_ok "Updated $APP LXC"

@@ -59,5 +59,6 @@ $STD apt-get autoclean
 msg_ok "Cleaned"
 
 echo -e "Default login for Calibre-web:
-    user: ${BL}admin${CL} \n
+    user: ${BL}admin${CL}
     password: ${BL}admin123${CL} \n"
+echo -e "${YW}Run the update script inside the container to install calibre-web optional dependencies (such as ldap or kobo support).${CL}"
