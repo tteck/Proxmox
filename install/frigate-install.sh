@@ -98,7 +98,7 @@ echo "tmpfs   /tmp/cache      tmpfs   defaults        0       0" >> /etc/fstab
 msg_ok "Installed Frigate $RELEASE"
 
 if grep -q -o -m1 'avx[^ ]*' /proc/cpuinfo; then
-  echo -e "AVX support detected"
+  msg_ok "AVX support detected"
   msg_info "Installing Openvino Object Detection Model (Resilience)"
   $STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
   cd /opt/frigate/models
