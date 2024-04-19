@@ -102,7 +102,10 @@ function update_script() {
       menu_array[$array_index]=ON
     done
   fi
-  CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 "${array[@]}"	3>&1 1>&2 2>&3)
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
+  CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 "${menu_array[@]}" 3>&1 1>&2 2>&3)
+  spinner &
+  SPINNER_PID=$!
   if [ ! -z "$CHOICES" ]; then
     declare -a options
     for CHOICE in $CHOICES; do

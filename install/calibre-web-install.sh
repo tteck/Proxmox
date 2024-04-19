@@ -27,7 +27,7 @@ cd /opt/kepubify
 curl -fsSLO https://github.com/pgaskin/kepubify/releases/latest/download/kepubify-linux-64bit &>/dev/null
 chmod +x kepubify-linux-64bit
 mkdir -p /opt/calibre-web
-wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
+$STD wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
 $STD pip install calibreweb
 msg_ok "Installed calibre-web"
 
@@ -58,6 +58,6 @@ $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
 
-echo -e "Default login for ${APP}:
+echo -e "Default login for Calibre-web:
     user: ${BL}admin${CL} \n
     password: ${BL}admin123${CL} \n"
