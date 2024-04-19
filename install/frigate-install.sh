@@ -123,7 +123,7 @@ model:
   input_pixel_format: bgr
   labelmap_path: /openvino-model/coco_91cl_bkgr.txt
 EOF
-  msg_ok "Installed Openvino Object Detection Model (Resilience)"
+  msg_ok "Installed Openvino Object Detection Model"
 else
   cat <<EOF >>/config/config.yml
 model:
