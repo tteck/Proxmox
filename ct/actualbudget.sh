@@ -57,7 +57,7 @@ header_info
 if [[ ! -d /opt/actualbudget ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 systemctl stop actualbudget.service
-/opt/actualbudget
+cd /opt/actualbudget
 git pull
 yarn install
 systemctl start actualbudget.service
