@@ -98,7 +98,7 @@ echo "tmpfs   /tmp/cache      tmpfs   defaults        0       0" >> /etc/fstab
 msg_ok "Installed Frigate $RELEASE"
 
 if grep -q -o -m1 'avx[^ ]*' /proc/cpuinfo; then
-  msg_ok "AVX support detected"
+  msg_ok "AVX Support Detected"
   msg_info "Installing Openvino Object Detection Model (Resilience)"
   $STD pip install -r /opt/frigate/docker/main/requirements-ov.txt
   cd /opt/frigate/models
@@ -131,7 +131,7 @@ model:
 EOF
 fi
 
-msg_info "Installing Coral Object Detection Model (Resilience)"
+msg_info "Installing Coral Object Detection Model (Patience)"
 cd /opt/frigate
 export CCACHE_DIR=/root/.ccache
 export CCACHE_MAXSIZE=2G
