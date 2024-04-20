@@ -18,22 +18,29 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y python3 python3-pip imagemagick
+$STD apt-get install -y imagemagick
 msg_ok "Installed Dependencies"
 
-msg_info "Installing calibre-web"
+msg_info "Installing Python Dependencies"
+$STD apt-get -y install python3-pip
+msg_ok "Installed Python Dependencies"
+
+msg_info "Installing Kepubify"
 mkdir -p /opt/kepubify
 cd /opt/kepubify
 curl -fsSLO https://github.com/pgaskin/kepubify/releases/latest/download/kepubify-linux-64bit &>/dev/null
 chmod +x kepubify-linux-64bit
+msg_ok "Installed Kepubify"
+
+msg_info "Installing Calibre-Web"
 mkdir -p /opt/calibre-web
 $STD wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
 $STD pip install calibreweb
-msg_ok "Installed calibre-web"
+msg_ok "Installed Calibre-Web"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/cps.service"
-echo "[Unit]
+cat <<EOF >/etc/systemd/system/cps.service
+[Unit]
 Description=Calibre-Web Server
 After=network.target
 
@@ -46,8 +53,9 @@ KillMode=process
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target" >$service_path
-systemctl enable --now -q cps.service
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now cps.service
 msg_ok "Created Service"
 
 motd_ssh
@@ -57,8 +65,3 @@ msg_info "Cleaning up"
 $STD apt-get autoremove
 $STD apt-get autoclean
 msg_ok "Cleaned"
-
-echo -e "Default login for Calibre-web:
-    user: ${BL}admin${CL}
-    password: ${BL}admin123${CL}"
-echo -e "${YW}Run the update script inside the container to install calibre-web optional dependencies (such as ldap or kobo support).${CL}"
