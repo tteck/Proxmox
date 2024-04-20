@@ -19,7 +19,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Calibre-web"
+APP="Calibre-Web"
 var_disk="4"
 var_cpu="2"
 var_ram="2048"
