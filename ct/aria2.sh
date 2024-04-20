@@ -8,13 +8,11 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-    ___         _      ___ 
+    ___         _      ___
    /   |  _____(_)___ |__ \
   / /| | / ___/ / __ `/_/ /
- / ___ |/ /  / / /_/ / __/ 
-/_/  |_/_/  /_/\__,_/____/ 
-                           
-
+ / ___ |/ /  / / /_/ / __/
+/_/  |_/_/  /_/\__,_/____/
 EOF
 }
 header_info
@@ -70,5 +68,3 @@ description
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be accessible via the following IP.
          ${BL}http://${IP}:6800${CL}"
-echo -e "AriaNG should be reachable by going to the following URL.
-         ${BL}http://${IP}:6880${CL} \n"
