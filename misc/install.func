@@ -12,7 +12,7 @@ color() {
   CM="${GN}✓${CL}"
   CROSS="${RD}✗${CL}"
   BFR="\\r\\033[K"
-  HOLD="-"
+  HOLD=" "
 }
 
 # This function enables IPv6 if it's not disabled and sets verbose mode if the global variable is set to "yes"
@@ -49,13 +49,13 @@ error_handler() {
 
 # This function displays a spinner.
 spinner() {
-  printf "\e[?25l"
-  spinner="/-\\|/-\\|"
-  spin_i=0
-  while true; do
-    printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
-    sleep 0.2
-  done
+    local chars="/-\|"
+    local spin_i=0
+    printf "\e[?25l"
+    while true; do
+        printf "\r \e[36m%s\e[0m" "${chars:spin_i++%${#chars}:1}"
+        sleep 0.1
+    done
 }
 
 # This function displays an informational message with a yellow color.
