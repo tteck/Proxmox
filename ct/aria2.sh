@@ -67,4 +67,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be accessible via the following IP.
-         ${BL}http://${IP}:6800${CL}"
+         ${BL}http://${IP}:6880${CL}"
