@@ -29,19 +29,20 @@ ln -sf /usr/local/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
-$STD npm install --global yarn
+$STD npm install -g yarn
 ln -sf /usr/local/bin/yarn /usr/bin/yarn
 msg_ok "Installed Yarn"
 
-msg_info "Installing Dashy (Patience)"
+RELEASE=$(curl -s https://api.github.com/repos/Lissy93/dashy/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+msg_info "Installing Dashy ${RELEASE} (Patience)"
 mkdir -p /opt/dashy
-#RELEASE=$(curl -s https://api.github.com/repos/Lissy93/dashy/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-#wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
-wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/2.1.1.tar.gz | tar -xz -C /opt/dashy --strip-components=1
+wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
 cd /opt/dashy
+sed -i 's/NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build/NODE_OPTIONS=yarn vue-cli-service build/' /opt/dashy/package.json
 $STD yarn
 $STD yarn build
-msg_ok "Installed Dashy"
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
+msg_ok "Installed Dashy ${RELEASE}"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/dashy.service
