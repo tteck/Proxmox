@@ -230,17 +230,24 @@ advanced_settings() {
     fi
   done
 
-  if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
-    if [ -z $PW1 ]; then
-      PW1="Automatic Login"
-      PW=""
+  while true; do
+    if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
+      if [ -z "$PW1" ]; then
+        PW1="Automatic Login"
+        PW=""
+      elif [[ "$PW1" == *" "* ]]; then
+        whiptail --msgbox "Password cannot contain spaces. Please try again." 8 58
+      elif [ "${#PW1}" -lt 5 ]; then
+        whiptail --msgbox "Password must be at least 5 characters long. Please try again." 8 58
+      else
+        PW="-password $PW1"
+        echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
+        break
+      fi
     else
-      PW="-password $PW1"
+      exit-script
     fi
-    echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
-  else
-    exit-script
-  fi
+  done
 
   if CT_ID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3); then
     if [ -z "$CT_ID" ]; then
