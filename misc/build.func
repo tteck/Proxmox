@@ -237,7 +237,7 @@ advanced_settings() {
         PW=""
       elif [[ "$PW1" == *" "* ]]; then
         whiptail --msgbox "Password cannot contain spaces. Please try again." 8 58
-      elif [ "${#PW1}" -lt 5 ]; then
+      elif [ ${#PW1} -ge 1 ] && [ ${#PW1} -lt 5 ]; then
         whiptail --msgbox "Password must be at least 5 characters long. Please try again." 8 58
       else
         PW="-password $PW1"
