@@ -98,7 +98,7 @@ pve_check() {
   if [ $(pveversion | grep "pve-manager/8" | wc -l) -ne 1 ]; then
     whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Proxmox VE 7 Detected" "You are currently using Proxmox VE 7 (EOL 2024-07), refrain from creating Debian 12 LXCs. \nDefault distribution for $APP LXC is ${var_os} ${var_version}" 10 60
   fi
-  if ! pveversion | grep -Eq "pve-manager/(7.4-[1][3-9]|8.1.[1-9])"; then
+  if ! pveversion | grep -Eq "pve-manager/(7\.4-(1[3-8])|8\.[0-2])"; then
     msg_error "This version of Proxmox Virtual Environment is not supported"
     echo -e "Requires PVE7 Version 7.4-13 or later, or PVE8 Version 8.1.1 or later."
     echo -e "Exiting..."
