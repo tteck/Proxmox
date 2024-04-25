@@ -20,6 +20,12 @@
   - Groups are set automatically
   - Checks for the existence of `/dev/dri/card0` if not found, use `/dev/dri/card1`. Set the GID to `44`
   - Set the GID for `/dev/dri/renderD128` to `104`
+- **Plex LXC**
+  - Default settings are now **Unprivileged**
+  - Unprivileged Hardware Acceleration
+  - Groups are set automatically
+  - Checks for the existence of `/dev/dri/card0` if not found, use `/dev/dri/card1`. Set the GID to `44`
+  - Set the GID for `/dev/dri/renderD128` to `104`
 
 ## 2024-04-24
 
