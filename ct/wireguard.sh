@@ -68,7 +68,11 @@ exit
 fi
 if [ "$UPD" == "2" ]; then
   if [[ -f /etc/systemd/system/wg-dashboard.service ]]; then
-    msg_error "Existing WGDashboard Installation Found!";
+    msg_info "Updating WGDashboard"
+    cd /etc/wgdashboard/src
+    yes "Y" | sudo ./wgd.sh update &>/dev/null
+    sudo chmod u+x wgd.sh
+    msg_ok "Updated Successfully"
     exit 
   fi
 IP=$(hostname -I | awk '{print $1}')
