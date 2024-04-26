@@ -79,17 +79,17 @@ VERSION=$(curl -s https://api.github.com/repos/coder/code-server/releases/latest
 
 msg_info "Installing Code-Server v${VERSION}"
 curl -fOL https://github.com/coder/code-server/releases/download/v$VERSION/code-server_${VERSION}_amd64.deb &>/dev/null
-sudo dpkg -i code-server_${VERSION}_amd64.deb &>/dev/null
+dpkg -i code-server_${VERSION}_amd64.deb &>/dev/null
 rm -rf code-server_${VERSION}_amd64.deb
 mkdir -p ~/.config/code-server/
-sudo systemctl enable --now code-server@$USER &>/dev/null
+systemctl enable -q --now code-server@$USER
 cat <<EOF >~/.config/code-server/config.yaml
 bind-addr: 0.0.0.0:8680
 auth: none
 password: 
 cert: false
 EOF
-sudo systemctl restart code-server@$USER
+systemctl restart code-server@$USER
 msg_ok "Installed Code-Server v${VERSION} on $hostname"
 
 echo -e "${APP} should be reachable by going to the following URL.
