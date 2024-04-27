@@ -15,7 +15,7 @@
 ### Changed
 
 - **Frigate LXC**
-  - Unprivileged Hardware Acceleration (https://github.com/tteck/Proxmox/discussions/2711#discussioncomment-9244629)
+  - Unprivileged Hardware Acceleration https://github.com/tteck/Proxmox/discussions/2711#discussioncomment-9244629
 
 ## 2024-04-26
 
