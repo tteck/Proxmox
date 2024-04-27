@@ -65,6 +65,7 @@ msg_ok() {
 }
 
 msg_info "Installing $APP"
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/nicolargo/glancesautoinstall/master/install.sh)" &>/dev/null
 cat <<EOF >/etc/systemd/system/glances.service
 [Unit]
