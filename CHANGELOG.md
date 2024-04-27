@@ -16,6 +16,8 @@
 
 - **Frigate LXC**
   - Unprivileged Hardware Acceleration https://github.com/tteck/Proxmox/discussions/2711#discussioncomment-9244629
+- **Ubuntu 24.04 VM**
+  - NEW Script
 
 ## 2024-04-26
 
