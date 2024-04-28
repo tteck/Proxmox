@@ -29,17 +29,8 @@ HOLD=" "
 CM="${GN}✓${CL}"
 APP="Glances"
 hostname="$(hostname)"
-
-header_info
-while true; do
-    read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
-    case $yn in
-    [Yy]*) break ;;
-    [Nn]*) exit ;;
-    *) echo "Please answer yes or no." ;;
-    esac
-done
-
+silent() { "$@" >/dev/null 2>&1; }
+set -e
 spinner() {
     local chars="/-\|"
     local spin_i=0
@@ -64,10 +55,27 @@ msg_ok() {
   echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-msg_info "Installing $APP"
-rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/nicolargo/glancesautoinstall/master/install.sh)" &>/dev/null
-cat <<EOF >/etc/systemd/system/glances.service
+install() {
+  header_info
+  while true; do
+      read -p "This will Install ${APP} on $hostname. Proceed(y/n)?" yn
+      case $yn in
+      [Yy]*) break ;;
+      [Nn]*) exit ;;
+      *) echo "Please answer yes or no." ;;
+      esac
+  done
+  header_info
+  read -r -p "Verbose mode? <y/N> " prompt
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  STD=""
+  else
+  STD="silent"
+  fi
+  msg_info "Installing $APP"
+  rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+  $STD bash -c "$(wget -qLO - https://raw.githubusercontent.com/nicolargo/glancesautoinstall/master/install.sh)"
+  cat <<EOF >/etc/systemd/system/glances.service
 [Unit]
 Description=Glances - An eye on your system
 After=network.target
@@ -80,8 +88,46 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable -q --now glances.service
-msg_ok "Installed $APP on $hostname"
+  systemctl enable -q --now glances.service
+  msg_ok "Installed $APP on $hostname"
 
-echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://$IP:61208${CL} \n"
+  echo -e "${APP} should be reachable by going to the following URL.
+           ${BL}http://$IP:61208${CL} \n"
+}
+uninstall() {
+  header_info
+  read -r -p "Verbose mode? <y/N> " prompt
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  STD=""
+  else
+  STD="silent"
+  fi
+  header_info
+
+  msg_info "Uninstalling $APP"
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
+  systemctl disable -q --now glances
+  bash -c "$(wget -qLO - https://raw.githubusercontent.com/nicolargo/glancesautoinstall/master/uninstall.sh)"
+  rm -rf /etc/systemd/system/glances.service
+  msg_ok "Uninstalled $APP"
+  msg_ok "Completed Successfully!\n"
+}
+
+OPTIONS=(Install "Install $APP" \
+         Uninstall "Uninstall $APP")
+
+CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "$APP" --menu "Select an option:" 10 58 2 \
+          "${OPTIONS[@]}" 3>&1 1>&2 2>&3)
+
+case $CHOICE in
+  "Install")
+    install
+    ;;
+  "Uninstall")
+    uninstall
+    ;;
+  *)
+    echo "Exiting..."
+    exit 0
+    ;;
+esac
