@@ -96,14 +96,6 @@ EOF
 }
 uninstall() {
   header_info
-  read -r -p "Verbose mode? <y/N> " prompt
-  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-  STD=""
-  else
-  STD="silent"
-  fi
-  header_info
-
   msg_info "Uninstalling $APP"
   if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
   systemctl disable -q --now glances
