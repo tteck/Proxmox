@@ -16,6 +16,8 @@
 
 - **Scrypted LXC**
   - Unprivileged Hardware Acceleration
+- **Emby LXC**
+  - Unprivileged Hardware Acceleration
 
 ## 2024-04-27
 
