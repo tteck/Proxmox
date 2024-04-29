@@ -66,16 +66,15 @@ systemctl stop ersatzTV
 msg_ok "Stopped ErsatzTV"
 
 msg_info "Updating ErsatzTV"
-RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-LATEST_RELEASE=$(echo $RELEASE | awk '{print $1}')
+RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }' | head -n 1)
 cd /opt
 if [ -d ErsatzTV_bak ]; then
   rm -rf ErsatzTV_bak
 fi
 mv ErsatzTV ErsatzTV_bak
-wget -q --no-check-certificate "https://github.com/ErsatzTV/ErsatzTV/releases/download/${LATEST_RELEASE}/ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz"
-tar -xf ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz 
-mv ErsatzTV-${LATEST_RELEASE}-linux-x64 ErsatzTV
+wget -q https://github.com/ErsatzTV/ErsatzTV/releases/download/${RELEASE}/ErsatzTV-${RELEASE}-linux-x64.tar.gz
+tar -xf ErsatzTV-${RELEASE}-linux-x64.tar.gz 
+mv ErsatzTV-${RELEASE}-linux-x64 ErsatzTV
 msg_ok "Updated ErsatzTV"
 
 msg_info "Starting ErsatzTV"
@@ -84,7 +83,7 @@ msg_ok "Started ErsatzTV"
 
 msg_info "Cleaning Up"
 cd /opt
-rm -R ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz
+rm -R ErsatzTV-${RELEASE}-linux-x64.tar.gz 
 rm -R ErsatzTV_bak 
 msg_ok "Cleaned"
 msg_ok "Updated Successfully"
