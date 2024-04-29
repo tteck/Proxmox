@@ -78,10 +78,6 @@ msg_ok "Updated ErsatzTV"
 msg_info "Starting ErsatzTV"
 systemctl start ersatzTV
 msg_ok "Started ErsatzTV"
-
-msg_info "Cleaning Up"
-cd /opt
-msg_ok "Cleaned"
 msg_ok "Updated Successfully"
 exit
 }
