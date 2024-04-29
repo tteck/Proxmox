@@ -58,7 +58,6 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
 systemctl -q --now enable ersatzTV.service
-systemctl start ersatzTV.service 
 msg_ok "Created Service"
 
 motd_ssh
