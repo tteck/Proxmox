@@ -31,13 +31,11 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing ErsatzTV (Patience)" 
 cd /opt
-RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-LATEST_RELEASE=$(echo $RELEASE | awk '{print $1}')
-echo $LATEST_RELEASE
-wget -q --no-check-certificate "https://github.com/ErsatzTV/ErsatzTV/releases/download/${LATEST_RELEASE}/ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz"
-tar -xf ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz 
-mv ErsatzTV-${LATEST_RELEASE}-linux-x64 ErsatzTV
-rm -R ErsatzTV-${LATEST_RELEASE}-linux-x64.tar.gz 
+RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }' | head -n 1)
+wget -q https://github.com/ErsatzTV/ErsatzTV/releases/download/${RELEASE}/ErsatzTV-${RELEASE}-linux-x64.tar.gz
+tar -xf ErsatzTV-${RELEASE}-linux-x64.tar.gz 
+mv ErsatzTV-${RELEASE}-linux-x64 ErsatzTV
+rm -R ErsatzTV-${RELEASE}-linux-x64.tar.gz 
 msg_ok "Installed ErsatzTV"
 
 msg_info "Creating Service"
