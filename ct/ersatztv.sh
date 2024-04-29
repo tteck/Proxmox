@@ -67,11 +67,10 @@ msg_ok "Stopped ErsatzTV"
 
 msg_info "Updating ErsatzTV"
 RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep -oP '"tag_name": "\K[^"]+' | head -n 1)
-cd /opt
-if [ -d ErsatzTV_bak ]; then
-  rm -rf ErsatzTV_bak
+if [ -d /opt/ErsatzTV/ErsatzTV_bak ]; then
+  rm -rf /opt/ErsatzTV/ErsatzTV_bak
 fi
-mv ErsatzTV ErsatzTV_bak
+mv /opt/ErsatzTV/ErsatzTV /opt/ErsatzTV/ErsatzTV_bak
 wget -qO- "https://github.com/ErsatzTV/ErsatzTV/releases/download/${RELEASE}/ErsatzTV-${RELEASE}-linux-x64.tar.gz" | tar -xz -C /opt
 mv "/opt/ErsatzTV-${RELEASE}-linux-x64" /opt/ErsatzTV
 msg_ok "Updated ErsatzTV"
@@ -82,8 +81,6 @@ msg_ok "Started ErsatzTV"
 
 msg_info "Cleaning Up"
 cd /opt
-rm -R ErsatzTV-${RELEASE}-linux-x64.tar.gz 
-rm -R ErsatzTV_bak 
 msg_ok "Cleaned"
 msg_ok "Updated Successfully"
 exit
