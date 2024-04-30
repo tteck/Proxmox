@@ -20,19 +20,16 @@ $STD apt-get install -y mc
 $STD apt-get install -y handbrake-cli
 msg_ok "Installed Dependencies"
 
+msg_info "Setting Up Hardware Acceleration"
+$STD apt-get -y install {va-driver-all,ocl-icd-libopencl1,intel-opencl-icd,vainfo,intel-gpu-tools}
 if [[ "$CTTYPE" == "0" ]]; then
-  msg_info "Setting Up Hardware Acceleration"
-  $STD apt-get -y install \
-    va-driver-all \
-    ocl-icd-libopencl1 \
-    intel-opencl-icd
   chgrp video /dev/dri
   chmod 755 /dev/dri
   chmod 660 /dev/dri/*
   $STD adduser $(id -u -n) video
   $STD adduser $(id -u -n) render
-  msg_ok "Set Up Hardware Acceleration"
 fi
+msg_ok "Set Up Hardware Acceleration"
 
 msg_info "Installing Tdarr"
 mkdir -p /opt/tdarr
@@ -43,7 +40,12 @@ $STD unzip Tdarr_Updater.zip
 rm -rf Tdarr_Updater.zip
 chmod +x Tdarr_Updater
 ./Tdarr_Updater &>/dev/null
-sed -i -e 's/^sgx:x:104:$/render:x:104:root/' -e 's/^render:x:106:root$/sgx:x:106:/' /etc/group
+if [[ "$CTTYPE" == "0" ]]; then
+  sed -i -e 's/^sgx:x:104:$/render:x:104:root/' -e 's/^render:x:106:root$/sgx:x:106:/' /etc/group
+else
+  sed -i -e 's/^sgx:x:104:$/render:x:104:/' -e 's/^render:x:106:$/sgx:x:106:/' /etc/group
+fi
+
 msg_ok "Installed Tdarr"
 
 msg_info "Creating Service"
