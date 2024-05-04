@@ -59,9 +59,9 @@ $STD nvm install 16.20.2
 ln -sf /root/.nvm/versions/node/v16.20.2/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
-msg_info "Installing pnpm"
-$STD npm install -g pnpm@8.15
-msg_ok "Installed pnpm"
+msg_info "Installing yarn"
+$STD npm install -g yarn@1.22.19
+msg_ok "Installed yarn"
 
 RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
   grep "tag_name" |
@@ -140,9 +140,8 @@ msg_ok "Set up Enviroment"
 
 msg_info "Building Frontend"
 cd ./frontend
-$STD pnpm install
-$STD pnpm upgrade
-$STD pnpm run build
+$STD yarn ci
+$STD yarn run build
 cp -r dist/* /app/frontend
 cp -r app-images/* /app/frontend/images
 msg_ok "Built Frontend"
@@ -165,7 +164,7 @@ if [ ! -f /app/config/production.json ]; then
 EOF
 fi
 cd /app
-$STD pnpm install
+$STD yarn ci
 msg_ok "Initialized Backend"
 
 msg_info "Creating Service"

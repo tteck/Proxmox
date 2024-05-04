@@ -59,11 +59,11 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
-  if ! command -v pnpm &> /dev/null; then  
-    msg_info "Installing pnpm"
+  if ! command -v yarn &> /dev/null; then  
+    msg_info "Installing yarn"
     export NODE_OPTIONS=--openssl-legacy-provider
-    npm install -g pnpm@8.15 &>/dev/null
-    msg_ok "Installed pnpm"
+    npm install -g yarn@1.22.19 &>/dev/null
+    msg_ok "Installed yarn"
   fi
   RELEASE=$(curl -s https://api.github.com/repos/NginxProxyManager/nginx-proxy-manager/releases/latest |
     grep "tag_name" |
@@ -138,9 +138,8 @@ function update_script() {
 
   msg_info "Building Frontend"
   cd ./frontend
-  pnpm install &>/dev/null
-  pnpm upgrade &>/dev/null
-  pnpm run build &>/dev/null
+  yarn ci &>/dev/null
+  yarn run build &>/dev/null
   cp -r dist/* /app/frontend
   cp -r app-images/* /app/frontend/images
   msg_ok "Built Frontend"
@@ -163,7 +162,7 @@ function update_script() {
 EOF
   fi
   cd /app
-  pnpm install &>/dev/null
+  yarn ci &>/dev/null
   msg_ok "Initialized Backend"
 
   msg_info "Starting Services"
