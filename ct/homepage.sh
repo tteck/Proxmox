@@ -76,6 +76,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   pnpm install
   pnpm build
   systemctl start homepage
+  echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated Homepage to v${RELEASE}"
 else
   msg_ok "No update required. ${APP} is already at ${RELEASE}"
