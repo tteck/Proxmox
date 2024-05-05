@@ -10,12 +10,12 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
- _____                         
-|  ___|__ _ __  _ __ _   _ ___ 
-| |_ / _ \ '_ \| '__| | | / __|
-|  _|  __/ | | | |  | |_| \__ \
-|_|  \___|_| |_|_|   \__,_|___/
-
+    ______                          
+   / ____/__  ____  _______  _______
+  / /_  / _ \/ __ \/ ___/ / / / ___/
+ / __/ /  __/ / / / /  / /_/ (__  ) 
+/_/    \___/_/ /_/_/   \__,_/____/  
+                                 
 EOF
 }
 header_info

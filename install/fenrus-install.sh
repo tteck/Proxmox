@@ -18,8 +18,10 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
-$STD apt install -y curl
-$STD apt install -y git
+$STD apt-get install -y sudo
+$STD apt-get install -y mc
+$STD apt-get install -y curl
+$STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
 msg_info "Installing ASP.NET Core 7 SDK"
@@ -35,15 +37,13 @@ $STD apt-get install -y dotnet-sdk-7.0
 msg_ok "Installed ASP.NET Core 7 SDK"
 
 msg_info "Installing ${APPLICATION}"
-git clone https://github.com/revenz/Fenrus.git
+git clone -q https://github.com/revenz/Fenrus.git
 cd Fenrus || exit
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 dotnet publish -c Release -o "/opt/${APPLICATION}/" Fenrus.csproj
 gitVersionNumber=$(git rev-parse HEAD)
 echo "$gitVersionNumber" >"/opt/${APPLICATION}_version.txt"
 cp -r Apps/ "/opt/${APPLICATION}/"
-cd ..
-rm -r Fenrus/
 msg_ok "Installed ${APPLICATION}"
 
 msg_info "Creating Service"
