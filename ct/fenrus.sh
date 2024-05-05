@@ -5,7 +5,6 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 # Co-Author: Scorpoon
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
-# Source: https://github.com/revenz/Fenrus
 
 function header_info {
 clear
