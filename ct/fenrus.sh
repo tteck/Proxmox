@@ -9,12 +9,12 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-    ______                          
+    ______
    / ____/__  ____  _______  _______
   / /_  / _ \/ __ \/ ___/ / / / ___/
- / __/ /  __/ / / / /  / /_/ (__  ) 
-/_/    \___/_/ /_/_/   \__,_/____/  
-                                 
+ / __/ /  __/ / / / /  / /_/ (__  )
+/_/    \___/_/ /_/_/   \__,_/____/
+
 EOF
 }
 header_info
@@ -56,6 +56,8 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/${APP} ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_error "There is currently no update path available."
+exit
 msg_info "Updating ${APP}"
 systemctl stop ${APP}
 git clone https://github.com/revenz/Fenrus.git
