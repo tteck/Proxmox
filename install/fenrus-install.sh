@@ -37,13 +37,10 @@ $STD apt-get install -y dotnet-sdk-7.0
 msg_ok "Installed ASP.NET Core 7 SDK"
 
 msg_info "Installing ${APPLICATION}"
-git clone -q https://github.com/revenz/Fenrus.git
-cd Fenrus || exit
+git clone -q https://github.com/revenz/Fenrus.git /opt/${APPLICATION}
+cd /opt/${APPLICATION}
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 dotnet publish -c Release -o "/opt/${APPLICATION}/" Fenrus.csproj
-gitVersionNumber=$(git rev-parse HEAD)
-echo "$gitVersionNumber" >"/opt/${APPLICATION}_version.txt"
-cp -r Apps/ "/opt/${APPLICATION}/"
 msg_ok "Installed ${APPLICATION}"
 
 msg_info "Creating Service"
