@@ -39,8 +39,8 @@ msg_ok "Installed ASP.NET Core 7 SDK"
 msg_info "Installing ${APPLICATION}"
 git clone -q https://github.com/revenz/Fenrus.git /opt/${APPLICATION}
 cd /opt/${APPLICATION}
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-dotnet publish -c Release -o "/opt/${APPLICATION}/" Fenrus.csproj
+#export DOTNET_CLI_TELEMETRY_OPTOUT=1
+$STD dotnet publish -c Release -o "/opt/${APPLICATION}/" Fenrus.csproj
 msg_ok "Installed ${APPLICATION}"
 
 msg_info "Creating Service"
