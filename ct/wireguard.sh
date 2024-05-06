@@ -68,7 +68,6 @@ exit
 fi
 if [ "$UPD" == "2" ]; then
   if [[ -f /etc/systemd/system/wg-dashboard.service ]]; then
-    msg_info "Updating WGDashboard"
     cd /etc/wgdashboard/src
     chmod u+x wgd.sh
     ./wgd.sh update
