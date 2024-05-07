@@ -9,12 +9,12 @@
 
 function header_info {
   cat <<"EOF"
-    ___    ____  _____ ____        ______              __             _    ____  ___
-   /   |  / __ \/ ___// __ )      / ____/__  ___  ____/ /__  _____   | |  / /  |/  /
-  / /| | / / / /\__ \/ __  |_____/ /_  / _ \/ _ \/ __  / _ \/ ___/   | | / / /|_/ / 
- / ___ |/ /_/ /___/ / /_/ /_____/ __/ /  __/  __/ /_/ /  __/ /       | |/ / /  / /  
-/_/  |_/_____//____/_____/     /_/    \___/\___/\__,_/\___/_/        |___/_/  /_/   
-                                                                                    
+    ___    ____  _____       ____     ______              __             _    ____  ___
+   /   |  / __ \/ ___/      / __ )   / ____/__  ___  ____/ /__  _____   | |  / /  |/  /
+  / /| | / / / /\__ \______/ __  |  / /_  / _ \/ _ \/ __  / _ \/ ___/   | | / / /|_/ / 
+ / ___ |/ /_/ /___/ /_____/ /_/ /  / __/ /  __/  __/ /_/ /  __/ /       | |/ / /  / /  
+/_/  |_/_____//____/     /_____/  /_/    \___/\___/\__,_/\___/_/        |___/_/  /_/   
+                                                                                                                                                                
 EOF
 }
 clear
@@ -71,7 +71,7 @@ pushd $TEMP_DIR >/dev/null
   sleep 3
   exit
 fi
-if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADSB Feeder VM" --yesno "This will create a New ADSB Feeder VM. Proceed?" 10 58); then
+if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADS-B Feeder VM" --yesno "This will create a New ADS-B Feeder VM. Proceed?" 10 58); then
   echo "User selected Yes"
 else
   clear
@@ -106,7 +106,7 @@ function default_settings() {
   echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
-  echo -e "${BL}Creating a ADSB Feeder VM using the above default settings${CL}"
+  echo -e "${BL}Creating a ADS-B Feeder VM using the above default settings${CL}"
 }
 function advanced_settings() {
   VMID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Virtual Machine ID" 8 58 $NEXTID --title "VIRTUAL MACHINE ID" 3>&1 1>&2 2>&3)
@@ -176,14 +176,14 @@ function advanced_settings() {
     fi
   fi
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start Mikrotik RouterOS CHR VM when completed?" 10 58); then
-    echo -e "${DGN}Start ADSB Feeder VM when completed: ${BGN}yes${CL}"
+    echo -e "${DGN}Start ADS-B Feeder VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
-    echo -e "${DGN}Start ADSB Feeder VM when completed: ${BGN}no${CL}"
+    echo -e "${DGN}Start ADS-B Feeder VM when completed: ${BGN}no${CL}"
     START_VM="no"
   fi
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ADSB Feeder VM?" 10 58); then
-    echo -e "${RD}Creating ADSB Feeder VM using the above advanced settings${CL}"
+    echo -e "${RD}Creating ADS-B Feeder VM using the above advanced settings${CL}"
   else
     clear
     header_info
@@ -227,14 +227,14 @@ elif [ $((${#STORAGE_MENU[@]} / 3)) -eq 1 ]; then
 else
   while [ -z "${STORAGE:+x}" ]; do
     STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Storage Pools" --radiolist \
-      "Which storage pool you would like to use for the ADSB Feeder VM?\n\n" \
+      "Which storage pool you would like to use for the ADS-B Feeder VM?\n\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
       "${STORAGE_MENU[@]}" 3>&1 1>&2 2>&3) || exit
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Getting URL for ADSB Feeder Disk Image"
+msg_info "Getting URL for ADS-B Feeder Disk Image"
 
 RELEASE=$(curl -s https://api.github.com/repos/dirkhh/adsb-feeder-image/releases/latest | grep -oP '"tag_name": "\K[^"]+')
 URL=https://github.com/dirkhh/adsb-feeder-image/releases/download/${RELEASE}/adsb-im-x86-64-vm-${RELEASE}-proxmox.tar.xz
@@ -267,8 +267,8 @@ esac
 DISK_VAR="vm-${VMID}-disk-0${DISK_EXT:-}"
 DISK_REF="${STORAGE}:${DISK_VAR:-}"
 
-msg_ok "Extracted ADSB Feeder Disk Image"
-msg_info "Creating ADSB Feeder VM (Patience) "
+msg_ok "Extracted ADS-B Feeder Disk Image"
+msg_info "Creating ADS-B Feeder VM (Patience) "
 qm create $VMID -tablet 0 -localtime 1 -cores $CORE_COUNT -memory $RAM_SIZE -name $HN \
   -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU \
   -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
@@ -278,14 +278,14 @@ qm set $VMID \
   -boot order=scsi0 \
   -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
-  # ADSB Feeder VM
+  # ADS-B Feeder VM
 
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/&#x2615;-Buy me a coffee-blue' /></a>
   </div>" >/dev/null
-msg_ok "ADSB Feeder VM ${CL}${BL}(${HN})"
+msg_ok "ADS-B Feeder VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
-  msg_info "Starting ADSB Feeder VM"
+  msg_info "Starting ADS-B Feeder VM"
   qm start $VMID
-  msg_ok "Started ADSB Feeder VM"
+  msg_ok "Started ADS-B Feeder VM"
 fi
 msg_ok "Completed Successfully!\n"
