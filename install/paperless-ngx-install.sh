@@ -13,15 +13,6 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Python3"
-$STD apt-get install -y --no-install-recommends \
-  python3 \
-  python3-pip \
-  python3-dev \
-  python3-setuptools \
-  python3-wheel
-msg_ok "Installed Python3"
-
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
   redis \
@@ -48,6 +39,15 @@ $STD apt-get install -y --no-install-recommends \
   sudo \
   mc
 msg_ok "Installed Dependencies"
+
+msg_info "Installing Python3 Dependencies"
+$STD apt-get install -y --no-install-recommends \
+  python3 \
+  python3-pip \
+  python3-dev \
+  python3-setuptools \
+  python3-wheel
+msg_ok "Installed Python3 Dependencies"
 
 msg_info "Installing OCR Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
