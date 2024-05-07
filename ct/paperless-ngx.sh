@@ -78,8 +78,8 @@ function update_script() {
     cp -r paperless-ngx/* /opt/paperless/
     cd /opt/paperless
     pip install -r requirements.txt
-    cd /opt/paperless/src
-    /usr/bin/python3 manage.py migrate
+    #cd /opt/paperless/src
+    #/usr/bin/python3 manage.py migrate
     msg_ok "Updated to ${RELEASE}"
 
     echo -e "Cleaning up"
