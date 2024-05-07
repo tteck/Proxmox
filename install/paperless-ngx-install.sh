@@ -97,13 +97,15 @@ $STD python3 -m nltk.downloader -d /usr/share/nltk_data all
 msg_ok "Installed Natural Language Toolkit"
 
 msg_info "Setting up PostgreSQL database"
-export LC_ALL=C.UTF-8
 DB_NAME=paperlessdb
 DB_USER=paperless
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
+$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO 'utf8';"
+$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET default_transaction_isolation TO 'read committed';"
+$STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET timezone TO 'UTC'"
 echo "" >>~/paperless.creds
 echo -e "Paperless-ngx Database User: \e[32m$DB_USER\e[0m" >>~/paperless.creds
 echo -e "Paperless-ngx Database Password: \e[32m$DB_PASS\e[0m" >>~/paperless.creds
