@@ -43,8 +43,6 @@ if [[ "$CTTYPE" == "0" ]]; then
   chgrp video /dev/dri
   chmod 755 /dev/dri
   chmod 660 /dev/dri/*
-  $STD adduser $(id -u -n) video
-  $STD adduser $(id -u -n) render
 fi
 msg_ok "Set Up Hardware Acceleration"
 
