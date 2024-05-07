@@ -14,7 +14,7 @@
 
 ### Changed
 
-- **pocketbase LXC**
+- **Pocketbase LXC**
   - NEW Script
 
 ## 2024-05-05
