@@ -175,7 +175,7 @@ function advanced_settings() {
       echo -e "${DGN}Using Interface MTU Size: ${BGN}$MTU1${CL}"
     fi
   fi
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start Mikrotik RouterOS CHR VM when completed?" 10 58); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "START VIRTUAL MACHINE" --yesno "Start ADS-B Feeder VM when completed?" 10 58); then
     echo -e "${DGN}Start ADS-B Feeder VM when completed: ${BGN}yes${CL}"
     START_VM="yes"
   else
