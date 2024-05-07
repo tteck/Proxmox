@@ -66,29 +66,29 @@ function update_script() {
     3>&1 1>&2 2>&3)
   header_info
   if [ "$UPD" == "1" ]; then
-    echo -e "Stopping all Paperless-ngx Services"
+    msg_info "Stopping all Paperless-ngx Services"
     systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
     msg_ok "Stopped all Paperless-ngx Services"
 
-    echo -e "Updating to ${RELEASE}"
+    msg_info "Updating to ${RELEASE}"
     cd ~
-    wget https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz
+    wget -q https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz
     tar -xf paperless-ngx-$RELEASE.tar.xz
     cp -r /opt/paperless/paperless.conf paperless-ngx/
     cp -r paperless-ngx/* /opt/paperless/
     cd /opt/paperless
-    pip install -r requirements.txt
-    #cd /opt/paperless/src
-    #/usr/bin/python3 manage.py migrate
+    pip install -r requirements.txt &>/dev/null
+    cd /opt/paperless/src
+    /usr/bin/python3 manage.py migrate &>/dev/null
     msg_ok "Updated to ${RELEASE}"
 
-    echo -e "Cleaning up"
+    msg_info "Cleaning up"
     cd ~
     rm paperless-ngx-$RELEASE.tar.xz
     rm -rf paperless-ngx
     msg_ok "Cleaned"
 
-    echo -e "Starting all Paperless-ngx Services"
+    msg_info "Starting all Paperless-ngx Services"
     systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
     sleep 1
     msg_ok "Started all Paperless-ngx Services"
