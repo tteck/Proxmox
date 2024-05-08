@@ -22,7 +22,7 @@ function update_container() {
   alpine) pct exec "$container" -- ash -c "apk update && apk upgrade" ;;
   archlinux) pct exec "$container" -- bash -c "pacman -Syyu --noconfirm" ;;
   fedora | rocky | centos | alma) pct exec "$container" -- bash -c "dnf -y update && dnf -y upgrade" ;;
-  ubuntu | debian | devuan) pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt list --upgradable && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" dist-upgrade -y" ;;
+  ubuntu | debian | devuan) pct exec "$container" -- bash -c "apt-get update 2>/dev/null | grep 'packages.*upgraded'; apt-get upgrade --dry-run && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" dist-upgrade -y" ;;
   esac
 }
 
