@@ -81,6 +81,7 @@ function update_script() {
       pip install -r requirements.txt &>/dev/null
       cd /opt/paperless/src
       /usr/bin/python3 manage.py migrate &>/dev/null
+      echo "${RELEASE}" >/opt/${APP}_version.txt
       msg_ok "Updated to ${RELEASE}"
 
       msg_info "Cleaning up"
