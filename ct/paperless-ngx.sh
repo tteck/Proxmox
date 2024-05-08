@@ -66,33 +66,37 @@ function update_script() {
     3>&1 1>&2 2>&3)
   header_info
   if [ "$UPD" == "1" ]; then
-    msg_info "Stopping all Paperless-ngx Services"
-    systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
-    msg_ok "Stopped all Paperless-ngx Services"
+    if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+      msg_info "Stopping all Paperless-ngx Services"
+      systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
+      msg_ok "Stopped all Paperless-ngx Services"
 
-    msg_info "Updating to ${RELEASE}"
-    cd ~
-    wget -q https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz
-    tar -xf paperless-ngx-$RELEASE.tar.xz
-    cp -r /opt/paperless/paperless.conf paperless-ngx/
-    cp -r paperless-ngx/* /opt/paperless/
-    cd /opt/paperless
-    pip install -r requirements.txt &>/dev/null
-    cd /opt/paperless/src
-    /usr/bin/python3 manage.py migrate &>/dev/null
-    msg_ok "Updated to ${RELEASE}"
+      msg_info "Updating to ${RELEASE}"
+      cd ~
+      wget -q https://github.com/paperless-ngx/paperless-ngx/releases/download/$RELEASE/paperless-ngx-$RELEASE.tar.xz
+      tar -xf paperless-ngx-$RELEASE.tar.xz
+      cp -r /opt/paperless/paperless.conf paperless-ngx/
+      cp -r paperless-ngx/* /opt/paperless/
+      cd /opt/paperless
+      pip install -r requirements.txt &>/dev/null
+      cd /opt/paperless/src
+      /usr/bin/python3 manage.py migrate &>/dev/null
+      msg_ok "Updated to ${RELEASE}"
 
-    msg_info "Cleaning up"
-    cd ~
-    rm paperless-ngx-$RELEASE.tar.xz
-    rm -rf paperless-ngx
-    msg_ok "Cleaned"
+      msg_info "Cleaning up"
+      cd ~
+      rm paperless-ngx-$RELEASE.tar.xz
+      rm -rf paperless-ngx
+      msg_ok "Cleaned"
 
-    msg_info "Starting all Paperless-ngx Services"
-    systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
-    sleep 1
-    msg_ok "Started all Paperless-ngx Services"
-    msg_ok "Updated Successfully!\n"
+      msg_info "Starting all Paperless-ngx Services"
+      systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
+      sleep 1
+      msg_ok "Started all Paperless-ngx Services"
+      msg_ok "Updated Successfully!\n"
+    else
+      msg_ok "No update required. ${APP} is already at ${RELEASE}"
+    fi
     exit
   fi
   if [ "$UPD" == "2" ]; then
