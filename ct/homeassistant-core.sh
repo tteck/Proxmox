@@ -22,8 +22,8 @@ APP="Home Assistant-Core"
 var_disk="8"
 var_cpu="2"
 var_ram="1024"
-var_os="debian"
-var_version="12"
+var_os="ubuntu"
+var_version="24.04"
 variables
 color
 catch_errors
