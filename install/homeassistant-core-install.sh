@@ -74,6 +74,7 @@ cd /srv/homeassistant
 python3 -m venv .
 source bin/activate
 $STD pip install --upgrade pip
+$STD pip install webrtcvad
 $STD python3 -m pip install wheel
 $STD pip install homeassistant
 $STD pip install mysqlclient
