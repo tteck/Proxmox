@@ -66,7 +66,7 @@ function update_script() {
     3>&1 1>&2 2>&3)
   header_info
   if [ "$UPD" == "1" ]; then
-    if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+    if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt 2>/dev/null ]]; then
       msg_info "Stopping all Paperless-ngx Services"
       systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
       msg_ok "Stopped all Paperless-ngx Services"
