@@ -16,6 +16,8 @@
 
 - **Kernel Pin**
   - NEW Script
+- **Home Assistant Core LXC**
+  - Ubuntu 24.04 ONLY
 
 ## 2024-05-07
 
