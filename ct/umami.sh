@@ -19,9 +19,9 @@ EOF
 header_info
 echo -e "Loading..."
 APP="umami"
-var_disk="8"
-var_cpu="1"
-var_ram="512"
+var_disk="12"
+var_cpu="2"
+var_ram="1024"
 var_os="debian"
 var_version="12"
 variables
