@@ -8,12 +8,12 @@
 function header_info {
   clear
   cat <<"EOF"
-    __ __      ___    __    _                     ___   ____ ___  __ __   ___   _    ____  ___
-   / //_/___ _/ (_)  / /   (_)___  __  ___  __   |__ \ / __ \__ \/ // /  <  /  | |  / /  |/  /
-  / ,< / __ `/ / /  / /   / / __ \/ / / / |/_/   __/ // / / /_/ / // /_  / /   | | / / /|_/ / 
- / /| / /_/ / / /  / /___/ / / / / /_/ />  <    / __// /_/ / __/__  __/ / /    | |/ / /  / /  
-/_/ |_\__,_/_/_/  /_____/_/_/ /_/\__,_/_/|_|   /____/\____/____/ /_/ (_)_/     |___/_/  /_/   
-                                                                                              
+    __ __      ___    __    _                     _    ____  ___
+   / //_/___ _/ (_)  / /   (_)___  __  ___  __   | |  / /  |/  /
+  / ,< / __ `/ / /  / /   / / __ \/ / / / |/_/   | | / / /|_/ / 
+ / /| / /_/ / / /  / /___/ / / / / /_/ />  <     | |/ / /  / /  
+/_/ |_\__,_/_/_/  /_____/_/_/ /_/\__,_/_/|_|     |___/_/  /_/   
+                                                                
 
 EOF
 }
@@ -61,7 +61,7 @@ function cleanup() {
 
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
-if whiptail --backtitle "Proxmox VE Helper Scripts" --title "Kali Linux 2024.1 VM" --yesno "This will create a New Kali Linux VM. Proceed?" 10 58; then
+if whiptail --backtitle "Proxmox VE Helper Scripts" --title "Kali Linux VM" --yesno "This will create a New Kali Linux VM. Proceed?" 10 58; then
   :
 else
   header_info && echo -e "⚠ User exited script \n" && exit
@@ -145,7 +145,7 @@ function default_settings() {
   MTU=""
   START_VM="no"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
-  echo -e "${DGN}Using Machine Type: ${BGN}q35${CL}"
+  echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
   echo -e "${DGN}Using Disk Cache: ${BGN}None${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
   echo -e "${DGN}Using CPU Model: ${BGN}KVM64${CL}"
@@ -156,7 +156,7 @@ function default_settings() {
   echo -e "${DGN}Using VLAN: ${BGN}Default${CL}"
   echo -e "${DGN}Using Interface MTU Size: ${BGN}Default${CL}"
   echo -e "${DGN}Start VM when completed: ${BGN}no${CL}"
-  echo -e "${BL}Creating a Kali Linux 2024.1 VM using the above default settings${CL}"
+  echo -e "${BL}Creating a Kali Linux VM using the above default settings${CL}"
 }
 
 function advanced_settings() {
@@ -177,9 +177,22 @@ function advanced_settings() {
     fi
   done
 
-echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-FORMAT=""
-MACHINE=" -machine q35"
+  if MACH=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
+    "i440fx" "Machine i440fx" ON \
+    "q35" "Machine q35" OFF \
+    3>&1 1>&2 2>&3); then
+    if [ $MACH = q35 ]; then
+      echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
+      FORMAT=""
+      MACHINE=" -machine q35"
+    else
+      echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
+      FORMAT=",efitype=4m"
+      MACHINE=""
+    fi
+  else
+    exit-script
+  fi
 
   if DISK_CACHE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
     "0" "None (Default)" ON \
@@ -302,8 +315,8 @@ MACHINE=" -machine q35"
     START_VM="no"
   fi
 
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create a Kali Linux 2024.1 VM?" --no-button Do-Over 10 58); then
-    echo -e "${RD}Creating an Kali Linux 2024.1 VM using the above advanced settings${CL}"
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create a Kali Linux VM?" --no-button Do-Over 10 58); then
+    echo -e "${RD}Creating a Kali Linux VM using the above advanced settings${CL}"
   else
     header_info
     echo -e "${RD}Using Advanced Settings${CL}"
@@ -321,6 +334,26 @@ function start_script() {
     echo -e "${RD}Using Advanced Settings${CL}"
     advanced_settings
   fi
+}
+
+getImageURL() {
+    local current_year=$(date +'%Y')
+    local found=false
+
+    for ((i=52; i>=1; i--)); do
+        URL="https://cdimage.kali.org/kali-weekly/kali-linux-$current_year-W$i-vmware-amd64.7z"
+        if curl --output /dev/null --silent --head --fail "$URL"; then
+            found=true
+            break
+        fi
+    done
+
+    if [ "$found" = false ]; then
+        msg_error "Couldn't find a valid URL for a Kali Linux Image"
+        echo -e "\nExiting..."
+        sleep 2
+        exit
+    fi
 }
 
 check_root
@@ -357,14 +390,31 @@ else
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
-msg_info "Retrieving the URL for the Kali Linux 2024.1 Disk Image"
-URL=https://cdimage.kali.org/kali-2024.1/kali-linux-2024.1-installer-amd64.iso
-sleep 2
+msg_info "Retrieving the URL for the latest Kali Linux Disk Image"
+getImageURL
 msg_ok "${CL}${BL}${URL}${CL}"
 wget -q --show-progress $URL
 echo -en "\e[1A\e[0K"
-FILE=$(basename $URL)
-msg_ok "Downloaded ${CL}${BL}${FILE}${CL}"
+FILE=$(basename $URL .7z).img
+msg_ok "Downloaded ${CL}${BL}$(basename $URL)${CL}"
+
+msg_info "Installing dependencies"
+apt install -y libguestfs-tools p7zip-full &>/dev/null
+msg_ok "Installed dependencies"
+
+msg_info "Extracting archive $(basename $URL), patience"
+7z e $(basename $URL) &>/dev/null
+msg_ok "Extracted ${CL}${BL}$(basename $URL)${CL}"
+
+msg_info "Modifying ${FILE}, patience"
+qemu-img convert -f vmdk -O raw $(basename $URL .7z).vmdk ${FILE}
+virt-customize -qa ${FILE} --install cloud-init &>/dev/null
+virt-customize -qa ${FILE} --install qemu-guest-agent &>/dev/null
+msg_ok "Modified ${CL}${BL}${FILE}${CL}"
+
+msg_info "Updating ${FILE}, a lot of patience"
+virt-customize -xqa ${FILE} --update &>/dev/null
+msg_ok "Finished building ${CL}${BL}${FILE}${CL}"
 
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
 case $STORAGE_TYPE in
@@ -388,8 +438,8 @@ for i in {0,1}; do
   eval DISK${i}_REF=${STORAGE}:${DISK_REF:-}${!disk}
 done
 
-msg_info "Creating a Kali Linux 2024.1 VM"
-qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} -cores $CORE_COUNT -memory $RAM_SIZE \
+msg_info "Creating a Kali Linux VM"
+qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios seabios${CPU_TYPE} -cores $CORE_COUNT -memory $RAM_SIZE \
   -name $HN -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
@@ -401,15 +451,15 @@ qm set $VMID \
   -serial0 socket \
   -description "<div align='center'><a href='https://Helper-Scripts.com'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
-  # Kali Linux 2024.1 VM
+  # Kali Linux VM
 
   <a href='https://ko-fi.com/D1D7EP4GF'><img src='https://img.shields.io/badge/&#x2615;-Buy me a coffee-blue' /></a>
   </div>" >/dev/null
-msg_ok "Created a Kali Linux 2024.1 VM ${CL}${BL}(${HN})"
+msg_ok "Created a Kali Linux VM ${CL}${BL}(${HN})"
 if [ "$START_VM" == "yes" ]; then
-  msg_info "Starting Kali Linux 2024.1 VM"
+  msg_info "Starting Kali Linux VM"
   qm start $VMID
-  msg_ok "Started Kali Linux 2024.1 VM"
+  msg_ok "Started Kali Linux VM"
 fi
 msg_ok "Completed Successfully!\n"
 echo -e "Setup Cloud-Init before starting \n
