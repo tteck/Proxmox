@@ -145,7 +145,7 @@ function default_settings() {
   MTU=""
   START_VM="no"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
-  echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
+  echo -e "${DGN}Using Machine Type: ${BGN}q35${CL}"
   echo -e "${DGN}Using Disk Cache: ${BGN}None${CL}"
   echo -e "${DGN}Using Hostname: ${BGN}${HN}${CL}"
   echo -e "${DGN}Using CPU Model: ${BGN}KVM64${CL}"
@@ -177,22 +177,9 @@ function advanced_settings() {
     fi
   done
 
-  if MACH=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "MACHINE TYPE" --radiolist --cancel-button Exit-Script "Choose Type" 10 58 2 \
-    "i440fx" "Machine i440fx" ON \
-    "q35" "Machine q35" OFF \
-    3>&1 1>&2 2>&3); then
-    if [ $MACH = q35 ]; then
-      echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-      FORMAT=""
-      MACHINE=" -machine q35"
-    else
-      echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
-      FORMAT=",efitype=4m"
-      MACHINE=""
-    fi
-  else
-    exit-script
-  fi
+echo -e "${DGN}Using Machine Type: ${BGN}$MACH${CL}"
+FORMAT=""
+MACHINE=" -machine q35"
 
   if DISK_CACHE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
     "0" "None (Default)" ON \
