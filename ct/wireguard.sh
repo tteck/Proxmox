@@ -60,7 +60,10 @@ UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "SUPPORT" --radio
   3>&1 1>&2 2>&3)
 header_info
 if [ "$UPD" == "1" ]; then
-msg_error "There is currently no update path available."
+msg_info "Updating ${APP} LXC"
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/null
+msg_ok "Updated ${APP} LXC"
 exit
 fi
 if [ "$UPD" == "2" ]; then
