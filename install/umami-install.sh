@@ -60,7 +60,7 @@ $STD bun run build
 msg_ok "Installed Umami"
 
 msg_info "Creating Service"
-cat <<EOF >/etc/systemd/system/umami.service
+cat <<EOF >/root/.bun/bin/bun
 echo "[Unit]
 Description=umami
 
