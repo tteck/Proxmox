@@ -26,6 +26,7 @@ msg_info "Setting up Node.js Repository"
 mkdir -p /etc/apt/keyrings
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
+curl -fsSL https://bun.sh/install | bash
 msg_ok "Set up Node.js Repository"
 
 msg_info "Installing Node.js"
@@ -52,9 +53,9 @@ msg_ok "Set up postgresql"
 msg_info "Installing Umami (Patience)"
 git clone -q https://github.com/umami-software/umami.git /opt/umami
 cd /opt/umami
-$STD npm install
+$STD bun install
 echo -e "DATABASE_URL=postgresql://$DB_USER:$DB_PASS@localhost:5432/$DB_NAME" >>/opt/umami/.env
-$STD npm run build
+$STD bun run build
 msg_ok "Installed Umami"
 
 msg_info "Creating Service"
@@ -67,7 +68,7 @@ Type=simple
 Restart=always
 User=root
 WorkingDirectory=/opt/umami
-ExecStart=/usr/bin/npm run start
+ExecStart=/usr/bin/bun run start
 
 [Install]
 WantedBy=multi-user.target
