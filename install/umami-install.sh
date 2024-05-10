@@ -31,7 +31,6 @@ msg_ok "Set up Node.js Repository"
 msg_info "Installing Node.js"
 $STD apt-get update
 $STD apt-get install -y nodejs
-$STD npm install -g yarn
 msg_ok "Installed Node.js"
 
 msg_info "Setting up postgresql"
@@ -53,9 +52,9 @@ msg_ok "Set up postgresql"
 msg_info "Installing Umami (Patience)"
 git clone -q https://github.com/umami-software/umami.git /opt/umami
 cd /opt/umami
-$STD yarn install
+$STD npm install
 echo -e "DATABASE_URL=postgresql://$DB_USER:$DB_PASS@localhost:5432/$DB_NAME" >>/opt/umami/.env
-$STD yarn run build
+$STD npm run build
 msg_ok "Installed Umami"
 
 msg_info "Creating Service"
@@ -68,7 +67,7 @@ Type=simple
 Restart=always
 User=root
 WorkingDirectory=/opt/umami
-ExecStart=/usr/bin/yarn run start
+ExecStart=/usr/bin/npm run start
 
 [Install]
 WantedBy=multi-user.target
