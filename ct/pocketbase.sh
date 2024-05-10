@@ -22,8 +22,8 @@ APP="Pocketbase"
 var_disk="8"
 var_cpu="1"
 var_ram="512"
-var_os="ubuntu"
-var_version="22.04"
+var_os="debian"
+var_version="12"
 variables
 color
 catch_errors
