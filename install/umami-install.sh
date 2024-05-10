@@ -60,7 +60,7 @@ $STD bun run build
 msg_ok "Installed Umami"
 
 msg_info "Creating Service"
-cat <<EOF >/root/.bun/bin/bun
+cat <<EOF >/etc/systemd/system/umami.service
 echo "[Unit]
 Description=umami
 
@@ -69,7 +69,7 @@ Type=simple
 Restart=always
 User=root
 WorkingDirectory=/opt/umami
-ExecStart=/usr/bin/bun run start
+ExecStart=/root/.bun/bin/bun run start
 
 [Install]
 WantedBy=multi-user.target
