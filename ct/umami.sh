@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="umami"
+APP="Umami"
 var_disk="12"
 var_cpu="2"
 var_ram="2048"
