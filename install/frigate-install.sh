@@ -45,8 +45,8 @@ if [[ "$CTTYPE" == "0" ]]; then
   chmod 660 /dev/dri/*
 fi
 msg_ok "Set Up Hardware Acceleration"
-RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | sed -n 's/.*"tag_name": "\(.*\)",/\1/p')
-#RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | grep -o '"tag_name": *"[^"]*"' | cut -d '"' -f 4)
+#RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | sed -n 's/.*"tag_name": "\(.*\)",/\1/p')
+RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | grep -o '"tag_name": *"[^"]*"' | cut -d '"' -f 4)
 msg_info "Installing Frigate $RELEASE (Perseverance)"
 cd ~
 mkdir -p /opt/frigate/models
