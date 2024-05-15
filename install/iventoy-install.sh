@@ -19,9 +19,10 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing iVentoy"
+RELEASE=$(curl -s https://api.github.com/repos/ventoy/pxe/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+msg_info "Installing iVentoy v${RELEASE}"
 mkdir -p /opt/iventoy/
-wget -q $(curl -s https://api.github.com/repos/ventoy/pxe/releases/latest | grep download | grep linux-free | cut -d\" -f4)      
+wget -q https://github.com/ventoy/PXE/releases/download/v${RELEASE}/iventoy-${RELEASE}-linux-free.tar.gz
 tar -C /tmp -xzf iventoy*.tar.gz
 mv /tmp/iventoy*/* /opt/iventoy/
 rm -rf iventoy*.tar.gz
