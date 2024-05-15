@@ -25,13 +25,11 @@ wget -q $(curl -s https://api.github.com/repos/ventoy/pxe/releases/latest | grep
 tar -C /tmp -xzf iventoy*.tar.gz
 mv /tmp/iventoy*/* /opt/iventoy/
 rm -rf iventoy*.tar.gz
-
-
 msg_ok "Installed iVentoy"
 
 msg_info "Creating Service"
 service_path="/etc/systemd/system/iventoy.service"
-echo "# /etc/systemd/system/iventoy.service
+cat <<EOF >/etc/systemd/system/iventoy.service
 [Unit]
 Description       =iVentoy PXE Booter
 Documentation     =https://www.iventoy.com
@@ -46,7 +44,8 @@ ExecStart         =sh ./iventoy.sh -R start
 WorkingDirectory  =/opt/iventoy
 Restart           =on-failure
 [Install]
-WantedBy=multi-user.target" >$service_path
+WantedBy=multi-user.target
+EOF
 systemctl enable --now iventoy.service
 msg_ok "Created Service"
 
