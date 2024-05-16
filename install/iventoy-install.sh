@@ -46,13 +46,13 @@ Restart           =on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable --now iventoy.service
+systemctl enable -q --now iventoy.service
 msg_ok "Created Service"
 
 motd_ssh
 customize
 
 msg_info "Cleaning up"
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"
