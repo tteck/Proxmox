@@ -52,6 +52,12 @@ function default_settings() {
   echo_default
 }
 
+function update_script() {
+if [[ ! -d /opt/iventoy ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_error "There is currently no update path available."
+exit
+}
+
 start
 build_container
 description
