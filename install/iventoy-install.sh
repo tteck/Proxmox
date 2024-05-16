@@ -29,7 +29,6 @@ rm -rf iventoy*.tar.gz
 msg_ok "Installed iVentoy"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/iventoy.service"
 cat <<EOF >/etc/systemd/system/iventoy.service
 [Unit]
 Description       =iVentoy PXE Booter
