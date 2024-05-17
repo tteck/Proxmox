@@ -124,7 +124,7 @@ if ! command -v pveversion >/dev/null 2>&1; then
   exit
 fi
 
-if ! pveversion | grep -Eq "pve-manager/(7\.4-(13|14|15|16|17))"; then
+if ! pveversion | grep -Eq "pve-manager/(7\.4-(1[3-9]|[2-9]\d))"; then
   header_info
   msg_error "This version of Proxmox Virtual Environment is not supported"
   echo -e "  PVE Version 7.4-13 or higher is required."
