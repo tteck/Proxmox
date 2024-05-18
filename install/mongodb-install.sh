@@ -25,7 +25,7 @@ wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | gpg --dearmor >/us
 echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] http://repo.mongodb.org/apt/debian $(grep '^VERSION_CODENAME=' /etc/os-release | cut -d'=' -f2)/mongodb-org/7.0 main" >/etc/apt/sources.list.d/mongodb-org-7.0.list
 $STD apt-get update
 $STD apt-get install -y mongodb-org
-sed -i 's/bindIp: 127.0.0.1/bindIp 0.0.0.0/' /etc/mongod.conf
+sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
 systemctl enable -q --now mongod.service
 msg_ok "Installed MongoDB"
 
