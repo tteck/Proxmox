@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="MongoDB"
 var_disk="4"
 var_cpu="1"
-var_ram="1024"
+var_ram="512"
 var_os="debian"
 var_version="12"
 variables
