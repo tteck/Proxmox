@@ -24,7 +24,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Redis"
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" >/etc/apt/sources.list.d/redis.list
 $STD apt-get update
 $STD apt-get install -y redis
 sed -i 's/^bind .*/bind 0.0.0.0/' /etc/redis/redis.conf
