@@ -59,8 +59,14 @@ lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
 EOF
 header_info
 msg "Installing Tailscale..."
-lxc-attach -n $CTID -- bash -c "$(curl -fsSL https://tailscale.com/install.sh)" &>/dev/null || exit
-msg "Installed Tailscale"
-sleep 2
-msg "\e[1;32m ✔ Completed Successfully!\e[0m"
+pct exec "$CTID" -- bash -c '
+ID=$(grep "^ID=" /etc/os-release | cut -d"=" -f2)
+VER=$(grep "^VERSION_CODENAME=" /etc/os-release | cut -d"=" -f2)
+wget -qO- https://pkgs.tailscale.com/stable/$ID/$VER.noarmor.gpg >/usr/share/keyrings/tailscale-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/$ID $VER main" >/etc/apt/sources.list.d/tailscale.list
+apt-get update &>/dev/null
+apt-get install -y tailscale &>/dev/null
+' || exit
+msg "\e[1;32m ✔ Installed Tailscale\e[0m"
+
 msg "\e[1;31m Reboot ${CTID} LXC to apply the changes, then run tailscale up in the LXC console\e[0m"
