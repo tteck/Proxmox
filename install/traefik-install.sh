@@ -48,8 +48,6 @@ entryPoints:
   websecure:
     address: ':443'
     http:
-      middlewares:
-        - crowdsec-bouncer@file
       tls:
         certResolver: letsencrypt
   traefik:
