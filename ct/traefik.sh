@@ -73,5 +73,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} dashboard should be reachable by going to the following URL.
+echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8080${CL} \n"
