@@ -14,7 +14,7 @@
 
 ### Changed
 
-- **Netbird**
+- **NetBird**
   - NEW Script
 - **Tailscale**
   - Refactor Code
