@@ -60,7 +60,7 @@ msg_info "Updating $APP LXC"
 if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
   wget -q https://github.com/traefik/traefik/releases/download/v${RELEASE}/traefik_v${RELEASE}_linux_amd64.tar.gz
   tar -C /tmp -xzf traefik*.tar.gz
-  mv /tmp/traefik*/traefik /usr/bin/
+  mv /tmp/traefik /usr/bin/
   rm -rf traefik*.tar.gz
   msg_ok "Updated $APP LXC"
 else
