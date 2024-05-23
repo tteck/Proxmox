@@ -77,7 +77,6 @@ function update_script() {
     1)
       apk update && apk upgrade
       curl -s -L "$var_recyclarr_url" | tar xJ --overwrite -C /usr/local/bin
-
       exit
       ;;
     esac
