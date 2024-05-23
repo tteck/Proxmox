@@ -39,6 +39,7 @@ Type=simple
 WorkingDirectory=/opt/Jackett
 ExecStart=/bin/sh /opt/Jackett/jackett_launcher.sh
 TimeoutStopSec=30
+Environment="DisableRootWarning=true"
 [Install]
 WantedBy=multi-user.target
 EOF
