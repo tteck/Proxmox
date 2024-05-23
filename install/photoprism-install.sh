@@ -26,6 +26,7 @@ $STD apt-get install -y libtiff-dev
 $STD apt-get install -y imagemagick
 $STD apt-get install -y darktable
 $STD apt-get install -y rawtherapee
+$STD apt-get install -y libvips42
 
 echo 'export PATH=/usr/local:$PATH' >>~/.bashrc
 export PATH=/usr/local:$PATH
