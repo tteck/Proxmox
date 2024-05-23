@@ -31,12 +31,12 @@ var_recyclarr_cron_file="/etc/periodic/daily/recyclarr"
 msg_info "Installing Alpine-Recyclarr"
 mkdir -p "$var_app_dir"
 chmod 775 "$var_app_dir"
-wget "$var_recyclarr_url" -O - | sudo tar xJ --overwrite -C "$var_app_file"
+wget "$var_recyclarr_url" -O - | tar xJ --overwrite -C "$var_app_dir"
 msg_ok "Installed Alpine-Recyclarr"
 
 msg_info "Creating Alpine-Recyclarr Config at $var_config_file"
 chmod +x "$var_app_file"
-export PATH="\${PATH}:$var_app_dir"
+export PATH="${PATH}:$var_app_dir"
 recyclarr config create --path "$var_config_file"
 msg_info "Created Alpine-Recyclarr Config at $var_config_file"
 
@@ -48,7 +48,7 @@ echo "-------------------------------------------------------------"
 echo " Executing Tasks: $(date)"
 echo "-------------------------------------------------------------"
 export PATH="\${PATH}:$var_app_dir"
-export RECYCLARR_APP_DATA=$var_config_file
+export RECYCLARR_APP_DATA="$var_app_dir"
 export COMPlus_EnableDiagnostics=0
 
 recyclarr sync

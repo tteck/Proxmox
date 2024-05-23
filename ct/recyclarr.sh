@@ -13,9 +13,7 @@ function header_info {
   / /_/ / _ \/ ___/ / / / ___/ / __ `/ ___/ ___/
  / _, _/  __/ /__/ /_/ / /__/ / /_/ / /  / /    
 /_/ |_|\___/\___/\__, /\___/_/\__,_/_/  /_/     
-                /____/                          
- Alpine                                                 
-
+                /____/                             
 EOF
 }
 header_info
@@ -28,6 +26,7 @@ var_os="debian"
 var_version="12"
 var_recyclarr_url="https://github.com/recyclarr/recyclarr/releases/latest/download/recyclarr-linux-x64.tar.xz"
 var_app_dir="/opt/recyclarr"
+var_app_file="$var_app_dir/recyclarr"
 var_config_file="$var_app_dir/recyclarr.yml"
 var_recyclarr_cron_file="/etc/periodic/daily/recyclarr"
 variables
@@ -60,7 +59,7 @@ function default_settings() {
 
 function update_script() {
   if [[ ! -d "$var_app_dir" ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  wget "$var_recyclarr_url" -O - | sudo tar xJ --overwrite -C "$var_app_dir/recyclarr"
+  wget "$var_recyclarr_url" -O - | tar xJ --overwrite -C "$var_app_dir"
   exit
 }
 
