@@ -28,7 +28,7 @@ var_recyclarr_url="https://github.com/recyclarr/recyclarr/releases/latest/downlo
 var_app_dir="/opt/recyclarr"
 var_app_file="$var_app_dir/recyclarr"
 var_config_file="$var_app_dir/recyclarr.yml"
-var_recyclarr_cron_file="/etc/periodic/daily/recyclarr"
+var_recyclarr_cron_file="$var_app_dir/recyclarr.cron"
 variables
 color
 catch_errors

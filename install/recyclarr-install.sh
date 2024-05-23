@@ -26,7 +26,7 @@ var_recyclarr_url="https://github.com/recyclarr/recyclarr/releases/latest/downlo
 var_app_dir="/opt/recyclarr"
 var_app_file="$var_app_dir/recyclarr"
 var_config_file="$var_app_dir/recyclarr.yml"
-var_recyclarr_cron_file="/etc/periodic/daily/recyclarr"
+var_recyclarr_cron_file="$var_app_dir/recyclarr.cron"
 
 msg_info "Installing Alpine-Recyclarr"
 mkdir -p "$var_app_dir"
@@ -34,13 +34,11 @@ chmod 775 "$var_app_dir"
 wget "$var_recyclarr_url" -O - | tar xJ --overwrite -C "$var_app_dir"
 msg_ok "Installed Alpine-Recyclarr"
 
-msg_info "Creating Alpine-Recyclarr Config at $var_config_file"
+msg_info "Configuring Alpine-Recyclarr"
 chmod +x "$var_app_file"
 export PATH="${PATH}:$var_app_dir"
 recyclarr config create --path "$var_config_file"
-msg_info "Created Alpine-Recyclarr Config at $var_config_file"
 
-msg_info "Scheduling Alpine-Recyclarr in $var_recyclarr_cron_file"
 cat <<EOF >$var_recyclarr_cron_file
 #!/usr/bin/env bash
 echo
@@ -53,7 +51,12 @@ export COMPlus_EnableDiagnostics=0
 
 recyclarr sync
 EOF
-msg_info "Scheduled Alpine-Recyclarr in $var_recyclarr_cron_file"
+chmod +x "$var_recyclarr_cron_file"
+msg_info "Configured Alpine-Recyclarr"
+
+msg_info "Scheduling Alpine-Recyclarr with Crontab"
+echo "1 6     * * *   root    /opt/recyclarr/recyclarr.cron" >> /etc/crontab
+msg_info "Scheduled Alpine-Recyclarr with Crontab"
 
 motd_ssh
 customize
