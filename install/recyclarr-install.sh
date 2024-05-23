@@ -52,11 +52,11 @@ export COMPlus_EnableDiagnostics=0
 recyclarr sync
 EOF
 chmod +x "$var_recyclarr_cron_file"
-msg_info "Configured Alpine-Recyclarr"
+msg_ok "Configured Alpine-Recyclarr"
 
 msg_info "Scheduling Alpine-Recyclarr with Crontab"
 echo "1 6     * * *   root    $var_recyclarr_cron_file" >> /etc/crontab
-msg_info "Scheduled Alpine-Recyclarr with Crontab"
+msg_ok "Scheduled Alpine-Recyclarr with Crontab"
 
 motd_ssh
 customize
