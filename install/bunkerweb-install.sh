@@ -32,7 +32,7 @@ msg_ok "Installed Nginx v1.20.0"
 
 msg_info "Installing BunkerWeb v1.5.7"
 export UI_WIZARD=1
-$STD curl -sSL https://packagecloud.io/install/repositories/bunkerity/bunkerweb/script.deb.sh | bash
+curl -sSL https://packagecloud.io/install/repositories/bunkerity/bunkerweb/script.deb.sh | bash &>/dev/null
 $STD apt-get install -y bunkerweb=1.5.7
 #$STD apt-mark hold nginx bunkerweb
 msg_ok "Installed BunkerWeb v1.5.7"
