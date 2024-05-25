@@ -42,7 +42,7 @@ msg_ok "Cloned Linkwarden Repository"
 msg_info "Setting up PostgreSQL DB"
 DB_NAME=linkwardendb
 DB_USER=linkwarden
-DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+DB_PASS="$(openssl rand -base64 18 | tr -d '/' | cut -c1-13)"
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER TEMPLATE template0;"
 
