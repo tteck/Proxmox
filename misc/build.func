@@ -111,6 +111,7 @@ pve_check() {
 arch_check() {
   if [ "$(dpkg --print-architecture)" != "amd64" ]; then
     echo -e "\n ${CROSS} This script will not work with PiMox! \n"
+    echo -e "\n Visit https://github.com/asylumexp/Proxmox for ARM64 support. \n"
     echo -e "Exiting..."
     sleep 2
     exit
