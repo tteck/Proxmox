@@ -21,10 +21,11 @@ $STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Notifiarr"
-groupadd notifiarr &>/dev/null
-useradd -g notifiarr notifiarr &>/dev/null
+$STD groupadd notifiarr
+$STD useradd -g notifiarr notifiarr
 wget -qO- https://packagecloud.io/golift/pkgs/gpgkey | gpg --dearmor >/usr/share/keyrings/golift-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/golift-archive-keyring.gpg] https://packagecloud.io/golift/pkgs/ubuntu focal main" >/etc/apt/sources.list.d/golift.list
+$STD apt-get update
 $STD apt-get install -y notifiarr
 msg_ok "Installed Notifiarr"
 
