@@ -133,15 +133,15 @@ cat <<EOF >/etc/systemd/system/forgejo.service
 Description=Forgejo
 After=syslog.target
 After=network.target
-$(if [ "$DB_CHOICE" == "2" ]; then
+$(if [[ -n "$DB_CHOICE" && "$DB_CHOICE" == "PostgreSQL" ]]; then
 echo -e "Wants=postgresql.service"
 echo -e "After=postgresql.service"
 fi)
-$(if [ "$DB_CHOICE" == "3" ]; then
+$(if [[ -n "$DB_CHOICE" && "$DB_CHOICE" == "MySQL" ]]; then
 echo -e "Wants=mysql.service"
 echo -e "After=mysql.service"
 fi)
-$(if [ "$DB_CHOICE" == "4" ]; then
+$(if [[ -n "$DB_CHOICE" && "$DB_CHOICE" == "MariaDB" ]]; then
 echo -e "Wants=mariadb.service"
 echo -e "After=mariadb.service"
 fi)
