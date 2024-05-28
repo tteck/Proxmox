@@ -49,6 +49,7 @@ DB_CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DATABASE" 
     "2" "PostgreSQL " OFF \
     "3" "MySQL" OFF \
     "4" "MariaDB" OFF \
+    --separate-output \
     3>&1 1>&2 2>&3)
 if [ "$DB_CHOICE" == "1" ]; then
   msg_info "SQLite will be setup automatically by Forgejo."
