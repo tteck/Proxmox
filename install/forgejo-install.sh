@@ -41,7 +41,7 @@ msg_info "Setting up database"
 DB_NAME=forgejodb
 DB_USER=forgejo
 DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DATABASE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
+DB_CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DATABASE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
     "1" "SQLite" ON \
     "2" "PostgreSQL " OFF \
     "3" "MySQL" OFF \
