@@ -52,7 +52,7 @@ if [ "$DB_CHOICE" == "1" ]; then
 fi
 if [ "$DB_CHOICE" == "2" ]; then
   msg_info "Setting up PostgreSQL"
-  $STD apt-get install postgresql
+  $STD apt-get install -y postgresql
   echo "" >>~/forgejo.creds
   echo -e "Forgejo PostgresQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
   echo -e "Forgejo PostgresQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
@@ -76,7 +76,7 @@ EOL
 fi
 if [ "$DB_CHOICE" == "3" ]; then
   msg_info "Setting up MySQL"
-  $STD apt-get install mysql-server
+  $STD apt-get install -y mysql-server
   ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
   echo "" >>~/forgejo.creds
   echo -e "MySQL Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
@@ -91,7 +91,7 @@ if [ "$DB_CHOICE" == "3" ]; then
 fi
 if [ "$DB_CHOICE" == "4" ]; then
   msg_info "Setting up MariaDB"
-  $STD apt-get install mariadb-server
+  $STD apt-get install -y mariadb-server
   ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
   echo "" >>~/forgejo.creds
   echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
