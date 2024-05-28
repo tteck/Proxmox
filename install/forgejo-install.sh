@@ -30,7 +30,7 @@ ln -sf /opt/forgejo/forgejo-$RELEASE-linux-amd64 /usr/local/bin/forgejo
 msg_ok "Installed Forgejo"
 
 msg_info "Setting up Forgejo"
-adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git  git
+$STD adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git  git
 mkdir /var/lib/forgejo
 chown git:git /var/lib/forgejo && chmod 750 /var/lib/forgejo
 mkdir /etc/forgejo
