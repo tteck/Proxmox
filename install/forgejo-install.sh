@@ -41,78 +41,80 @@ echo -e "Forgejo data directory: \e[32m/var/lib/forgejo\e[0m" >>~/forgejo.creds
 msg_info "Setup Forgejo"
 
 msg_info "Setting up database"
-DB_NAME=forgejodb
-DB_USER=forgejo
-DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-DB_CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DATABASE" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
-    "1" "SQLite" ON \
-    "2" "PostgreSQL " OFF \
-    "3" "MySQL" OFF \
-    "4" "MariaDB" OFF \
-    --separate-output \
-    3>&1 1>&2 2>&3)
-if [ "$DB_CHOICE" == "1" ]; then
-  msg_info "SQLite will be setup automatically by Forgejo."
-fi
-if [ "$DB_CHOICE" == "2" ]; then
-  msg_info "Setting up PostgreSQL"
-  $STD apt-get install -y postgresql
-  echo "" >>~/forgejo.creds
-  echo -e "Database Type: \e[32mPostgresQL\e[0m" >>~/forgejo.creds
-  echo -e "PostgresQL Database Host: \e[32m127.0.0.1:5432\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo PostgresQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo PostgresQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo PostgresQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-  $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
-  $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER ENCODING 'UTF8' TEMPLATE template0;"
-  $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO 'utf8';"
-  $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET default_transaction_isolation TO 'read committed';"
-  $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET timezone TO 'UTC'"
-  HBA_FILE=$(sudo -u postgres psql -t -P format=unaligned -c 'SHOW hba_file' 2>/dev/null)
-  tee -a "$HBA_FILE" > /dev/null <<EOL
+read -r -p "Forgejo uses SQLite by default. Would you like to use another database? <y/N> " prompt
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+  PS3="Please enter your choice: "
+  files="$(ls -A .)"
+  select DB_CHOICE in "PostgreSQL" "MySQL" "MariaDB"; do
+      msg_ok "You selected ${BL}${DB_CHOICE}${CL}"
+      break
+  done
+
+  DB_NAME=forgejodb
+  DB_USER=forgejo
+  DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+  if [ "$DB_CHOICE" == "PostgreSQL" ]; then
+    msg_info "Setting up PostgreSQL"
+    $STD apt-get install -y postgresql
+    echo "" >>~/forgejo.creds
+    echo -e "Database Type: \e[32mPostgresQL\e[0m" >>~/forgejo.creds
+    echo -e "PostgresQL Database Host: \e[32m127.0.0.1:5432\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo PostgresQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo PostgresQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo PostgresQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
+    $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
+    $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER ENCODING 'UTF8' TEMPLATE template0;"
+    $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO 'utf8';"
+    $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET default_transaction_isolation TO 'read committed';"
+    $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET timezone TO 'UTC'"
+    HBA_FILE=$(sudo -u postgres psql -t -P format=unaligned -c 'SHOW hba_file' 2>/dev/null)
+    tee -a "$HBA_FILE" > /dev/null <<EOL
 # Allow Forgejo database user to access the database
 local   forgejodb       forgejo         scram-sha-256
 host    forgejodb       forgejo         127.0.0.1/32            scram-sha-256  # IPv4 local connections
 host    forgejodb       forgejo         ::1/128                 scram-sha-256  # IPv6 local connections
 EOL
-  msg_info "Restarting PostgreSQL"
-  $STD systemctl restart postgresql
-  msg_info "Restarted PostgreSQL"
-  msg_info "Setup PostgreSQL"
-fi
-if [ "$DB_CHOICE" == "3" ]; then
-  msg_info "Setting up MySQL"
-  $STD apt-get install -y mysql-server
-  ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-  echo "" >>~/forgejo.creds
-  echo -e "Database Type: \e[32mMySQL\e[0m" >>~/forgejo.creds
-  echo -e "MySQL Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
-  echo -e "MySQL Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MySQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MySQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MySQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-  mysql -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
-  msg_info "Restarting MySQL"
-  $STD systemctl restart mysql
-  msg_info "Restarted MySQL"
-  msg_info "Setup MySQL"
-fi
-if [ "$DB_CHOICE" == "4" ]; then
-  msg_info "Setting up MariaDB"
-  $STD apt-get install -y mariadb-server
-  ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-  echo "" >>~/forgejo.creds
-  echo -e "Database Type: \e[32mMariaDB\e[0m" >>~/forgejo.creds
-  echo -e "MariaDB Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
-  echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-  mariadb -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
-  msg_info "Restarting MariaDB"
-  $STD systemctl restart mariadb
-  msg_info "Restarted MariaDB"
-  msg_info "Setup MariaDB"
+    msg_info "Restarting PostgreSQL"
+    $STD systemctl restart postgresql
+    msg_info "Restarted PostgreSQL"
+    msg_info "Setup PostgreSQL"
+  fi
+  if [ "$DB_CHOICE" == "MySQL" ]; then
+    msg_info "Setting up MySQL"
+    $STD apt-get install -y mysql-server
+    ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+    echo "" >>~/forgejo.creds
+    echo -e "Database Type: \e[32mMySQL\e[0m" >>~/forgejo.creds
+    echo -e "MySQL Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
+    echo -e "MySQL Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MySQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MySQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MySQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
+    mysql -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
+    msg_info "Restarting MySQL"
+    $STD systemctl restart mysql
+    msg_info "Restarted MySQL"
+    msg_info "Setup MySQL"
+  fi
+  if [ "$DB_CHOICE" == "MariaDB" ]; then
+    msg_info "Setting up MariaDB"
+    $STD apt-get install -y mariadb-server
+    ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+    echo "" >>~/forgejo.creds
+    echo -e "Database Type: \e[32mMariaDB\e[0m" >>~/forgejo.creds
+    echo -e "MariaDB Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
+    echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
+    mariadb -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
+    msg_info "Restarting MariaDB"
+    $STD systemctl restart mariadb
+    msg_info "Restarted MariaDB"
+    msg_info "Setup MariaDB"
+  fi
+else
+  msg_ok "${BL}SQLite${CL} will be used"
 fi
 
 read -r -p "Would you like to add Adminer? <y/N> " prompt
