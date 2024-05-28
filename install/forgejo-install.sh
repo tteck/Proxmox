@@ -35,6 +35,9 @@ mkdir /var/lib/forgejo
 chown git:git /var/lib/forgejo && chmod 750 /var/lib/forgejo
 mkdir /etc/forgejo
 chown root:git /etc/forgejo && chmod 770 /etc/forgejo
+echo "" >>~/forgejo.creds
+echo -e "Forgejo GIT User: \e[32mgit\e[0m" >>~/forgejo.creds
+echo -e "Forgejo data directory: \e[32m/var/lib/forgejo\e[0m" >>~/forgejo.creds
 msg_info "Setup Forgejo"
 
 msg_info "Setting up database"
@@ -54,6 +57,8 @@ if [ "$DB_CHOICE" == "2" ]; then
   msg_info "Setting up PostgreSQL"
   $STD apt-get install -y postgresql
   echo "" >>~/forgejo.creds
+  echo -e "Database Type: \e[32mPostgresQL\e[0m" >>~/forgejo.creds
+  echo -e "PostgresQL Database Host: \e[32m127.0.0.1:5432\e[0m" >>~/forgejo.creds
   echo -e "Forgejo PostgresQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
   echo -e "Forgejo PostgresQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
   echo -e "Forgejo PostgresQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
@@ -79,6 +84,8 @@ if [ "$DB_CHOICE" == "3" ]; then
   $STD apt-get install -y mysql-server
   ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
   echo "" >>~/forgejo.creds
+  echo -e "Database Type: \e[32mMySQL\e[0m" >>~/forgejo.creds
+  echo -e "MySQL Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
   echo -e "MySQL Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
   echo -e "Forgejo MySQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
   echo -e "Forgejo MySQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
@@ -94,6 +101,8 @@ if [ "$DB_CHOICE" == "4" ]; then
   $STD apt-get install -y mariadb-server
   ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
   echo "" >>~/forgejo.creds
+  echo -e "Database Type: \e[32mMariaDB\e[0m" >>~/forgejo.creds
+  echo -e "MariaDB Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
   echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
   echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
   echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
