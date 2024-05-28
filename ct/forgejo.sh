@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/barremian/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/barremian/Proxmox/feature/lxc-forgejo/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
