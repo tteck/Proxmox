@@ -40,8 +40,8 @@ echo -e "Forgejo GIT User: \e[32mgit\e[0m" >>~/forgejo.creds
 echo -e "Forgejo data directory: \e[32m/var/lib/forgejo\e[0m" >>~/forgejo.creds
 msg_ok "Setup Forgejo"
 
-msg_info "Setting up database"
 read -r -p "Forgejo uses SQLite by default. Would you like to use another database? <y/N> " prompt
+msg_info "Setting up database"
 if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   PS3="Please enter your choice: "
   files="$(ls -A .)"
@@ -54,7 +54,6 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   DB_USER=forgejo
   DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
   if [ "$DB_CHOICE" == "PostgreSQL" ]; then
-    msg_info "Setting up PostgreSQL"
     $STD apt-get install -y postgresql
     echo "" >>~/forgejo.creds
     echo -e "Database Type: \e[32mPostgresQL\e[0m" >>~/forgejo.creds
@@ -75,10 +74,8 @@ host    forgejodb       forgejo         127.0.0.1/32            scram-sha-256  #
 host    forgejodb       forgejo         ::1/128                 scram-sha-256  # IPv6 local connections
 EOL
     $STD systemctl restart postgresql
-    msg_ok "Setup PostgreSQL"
   fi
   if [ "$DB_CHOICE" == "MySQL" ]; then
-    msg_info "Setting up MySQL"
     $STD apt-get install -y mysql-server
     ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
     echo "" >>~/forgejo.creds
@@ -90,10 +87,8 @@ EOL
     echo -e "Forgejo MySQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
     mysql -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
     $STD systemctl restart mysql
-    msg_ok "Setup MySQL"
   fi
   if [ "$DB_CHOICE" == "MariaDB" ]; then
-    msg_info "Setting up MariaDB"
     $STD apt-get install -y mariadb-server
     ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
     echo "" >>~/forgejo.creds
@@ -105,8 +100,8 @@ EOL
     echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
     mariadb -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
     $STD systemctl restart mariadb
-    msg_ok "Setup MariaDB"
   fi
+  msg_ok "${BL}${DB_CHOICE}${CL} will be used"
 else
   msg_ok "${BL}SQLite${CL} will be used"
 fi
