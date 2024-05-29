@@ -96,7 +96,7 @@ EOL
         ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
         echo "" >>~/forgejo.creds
         echo -e "Database Type: \e[32mMariaDB\e[0m" >>~/forgejo.creds
-        echo -e "MariaDB Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
+        echo -e "MariaDB Database Host: \e[32mlocalhost:3306\e[0m" >>~/forgejo.creds
         echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
