@@ -58,16 +58,15 @@ if [[ ! -d /opt/zoraxy/src ]]; then msg_error "No ${APP} Installation Found!"; e
 msg_info "Updating $APP"
 systemctl stop zoraxy
 cd /opt/zoraxy/src
-if ! git pull; then
-  echo "Already up to date."
-  systemctl start zoraxy
-  echo "No update required."
-  exit
+systemctl stop zoraxy
+if git pull | grep -q 'Already up to date.'; then
+  msg_ok "Already up to date. No update required."
+else
+  go mod tidy
+  go build
+  msg_ok "Updated $APP"
 fi
-go mod tidy
-go build
 systemctl start zoraxy
-msg_ok "Updated $APP"
 exit
 }
 
