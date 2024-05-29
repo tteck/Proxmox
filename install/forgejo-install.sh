@@ -103,7 +103,7 @@ EOL
         echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
         mariadb -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
         $STD systemctl restart mariadb
-        msg_ok "Setting up MariaDB"
+        msg_ok "Setup MariaDB"
         break
         ;;
       *)
@@ -111,7 +111,6 @@ EOL
         ;;
     esac
   done
-  msg_ok "Database ${BL}${DB_CHOICE}${CL} will be used"
 else
   msg_ok "Database ${BL}SQLite${CL} will be used"
 fi
