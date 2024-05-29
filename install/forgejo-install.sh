@@ -85,7 +85,7 @@ EOL
         echo -e "Forgejo MySQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MySQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MySQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-        mysql -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
+        mysql -uroot -p"$ADMIN_PASS" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'; FLUSH PRIVILEGES;"
         $STD systemctl restart mysql
         msg_ok "Setup MySQL"
         break
@@ -101,7 +101,7 @@ EOL
         echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-        mariadb -uroot -p"$ADMIN_PASS" -e "SET old_passwords=0; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER' IDENTIFIED BY '$DB_PASS'; FLUSH PRIVILEGES;"
+        mariadb -uroot -p"$ADMIN_PASS" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'; FLUSH PRIVILEGES;"
         $STD systemctl restart mariadb
         msg_ok "Setup MariaDB"
         break
