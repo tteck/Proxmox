@@ -32,9 +32,11 @@ msg_ok "Installed Forgejo"
 msg_info "Setting up Forgejo"
 $STD adduser --system --shell /bin/bash --gecos 'Git Version Control' --group --disabled-password --home /home/git  git
 mkdir /var/lib/forgejo
-chown git:git /var/lib/forgejo && chmod 750 /var/lib/forgejo
+chown git:git /var/lib/forgejo
+chmod 750 /var/lib/forgejo
 mkdir /etc/forgejo
-chown root:git /etc/forgejo && chmod 770 /etc/forgejo
+chown root:git /etc/forgejo
+chmod 770 /etc/forgejo
 echo "" >>~/forgejo.creds
 echo -e "Forgejo GIT User: \e[32mgit\e[0m" >>~/forgejo.creds
 echo -e "Forgejo data directory: \e[32m/var/lib/forgejo\e[0m" >>~/forgejo.creds
