@@ -47,7 +47,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
   DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 
   PS3="Please enter your choice: "
-  select DB_CHOICE in "PostgreSQL" "MySQL" "MariaDB"; do
+  select DB_CHOICE in "PostgreSQL" "MySQL"; do
     case $DB_CHOICE in
       "PostgreSQL")
         msg_info "Setting up PostgreSQL"
@@ -76,34 +76,18 @@ EOL
         ;;
       "MySQL")
         msg_info "Setting up MySQL"
-        $STD apt-get install -y mysql-server
+        $STD apt-get install -y mariadb-server
         ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
         echo "" >>~/forgejo.creds
         echo -e "Database Type: \e[32mMySQL\e[0m" >>~/forgejo.creds
-        echo -e "MySQL Database Host: \e[32m127.0.0.1:3306\e[0m" >>~/forgejo.creds
+        echo -e "MySQL Database Host: \e[32mlocalhost:3306\e[0m" >>~/forgejo.creds
         echo -e "MySQL Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MySQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MySQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo MySQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-        mysql -uroot -p"$ADMIN_PASS" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'; FLUSH PRIVILEGES;"
-        $STD systemctl restart mysql
-        msg_ok "Setup MySQL"
-        break
-        ;;
-      "MariaDB")
-        msg_info "Setting up MariaDB"
-        $STD apt-get install -y mariadb-server
-        ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
-        echo "" >>~/forgejo.creds
-        echo -e "Database Type: \e[32mMariaDB\e[0m" >>~/forgejo.creds
-        echo -e "MariaDB Database Host: \e[32mlocalhost:3306\e[0m" >>~/forgejo.creds
-        echo -e "MariaDB Admin Password: \e[32m$ADMIN_PASS\e[0m" >>~/forgejo.creds
-        echo -e "Forgejo MariaDB Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
-        echo -e "Forgejo MariaDB Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
-        echo -e "Forgejo MariaDB Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
         mariadb -uroot -p"$ADMIN_PASS" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ADMIN_PASS'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION; CREATE USER '$DB_USER' IDENTIFIED BY '$DB_PASS'; CREATE DATABASE $DB_NAME CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'; GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'; FLUSH PRIVILEGES;"
         $STD systemctl restart mariadb
-        msg_ok "Setup MariaDB"
+        msg_ok "Setup MySQL"
         break
         ;;
       *)
@@ -128,7 +112,7 @@ if [[ -n "${DB_CHOICE:-}" ]]; then
     if [[ "$DB_CHOICE" == "PostgreSQL" ]]; then
       echo -e "Adminer System: \e[32mPostgreSQL\e[0m" >>~/forgejo.creds
       echo -e "Adminer Server: \e[32mlocalhost:5432\e[0m" >>~/forgejo.creds
-    elif [[ "$DB_CHOICE" == "MySQL" || "$DB_CHOICE" == "MariaDB" ]]; then
+    elif [[ "$DB_CHOICE" == "MySQL" ]]; then
       echo -e "Adminer System: \e[32mMySQL\e[0m" >>~/forgejo.creds
       echo -e "Adminer Server: \e[32mlocalhost:3306\e[0m" >>~/forgejo.creds
     fi
@@ -150,10 +134,6 @@ echo -e "Wants=postgresql.service"
 echo -e "After=postgresql.service"
 fi)
 $(if [[ -n "${DB_CHOICE:-}" && "$DB_CHOICE" == "MySQL" ]]; then
-echo -e "Wants=mysql.service"
-echo -e "After=mysql.service"
-fi)
-$(if [[ -n "${DB_CHOICE:-}" && "$DB_CHOICE" == "MariaDB" ]]; then
 echo -e "Wants=mariadb.service"
 echo -e "After=mariadb.service"
 fi)
