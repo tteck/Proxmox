@@ -115,7 +115,7 @@ else
   msg_ok "Database ${BL}SQLite${CL} will be used"
 fi
 
-if [[ -n "$DB_CHOICE" ]]; then
+if [[ -n "${DB_CHOICE:-}" ]]; then
   read -r -p "Would you like to add Adminer? <y/N> " prompt
   if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
     msg_info "Installing Adminer"
