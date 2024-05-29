@@ -115,21 +115,28 @@ else
   msg_ok "Database ${BL}SQLite${CL} will be used"
 fi
 
-read -r -p "Would you like to add Adminer? <y/N> " prompt
-if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
-  msg_info "Installing Adminer"
-  $STD apt install -y adminer
-  $STD a2enconf adminer
-  systemctl reload apache2
-  IP=$(hostname -I | awk '{print $1}')
-  echo "" >>~/forgejo.creds
-  echo -e "Adminer Interface: \e[32m$IP/adminer/\e[0m" >>~/forgejo.creds
-  echo -e "Adminer System: \e[32mPostgreSQL\e[0m" >>~/forgejo.creds
-  echo -e "Adminer Server: \e[32mlocalhost:5432\e[0m" >>~/forgejo.creds
-  echo -e "Adminer Username: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
-  echo -e "Adminer Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
-  echo -e "Adminer Database: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
-  msg_ok "Installed Adminer"
+if [[ -n "$DB_CHOICE" ]]; then
+  read -r -p "Would you like to add Adminer? <y/N> " prompt
+  if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+    msg_info "Installing Adminer"
+    $STD apt install -y adminer
+    $STD a2enconf adminer
+    systemctl reload apache2
+    IP=$(hostname -I | awk '{print $1}')
+    echo "" >>~/forgejo.creds
+    echo -e "Adminer Interface: \e[32m$IP/adminer/\e[0m" >>~/forgejo.creds
+    if [[ "$DB_CHOICE" == "PostgreSQL" ]]; then
+      echo -e "Adminer System: \e[32mPostgreSQL\e[0m" >>~/forgejo.creds
+      echo -e "Adminer Server: \e[32mlocalhost:5432\e[0m" >>~/forgejo.creds
+    elif [[ "$DB_CHOICE" == "MySQL" || "$DB_CHOICE" == "MariaDB" ]]; then
+      echo -e "Adminer System: \e[32mMySQL\e[0m" >>~/forgejo.creds
+      echo -e "Adminer Server: \e[32mlocalhost:3306\e[0m" >>~/forgejo.creds
+    fi
+    echo -e "Adminer Username: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
+    echo -e "Adminer Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
+    echo -e "Adminer Database: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
+    msg_ok "Installed Adminer"
+  fi
 fi
 
 msg_info "Creating Service"
