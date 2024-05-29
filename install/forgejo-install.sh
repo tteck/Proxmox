@@ -54,7 +54,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
         $STD apt-get install -y postgresql
         echo "" >>~/forgejo.creds
         echo -e "Database Type: \e[32mPostgresQL\e[0m" >>~/forgejo.creds
-        echo -e "PostgresQL Database Host: \e[32m127.0.0.1:5432\e[0m" >>~/forgejo.creds
+        echo -e "PostgresQL Database Host: \e[32mlocalhost:5432\e[0m" >>~/forgejo.creds
         echo -e "Forgejo PostgresQL Database User: \e[32m$DB_USER\e[0m" >>~/forgejo.creds
         echo -e "Forgejo PostgresQL Database Password: \e[32m$DB_PASS\e[0m" >>~/forgejo.creds
         echo -e "Forgejo PostgresQL Database Name: \e[32m$DB_NAME\e[0m" >>~/forgejo.creds
