@@ -57,7 +57,7 @@ Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/forgejo
 [Install]
 WantedBy=multi-user.target
 EOF
-$STD systemctl enable -q --now forgejo
+systemctl enable -q --now forgejo
 msg_ok "Created Service"
 
 motd_ssh
