@@ -37,9 +37,6 @@ chmod 750 /var/lib/forgejo
 mkdir /etc/forgejo
 chown root:git /etc/forgejo
 chmod 770 /etc/forgejo
-echo "" >>~/forgejo.creds
-echo -e "Forgejo GIT User: \e[32mgit\e[0m" >>~/forgejo.creds
-echo -e "Forgejo data directory: \e[32m/var/lib/forgejo\e[0m" >>~/forgejo.creds
 msg_ok "Setup Forgejo"
 
 msg_info "Creating Service"
