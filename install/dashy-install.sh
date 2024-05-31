@@ -49,7 +49,7 @@ Description=dashy
 [Service]
 Type=simple
 WorkingDirectory=/opt/dashy
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/bin/npm start
 [Install]
 WantedBy=multi-user.target
 EOF
