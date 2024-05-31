@@ -41,8 +41,10 @@ mkdir -p /opt/dashy
 wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
 cd /opt/dashy
 #sed -i 's/NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build/NODE_OPTIONS=yarn vue-cli-service build/' /opt/dashy/package.json
-$STD yarn
-$STD yarn build
+#$STD yarn
+#$STD yarn build
+$STD npm install
+$STD npm run build
 echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Dashy ${RELEASE}"
 
