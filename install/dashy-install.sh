@@ -33,7 +33,6 @@ msg_ok "Installed Node.js"
 
 msg_info "Installing Yarn"
 $STD npm install -g yarn
-ln -sf /usr/local/bin/yarn /usr/bin/yarn
 msg_ok "Installed Yarn"
 
 RELEASE=$(curl -s https://api.github.com/repos/Lissy93/dashy/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
