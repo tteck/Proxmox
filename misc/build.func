@@ -232,16 +232,24 @@ advanced_settings() {
   done
 
   while true; do
-    if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD(leave blank for automatic login)" 3>&1 1>&2 2>&3); then
+    if PW1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --passwordbox "\nSet Root Password (needed for root ssh access)" 9 58 --title "PASSWORD (leave blank for automatic login)" 3>&1 1>&2 2>&3); then
       if [[ ! -z "$PW1" ]]; then
         if [[ "$PW1" == *" "* ]]; then
           whiptail --msgbox "Password cannot contain spaces. Please try again." 8 58
         elif [ ${#PW1} -lt 5 ]; then
           whiptail --msgbox "Password must be at least 5 characters long. Please try again." 8 58
         else
-          PW="-password $PW1"
-          echo -e "${DGN}Using Root Password: ${BGN}$PW1${CL}"
-          break
+          if PW2=$(whiptail --backtitle "Proxmox VE Helper Scripts" --passwordbox "\nVerify Root Password" 9 58 --title "PASSWORD VERIFICATION" 3>&1 1>&2 2>&3); then
+            if [[ "$PW1" == "$PW2" ]]; then
+              PW="-password $PW1"
+              echo -e "${DGN}Using Root Password: ${BGN}********${CL}"
+              break
+            else
+              whiptail --msgbox "Passwords do not match. Please try again." 8 58
+            fi
+          else
+            exit-script
+          fi
         fi
       else
         PW1="Automatic Login"
