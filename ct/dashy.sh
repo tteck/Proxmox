@@ -75,10 +75,9 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   rm -rf /opt/dashy
   mkdir -p /opt/dashy
   wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
-  sed -i 's/NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build/NODE_OPTIONS=yarn vue-cli-service build/' /opt/dashy/package.json
   cd /opt/dashy
-  yarn &>/dev/null
-  yarn build &>/dev/null
+  npm install &>/dev/null
+  npm run build &>/dev/null
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
