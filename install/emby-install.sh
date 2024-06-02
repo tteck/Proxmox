@@ -46,7 +46,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 rm emby-server-deb_${LATEST}_amd64.deb
 msg_ok "Cleaned"

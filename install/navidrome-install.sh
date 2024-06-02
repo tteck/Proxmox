@@ -76,7 +76,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 rm -rf /root/Navidrome.tar.gz
 msg_ok "Cleaned"

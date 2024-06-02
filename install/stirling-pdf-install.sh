@@ -115,6 +115,6 @@ customize
 
 msg_info "Cleaning up"
 rm -rf v$RELEASE.tar.gz /zulu-repo_1.0.0-3_all.deb
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"

@@ -48,6 +48,6 @@ customize
 
 msg_info "Cleaning up"
 rm zwave-js-ui-${RELEASE}-linux.zip
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"

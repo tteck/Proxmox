@@ -58,6 +58,6 @@ customize
 
 msg_info "Cleaning up"
 rm -rf $RELEASE
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"
