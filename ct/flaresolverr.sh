@@ -54,22 +54,21 @@ function default_settings() {
 }
 
 function update_script() {
-  if [[ ! -f /etc/systemd/system/flaresolverr.service ]]; then
-    msg_error "No ${APP} Installation Found!"
-    exit
-  fi
   header_info
-  msg_info "Updating $APP LXC"
-  systemctl stop flaresolverr
-
-  # install flaresolverr
+  if [[ ! -f /etc/systemd/system/flaresolverr.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   RELEASE=$(wget -q https://github.com/FlareSolverr/FlareSolverr/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-  wget -q https://github.com/FlareSolverr/FlareSolverr/releases/download/$RELEASE/flaresolverr_linux_x64.tar.gz
-  tar -xzf flaresolverr_linux_x64.tar.gz -C /opt
-  rm flaresolverr_linux_x64.tar.gz
-
-  systemctl start flaresolverr
-  msg_ok "Updated $APP LXC"
+  if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+    msg_info "Updating $APP LXC"
+    systemctl stop flaresolverr
+    wget -q https://github.com/FlareSolverr/FlareSolverr/releases/download/$RELEASE/flaresolverr_linux_x64.tar.gz
+    tar -xzf flaresolverr_linux_x64.tar.gz -C /opt
+    rm flaresolverr_linux_x64.tar.gz
+    systemctl start flaresolverr
+    echo "${RELEASE}" >/opt/${APP}_version.txt
+    msg_ok "Updated $APP LXC"
+  else
+    msg_ok "No update required. ${APP} is already at ${RELEASE}"
+  fi
   exit
 }
 
