@@ -18,11 +18,10 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y apt-transport-https wget gpg xvfb
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Chrome"
-# install chrome
-$STD apt install -y apt-transport-https wget gpg xvfb
 wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 $STD apt update
@@ -30,7 +29,6 @@ $STD apt install -y google-chrome-stable
 msg_ok "Installed Chrome"
 
 msg_info "Installing FlareSolverr"
-# install flaresolverr
 RELEASE=$(wget -q https://github.com/FlareSolverr/FlareSolverr/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 $STD wget -q https://github.com/FlareSolverr/FlareSolverr/releases/download/$RELEASE/flaresolverr_linux_x64.tar.gz
 $STD tar -xzf flaresolverr_linux_x64.tar.gz -C /opt
@@ -38,7 +36,6 @@ $STD rm flaresolverr_linux_x64.tar.gz
 msg_ok "Installed FlareSolverr"
 
 msg_info "Creating Service"
-# run as a service
 cat <<EOF >/etc/systemd/system/flaresolverr.service
 [Unit]
 Description=FlareSolverr
@@ -56,7 +53,6 @@ TimeoutStopSec=30
 [Install]
 WantedBy=multi-user.target
 EOF
-
 systemctl enable -q --now flaresolverr.service
 msg_ok "Created Service"
 
