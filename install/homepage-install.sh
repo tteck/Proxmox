@@ -36,6 +36,7 @@ RELEASE=$(curl -s https://api.github.com/repos/gethomepage/homepage/releases/lat
 msg_info "Installing Homepage v${RELEASE} (Patience)"
 wget -q https://github.com/gethomepage/homepage/archive/refs/tags/v${RELEASE}.tar.gz
 $STD tar -xzf v${RELEASE}.tar.gz
+rm -rf v${RELEASE}.tar.gz
 mkdir -p /opt/homepage/config
 mv homepage-${RELEASE}/* /opt/homepage
 rm -rf homepage-${RELEASE}
