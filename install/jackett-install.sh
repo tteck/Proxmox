@@ -24,6 +24,7 @@ RELEASE=$(wget -q https://github.com/Jackett/Jackett/releases/latest -O - | grep
 wget -q https://github.com/Jackett/Jackett/releases/download/$RELEASE/Jackett.Binaries.LinuxAMDx64.tar.gz
 tar -xzf Jackett.Binaries.LinuxAMDx64.tar.gz -C /opt
 rm -rf Jackett.Binaries.LinuxAMDx64.tar.gz
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Jackett"
 
 msg_info "Creating Service"
