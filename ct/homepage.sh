@@ -69,6 +69,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   systemctl stop homepage
   wget -q https://github.com/gethomepage/homepage/archive/refs/tags/v${RELEASE}.tar.gz
   tar -xzf v${RELEASE}.tar.gz
+  rm -rf v${RELEASE}.tar.gz
   cp -r homepage-${RELEASE}/* /opt/homepage/
   rm -rf homepage-${RELEASE}
   cd /opt/homepage
