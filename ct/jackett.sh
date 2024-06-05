@@ -55,19 +55,20 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -f /etc/systemd/system/jackett.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-msg_ok "Updated ${APP} LXC"
-msg_info "Updating ${APP}"
 RELEASE=$(wget -q https://github.com/Jackett/Jackett/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-wget -q https://github.com/Jackett/Jackett/releases/download/$RELEASE/Jackett.Binaries.LinuxAMDx64.tar.gz
-systemctl stop jackett
-rm -rf /opt/Jackett
-tar -xzf Jackett.Binaries.LinuxAMDx64.tar.gz -C /opt
-rm -rf Jackett.Binaries.LinuxAMDx64.tar.gz
-systemctl start jackett
-msg_ok "Updated ${APP} to ${RELEASE}"
+if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  msg_info "Updating ${APP}"
+  wget -q https://github.com/Jackett/Jackett/releases/download/$RELEASE/Jackett.Binaries.LinuxAMDx64.tar.gz
+  systemctl stop jackett
+  rm -rf /opt/Jackett
+  tar -xzf Jackett.Binaries.LinuxAMDx64.tar.gz -C /opt
+  rm -rf Jackett.Binaries.LinuxAMDx64.tar.gz
+  systemctl start jackett
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+fi
 exit
 }
 
