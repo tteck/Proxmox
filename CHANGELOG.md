@@ -16,6 +16,8 @@
 
 - **Petio LXC**
   - NEW Script
+- **Website**
+  - Important notices will now be displayed on the landing page.
 
 ## 2024-06-04
 
