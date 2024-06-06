@@ -63,7 +63,6 @@ User=petio
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl daemon-reload
 systemctl enable -q --now petio.service
 msg_ok "Created Service"
 
