@@ -30,7 +30,7 @@ msg_ok() { echo -e "${BFR} ${CM} ${GN}$1${CL}"; }
 msg_error() { echo -e "${BFR} ${CROSS} ${RD}$1${CL}"; }
 
 header_info
-current_microcode=$(journalctl -k | grep -oP "microcode: updated early: [^ ]+ -> \K[^,]+, date = [^ ]+" | head -n 1)
+current_microcode=$(journalctl -k | grep -i 'microcode: Current revision:' | grep -oP 'Current revision: \K0x[0-9a-f]+')
 [ -z "$current_microcode" ] && current_microcode="Not found."
 
 intel() {
