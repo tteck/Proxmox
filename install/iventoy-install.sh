@@ -31,18 +31,18 @@ msg_ok "Installed iVentoy"
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/iventoy.service
 [Unit]
-Description       =iVentoy PXE Booter
-Documentation     =https://www.iventoy.com
-Wants             =network-online.target
+Description=iVentoy PXE Booter
+Documentation=https://www.iventoy.com
+Wants=network-online.target
 [Service]
-Type              =forking
-Environment       =IVENTOY_API_ALL=1
-Environment       =IVENTOY_AUTO_RUN=1
-Environment       =LIBRARY_PATH=/opt/iventoy/lib/lin64
-Environment       =LD_LIBRARY_PATH=/opt/iventoy/lib/lin64
-ExecStart         =sh ./iventoy.sh -R start
-WorkingDirectory  =/opt/iventoy
-Restart           =on-failure
+Type=forking
+Environment=IVENTOY_API_ALL=1
+Environment=IVENTOY_AUTO_RUN=1
+Environment=LIBRARY_PATH=/opt/iventoy/lib/lin64
+Environment=LD_LIBRARY_PATH=/opt/iventoy/lib/lin64
+ExecStart=sh ./iventoy.sh -R start
+WorkingDirectory=/opt/iventoy
+Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
