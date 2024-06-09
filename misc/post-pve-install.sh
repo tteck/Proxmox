@@ -105,9 +105,9 @@ EOF
     yes)
       msg_info "Correcting 'ceph package repositories'"
       cat <<EOF >/etc/apt/sources.list.d/ceph.list
-# deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
+# deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
 # deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
-# deb http://download.proxmox.com/debian/ceph-reef bookworm enterprise
+# deb https://enterprise.proxmox.com/debian/ceph-reef bookworm enterprise
 # deb http://download.proxmox.com/debian/ceph-reef bookworm no-subscription
 EOF
       msg_ok "Corrected 'ceph package repositories'"
