@@ -73,7 +73,7 @@ EOF
   whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "PVE8 CEPH PACKAGE REPOSITORIES" "The 'Ceph Package Repositories' provides access to both the 'no-subscription' and 'enterprise' repositories." 10 58
     msg_info "Enabling 'ceph package repositories'"
     cat <<EOF >/etc/apt/sources.list.d/ceph.list
-# deb http://download.proxmox.com/debian/ceph-quincy bookworm enterprise
+# deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
 deb http://download.proxmox.com/debian/ceph-quincy bookworm no-subscription
 EOF
     msg_ok "Enabled 'ceph package repositories'"
