@@ -370,6 +370,19 @@ function start_script() {
   fi
 }
 
+function btrfs_cow() {
+  if [ -z "$DISK_CACHE" ]; then
+    BTRFS_COW="disabled"
+  else
+    if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "BTRFS COW" --yesno "Disable COW?" --defaultno 10 58); then 
+      BTRFS_COW="disabled"
+    else
+      BTRFS_COW=""
+    fi
+  fi
+  msg_ok "Btrfs COW: ${CL}${BL}${BTRFS_COW:-default}${CL}"
+}
+
 check_root
 arch_check
 pve_check
@@ -405,6 +418,23 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
+STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
+case $STORAGE_TYPE in
+nfs | dir)
+  DISK_EXT=".raw"
+  DISK_REF="$VMID/"
+  DISK_IMPORT="-format raw"
+  THIN=""
+  ;;
+btrfs)
+  DISK_EXT=".raw"
+  DISK_REF="$VMID/"
+  DISK_IMPORT="-format raw"
+  FORMAT=",efitype=4m"
+  THIN=""
+  btrfs_cow
+  ;;
+esac
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Retrieving the URL for Home Assistant ${BRANCH} Disk Image"
 if [ "$BRANCH" == "$dev" ]; then
@@ -420,22 +450,6 @@ FILE=$(basename $URL)
 msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
 msg_info "Extracting KVM Disk Image"
 unxz $FILE
-STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
-case $STORAGE_TYPE in
-nfs | dir)
-  DISK_EXT=".raw"
-  DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  THIN=""
-  ;;
-btrfs)
-  DISK_EXT=".raw"
-  DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  FORMAT=",efitype=4m"
-  THIN=""
-  ;;
-esac
 for i in {0,1}; do
   disk="DISK$i"
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
@@ -447,6 +461,15 @@ qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} 
   -name $HN -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
+if [ "${BTRFS_COW:-}" == "disabled" ]; then
+  DISK1_PATH=$(pvesm path ${DISK1_REF})
+  mv ${DISK1_PATH} ${DISK1_PATH}-cow
+  touch ${DISK1_PATH}
+  chattr +C ${DISK1_PATH}
+  cp --reflink=never ${DISK1_PATH}-cow ${DISK1_PATH}
+  chmod o-r ${DISK1_PATH}
+  rm ${DISK1_PATH}-cow
+fi
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=32G \
