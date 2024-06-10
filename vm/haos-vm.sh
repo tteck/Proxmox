@@ -167,6 +167,7 @@ function default_settings() {
   VLAN=""
   MTU=""
   START_VM="yes"
+  BTRFS_COW="default"
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
@@ -228,17 +229,40 @@ function advanced_settings() {
     exit-script
   fi
 
-  if DISK_CACHE1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 10 58 2 \
+  if DISK_CACHE1=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "DISK CACHE" --radiolist "Choose" --cancel-button Exit-Script 14 58 6 \
     "0" "None" OFF \
     "1" "Write Through (Default)" ON \
+    "2" "Write Back" OFF \
+    "3" "Direct Sync" OFF \
+    "4" "Unsafe" OFF \
+    "5" "Default" OFF \
     3>&1 1>&2 2>&3); then
-    if [ $DISK_CACHE1 = "1" ]; then
+    case $DISK_CACHE1 in
+    0)
+      echo -e "${DGN}Using Disk Cache: ${BGN}None${CL}"
+      DISK_CACHE="cache=none,"
+      ;;
+    1)
       echo -e "${DGN}Using Disk Cache: ${BGN}Write Through${CL}"
       DISK_CACHE="cache=writethrough,"
-    else
-      echo -e "${DGN}Using Disk Cache: ${BGN}None${CL}"
+      ;;
+    2)
+      echo -e "${DGN}Using Disk Cache: ${BGN}Write Back${CL}"
+      DISK_CACHE="cache=writeback,"
+      ;;
+    3)
+      echo -e "${DGN}Using Disk Cache: ${BGN}Direct Sync${CL}"
+      DISK_CACHE="cache=directsync,"
+      ;;
+    4)
+      echo -e "${DGN}Using Disk Cache: ${BGN}Unsafe${CL}"
+      DISK_CACHE="cache=unsafe,"
+      ;;
+    *)
+      echo -e "${DGN}Using Disk Cache: ${BGN}Default${CL}"
       DISK_CACHE=""
-    fi
+      ;;
+    esac
   else
     exit-script
   fi
@@ -370,6 +394,28 @@ function start_script() {
   fi
 }
 
+function btrfs_cow() {
+  local MSG_EXTRA=""
+  local SELECTION=""
+  local CACHE_MODE="${DISK_CACHE:6:-1}"
+  if [ -z "${BTRFS_COW:-}" ]; then
+    case "${CACHE_MODE}" in
+    none | directsync)
+      MSG_EXTRA="COW shall be disabled!"
+      ;;
+    *)
+      SELECTION="--defaultno"
+      ;;
+    esac
+    if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "BTRFS COW" --yesno "Disable COW?\nSelected cache is: ${CACHE_MODE:-default}. ${MSG_EXTRA}" ${SELECTION} 10 58); then 
+      BTRFS_COW="disabled"
+    else
+      BTRFS_COW="default"
+    fi
+  fi
+  msg_ok "Btrfs COW: ${CL}${BL}${BTRFS_COW}${CL}"
+}
+
 check_root
 arch_check
 pve_check
@@ -405,6 +451,23 @@ else
   done
 fi
 msg_ok "Using ${CL}${BL}$STORAGE${CL} ${GN}for Storage Location."
+STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
+case $STORAGE_TYPE in
+nfs | dir)
+  DISK_EXT=".raw"
+  DISK_REF="$VMID/"
+  DISK_IMPORT="-format raw"
+  THIN=""
+  ;;
+btrfs)
+  DISK_EXT=".raw"
+  DISK_REF="$VMID/"
+  DISK_IMPORT="-format raw"
+  FORMAT=",efitype=4m"
+  THIN=""
+  btrfs_cow
+  ;;
+esac
 msg_ok "Virtual Machine ID is ${CL}${BL}$VMID${CL}."
 msg_info "Retrieving the URL for Home Assistant ${BRANCH} Disk Image"
 if [ "$BRANCH" == "$dev" ]; then
@@ -420,22 +483,6 @@ FILE=$(basename $URL)
 msg_ok "Downloaded ${CL}${BL}haos_ova-${BRANCH}.qcow2.xz${CL}"
 msg_info "Extracting KVM Disk Image"
 unxz $FILE
-STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
-case $STORAGE_TYPE in
-nfs | dir)
-  DISK_EXT=".raw"
-  DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  THIN=""
-  ;;
-btrfs)
-  DISK_EXT=".raw"
-  DISK_REF="$VMID/"
-  DISK_IMPORT="-format raw"
-  FORMAT=",efitype=4m"
-  THIN=""
-  ;;
-esac
 for i in {0,1}; do
   disk="DISK$i"
   eval DISK${i}=vm-${VMID}-disk-${i}${DISK_EXT:-}
@@ -447,6 +494,15 @@ qm create $VMID -agent 1${MACHINE} -tablet 0 -localtime 1 -bios ovmf${CPU_TYPE} 
   -name $HN -tags proxmox-helper-scripts -net0 virtio,bridge=$BRG,macaddr=$MAC$VLAN$MTU -onboot 1 -ostype l26 -scsihw virtio-scsi-pci
 pvesm alloc $STORAGE $VMID $DISK0 4M 1>&/dev/null
 qm importdisk $VMID ${FILE%.*} $STORAGE ${DISK_IMPORT:-} 1>&/dev/null
+if [ "${BTRFS_COW:-}" == "disabled" ]; then
+  DISK1_PATH=$(pvesm path ${DISK1_REF})
+  mv ${DISK1_PATH} ${DISK1_PATH}-cow
+  touch ${DISK1_PATH}
+  chattr +C ${DISK1_PATH}
+  cp --reflink=never ${DISK1_PATH}-cow ${DISK1_PATH}
+  chmod o-r ${DISK1_PATH}
+  rm ${DISK1_PATH}-cow
+fi
 qm set $VMID \
   -efidisk0 ${DISK0_REF}${FORMAT} \
   -scsi0 ${DISK1_REF},${DISK_CACHE}${THIN}size=32G \
