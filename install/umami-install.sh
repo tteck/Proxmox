@@ -45,6 +45,8 @@ $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO 'utf8'
 $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET default_transaction_isolation TO 'read committed';"
 $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET timezone TO 'UTC'"
 echo "" >~/umami.creds
+echo "Umami Database Credentials" >>~/umami.creds
+echo "" >>~/umami.creds
 echo -e "umami Database User: \e[32m$DB_USER\e[0m" >>~/umami.creds
 echo -e "umami Database Password: \e[32m$DB_PASS\e[0m" >>~/umami.creds
 echo -e "umami Database Name: \e[32m$DB_NAME\e[0m" >>~/umami.creds
