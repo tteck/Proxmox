@@ -31,7 +31,8 @@ msg_info "Setting up PostgreSQL"
 $STD apt-get install -y postgresql
 DB_NAME=zabbixdb
 DB_USER=zabbix
-DB_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+RAW_PASS="$(openssl rand -base64 18 | cut -c1-13)"
+DB_PASS=$(printf '%s\n' "$RAW_PASS" | sed 's/[&/\]/\\&/g')
 $STD sudo -u postgres psql -c "CREATE ROLE $DB_USER WITH LOGIN PASSWORD '$DB_PASS';"
 $STD sudo -u postgres psql -c "CREATE DATABASE $DB_NAME WITH OWNER $DB_USER ENCODING 'UTF8' TEMPLATE template0;"
 $STD sudo -u postgres psql -c "ALTER ROLE $DB_USER SET client_encoding TO 'utf8';"
