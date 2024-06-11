@@ -37,25 +37,27 @@ msg_ok "Updated Python3"
 
 msg_info "Installing Mylar3"
 RELEASE=$(curl -s https://api.github.com/repos/mylar3/mylar3/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-$STD tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz)
-mv mylar3-${RELEASE:1} /opt/mylar3
+msg_info "Installing Mylar3 ${RELEASE} (Patience)"
+mkdir -p /opt/mylar3
+tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) -C /opt/mylar3 --strip-components=1
 cd /opt/mylar3
 $STD python3 -m pip install -r requirements.txt
+echo "${RELEASE:1}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Mylar3"
 
 msg_info "Creating Service"
-service_path="/etc/systemd/system/mylar3.service"
-echo "[Unit]
-Description=Mylar3
-After=network.target
+cat <<EOF >/etc/systemd/system/mylar3.service
+[Unit]
+Description=mylar3
+
 [Service]
+Type=simple
 WorkingDirectory=/opt/mylar3
 ExecStart=python3 Mylar.py -p 8585
-Restart=always
-User=root
 [Install]
-WantedBy=multi-user.target" >$service_path
-systemctl enable --now -q mylar3.service
+WantedBy=multi-user.target
+EOF
+systemctl -q --now enable mylar3
 msg_ok "Created Service"
 
 motd_ssh
