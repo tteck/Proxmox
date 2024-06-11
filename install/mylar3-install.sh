@@ -55,7 +55,7 @@ Restart=always
 User=root
 [Install]
 WantedBy=multi-user.target" >$service_path
-systemctl enable --now -q sabnzbd.service
+systemctl enable --now -q mylar3.service
 msg_ok "Created Service"
 
 motd_ssh
