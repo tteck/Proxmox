@@ -59,7 +59,7 @@ if [[ ! -d /opt/mylar3 ]]; then msg_error "No ${APP} Installation Found!"; exit;
 msg_info "Updating $APP"
 systemctl stop mylar3.service
 RELEASE=$(curl -s https://api.github.com/repos/mylar3/mylar3/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) -C /opt/mylar3
+tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) -C /opt/mylar3 &>/dev/null
 cd /opt/mylar3
 python3 -m pip install -r requirements.txt &>/dev/null
 systemctl start mylar3.service

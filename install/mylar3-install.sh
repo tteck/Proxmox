@@ -17,7 +17,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y git
 $STD apt-get install -y pip
 msg_ok "Installed Dependencies"
 
@@ -32,7 +31,7 @@ msg_info "Installing Mylar3"
 RELEASE=$(curl -s https://api.github.com/repos/mylar3/mylar3/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 msg_info "Installing Mylar3 ${RELEASE} (Patience)"
 mkdir -p /opt/mylar3
-tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) -C /opt/mylar3 --strip-components=1
+tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) -C /opt/mylar3 --strip-components=1 &>/dev/null
 cd /opt/mylar3
 $STD python3 -m pip install -r requirements.txt
 echo "${RELEASE:1}" >/opt/${APPLICATION}_version.txt
