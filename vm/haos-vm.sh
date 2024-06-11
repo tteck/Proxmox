@@ -167,6 +167,7 @@ function default_settings() {
   VLAN=""
   MTU=""
   START_VM="yes"
+  BTRFS_COW="default"
   echo -e "${DGN}Using HAOS Version: ${BGN}${BRANCH}${CL}"
   echo -e "${DGN}Using Virtual Machine ID: ${BGN}${VMID}${CL}"
   echo -e "${DGN}Using Machine Type: ${BGN}i440fx${CL}"
@@ -373,14 +374,14 @@ function start_script() {
 function btrfs_cow() {
   if [ -z "$DISK_CACHE" ]; then
     BTRFS_COW="disabled"
-  else
+  elif [ -z "${BTRFS_COW:-}" ]; then
     if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "BTRFS COW" --yesno "Disable COW?" --defaultno 10 58); then 
       BTRFS_COW="disabled"
     else
-      BTRFS_COW=""
+      BTRFS_COW="default"
     fi
   fi
-  msg_ok "Btrfs COW: ${CL}${BL}${BTRFS_COW:-default}${CL}"
+  msg_ok "Btrfs COW: ${CL}${BL}${BTRFS_COW}${CL}"
 }
 
 check_root
