@@ -40,7 +40,7 @@ RELEASE=$(curl -s https://api.github.com/repos/mylar3/mylar3/releases/latest | g
 $STD tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz)
 mv mylar3-${RELEASE:1} /opt/mylar3
 cd /opt/mylar3
-$STD pip3 install -r requirements.txt
+$STD python3 -m pip install -r requirements.txt
 msg_ok "Installed Mylar3"
 
 msg_info "Creating Service"
