@@ -61,7 +61,7 @@ systemctl stop mylar3.service
 RELEASE=$(curl -s https://api.github.com/repos/mylar3/mylar3/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 tar zxvf <(curl -fsSL https://github.com/mylar3/mylar3/archive/refs/tags/${RELEASE}.tar.gz) &>/dev/null
 RELEASE="${RELEASE:1}"
-\cp -r mylar-${RELEASE}/* /opt/mylar3 &>/dev/null
+\cp -r mylar3-${RELEASE}/* /opt/mylar3 &>/dev/null
 rm -rf mylar3-${RELEASE}
 cd /opt/mylar3
 python3 -m pip install -r requirements.txt &>/dev/null
