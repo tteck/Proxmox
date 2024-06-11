@@ -17,14 +17,8 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y par2
-$STD apt-get install -y p7zip-full
-cat <<EOF >/etc/apt/sources.list.d/non-free.list
-deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
-EOF
-$STD apt-get update
-$STD apt-get install -y unrar
-rm /etc/apt/sources.list.d/non-free.list
+$STD apt-get install -y git
+$STD apt-get install -y pip
 msg_ok "Installed Dependencies"
 
 msg_info "Updating Python3"
@@ -32,7 +26,6 @@ $STD apt-get install -y \
   python3 \
   python3-dev \
   python3-pip
-$STD apt-get install -y python3-setuptools
 msg_ok "Updated Python3"
 
 msg_info "Installing Mylar3"
