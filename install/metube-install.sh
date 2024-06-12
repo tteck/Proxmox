@@ -19,6 +19,11 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y --no-install-recommends \
   build-essential \
   curl \
+  aria2 \
+  coreutils \
+  gcc \
+  g++ \
+  musl-dev \
   sudo \
   ffmpeg \
   git \
@@ -60,6 +65,7 @@ cat <<EOF >/opt/metube/.env
 DOWNLOAD_DIR=/opt/metube_downloads
 STATE_DIR=/opt/metube_downloads/.metube
 TEMP_DIR=/opt/metube_downloads
+YTDL_OPTIONS={"trim_file_name":10}
 EOF
 msg_ok "Installed MeTube"
 
