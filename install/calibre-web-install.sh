@@ -36,6 +36,7 @@ msg_info "Installing Calibre-Web"
 mkdir -p /opt/calibre-web
 $STD wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
 $STD pip install calibreweb
+$STD pip install jsonschema
 msg_ok "Installed Calibre-Web"
 
 msg_info "Creating Service"
