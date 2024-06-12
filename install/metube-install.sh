@@ -19,6 +19,11 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y --no-install-recommends \
   build-essential \
   curl \
+  aria2 \
+  coreutils \
+  gcc \
+  g++ \
+  musl-dev \
   sudo \
   ffmpeg \
   git \
