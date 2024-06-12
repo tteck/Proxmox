@@ -17,7 +17,6 @@ update_os
 
 msg_info "Installing Dependencies (Patience)"
 $STD apt-get install -y --no-install-recommends \
-  unzip \
   build-essential \
   curl \
   sudo \
@@ -48,6 +47,7 @@ rm -R ${RELEASE}.zip
 cd /opt/matterbridge
 $STD npm ci
 $STD npm run build
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Matterbridge"
 
 msg_info "Creating Service"
@@ -79,6 +79,6 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"
