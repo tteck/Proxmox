@@ -59,11 +59,11 @@ msg_info "Stopping ${APP}"
 systemctl stop homer
 msg_ok "Stopped ${APP}"
 
-msg_info "Backing up config.yml"
+msg_info "Backing up assets directory"
 cd ~
-cp -R /opt/homer/assets/config.yml config.yml
-cp -R /opt/homer/assets/tools tools
-msg_ok "Backed up config.yml and tools directory"
+mkdir -p assets-backup
+cp -R /opt/homer/assets/. assets-backup
+msg_ok "Backed up assets directory"
 
 msg_info "Updating ${APP}"
 rm -rf /opt/homer/*
@@ -71,14 +71,14 @@ cd /opt/homer
 wget -q https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip
 unzip homer.zip &>/dev/null
 msg_ok "Updated ${APP}"
-msg_info "Restoring conf.yml"
+
+msg_info "Restoring assets directory"
 cd ~
-cp -R config.yml /opt/homer/assets
-cp -R tools /opt/homer/assets
-msg_ok "Restored config.yml and tools directory"
+cp -Rf assets-backup/. /opt/homer/assets/
+msg_ok "Restored assets directory"
 
 msg_info "Cleaning"
-rm -rf config.yml tools /opt/homer/homer.zip
+rm -rf assets-backup /opt/homer/homer.zip
 msg_ok "Cleaned"
 
 msg_info "Starting ${APP}"
