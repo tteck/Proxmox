@@ -18,7 +18,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="matterbridge"
+APP="Matterbridge"
 var_disk="4"
 var_cpu="1"
 var_ram="1024"
@@ -53,41 +53,39 @@ function default_settings() {
 }
 
 function update_script() {
-  if [[ ! -d /opt/matterbridge ]]; then 
-	msg_error "No ${APP} Installation Found!"; 
-	exit; 
-fi
-
-LATEST_VERSION=$(grep -oP '## \[\d+\.\d+\.\d+\]' /opt/matterbridge/CHANGELOG.md | head -1 | sed 's/## \[\(.*\)\]/\1/')
-RELEASE=$(curl -s https://api.github.com/repos/Luligu/matterbridge/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-
 header_info
-if [[ "${RELEASE}" != "${LATEST_VERSION}" ]]; then
-    msg_info "Stopping Matterbridge Service"
-    systemctl stop matterbridge
-    msg_ok "Stopped Matterbridge Service"
+if [[ ! -d /opt/matterbridge ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 
-    msg_info "Updating ${APP} LXC"
-    cd /opt/matterbridge
-    wget -q "https://github.com/Luligu/matterbridge/archive/refs/tags/${RELEASE}.zip"  >/dev/null 2>&1
-    unzip -q ${RELEASE}.zip
-    mv matterbridge-${RELEASE} /opt/matterbridge
-    cd /opt/matterbridge
-    npm ci >/dev/null 2>&1
-    npm run build >/dev/null 2>&1
-    
-    msg_info "Cleaning up"
-    rm /opt/${RELEASE}.zip 
-    msg_ok "Cleaned"
+RELEASE=$(curl -s https://api.github.com/repos/Luligu/matterbridge/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3)}')
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+  msg_info "Stopping ${APP} Service"
+  systemctl stop matterbridge
+  msg_ok "Stopped ${APP} Service"
 
-    msg_info "Starting Matterbridge Service"
-    systemctl start matterbridge
-    sleep 1
-    msg_ok "Started Matterbridge Service"
+  msg_info "Updating ${APP} to ${RELEASE}"
+  cd /opt/matterbridge
+  wget -q "https://github.com/Luligu/matterbridge/archive/refs/tags/${RELEASE}.zip" 
+  unzip -q ${RELEASE}.zip
+  mv matterbridge-${RELEASE} /opt/matterbridge
+  cd /opt/matterbridge
+  npm ci >/dev/null 2>&1
+  npm run build >/dev/null 2>&1
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
+
+  msg_info "Cleaning up"
+  rm /opt/${RELEASE}.zip 
+  msg_ok "Cleaned"
+
+  msg_info "Starting ${APP} Service"
+  systemctl start matterbridge
+  sleep 1
+  msg_ok "Started ${APP} Service"
   msg_ok "Updated Successfully!\n"
-  else
-    msg_ok "No update required. ${APP} is already at ${RELEASE}"
-  fi
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+fi
+exit
 }
 
 start
