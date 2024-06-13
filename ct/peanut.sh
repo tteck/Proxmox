@@ -82,4 +82,5 @@ pct set $CTID -cores 1
 msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:8080${CL} \n"
+         ${BL}http://${IP}:3000${CL} \n
+		 ${YW}Don't forget to update the NUT configuration!${CL} \n"
