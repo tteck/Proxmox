@@ -172,6 +172,7 @@ cat <<EOF >/etc/systemd/system/paperless-task-queue.service
 [Unit]
 Description=Paperless Celery Workers
 Requires=redis.service
+After=postgresql.service
 
 [Service]
 WorkingDirectory=/opt/paperless/src
