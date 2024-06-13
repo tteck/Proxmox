@@ -56,12 +56,13 @@ function default_settings() {
 function update_script() {
   header_info
   if [[ ! -f /etc/systemd/system/peanut.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  RELEASE=$(wget -q https://github.com/Brandawg93/PeaNUT/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+  RELEASE=$(curl -sL https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
   if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
     msg_info "Updating $APP LXC"
     systemctl stop peanut
-    wget -qO peanut.tar.gz https://github.com/Brandawg93/PeaNUT/releases/download/$RELEASE/$RELEASE.tar.gz
-    tar -xzf peanut.tar.gz -C /opt
+    RELEASE_URL=$(curl -s https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep "tarball_url" | awk '{print substr($2, 2, length($2)-3)}')
+    wget -qO peanut.tar.gz $RELEASE_URL
+    tar -xzf peanut.tar.gz -C /opt/peanut --strip-components 1
     rm peanut.tar.gz
     systemctl start peanut
     echo "${RELEASE}" >/opt/${APP}_version.txt
