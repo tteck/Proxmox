@@ -16,42 +16,37 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
-$STD apt-get install -y --no-install-recommends \
+$STD apt-get install -y \
   build-essential \
   curl \
-  unzip \
   sudo \
-  jq \
-  git \
   make \
   libpq-dev \
-  gnupg \
+  unzip \
+  gpg \
   ca-certificates \
   mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Python3"
 $STD apt-get install -y \
-  python3 \
   python3-dev \
   python3-setuptools \
   python3-wheel \
-  python3-pip \
-  python3-venv
+  python3-pip
 msg_ok "Installed Python3"
 
 msg_info "Installing Spoolman"
 cd /opt
 RELEASE=$(wget -q https://github.com/Donkie/Spoolman/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+cd /opt
 wget -q https://github.com/Donkie/Spoolman/releases/download/$RELEASE/spoolman.zip
 unzip -q spoolman.zip -d spoolman
-echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
+rm -rf spoolman.zip
 cd spoolman
-$STD python3 -m venv .venv
-$STD source .venv/bin/activate
 $STD pip3 install -r requirements.txt
 cp .env.example .env
-chmod +x scripts/*.sh
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Spoolman"
 
 msg_info "Creating Service"
@@ -59,15 +54,13 @@ cat <<EOF >/etc/systemd/system/spoolman.service
 [Unit]
 Description=Spoolman
 After=network.target
-
 [Service]
 Type=simple
 WorkingDirectory=/opt/spoolman
 EnvironmentFile=/opt/spoolman/.env
-ExecStart=/opt/spoolman/scripts/start.sh
+ExecStart=uvicorn spoolman.main:app --host 0.0.0.0 --port 7912
 Restart=always
 User=root
-
 [Install]
 WantedBy=multi-user.target
 EOF
