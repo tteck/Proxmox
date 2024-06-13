@@ -13,6 +13,8 @@
 
 ### Changed
 
+- **Website**
+  - If the Changelog has changed recently, the link on the website will pulse.
 - **Spoolman LXC**
   - NEW Script
 
