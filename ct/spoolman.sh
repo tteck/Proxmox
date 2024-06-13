@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
-# Author: MickLesk (Canbiz)
+# Author: tteck
+# Co-Author: MickLesk (Canbiz)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -59,41 +60,37 @@ if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
   read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
   [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
 fi
-msg_info "Stopping ${APP} Service"
-systemctl stop spoolman
-msg_ok "Stopped ${APP} Service"
-
-msg_info "Updating ${APP} to latest Git"
 RELEASE=$(wget -q https://github.com/Donkie/Spoolman/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-cd /opt
-if [ -d spoolman_bak ]; then
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+
+  msg_info "Stopping ${APP} Service"
+  systemctl stop spoolman
+  msg_ok "Stopped ${APP} Service"
+
+  msg_info "Updating ${APP} to ${RELEASE}"
+  cd /opt
   rm -rf spoolman_bak
+  mv spoolman spoolman_bak
+  wget -q https://github.com/Donkie/Spoolman/releases/download/${RELEASE}/spoolman.zip 
+  unzip -q spoolman.zip -d spoolman 
+  cd spoolman
+  pip3 install -r requirements.txt >/dev/null 2>&1
+  cp .env.example .env
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
+
+  msg_info "Starting ${APP} Service"
+  systemctl start spoolman
+  msg_ok "Started ${APP} Service"
+
+  msg_info "Cleaning up"
+  rm -rf /opt/spoolman.zip
+  msg_ok "Cleaned"
+
+  msg_ok "Updated Successfully!\n"
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
 fi
-mv spoolman spoolman_bak
-wget -q https://github.com/Donkie/Spoolman/releases/download/${RELEASE}/spoolman.zip 
-unzip -q spoolman.zip -d spoolman 
-echo "${RELEASE}" >/opt/${APP}_version.txt
-cd spoolman
-python3 -m venv .venv >/dev/null 2>&1
-source .venv/bin/activate >/dev/null 2>&1
-pip3 install -r requirements.txt >/dev/null 2>&1
-cp .env.example .env
-chmod +x scripts/*.sh
-msg_ok "Updated ${APP} to latest Git"
-
-msg_info "Starting ${APP} Service"
-systemctl start spoolman
-sleep 1
-msg_ok "Started ${APP} Service"
-
-msg_info "Cleaning up"
-if [ -d "/opt/spoolman_bak" ]; then
-rm -rf /opt/spoolman_bak
-rm -rf /opt/spoolman.zip
-fi
-msg_ok "Cleaning up Successfully!"
-
-msg_ok "Updated Successfully!\n"
 exit
 }
 
