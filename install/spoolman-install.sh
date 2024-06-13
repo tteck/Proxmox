@@ -73,3 +73,5 @@ msg_info "Cleaning up"
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
+echo -e "${APP} Setup should be reachable by going to the following URL.
+         ${BL}http://${IP}:7912${CL} \n"
