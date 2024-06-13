@@ -18,56 +18,31 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
+$STD apt-get install -y wget
+$STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
+msg_info "Installing Node.js"
+#curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && apt-get install -y nodejs
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
+$STD apt-get update
+$STD apt-get install -y nodejs
+msg_ok "Installed Node.js"
+
 msg_info "Installing Peanut"
-# WORKDIR /app
-
-# COPY --link package.json pnpm-lock.yaml* ./
-
-# SHELL ["/bin/ash", "-xeo", "pipefail", "-c"]
-# RUN npm install -g pnpm
-
-# RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store pnpm fetch | grep -v "cross-device link not permitted\|Falling back to copying packages from store"
-
-# RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store pnpm install -r --offline
-
-# FROM node:20-alpine as build
-
-# WORKDIR /app
-
-# COPY --link --from=deps /app/node_modules ./node_modules/
-# COPY . .
-
-# RUN npm run telemetry && npm run build
-
-# FROM node:20-alpine as runner
-
-# LABEL org.opencontainers.image.title "PeaNUT"
-# LABEL org.opencontainers.image.description "A tiny dashboard for Network UPS Tools"
-# LABEL org.opencontainers.image.url="https://github.com/Brandawg93/PeaNUT"
-# LABEL org.opencontainers.image.source='https://github.com/Brandawg93/PeaNUT'
-# LABEL org.opencontainers.image.licenses='Apache-2.0'
-
-# COPY --link package.json next.config.js ./
-
-# COPY --from=build --link /app/.next/standalone ./
-# COPY --from=build --link /app/.next/static ./.next/static
-
-# ENV NODE_ENV production
-# ENV NUT_HOST localhost
-# ENV NUT_PORT 3493
-# ENV WEB_HOST 0.0.0.0
-# ENV WEB_PORT 8080
-
-# EXPOSE $WEB_PORT
-
-# HEALTHCHECK --interval=10s --timeout=3s --start-period=20s \
-  # CMD wget --no-verbose --tries=1 --spider --no-check-certificate http://$WEB_HOST:$WEB_PORT/api/ping || exit 1
-
-# CMD ["npm", "start"]
-
-
+wget -qO peanut.tar.gz https://github.com/Brandawg93/PeaNUT/releases/download/$RELEASE/$RELEASE.tar.gz
+tar -xzf peanut.tar.gz -C /opt
+rm peanut.tar.gz
+cd /opt/peanut
+npm install -g pnpm
+pnpm i
+#pnpm run build
+#pnpm run build:local
+npm run build && cp -r .next/static .next/standalone/.next/
+#pnpm run start:local
+node .next/standalone/server.js
 msg_ok "Installed Peanut"
 
 msg_info "Creating Service"
