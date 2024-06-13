@@ -22,7 +22,6 @@ $STD apt-get install -y \
   sudo \
   make \
   libpq-dev \
-  unzip \
   gpg \
   ca-certificates \
   mc
