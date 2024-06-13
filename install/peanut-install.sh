@@ -32,8 +32,10 @@ $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
 msg_info "Installing Peanut"
-wget -qO peanut.tar.gz https://github.com/Brandawg93/PeaNUT/releases/download/$RELEASE/$RELEASE.tar.gz
-tar -xzf peanut.tar.gz -C /opt
+RELEASE_URL=$(curl -s https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep "tarball_url" | awk '{print substr($2, 2, length($2)-3)}')
+wget -qO peanut.tar.gz $RELEASE_URL
+mkdir -p /opt/peanut
+tar -xzf peanut.tar.gz -C /opt/peanut --strip-components 1
 rm peanut.tar.gz
 cd /opt/peanut
 npm install -g pnpm
