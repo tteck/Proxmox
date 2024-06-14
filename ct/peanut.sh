@@ -57,16 +57,18 @@ function update_script() {
   header_info
   if [[ ! -f /etc/systemd/system/peanut.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   RELEASE=$(curl -sL https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-  if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
     msg_info "Updating $APP LXC"
     systemctl stop peanut
-    RELEASE_URL=$(curl -s https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep "tarball_url" | awk '{print substr($2, 2, length($2)-3)}')
-    wget -qO peanut.tar.gz $RELEASE_URL
+    wget -qO peanut.tar.gz https://api.github.com/repos/Brandawg93/PeaNUT/tarball/${RELEASE}
     tar -xzf peanut.tar.gz -C /opt/peanut --strip-components 1
     rm peanut.tar.gz
+    cd /opt/peanut
+    pnpm i &>/dev/null
+    pnpm run build &>/dev/null
     systemctl start peanut
     echo "${RELEASE}" >/opt/${APP}_version.txt
-    msg_ok "Updated $APP LXC"
+    msg_ok "Updated $APP to ${RELEASE}"
   else
     msg_ok "No update required. ${APP} is already at ${RELEASE}"
   fi
@@ -83,5 +85,4 @@ pct set $CTID -cores 1
 msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:3000${CL} \n
-		 ${YW}Don't forget to update the NUT configuration!${CL} \n"
+         ${BL}http://${IP}:3000${CL} \n"

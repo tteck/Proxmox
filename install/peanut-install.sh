@@ -18,7 +18,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
-$STD apt-get install -y wget
 $STD apt-get install -y gpg
 msg_ok "Installed Dependencies"
 
@@ -35,15 +34,15 @@ $STD apt-get install -y nut-client
 msg_ok "Installed NUT"
 
 msg_info "Installing Peanut"
-RELEASE_URL=$(curl -s https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep "tarball_url" | awk '{print substr($2, 2, length($2)-3)}')
-wget -qO peanut.tar.gz $RELEASE_URL
+RELEASE=$(curl -sL https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+wget -qO peanut.tar.gz https://api.github.com/repos/Brandawg93/PeaNUT/tarball/${RELEASE}
 mkdir -p /opt/peanut
 tar -xzf peanut.tar.gz -C /opt/peanut --strip-components 1
 rm peanut.tar.gz
 cd /opt/peanut
 $STD npm install -g pnpm
 $STD pnpm i
-$STD npm run build
+$STD pnpm run build
 cp -r .next/static .next/standalone/.next/
 msg_ok "Installed Peanut"
 
