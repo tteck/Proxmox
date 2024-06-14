@@ -66,6 +66,7 @@ function update_script() {
     cd /opt/peanut
     pnpm i &>/dev/null
     pnpm run build &>/dev/null
+    cp -r .next/static .next/standalone/.next/
     systemctl start peanut
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated $APP to ${RELEASE}"
@@ -80,7 +81,7 @@ build_container
 description
 
 msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 512
+pct set $CTID -memory 1024
 pct set $CTID -cores 1
 msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
