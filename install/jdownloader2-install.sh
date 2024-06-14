@@ -23,6 +23,7 @@ $STD apt-get install -y xvfb
 $STD apt-get install -y tigervnc-scraping-server
 $STD apt-get install -y openjdk-11-jdk
 $STD apt-get install -y openbox
+$STD apt-get install -y net-tools
 msg_ok "Installed Dependencies"
 
 msg_info "Installing JDownloader2"
