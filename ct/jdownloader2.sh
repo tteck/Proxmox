@@ -67,4 +67,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:6080${CL}/vnc.html"
+         ${BL}http://${IP}:6080/vnc.html${CL}"
