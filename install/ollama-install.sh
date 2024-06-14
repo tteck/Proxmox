@@ -22,6 +22,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Ollama"
 $STD curl -fsSL https://ollama.com/install.sh | sh
+
 msg_ok "Installed Ollama"
 
 msg_info "Creating Service"
@@ -32,14 +33,13 @@ After=network-online.target
 
 [Service]
 Type=simple
-UMask=007
 ExecStart=/usr/bin/ollama serve
 Restart=always
 RestartSec=3
 
 [Install]
 WantedBy=multi-user.target" >$service_path
-systemctl enable --now -q ollama
+systemctl enable -q --now ollama.service
 msg_ok "Created Service"
 
 motd_ssh
