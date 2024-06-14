@@ -55,14 +55,14 @@ function default_settings() {
 }
 
 function update_script() {
-  header_info
-  if [[ ! -d /opt/myspeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-    read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-    [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-  fi
-  RELEASE=$(wget -q https://github.com/gnmyt/myspeed/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
-  if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+header_info
+if [[ ! -d /opt/myspeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
+  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
+  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
+fi
+RELEASE=$(wget -q https://github.com/gnmyt/myspeed/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
   msg_info "Stopping ${APP} Service"
   systemctl stop myspeed
@@ -88,9 +88,9 @@ function update_script() {
   msg_ok "Cleaned"
 
   msg_ok "Updated Successfully!\n"
-  else
+else
   msg_ok "No update required. ${APP} is already at ${RELEASE}"
-  fi
+fi
 exit
 }
 
