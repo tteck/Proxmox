@@ -30,7 +30,8 @@ mkdir -p /app/cfg
 $STD git clone https://github.com/jlesage/docker-jdownloader-2 /root/djd2
 mv /root/djd2/rootfs/defaults/cfg/* /app/cfg/
 rm -rf /root/djd2
-wget -Oq - http://installer.jdownloader.org/JDownloader.jar > /app/JDownloader.jar
+cd /app
+wget -q http://installer.jdownloader.org/JDownloader.jar
 msg_ok "Installed JDownloader2"
 
 msg_info "Setting up VNC Server"
