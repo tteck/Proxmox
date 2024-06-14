@@ -8,11 +8,11 @@ source <(curl -s https://raw.githubusercontent.com/asylumexp/Proxmox/main/misc/b
 function header_info {
 clear
 cat <<"EOF"
-    ___         _      ___
-   /   |  _____(_)___ |__ \
-  / /| | / ___/ / __ `/_/ /
- / ___ |/ /  / / /_/ / __/
-/_/  |_/_/  /_/\__,_/____/
+       ______                      __                __         ___ 
+      / / __ \____ _      ______  / /___  ____ _____/ /__  ____|__ \
+ __  / / / / / __ \ | /| / / __ \/ / __ \/ __ `/ __  / _ \/ ___/_/ /
+/ /_/ / /_/ / /_/ / |/ |/ / / / / / /_/ / /_/ / /_/ /  __/ /  / __/ 
+\____/_____/\____/|__/|__/_/ /_/_/\____/\__,_/\__,_/\___/_/  /____/ 
 EOF
 }
 header_info
@@ -67,4 +67,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:6880${CL}"
+         ${BL}http://${IP}:6080${CL}/vnc.html"

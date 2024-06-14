@@ -35,13 +35,6 @@ cd /app
 wget -q http://installer.jdownloader.org/JDownloader.jar
 msg_ok "Installed JDownloader2"
 
-msg_info "Setting up VNC Server"
-mkdir /root/.vnc
-secret=$(openssl rand -base64 8)
-echo "$secret" >>/app/passwd
-echo $secret | vncpasswd -f
-msg_ok "Setup VNC Server"
-
 msg_info "Creating Service"
 mkdir /output
 cat <<EOF >/etc/systemd/system/xvfb.service
@@ -62,7 +55,7 @@ After=xvfb.service
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/x0vncserver -display :1 -PasswordFile=/root/.vnc/passwd
+ExecStart=/usr/bin/x0vncserver -display :1 -SecurityTypes none
 Environment="DISPLAY=:1"
 Environment="HOME=/root"
 Restart=on-failure
