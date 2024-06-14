@@ -9,6 +9,13 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-06-14
+
+### Changed
+
+- **MySpeed LXC**
+  - NEW Script
+
 ## 2024-06-13
 
 ### Changed
