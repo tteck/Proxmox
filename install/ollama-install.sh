@@ -39,7 +39,6 @@ RestartSec=3
 
 [Install]
 WantedBy=multi-user.target" >$service_path
-systemctl daemon-reload
 systemctl enable --now -q ollama
 msg_ok "Created Service"
 
