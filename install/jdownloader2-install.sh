@@ -18,7 +18,6 @@ $STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y git
 $STD apt-get install -y mc
-$STD apt-get install -y wget
 $STD apt-get install -y novnc
 $STD apt-get install -y xvfb
 $STD apt-get install -y tigervnc-scraping-server
