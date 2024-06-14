@@ -26,7 +26,7 @@ $STD apt-get install -y openbox
 msg_ok "Installed Dependencies"
 
 msg_info "Installing JDownloader2"
-mkidr -p /app/cfg
+mkdir -p /app/cfg
 $STD git clone https://github.com/jlesage/docker-jdownloader-2
 mv ./docker-jdownloader2/rootfs/defaults/cfg/* /app/cfg/
 rm -rf ./docker-jdownloader2
