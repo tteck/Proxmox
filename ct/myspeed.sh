@@ -55,43 +55,43 @@ function default_settings() {
 }
 
 function update_script() {
-	header_info
-	if [[ ! -d /opt/myspeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-	if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-	  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-	  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-	fi
-	RELEASE=$(wget -q https://github.com/gnmyt/myspeed/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
-	if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
-		msg_info "Stopping ${APP} Service"
-		systemctl stop myspeed
-		msg_ok "Stopped ${APP} Service"
+  header_info
+  if [[ ! -d /opt/myspeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+  if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
+    read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
+    [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
+  fi
+  RELEASE=$(wget -q https://github.com/gnmyt/myspeed/releases/latest -O - | grep "title>Release" | cut -d " " -f 5)
+  if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
-		msg_info "Updating ${APP} to ${RELEASE}"
-		cd /opt
-		rm -rf myspeed_bak
-		mv myspeed myspeed_bak
-		wget -q https://github.com/gnmyt/myspeed/releases/download/v$RELEASE/MySpeed-$RELEASE.zip
-		unzip -q MySpeed-$RELEASE.zip -d myspeed
-		cd myspeed
-		npm install >/dev/null 2>&1
-		echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_info "Stopping ${APP} Service"
+  systemctl stop myspeed
+  msg_ok "Stopped ${APP} Service"
 
-		msg_ok "Updated ${APP} to ${RELEASE}"
+  msg_info "Updating ${APP} to ${RELEASE}"
+  cd /opt
+  rm -rf myspeed_bak
+  mv myspeed myspeed_bak
+  wget -q https://github.com/gnmyt/myspeed/releases/download/v$RELEASE/MySpeed-$RELEASE.zip
+  unzip -q MySpeed-$RELEASE.zip -d myspeed
+  cd myspeed
+  npm install >/dev/null 2>&1
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
 
-		msg_info "Starting ${APP} Service"
-		systemctl start myspeed
-		msg_ok "Started ${APP} Service"
+  msg_info "Starting ${APP} Service"
+  systemctl start myspeed
+  msg_ok "Started ${APP} Service"
 
-		msg_info "Cleaning up"
-		rm -rf MySpeed-$RELEASE.zip
-		msg_ok "Cleaned"
+  msg_info "Cleaning up"
+  rm -rf MySpeed-$RELEASE.zip
+  msg_ok "Cleaned"
 
-		msg_ok "Updated Successfully!\n"
-	else
-		msg_ok "No update required. ${APP} is already at ${RELEASE}"
-	fi
-	exit
+  msg_ok "Updated Successfully!\n"
+  else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+  fi
+exit
 }
 
 start
