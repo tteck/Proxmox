@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2024 ulmentflam
-# Author: ulmentflam
+# Copyright (c) 2021-2024 tteck
+# Author: tteck (tteckster)
+# Co-Author: ulmentflam
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
