@@ -9,17 +9,17 @@ source <(curl -s https://raw.githubusercontent.com/remz1337/Proxmox/remz/misc/bu
 function header_info {
 clear
 cat <<"EOF"
-    ____                         __ 
-   / __ \___  ____ _____  __  __/ /_
-  / /_/ / _ \/ __ `/ __ \/ / / / __/
- / ____/  __/ /_/ / / / / /_/ / /_  
-/_/    \___/\__,_/_/ /_/\__,_/\__/  
+    ____             _   ____  ________
+   / __ \___  ____ _/ | / / / / /_  __/
+  / /_/ / _ \/ __ `/  |/ / / / / / /
+ / ____/  __/ /_/ / /|  / /_/ / / /
+/_/    \___/\__,_/_/ |_/\____/ /_/
 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Peanut"
+APP="PeaNUT"
 var_disk="4"
 var_cpu="2"
 var_ram="2048"
@@ -58,7 +58,7 @@ function update_script() {
   if [[ ! -f /etc/systemd/system/peanut.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   RELEASE=$(curl -sL https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
   if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
-    msg_info "Updating $APP LXC"
+    msg_info "Updating $APP to ${RELEASE}"
     systemctl stop peanut
     wget -qO peanut.tar.gz https://api.github.com/repos/Brandawg93/PeaNUT/tarball/${RELEASE}
     tar -xzf peanut.tar.gz -C /opt/peanut --strip-components 1
