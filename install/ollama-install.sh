@@ -30,9 +30,9 @@ Description=Ollama Service
 After=network-online.target
 
 [Service]
+Type=simple
+UMask=007
 ExecStart=/usr/bin/ollama serve
-User=ollama
-Group=ollama
 Restart=always
 RestartSec=3
 
