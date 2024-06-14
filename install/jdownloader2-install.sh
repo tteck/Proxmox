@@ -35,6 +35,7 @@ wget -q http://installer.jdownloader.org/JDownloader.jar
 msg_ok "Installed JDownloader2"
 
 msg_info "Setting up VNC Server"
+mkdir /root/.vnc
 secret=$(openssl rand -base64 8)
 echo "password: $secret" >>/root/.vnc/passwd
 echo $secret | vncpasswd -f
