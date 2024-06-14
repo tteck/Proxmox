@@ -21,7 +21,7 @@ $STD apt-get install -y mc
 $STD apt-get install -y novnc
 $STD apt-get install -y xvfb
 $STD apt-get install -y tigervnc-scraping-server
-$STD apt-get install -y openjdk-11-jdk
+$STD apt-get install -y openjdk-17-jdk
 $STD apt-get install -y openbox
 $STD apt-get install -y net-tools
 msg_ok "Installed Dependencies"
@@ -72,7 +72,7 @@ After=x0vncserver.service network.target
 [Service]
 Type=simple
 WorkingDirectory=/usr/share/novnc
-ExecStart=/usr/share/novnc/utils/launch.sh --vnc localhost:5901
+ExecStart=/usr/bin/websockify 6080 --web /usr/share/novnc --wrap-mode=ignore :5901
 Restart=always
 RestartSec=5
 
