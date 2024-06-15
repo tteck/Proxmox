@@ -30,11 +30,12 @@ msg_ok "Updated Python3"
 
 msg_info "Installing Fooocus"
 FOOOCUS_VERSION=$(wget -q https://github.com/lllyasviel/Fooocus/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+FOOOCUS_VERSION_NO_V=$(echo "${FOOOCUS_VERSION}" | cut -c 2-)
 cd /opt || msg_error "Failed to change directory to /opt"
 $STD wget https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${FOOOCUS_VERSION}".tar.gz
 $STD tar -xf "${FOOOCUS_VERSION}".tar.gz
-mv "Fooocus-${FOOOCUS_VERSION}" /opt/Fooocus
-rm -rf "Fooocus-${FOOOCUS_VERSION}" "${FOOOCUS_VERSION}".tar.gz
+mv /opt/"Fooocus-${FOOOCUS_VERSION_NO_V}" /opt/Fooocus
+rm -rf "Fooocus-${FOOOCUS_VERSION_NO_V}" "${FOOOCUS_VERSION}".tar.gz
 cd /opt/Fooocus || msg_error "Failed to change directory to /opt/Fooocus"
 $STD pip3 install --upgrade pip
 $STD pip3 install -r requirements.txt

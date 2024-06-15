@@ -54,12 +54,12 @@ function default_settings() {
 }
 
 function update_script() {
-header_info
 if [[ ! -f /etc/systemd/system/fooocus.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 
 RELEASE=$(curl -s https://api.github.com/repos/lllyasviel/Fooocus/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+RELEASE_VERSION_NO_V=$(echo "${RELEASE}" | cut -c 2-)
 
 if [[ -z "$RELEASE" ]]; then
   msg_error "Failed to get latest version"
@@ -77,8 +77,8 @@ if [ "$UPD" == "1" ]; then
     cd ~ || msg_error "Failed to change directory"
     wget -q https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${RELEASE}".tar.gz
     tar -xf "${RELEASE}".tar.gz
-    cp -r "Fooocus-${RELEASE}"/* /opt/Fooocus
-    rm -rf "Fooocus-${RELEASE}" "${RELEASE}".tar.gz
+    cp -r "Fooocus-${RELEASE_VERSION_NO_V}"/* /opt/Fooocus
+    rm -rf "Fooocus-${RELEASE_VERSION_NO_V}" "${RELEASE}".tar.gz
     cd /opt/Fooocus || msg_error "Failed to change directory"
     pip3 install --upgrade pip
     pip3 install -r requirements_versions.txt
