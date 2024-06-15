@@ -33,8 +33,8 @@ FOOOCUS_VERSION=$(wget -q https://github.com/lllyasviel/Fooocus/releases/latest 
 cd /opt || msg_error "Failed to change directory to /opt"
 $STD wget https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${FOOOCUS_VERSION}".tar.gz
 $STD tar -xf "${FOOOCUS_VERSION}".tar.gz
-mv "${FOOOCUS_VERSION}" /opt/Fooocus
-rm -rf "${FOOOCUS_VERSION}" "${FOOOCUS_VERSION}".tar.gz
+mv "Fooocus-${FOOOCUS_VERSION}" /opt/Fooocus
+rm -rf "Fooocus-${FOOOCUS_VERSION}" "${FOOOCUS_VERSION}".tar.gz
 cd /opt/Fooocus || msg_error "Failed to change directory to /opt/Fooocus"
 $STD pip3 install --upgrade pip
 $STD pip3 install -r requirements.txt

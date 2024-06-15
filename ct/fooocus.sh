@@ -77,8 +77,8 @@ if [ "$UPD" == "1" ]; then
     cd ~ || msg_error "Failed to change directory"
     wget -q https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${RELEASE}".tar.gz
     tar -xf "${RELEASE}".tar.gz
-    cp -r "${RELEASE}"/* /opt/Fooocus
-    rm -rf "${RELEASE}" "${RELEASE}".tar.gz
+    cp -r "Fooocus-${RELEASE}"/* /opt/Fooocus
+    rm -rf "Fooocus-${RELEASE}" "${RELEASE}".tar.gz
     cd /opt/Fooocus || msg_error "Failed to change directory"
     pip3 install --upgrade pip
     pip3 install -r requirements_versions.txt
