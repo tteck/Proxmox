@@ -75,9 +75,8 @@ if [ "$UPD" == "1" ]; then
     msg_info "Updating $APP to $RELEASE"
     systemctl stop fooocus.service
     cd ~ || msg_error "Failed to change directory"
-    wget -q https://github.com/lllyasviel/Fooocus/archive/refs/tags/${RELEASE}.tar.gz
-    # shellcheck disable=SC2086
-    tar -xf ${RELEASE}.tar.gz
+    wget -q https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${RELEASE}".tar.gz
+    tar -xf "${RELEASE}".tar.gz
     cp -r "${RELEASE}"/* /opt/Fooocus
     rm -rf "${RELEASE}" "${RELEASE}".tar.gz
     cd /opt/Fooocus || msg_error "Failed to change directory"
