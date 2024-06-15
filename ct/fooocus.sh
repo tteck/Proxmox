@@ -21,8 +21,8 @@ header_info
 echo -e "Loading..."
 APP="Fooocus"
 var_disk="24"
-var_cpu="2"
-var_ram="2048"
+var_cpu="4"
+var_ram="8192"
 var_os="debian"
 var_version="12"
 variables
