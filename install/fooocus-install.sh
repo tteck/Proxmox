@@ -32,7 +32,7 @@ msg_info "Installing Fooocus"
 FOOOCUS_VERSION=$(wget -q https://github.com/lllyasviel/Fooocus/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 cd /opt || msg_error "Failed to change directory to /opt"
 $STD wget https://github.com/lllyasviel/Fooocus/archive/refs/tags/"${FOOOCUS_VERSION}".tar.gz
-$STD tar -xf "${FOOOCUS_VERSION}".tar.gz -C /opt/
+$STD tar -xf "${FOOOCUS_VERSION}".tar.gz
 mv "${FOOOCUS_VERSION}" /opt/Fooocus
 rm -rf "${FOOOCUS_VERSION}" "${FOOOCUS_VERSION}".tar.gz
 cd /opt/Fooocus || msg_error "Failed to change directory to /opt/Fooocus"
