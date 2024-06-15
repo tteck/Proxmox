@@ -38,7 +38,7 @@ mv /opt/"Fooocus-${FOOOCUS_VERSION_NO_V}" /opt/Fooocus
 rm -rf "Fooocus-${FOOOCUS_VERSION_NO_V}" "${FOOOCUS_VERSION}".tar.gz
 cd /opt/Fooocus || msg_error "Failed to change directory to /opt/Fooocus"
 $STD pip3 install --upgrade pip
-$STD pip3 install -r requirements.txt
+$STD pip3 install -r requirements_versions.txt
 echo "${FOOOCUS_VERSION}" >/opt/Fooocus_version.txt
 msg_ok "Installed Fooocus"
 
