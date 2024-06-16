@@ -22,7 +22,7 @@ echo -e "Loading..."
 APP="Fooocus"
 var_disk="24"
 var_cpu="4"
-var_ram="9216"
+var_ram="16384"
 var_os="debian"
 var_version="12"
 variables
