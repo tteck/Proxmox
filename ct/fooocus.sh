@@ -22,7 +22,7 @@ echo -e "Loading..."
 APP="Fooocus"
 var_disk="24"
 var_cpu="4"
-var_ram="8192"
+var_ram="9216"
 var_os="debian"
 var_version="12"
 variables
@@ -98,4 +98,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:80${CL} \n"
+         ${BL}http://${IP}:7865${CL} \n"
