@@ -254,13 +254,12 @@ nfs | dir)
 btrfs | zfspool)
   DISK_EXT=""
   DISK_REF="$VMID/"
-  DISK_FORMAT="subvol"
   DISK_IMPORT="-format raw"
   ;;
 esac
 
 DISK_VAR="vm-${VMID}-disk-0${DISK_EXT:-}"
-DISK_REF="${STORAGE}:${DISK_VAR:-}"
+DISK_REF="${STORAGE}:${DISK_REF:-}${DISK_VAR:-}"
 
 msg_ok "Extracted Mikrotik RouterOS CHR Disk Image"
 msg_info "Creating Mikrotik RouterOS CHR VM"
