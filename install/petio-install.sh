@@ -51,15 +51,18 @@ msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/petio.service
 [Unit]
 Description=Petio a content request system
-After=network.target
-StartLimitIntervalSec=0
+After=network.target mongod.service
 
 [Service]
 Type=simple
+User=petio
 Restart=on-failure
 RestartSec=1
 ExecStart=/opt/Petio/bin/petio-linux
-User=petio
+
+[Install]
+WantedBy=multi-user.target
+
 
 EOF
 systemctl enable -q --now petio.service
