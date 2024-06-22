@@ -58,8 +58,8 @@ if [[ ! -d /opt/actualbudget ]]; then msg_error "No ${APP} Installation Found!";
 msg_info "Updating ${APP}"
 systemctl stop actualbudget.service
 cd /opt/actualbudget
-git pull
-yarn install
+git pull &>/dev/null
+yarn install &>/dev/null
 systemctl start actualbudget.service
 msg_ok "Successfully Updated ${APP}"
 exit
