@@ -40,7 +40,7 @@ msg_ok "Installed pnpm"
 msg_info "Installing Jellyseerr (Patience)"
 git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
 cd /opt/jellyseerr
-$STD CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile
+CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile &>/dev/null
 $STD pnpm build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
