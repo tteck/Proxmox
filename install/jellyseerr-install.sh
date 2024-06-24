@@ -53,15 +53,17 @@ msg_ok "Installed Jellyseerr"
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/jellyseerr.service
 [Unit]
-Description=jellyseerr Service
-After=network.target
+Description=Jellyseerr Service
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 EnvironmentFile=/etc/jellyseerr/jellyseerr.conf
 Environment=NODE_ENV=production
 Type=exec
+Restart=on-failure
 WorkingDirectory=/opt/jellyseerr
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/bin/node dist/index.js
 
 [Install]
 WantedBy=multi-user.target
