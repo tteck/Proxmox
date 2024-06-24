@@ -33,15 +33,16 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Yarn"
-$STD npm install -g yarn
-msg_ok "Installed Yarn"
+msg_info "Installing pnpm"
+$STD npm install -g pnpm
+msg_ok "Installed pnpm"
 
 msg_info "Installing Jellyseerr (Patience)"
 git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
 cd /opt/jellyseerr
-$STD yarn install
-$STD yarn build
+git checkout main
+$STD CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile
+$STD pnpm build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
 PORT=5055
