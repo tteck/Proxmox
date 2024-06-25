@@ -17,6 +17,7 @@ msg_info "Installing Dependencies"
 $STD apk add newt
 $STD apk add curl
 $STD apk add openssh
+$STD apk add tzdata
 $STD apk add nano
 $STD apk add mc
 msg_ok "Installed Dependencies"
