@@ -25,15 +25,14 @@ $STD apt-get install -y \
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Scrutiny WebApp"
-mkdir -p /opt/scrutiny/config
-mkdir -p /opt/scrutiny/web
-mkdir -p /opt/scrutiny/bin
+mkdir -p /opt/scrutiny/{config,web,bin}
 RELEASE=$(curl -s https://api.github.com/repos/analogj/scrutiny/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-echo "${RELEASE}" >/opt/scrutiny_version.txt
+echo "${RELEASE}" >/opt/${APP}_version.txt
 wget -q -O /opt/scrutiny/config/scrutiny.yaml https://raw.githubusercontent.com/AnalogJ/scrutiny/master/example.scrutiny.yaml
 wget -q -O /opt/scrutiny/bin/scrutiny-web-linux-amd64 "https://github.com/AnalogJ/scrutiny/releases/download/${RELEASE}/scrutiny-web-linux-amd64"
 wget -q -O /opt/scrutiny/web/scrutiny-web-frontend.tar.gz "https://github.com/AnalogJ/scrutiny/releases/download/${RELEASE}/scrutiny-web-frontend.tar.gz"
-cd /opt/scrutiny/web && tar xzf scrutiny-web-frontend.tar.gz --strip-components 1 -C .
+cd /opt/scrutiny/web 
+tar xzf scrutiny-web-frontend.tar.gz --strip-components 1 -C .
 chmod +x /opt/scrutiny/bin/scrutiny-web-linux-amd64
 msg_ok "Installed Scrutiny WebApp"
 
@@ -52,9 +51,8 @@ User=root
 [Install]
 WantedBy=multi-user.target
 EOF
-    systemctl enable -q --now scrutiny.service
+systemctl enable -q --now scrutiny.service
 msg_ok "Created and enabled Service"
-
 
 motd_ssh
 customize
