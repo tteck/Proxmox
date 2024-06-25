@@ -36,30 +36,19 @@ cd /opt/scrutiny/web && tar xzf scrutiny-web-frontend.tar.gz --strip-components 
 chmod +x /opt/scrutiny/bin/scrutiny-web-linux-amd64
 msg_ok "Installed Scrutiny WebApp"
 
-msg_info "Installing Scrutiny Collector"
-wget -q -O /opt/scrutiny/bin/scrutiny-collector-metrics-linux-amd64 "https://github.com/AnalogJ/scrutiny/releases/download/${RELEASE}/scrutiny-collector-metrics-linux-amd64"
-chmod +x /opt/scrutiny/bin/scrutiny-collector-metrics-linux-amd64
-msg_ok "Installed Scrutiny Collector"
-
 DEFAULT_HOST="127.0.0.1"
 DEFAULT_PORT="8086"
 DEFAULT_TOKEN="my-token"
 DEFAULT_ORG="my-org"
 DEFAULT_BUCKET="bucket"
-
-# Prompt the user for input
 read -r -p "Enter InfluxDB Host/IP [$DEFAULT_HOST]: " HOST
 HOST=${HOST:-$DEFAULT_HOST}
-
 read -r -p "Enter InfluxDB Port [$DEFAULT_PORT]: " PORT
 PORT=${PORT:-$DEFAULT_PORT}
-
 read -r -p "Enter InfluxDB Token [$DEFAULT_TOKEN]: " TOKEN
 TOKEN=${TOKEN:-$DEFAULT_TOKEN}
-
 read -r -p "Enter InfluxDB Organization [$DEFAULT_ORG]: " ORG
 ORG=${ORG:-$DEFAULT_ORG}
-
 read -r -p "Enter InfluxDB Bucket [$DEFAULT_BUCKET]: " BUCKET
 BUCKET=${BUCKET:-$DEFAULT_BUCKET}
 
@@ -93,14 +82,8 @@ log:
 EOF
 msg_ok "Setup InfluxDB-Connection"
 
-SCRUTINY_OPTION="1" 
-read -r -p "Choose an option:
-1) Start Scrutiny with GUI
-2) Start Scrutiny Collector only
-Enter your choice (1/2): " SCRUTINY_OPTION
-
-if [[ $SCRUTINY_OPTION == "1" ]]; then
-    cat <<EOF >/etc/systemd/system/scrutiny.service
+msg_info "Setup Service" 
+cat <<EOF >/etc/systemd/system/scrutiny.service
 [Unit]
 Description=Scrutiny - Hard Drive Monitoring and Webapp
 After=network.target
@@ -115,45 +98,8 @@ User=root
 WantedBy=multi-user.target
 EOF
     systemctl enable -q --now scrutiny.service
-    msg_ok "Created and enabled Scrutiny Webapp service"
+msg_ok "Created and enabled Service"
 
-elif [[ $SCRUTINY_OPTION == "2" ]]; then
-    cat <<EOF >/etc/systemd/system/scrutiny_collector.service
-[Unit]
-Description=Scrutiny Collector - Collect Metrics
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/opt/scrutiny/bin/scrutiny-collector-metrics-linux-amd64 run --api-endpoint "http://localhost:8080"
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-    systemctl enable -q --now scrutiny_collector.service
-    msg_ok "Created and enabled Scrutiny Collector service"
-
-else
-    msg_error "Invalid option selected. Starting Scrutiny with GUI by default."
-   cat <<EOF >/etc/systemd/system/scrutiny.service
-[Unit]
-Description=Scrutiny - Hard Drive Monitoring and Webapp
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/opt/scrutiny/bin/scrutiny-web-linux-amd64 start --config /opt/scrutiny/config/scrutiny.yaml
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-    systemctl enable -q --now scrutiny.service
-    msg_ok "Created and enabled Scrutiny Webapp service (default option)"
-fi
 
 motd_ssh
 customize
