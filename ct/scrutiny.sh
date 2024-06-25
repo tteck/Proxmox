@@ -65,7 +65,7 @@ function update_script() {
   UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Scrutiny Management" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
     "1" "Update Scrutiny to $RELEASE" ON \
     "2" "Start Scrutiny Webapp" OFF \
-    "3" "Start Scrutiny Collector" OFF \
+    "3" "Create/Start Scrutiny Collector" OFF \
     3>&1 1>&2 2>&3)
   header_info
 
@@ -155,6 +155,8 @@ if [ "$UPD" == "3" ]; then
         msg_ok "Stopped Scrutiny Collector Service"
     else
         msg_info "Scrutiny Collector Service not found, creating..."
+		wget -q -O /opt/scrutiny/bin/scrutiny-collector-metrics-linux-amd64 "https://github.com/AnalogJ/scrutiny/releases/download/${RELEASE}/scrutiny-collector-metrics-linux-amd64"
+		chmod +x /opt/scrutiny/bin/scrutiny-collector-metrics-linux-amd64
         cat <<EOF >/etc/systemd/system/scrutiny_collector.service
 [Unit]
 Description=Scrutiny Collector
