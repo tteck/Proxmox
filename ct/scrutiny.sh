@@ -53,7 +53,6 @@ function default_settings() {
   echo_default
 }
 
-
 function update_script() {
   if [[ ! -d /opt/scrutiny ]]; then
     msg_error "No ${APP} Installation Found!"
@@ -62,10 +61,11 @@ function update_script() {
 
   RELEASE=$(curl -s https://api.github.com/repos/AnalogJ/scrutiny/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 
-  UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Scrutiny Management" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 3 \
+  UPD=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Scrutiny Management" --radiolist --cancel-button Exit-Script "Spacebar = Select" 15 70 4 \
     "1" "Update Scrutiny to $RELEASE" ON \
     "2" "Start Scrutiny Webapp" OFF \
     "3" "Create/Start Scrutiny Collector" OFF \
+	"4" "Change Scrutiny Settings"  OFF \
     3>&1 1>&2 2>&3)
   header_info
 
@@ -114,7 +114,6 @@ function update_script() {
     fi
     exit
   fi
-
 if [ "$UPD" == "2" ]; then
     msg_info "Checking for Scrutiny Webapp Service"
     if systemctl list-units --full -all | grep -Fq 'scrutiny.service'; then
@@ -179,6 +178,10 @@ EOF
     systemctl start scrutiny_collector.service
     msg_ok "Started Scrutiny Collector Service"
     exit
+fi
+if [ "$UPD" == "4" ]; then
+	nano /opt/scrutiny/config/scrutiny.yaml
+	exit
 fi
 }
 
