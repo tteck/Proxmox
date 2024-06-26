@@ -33,7 +33,7 @@ wget -qO- "https://github.com/rabbitmq/signing-keys/releases/download/3.0/clouds
 msg_ok "Signing keys added"
 
 msg_info "Adding RabbitMQ repository"
-$STD sudo tee /etc/apt/sources.list.d/rabbitmq.list <<EOF
+cat <<EOF >/etc/apt/sources.list.d/rabbitmq.list
 ## Provides modern Erlang/OTP releases from a Cloudsmith mirror
 deb [signed-by=/usr/share/keyrings/rabbitmq.E495BB49CC4BBE5B.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/debian $(lsb_release -cs) main
 deb-src [signed-by=/usr/share/keyrings/rabbitmq.E495BB49CC4BBE5B.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/debian $(lsb_release -cs) main
@@ -45,21 +45,21 @@ EOF
 msg_ok "RabbitMQ repository added"
 
 msg_info "Updating package list"
-$STD sudo apt-get update -y
+$STD apt-get update -y
 msg_ok "Package list updated"
 
 msg_info "Installing Erlang & RabbitMQ server"
-$STD sudo apt-get install -y erlang-base \
-                        erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
-                        erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
-                        erlang-runtime-tools erlang-snmp erlang-ssl \
-                        erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl \
-                        rabbitmq-server
+$STD apt-get install -y erlang-base \
+  erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
+  erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
+  erlang-runtime-tools erlang-snmp erlang-ssl \
+  erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl \
+  rabbitmq-server
 sudo sh -c 'echo "LANG=en_US.UTF-8" > /etc/default/locale && . /etc/default/locale'
 msg_ok "RabbitMQ server installed"
 
 msg_info "Starting RabbitMQ service"
-systemctl start rabbitmq-server
+systemctl enable -q --now rabbitmq-server
 msg_ok "RabbitMQ service started"
 
 msg_info "Enabling RabbitMQ management plugin"
