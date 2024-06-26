@@ -47,7 +47,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 systemctl -q daemon-reload
-systemctl enable --now -q ipfs.service
+systemctl enable -q ipfs.service
 msg_ok "Created Service"
 
 motd_ssh
