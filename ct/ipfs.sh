@@ -60,8 +60,8 @@ apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 wget -q "$(curl -s "https://api.github.com/repos/ipfs/kubo/releases/latest" | grep "linux-amd64.tar.gz" | grep "browser_download_url" | head -n 1 | cut -d\" -f4)"
 tar -xzf kubo*linux-amd64.tar.gz -C /usr/local
-$STD ln -s /usr/local/kubo/ipfs /usr/local/bin/ipfs
 rm -rf kubo*linux-amd64.tar.gz
+systemctl restart ipfs.service
 msg_ok "Updated $APP LXC"
 exit
 }
