@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="IPFS"
 var_disk="4"
 var_cpu="2"
-var_ram="6144"
+var_ram="4096"
 var_os="debian"
 var_version="12"
 variables
@@ -55,14 +55,20 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -f /usr/local/kubo ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/null
-wget -q "$(curl -s "https://api.github.com/repos/ipfs/kubo/releases/latest" | grep "linux-amd64.tar.gz" | grep "browser_download_url" | head -n 1 | cut -d\" -f4)"
-tar -xzf kubo*linux-amd64.tar.gz -C /usr/local
-rm -rf kubo*linux-amd64.tar.gz
-systemctl restart ipfs.service
-msg_ok "Updated $APP LXC"
+RELEASE=$(wget -q https://github.com/ipfs/kubo/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  msg_info "Updating $APP LXC"
+  apt-get update &>/dev/null
+  apt-get -y upgrade &>/dev/null
+  wget -q "https://github.com/ipfs/kubo/releases/download/${RELEASE}/kubo_${RELEASE}_linux-amd64.tar.gz"
+  tar -xzf "kubo_${RELEASE}_linux-amd64.tar.gz" -C /usr/local
+  systemctl restart ipfs.service
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  rm "kubo_${RELEASE}_linux-amd64.tar.gz"
+  msg_ok "Updated $APP LXC"
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+fi
 exit
 }
 
