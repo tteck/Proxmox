@@ -25,7 +25,7 @@ msg_info "Installing IPFS"
 wget -q "$(curl -s "https://api.github.com/repos/ipfs/kubo/releases/latest" | grep "linux-amd64.tar.gz" | grep "browser_download_url" | head -n 1 | cut -d\" -f4)"
 tar -xzf kubo*linux-amd64.tar.gz -C /usr/local
 $STD ln -s /usr/local/kubo/ipfs /usr/local/bin/ipfs
-ipfs init
+ipfs init &>/dev/null
 ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
 ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
 LXCIP=$(hostname -I | awk '{print $1}')
