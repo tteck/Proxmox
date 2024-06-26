@@ -29,7 +29,7 @@ ipfs init
 ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
 ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
 LXCIP=$(hostname -I | awk '{print $1}')
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http:/${LXCIP}:5001\", \"http://localhost:3000\", \"http://127.0.0.1:5001\", \"https://webui.ipfs.io\", \"http://0.0.0.0:5001\"]"
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://${LXCIP}:5001\", \"http://localhost:3000\", \"http://127.0.0.1:5001\", \"https://webui.ipfs.io\", \"http://0.0.0.0:5001\"]"
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST"]'
 msg_ok "Installed IPFS"
 
@@ -47,7 +47,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 systemctl -q daemon-reload
-systemctl enable -q ipfs.service
+systemctl enable --now -q ipfs.service
 msg_ok "Created Service"
 
 motd_ssh
