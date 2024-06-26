@@ -19,7 +19,7 @@ EOF
 }
 header_info
 echo -e "Loading..."
-APP="Rabbitmq"
+APP="RabbitMQ"
 var_disk="4"
 var_cpu="1"
 var_ram="1024"
@@ -66,7 +66,7 @@ systemctl stop rabbitmq-server
 msg_ok "Stopped ${APP} Service"
 
 msg_info "Updating..."
-sudo apt-get update &>/dev/null
+apt install --only-upgrade rabbitmq-server &>/dev/null
 msg_ok "Update Successfully"
 
 msg_info "Starting ${APP}"
