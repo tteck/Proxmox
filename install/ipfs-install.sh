@@ -28,7 +28,7 @@ $STD ln -s /usr/local/kubo/ipfs /usr/local/bin/ipfs
 ipfs init
 ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
 ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["http://192.168.68.99:5001", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io", "http://0.0.0.0:5001"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://${IP}:5001\", \"http://localhost:3000\", \"http://127.0.0.1:5001\", \"https://webui.ipfs.io\", \"http://0.0.0.0:5001\"]"
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST"]'
 msg_ok "Installed IPFS"
 
