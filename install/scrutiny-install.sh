@@ -36,7 +36,7 @@ msg_ok "Set up InfluxDB Repository"
 msg_info "Installing InfluxDB"
 $STD apt-get update
 $STD apt-get install -y influxdb2
-$STD systemctl enable --now influxdb
+systemctl enable -q --now influxdb
 msg_ok "Installed InfluxDB"
 
 msg_info "Installing Scrutiny WebApp"
