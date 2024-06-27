@@ -55,7 +55,6 @@ $STD apt-get install -y erlang-base \
   erlang-runtime-tools erlang-snmp erlang-ssl \
   erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl \
   rabbitmq-server
-sudo sh -c 'echo "LANG=en_US.UTF-8" > /etc/default/locale && . /etc/default/locale'
 msg_ok "RabbitMQ server installed"
 
 msg_info "Starting RabbitMQ service"
