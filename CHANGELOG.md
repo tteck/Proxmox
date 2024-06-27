@@ -17,6 +17,8 @@
   - NEW Script
 - **RabbitMQ LXC**
   - NEW Script
+- **Scruyiny LXC**
+  - Removed from website, broken.
 
 ## 2024-06-26
 
