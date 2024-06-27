@@ -15,6 +15,8 @@
 
 - **Kubo LXC**
   - NEW Script
+- **RabbitMQ LXC**
+  - NEW Script
 
 ## 2024-06-26
 
