@@ -9,16 +9,16 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-    ________  ___________
-   /  _/ __ \/ ____/ ___/
-   / // /_/ / /_   \__ \
- _/ // ____/ __/  ___/ /
-/___/_/   /_/    /____/
+    __ __      __
+   / //_/_  __/ /_  ____
+  / ,< / / / / __ \/ __ \
+ / /| / /_/ / /_/ / /_/ /
+/_/ |_\__,_/_.___/\____/
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="IPFS"
+APP="Kubo"
 var_disk="4"
 var_cpu="2"
 var_ram="4096"
