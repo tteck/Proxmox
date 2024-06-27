@@ -63,6 +63,7 @@ msg_ok "RabbitMQ service started"
 
 msg_info "Enabling RabbitMQ management plugin"
 $STD rabbitmq-plugins enable rabbitmq_management
+$STD rabbitmqctl enable_feature_flag all
 msg_ok "RabbitMQ management plugin enabled"
 
 msg_info "Create User"
