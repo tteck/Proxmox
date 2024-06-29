@@ -30,6 +30,7 @@ $STD apt-get install -y \
   python3-venv
 
 $STD apt-get install -y python3-setuptools
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Updated Python3"
 
 msg_info "Creating user octoprint"
