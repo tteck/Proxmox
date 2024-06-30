@@ -50,6 +50,7 @@ msg_info "Installing Python Dependencies"
 $STD apt-get -y install \
   python3-pip \
   python3-requests
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 $STD pip3 install mac-vendor-lookup
 $STD pip3 install fritzconnection
 $STD pip3 install cryptography

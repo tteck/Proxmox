@@ -42,6 +42,7 @@ msg_info "Installing Python Dependencies"
 $STD apt-get install -y \
   python3 \
   python3-pip
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 $STD pip3 install \
   uno \
   opencv-python-headless \
