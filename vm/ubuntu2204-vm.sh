@@ -92,13 +92,13 @@ function check_root() {
 }
 
 function pve_check() {
-  if ! pveversion | grep -Eq "pve-manager/(7\.4-(1[3-8])|8\.[1-2])"; then
+  if ! pveversion | grep -Eq "pve-manager/8.[1-3]"; then
     msg_error "This version of Proxmox Virtual Environment is not supported"
-    echo -e "Requires PVE7 Version 7.4-13 or later, or PVE8 Version 8.1.1 or later."
+    echo -e "Requires Proxmox Virtual Environment Version 8.1 or later."
     echo -e "Exiting..."
     sleep 2
     exit
-  fi
+fi
 }
 
 function arch_check() {
