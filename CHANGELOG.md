@@ -9,6 +9,14 @@
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+
+## 2024-06-30
+
+### Changed
+
+- **All Scripts**
+  - Requires Proxmox Virtual Environment version 8.1 or later.
+
 ## 2024-06-27
 
 ### Changed
