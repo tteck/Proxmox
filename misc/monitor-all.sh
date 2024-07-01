@@ -28,6 +28,7 @@ done
 echo '#!/usr/bin/env bash
 # Read excluded instances from command line arguments
 excluded_instances=("$@")
+pause_delay_in_seconds=300 #  (Edit to your needs)
 echo "Excluded instances: ${excluded_instances[@]}"
 
 while true; do
@@ -85,9 +86,9 @@ while true; do
     fi
   done
 
-  # Wait for 5 minutes. (Edit to your needs)
-  echo "$(date): Pausing for 5 minutes..."
-  sleep 300
+  # Wait for ( ${pause_delay_in_seconds} / 60 ) minutes.
+  echo "$(date): Pausing for $((${pause_delay_in_seconds}/60)) minutes..."
+  sleep ${pause_delay_in_seconds}
 done >/var/log/ping-instances.log 2>&1' >/usr/local/bin/ping-instances.sh
 touch /var/log/ping-instances.log
 # Change file permissions to executable
