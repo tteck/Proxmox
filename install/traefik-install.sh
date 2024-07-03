@@ -21,7 +21,7 @@ $STD apt-get install -y gpg
 $STD apt-get install -y apt-transport-https
 msg_ok "Installed Dependencies"
 
-RELEASE=$(curl -s https://api.github.com/repos/traefik/traefik/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+RELEASE=3.0.4 #$(curl -s https://api.github.com/repos/traefik/traefik/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 msg_info "Installing Traefik v${RELEASE}"
 mkdir -p /etc/traefik/{conf.d,ssl}
 wget -q https://github.com/traefik/traefik/releases/download/v${RELEASE}/traefik_v${RELEASE}_linux_amd64.tar.gz
