@@ -51,6 +51,7 @@ PHOTOPRISM_STORAGE_PATH='/opt/photoprism/storage'
 PHOTOPRISM_ORIGINALS_PATH='/opt/photoprism/photos/originals'
 PHOTOPRISM_IMPORT_PATH='/opt/photoprism/photos/import'
 EOF
+ln -sf /opt/photoprism/bin/photoprism /usr/local/bin/photoprism
 msg_ok "Installed PhotoPrism"
 
 msg_info "Creating Service"
