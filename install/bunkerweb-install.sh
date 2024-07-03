@@ -35,6 +35,7 @@ msg_info "Installing BunkerWeb v${RELEASE}"
 export UI_WIZARD=1
 curl -sSL https://packagecloud.io/install/repositories/bunkerity/bunkerweb/script.deb.sh | bash &>/dev/null
 $STD apt-get install -y bunkerweb=${RELEASE}
+$STD apt-mark hold bunkerweb
 echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed BunkerWeb v${RELEASE}"
 
