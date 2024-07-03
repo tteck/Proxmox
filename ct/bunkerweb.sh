@@ -60,11 +60,14 @@ RELEASE=$(curl -s https://api.github.com/repos/bunkerity/bunkerweb/releases/late
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
   msg_info "Updating ${APP} to ${RELEASE}"
+  cat <<EOF >/etc/apt/preferences.d/bunkerweb
+Package: bunkerweb
+Pin: version ${RELEASE}
+Pin-Priority: 1001
+EOF
   apt-get update
   apt-get install nginx -y
-  apt-mark unhold bunkerweb
   apt-get install -y bunkerweb=${RELEASE}
-  apt-mark hold bunkerweb
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
