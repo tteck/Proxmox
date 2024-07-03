@@ -25,6 +25,9 @@ wget -q https://github.com/pocketbase/pocketbase/releases/download/v${RELEASE}/p
 mkdir -p /opt/pocketbase/{pb_public,pb_migrations,pb_hooks}
 unzip -q -o /tmp/pocketbase.zip -d /opt/pocketbase
 
+# Create a file with the version information
+echo "Pocketbase version: ${RELEASE}" > /opt/pocketbase/version.txt
+
 cat <<EOF >/etc/systemd/system/pocketbase.service
 [Unit]
 Description = pocketbase
