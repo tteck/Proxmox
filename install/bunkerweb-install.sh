@@ -25,18 +25,18 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Nginx"
 wget -qO- https://nginx.org/keys/nginx_signing.key | gpg --dearmor >/usr/share/keyrings/nginx-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" >/etc/apt/sources.list.d/nginx.list
+echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian $(lsb_release -cs) nginx" >/etc/apt/sources.list.d/nginx.list
 $STD apt-get update
 $STD apt-get install -y nginx
 msg_ok "Installed Nginx"
 
 RELEASE=$(curl -s https://api.github.com/repos/bunkerity/bunkerweb/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-msg_info "Installing BunkerWeb v$(RELEASE}"
+msg_info "Installing BunkerWeb v${RELEASE}"
 export UI_WIZARD=1
 curl -sSL https://packagecloud.io/install/repositories/bunkerity/bunkerweb/script.deb.sh | bash &>/dev/null
-$STD apt-get install -y bunkerweb=$(RELEASE}
+$STD apt-get install -y bunkerweb=${RELEASE}
 echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
-msg_ok "Installed BunkerWeb v$(RELEASE}"
+msg_ok "Installed BunkerWeb v${RELEASE}"
 
 motd_ssh
 customize
