@@ -55,6 +55,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /etc/bunkerweb ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+
 RELEASE=$(curl -s https://api.github.com/repos/bunkerity/bunkerweb/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
