@@ -33,15 +33,17 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing pnpm"
-$STD npm install -g pnpm
-msg_ok "Installed pnpm"
+msg_info "Installing Yarn"
+$STD npm install -g yarn
+msg_ok "Installed Yarn"
 
 msg_info "Installing Jellyseerr (Patience)"
 git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
 cd /opt/jellyseerr
-CYPRESS_INSTALL_BINARY=0 pnpm install --frozen-lockfile &>/dev/null
-$STD pnpm build
+$STD git checkout main
+CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000 &>/dev/null
+$STD yarn install
+$STD yarn build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
 PORT=5055
@@ -53,17 +55,15 @@ msg_ok "Installed Jellyseerr"
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/jellyseerr.service
 [Unit]
-Description=Jellyseerr Service
-Wants=network-online.target
-After=network-online.target
+Description=jellyseerr Service
+After=network.target
 
 [Service]
 EnvironmentFile=/etc/jellyseerr/jellyseerr.conf
 Environment=NODE_ENV=production
 Type=exec
-Restart=on-failure
 WorkingDirectory=/opt/jellyseerr
-ExecStart=/usr/bin/node dist/index.js
+ExecStart=/usr/bin/yarn start
 
 [Install]
 WantedBy=multi-user.target
