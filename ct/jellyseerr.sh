@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="Jellyseerr"
 var_disk="8"
 var_cpu="2"
-var_ram="4096"
+var_ram="2048"
 var_os="debian"
 var_version="12"
 variables
@@ -66,7 +66,7 @@ then
   systemctl start jellyseerr
   exit
 fi
-yarn install &>/dev/null
+CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000 &>/dev/null
 yarn build &>/dev/null
 systemctl start jellyseerr
 msg_ok "Updated $APP"
@@ -76,10 +76,6 @@ exit
 start
 build_container
 description
-
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -memory 2048
-msg_ok "Set Container to Normal Resources"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
