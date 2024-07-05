@@ -64,8 +64,10 @@ cd /opt/pingvin-share
 git fetch --tags
 git checkout $(git describe --tags `git rev-list --tags --max-count=1`) &>/dev/null
 cd backend
+npm install &>/dev/null
 npm run build &>/dev/null
 cd ../frontend
+npm install &>/dev/null
 npm run build &>/dev/null
 msg_ok "Updated Pingvin Share"
 
