@@ -3,9 +3,11 @@
     <img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo.png" height="100px" />
  </a>
 </div>
-<h1 align="center">Change Log</h1>
+<h1 align="center">Changelog</h1>
 
 <h3 align="center">All notable changes to this project will be documented in this file.</h3>
+
+- I keep the website source private to prevent _**copycat**_  sites from exploiting the project's popularity with potentially malicious intent. Please only trust information from https://Helper-Scripts.com/ or https://tteck.github.io/Proxmox/.
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
@@ -14,16 +16,16 @@
 
 ### Changed
 
-- **All Scripts**
+- **All Scripts** [(Commit)](https://github.com/tteck/Proxmox/commit/39ea1d4a20b83c07d084ebafdc811eec3548f289)
   - Requires Proxmox Virtual Environment version 8.1 or later.
 
 ## 2024-06-27
 
 ### Changed
 
-- **Kubo LXC**
+- **Kubo LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/kubo-install.sh)
   - NEW Script
-- **RabbitMQ LXC**
+- **RabbitMQ LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/rabbitmq-install.sh)
   - NEW Script
 - **Scrutiny LXC**
   - Removed from website, broken.
@@ -39,27 +41,27 @@
 
 ### Changed
 
-- **MySpeed LXC**
+- **MySpeed LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/myspeed-install.sh)
   - NEW Script
 
 ## 2024-06-13
 
 ### Changed
 
-- **PeaNUT LXC**
+- **PeaNUT LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/peanut-install.sh)
   - NEW Script
 - **Website**
   - If the Changelog has changed recently, the link on the website will pulse.
-- **Spoolman LXC**
+- **Spoolman LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/spoolman-install.sh)
   - NEW Script
 
 ## 2024-06-12
 
 ### Changed
 
-- **MeTube LXC**
+- **MeTube LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/metube-install.sh)
   - NEW Script
-- **Matterbridge LXC**
+- **Matterbridge LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/matterbridge-install.sh)
   - NEW Script
 - **Website**
   - Reopen the gh-pages site (https://tteck.github.io/Proxmox/) 
@@ -68,14 +70,14 @@
 
 ### Changed
 
-- **Zabbix LXC**
+- **Zabbix LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/zabbix-install.sh)
   - NEW Script
 
 ## 2024-06-06
 
 ### Changed
 
-- **Petio LXC**
+- **Petio LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/petio-install.sh)
   - NEW Script
 - **Website**
   - Important notices will now be displayed on the landing page.
@@ -84,14 +86,14 @@
 
 ### Changed
 
-- **FlareSolverr LXC**
+- **FlareSolverr LXC** [(View Source)](https://raw.githubusercontent.com/tteck/Proxmox/main/install/flaresolverr-install.sh)
   - NEW Script
 
 ## 2024-05-31
 
 ### Changed
 
-- **Advanced Settings**
+- **Advanced Settings** [(Commit)](https://github.com/tteck/Proxmox/commit/fc9dff220b4ea426d3a75178ad8accacae4683ca)
   - Passwords are now masked
 
 ## 2024-05-30
