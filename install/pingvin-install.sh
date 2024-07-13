@@ -43,6 +43,7 @@ $STD npm install
 $STD npm run build
 $STD pm2 start --name="pingvin-share-backend" npm -- run prod
 cd ../frontend
+sed -i '/"admin.config.smtp.allow-unauthorized-certificates":\|admin.config.smtp.allow-unauthorized-certificates.description":/,+1d' ./src/i18n/translations/fr-FR.ts
 $STD npm install
 $STD npm run build
 $STD pm2 start --name="pingvin-share-frontend" npm -- run start
