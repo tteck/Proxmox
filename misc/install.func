@@ -87,7 +87,10 @@ msg_error() {
 setting_up_container() {
   msg_info "Setting up Container OS"
   sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+  locale_line=$(grep -v '^#' /etc/locale.gen | grep -E '^[a-zA-Z]' | awk '{print $1}' | head -n 1)
+  echo "LANG=${locale_line}" >/etc/default/locale
   locale-gen >/dev/null
+  export LANG=${locale_line}
   echo $tz >/etc/timezone
   ln -sf /usr/share/zoneinfo/$tz /etc/localtime
   for ((i = RETRY_NUM; i > 0; i--)); do
