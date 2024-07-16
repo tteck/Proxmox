@@ -428,7 +428,7 @@ nfs | dir)
   DISK_IMPORT="-format raw"
   THIN=""
   ;;
-btrfs)
+btrfs | local-zfs)
   DISK_EXT=".raw"
   DISK_REF="$VMID/"
   DISK_IMPORT="-format raw"
