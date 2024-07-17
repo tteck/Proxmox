@@ -127,9 +127,10 @@ function update_script() {
       if [[ -z "$NEWTOKEN" ]]; then exit; fi
       if ! command -v argon2 >/dev/null 2>&1; then apt-get install -y argon2 &>/dev/null; fi
       TOKEN=$(echo -n ${NEWTOKEN} | argon2 "$(openssl rand -base64 32)" -t 2 -m 16 -p 4 -l 64 -e)
-      for file in /opt/vaultwarden/.env /opt/vaultwarden/data/config.json; do
-        sed -i "s|ADMIN_TOKEN=.*|ADMIN_TOKEN='${TOKEN}'|" "$file"
-      done
+      sed -i "s|ADMIN_TOKEN=.*|ADMIN_TOKEN='${TOKEN}'|" /opt/vaultwarden/.env
+      if [[ -f /opt/vaultwarden/data/config.json ]]; then
+        sed -i "s|\"admin_token\":.*|\"admin_token\": \"${TOKEN}\"|" /opt/vaultwarden/data/config.json
+      fi
       systemctl restart vaultwarden
     fi
     exit
