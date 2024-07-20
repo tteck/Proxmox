@@ -5,6 +5,9 @@
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
+LC_ALL=C
+export LC_ALL
+
 function header_info {
   clear
   cat <<"EOF"
