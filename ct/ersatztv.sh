@@ -57,22 +57,20 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/ErsatzTV ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-fi
+
 msg_info "Stopping ErsatzTV"
 systemctl stop ersatzTV
 msg_ok "Stopped ErsatzTV"
 
 msg_info "Updating ErsatzTV"
 RELEASE=$(curl -s https://api.github.com/repos/ErsatzTV/ErsatzTV/releases | grep -oP '"tag_name": "\K[^"]+' | head -n 1)
-if [ -d /opt/ErsatzTV/ErsatzTV_bak ]; then
-  rm -rf /opt/ErsatzTV/ErsatzTV_bak
-fi
-mv /opt/ErsatzTV/ErsatzTV /opt/ErsatzTV/ErsatzTV_bak
+cp -R /opt/ErsatzTV/ ErsatzTV-backup
+rm ErsatzTV-backup/ErsatzTV
+rm -rf /opt/ErsatzTV
 wget -qO- "https://github.com/ErsatzTV/ErsatzTV/releases/download/${RELEASE}/ErsatzTV-${RELEASE}-linux-x64.tar.gz" | tar -xz -C /opt
 mv "/opt/ErsatzTV-${RELEASE}-linux-x64" /opt/ErsatzTV
+cp -R ErsatzTV-backup/* /opt/ErsatzTV/
+rm -rf ErsatzTV-backup
 msg_ok "Updated ErsatzTV"
 
 msg_info "Starting ErsatzTV"
