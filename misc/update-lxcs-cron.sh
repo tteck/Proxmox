@@ -35,7 +35,6 @@ for container in $(pct list | awk '{if(NR>1) print $1}'); do
     fi
   done
   if [ "$excluded" == true ]; then
-    header_info
     echo -e "[Info] Skipping $container"
     sleep 1
   else
