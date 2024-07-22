@@ -19,10 +19,8 @@ $STD apt-get install -y sudo
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Gitea"
-RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-VERSION=${RELEASE#v}
-wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
-#wget https://dl.gitea.com/gitea/1.20.3/gitea-1.20.3-linux-amd64
+RELEASE=$(wget -q https://github.com/go-gitea/gitea/releaseslatest -O - | grep "title>Release" | cut -d " " -f 4)
+wget https://dl.gitea.com/gitea/1.20.3/gitea-1.20.3-linux-amd64
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
 

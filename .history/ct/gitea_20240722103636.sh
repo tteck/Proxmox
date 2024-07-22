@@ -67,16 +67,11 @@ RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep 
 VERSION=${RELEASE#v}
 msg_info "Updating ${APP}"
 wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
-systemctl stop gitea
-rm -rf /usr/local/bin/gitea 
-mv gitea* /usr/local/bin/gitea
-systemctl start gitea
+
+
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/nullexit
-msg_ok "Updated ${APP} to ${RELEASE}"
-else 
-  msg_ok "No update required ${APP} is already at ${RELEASE}"
-fi
+msg_ok "Updated ${APP} LXC"
 exit
 }
 

@@ -75,8 +75,8 @@ apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/nullexit
 msg_ok "Updated ${APP} to ${RELEASE}"
 else 
-  msg_ok "No update required ${APP} is already at ${RELEASE}"
-fi
+ msg_ok "No update required ${APP} is already at ${RELEASE}"
+
 exit
 }
 
