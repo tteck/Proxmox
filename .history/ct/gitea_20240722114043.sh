@@ -65,7 +65,7 @@ header_info
 if [[  ! -f /lib/systemd/system/gitea.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 VERSION=${RELEASE#v}
-msg_info "Updating Gitea to ${RELEASE}"
+msg_info "Updating gitea"
 wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
 systemctl stop gitea
 rm -rf /usr/local/bin/gitea 
@@ -73,7 +73,7 @@ mv gitea* /usr/local/bin/gitea
 systemctl start gitea
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/nullexit
-msg_ok "Updated Gitea to ${RELEASE}"
+msg_ok "Updated ${APP} to ${RELEASE}"
 # else 
 #   msg_ok "No update required ${APP} is already at ${RELEASE}"
 # fi
