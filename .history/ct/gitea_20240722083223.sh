@@ -2,7 +2,17 @@
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
-# Co-author: Rogue-King
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
+
+function header_info {
+clear
+cat <<"EOF"
+
+#!/usr/bin/env bash
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+# Copyright (c) 2021-2024 tteck
+# Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -22,8 +32,7 @@ cat <<"EOF"
  / / __// // __/ _ \/ __  /
 / /_/ // // /_/  __/ /_/ /
 \____//_/ \__/\___/\__,_/
-
-EOF
+ EOF
 }
 header_info
 echo -e "Loading..."

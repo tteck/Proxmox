@@ -9,28 +9,21 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-
-          _   __
-   ______(_)_/ /___  ____ _
-  / __  / // __/ _ \/ __  /
- / /_/ / // /_/  __/ /_/ /
- \__, /_/ \__/\___/\__,_/
-/____/
-
-   ______ _   __
-  / ____/(_)_/ /___  ____ _
- / / __// // __/ _ \/ __  /
-/ /_/ // // /_/  __/ /_/ /
-\____//_/ \__/\___/\__,_/
-
+               ___        __      
+   ____ _____ |__ \ _____/ /______
+  / __ `/ __ \__/ // ___/ __/ ___/
+ / /_/ / /_/ / __// /  / /_/ /__  
+ \__, /\____/____/_/   \__/\___/  
+/____/                            
+ 
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="gitea"
-var_disk="5"
-var_cpu="1"
-var_ram="512"
+APP="go2rtc"
+var_disk="4"
+var_cpu="2"
+var_ram="2048"
 var_os="debian"
 var_version="12"
 variables
@@ -63,12 +56,16 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[  ! -f /lib/systemd/system/gitea.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-
-
-msg_info "Updating ${APP} LXC"
-apt-get update &>/dev/null
-apt-get -y upgrade &>/dev/nullexit
+if [[ ! -d /opt/go2rtc ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating $APP"
+systemctl stop go2rtc
+cd /opt/go2rtc
+rm go2rtc_linux_amd64
+wget -q https://github.com/AlexxIT/go2rtc/releases/latest/download/go2rtc_linux_amd64
+chmod +x go2rtc_linux_amd64
+systemctl start go2rtc
+msg_ok "Updated $APP"
+exit
 }
 
 start
@@ -77,4 +74,4 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
-         ${BL}http://${IP}:3000${CL} \n"
+         ${BL}http://${IP}:1984${CL} \n"
