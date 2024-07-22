@@ -9,18 +9,18 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-          _  __
-   ______(_)/ / ___  ____ _
+          _   __
+   ______(_)_/ /___  ____ _
   / __  / // __/ _ \/ __  /
  / /_/ / // /_/  __/ /_/ /
  \__, /_/ \__/\___/\__,_/
 /____/
-          _  __
-   ______(_)/ /___  ____ _
-  / __  / / __/ _ \/ __  /
- / /_/ / / /_/  __/ /_/ /
- \__, /_/\__/\___/\__,_/
-/____/
+
+   ______ _   __
+  / ____/(_)_/ /___  ____ _
+ / / __// // __/ _ \/ __  /
+/ /_/ // // /_/  __/ /_/ /
+\____//_/ \__/\___/\__,_/
 
 EOF
 }
@@ -71,7 +71,12 @@ systemctl stop gitea
 rm -rf /usr/local/bin/gitea 
 mv gitea* /usr/local/bin/gitea
 systemctl start gitea
+apt-get update &>/dev/null
+apt-get -y upgrade &>/dev/nullexit
 msg_ok "Updated $APP Successfully"
+# else 
+#   msg_ok "No update required ${APP} is already at ${RELEASE}"
+# fi
 exit
 }
 
