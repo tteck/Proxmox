@@ -62,7 +62,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 EOF
 systemctl enable -q --now gitea
-msg_ok "Created Service"
+msg_ok "Installed Gitea"
 
 motd_ssh
 customize

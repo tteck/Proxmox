@@ -31,7 +31,6 @@ chown -R gitea:gitea /var/lib/gitea/
 chmod -R 750 /var/lib/gitea/
 chown root:gitea /etc/gitea
 chmod 770 /etc/gitea
-msg_ok "Installed Gitea"
 
 cat <<EOF >/etc/systemd/system/gitea.service
 [Unit]
@@ -62,7 +61,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 EOF
 systemctl enable -q --now gitea
-msg_ok "Created Service"
+msg_ok "Installed Gitea"
 
 motd_ssh
 customize

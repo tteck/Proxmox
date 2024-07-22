@@ -64,10 +64,10 @@ function update_script() {
 header_info
 if [[  ! -f /lib/systemd/system/gitea.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 
+
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/nullexit
-exit
 }
 
 start
