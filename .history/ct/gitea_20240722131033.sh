@@ -62,7 +62,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[  ! -f /etc/systemd/system/gitea.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[  ! -f /etc/systemd/gitea.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 VERSION=${RELEASE#v}
 msg_info "Updating gitea to ${RELEASE}"
