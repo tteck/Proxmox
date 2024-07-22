@@ -33,7 +33,7 @@ msg_ok "Installed Nginx"
 RELEASE=$(curl -s https://api.github.com/repos/bunkerity/bunkerweb/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 msg_info "Installing BunkerWeb v${RELEASE}"
 export UI_WIZARD=1
-curl -sSL https://packagecloud.io/install/repositories/bunkerity/bunkerweb/script.deb.sh | bash &>/dev/null
+curl -sSL https:/repo.bunkerweb.io/install/script.deb.sh | bash &>/dev/null
 $STD apt-get install -y bunkerweb=${RELEASE}
 cat <<EOF >/etc/apt/preferences.d/bunkerweb
 Package: bunkerweb
