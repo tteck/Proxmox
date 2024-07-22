@@ -56,9 +56,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[  ! -f /usr/local/bin/gitea ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-VERSION=${RELEASE#v}
+if [[  ! -f -f /usr/local/bin/gitea ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating gitea to ${RELEASE}"
 wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
 systemctl stop gitea
