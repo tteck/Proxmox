@@ -3,7 +3,6 @@
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # Co-author: Rogue-King
-# Base Script: apalrd (alpard.net)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -27,7 +26,6 @@ VERSION=${RELEASE#v}
 wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
-msg_info "Installed Gitea"
 
 msg_info "Creating Gitea user"
 adduser --system --group --disabled-password --home /etc/gitea gitea
@@ -38,6 +36,7 @@ chown -R gitea:gitea /var/lib/gitea/
 chmod -R 750 /var/lib/gitea/
 chown root:gitea /etc/gitea
 chmod 770 /etc/gitea
+msg_ok "Installed Gitea"
 
 cat <<EOF >/etc/systemd/system/gitea.service
 [Unit]
