@@ -28,14 +28,11 @@ mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
 msg_info "Installed Gitea"
 
-msg_info "Creating Gitea user"
-adduser --system --group --disabled-password --home /etc/gitea gitea
-
-msg_info "Creating directory structure"
 mkdir -p /var/lib/gitea/{custom,data,log}
-chown -R gitea:gitea /var/lib/gitea/
+chown -R git:git /var/lib/gitea/
 chmod -R 750 /var/lib/gitea/
-chown root:gitea /etc/gitea
+mkdir /etc/gitea
+chown root:git /etc/gitea
 chmod 770 /etc/gitea
 
 msg_info "Creating Service"

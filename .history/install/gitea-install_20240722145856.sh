@@ -3,6 +3,7 @@
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # Co-author: Rogue-King
+# Base Script: apalrd (https://www.apalrd.net/posts/2023/ultimate_gitea/)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
