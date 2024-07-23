@@ -10,7 +10,7 @@ function header_info {
 clear
 cat <<"EOF"
           _  __
-   ______(_)/ /____  ____ _
+   ______(_)/ /_ ___  ____ _
   / __  / // __/ _ \/ __  /
  / /_/ / // /_/  __/ /_/ /
  \__, /_/ \__/\___/\__,_/
@@ -70,9 +70,7 @@ exit
 }
 
 start
-msg_ok "start\n"
 build_container
-msg_ok "container\n"
 description
 
 msg_ok "Completed Successfully!\n"

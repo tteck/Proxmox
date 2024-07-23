@@ -70,9 +70,8 @@ exit
 }
 
 start
-msg_ok "start\n"
+msg_ok "Completed Successfully!\n"
 build_container
-msg_ok "container\n"
 description
 
 msg_ok "Completed Successfully!\n"
