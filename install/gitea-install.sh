@@ -49,7 +49,8 @@ After=network.target
 # Uncomment the next line if you have repos with lots of files and get a HTTP 500 error because of that
 # LimitNOFILE=524288:524288
 RestartSec=2s
-Type=notify
+#Type=notify
+Type=simple
 User=gitea
 Group=gitea
 #The mount point we added to the container
@@ -59,10 +60,10 @@ RuntimeDirectory=gitea
 ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini
 Restart=always
 Environment=USER=gitea HOME=/var/lib/gitea/data GITEA_WORK_DIR=/var/lib/gitea
-WatchdogSec=30s
+#WatchdogSec=30s
 #Capabilities to bind to low-numbered ports
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_BIND_SERVICE
+#CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+#AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
 WantedBy=multi-user.target
