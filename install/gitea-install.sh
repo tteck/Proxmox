@@ -29,7 +29,7 @@ chmod +x /usr/local/bin/gitea
 msg_info "Installed Gitea"
 
 msg_info "Creating Gitea user"
-adduser --system --group --disabled-password --home /etc/gitea gitea
+adduser --system --group --disabled-password --home /etc/gitea gitea > /dev/null 2>&1
 
 msg_info "Creating directory structure"
 mkdir -p /var/lib/gitea/{custom,data,log}
