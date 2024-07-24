@@ -46,11 +46,12 @@ After=syslog.target
 After=network.target
 
 [Service]
+# Uncomment notify and watchdog if you want to use them
 # Uncomment the next line if you have repos with lots of files and get a HTTP 500 error because of that
 # LimitNOFILE=524288:524288
 RestartSec=2s
-#Type=notify
 Type=simple
+#Type=notify
 User=gitea
 Group=gitea
 #The mount point we added to the container
