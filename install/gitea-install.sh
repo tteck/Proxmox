@@ -23,13 +23,13 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Gitea"
 RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 VERSION=${RELEASE#v}
-wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
+$STD wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
 msg_info "Installed Gitea"
 
 msg_info "Creating Gitea user"
-adduser --system --group --disabled-password --home /etc/gitea gitea
+adduser --system --group --disabled-password --home /etc/gitea gitea > /dev/null
 
 msg_info "Creating directory structure"
 mkdir -p /var/lib/gitea/{custom,data,log}
@@ -46,11 +46,12 @@ After=syslog.target
 After=network.target
 
 [Service]
+# Uncomment notify and watchdog if you want to use them
 # Uncomment the next line if you have repos with lots of files and get a HTTP 500 error because of that
 # LimitNOFILE=524288:524288
 RestartSec=2s
-#Type=notify
 Type=simple
+#Type=notify
 User=gitea
 Group=gitea
 #The mount point we added to the container
