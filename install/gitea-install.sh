@@ -16,14 +16,14 @@ update_os
 
 msg_info "Installing Dependencies"
 $STD apt-get install -y git
+$STD apt-get install -y curl
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Gitea"
-RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
-VERSION=${RELEASE#v}
-$STD wget -q https://github.com/go-gitea/gitea/releases/download/$RELEASE/gitea-$VERSION-linux-amd64
+RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep "title>Release" | cut -d " " -f 4 | sed 's/^v//')
+$STD wget -q https://github.com/go-gitea/gitea/releases/download/v$RELEASE/gitea-$RELEASE-linux-amd64
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
 msg_info "Installed Gitea"
