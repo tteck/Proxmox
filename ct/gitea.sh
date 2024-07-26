@@ -62,6 +62,7 @@ wget -q https://github.com/go-gitea/gitea/releases/download/v$RELEASE/gitea-$REL
 systemctl stop gitea
 rm -rf /usr/local/bin/gitea 
 mv gitea* /usr/local/bin/gitea
+chmod +x /usr/local/bin/gitea
 systemctl start gitea
 msg_ok "Updated $APP Successfully"
 exit
