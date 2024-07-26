@@ -32,7 +32,7 @@ chown -R gitea:gitea /var/lib/gitea/
 chmod -R 750 /var/lib/gitea/
 chown root:gitea /etc/gitea
 chmod 770 /etc/gitea
-msg_info "Installed Gitea"
+msg_ok "Installed Gitea"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/gitea.service
