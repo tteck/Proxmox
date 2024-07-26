@@ -60,9 +60,9 @@ RELEASE=$(wget -q https://github.com/pelican-dev/panel/releases/latest -O - | gr
 msg_info "Updating $APP to ${RELEASE}"
 cd /var/www/pelican
 php artisan down
-curl -L https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz
-$STD tar -xzvf panel.tar.gz
+curl -L https://github.com/pelican-dev/panel/releases/latest/download/panel.tar.gz | sudo tar -xzv
 chmod -R 755 storage/* bootstrap/cache
+export COMPOSER_ALLOW_SUPERUSER=1
 composer install --no-dev --optimize-autoloader
 php artisan view:clear
 php artisan config:clear
