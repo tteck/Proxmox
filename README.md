@@ -6,7 +6,7 @@
 <h1 align="center">Proxmox VE Helper-Scripts</h1>
 
 <p align="center">
-  <a href="https://tteck.github.io/Proxmox/">Website</a> | 
+  <a href="https://helper-scripts.com">Website</a> | 
   <a href="https://github.com/tteck/Proxmox/blob/main/.github/CONTRIBUTING.md">Contribute</a> |
   <a href="https://github.com/tteck/Proxmox/blob/main/USER_SUBMITTED_GUIDES.md">Guides</a> |
   <a href="https://github.com/tteck/Proxmox/blob/main/CHANGELOG.md">Changelog</a> |
@@ -14,6 +14,8 @@
 </p>
 
 ---
+
+Be cautious of copycat or coat-tailing sites that exploit the project's popularity with potentially malicious intent. Please only trust information from https://Helper-Scripts.com/ or https://tteck.github.io/Proxmox/.
 
 These scripts empower users to create a Linux container or virtual machine interactively, providing choices for both simple and advanced configurations. The basic setup adheres to default settings, while the advanced setup gives users the ability to customize these defaults. 
 
