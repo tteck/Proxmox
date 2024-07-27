@@ -101,7 +101,7 @@ for container in $(pct list | awk '{if(NR>1) print $1}'); do
 done
 wait
 header_info
-echo -e "${GN}The process is complete, and the selected containers have been updated.${CL}\n"
+echo -e "${GN}The process is complete, and the containers have been successfully updated.${CL}\n"
 if [ "${#containers_needing_reboot[@]}" -gt 0 ]; then
     echo -e "${RD}The following containers require a reboot:${CL}"
     for container_name in "${containers_needing_reboot[@]}"; do
