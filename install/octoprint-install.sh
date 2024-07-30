@@ -37,6 +37,7 @@ msg_info "Creating user octoprint"
 useradd -m -s /bin/bash -p $(openssl passwd -1 octoprint) octoprint
 usermod -aG sudo,tty,dialout octoprint
 chown -R octoprint:octoprint /opt
+echo "octoprint ALL=NOPASSWD: $(command -v systemctl) restart octoprint, $(command -v reboot), $(command -v poweroff)" > /etc/sudoers.d/octoprint
 msg_ok "Created user octoprint"
 
 msg_info "Installing OctoPrint"
