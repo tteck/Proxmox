@@ -21,7 +21,7 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Wastebin (Patience)"
+msg_info "Installing Wastebin"
 RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
 wget -q https://github.com/matze/wastebin/releases/download/${RELEASE}/wastebin_${RELEASE}_x86_64-unknown-linux-musl.tar.zst
 tar -xf wastebin_${RELEASE}_x86_64-unknown-linux-musl.tar.zst
