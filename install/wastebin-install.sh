@@ -15,30 +15,20 @@ setting_up_container
 network_check
 update_os
 
-msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y --no-install-recommends \
-  build-essential \
-  unzip \
-  curl \
-  sudo \
-  git \
-  make \
-  mc
+msg_info "Installing Dependencies"
+$STD apt-get install -y curl
+$STD apt-get install -y sudo
+$STD apt-get install -y mc
 msg_ok "Installed Dependencies"
-
-msg_info "Installing Rust (Patience)" 
-$STD bash <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) -y
-source ~/.cargo/env
-msg_ok "Installed Rust" 
 
 msg_info "Installing Wastebin (Patience)"
 RELEASE=$(curl -s https://api.github.com/repos/matze/wastebin/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-wget -q "https://github.com/matze/wastebin/archive/refs/tags/${RELEASE}.zip"
-unzip -q ${RELEASE}.zip
-mv wastebin-${RELEASE} /opt/wastebin
-rm -R ${RELEASE}.zip 
-cd /opt/wastebin
-cargo build -q --release
+wget -q https://github.com/matze/wastebin/releases/download/${RELEASE}/wastebin_${RELEASE}_x86_64-unknown-linux-musl.tar.zst
+tar -xf wastebin_${RELEASE}_x86_64-unknown-linux-musl.tar.zst
+rm -rf wastebin_${RELEASE}_x86_64-unknown-linux-musl.tar.zst
+mkdir -p /opt/wastebin
+mv wastebin /opt/wastebin/
+chmod +x /opt/wastebin/wastebin
 msg_ok "Installed Wastebin"
 
 msg_info "Creating Service"
@@ -48,9 +38,8 @@ Description=Start Wastebin Service
 After=network.target
 
 [Service]
-User=root
 WorkingDirectory=/opt/wastebin
-ExecStart=/root/.cargo/bin/cargo run --release --quiet
+ExecStart=/opt/wastebin/wastebin
 
 [Install]
 WantedBy=multi-user.target
