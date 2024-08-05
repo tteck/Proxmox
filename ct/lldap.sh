@@ -71,6 +71,3 @@ description
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:17170${CL} \n"
-echo -e "$Default login:
-         username:${BL}admin${CL}
-		 password:${BL}password${CL} \n"
