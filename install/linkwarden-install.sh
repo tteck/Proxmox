@@ -74,6 +74,7 @@ RELEASE=$(curl -s https://api.github.com/repos/linkwarden/linkwarden/releases/la
 echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 $STD yarn
 $STD npx playwright install-deps
+$STD yarn playwright install
 IP=$(hostname -I | awk '{print $1}')
 SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 env_path="/opt/linkwarden/.env"
