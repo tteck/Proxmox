@@ -65,6 +65,7 @@ if [[ ! -f /etc/systemd/system/n8n.service ]]; then msg_error "No ${APP} Install
   fi
 msg_info "Updating ${APP} LXC"
 npm update -g n8n &>/dev/null
+systemctl restart n8n
 msg_ok "Updated Successfully"
 exit
 }
