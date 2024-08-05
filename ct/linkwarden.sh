@@ -67,6 +67,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   git pull
   yarn
   npx playwright install-deps
+  yarn playwright install
   yarn prisma generate
   yarn build
   yarn prisma migrate deploy
