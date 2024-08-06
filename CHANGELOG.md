@@ -12,6 +12,13 @@ Be cautious of copycat or coat-tailing sites that exploit the project's populari
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-08-06
+
+### Changed
+
+- **lldap LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/lldap-install.sh)
+  - NEW Script
+
 ## 2024-07-26
 
 ### Changed
