@@ -117,7 +117,7 @@ network_check() {
   trap - ERR
   ipv4_connected=false
   ipv6_connected=false
-
+  sleep 1
 # Check IPv4 connectivity
   if ping -c 1 -W 1 1.1.1.1 &>/dev/null; then 
     msg_ok "IPv4 Internet Connected";
