@@ -27,12 +27,13 @@ RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep 
 wget -q https://github.com/go-gitea/gitea/releases/download/v$RELEASE/gitea-$RELEASE-linux-amd64
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
-adduser --system --group --disabled-password --home /etc/gitea gitea > /dev/null
+adduser --system --group --disabled-password --shell /bin/bash --home /etc/gitea gitea > /dev/null
 mkdir -p /var/lib/gitea/{custom,data,log}
 chown -R gitea:gitea /var/lib/gitea/
 chmod -R 750 /var/lib/gitea/
 chown root:gitea /etc/gitea
 chmod 770 /etc/gitea
+sudo -u gitea ln -s /var/lib/gitea/data/.ssh/ /etc/gitea/.ssh
 msg_ok "Installed Gitea"
 
 msg_info "Creating Service"
