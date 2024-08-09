@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2024 tteck
-# Authors: tteck (tteckster)
+# Author: tteck (tteckster)
+# Co-Author: remz1337
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -14,11 +15,12 @@ network_check
 update_os
 
 msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y {curl,sudo,mc,git,gpg,automake,build-essential,xz-utils,libtool,ccache,pkg-config,libgtk-3-dev,libavcodec-dev,libavformat-dev,libswscale-dev,libv4l-dev,libxvidcore-dev,libx264-dev,libjpeg-dev,libpng-dev,libtiff-dev,gfortran,openexr,libatlas-base-dev,libssl-dev,libtbb2,libtbb-dev,libdc1394-22-dev,libopenexr-dev,libgstreamer-plugins-base1.0-dev,libgstreamer1.0-dev,gcc,gfortran,libopenblas-dev,liblapack-dev,libusb-1.0-0-dev,jq}
+$STD apt-get install -y {curl,sudo,mc,git,gpg,automake,build-essential,xz-utils,libtool,ccache,pkg-config,libgtk-3-dev,libavcodec-dev,libavformat-dev,libswscale-dev,libv4l-dev,libxvidcore-dev,libx264-dev,libjpeg-dev,libpng-dev,libtiff-dev,gfortran,openexr,libatlas-base-dev,libssl-dev,libtbb2,libtbb-dev,libdc1394-22-dev,libopenexr-dev,libgstreamer-plugins-base1.0-dev,libgstreamer1.0-dev,gcc,gfortran,libopenblas-dev,liblapack-dev,libusb-1.0-0-dev,jq,moreutils}
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Python3 Dependencies"
 $STD apt-get install -y {python3,python3-dev,python3-setuptools,python3-distutils,python3-pip}
+$STD pip install --upgrade pip
 msg_ok "Installed Python3 Dependencies"
 
 msg_info "Installing Node.js"
@@ -46,8 +48,7 @@ if [[ "$CTTYPE" == "0" ]]; then
 fi
 msg_ok "Set Up Hardware Acceleration"
 
-#RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | jq -r '.tag_name')
-RELEASE=v0.13.2
+RELEASE=$(curl -s https://api.github.com/repos/blakeblackshear/frigate/releases/latest | jq -r '.tag_name')
 msg_ok "Stop spinner to prevent segmentation fault"
 msg_info "Installing Frigate $RELEASE (Perseverance)"
 if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
@@ -63,6 +64,7 @@ export TARGETARCH="amd64"
 echo 'libc6 libraries/restart-without-asking boolean true' | debconf-set-selections
 wget -q -O /opt/frigate/docker/main/install_deps.sh https://raw.githubusercontent.com/blakeblackshear/frigate/dev/docker/main/install_deps.sh
 $STD /opt/frigate/docker/main/install_deps.sh
+$STD apt update
 $STD ln -svf /usr/lib/btbn-ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg
 $STD ln -svf /usr/lib/btbn-ffmpeg/bin/ffprobe /usr/local/bin/ffprobe
 $STD pip3 install -U /wheels/*.whl
@@ -119,7 +121,7 @@ if grep -q -o -m1 'avx[^ ]*' /proc/cpuinfo; then
 detectors:
   ov:
     type: openvino
-    device: AUTO
+    device: CPU
     model:
       path: /openvino-model/FP16/ssdlite_mobilenet_v2.xml
 model:
@@ -169,10 +171,18 @@ msg_ok "Installed Coral Object Detection Model"
 
 msg_info "Building Nginx with Custom Modules"
 $STD /opt/frigate/docker/main/build_nginx.sh
-sed -i 's/exec nginx/exec \/usr\/local\/nginx\/sbin\/nginx/g' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
+#sed -i 's/exec nginx/exec \/usr\/local\/nginx\/sbin\/nginx/g' /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
+sed -e '/s6-notifyoncheck/ s/^#*/#/' -i /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
 sed -i 's/error_log \/dev\/stdout warn\;/error_log \/dev\/shm\/logs\/nginx\/current warn\;/' /usr/local/nginx/conf/nginx.conf
 sed -i 's/access_log \/dev\/stdout main\;/access_log \/dev\/shm\/logs\/nginx\/current main\;/' /usr/local/nginx/conf/nginx.conf
+ln -svf /usr/local/nginx/sbin/nginx  /usr/local/bin/nginx
 msg_ok "Built Nginx"
+
+msg_info "Installing Tempio"
+sed -i 's|/rootfs/usr/local|/usr/local|g' /opt/frigate/docker/main/install_tempio.sh
+$STD /opt/frigate/docker/main/install_tempio.sh
+ln -svf /usr/local/tempio/bin/tempio /usr/local/bin/tempio
+msg_ok "Installed Tempio"
 
 msg_info "Creating Services"
 cat <<EOF >/etc/systemd/system/create_directories.service
@@ -201,7 +211,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStartPre=+rm /dev/shm/logs/go2rtc/current
-ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/go2rtc/run
+#ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/go2rtc/run
+ExecStart=/bin/bash -c "bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/go2rtc/run 2> >(/usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S ' >&2) | /usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S '"
 StandardOutput=file:/dev/shm/logs/go2rtc/current
 StandardError=file:/dev/shm/logs/go2rtc/current
 
@@ -223,7 +234,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStartPre=+rm /dev/shm/logs/frigate/current
-ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
+#ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run
+ExecStart=/bin/bash -c "bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/frigate/run 2> >(/usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S ' >&2) | /usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S '"
 StandardOutput=file:/dev/shm/logs/frigate/current
 StandardError=file:/dev/shm/logs/frigate/current
 
@@ -245,7 +257,8 @@ Restart=always
 RestartSec=1
 User=root
 ExecStartPre=+rm /dev/shm/logs/nginx/current
-ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
+#ExecStart=bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
+ExecStart=/bin/bash -c "bash /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run 2> >(/usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S ' >&2) | /usr/bin/ts '%%Y-%%m-%%d %%H:%%M:%%.S '"
 StandardOutput=file:/dev/shm/logs/nginx/current
 StandardError=file:/dev/shm/logs/nginx/current
 
