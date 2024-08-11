@@ -54,7 +54,7 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/matterbridge ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /root/Matterbridge ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_error "Update via the Matterbridge UI"
 exit
 }
