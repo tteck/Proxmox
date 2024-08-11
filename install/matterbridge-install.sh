@@ -34,6 +34,7 @@ $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
 msg_info "Install Matterbridge" 
+mkdir -p /root/Matterbridge
 $STD npm install -g matterbridge
 msg_ok "Installed Matterbridge"
 
