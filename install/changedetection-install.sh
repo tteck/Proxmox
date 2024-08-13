@@ -74,7 +74,7 @@ msg_ok "Installed Change Detection"
 msg_info "Installing Browserless & Playwright"
 mkdir /opt/browserless
 $STD python3 -m pip install playwright
-$STD git clone -b v1 https://github.com/browserless/chrome /opt/browserless
+$STD git clone https://github.com/browserless/chrome /opt/browserless
 $STD npm install --prefix /opt/browserless
 $STD npm run build --prefix /opt/browserless
 $STD npm prune production --prefix /opt/browserless
@@ -123,8 +123,8 @@ Wants=browserless.service
 [Service]
 Type=simple
 WorkingDirectory=/opt/changedetection
-Environment="WEBDRIVER_URL=http://127.0.0.1:4444/wd/hub"
-Environment="PLAYWRIGHT_DRIVER_URL=ws://127.0.0.1:3000/?stealth=1&--disable-web-security=true"
+Environment=WEBDRIVER_URL=http://127.0.0.1:4444/wd/hub
+Environment=PLAYWRIGHT_DRIVER_URL=ws://browserless-chrome:3000/chrome?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
 ExecStart=changedetection.io -d /opt/changedetection -p 5000
 [Install]
 WantedBy=multi-user.target
