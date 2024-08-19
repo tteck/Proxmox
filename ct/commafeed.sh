@@ -55,19 +55,27 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/commafeed ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Stopping CommaFeed"
-systemctl stop commafeed
-msg_ok "Stopped CommaFeed"
+RELEASE=$(curl -sL https://api.github.com/repos/Athou/commafeed/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+  msg_info "Stopping ${APP}"
+  systemctl stop commafeed
+  msg_ok "Stopped ${APP}"
 
-msg_info "Updating CommaFeed"
-cd /opt/commafeed
-rm commafeed.jar
-wget -q https://github.com/Athou/commafeed/releases/latest/download/commafeed.jar
-msg_ok "Updated CommaFeed"
+  msg_info "Updating ${APP} to ${RELEASE}"
+  wget https://github.com/Athou/commafeed/releases/download/${RELEASE}/commafeed-${RELEASE}-h2-jvm.zip
+  unzip -q commafeed-${RELEASE}-h2-jvm.zip
+  rsync -a --exclude 'data/' commafeed-${RELEASE}-h2/ /opt/commafeed/
+  rm -rf commafeed-${RELEASE}-h2-jvm.zip
+  echo "${RELEASE}" >/opt/${APP}_version.txt
+  msg_ok "Updated ${APP} to ${RELEASE}"
 
-msg_info "Starting CommaFeed"
-systemctl start commafeed
-msg_ok "Update Completed Successfully"
+  msg_info "Starting ${APP}"
+  systemctl start commafeed
+  msg_ok "Started ${APP}"
+  msg_ok "Updated Successfully"
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+fi
 exit
 }
 
