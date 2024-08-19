@@ -65,7 +65,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   wget -q https://github.com/Athou/commafeed/releases/download/${RELEASE}/commafeed-${RELEASE}-h2-jvm.zip
   unzip -q commafeed-${RELEASE}-h2-jvm.zip
   rsync -a --exclude 'data/' commafeed-${RELEASE}-h2/ /opt/commafeed/
-  rm -rf commafeed-${RELEASE}-h2-jvm.zip
+  rm -rf commafeed-${RELEASE}-h2  commafeed-${RELEASE}-h2-jvm.zip
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
