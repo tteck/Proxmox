@@ -12,6 +12,14 @@ Be cautious of copycat or coat-tailing sites that exploit the project's populari
 
 - All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-08-19
+
+### Changed
+
+- **CommaFeed LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/0a33d1739ec3a49011411929bd46a260e92e99f9)
+  - Refactor Code
+  - Breaking Change
+
 ## 2024-08-06
 
 ### Changed
