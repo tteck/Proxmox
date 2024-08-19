@@ -71,7 +71,7 @@ function update_script() {
     header_info
     case $CHOICE in
     1)
-      apk update && apk upgrade
+      apk update && apk upgrade && rc-service vaultwarden restart -q
       exit
       ;;
     2)
