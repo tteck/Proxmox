@@ -81,7 +81,7 @@ function update_script() {
 	    line=0
 	  elif [ $i == "gmail" ]; then
 	    line=1
-      elif [ $i == "goodreads" ]; then
+          elif [ $i == "goodreads" ]; then
 	    line=2
 	  elif [ $i == "ldap" ]; then
 	    line=3
@@ -102,8 +102,8 @@ function update_script() {
   CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 "${menu_array[@]}" 3>&1 1>&2 2>&3)
   spinner &
   SPINNER_PID=$!
+  options=()
   if [ ! -z "$CHOICES" ]; then
-    declare -a options
     for CHOICE in $CHOICES; do
       case "$CHOICE" in
       "1")
