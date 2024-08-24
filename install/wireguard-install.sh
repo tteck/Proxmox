@@ -22,6 +22,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing WireGuard"
 $STD apt-get install -y wireguard wireguard-tools net-tools iptables
+$STD DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" install -y iptables-persistent
 msg_ok "Installed WireGuard"
 
 msg_info "Installing WGDashboard"
