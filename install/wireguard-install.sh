@@ -21,7 +21,7 @@ $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
 msg_info "Installing WireGuard"
-$STD DEBIAN_FRONTEND=noninteractive apt-get install -y wireguard wireguard-tools net-tools iptables iptables-persistent
+$STD apt-get install -y wireguard wireguard-tools net-tools iptables
 msg_ok "Installed WireGuard"
 
 msg_info "Installing WGDashboard"
