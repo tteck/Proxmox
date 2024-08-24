@@ -21,7 +21,10 @@ $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
 msg_info "Installing WireGuard"
-$STD apt-get install -y wireguard wireguard-tools net-tools iptables
+$STD apt-get install -y wireguard wireguard-tools net-tools iptables iptables-persistent
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+$STD netfilter-persistent save
+$STD netfilter-persistent reload
 msg_ok "Installed WireGuard"
 
 msg_info "Installing WGDashboard"
