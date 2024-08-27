@@ -28,26 +28,25 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Postgresql and pgvector"
 $STD /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-apt install -y postgresql postgresql-16-pgvector
+$STD apt install -y postgresql postgresql-16-pgvector
 msg_ok "Installed Postgresql and pgvector"
 
 msg_info "Setting up database"
 #test this:
-$STD su postgres -s /bin/sh -c "psql \
-CREATE DATABASE immich;
-CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';
-GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-ALTER USER immich WITH SUPERUSER;
-\q"
+#$STD su postgres -s /bin/sh -c "psql \
+#CREATE DATABASE immich;
+#CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';
+#GRANT ALL PRIVILEGES ON DATABASE immich to immich;
+#ALTER USER immich WITH SUPERUSER;
+#\q"
 
 #otherwise this:
-#su postgres <<EOF
-#psql -c "CREATE DATABASE immich;"
-#psql -c "CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';"
-#psql -c "GRANT ALL PRIVILEGES ON DATABASE immich to immich;"
-#psql -c "ALTER USER immich WITH SUPERUSER;"
-#EOF
-
+su postgres <<EOF
+psql -c "CREATE DATABASE immich;"
+psql -c "CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';"
+psql -c "GRANT ALL PRIVILEGES ON DATABASE immich to immich;"
+psql -c "ALTER USER immich WITH SUPERUSER;"
+EOF
 msg_ok "Database setup completed"
 
 msg_info "Installing ffmpeg yellyfin"
