@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/chmistry/proxmox-immich/main/misc/build.func)
 # Copyright (c) 2024 chmistry
 # Author: chmistry
 # License: MIT
@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="immich"
 var_disk="50"
 var_cpu="4"
-var_ram="8193"
+var_ram="8192"
 var_os="ubuntu"
 var_version="24.04"
 variables
