@@ -43,7 +43,7 @@ msg_ok "Database setup completed"
 msg_info "Installing ffmpeg yellyfin"
 $STD add-apt-repository universe -y
 $STD mkdir -p /etc/apt/keyrings
-$STD curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
+curl -fsSL https://repo.jellyfin.org/jellyfin_team.gpg.key | gpg --dearmor -o /etc/apt/keyrings/jellyfin.gpg
 $STD export VERSION_OS="$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release )"
 $STD export VERSION_CODENAME="$( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release )"
 $STD export DPKG_ARCHITECTURE="$( dpkg --print-architecture )"
