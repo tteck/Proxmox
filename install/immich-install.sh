@@ -32,15 +32,6 @@ $STD apt install -y postgresql postgresql-16-pgvector
 msg_ok "Installed Postgresql and pgvector"
 
 msg_info "Setting up database"
-#test this:
-#$STD su postgres -s /bin/sh -c "psql \
-#CREATE DATABASE immich;
-#CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';
-#GRANT ALL PRIVILEGES ON DATABASE immich to immich;
-#ALTER USER immich WITH SUPERUSER;
-#\q"
-
-#otherwise this:
 su postgres <<EOF
 psql -c "CREATE DATABASE immich;"
 psql -c "CREATE USER immich WITH ENCRYPTED PASSWORD 'YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w';"
@@ -78,10 +69,9 @@ $STD useradd -m immich
 msg_ok "User immich added"
 
 msg_info "Installing Node.js"
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
-source ~/.bashrc
-$STD nvm install 20
-ln -sf /root/.nvm/versions/node/v20/bin/node /usr/bin/node
+#TODO script crashes at this point, attempt to install as immich user
+$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+$STD su immich -c "nvm install 20"
 msg_ok "Installed Node.js"
 
 msg_info "Installing ${APPLICATION}"
