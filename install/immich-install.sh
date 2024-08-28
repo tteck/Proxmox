@@ -92,7 +92,7 @@ msg_ok "Installed Node.js and ${APPLICATION}"
 
 msg_info "Creating log directory /var/log/immich"
 mkdir -p /var/log/immich
-chmod immich:immich /var/log/immich
+chown immich:immich /var/log/immich
 msg_ok "Log directory created"
 
 msg_info "Creating Services"
