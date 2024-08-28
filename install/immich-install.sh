@@ -70,10 +70,15 @@ msg_ok "User immich added"
 
 msg_info "Installing Node.js"
 #TODO script crashes at this point, attempt to install as immich user
-#$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
-$STD su immich -c "nvm install 20"
 
+#$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+#$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
+#$STD su immich -c "nvm install 20"
+
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+. ~/.bashrc
+$STD nvm install 16.20.1
+ln -sf /root/.nvm/versions/node/v16.20.1/bin/node /usr/bin/node
 msg_ok "Installed Node.js"
 
 msg_info "Installing ${APPLICATION}"
