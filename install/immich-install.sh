@@ -76,7 +76,7 @@ msg_info "Installing Node.js"
 #$STD su immich -c "nvm install 20"
 
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-. ~/.bashrc
+#. ~/.bashrc
 $STD nvm install 20
 $STD export NODE_VERSION="$( node -v )"
 ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
