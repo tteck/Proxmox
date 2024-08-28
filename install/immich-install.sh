@@ -91,7 +91,7 @@ msg_ok "User immich added"
 
 msg_info "Installing ${APPLICATION}"
 
-su immich -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp"
+su immich -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc"
 cd /tmp/immich-in-lxc
 su immich -c "./install.sh" # creates env file
 # Replace password in runtime.env file
