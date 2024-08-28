@@ -52,6 +52,7 @@ EOF
 $STD apt-get update
 $STD apt-get install -y jellyfin
 chown -R jellyfin:adm /etc/jellyfin
+sleep 10
 systemctl restart jellyfin
 if [[ "$CTTYPE" == "0" ]]; then
   sed -i -e 's/^ssl-cert:x:104:$/render:x:104:root,jellyfin/' -e 's/^render:x:108:root,jellyfin$/ssl-cert:x:108:/' /etc/group
