@@ -26,6 +26,20 @@ $STD apt install -y software-properties-common
 $STD apt install -y redis
 msg_ok "Installed Dependencies"
 
+msg_info "Installing Node.js"
+#TODO script crashes at this point, attempt to install as immich user
+
+#$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+#$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
+#$STD su immich -c "nvm install 20"
+
+$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+. ~/.bashrc
+$STD nvm install 20
+$STD export NODE_VERSION="$( node -v )"
+ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
+msg_ok "Installed Node.js"
+
 msg_info "Installing Postgresql and pgvector"
 $STD /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
 $STD apt install -y postgresql postgresql-16-pgvector
@@ -67,20 +81,6 @@ msg_info "Adding immich user"
 $STD useradd -m immich
 #TODO: strip user login etc. (make it more a daemon user)
 msg_ok "User immich added"
-
-msg_info "Installing Node.js"
-#TODO script crashes at this point, attempt to install as immich user
-
-#$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-#$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
-#$STD su immich -c "nvm install 20"
-
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-#. ~/.bashrc
-$STD nvm install 20
-$STD export NODE_VERSION="$( node -v )"
-ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
-msg_ok "Installed Node.js"
 
 msg_info "Installing ${APPLICATION}"
 
