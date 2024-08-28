@@ -72,6 +72,7 @@ msg_info "Installing Node.js"
 #TODO script crashes at this point, attempt to install as immich user
 $STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
 $STD su immich -c "nvm install 20"
+
 msg_ok "Installed Node.js"
 
 msg_info "Installing ${APPLICATION}"
