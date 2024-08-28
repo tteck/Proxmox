@@ -26,25 +26,31 @@ $STD apt install -y software-properties-common
 $STD apt install -y redis
 msg_ok "Installed Dependencies"
 
+msg_info "Adding immich user"
+$STD useradd -m immich
+#TODO: strip user login etc. (make it more a daemon user)
+msg_ok "User immich added"
+
 msg_info "Installing Node.js"
 #TODO script crashes at this point, attempt to install as immich user
 
 #$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-#$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
-#$STD su immich -c "nvm install 20"
+$STD su immich -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
+$STD su immich -c "nvm install 20"
 
-$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-export PS1=$'\h:\w\$'
-export debian_chroot=""
-export force_color_prompt=no
-. ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
+#$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
+#export PS1=$'\h:\w\$'
+#export debian_chroot=""
+#export force_color_prompt=no
+#. ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-$STD nvm install 20
-$STD export NODE_VERSION="$( node -v )"
-ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
+#$STD nvm install 20
+#$STD export NODE_VERSION="$( node -v )"
+#ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
+
 msg_ok "Installed Node.js"
 
 msg_info "Installing Postgresql and pgvector"
@@ -83,11 +89,6 @@ $STD apt install -y jellyfin-ffmpeg6
 ln -s /usr/lib/jellyfin-ffmpeg/ffmpeg  /bin/ffmpeg
 ln -s /usr/lib/jellyfin-ffmpeg/ffprobe  /bin/ffprobe
 msg_ok "Installed ffmpeg yellyfin"
-
-msg_info "Adding immich user"
-$STD useradd -m immich
-#TODO: strip user login etc. (make it more a daemon user)
-msg_ok "User immich added"
 
 msg_info "Installing ${APPLICATION}"
 
