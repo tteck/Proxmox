@@ -34,10 +34,11 @@ msg_info "Installing Node.js"
 #$STD su immich -c "nvm install 20"
 
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-#. ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PS1=$'\h:\w\$'
+. ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 $STD nvm install 20
 $STD export NODE_VERSION="$( node -v )"
