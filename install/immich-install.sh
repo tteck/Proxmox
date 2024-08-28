@@ -43,8 +43,9 @@ source ~/.bashrc
 export NVM_DIR="\$HOME/.nvm"
 [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
 [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
+nvm install 20
 EOF
-su immich -s /usr/bin/bash -c "nvm install 20"
+#su immich -s /usr/bin/bash -c "nvm install 20"
 
 #$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
 #export PS1=$'\h:\w\$'
