@@ -36,7 +36,7 @@ msg_info "Installing Node.js"
 
 #$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
 su immich -s /bin/bash -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
-su immich -s /bin/bash -c ". ~/.bashrc"
+su immich -s /bin/bash -c "source ~/.bashrc"
 #su immich <<EOF
 #export NVM_DIR="\$HOME/.nvm"
 #[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
