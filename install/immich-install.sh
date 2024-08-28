@@ -26,22 +26,6 @@ $STD apt install -y software-properties-common
 $STD apt install -y redis
 msg_ok "Installed Dependencies"
 
-msg_info "Adding immich user"
-$STD useradd -m immich
-#TODO: strip user login etc. (make it more a daemon user)
-msg_ok "User immich added"
-
-msg_info "Installing Node.js"
-#source ~/.bashrc
-su immich -s /usr/bin/bash <<EOF
-bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
-export NVM_DIR="\$HOME/.nvm"
-[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
-[ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
-nvm install 20
-EOF
-msg_ok "Installed Node.js"
-
 msg_info "Installing Postgresql and pgvector"
 $STD /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
 $STD apt install -y postgresql postgresql-16-pgvector
@@ -79,15 +63,32 @@ ln -s /usr/lib/jellyfin-ffmpeg/ffmpeg  /bin/ffmpeg
 ln -s /usr/lib/jellyfin-ffmpeg/ffprobe  /bin/ffprobe
 msg_ok "Installed ffmpeg yellyfin"
 
-msg_info "Installing ${APPLICATION}"
+msg_info "Adding immich user"
+$STD useradd -m immich
+#TODO: strip user login etc. (make it more a daemon user)
+msg_ok "User immich added"
 
-su immich -s /usr/bin/bash -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc"
+msg_info "Installing Node.js and ${APPLICATION}"
+su immich -s /usr/bin/bash <<EOF
+bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
+export NVM_DIR="\$HOME/.nvm"
+[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+[ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
+nvm install 20
+git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc
 cd /tmp/immich-in-lxc
-su immich -s /usr/bin/bash -c "./install.sh" # creates env file
-# Replace password in runtime.env file
+./install.sh
 sed -i 's/A_SEHR_SAFE_PASSWORD/YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w/g' runtime.env
-su immich -s /usr/bin/bash -c "./install.sh" # runs rest of script
-msg_ok "Installed ${APPLICATION}"
+./install.sh
+EOF
+
+#su immich -s /usr/bin/bash -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc"
+#cd /tmp/immich-in-lxc
+#$su immich -s /usr/bin/bash -c "./install.sh" # creates env file
+# Replace password in runtime.env file
+#sed -i 's/A_SEHR_SAFE_PASSWORD/YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w/g' runtime.env
+#su immich -s /usr/bin/bash -c "./install.sh" # runs rest of script
+msg_ok "Installed Node.js and ${APPLICATION}"
 
 msg_info "Creating log directory /var/log/immich"
 mkdir -p /var/log/immich
