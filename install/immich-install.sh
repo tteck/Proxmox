@@ -35,9 +35,12 @@ msg_info "Installing Node.js"
 #TODO script crashes at this point, attempt to install as immich user
 
 #$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-su immich -p -s /usr/bin/bash -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)" 
-su immich -p -s /usr/bin/bash -c "source ~/.bashrc"
-#su immich <<EOF
+#su immich -s /usr/bin/bash -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)" 
+#su immich -s /usr/bin/bash -c "source ~/.bashrc"
+su immich -s /usr/bin/bash <<EOF
+bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
+source ~/.bashrc
+EOF
 #export NVM_DIR="\$HOME/.nvm"
 #[ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
 #[ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
