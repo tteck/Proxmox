@@ -32,34 +32,14 @@ $STD useradd -m immich
 msg_ok "User immich added"
 
 msg_info "Installing Node.js"
-#TODO script crashes at this point, attempt to install as immich user
-
-#$STD su immich -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
-#su immich -s /usr/bin/bash -c "bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)" 
-#su immich -s /usr/bin/bash -c "source ~/.bashrc"
+#source ~/.bashrc
 su immich -s /usr/bin/bash <<EOF
 bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)
-source ~/.bashrc
 export NVM_DIR="\$HOME/.nvm"
 [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
 [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
 nvm install 20
 EOF
-#su immich -s /usr/bin/bash -c "nvm install 20"
-
-#$STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
-#export PS1=$'\h:\w\$'
-#export debian_chroot=""
-#export force_color_prompt=no
-#. ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-#$STD nvm install 20
-#$STD export NODE_VERSION="$( node -v )"
-#ln -sf /root/.nvm/versions/node/$NODE_VERSION/bin/node /usr/bin/node
-
 msg_ok "Installed Node.js"
 
 msg_info "Installing Postgresql and pgvector"
@@ -101,16 +81,17 @@ msg_ok "Installed ffmpeg yellyfin"
 
 msg_info "Installing ${APPLICATION}"
 
-su immich -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc"
+su immich -s /usr/bin/bash -c "git clone https://github.com/loeeeee/immich-in-lxc.git /tmp/immich-in-lxc"
 cd /tmp/immich-in-lxc
-su immich -c "./install.sh" # creates env file
+su immich -s /usr/bin/bash -c "./install.sh" # creates env file
 # Replace password in runtime.env file
 sed -i 's/A_SEHR_SAFE_PASSWORD/YUaaWZAvtL@JpNgpi3z6uL4MmDMR_w/g' runtime.env
-su immich -c "./install.sh" # runs rest of script
+su immich -s /usr/bin/bash -c "./install.sh" # runs rest of script
 msg_ok "Installed ${APPLICATION}"
 
 msg_info "Creating log directory /var/log/immich"
 mkdir -p /var/log/immich
+chmod immich:immich /var/log/immich
 msg_ok "Log directory created"
 
 msg_info "Creating Services"
