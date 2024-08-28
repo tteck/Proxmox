@@ -35,6 +35,7 @@ msg_info "Installing Node.js"
 
 $STD bash <(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh)
 export PS1=$'\h:\w\$'
+export debian_chroot=""
 . ~/.bashrc  # crashes with: /root/.bashrc: line 6: PS1: unbound variable
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
