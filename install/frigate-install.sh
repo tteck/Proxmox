@@ -58,11 +58,11 @@ wget -q https://github.com/blakeblackshear/frigate/archive/refs/tags/${RELEASE}.
 tar -xzf frigate.tar.gz -C /opt/frigate --strip-components 1
 rm -rf frigate.tar.gz
 cd /opt/frigate
-$STD pip3 wheel --wheel-dir=/wheels -r /opt/frigate/docker/main/requirements-wheels.txt
+$STD pip3 wheel --wheel-dir=/wheels -r /opt/frigate/docker/4be1d23dcda39a13aa5025a94aec4627ae3ac2aa/requirements-wheels.txt
 cp -a /opt/frigate/docker/main/rootfs/. /
 export TARGETARCH="amd64"
 echo 'libc6 libraries/restart-without-asking boolean true' | debconf-set-selections
-wget -q -O /opt/frigate/docker/main/install_deps.sh https://raw.githubusercontent.com/blakeblackshear/frigate/dev/docker/main/install_deps.sh
+wget -q -O /opt/frigate/docker/main/install_deps.sh https://raw.githubusercontent.com/blakeblackshear/frigate/dev/docker/4be1d23dcda39a13aa5025a94aec4627ae3ac2aa/install_deps.sh
 $STD /opt/frigate/docker/main/install_deps.sh
 $STD apt update
 $STD ln -svf /usr/lib/btbn-ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg
@@ -178,7 +178,7 @@ ln -sf /usr/local/nginx/sbin/nginx  /usr/local/bin/nginx
 msg_ok "Built Nginx"
 
 msg_info "Installing Tempio"
-sed -i 's|/rootfs/usr/local|/usr/local|g' /opt/frigate/docker/main/install_tempio.sh
+sed -i 's|/rootfs/usr/local|/usr/local|g' /opt/frigate/docker/4be1d23dcda39a13aa5025a94aec4627ae3ac2aa/install_tempio.sh
 $STD /opt/frigate/docker/main/install_tempio.sh
 ln -sf /usr/local/tempio/bin/tempio /usr/local/bin/tempio
 msg_ok "Installed Tempio"
