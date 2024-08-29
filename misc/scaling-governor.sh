@@ -1,99 +1,58 @@
 #!/usr/bin/env bash
-clear
+
+# Copyright (c) 2021-2024 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 set -e
-while true; do
-    read -p "View CPU Scaling Governors. Proceed(y/n)?" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+header_info() {
 clear
-function header_info {
-echo -e "
-   _____ _____  _    _ 
-  / ____|  __ \| |  | |
- | |    | |__) | |  | |
- | |    |  ___/| |  | |
- | |____| |    | |__| |
-  \_____|_|     \____/ 
-    Scaling Governors
-"
+cat <<EOF
+  ________  __  __  _____
+ / ___/ _ \/ / / / / ___/__ _  _____ _______  ___  _______
+/ /__/ ___/ /_/ / / (_ / _ \ |/ / -_) __/ _ \/ _ \/ __(_-<
+\___/_/   \____/  \___/\___/___/\__/_/ /_//_/\___/_/ /___/
+EOF
 }
-show_menu(){
-    CL=`echo "\033[m"`
-    GN=`echo "\033[32m"`
-    BL=`echo "\033[36m"`
-    YW=`echo "\033[33m"`
-    fgred=`echo "\033[31m"`
 header_info
-    CK=$(uname -r)
-    IP=$(hostname -I)
-#    MAC=$(cat /sys/class/net/eno1/address)
-    ACSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)
-    CCSG=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
-    echo -e "${YW}Proxmox IP ${BL}${IP}${CL}"
-
-    echo -e "${YW}MAC Address ${BL}${MAC}${CL}"
-
-    echo -e "${YW}Current Kernel ${BL}${CK}${CL}"
-
-    echo -e "\n${YW}Available CPU Scaling Governors
-    ${BL}${ACSG}${CL}"
-    
-    echo -e "\n${YW}Current CPU Scaling Governor
-    ${BL}${CCSG}${CL}"
-    printf "\n ${fgred}Only Select Available CPU Scaling Governors From Above${CL}\n \n"
-    printf "${BL}**${YW} 1)${GN} Switch to ${BL}conservative${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "${BL}**${YW} 2)${GN} Switch to ${BL}ondemand${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "${BL}**${YW} 3)${GN} Switch to ${BL}userspace${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "${BL}**${YW} 4)${GN} Switch to ${BL}powersave${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "${BL}**${YW} 5)${GN} Switch to ${BL}performance${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "${BL}**${YW} 6)${GN} Switch to ${BL}schedutil${CL}${GN} CPU Scaling Governor ${CL}\n"
-    printf "\n ${fgred}NOTE: Settings return to default after reboot${CL}\n"
-    printf "\n Please choose an option from the menu and press [ENTER] or ${fgred}x${CL} to exit."
-    read opt
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU Scaling Governors" --yesno "View/Change CPU Scaling Governors. Proceed?" 10 58 || exit
+current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+GOVERNORS_MENU=()
+MSG_MAX_LENGTH=0
+while read -r TAG ITEM; do
+  OFFSET=2
+  ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
+  GOVERNORS_MENU+=("$TAG" "$ITEM " "OFF")
+done < <(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors | tr ' ' '\n' | grep -v "$current_governor")
+scaling_governor=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current CPU Scaling Governor is set to $current_governor" --checklist "\nSelect the Scaling Governor to use:\n" 16 $((MSG_MAX_LENGTH + 58)) 6 "${GOVERNORS_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+[ -z "$scaling_governor" ] && {
+    whiptail --backtitle "Proxmox VE Helper Scripts" --title "No CPU Scaling Governor Selected" --msgbox "It appears that no CPU Scaling Governor was selected" 10 68
+    clear
+    exit
 }
-clear
-show_menu
-while [ $opt != '' ]
-    do
-    if [ $opt = '' ]; then
-      exit;
-    else
-      case $opt in
-        1) echo "conservative" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        2) echo "ondemand" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        3) echo "userspace" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        4) echo "powersave" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        5) echo "performance" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        6) echo "schedutil" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-            clear
-            show_menu
-        ;;
-        x)exit;
-        ;;
-        \n)exit;
-        ;;
-        *)clear;
-            show_menu;
-        ;;
-      esac
+echo "${scaling_governor}" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor >/dev/null
+current_governor=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "Current CPU Scaling Governor" "\nCurrent CPU Scaling Governor has been set to $current_governor\n" 10 60
+CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CPU Scaling Governor" --menu "This will establish a crontab to maintain the CPU Scaling Governor configuration across reboots.\n \nSetup a crontab?" 14 68 2 \
+  "yes" " " \
+  "no" " " 3>&2 2>&1 1>&3)
+
+case $CHOICE in
+  yes)
+    set +e
+    NEW_CRONTAB_COMMAND="(sleep 60 && echo \"$current_governor\" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)"
+    EXISTING_CRONTAB=$(crontab -l 2>/dev/null)
+    if [[ -n "$EXISTING_CRONTAB" ]]; then
+      TEMP_CRONTAB_FILE=$(mktemp)
+      echo "$EXISTING_CRONTAB" | grep -v "@reboot (sleep 60 && echo*" > "$TEMP_CRONTAB_FILE"
+      crontab "$TEMP_CRONTAB_FILE"
+      rm "$TEMP_CRONTAB_FILE"
     fi
-  done
+    (crontab -l 2>/dev/null; echo "@reboot $NEW_CRONTAB_COMMAND") | crontab -
+    echo -e "\nCrontab Set (use 'crontab -e' to check)"
+    ;;
+  no)
+    echo -e "\n\033[31mNOTE: Settings return to default after reboot\033[m\n"
+    ;;
+esac
+echo -e "Current CPU Scaling Governor is set to \033[36m$current_governor\033[m\n"

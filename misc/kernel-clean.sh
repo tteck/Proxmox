@@ -1,100 +1,75 @@
-#!/bin/bash
-RD=$(tput setaf 1)
-GN=$(tput setaf 2)
-LYW=$(tput setaf 190)
-WH=$(tput setaf 7)
-BRT=$(tput bold)
-CL=$(tput sgr0)
-UL=$(tput smul)
-current_kernel=$(uname -r)
-pve=$(pveversion)
+#!/usr/bin/env bash
 
-while true; do
-    read -p "${WH}This will Clean unused Kernel images. Proceed(y/n)?${CL}" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo -e "${RD}Please answer y/n${CL}";;
-    esac
-done
-clear
-
-function check_root {
-        if [[ $EUID -ne 0 ]]; then
-                echo -e "${RD}Error: This script must be ran as the root user.\n${CL}" 
-                exit 1
-        fi
-}
+# Copyright (c) 2021-2024 tteck
+# Author: tteck (tteckster)
+# License: MIT
+# https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
-echo -e "${RD}
-  _  __                    _    _____ _                  
- | |/ /                   | |  / ____| |                 
- |   / ___ _ __ _ __   ___| | | |    | | ___  __ _ _ __  
- |  < / _ \  __|  _ \ / _ \ | | |    | |/ _ \/ _  |  _ \ 
- |   \  __/ |  | | | |  __/ | | |____| |  __/ (_| | | | |
- |_|\_\___|_|  |_| |_|\___|_|  \_____|_|\___|\__,_|_| |_|
+  clear
+  cat <<"EOF"
+    __ __                     __   ________
+   / //_/__  _________  ___  / /  / ____/ /__  ____ _____
+  / ,< / _ \/ ___/ __ \/ _ \/ /  / /   / / _ \/ __ `/ __ \
+ / /| /  __/ /  / / / /  __/ /  / /___/ /  __/ /_/ / / / /
+/_/ |_\___/_/  /_/ /_/\___/_/   \____/_/\___/\__,_/_/ /_/
 
-${CL}"
+EOF
+}
+YW=$(echo "\033[33m")
+RD=$(echo "\033[01;31m")
+GN=$(echo "\033[1;92m")
+CL=$(echo "\033[m")
+BFR="\\r\\033[K"
+HOLD="-"
+CM="${GN}✓${CL}"
+current_kernel=$(uname -r)
+available_kernels=$(dpkg --list | grep 'kernel-.*-pve' | awk '{print $2}' | grep -v "$current_kernel" | sort -V)
+header_info
+
+function msg_info() {
+  local msg="$1"
+  echo -ne " ${HOLD} ${YW}${msg}..."
 }
 
-function kernel_info() {
-    latest_kernel=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | tac | head -n 1)
-    echo -e "${LYW}PVE Version: ${UL}${WH}$pve\n${CL}"
-    if [[ "$current_kernel" == *"pve"* ]]; then
-      if [[ "$latest_kernel" != *"$current_kernel"* ]]; then
-        echo -e "${GN}Latest Kernel: $latest_kernel\n${CL}"
-      fi
-    else
-        echo -e "\n${RD}ERROR: No PVE Kernel Found\n${CL}"
-        exit 1
-    fi
+function msg_ok() {
+  local msg="$1"
+  echo -e "${BFR} ${CM} ${GN}${msg}${CL}"
 }
 
-function kernel_clean() {
-    kernels=$(dpkg --list| grep 'kernel-.*-pve' | awk '{print $2}' | sort -V)
-    remove_kernels=""
-    for kernel in $kernels
-      do
-        if [ "$(echo $kernel | grep $current_kernel)" ]; then
-            break
-        else
-            echo -e "${RD}'$kernel' ${CL}${LYW}has been added to the remove Kernel list\n${CL}"
-                    remove_kernels+=" $kernel"
-        fi
-    done
-echo -e "${LYW}Kernel Search Complete!\n${CL}"
-    if [[ "$remove_kernels" != *"pve"* ]]; then
-        echo -e "${BRT}${GN}It appears there are no old Kernels on your system. \n${CL}"
-    else
-    read -p "${LYW}Would you like to remove the${RD} $(echo $remove_kernels | awk '{print NF}') ${CL}${LYW}selected Kernels listed above? [y/n]: ${CL}" -n 1 -r
-    fi
-      if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo -e "${LYW}\nRemoving ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${LYW}old Kernels...${CL}"
-        /usr/bin/apt purge -y $remove_kernels > /dev/null 2>&1
-        echo -e "${LYW}Finished!\n${CL}"
-        echo -e "${LYW}Updating GRUB... \n${CL}"
-        /usr/sbin/update-grub > /dev/null 2>&1
-        echo -e "${LYW}Finished!\n${CL}"
-      else
-        echo -e "${LYW}Exiting...\n${CL}"
-        sleep 2
-      fi
-}
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE Kernel Clean" --yesno "This will Clean Unused Kernel Images, USE AT YOUR OWN RISK. Proceed?" 10 68 || exit
+if [ -z "$available_kernels" ]; then
+  whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Old Kernels" --msgbox "It appears there are no old Kernels on your system. \nCurrent kernel ($current_kernel)." 10 68
+  echo "Exiting..."
+  sleep 2
+  clear
+  exit
+fi
+  KERNEL_MENU=()
+  MSG_MAX_LENGTH=0
+while read -r TAG ITEM; do
+  OFFSET=2
+  ((${#ITEM} + OFFSET > MSG_MAX_LENGTH)) && MSG_MAX_LENGTH=${#ITEM}+OFFSET
+  KERNEL_MENU+=("$TAG" "$ITEM " "OFF")
+done < <(echo "$available_kernels")
 
-function main() {
-    check_root
-    header_info
-    kernel_info
+remove_kernels=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Current Kernel $current_kernel" --checklist "\nSelect Kernels to remove:\n" 16 $((MSG_MAX_LENGTH + 58)) 6 "${KERNEL_MENU[@]}" 3>&1 1>&2 2>&3 | tr -d '"') || exit
+[ -z "$remove_kernels" ] && {
+  whiptail --backtitle "Proxmox VE Helper Scripts" --title "No Kernel Selected" --msgbox "It appears that no Kernel was selected" 10 68
+  echo "Exiting..."
+  sleep 2
+  clear
+  exit
 }
+whiptail --backtitle "Proxmox VE Helper Scripts" --title "Remove Kernels" --yesno "Would you like to remove the $(echo $remove_kernels | awk '{print NF}') previously selected Kernels?" 10 68 || exit
 
-while true; do
-    case "$1" in
-        * )
-        main
-        kernel_clean
-        exit 1
-    ;;
-    esac
-  shift
-done
+msg_info "Removing ${CL}${RD}$(echo $remove_kernels | awk '{print NF}') ${CL}${YW}old Kernels${CL}"
+/usr/bin/apt purge -y $remove_kernels >/dev/null 2>&1
+msg_ok "Successfully Removed Kernels"
+
+msg_info "Updating GRUB"
+/usr/sbin/update-grub >/dev/null 2>&1
+msg_ok "Successfully Updated GRUB"
+msg_info "Exiting"
+sleep 2
+msg_ok "Finished"
