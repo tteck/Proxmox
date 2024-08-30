@@ -55,7 +55,7 @@ function default_settings() {
 
 function update_script() {
   if [[ ! -f /etc/systemd/system/frigate.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-  msg_error "There is currently no update path available."
+  msg_error "To update Frigate, create a new container and transfer your configuration."
   exit  
 }
 
