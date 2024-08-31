@@ -78,7 +78,7 @@ CHOICES=$(whiptail --title "Select game services" --checklist "Select services" 
 
 if [ ! -z "$CHOICES" ]; then
     for CHOICE in $CHOICES; do
-      case "$CHOICE" in
+      case $CHOICE in
       "EPIC")
         $STD node epic-games
         ;;
