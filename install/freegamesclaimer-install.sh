@@ -74,8 +74,9 @@ EOF
 msg_ok "Created dummy config file"
 
 msg_info "Initializing gaming services to claim games for"
-CHOICES=$(whiptail --title "Select game services" --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
+CHOICES=$(whiptail --title "Select game services" --separate-output --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
 
+echo $CHOICES
 if [ ! -z "$CHOICES" ]; then
     for CHOICE in $CHOICES; do
       case $CHOICE in
