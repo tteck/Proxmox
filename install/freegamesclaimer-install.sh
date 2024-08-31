@@ -80,25 +80,17 @@ CHOICES=$(whiptail --title "Select game services" --separate-output --checklist 
 function setup_epic() {
   $STD node epic-games || success=false
 
-  if [ $success == false ]; then
-    echo "epic failed"
-  else
-    msg_info "Creating daily cronjob for epic games"
-    (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
-    msg_ok "Cronjob created"
-  fi
+  msg_info "Creating daily cronjob for epic games"
+  (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
+  msg_ok "Cronjob created"
 }
 
 function setup_gog() {
   $STD node gog || success=false
 
-  if [ $success == false ]; then
-    echo "gog failed"
-  else
-    msg_info "Creating daily cronjob for gog"
-    (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
-    msg_ok "Cronjob created"
-  fi
+  msg_info "Creating daily cronjob for gog"
+  (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+  msg_ok "Cronjob created"
 }
 
 echo $CHOICES
