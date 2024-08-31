@@ -54,23 +54,23 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/overseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP"
-systemctl stop overseerr
-cd /opt/overseerr
-output=$(git pull)
-git pull &>/dev/null
-if echo "$output" | grep -q "Already up to date."
-then
-  msg_ok " $APP is already up to date."
-  systemctl start overseerr
-  exit
-fi
-yarn install &>/dev/null
-yarn build &>/dev/null
-systemctl start overseerr
-msg_ok "Updated $APP"
-msg_info "Not implemented yet"
+#if [[ ! -d /opt/overseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+#msg_info "Updating $APP"
+#systemctl stop overseerr
+#cd /opt/overseerr
+#output=$(git pull)
+#git pull &>/dev/null
+#if echo "$output" | grep -q "Already up to date."
+#then
+#  msg_ok " $APP is already up to date."
+#  systemctl start overseerr
+#  exit
+#fi
+#yarn install &>/dev/null
+#yarn build &>/dev/null
+#systemctl start overseerr
+#msg_ok "Updated $APP"
+msg_ok "Not implemented yet"
 exit
 }
 

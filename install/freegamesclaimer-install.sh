@@ -74,7 +74,7 @@ EOF
 msg_ok "Created dummy config file"
 
 msg_info "Select gaming services to claim games for"
-CHOICES=$(whiptail --title "Gaming services" --checklist "Select services" 20 78 4 "EPIC" "Allow connections to other hosts" ON "GOG" "Allow connections from other hosts" OFF "PRIME" "Allow mounting of local devices" OFF)
+CHOICES=$(whiptail --title "Tools to install" --checklist "Choose something" 20 78 4 "NTP" "NTP setup" OFF "Perl" "Perl install" OFF "Ruby" "Ruby install" OFF "Python" "Python install" OFF 3>&1 1>&2 2>&3)
 msg_ok "Selected ${CHOICES}"
 
 motd_ssh
