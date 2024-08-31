@@ -61,7 +61,7 @@ After=network.target
 [Service]
 Type=exec
 WorkingDirectory=/opt/freegamesclaimer
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/bin/node epic-games
 
 [Install]
 WantedBy=multi-user.target
