@@ -73,9 +73,26 @@ cat <<EOF >/opt/freegamesclaimer/data/config.env
 EOF
 msg_ok "Created dummy config file"
 
-msg_info "Select gaming services to claim games for"
-CHOICES=$(whiptail --title "Tools to install" --checklist "Choose something" 20 78 4 "NTP" "NTP setup" OFF "Perl" "Perl install" OFF "Ruby" "Ruby install" OFF "Python" "Python install" OFF 3>&1 1>&2 2>&3)
-msg_ok "Selected ${CHOICES}"
+msg_info "Initializing gaming services to claim games for"
+CHOICES=$(whiptail --title "Select game services" --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
+
+if [ ! -z "$CHOICES" ]; then
+    for CHOICE in $CHOICES; do
+      case "$CHOICE" in
+      "EPIC")
+        $STD node epic-games
+        ;;
+      "GOG")
+        $STD node gog
+        ;;
+      *)
+        echo "Unsupported item $CHOICE!" >&2
+        exit 1
+        ;;
+      esac
+    done
+  fi
+msg_ok "Services initialized: ${CHOICES}"
 
 motd_ssh
 customize
