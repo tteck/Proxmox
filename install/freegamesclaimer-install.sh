@@ -52,27 +52,28 @@ msg_info "Installing apprise"
 $STD pip install apprise
 msg_ok "Installed apprise"
 
-msg_info "Creating Service"
-cat <<EOF >/etc/systemd/system/freegamesclaimer.service
-[Unit]
-Description=Free Games Claimer Service
-After=network.target
-
-[Service]
-Type=exec
-WorkingDirectory=/opt/freegamesclaimer
-ExecStart=/usr/bin/node epic-games
-
-[Install]
-WantedBy=multi-user.target
-EOF
-systemctl enable -q --now freegamesclaimer.service
-msg_ok "Created Service"
+#msg_info "Creating Service"
+#cat <<EOF >/etc/systemd/system/freegamesclaimer.service
+#[Unit]
+#Description=Free Games Claimer Service
+#After=network.target
+#
+#[Service]
+#Type=exec
+#WorkingDirectory=/opt/freegamesclaimer
+#ExecStart=/usr/bin/node epic-games
+#
+#[Install]
+#WantedBy=multi-user.target
+#EOF
+#systemctl enable -q --now freegamesclaimer.service
+#msg_ok "Created Service"
 
 motd_ssh
 customize
 
 msg_info "Setting up Epic Games"
+cd /opt/freegamesclaimer
 $STD node epic-games
 msg_info "Set up Epic games"
 
