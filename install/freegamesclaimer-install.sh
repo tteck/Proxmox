@@ -28,7 +28,6 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dea
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
-
 msg_info "Installing Node.js"
 $STD apt-get update
 $STD apt-get install -y nodejs
@@ -46,36 +45,38 @@ msg_info "Installing Free Games Claimer"
 git clone -q https://github.com/vogler/free-games-claimer.git /opt/freegamesclaimer
 cd /opt/freegamesclaimer
 $STD npm install
+$STD npx playwright install firefox --with-deps
 msg_ok "Installed Free Games Claimer"
 
 msg_info "Installing apprise"
 $STD pip install apprise
 msg_ok "Installed apprise"
 
-#msg_info "Creating Service"
-#cat <<EOF >/etc/systemd/system/freegamesclaimer.service
-#[Unit]
-#Description=Free Games Claimer Service
-#After=network.target
-#
-#[Service]
-#Type=exec
-#WorkingDirectory=/opt/freegamesclaimer
-#ExecStart=/usr/bin/node epic-games
-#
-#[Install]
-#WantedBy=multi-user.target
-#EOF
-#systemctl enable -q --now freegamesclaimer.service
-#msg_ok "Created Service"
+msg_info "Creating dummy config file"
+cat <<EOF >/opt/freegamesclaimer/data/config.env
+  NOTIFY=  # apprise notification services
+  NOTIFY_TITLE=  # apprise notification title
+
+  # auth epic-games
+  EG_EMAIL=
+  EG_PASSWORD=
+
+  # auth prime-gaming
+  PG_EMAIL=
+  PG_PASSWORD=
+
+  # auth gog
+  GOG_EMAIL=
+  GOG_PASSWORD=
+
+  # auth AliExpress
+  AER_EMAIL=
+  AE_PASSWORD=
+EOF
+msg_ok "Created dummy config file"
 
 motd_ssh
 customize
-
-#msg_info "Setting up Epic Games"
-#cd /opt/freegamesclaimer
-#$STD node epic-games
-#msg_info "Set up Epic games"
 
 msg_info "Cleaning up"
 $STD apt-get -y autoremove
