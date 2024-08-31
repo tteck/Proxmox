@@ -28,10 +28,19 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dea
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
 msg_ok "Set up Node.js Repository"
 
+
 msg_info "Installing Node.js"
 $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
+
+msg_info "Updating Python3"
+$STD apt-get install -y \
+  python3 \
+  python3-dev \
+  python3-pip
+rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+msg_ok "Updated Python3"
 
 msg_info "Installing Free Games Claimer"
 git clone -q https://github.com/vogler/free-games-claimer.git /opt/freegamesclaimer
