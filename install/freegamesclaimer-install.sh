@@ -53,6 +53,8 @@ $STD pip install apprise
 msg_ok "Installed apprise"
 
 msg_info "Creating dummy config file"
+cd /opt/freegamesclaimer
+mkdir data
 cat <<EOF >/opt/freegamesclaimer/data/config.env
   NOTIFY=  # apprise notification services
   NOTIFY_TITLE=  # apprise notification title
@@ -68,12 +70,12 @@ cat <<EOF >/opt/freegamesclaimer/data/config.env
   # auth gog
   GOG_EMAIL=
   GOG_PASSWORD=
-
-  # auth AliExpress
-  AER_EMAIL=
-  AE_PASSWORD=
 EOF
 msg_ok "Created dummy config file"
+
+msg_info "Select gaming services to claim games for"
+CHOICES=$(whiptail --title "Gaming services" --checklist "Select services" 20 78 4 "EPIC" "Allow connections to other hosts" ON "GOG" "Allow connections from other hosts" OFF "PRIME" "Allow mounting of local devices" OFF)
+msg_ok "Selected ${CHOICES}"
 
 motd_ssh
 customize
