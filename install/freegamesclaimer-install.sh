@@ -56,6 +56,7 @@ msg_info "Creating dummy config file"
 cd /opt/freegamesclaimer
 mkdir data
 cat <<EOF >/opt/freegamesclaimer/data/config.env
+  LOGIN_TIMEOUT=30
   NOTIFY=  # apprise notification services
   NOTIFY_TITLE=  # apprise notification title
 
@@ -77,10 +78,10 @@ msg_info "Initializing gaming services to claim games for"
 CHOICES=$(whiptail --title "Select game services" --separate-output --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
 
 function setup_epic() {
-  $STD LOGIN_TIMEOUT=30 node epic-games || success=false
+  $STD node epic-games || success=false
 
   if [ "$success" == false ]; then
-    echo "gog failed"
+    echo "epic failed"
   else
     msg_info "Creating daily cronjob for epic games"
     (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
@@ -89,7 +90,7 @@ function setup_epic() {
 }
 
 function setup_gog() {
-  $STD LOGIN_TIMEOUT=30 node gog || success=false
+  $STD node gog || success=false
 
   if [ "$success" == false ]; then
     echo "gog failed"
