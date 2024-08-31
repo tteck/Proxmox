@@ -80,7 +80,7 @@ CHOICES=$(whiptail --title "Select game services" --separate-output --checklist 
 function setup_epic() {
   $STD node epic-games || success=false
 
-  if [ "$success" == false ]; then
+  if [ $success == false ]; then
     echo "epic failed"
   else
     msg_info "Creating daily cronjob for epic games"
@@ -92,7 +92,7 @@ function setup_epic() {
 function setup_gog() {
   $STD node gog || success=false
 
-  if [ "$success" == false ]; then
+  if [ $success == false ]; then
     echo "gog failed"
   else
     msg_info "Creating daily cronjob for gog"
