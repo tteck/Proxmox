@@ -89,6 +89,7 @@ function setup_gog() {
 
   msg_info "Creating daily cronjob for gog"
   (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+  msg_ok "Cronjob created"
 }
 
 echo $CHOICES
