@@ -72,10 +72,10 @@ msg_ok "Installed apprise"
 motd_ssh
 customize
 
-msg_info "Setting up Epic Games"
-cd /opt/freegamesclaimer
-$STD node epic-games
-msg_info "Set up Epic games"
+#msg_info "Setting up Epic Games"
+#cd /opt/freegamesclaimer
+#$STD node epic-games
+#msg_info "Set up Epic games"
 
 msg_info "Cleaning up"
 $STD apt-get -y autoremove
