@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/msarsha/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/msarsha/Proxmox/feat/free-games-claimer/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
