@@ -76,15 +76,30 @@ msg_ok "Created dummy config file"
 msg_info "Initializing gaming services to claim games for"
 CHOICES=$(whiptail --title "Select game services" --separate-output --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
 
+function setup_epic() {
+  $STD node epic-games
+
+  msg_info "Creating daily cronjob for epic games"
+  (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
+  msg_ok "Cronjob created"
+}
+
+function setup_gog() {
+  $STD node gog
+
+  msg_info "Creating daily cronjob for gog"
+  (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+}
+
 echo $CHOICES
 if [ ! -z "$CHOICES" ]; then
     for CHOICE in $CHOICES; do
       case $CHOICE in
       "EPIC")
-        $STD node epic-games
+        setup_epic
         ;;
       "GOG")
-        $STD node gog
+        setup_gog
         ;;
       *)
         echo "Unsupported item $CHOICE!" >&2
