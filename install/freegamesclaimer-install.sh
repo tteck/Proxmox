@@ -33,15 +33,10 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Yarn"
-$STD npm install -g yarn
-msg_ok "Installed Yarn"
-
 msg_info "Installing Free Games Claimer"
-git clone -q https://github.com/vogler/free-games-claimer.git /opt/free-games-claimer
-cd /opt/free-games-claimer
-$STD yarn install
-$STD yarn build
+git clone -q https://github.com/vogler/free-games-claimer.git /opt/freegamesclaimer
+cd /opt/freegamesclaimer
+$STD npm install
 msg_ok "Installed Free Games Claimer"
 
 msg_info "Installing apprise"
@@ -56,7 +51,7 @@ After=network.target
 
 [Service]
 Type=exec
-WorkingDirectory=/opt/free-games-claimer
+WorkingDirectory=/opt/freegamesclaimer
 ExecStart=/usr/bin/yarn start
 
 [Install]
@@ -67,6 +62,10 @@ msg_ok "Created Service"
 
 motd_ssh
 customize
+
+msg_info "Setting up Epic Games"
+$STD node epic-games
+msg_info "Set up Epic games"
 
 msg_info "Cleaning up"
 $STD apt-get -y autoremove
