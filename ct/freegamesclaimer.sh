@@ -68,7 +68,7 @@ function update_script() {
   fi
   $STD npm install
   $STD npx playwright install firefox --with-deps
-  msg_ok "Updated $APP - If needed, run update again to setup the gaming services"
+  msg_ok "Updated $APP"
 }
 
 start
