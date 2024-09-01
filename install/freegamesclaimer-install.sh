@@ -75,17 +75,14 @@ EOF
 msg_ok "Created dummy config file"
 
 msg_info "Creating cron jobs"
-  msg_info "Creating daily cronjob for epic games"
 
-  crontab -l | grep -v "0 0 * * * cd /opt/freegamesclaimer && node epic-games" | crontab -
-  echo "0 0 * * * /path/to/your/command" | crontab -
-
-#  (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
-  msg_ok "created"
-
-  msg_info "Creating daily cronjob for gog"
-#  (crontab -l ; echo "2 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
-  msg_ok "created"
+cat <<EOF >/opt/claimer_cron_creator.sh
+  (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
+  (crontab -l ; echo "5 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+EOF
+cd /opt
+chmod +x ./claimer_cron_creator.sh
+./claimer_cron_creator.sh
 msg_ok "Cron jobs created"
 
 motd_ssh
