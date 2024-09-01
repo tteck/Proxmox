@@ -80,7 +80,7 @@ msg_info "Creating cron jobs"
   msg_ok "created"
 
   msg_info "Creating daily cronjob for gog"
-  (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+  (crontab -l ; echo "2 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
   msg_ok "created"
 msg_ok "Cron jobs created"
 
