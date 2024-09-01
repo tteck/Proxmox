@@ -83,6 +83,7 @@ EOF
 cd /opt
 chmod +x ./claimer_cron_creator.sh
 ./claimer_cron_creator.sh
+rm ./claimer_cron_creator.sh
 msg_ok "Cron jobs created"
 
 motd_ssh
