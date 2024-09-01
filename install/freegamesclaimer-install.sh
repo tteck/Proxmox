@@ -91,8 +91,3 @@ msg_info "Cleaning up"
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
-
-
-msg_ok "Completed Successfully!\n"
-echo -e "${APP} has been setup to claim GOG and Epic games. \n
-         Please add your credentials to /opt/freegamesclaimer/data/config.env \n"

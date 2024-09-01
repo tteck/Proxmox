@@ -48,32 +48,8 @@ function default_settings() {
   MAC=""
   VLAN=""
   SSH="no"
-  VERB="yes"
+  VERB="no"
   echo_default
-}
-
-function setup_services(){
-  msg_info "Initializing gaming services to claim games for"
-  CHOICES=$(whiptail --title "Select game services" --separate-output --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
-
-  echo $CHOICES
-  if [ ! -z "$CHOICES" ]; then
-      for CHOICE in $CHOICES; do
-        case $CHOICE in
-        "EPIC")
-          $STD node epic-games
-          ;;
-        "GOG")
-          $STD node gog
-          ;;
-        *)
-          echo "Unsupported item $CHOICE!" >&2
-          exit 1
-          ;;
-        esac
-      done
-    fi
-  msg_ok "Services initialized: ${CHOICES}"
 }
 
 function update_script() {
@@ -81,34 +57,18 @@ function update_script() {
   if [[ ! -d /opt/freegamesclaimer ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   msg_info "Updating $APP"
 
-  CHOICE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "UPDATE \ Setup service" --radiolist --cancel-button Exit-Script "Spacebar = Select" 11 58 4 \
-      "1" "Update" ON \
-      "2" "Setup a service" OFF \
-      3>&1 1>&2 2>&3)
-
-  case $CHOICE in
-  "1")
-    cd /opt/freegamesclaimer || exit
-    output=$(git pull)
-    git pull &>/dev/null
-    if echo "$output" | grep -q "Already up to date."
-    then
-      msg_ok "$APP is already up to date."
-      systemctl start overseerr
-      exit
-    fi
-    $STD npm install
-    $STD npx playwright install firefox --with-deps
-    msg_ok "Updated $APP - If needed, run update again to setup the gaming services"
-    ;;
-  "2")
-    setup_services
-    ;;
-  *)
-    echo "Unsupported item $CHOICE!" >&2
-    exit 1
-    ;;
-  esac
+  cd /opt/freegamesclaimer || exit
+  output=$(git pull)
+  git pull &>/dev/null
+  if echo "$output" | grep -q "Already up to date."
+  then
+    msg_ok "$APP is already up to date."
+    systemctl start overseerr
+    exit
+  fi
+  $STD npm install
+  $STD npx playwright install firefox --with-deps
+  msg_ok "Updated $APP - If needed, run update again to setup the gaming services"
 }
 
 start
@@ -116,4 +76,5 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} installed"
+echo -e "${APP} has been setup to claim GOG and Epic games. \n
+         Make sure to run an initial login for the cookies to be set  \n"
