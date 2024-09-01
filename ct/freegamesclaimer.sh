@@ -77,9 +77,9 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} has been setup to claim GOG and Epic games. \n
-Make sure to run an initial login for the cookies to be set.  \n
+Make sure to run an initial login for the cookies to be set.
 
-To run initial setup run: \n
-1. cd /opt/freegamesclaimer \n
-2. node epic-games \n
+For initial setup run: \n
+1. cd /opt/freegamesclaimer
+2. node epic-games
 3. node gog \n"
