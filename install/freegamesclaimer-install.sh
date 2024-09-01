@@ -76,11 +76,15 @@ msg_ok "Created dummy config file"
 
 msg_info "Creating cron jobs"
   msg_info "Creating daily cronjob for epic games"
-  $STD (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
+
+  crontab -l | grep -v "0 0 * * * cd /opt/freegamesclaimer && node epic-games" | crontab -
+  echo "0 0 * * * /path/to/your/command" | crontab -
+
+#  (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
   msg_ok "created"
 
   msg_info "Creating daily cronjob for gog"
-  $STD (crontab -l ; echo "2 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
+#  (crontab -l ; echo "2 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
   msg_ok "created"
 msg_ok "Cron jobs created"
 
