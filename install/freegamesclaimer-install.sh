@@ -74,43 +74,15 @@ cat <<EOF >/opt/freegamesclaimer/data/config.env
 EOF
 msg_ok "Created dummy config file"
 
-msg_info "Initializing gaming services to claim games for"
-CHOICES=$(whiptail --title "Select game services" --separate-output --checklist "Select services" 20 78 4 "EPIC" "Epic Games" OFF "GOG" "Good Old Games" OFF 3>&1 1>&2 2>&3)
-
-function setup_epic() {
-  $STD node epic-games || success=false
-
+msg_info "Creating cron jobs"
   msg_info "Creating daily cronjob for epic games"
   (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
-  msg_ok "Cronjob created"
-}
-
-function setup_gog() {
-  $STD node gog || success=false
+  msg_ok "created"
 
   msg_info "Creating daily cronjob for gog"
   (crontab -l ; echo "02 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
-  msg_ok "Cronjob created"
-}
-
-echo $CHOICES
-if [ ! -z "$CHOICES" ]; then
-    for CHOICE in $CHOICES; do
-      case $CHOICE in
-      "EPIC")
-        setup_epic
-        ;;
-      "GOG")
-        setup_gog
-        ;;
-      *)
-        echo "Unsupported item $CHOICE!" >&2
-        exit 1
-        ;;
-      esac
-    done
-  fi
-msg_ok "Services initialized: ${CHOICES}"
+  msg_ok "created"
+msg_ok "Cron jobs created"
 
 motd_ssh
 customize
@@ -119,3 +91,8 @@ msg_info "Cleaning up"
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
+
+
+msg_ok "Completed Successfully!\n"
+echo -e "${APP} has been setup to claim GOG and Epic games. \n
+         Please add your credentials to /opt/freegamesclaimer/data/config.env \n"
