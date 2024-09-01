@@ -20,8 +20,6 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing MariaDB"
-$STD bash <(curl -fsSL https://r.mariadb.com/downloads/mariadb_repo_setup)
-$STD apt-get update
 $STD apt-get install -y mariadb-server
 sed -i 's/^# *\(port *=.*\)/\1/' /etc/mysql/my.cnf
 sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
