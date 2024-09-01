@@ -55,6 +55,7 @@ msg_ok "Installed apprise"
 msg_info "Creating dummy config file"
 cd /opt/freegamesclaimer
 mkdir data
+
 cat <<EOF >/opt/freegamesclaimer/data/config.env
   LOGIN_TIMEOUT=30
   NOTIFY=  # apprise notification services
@@ -80,9 +81,10 @@ cat <<EOF >/opt/claimer_cron_creator.sh
   (crontab -l ; echo "0 0 * * * cd /opt/freegamesclaimer && node epic-games") | crontab -
   (crontab -l ; echo "5 0 * * * cd /opt/freegamesclaimer && node gog") | crontab -
 EOF
+
 cd /opt
 chmod +x ./claimer_cron_creator.sh
-./claimer_cron_creator.sh
+./claimer_cron_creator.sh &>/dev/null
 rm ./claimer_cron_creator.sh
 msg_ok "Cron jobs created"
 
