@@ -25,6 +25,7 @@ $STD apt-get install -y wireguard wireguard-tools net-tools iptables
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" install -y iptables-persistent &>/dev/null
 $STD netfilter-persistent reload
+$STD apt-get install -y resolvconf
 msg_ok "Installed WireGuard"
 
 msg_info "Installing WGDashboard"
