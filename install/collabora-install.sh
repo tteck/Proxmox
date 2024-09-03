@@ -21,9 +21,7 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing Collabora Online"
-cd /usr/share/keyrings
-$STD wget -q https://collaboraoffice.com/downloads/gpg/collaboraonline-release-keyring.gpg
-cd ~
+wget -q -O /usr/share/keyrings/collaboraonline-release-keyring.gpg https://collaboraoffice.com/downloads/gpg/collaboraonline-release-keyring.gpg
 cat <<EOF >/etc/apt/sources.list.d/collaboraonline.sources
 Types: deb
 URIs: https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-deb
