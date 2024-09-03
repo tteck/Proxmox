@@ -23,8 +23,8 @@ msg_info "Installing Prometheus"
 RELEASE=$(curl -s https://api.github.com/repos/prometheus/prometheus/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 mkdir -p /etc/prometheus
 mkdir -p /var/lib/prometheus
-$STD wget https://github.com/prometheus/prometheus/releases/download/v${RELEASE}/prometheus-${RELEASE}.linux-amd64.tar.gz
-$STD tar -xvf prometheus-${RELEASE}.linux-amd64.tar.gz
+wget -q https://github.com/prometheus/prometheus/releases/download/v${RELEASE}/prometheus-${RELEASE}.linux-amd64.tar.gz
+tar -xf prometheus-${RELEASE}.linux-amd64.tar.gz
 cd prometheus-${RELEASE}.linux-amd64
 mv prometheus promtool /usr/local/bin/
 mv consoles/ console_libraries/ /etc/prometheus/
@@ -51,7 +51,7 @@ ExecStart=/usr/local/bin/prometheus \
 
 [Install]
 WantedBy=multi-user.target" >$service_path
-$STD sudo systemctl enable --now prometheus
+systemctl enable -q --now prometheus
 msg_ok "Created Service"
 
 motd_ssh
