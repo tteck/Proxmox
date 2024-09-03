@@ -68,4 +68,4 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "Don't forget to setup reverse proxy. See ${BL}https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html#reverse-proxy-settings-in-nginx-config-ssl-termination${CL}"
+echo -e "${APP} needs to be behind a proxy (Nginx Proxy Manager)."
