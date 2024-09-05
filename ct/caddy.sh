@@ -58,6 +58,7 @@ if [[ ! -d /etc/caddy ]]; then msg_error "No ${APP} Installation Found!"; exit; 
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
+caddy upgrade &>/dev/null # Support for custom caddy builds as per https://caddyserver.com/docs/build#package-support-files-for-custom-builds-for-debianubunturaspbian
 msg_ok "Updated $APP LXC"
 exit
 }
