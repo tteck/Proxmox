@@ -12,13 +12,13 @@ fs_cat() {
     if [ "$FS_SOURCE" == "local" ]; then
         FILE_PATH="${FS_LOCAL_ROOT}/$1";
         if [ -f "$FILE_PATH" ]; then
-            cat "$FILE_PATH";
+            cat "$FILE_PATH" && exit;
         fi;
     elif [ "$FS_SOURCE" == "remote" ]; then
-        curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${FS_REMOTE_BRANCH}/$1";
+        curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${FS_REMOTE_BRANCH}/$1" && exit;
     fi;
 
-    msg_error "Something went wrong while attempting to cat file: $1.";
+    echo "Something went wrong while attempting to cat file: $1.";
     echo -e "\nExiting...";
     sleep 2;
     exit;
