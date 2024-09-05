@@ -21,7 +21,7 @@ header_info
 echo -e "Loading..."
 APP="Collabora"
 var_disk="12"
-var_cpu="1"
+var_cpu="2"
 var_ram="1024"
 var_os="debian"
 var_version="12"
