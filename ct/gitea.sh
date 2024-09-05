@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/fs.func)
+source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # Co-author: Rogue-King
@@ -60,7 +61,7 @@ RELEASE=$(wget -q https://github.com/go-gitea/gitea/releases/latest -O - | grep 
 msg_info "Updating $APP to ${RELEASE}"
 wget -q https://github.com/go-gitea/gitea/releases/download/v$RELEASE/gitea-$RELEASE-linux-amd64
 systemctl stop gitea
-rm -rf /usr/local/bin/gitea 
+rm -rf /usr/local/bin/gitea
 mv gitea* /usr/local/bin/gitea
 chmod +x /usr/local/bin/gitea
 systemctl start gitea

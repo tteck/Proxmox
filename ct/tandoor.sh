@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/fs.func)
+source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck
 # Co-Author: MickLesk (Canbiz)
@@ -55,7 +56,7 @@ function default_settings() {
 
 function update_script() {
   header_info
-  if [[ ! -d /opt/tandoor ]]; then msg_error "No ${APP} Installation Found!"; exit; fi 
+  if [[ ! -d /opt/tandoor ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   if cd /opt/tandoor && git pull | grep -q 'Already up to date'; then
     msg_ok "There is currently no update available."
   else

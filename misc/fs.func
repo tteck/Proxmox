@@ -1,0 +1,25 @@
+##
+# File system helper fns
+##
+
+FS_SOURCE=remote;
+FS_REMOTE_BRANCH=${DANGEROUSLY_CHANGE_REMOTE_BRANCH:-main}; # This variable allows the user to point towards a different remote branch by setting the variable "$DANGEROUSLY_CHANGE_REMOTE_BRANCH". The name of the user-facing variable has "DANGEROUSLY_CHANGE" prepended to it as changing the branch name to a commit or branch created by a bad actor can put their system at risk.
+FS_LOCAL_ROOT=${PHS_ROOT};
+if [ "$FS_LOCAL_ROOT" != "" ]; then FS_SOURCE=local; fi;
+
+# This function prints a file from the repositories root. When running PHS locally, it uses the file system, otherwise it points to the latest main branch.
+fs_cat() {
+    if [ "$FS_SOURCE" == "local" ]; then
+        FILE_PATH="${FS_LOCAL_ROOT}/$1"
+        if [ -f "$FILE_PATH" ]; then
+            cat "$FILE_PATH";
+        fi;
+    else if [ "$FS_SOURCE" == "remote" ]; then
+        curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${PHS_REMOTE_BRANCH}/$1";
+    fi;
+
+    msg_error "Something went wrong while attempting to cat file: $1."
+    echo -e "\nExiting..."
+    sleep 2
+    exit
+}

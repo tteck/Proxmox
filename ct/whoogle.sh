@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/fs.func)
+source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
@@ -10,10 +11,10 @@ clear
 cat <<"EOF"
  _       ____  ______  ____  ________    ______
 | |     / / / / / __ \/ __ \/ ____/ /   / ____/
-| | /| / / /_/ / / / / / / / / __/ /   / __/   
-| |/ |/ / __  / /_/ / /_/ / /_/ / /___/ /___   
-|__/|__/_/ /_/\____/\____/\____/_____/_____/   
- 
+| | /| / / /_/ / / / / / / / / __/ /   / __/
+| |/ |/ / __  / /_/ / /_/ / /_/ / /___/ /___
+|__/|__/_/ /_/\____/\____/\____/_____/_____/
+
 EOF
 }
 header_info

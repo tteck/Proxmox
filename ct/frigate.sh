@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/fs.func)
+source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Authors: tteck (tteckster)
 # License: MIT
@@ -56,7 +57,7 @@ function default_settings() {
 function update_script() {
   if [[ ! -f /etc/systemd/system/frigate.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
   msg_error "To update Frigate, create a new container and transfer your configuration."
-  exit  
+  exit
 }
 
 start

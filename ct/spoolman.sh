@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/fs.func)
+source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck
 # Co-Author: MickLesk (Canbiz)
@@ -9,12 +10,12 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-   _____                   __                    
-  / ___/____  ____  ____  / /___ ___  ____ _____ 
+   _____                   __
+  / ___/____  ____  ____  / /___ ___  ____ _____
   \__ \/ __ \/ __ \/ __ \/ / __ `__ \/ __ `/ __ \
  ___/ / /_/ / /_/ / /_/ / / / / / / / /_/ / / / /
-/____/ .___/\____/\____/_/_/ /_/ /_/\__,_/_/ /_/ 
-    /_/                                                         
+/____/ .___/\____/\____/_/_/ /_/ /_/\__,_/_/ /_/
+    /_/
 EOF
 }
 header_info
@@ -71,8 +72,8 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   cd /opt
   rm -rf spoolman_bak
   mv spoolman spoolman_bak
-  wget -q https://github.com/Donkie/Spoolman/releases/download/${RELEASE}/spoolman.zip 
-  unzip -q spoolman.zip -d spoolman 
+  wget -q https://github.com/Donkie/Spoolman/releases/download/${RELEASE}/spoolman.zip
+  unzip -q spoolman.zip -d spoolman
   cd spoolman
   pip3 install -r requirements.txt >/dev/null 2>&1
   cp .env.example .env

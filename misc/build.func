@@ -1,3 +1,7 @@
+##
+# Runtime helper fns
+##
+
 variables() {
   NSAPP=$(echo ${APP,,} | tr -d ' ') # This function sets the NSAPP variable by converting the value of the APP variable to lowercase and removing any spaces.
   var_install="${NSAPP}-install"     # sets the var_install variable by appending "-install" to the value of NSAPP.
@@ -18,6 +22,7 @@ color() {
   BFR="\\r\\033[K"
   HOLD=" "
 }
+
 
 # This function enables error handling in the script by setting options and defining a trap for the ERR signal.
 catch_errors() {
@@ -502,6 +507,22 @@ install_script() {
 }
 
 start() {
+  if [ "$FS_SOURCE" == "local" ]; then
+    if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "You are using the local file system for installing this LXC. This can pose a SECURITY RISK TO YOUR SYSTEM in case the files were changed by a bad actor. Proceed?" 10 58); then
+        clear
+        echo -e "⚠  User exited script \n"
+        exit
+    fi;
+  fi
+
+  if [ "$FS_REMOTE_BRANCH" != "main" ]; then
+    if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "You are pointing to a remote branch other than main ($FS_REMOTE_BRANCH). This can pose a SECURITY RISK TO YOUR SYSTEM in case the branch/commit was created by a bad actor. Proceed?" 10 58); then
+        clear
+        echo -e "⚠  User exited script \n"
+        exit
+    fi;
+  fi
+
   if command -v pveversion >/dev/null 2>&1; then
     if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "This will create a New ${APP} LXC. Proceed?" 10 58); then
       clear
@@ -537,9 +558,9 @@ build_container() {
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
   if [ "$var_os" == "alpine" ]; then
-    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/alpine-install.func)"
+    export FUNCTIONS_FILE_PATH="$(fs_cat misc/alpine-install.func)"
   else
-    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
+    export FUNCTIONS_FILE_PATH="$(fs_cat misc/install.func)"
   fi
   export CACHER="$APT_CACHER"
   export CACHER_IP="$APT_CACHER_IP"
@@ -569,7 +590,7 @@ build_container() {
     $PW
   "
   # This executes create_lxc.sh and creates the container and .conf file
-  bash -c "$(wget -qLO - https://raw.githubusercontent.com/tteck/Proxmox/main/ct/create_lxc.sh)" || exit
+  bash -c "$(fs_cat misc/create_lxc.sh)" || exit
 
   LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
   if [ "$CT_TYPE" == "0" ]; then
