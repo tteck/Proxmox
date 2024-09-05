@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/cusspvz/Proxmox-Helper-Scripts/feat/local-development/misc/fs.func)
+source <(curl -s https://raw.githubusercontent.com/cusspvz/Proxmox-Helper-Scripts/main/misc/fs.func)
 source <(fs_cat misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
