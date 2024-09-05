@@ -15,7 +15,7 @@ fs_cat() {
             cat "$FILE_PATH";
         fi;
     else if [ "$FS_SOURCE" == "remote" ]; then
-        curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${PHS_REMOTE_BRANCH}/$1";
+        curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${FS_REMOTE_BRANCH}/$1";
     fi;
 
     msg_error "Something went wrong while attempting to cat file: $1."
