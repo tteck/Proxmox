@@ -10,16 +10,16 @@ if [ "$FS_LOCAL_ROOT" != "" ]; then FS_SOURCE=local; fi;
 # This function prints a file from the repositories root. When running PHS locally, it uses the file system, otherwise it points to the latest main branch.
 fs_cat() {
     if [ "$FS_SOURCE" == "local" ]; then
-        FILE_PATH="${FS_LOCAL_ROOT}/$1"
+        FILE_PATH="${FS_LOCAL_ROOT}/$1";
         if [ -f "$FILE_PATH" ]; then
             cat "$FILE_PATH";
         fi;
-    else if [ "$FS_SOURCE" == "remote" ]; then
+    elif [ "$FS_SOURCE" == "remote" ]; then
         curl -s "https://raw.githubusercontent.com/tteck/Proxmox/${FS_REMOTE_BRANCH}/$1";
     fi;
 
-    msg_error "Something went wrong while attempting to cat file: $1."
-    echo -e "\nExiting..."
-    sleep 2
-    exit
-}
+    msg_error "Something went wrong while attempting to cat file: $1.";
+    echo -e "\nExiting...";
+    sleep 2;
+    exit;
+};
