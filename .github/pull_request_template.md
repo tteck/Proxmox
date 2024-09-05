@@ -1,18 +1,20 @@
-## I wanted to make you aware that I am meticulous when it comes to merging code into the main branch, so please don't take it personally if I reject your request.
+> [!NOTE]
+I am meticulous when it comes to merging code into the main branch, so please understand that I may reject pull requests that do not meet the project's standards. It's never personal. Also, game-related scripts have a lower chance of being merged.
 
 ## Description
 
-Please include a summary of the change and/or which issue is fixed. 
+Provide a summary of the changes made and/or reference the issue being addressed.
 
 Fixes # (issue)
 
 ## Type of change
 
-Please delete options that are not relevant.
+Please check the relevant option(s):
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] New Script (Develop a new script or set of scripts that are fully functional and thoroughly tested)
-- [ ] I have performed a self-review of my code, adhering to established codebase patterns and conventions.
-- [ ] This change requires a documentation update
+- [ ] Bug fix (non-breaking change that resolves an issue)
+- [ ] New feature (non-breaking change that adds functionality)
+- [ ] Breaking change (a fix or feature that would cause existing functionality to change unexpectedly)
+- [ ] New script (a fully functional and thoroughly tested script or set of scripts.)
+- [ ] Self-review performed (I have reviewed my code, ensuring it follows established patterns and conventions)
+- [ ] Documentation update required (this change requires an update to the documentation)
+
