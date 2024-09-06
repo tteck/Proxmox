@@ -55,16 +55,21 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/sabnzbd ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP"
-systemctl stop sabnzbd.service
 RELEASE=$(curl -s https://api.github.com/repos/sabnzbd/sabnzbd/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-tar zxvf <(curl -fsSL https://github.com/sabnzbd/sabnzbd/releases/download/$RELEASE/SABnzbd-${RELEASE}-src.tar.gz) &>/dev/null
-\cp -r SABnzbd-${RELEASE}/* /opt/sabnzbd &>/dev/null
-rm -rf SABnzbd-${RELEASE}
-cd /opt/sabnzbd
-python3 -m pip install -r requirements.txt &>/dev/null
-systemctl start sabnzbd.service
-msg_ok "Updated $APP"
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
+   msg_info "Updating $APP to ${RELEASE}"
+   systemctl stop sabnzbd.service
+   tar zxvf <(curl -fsSL https://github.com/sabnzbd/sabnzbd/releases/download/$RELEASE/SABnzbd-${RELEASE}-src.tar.gz) &>/dev/null
+   \cp -r SABnzbd-${RELEASE}/* /opt/sabnzbd &>/dev/null
+   rm -rf SABnzbd-${RELEASE}
+   cd /opt/sabnzbd
+   python3 -m pip install -r requirements.txt &>/dev/null
+   echo "${RELEASE}" >/opt/${APP}_version.txt
+   systemctl start sabnzbd.service
+   msg_ok "Updated ${APP} to ${RELEASE}"
+else
+   msg_info "No update required. ${APP} is already at ${RELEASE}"
+fi
 exit
 }
 
