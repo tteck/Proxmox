@@ -41,6 +41,7 @@ $STD tar zxvf <(curl -fsSL https://github.com/sabnzbd/sabnzbd/releases/download/
 mv SABnzbd-${RELEASE} /opt/sabnzbd
 cd /opt/sabnzbd
 $STD python3 -m pip install -r requirements.txt
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed SABnzbd"
 
 msg_info "Creating Service"
