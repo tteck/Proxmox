@@ -66,7 +66,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
    python3 -m pip install -r requirements.txt &>/dev/null
    echo "${RELEASE}" >/opt/${APP}_version.txt
    systemctl start sabnzbd.service
-   msg_info "Updated ${APP} to ${RELEASE}"
+   msg_ok "Updated ${APP} to ${RELEASE}"
 else
    msg_info "No update required. ${APP} is already at ${RELEASE}"
 fi
