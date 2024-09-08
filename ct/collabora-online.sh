@@ -68,4 +68,4 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} needs to be behind a proxy (Nginx Proxy Manager)."
+echo -e "https://github.com/tteck/Proxmox/discussions/3651"
