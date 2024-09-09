@@ -38,3 +38,5 @@
 [Proxmox + NetData](<https://dbt3ch.com/books/proxmox-netdata-for-better-insights-and-notifications/page/proxmox-netdata-for-better-insights-and-notifications>)
 
 [Proxmox Homelab Series](<https://blog.kye.dev/proxmox-series>)
+
+[The fastest installation of Docker and Portainer on Proxmox VE](https://lavr.site/en-fastest-install-docker-portainer-proxmox/)
