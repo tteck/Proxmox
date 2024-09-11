@@ -44,7 +44,7 @@ unzip -q spoolman.zip -d spoolman
 rm -rf spoolman.zip
 cd spoolman
 $STD pip3 install -r requirements.txt
-cp .env.example .env
+wget -q https://raw.githubusercontent.com/Donkie/Spoolman/master/.env.example -O .env
 echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 msg_ok "Installed Spoolman"
 
