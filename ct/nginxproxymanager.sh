@@ -61,7 +61,7 @@ function update_script() {
   fi
   if ! command -v pnpm &> /dev/null; then  
     msg_info "Installing pnpm"
-    export NODE_OPTIONS=--openssl-legacy-provider
+    #export NODE_OPTIONS=--openssl-legacy-provider
     npm install -g pnpm@8.15 &>/dev/null
     msg_ok "Installed pnpm"
   fi
