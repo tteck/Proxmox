@@ -75,7 +75,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   unzip -q spoolman.zip -d spoolman 
   cd spoolman
   pip3 install -r requirements.txt >/dev/null 2>&1
-  cp .env.example .env
+  wget -q https://raw.githubusercontent.com/Donkie/Spoolman/master/.env.example -O .env
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
