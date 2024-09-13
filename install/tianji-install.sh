@@ -96,7 +96,7 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -R /opt/${RELEASE}.zip
+rm -R /opt/v${RELEASE}.zip
 $STD apt-get autoremove -y
 $STD apt-get autoclean -y
 msg_ok "Cleaned"
