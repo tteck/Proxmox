@@ -59,7 +59,7 @@ if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
   read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
   [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
 fi
-RELEASE=$(wget -q https://github.com/msgbyte/tianji/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
+RELEASE=$(curl -s https://api.github.com/repos/msgbyte/tianji/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
   msg_info "Stopping ${APP} Service"
@@ -68,7 +68,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
 
   msg_info "Updating ${APP} to ${RELEASE}"
   cd /opt/tianji
-  git checkout -q $RELEASE
+  git checkout -q v${RELEASE}
   pnpm db:migrate:apply >/dev/null 2>&1
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
