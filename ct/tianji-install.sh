@@ -45,7 +45,7 @@ msg_ok "Installed Node.js, pnpm & pm2"
 
 msg_info "Setup Tianji (Patience)"
 cd /opt
-RELEASE=$(curl -s https://api.github.com/repos/msgbyte/tianji/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+RELEASE=$(wget -q https://github.com/msgbyte/tianji/releases/latest -O - | grep "title>Release" | cut -d " " -f 4)
 wget -q "https://github.com/msgbyte/tianji/archive/refs/tags/${RELEASE}.zip"
 unzip -q ${RELEASE}.zip
 CLEAN_RELEASE=$(echo $RELEASE | sed 's/^v//')
