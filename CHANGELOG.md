@@ -13,6 +13,13 @@ Be cautious of copycat or coat-tailing sites that exploit the project's populari
 > [!NOTE]
 All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-09-13
+
+### Changed
+
+- **Tianji LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/tianji-install.sh)
+  - NEW Script
+
 ## 2024-08-21
 
 ### Changed
