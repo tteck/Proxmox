@@ -86,7 +86,7 @@ PCT_OPTIONS="
     -memory 2048
     -password $PASS
     -net0 name=eth0,bridge=vmbr0,ip=dhcp
-    -unprivileged 1
+    -unprivileged 0
   "
 DEFAULT_PCT_OPTIONS=(
   -arch $(dpkg --print-architecture)
