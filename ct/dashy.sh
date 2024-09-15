@@ -76,8 +76,8 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   mkdir -p /opt/dashy
   wget -qO- https://github.com/Lissy93/dashy/archive/refs/tags/${RELEASE}.tar.gz | tar -xz -C /opt/dashy --strip-components=1
   cd /opt/dashy
-  npm install &>/dev/null
-  npm run build &>/dev/null
+  npm install
+  npm run build
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
 
