@@ -54,7 +54,11 @@ function default_settings() {
 
 function update_script() {
 if [[ ! -d /etc/wireguard ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_error "Update WireGuard via apt"
+apt-get update
+apt-get -y upgrade
+sleep 2
+cd /etc/wgdashboard/src
+./wgd.sh update
 exit
 }
 
