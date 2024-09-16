@@ -24,10 +24,7 @@ msg_ok "Installed Dependencies"
 
 msg_info "Installing Homebox"
 RELEASE=$(curl -s https://api.github.com/repos/sysadminsmedia/homebox/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
-wget -q https://github.com/sysadminsmedia/homebox/releases/download/${RELEASE}/homebox_Linux_x86_64.tar.gz
-tar -xf homebox_Linux_x86_64.tar.gz
-rm -rf homebox_Linux_x86_64.tar.gz
-mv homebox /opt/
+wget -qO- https://github.com/sysadminsmedia/homebox/releases/download/${RELEASE}/homebox_Linux_x86_64.tar.gz | tar -xzf - -C /opt
 chmod +x /opt/homebox
 echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
 msg_ok "Installed Homebox"
