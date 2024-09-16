@@ -69,8 +69,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   cd /opt
   rm -rf homebox_bak
   mv homebox homebox_bak
-  wget -q https://github.com/sysadminsmedia/homebox/releases/download/${RELEASE}/homebox_Linux_x86_64.tar.gz
-  tar -xf homebox_Linux_x86_64.tar.gz
+  wget -qO- https://github.com/sysadminsmedia/homebox/releases/download/${RELEASE}/homebox_Linux_x86_64.tar.gz | tar -xzf - -C /opt
   chmod +x /opt/homebox
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated Homebox"
