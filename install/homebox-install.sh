@@ -28,7 +28,6 @@ RELEASE=$(curl -s https://api.github.com/repos/sysadminsmedia/homebox/releases/l
 wget -q https://github.com/sysadminsmedia/homebox/releases/download/${RELEASE}/homebox_Linux_x86_64.tar.gz
 tar -xf homebox_Linux_x86_64.tar.gz
 rm -rf homebox_Linux_x86_64.tar.gz
-mkdir -p /opt
 mv homebox /opt/
 chmod +x /opt/homebox
 echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
