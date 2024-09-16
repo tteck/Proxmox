@@ -19,6 +19,8 @@ All LXC instances created using this repository come pre-installed with Midnight
 
 - **HomeBox LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/homebox-install.sh)
   - NEW Script
+- **Zipline LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/zipline-install.sh)
+  - NEW Script
 
 ## 2024-09-13
 
