@@ -9,17 +9,17 @@ source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build
 function header_info {
 clear
 cat <<"EOF"
-    __  __                     __              
-   / / / /___  ____ ___  ___  / /_  ____  _  __
-  / /_/ / __ \/ __ `__ \/ _ \/ __ \/ __ \| |/_/
- / __  / /_/ / / / / / /  __/ /_/ / /_/ />  <  
-/_/ /_/\____/_/ /_/ /_/\___/_.___/\____/_/|_|  
+    __  __                     ____            
+   / / / /___  ____ ___  ___  / __ )____  _  __
+  / /_/ / __ \/ __ `__ \/ _ \/ __  / __ \| |/_/
+ / __  / /_/ / / / / / /  __/ /_/ / /_/ />  <
+/_/ /_/\____/_/ /_/ /_/\___/_____/\____/_/|_|
                                                    
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Homebox"
+APP="HomeBox"
 var_disk="4"
 var_cpu="1"
 var_ram="1024"
