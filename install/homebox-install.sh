@@ -19,7 +19,6 @@ msg_info "Installing Dependencies"
 $STD apt-get install -y \
   curl \
   sudo \
-  make \
   mc
 msg_ok "Installed Dependencies"
 
