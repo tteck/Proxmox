@@ -78,9 +78,6 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   systemctl start homebox
   msg_ok "Started ${APP}"
 
-  msg_info "Cleaning Up"
-  rm -rf homebox_Linux_x86_64.tar.gz
-  msg_ok "Cleaned"
   msg_ok "Updated Successfully"
 else
   msg_ok "No update required. ${APP} is already at ${RELEASE}"
