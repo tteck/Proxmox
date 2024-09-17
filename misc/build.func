@@ -503,7 +503,7 @@ install_script() {
 
 start() {
   if command -v pveversion >/dev/null 2>&1; then
-    if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "If this link isn't from https://tteck.github.io/Proxmox/, you may be exposing your system to malicious code. \n \n This will create a New ${APP} LXC. Proceed?" 10 62); then
+    if ! (whiptail --backtitle "Proxmox VE Helper Scripts" --title "${APP} LXC" --yesno "To ensure the safety of your system, please only use https://tteck.github.io/Proxmox/\n\nThis will create a New ${APP} LXC. Proceed?" 10 58); then
       clear
       echo -e "⚠  User exited script \n"
       exit
