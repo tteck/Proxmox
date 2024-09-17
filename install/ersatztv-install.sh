@@ -30,7 +30,7 @@ deb https://www.deb-multimedia.org bookworm-backports main
 EOF
 $STD apt update
 DEBIAN_FRONTEND=noninteractive $STD apt-get install -t bookworm-backports ffmpeg -y
-rm /etc/apt/sources.list.d/backports.list
+rm -rf /etc/apt/sources.list.d/backports.list deb-multimedia-keyring_2016.8.1_all.deb
 $STD apt update
 msg_ok "Installed FFmpeg"
 
