@@ -22,10 +22,15 @@ $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
 msg_info "Installing FFmpeg (Patience)"
-echo "deb http://deb.debian.org/debian/ sid main" >/etc/apt/sources.list.d/sid.list
+wget -q https://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb
+$STD dpkg -i deb-multimedia-keyring_2016.8.1_all.deb
+cat <<EOF >/etc/apt/sources.list.d/backports.list
+deb https://www.deb-multimedia.org bookworm main non-free
+deb https://www.deb-multimedia.org bookworm-backports main
+EOF
 $STD apt update
-DEBIAN_FRONTEND=noninteractive $STD apt install -t sid ffmpeg -y
-rm /etc/apt/sources.list.d/sid.list
+DEBIAN_FRONTEND=noninteractive $STD apt-get install -t bookworm-backports ffmpeg -y
+rm /etc/apt/sources.list.d/backports.list
 $STD apt update
 msg_ok "Installed FFmpeg"
 
