@@ -21,6 +21,17 @@ $STD apt-get install -y sudo
 $STD apt-get install -y mc
 msg_ok "Installed Dependencies"
 
+msg_info "Setting Up Hardware Acceleration"
+$STD apt-get -y install {va-driver-all,ocl-icd-libopencl1,intel-opencl-icd,vainfo,intel-gpu-tools}
+if [[ "$CTTYPE" == "0" ]]; then
+  chgrp video /dev/dri
+  chmod 755 /dev/dri
+  chmod 660 /dev/dri/*
+  $STD adduser $(id -u -n) video
+  $STD adduser $(id -u -n) render
+fi
+msg_ok "Set Up Hardware Acceleration"
+
 msg_info "Installing FFmpeg (Patience)"
 wget -q https://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb
 $STD dpkg -i deb-multimedia-keyring_2016.8.1_all.deb
