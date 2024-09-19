@@ -28,7 +28,8 @@ $STD apt-get install -y \
   make \
   g++ \
   unpaper \
-  ocrmypdf
+  ocrmypdf \
+  poppler-utils
 msg_ok "Installed Dependencies"
 
 msg_info "Installing LibreOffice Components"
