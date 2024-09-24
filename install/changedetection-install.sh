@@ -144,7 +144,7 @@ Environment=NODE_ENV=production
 Environment=PORT=3000
 Environment=WORKSPACE_DIR=/opt/browserless/workspace
 WorkingDirectory=/opt/browserless
-ExecStart=/opt/browserless/start.sh
+ExecStart=/opt/browserless/scripts/start.sh
 SyslogIdentifier=browserless
 [Install]
 WantedBy=default.target
