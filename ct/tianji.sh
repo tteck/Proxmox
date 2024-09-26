@@ -68,7 +68,8 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
 
   msg_info "Updating ${APP} to ${RELEASE}"
   cd /opt/tianji
-  git checkout -q v${RELEASE}
+  git checkout -f -q v${RELEASE}
+  cd src/server
   pnpm db:migrate:apply >/dev/null 2>&1
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
