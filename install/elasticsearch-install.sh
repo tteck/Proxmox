@@ -35,9 +35,9 @@ $STD apt-get install elasticsearch
 msg_ok "Installed Elastcisearch"
 
 msg_info "Creating Service"
-$STD /bin/systemctl daemon-reload
-$STD /bin/systemctl enable elasticsearch.service
-$STD /bin/systemctl start elasticsearch.service
+# $STD /bin/systemctl daemon-reload
+# $STD /bin/systemctl enable elasticsearch.service
+# $STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
 
 motd_ssh
