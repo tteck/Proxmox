@@ -14,21 +14,28 @@ network_check
 update_os
 
 msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y {git,curl,sudo,mc,bluez,libffi-dev,libssl-dev,libjpeg-dev,zlib1g-dev,autoconf,build-essential,libopenjp2-7,libturbojpeg0-dev,ffmpeg,liblapack3,liblapack-dev,dbus-broker,libpcap-dev,libavdevice-dev,libavformat-dev,libavcodec-dev,libavutil-dev,libavfilter-dev,libmariadb-dev-compat,libatlas-base-dev,python3-pip,python3.12-venv}
+$STD apt-get install -y {git,curl,sudo,mc,bluez,libffi-dev,libssl-dev,libjpeg-dev,zlib1g-dev,autoconf,build-essential,libopenjp2-7,libturbojpeg0-dev,ffmpeg,liblapack3,liblapack-dev,dbus-broker,libpcap-dev,libavdevice-dev,libavformat-dev,libavcodec-dev,libavutil-dev,libavfilter-dev,libmariadb-dev-compat,libatlas-base-dev,python3.12-dev}
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Home Assistant-Core"
+msg_info "Installing UV"
+set +u
+curl -LsSf https://astral.sh/uv/install.sh | sh -s -- -q
+export PATH="$HOME/.cargo/bin:$PATH"
+source ~/.bashrc
+set -u
+msg_ok "Installed UV"
+
+msg_info "Setting up Home Assistant-Core environment"
 mkdir /srv/homeassistant
 cd /srv/homeassistant
-python3 -m venv .
+uv venv . &>/dev/null
 source bin/activate
-$STD pip install webrtcvad
-$STD python3 -m pip install wheel
-$STD pip install homeassistant
-$STD pip install mysqlclient
-$STD pip install psycopg2-binary
+msg_ok "Created virtual environment with UV"
+
+msg_info "Installing Home Assistant-Core and packages"
+$STD uv pip install webrtcvad wheel homeassistant mysqlclient psycopg2-binary isal
 mkdir -p /root/.homeassistant
-msg_ok "Installed Home Assistant-Core"
+msg_ok "Installed Home Assistant-Core and required packages"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/homeassistant.service
@@ -38,7 +45,8 @@ After=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=/root/.homeassistant
-ExecStart=/srv/homeassistant/bin/hass -c "/root/.homeassistant"
+Environment="PATH=/srv/homeassistant/bin:/usr/local/bin:/usr/bin:/bin:$HOME/.cargo/bin"
+ExecStart=/srv/homeassistant/bin/python3 -m homeassistant --config /root/.homeassistant
 Restart=always
 RestartForceExitStatus=100
 [Install]
