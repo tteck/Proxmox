@@ -13,6 +13,15 @@ Be cautious of copycat or coat-tailing sites that exploit the project's populari
 > [!NOTE]
 All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-10-03
+
+### Changed
+
+- **Home Assistant Core LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/f2937febe69b2bad8b3a14eb84aa562a8f14cc6a) [(Commit)](https://github.com/tteck/Proxmox/commit/f2966ced7f457fd506f865f7f5b70ea12c4b0049)
+  - Refactor Code
+  - Breaking Change
+  - Home Assistant has transitioned to using `uv` for managing the virtual environment and installing additional modules.
+
 ## 2024-09-16
 
 ### Changed
