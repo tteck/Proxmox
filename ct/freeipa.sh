@@ -48,8 +48,8 @@ function default_settings() {
   
   # Ask for full hostname (including domain) and validate domain
   while true; do
-    CT_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
-    DOMAIN=$(echo "$CT_NAME" | cut -d. -f2-)
+    HN=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
+    DOMAIN=$(echo "$HN" | cut -d. -f2-)
     if [[ "$DOMAIN" =~ ^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
       local tld=$(echo "$DOMAIN" | rev | cut -d. -f1 | rev)
       if [[ ! "$tld" =~ ^[0-9]+$ ]]; then
@@ -105,18 +105,18 @@ motd_ssh
 
   msg_info "Configuring FreeIPA"
   
-  SERVER_NAME=$(echo "$CT_NAME" | cut -d. -f1)
+  SERVER_NAME=$(echo "$HN" | cut -d. -f1)
   REALM=$(echo "${DOMAIN}" | tr '[:lower:]' '[:upper:]')
   
-  eval pct exec $CTID -- hostnamectl set-hostname $CT_NAME $redirect
-  eval pct exec $CTID -- bash -c "'echo '127.0.0.1 $CT_NAME $SERVER_NAME' >> /etc/hosts'" $redirect
+  eval pct exec $CTID -- hostnamectl set-hostname $HN $redirect
+  eval pct exec $CTID -- bash -c "'echo '127.0.0.1 $HN $SERVER_NAME' >> /etc/hosts'" $redirect
   
   eval pct exec $CTID -- ipa-server-install \
     --realm=$REALM \
     --domain=$DOMAIN \
     --ds-password="changeme" \
     --admin-password="changeme" \
-    --hostname=$CT_NAME \
+    --hostname=$HN \
     --setup-dns \
     --no-forwarders \
     --no-ntp \
@@ -141,7 +141,7 @@ install_freeipa
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should now be setup and reachable by going to the following URL.
-         ${BL}https://${CT_NAME}${CL} \n"
+         ${BL}https://${HN}${CL} \n"
 echo -e "FreeIPA admin password: ${BL}$DEFAULT_PW${CL}"
 echo -e "It's highly recommended to change this password immediately after your first login.\n"
 echo -e "To change the admin password, follow these steps:"
