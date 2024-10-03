@@ -24,8 +24,53 @@ variables
 color
 catch_errors
 
-# Set default pass for FreeIPA
-DEFAULT_PW="changeme"
+function select_storage() {
+  local CLASS=$1
+  local CONTENT
+  local CONTENT_LABEL
+  case $CLASS in
+    container)
+      CONTENT='rootdir'
+      CONTENT_LABEL='Container'
+      ;;
+    template)
+      CONTENT='vztmpl'
+      CONTENT_LABEL='Container template'
+      ;;
+    *) false || die "Invalid storage class." ;;
+  esac
+
+  # Query all storage locations
+  local -a MENU
+  while read -r line; do
+    local TAG=$(echo $line | awk '{print $1}')
+    local TYPE=$(echo $line | awk '{printf "%-10s", $2}')
+    local FREE=$(echo $line | numfmt --field 4-6 --from-unit=K --to=iec --format %.2f | awk '{printf( "%9sB", $6)}')
+    local ITEM="  Type: $TYPE Free: $FREE "
+    local OFFSET=2
+    if [[ $((${#ITEM} + $OFFSET)) -gt ${MSG_MAX_LENGTH:-} ]]; then
+      local MSG_MAX_LENGTH=$((${#ITEM} + $OFFSET))
+    fi
+    MENU+=("$TAG" "$ITEM" "OFF")
+  done < <(pvesm status -content $CONTENT | awk 'NR>1')
+
+  # Select storage location
+  if [ $((${#MENU[@]} / 3)) -eq 0 ]; then
+    warn "'$CONTENT_LABEL' needs to be selected for at least one storage location."
+    die "Unable to detect valid storage location."
+  elif [ $((${#MENU[@]} / 3)) -eq 1 ]; then
+    printf ${MENU[0]}
+  else
+    local STORAGE
+    while [ -z "${STORAGE:+x}" ]; do
+      STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "Storage Pools" --radiolist \
+        "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\n\n" \
+        16 $(($MSG_MAX_LENGTH + 23)) 6 \
+        "${MENU[@]}" 3>&1 1>&2 2>&3) || die "Menu aborted."
+    done
+    printf $STORAGE
+  fi
+}
 
 function default_settings() {
   CT_TYPE="1"
@@ -42,11 +87,12 @@ function default_settings() {
   VLAN=""
   SSH="no"
   VERB="no"
+  PW=""
   
   # Ask for full hostname (including domain) and validate domain
   while true; do
-    HN=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
-    DOMAIN=$(echo "$HN" | cut -d. -f2-)
+    CT_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
+    DOMAIN=$(echo "$CT_NAME" | cut -d. -f2-)
     if [[ "$DOMAIN" =~ ^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
       local tld=$(echo "$DOMAIN" | rev | cut -d. -f1 | rev)
       if [[ ! "$tld" =~ ^[0-9]+$ ]]; then
@@ -76,28 +122,11 @@ function default_settings() {
     fi
   done
 
-  # Set PW for container creation
-  PW="$DEFAULT_PW"
-
   # Ask for storage location for template
-  while true; do
-    TEMPLATE_STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter storage location for the template (e.g., local)" 8 58 local --title "TEMPLATE STORAGE" 3>&1 1>&2 2>&3)
-    if [ -n "$TEMPLATE_STORAGE" ]; then
-      break
-    else
-      whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox "Storage location cannot be empty. Please try again." 8 58
-    fi
-  done
+  TEMPLATE_STORAGE=$(select_storage "template")
 
   # Ask for storage location for CT disk
-  while true; do
-    DISK_STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter storage location for the CT disk (e.g., local-lvm)" 8 58 local-lvm --title "CT DISK STORAGE" 3>&1 1>&2 2>&3)
-    if [ -n "$DISK_STORAGE" ]; then
-      break
-    else
-      whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox "Storage location cannot be empty. Please try again." 8 58
-    fi
-  done
+  DISK_STORAGE=$(select_storage "container")
 
   echo_default
 }
@@ -124,9 +153,10 @@ function advanced_settings() {
   done
   
   CT_ID=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Container ID" 8 58 $NEXTID --title "CONTAINER ID" 3>&1 1>&2 2>&3)
+  
   while true; do
-    HN=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
-    DOMAIN=$(echo "$HN" | cut -d. -f2-)
+    CT_NAME=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter the full hostname (e.g., freeipa.example.com)" 8 58 --title "HOSTNAME" 3>&1 1>&2 2>&3)
+    DOMAIN=$(echo "$CT_NAME" | cut -d. -f2-)
     if [[ "$DOMAIN" =~ ^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
       local tld=$(echo "$DOMAIN" | rev | cut -d. -f1 | rev)
       if [[ ! "$tld" =~ ^[0-9]+$ ]]; then
@@ -135,8 +165,10 @@ function advanced_settings() {
     fi
     whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox "Invalid domain format. Please use a fully qualified domain name (e.g., example.com, sub.example.com)." 8 58
   done
+  
   DISK_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Set Disk Size in GB" 8 58 $var_disk --title "DISK SIZE" 3>&1 1>&2 2>&3)
   CORE_COUNT=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate CPU Cores" 8 58 $var_cpu --title "CORE COUNT" 3>&1 1>&2 2>&3)
+  
   while true; do
     RAM_SIZE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Allocate RAM in MiB (minimum 1537)" 8 58 $var_ram --title "RAM" 3>&1 1>&2 2>&3)
     if [[ "$RAM_SIZE" =~ ^[0-9]+$ ]] && [ "$RAM_SIZE" -gt 1536 ]; then
@@ -186,24 +218,11 @@ function advanced_settings() {
   fi
   
   # Ask for storage location for template
-  while true; do
-    TEMPLATE_STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter storage location for the template (e.g., local)" 8 58 local --title "TEMPLATE STORAGE" 3>&1 1>&2 2>&3)
-    if [ -n "$TEMPLATE_STORAGE" ]; then
-      break
-    else
-      whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox "Storage location cannot be empty. Please try again." 8 58
-    fi
-  done
+  TEMPLATE_STORAGE=$(select_storage "template")
 
   # Ask for storage location for CT disk
-  while true; do
-    DISK_STORAGE=$(whiptail --backtitle "Proxmox VE Helper Scripts" --inputbox "Enter storage location for the CT disk (e.g., local-lvm)" 8 58 local-lvm --title "CT DISK STORAGE" 3>&1 1>&2 2>&3)
-    if [ -n "$DISK_STORAGE" ]; then
-      break
-    else
-      whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox "Storage location cannot be empty. Please try again." 8 58
-    fi
-  done
+  DISK_STORAGE=$(select_storage "container")
+  
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "ADVANCED SETTINGS COMPLETE" --yesno "Ready to create ${APP} LXC?" 10 58); then
     echo -e "${RD}Creating a ${APP} LXC using the above advanced settings${CL}"
   else
@@ -235,7 +254,7 @@ function build_container() {
 
   export PCT_OPTIONS="
     -features $FEATURES
-    -hostname $HN
+    -hostname $CT_NAME
     -tags proxmox-helper-scripts
     $SD
     $NS
@@ -288,18 +307,18 @@ function install_freeipa() {
 
   msg_info "Configuring FreeIPA"
   
-  SERVER_NAME=$(echo "$HN" | cut -d. -f1)
+  SERVER_NAME=$(echo "$CT_NAME" | cut -d. -f1)
   REALM=$(echo "${DOMAIN}" | tr '[:lower:]' '[:upper:]')
   
-  eval pct exec $CTID -- hostnamectl set-hostname $HN $redirect
-  eval pct exec $CTID -- bash -c "'echo '127.0.0.1 $HN $SERVER_NAME' >> /etc/hosts'" $redirect
+  eval pct exec $CTID -- hostnamectl set-hostname $CT_NAME $redirect
+  eval pct exec $CTID -- bash -c "'echo '127.0.0.1 $CT_NAME $SERVER_NAME' >> /etc/hosts'" $redirect
   
   eval pct exec $CTID -- ipa-server-install \
     --realm=$REALM \
     --domain=$DOMAIN \
-    --ds-password=$DEFAULT_PW \
-    --admin-password=$DEFAULT_PW \
-    --hostname=$HN \
+    --ds-password="changeme" \
+    --admin-password="changeme" \
+    --hostname=$CT_NAME \
     --setup-dns \
     --no-forwarders \
     --no-ntp \
@@ -324,7 +343,7 @@ install_freeipa
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should now be setup and reachable by going to the following URL.
-         ${BL}https://${HN}${CL} \n"
+         ${BL}https://${CT_NAME}${CL} \n"
 echo -e "FreeIPA admin password: ${BL}$DEFAULT_PW${CL}"
 echo -e "It's highly recommended to change this password immediately after your first login.\n"
 echo -e "To change the admin password, follow these steps:"
