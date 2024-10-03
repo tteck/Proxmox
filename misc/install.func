@@ -154,9 +154,21 @@ network_check() {
 # This function updates the Container OS by running apt-get update and upgrade
 update_os() {
   msg_info "Updating Container OS"
+  
+  # Detect the OS
+  if [ -f /etc/debian_version ]; then
+    OS="debian"
+  elif [ -f /etc/centos-release ]; then
+    OS="centos"
+  else
+    msg_error "Unsupported OS detected"
+    exit 1
+  fi
+
   if [[ "$CACHER" == "yes" ]]; then
-    echo "Acquire::http::Proxy-Auto-Detect \"/usr/local/bin/apt-proxy-detect.sh\";" >/etc/apt/apt.conf.d/00aptproxy
-    cat <<EOF >/usr/local/bin/apt-proxy-detect.sh
+    if [ "$OS" == "debian" ]; then
+      echo "Acquire::http::Proxy-Auto-Detect \"/usr/local/bin/apt-proxy-detect.sh\";" >/etc/apt/apt.conf.d/00aptproxy
+      cat <<EOF >/usr/local/bin/apt-proxy-detect.sh
 #!/bin/bash
 if nc -w1 -z "${CACHER_IP}" 3142; then
   echo -n "http://${CACHER_IP}:3142"
@@ -164,11 +176,24 @@ else
   echo -n "DIRECT"
 fi
 EOF
-  chmod +x /usr/local/bin/apt-proxy-detect.sh
+      chmod +x /usr/local/bin/apt-proxy-detect.sh
+    elif [ "$OS" == "centos" ]; then
+      cat <<EOF >/etc/yum.conf.d/proxy.conf
+[main]
+proxy=http://${CACHER_IP}:3142
+EOF
+    fi
   fi
-  $STD apt-get update
-  $STD apt-get -o Dpkg::Options::="--force-confold" -y dist-upgrade
-  rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+
+  if [ "$OS" == "debian" ]; then
+    $STD apt-get update
+    $STD apt-get -o Dpkg::Options::="--force-confold" -y dist-upgrade
+    rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
+  elif [ "$OS" == "centos" ]; then
+    $STD yum clean all
+    $STD yum -y update
+  fi
+
   msg_ok "Updated Container OS"
 }
 
