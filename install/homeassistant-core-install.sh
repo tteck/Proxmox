@@ -14,15 +14,11 @@ network_check
 update_os
 
 msg_info "Installing Dependencies (Patience)"
-$STD apt-get install -y {git,curl,sudo,mc,bluez,libffi-dev,libssl-dev,libjpeg-dev,zlib1g-dev,autoconf,build-essential,libopenjp2-7,libturbojpeg0-dev,ffmpeg,liblapack3,liblapack-dev,dbus-broker,libpcap-dev,libavdevice-dev,libavformat-dev,libavcodec-dev,libavutil-dev,libavfilter-dev,libmariadb-dev-compat,libatlas-base-dev,python3.12-dev}
+$STD apt-get install -y git curl sudo mc bluez libffi-dev libssl-dev libjpeg-dev zlib1g-dev autoconf build-essential libopenjp2-7 libturbojpeg0-dev ffmpeg liblapack3 liblapack-dev dbus-broker libpcap-dev libavdevice-dev libavformat-dev libavcodec-dev libavutil-dev libavfilter-dev libmariadb-dev-compat libatlas-base-dev pip python3.12-dev
 msg_ok "Installed Dependencies"
 
 msg_info "Installing UV"
-set +u
-curl -LsSf https://astral.sh/uv/install.sh | sh -s -- -q
-export PATH="$HOME/.cargo/bin:$PATH"
-source ~/.bashrc
-set -u
+$STD pip install uv
 msg_ok "Installed UV"
 
 msg_info "Setting up Home Assistant-Core environment"
@@ -45,7 +41,7 @@ After=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=/root/.homeassistant
-Environment="PATH=/srv/homeassistant/bin:/usr/local/bin:/usr/bin:/bin:$HOME/.cargo/bin"
+Environment="PATH=/srv/homeassistant/bin:/usr/local/bin:/usr/bin:/usr/local/bin/uv"
 ExecStart=/srv/homeassistant/bin/python3 -m homeassistant --config /root/.homeassistant
 Restart=always
 RestartForceExitStatus=100
