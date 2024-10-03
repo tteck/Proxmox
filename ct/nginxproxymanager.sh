@@ -168,6 +168,7 @@ EOF
 
   msg_info "Starting Services"
   sed -i 's/user npm/user root/g; s/^pid/#pid/g' /usr/local/openresty/nginx/conf/nginx.conf
+  sed -i 's/su npm npm/su root root/g' /etc/logrotate.d/nginx-proxy-manager
   sed -i 's/include-system-site-packages = false/include-system-site-packages = true/g' /opt/certbot/pyvenv.cfg
   systemctl enable -q --now openresty
   systemctl enable -q --now npm
