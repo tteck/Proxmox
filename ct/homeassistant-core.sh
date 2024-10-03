@@ -85,7 +85,7 @@ function update_script() {
 
     msg_info "Updating Home Assistant"
     source /srv/homeassistant/bin/activate
-    pip install ${BR}--upgrade homeassistant &>/dev/null
+    uv pip install ${BR}--upgrade homeassistant &>/dev/null
     msg_ok "Updated Home Assistant"
 
     msg_info "Starting Home Assistant"
