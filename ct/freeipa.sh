@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func) # Can be removed after proper freeipa_intall.sh implementation
 
 function header_info {
 clear
@@ -86,63 +85,14 @@ function default_settings() {
  echo_default
 }
 
-function install_freeipa() {
-  local redirect=""
-  if [ "$VERB" != "yes" ]; then
-    redirect=">/dev/null 2>&1"
-  fi
-
-  msg_info "Updating Container OS"
-  eval pct exec $CTID -- dnf update -y $redirect
-  msg_ok "Updated Container OS"
-  
-motd_ssh
-  customize
-
-  msg_info "Installing FreeIPA Server"
-  eval pct exec $CTID -- dnf install -y freeipa-server freeipa-server-dns $redirect
-  msg_ok "Installed FreeIPA Server"
-
-  msg_info "Configuring FreeIPA"
-  
-  SERVER_NAME=$(echo "$HN" | cut -d. -f1)
-  REALM=$(echo "${DOMAIN}" | tr '[:lower:]' '[:upper:]')
-  
-  eval pct exec $CTID -- hostnamectl set-hostname $HN $redirect
-  eval pct exec $CTID -- bash -c "'echo '127.0.0.1 $HN $SERVER_NAME' >> /etc/hosts'" $redirect
-  
-  eval pct exec $CTID -- ipa-server-install \
-    --realm=$REALM \
-    --domain=$DOMAIN \
-    --ds-password="changeme" \
-    --admin-password="changeme" \
-    --hostname=$HN \
-    --setup-dns \
-    --no-forwarders \
-    --no-ntp \
-    --unattended $redirect
-  
-  if [ $? -ne 0 ]; then
-    msg_error "FreeIPA installation failed. Please check the logs in the container at /var/log/ipaserver-install.log"
-    exit 1
-  fi
-  
-  msg_ok "Configured FreeIPA"
-
-  msg_info "Starting FreeIPA services"
-  eval pct exec $CTID -- systemctl enable --now ipa $redirect
-  msg_ok "Started FreeIPA services"
-}
-
 start
 build_container
 description
-install_freeipa
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should now be setup and reachable by going to the following URL.
          ${BL}https://${HN}${CL} \n"
-echo -e "FreeIPA admin password: ${BL}$DEFAULT_PW${CL}"
+echo -e "FreeIPA admin password: ${BL}changeme${CL}"
 echo -e "It's highly recommended to change this password immediately after your first login.\n"
 echo -e "To change the admin password, follow these steps:"
 echo -e "1. SSH into the FreeIPA container: ${BL}pct enter $CTID${CL}"
