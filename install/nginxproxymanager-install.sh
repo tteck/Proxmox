@@ -36,8 +36,7 @@ $STD apt-get install -y \
   python3-dev \
   python3-pip \
   python3-venv \
-  python3-cffi \
-  python3-certbot-dns-cloudflare
+  python3-cffi
 $STD pip3 install certbot certbot-dns-multi
 $STD python3 -m venv /opt/certbot/
 rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
