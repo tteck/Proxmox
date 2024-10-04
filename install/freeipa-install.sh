@@ -47,3 +47,6 @@ msg_ok "Configured FreeIPA"
 msg_info "Starting FreeIPA services"
 $STD systemctl enable --now ipa
 msg_ok "Started FreeIPA services"
+
+motd_ssh
+customize
