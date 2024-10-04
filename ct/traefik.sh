@@ -62,6 +62,7 @@ if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}
   tar -C /tmp -xzf traefik*.tar.gz
   mv /tmp/traefik /usr/bin/
   rm -rf traefik*.tar.gz
+  systemctl restart traefik.service
   msg_ok "Updated $APP LXC"
 else
   msg_ok "No update required. ${APP} is already at ${RELEASE}"
