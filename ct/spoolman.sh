@@ -72,7 +72,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   rm -rf spoolman_bak
   mv spoolman spoolman_bak
   wget -q https://github.com/Donkie/Spoolman/releases/download/${RELEASE}/spoolman.zip 
-  unzip -q spoolman.zip
+  unzip -q spoolman.zip -d spoolman
   cd spoolman
   pip3 install -r requirements.txt >/dev/null 2>&1
   wget -q https://raw.githubusercontent.com/Donkie/Spoolman/master/.env.example -O .env
