@@ -39,6 +39,7 @@ $STD apt-get install -y \
   python3-cffi
 $STD pip3 install certbot certbot-dns-multi
 $STD python3 -m venv /opt/certbot/
+ln -s /usr/local/bin/certbot /usr/bin/certbot
 rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 msg_ok "Installed Python Dependencies"
 
