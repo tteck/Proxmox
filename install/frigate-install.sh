@@ -171,8 +171,6 @@ msg_ok "Installed Coral Object Detection Model"
 msg_info "Building Nginx with Custom Modules"
 $STD /opt/frigate/docker/main/build_nginx.sh
 sed -e '/s6-notifyoncheck/ s/^#*/#/' -i /opt/frigate/docker/main/rootfs/etc/s6-overlay/s6-rc.d/nginx/run
-sed -i 's/error_log \/dev\/stdout warn\;/error_log \/dev\/shm\/logs\/nginx\/current warn\;/' /usr/local/nginx/conf/nginx.conf
-sed -i 's/access_log \/dev\/stdout main\;/access_log \/dev\/shm\/logs\/nginx\/current main\;/' /usr/local/nginx/conf/nginx.conf
 ln -sf /usr/local/nginx/sbin/nginx  /usr/local/bin/nginx
 msg_ok "Built Nginx"
 
