@@ -64,7 +64,7 @@ $STD apt-get install -y --no-install-recommends \
 msg_ok "Installed OCR Dependencies"
 
 msg_info "Installing JBIG2"
-$STD git clone https://github.com/agl/jbig2enc /opt/jbig2enc
+$STD git clone https://github.com/ie13/jbig2enc /opt/jbig2enc
 cd /opt/jbig2enc
 $STD bash ./autogen.sh
 $STD bash ./configure
