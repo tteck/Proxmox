@@ -18,6 +18,9 @@ update_os
 msg_info "Installing Dependencies"
 $STD apt-get install -y \
   postgresql \
+  python3 \
+  cmake \
+  g++ \
   build-essential \
   curl \
   sudo \
@@ -62,9 +65,12 @@ wget -q "https://github.com/msgbyte/tianji/archive/refs/tags/v${RELEASE}.zip"
 unzip -q v${RELEASE}.zip
 mv tianji-${RELEASE} /opt/tianji
 cd tianji
-export NODE_OPTIONS=--max_old_space_size=4096
-$STD pnpm install
-$STD pnpm build
+$STD pnpm install --filter @tianji/client... --config.dedupe-peer-dependents=false --frozen-lockfile
+$STD pnpm build:static
+$STD pnpm install --filter @tianji/server... --config.dedupe-peer-dependents=false
+mkdir -p ./src/server/public
+cp -r ./geo ./src/server/public
+$STD pnpm build:server
 echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
 cat <<EOF >/opt/tianji/src/server/.env
 DATABASE_URL="postgresql://$DB_USER:$DB_PASS@localhost:5432/$DB_NAME?schema=public"
@@ -84,6 +90,9 @@ customize
 
 msg_info "Cleaning up"
 rm -R /opt/v${RELEASE}.zip
+rm -rf /opt/tianji/src/client
+rm -rf /opt/tianji/website
+rm -rf /opt/tianji/reporter
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
