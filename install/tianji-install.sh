@@ -39,6 +39,7 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 $STD npm install -g pnpm@9.7.1
 $STD npm install -g pm2 
+export NODE_OPTIONS="--max_old_space_size=4096"
 msg_ok "Installed Node.js, pnpm & pm2"
 
 msg_info "Setting up PostgreSQL"
