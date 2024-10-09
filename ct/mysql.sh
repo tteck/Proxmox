@@ -68,7 +68,3 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} setup completed successfully with the IP:\n\
-${IP}\n\
-If you use phpMyAdmin, you can access it at the following URL:\n\
-${BL}http://${IP}/phpMyAdmin${CL}\n"
