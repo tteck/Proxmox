@@ -20,9 +20,7 @@ $STD apt-get install -y \
   sudo \
   lsb-release \
   curl \
-  gnupg   \
-  apt-transport-https \
-  make \
+  gnupg \
   mc
 msg_ok "Installed Dependencies"
 
@@ -32,7 +30,6 @@ echo "deb [signed-by=/usr/share/keyrings/mysql.gpg] http://repo.mysql.com/apt/de
 $STD apt-get update
 export DEBIAN_FRONTEND=noninteractive
 $STD apt-get install -y \
-  mysql-common \
   mysql-community-client \
   mysql-community-server
 msg_ok "Installed MySQL"
@@ -46,7 +43,7 @@ msg_ok "MySQL Server configured"
 
 read -r -p "Would you like to add PhpMyAdmin? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-  msg_info "Adding phpMyAdmin"
+  msg_info "Installing phpMyAdmin"
   $STD apt-get install -y \
     apache2 \
     php \
@@ -66,7 +63,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
 	chmod 660 /var/www/html/phpMyAdmin/config.inc.php
 	chown -R www-data:www-data /var/www/html/phpMyAdmin
 	systemctl restart apache2
-  msg_ok "Added phpMyAdmin"
+  msg_ok "Installed phpMyAdmin"
 fi
 
 msg_info "Start Service"
