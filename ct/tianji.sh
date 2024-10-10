@@ -63,7 +63,7 @@ RELEASE=$(curl -s https://api.github.com/repos/msgbyte/tianji/releases/latest | 
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
 
   msg_info "Stopping ${APP} Service"
-  pm2 stop tianji >/dev/null 2>&1
+  systemctl stop tianji
   msg_ok "Stopped ${APP} Service"
 
   msg_info "Updating ${APP} to ${RELEASE}"
@@ -75,7 +75,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   msg_ok "Updated ${APP} to ${RELEASE}"
 
   msg_info "Starting ${APP}"
-  pm2 start tianji >/dev/null 2>&1
+  systemctl start tianji
   msg_ok "Started ${APP}"
   msg_ok "Updated Successfully"
 else
