@@ -38,7 +38,6 @@ echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.co
 $STD apt-get update
 $STD apt-get install -y nodejs
 $STD npm install -g pnpm@9.7.1
-$STD npm install -g pm2 
 export NODE_OPTIONS="--max_old_space_size=4096"
 msg_ok "Installed Node.js, pnpm & pm2"
 
@@ -77,14 +76,29 @@ cat <<EOF >/opt/tianji/src/server/.env
 DATABASE_URL="postgresql://$DB_USER:$DB_PASS@localhost:5432/$DB_NAME?schema=public"
 JWT_SECRET="$TIANJI_SECRET"
 EOF
-cd /opt/tianji
-$STD npm install pm2 -g
-$STD pm2 install pm2-logrotate
-cd src/server
+cd /opt/tianji/src/server
 $STD pnpm db:migrate:apply
-$STD pm2 start /opt/tianji/src/server/dist/src/server/main.js --name tianji
-$STD pm2 save
 msg_ok "Installed Tianji"
+
+msg_info "Creating Service"
+cat <<EOF >/etc/systemd/system/tianji.service
+[Unit]
+Description=Tianji Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /opt/tianji/src/server/dist/src/server/main.js
+WorkingDirectory=/opt/tianji/src/server
+Restart=always
+RestartSec=10
+
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now tianji.service
+msg_ok "Created Service"
 
 motd_ssh
 customize
