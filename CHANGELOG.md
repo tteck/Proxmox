@@ -19,6 +19,9 @@ All LXC instances created using this repository come pre-installed with Midnight
 
 - **MySQL LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/mysql-install.sh)
   - NEW Script
+- **Tianji LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/4c83a790ac9b040da1f11ad2cbe13d3fc5f480e9)
+  - Breaking Change
+  - Switch from `pm2` process management to `systemd`
 
 ## 2024-10-03
 
