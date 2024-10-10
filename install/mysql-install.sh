@@ -37,8 +37,9 @@ msg_ok "Installed MySQL"
 msg_info "Configure MySQL Server"
 ADMIN_PASS="$(openssl rand -base64 18 | cut -c1-13)"
 $STD mysql -uroot -p"$ADMIN_PASS" -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$ADMIN_PASS'; FLUSH PRIVILEGES;"
-echo "" >>~/mysql.creds
-echo -e "MySQL Root Password: $ADMIN_PASS" >>~/mysql.creds
+echo "" >~/mysql.creds
+echo -e "MySQL user: root" >>~/mysql.creds
+echo -e "MySQL password: $ADMIN_PASS" >>~/mysql.creds
 msg_ok "MySQL Server configured"
 
 read -r -p "Would you like to add PhpMyAdmin? <y/N> " prompt
