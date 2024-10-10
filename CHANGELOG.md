@@ -13,6 +13,13 @@ Be cautious of copycat or coat-tailing sites that exploit the project's populari
 > [!NOTE]
 All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-10-10
+
+### Changed
+
+- **MySQL LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/mysql-install.sh)
+  - NEW Script
+
 ## 2024-10-03
 
 ### Changed
