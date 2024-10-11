@@ -78,7 +78,6 @@ function update_script() {
 
 function ask_extend_mmap() {
   echo "Elasticsearch recommends extending the vm.max_map_count"
-  echo "(https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)"
   read -r -p "Would you like to extend mmap count? <y/N>" prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
     msg_info "Extending mmap count"
@@ -103,9 +102,7 @@ msg_ok "Configured User"
 
 msg_info "Checking Health"
 ELASTIC_PORT=9200
-echo "User: $ELASTIC_USER"
-echo "Password: $ELASTIC_PASSWORD"
-curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty
+curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty >/dev/null
 msg_ok "Checked Health"
 
 msg_ok "Completed Successfully!\n"
