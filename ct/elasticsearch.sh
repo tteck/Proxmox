@@ -76,7 +76,18 @@ function update_script() {
   exit
 }
 
+function ask_extend_mmap() {
+  read -r -p "Elasticsearch recommends extending the vm.max_map_count \n(https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)? <y/N> " prompt
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+    msg_info "Extending mmap"
+    sysctl -w vm.max_map_count=262144
+    echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+    msg_ok "Extended mmap"
+  fi
+}
+
 start
+ask_extend_mmap
 build_container
 description
 
@@ -97,10 +108,10 @@ msg_ok "Checked Health"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} is installed, you can check it's health by running:
-         ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty${CL}
+${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty${CL}
          Elasticsearch credentials are:
-          User: ${BL}${ELASTIC_USER}${CL}
-          Password: ${BL}${ELASTIC_PASSWORD}${CL}
+User: ${BL}${ELASTIC_USER}${CL}
+Password: ${BL}${ELASTIC_PASSWORD}${CL}
          Enrollment and Kibana tokens were also generated for you:
-          Kibana Token: ${BL}${KIBANA_TOKEN}${CL}
-          Enrollment Token: ${BL}${ENROLLMENT_TOKEN}${CL} \n"
+Kibana Token: ${BL}${KIBANA_TOKEN}${CL}
+Enrollment Token: ${BL}${ENROLLMENT_TOKEN}${CL} \n"
