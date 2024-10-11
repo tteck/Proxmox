@@ -34,11 +34,37 @@ $STD apt-get update
 $STD apt-get install elasticsearch
 msg_ok "Installed Elastcisearch"
 
+msg_info "Configuring Elasticsearch Memory"
+$STD sed -i 's/## -Xms[0-9]+[Ggm]/-Xms4g/' /etc/elasticsearch/jvm.options
+$STD sed -i 's/## -Xmx[0-9]+[Ggm]/-Xmx4g/' /etc/elasticsearch/jvm.options
+msg_ok "Elastcisearch Configured to user 4GB of RAM, adjust if needed by editing /etc/elasticsearch/jvm.options"
+
+
+# msg_info "Configuring Elasticsearch Limits"
+# adjust limits in  /etc/security/limits.conf
+# elasticsearch soft memlock unlimited
+# elasticsearch hard memlock unlimited
+
+# msg_info "Configuring Elasticsearch Service"
+# uncomment /usr/lib/systemd/system/elasticsearch.service
+# LimitMEMLOCK=infinity
+
+# /etc/elasticsearch/elasticsearch.yml
+# bootstrap.memory_lock: true
+
 msg_info "Creating Service"
-# $STD /bin/systemctl daemon-reload
-# $STD /bin/systemctl enable elasticsearch.service
-# $STD /bin/systemctl start elasticsearch.service
+$STD /bin/systemctl daemon-reload
+$STD /bin/systemctl enable elasticsearch.service
+$STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
+
+# Get the password
+msg_info "Checking Health"
+$ELASTIC_USER=elastic
+$ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -u $ELASTIC_USER -b -s -f)
+$ELASTIC_IP=$IP
+curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://$ELASTIC_IP:9200/_cluster/health?pretty
+msg_ok "Checked Health"
 
 motd_ssh
 customize
