@@ -80,7 +80,16 @@ start
 build_container
 description
 
+msg_info "Configuring User"
+ELASTIC_USER=elastic
+KIBANA_USER=kibana
+ELASTIC_PASSWORD=$(lxc-attach -n "$CTID" -- bash -c "/usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER" || exit)
+KIBANA_TOKEN=$(lxc-attach -n "$CTID" -- bash -c "/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s $KIBANA_USER" || exit)
+ENROLLMENT_TOKEN=$(lxc-attach -n "$CTID" -- bash -c "/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node" || exit)
+msg_ok "Configured User"
+
 msg_info "Checking Health"
+ELASTIC_PORT=9200
 echo "User: $ELASTIC_USER"
 echo "Password: $ELASTIC_PASSWORD"
 $STD curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty

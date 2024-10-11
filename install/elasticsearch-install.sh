@@ -45,13 +45,6 @@ $STD /bin/systemctl enable elasticsearch.service
 $STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
 
-msg_info "Configuring User"
-ELASTIC_USER=elastic
-ELASTIC_PASSWORD=$($STD /usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
-KIBANA_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
-ENROLLMENT_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
-msg_ok "Configured User"
-
 motd_ssh
 customize
 
@@ -59,5 +52,6 @@ msg_info "Cleaning up"
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
+
 
 export ELASTIC_USER ELASTIC_PASSWORD KIBANA_TOKEN ENROLLMENT_TOKEN
