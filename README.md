@@ -16,7 +16,7 @@
 ---
 
 > [!CAUTION]
-Be cautious of copycat or coat-tailing sites that exploit the project's popularity with potentially malicious intent. Please only trust information from https://Helper-Scripts.com/ or https://tteck.github.io/Proxmox/.
+Exercise vigilance regarding copycat or coat-tailing sites that seek to exploit the project's popularity for potentially malicious purposes. It is imperative to rely solely on information from https://Helper-Scripts.com/ or https://tteck.github.io/Proxmox/ for accurate and trustworthy content.
 
 These scripts empower users to create a Linux container or virtual machine interactively, providing choices for both simple and advanced configurations. The basic setup adheres to default settings, while the advanced setup gives users the ability to customize these defaults. 
 
