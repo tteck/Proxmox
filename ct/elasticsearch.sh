@@ -77,12 +77,13 @@ function update_script() {
 }
 
 function ask_extend_mmap() {
-  read -r -p "Elasticsearch recommends extending the vm.max_map_count \n(https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)? <y/N> " prompt
+  echo "Elasticsearch recommends extending the vm.max_map_count \n(https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)?"
+  read -r -p "Would you like to extend mmap count? <y/N>" prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
-    msg_info "Extending mmap"
+    msg_info "Extending mmap count"
     sysctl -w vm.max_map_count=262144
     echo "vm.max_map_count=262144" >> /etc/sysctl.conf
-    msg_ok "Extended mmap"
+    msg_ok "Extended mmap count"
   fi
 }
 
