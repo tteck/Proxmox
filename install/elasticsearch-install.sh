@@ -34,13 +34,6 @@ $STD apt-get update
 $STD apt-get install elasticsearch
 msg_ok "Installed Elastcisearch"
 
-msg_info "Configuring User"
-ELASTIC_USER=elastic
-ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
-KIBANA_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
-ENROLLMENT_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
-msg_ok "Installed Elastcisearch"
-
 msg_info "Configuring Elasticsearch Memory"
 $STD sed -i -E 's/## -Xms[0-9]+[Ggm]/-Xms3g/' /etc/elasticsearch/jvm.options
 $STD sed -i -E 's/## -Xmx[0-9]+[Ggm]/-Xmx3g/' /etc/elasticsearch/jvm.options
@@ -51,6 +44,13 @@ $STD /bin/systemctl daemon-reload
 $STD /bin/systemctl enable elasticsearch.service
 $STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
+
+msg_info "Configuring User"
+ELASTIC_USER=elastic
+ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
+KIBANA_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
+ENROLLMENT_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
+msg_ok "Configured User"
 
 msg_info "Checking Health"
 ELASTIC_PORT=9200
