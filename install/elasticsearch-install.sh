@@ -52,13 +52,6 @@ KIBANA_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment
 ENROLLMENT_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
 msg_ok "Configured User"
 
-msg_info "Checking Health"
-ELASTIC_PORT=9200
-echo "User: $ELASTIC_USER"
-echo "Password: $ELASTIC_PASSWORD"
-$STD curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty
-msg_ok "Checked Health"
-
 motd_ssh
 customize
 

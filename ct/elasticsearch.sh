@@ -80,6 +80,12 @@ start
 build_container
 description
 
+msg_info "Checking Health"
+echo "User: $ELASTIC_USER"
+echo "Password: $ELASTIC_PASSWORD"
+$STD curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty
+msg_ok "Checked Health"
+
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} is installed, you can check it's health by running:
          ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty${CL}
