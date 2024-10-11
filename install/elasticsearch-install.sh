@@ -34,6 +34,13 @@ $STD apt-get update
 $STD apt-get install elasticsearch
 msg_ok "Installed Elastcisearch"
 
+msg_info "Configuring User"
+ELASTIC_USER=elastic
+ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
+KIBANA_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
+ENROLLMENT_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
+msg_ok "Installed Elastcisearch"
+
 msg_info "Configuring Elasticsearch Memory"
 $STD sed -i -E 's/## -Xms[0-9]+[Ggm]/-Xms3g/' /etc/elasticsearch/jvm.options
 $STD sed -i -E 's/## -Xmx[0-9]+[Ggm]/-Xmx3g/' /etc/elasticsearch/jvm.options
@@ -46,12 +53,9 @@ $STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
 
 msg_info "Checking Health"
-ELASTIC_USER=elastic
-ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -u $ELASTIC_USER -b -s -f)
 ELASTIC_PORT=9200
-echo $ELASTIC_USER
-echo $ELASTIC_PASSWORD
-echo $ELASTIC_IP
+echo "User: $ELASTIC_USER"
+echo "Password: $ELASTIC_PASSWORD"
 curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty
 msg_ok "Checked Health"
 
@@ -62,3 +66,5 @@ msg_info "Cleaning up"
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
+
+export ELASTIC_USER ELASTIC_PASSWORD KIBANA_TOKEN ENROLLMENT_TOKEN

@@ -81,5 +81,11 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} should be reachable on port 9200
-         ${BL}http://${IP}:9200${CL} \n"
+echo -e "${APP} is installed, you can check it's health by running:
+         ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty${CL}
+         Elasticsearch credentials are:
+          User: ${BL}${ELASTIC_USER}${CL}
+          Password: ${BL}${ELASTIC_PASSWORD}${CL}
+         Enrollment and Kibana tokens were also generated for you:
+          Kibana Token: ${BL}${KIBANA_TOKEN}${CL}
+          Enrollment Token: ${BL}${ENROLLMENT_TOKEN}${CL} \n"
