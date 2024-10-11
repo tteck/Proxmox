@@ -45,12 +45,15 @@ $STD /bin/systemctl enable elasticsearch.service
 $STD /bin/systemctl start elasticsearch.service
 msg_ok "Created Service"
 
-# Get the password
 msg_info "Checking Health"
-$ELASTIC_USER=elastic
-$ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -u $ELASTIC_USER -b -s -f)
-$ELASTIC_IP=$IP
-curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://$ELASTIC_IP:9200/_cluster/health?pretty
+ELASTIC_USER=elastic
+ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -u $ELASTIC_USER -b -s -f)
+ELASTIC_IP=$IP
+ELASTIC_PORT=9200
+echo $ELASTIC_USER
+echo $ELASTIC_PASSWORD
+echo $ELASTIC_IP
+curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://$ELASTIC_IP:$ELASTIC_PORT/_cluster/health?pretty
 msg_ok "Checked Health"
 
 motd_ssh
