@@ -92,7 +92,7 @@ msg_info "Checking Health"
 ELASTIC_PORT=9200
 echo "User: $ELASTIC_USER"
 echo "Password: $ELASTIC_PASSWORD"
-$STD curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty
+curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty
 msg_ok "Checked Health"
 
 msg_ok "Completed Successfully!\n"
