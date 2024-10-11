@@ -49,7 +49,9 @@ msg_ok "Installed PHP Dependencies"
 msg_info "Installing Python Dependencies"
 $STD apt-get -y install \
   python3-pip \
-  python3-requests
+  python3-requests \
+  python3-tz \
+  python3-tzlocal
 rm -rf /usr/lib/python3.*/EXTERNALLY-MANAGED
 $STD pip3 install mac-vendor-lookup
 $STD pip3 install fritzconnection
