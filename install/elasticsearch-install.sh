@@ -39,19 +39,6 @@ $STD sed -i -E 's/## -Xms[0-9]+[Ggm]/-Xms3g/' /etc/elasticsearch/jvm.options
 $STD sed -i -E 's/## -Xmx[0-9]+[Ggm]/-Xmx3g/' /etc/elasticsearch/jvm.options
 msg_ok "Elastcisearch Configured to user 3GB of RAM, adjust if needed by editing /etc/elasticsearch/jvm.options"
 
-
-# msg_info "Configuring Elasticsearch Limits"
-# adjust limits in  /etc/security/limits.conf
-# elasticsearch soft memlock unlimited
-# elasticsearch hard memlock unlimited
-
-# msg_info "Configuring Elasticsearch Service"
-# uncomment /usr/lib/systemd/system/elasticsearch.service
-# LimitMEMLOCK=infinity
-
-# /etc/elasticsearch/elasticsearch.yml
-# bootstrap.memory_lock: true
-
 msg_info "Creating Service"
 $STD /bin/systemctl daemon-reload
 $STD /bin/systemctl enable elasticsearch.service
