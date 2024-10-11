@@ -35,8 +35,8 @@ $STD apt-get install elasticsearch
 msg_ok "Installed Elastcisearch"
 
 msg_info "Configuring Elasticsearch Memory"
-$STD sed -i 's/## -Xms[0-9]+[Ggm]/-Xms4g/' /etc/elasticsearch/jvm.options
-$STD sed -i 's/## -Xmx[0-9]+[Ggm]/-Xmx4g/' /etc/elasticsearch/jvm.options
+$STD sed -i -E 's/## -Xms[0-9]+[Ggm]/-Xms4g/' /etc/elasticsearch/jvm.options
+$STD sed -i -E 's/## -Xmx[0-9]+[Ggm]/-Xmx4g/' /etc/elasticsearch/jvm.options
 msg_ok "Elastcisearch Configured to user 4GB of RAM, adjust if needed by editing /etc/elasticsearch/jvm.options"
 
 
