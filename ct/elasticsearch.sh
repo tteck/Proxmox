@@ -82,7 +82,7 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} is installed, you can check it's health by running:
-         ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty${CL}
+         ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty${CL}
          Elasticsearch credentials are:
           User: ${BL}${ELASTIC_USER}${CL}
           Password: ${BL}${ELASTIC_PASSWORD}${CL}
