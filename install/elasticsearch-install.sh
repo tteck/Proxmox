@@ -47,16 +47,16 @@ msg_ok "Created Service"
 
 msg_info "Configuring User"
 ELASTIC_USER=elastic
-ELASTIC_PASSWORD=$(/usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
-KIBANA_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
-ENROLLMENT_TOKEN=$(/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
+ELASTIC_PASSWORD=$($STD /usr/share/elasticsearch/bin/elasticsearch-reset-password -sbf -u $ELASTIC_USER)
+KIBANA_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana)
+ENROLLMENT_TOKEN=$($STD /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s node)
 msg_ok "Configured User"
 
 msg_info "Checking Health"
 ELASTIC_PORT=9200
 echo "User: $ELASTIC_USER"
 echo "Password: $ELASTIC_PASSWORD"
-curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty
+$STD curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://localhost:$ELASTIC_PORT/_cluster/health?pretty
 msg_ok "Checked Health"
 
 motd_ssh
