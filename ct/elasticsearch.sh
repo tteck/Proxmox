@@ -77,12 +77,15 @@ function update_script() {
 }
 
 function ask_extend_mmap() {
-  echo "Elasticsearch recommends extending the vm.max_map_count"
+  echo "Elasticsearch recommends extending the vm.max_map_count on the host"
   read -r -p "Would you like to extend mmap count? <y/N>" prompt
   if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
     msg_info "Extending mmap count"
-    sysctl -w vm.max_map_count=262144
-    echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+    sysctl -w vm.max_map_count=262144 >/dev/null
+    # Check if the setting is persistent
+    if ! grep -q "vm.max_map_count" /etc/sysctl.conf; then
+      echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+    fi
     msg_ok "Extended mmap count"
   fi
 }
@@ -102,15 +105,15 @@ msg_ok "Configured User"
 
 msg_info "Checking Health"
 ELASTIC_PORT=9200
-curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty >/dev/null
+curl -s -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty >/dev/null
 msg_ok "Checked Health"
 
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} is installed, you can check it's health by running:
 ${BL}curl -XGET --insecure --fail --user $ELASTIC_USER:$ELASTIC_PASSWORD https://${IP}:$ELASTIC_PORT/_cluster/health?pretty${CL}
-         Elasticsearch credentials are:
+Elasticsearch credentials are:
 User: ${BL}${ELASTIC_USER}${CL}
 Password: ${BL}${ELASTIC_PASSWORD}${CL}
-         Enrollment and Kibana tokens were also generated for you:
+Enrollment and Kibana tokens were also generated for you:
 Kibana Token: ${BL}${KIBANA_TOKEN}${CL}
 Enrollment Token: ${BL}${ENROLLMENT_TOKEN}${CL} \n"
