@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2024 tteck
-# Author: tteck (tteckster)
-# Co-Author: T.H. (ELKozel)
+# Author: T.H. (ELKozel)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -19,7 +18,7 @@ $STD apt-get install -y wget
 $STD apt-get install -y sudo
 $STD apt-get install -y mc
 $STD apt-get install -y ca-certificates
-$STD apt-get install apt-transport-https
+$STD apt-get install -y apt-transport-https
 $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
@@ -35,9 +34,41 @@ $STD apt-get install kibana
 msg_ok "Installed Kibana"
 
 msg_info "Creating Service"
-$STD /bin/systemctl daemon-reload
-$STD /bin/systemctl enable kibana.service
-$STD /bin/systemctl start kibana.service
+cat <<EOF >/etc/systemd/system/Kibana.service
+[Unit]
+Description=Kibana
+Documentation=https://www.elastic.co/guide/en/kibana/8.15/index.html
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=simple
+User=kibana
+Group=kibana
+PrivateTmp=true
+
+Environment=KBN_HOME=/usr/share/kibana
+Environment=KBN_PATH_CONF=/etc/kibana
+
+EnvironmentFile=-/etc/default/kibana
+EnvironmentFile=-/etc/sysconfig/kibana
+
+ExecStart=/usr/share/kibana/bin/kibana
+
+Restart=on-failure
+RestartSec=3
+
+StartLimitBurst=3
+StartLimitInterval=60
+
+WorkingDirectory=/usr/share/kibana
+
+StandardOutput=journal
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable -q --now Kibana.service
 msg_ok "Created Service"
 
 motd_ssh
