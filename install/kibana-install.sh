@@ -15,12 +15,12 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
+$STD apt-get install -y curl
 $STD apt-get install -y apt-transport-https
 $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
 
 msg_info "Setting up Elastic Repository"
-mkdir -p /etc/apt/keyrings
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" >/etc/apt/sources.list.d/elastic-8.x.list
 msg_ok "Set up Elastic Repository"
@@ -29,6 +29,11 @@ msg_info "Installing Kibana"
 $STD apt-get update
 $STD apt-get install -y kibana
 msg_ok "Installed Kibana"
+
+msg_info "Configuring hostname"
+IP=$(hostname -I | awk '{print $1}')
+sed -i -E "s/#server.host: \"localhost\"/server.host: \"${IP}\"/" /etc/kibana/kibana.yml
+msg_ok "Configured hostname"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/Kibana.service
