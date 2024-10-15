@@ -53,33 +53,11 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /usr/bin/evcc ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-fi
-RELEASE=$(curl -s https://api.github.com/repos/evcc-io/evcc/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-4) }')
-if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
-  msg_info "Stopping ${APP}"
-  systemctl stop evcc
-  msg_ok "${APP} Stopped"
-  
-  msg_info "Updating ${APP} to ${RELEASE}"
-  wget -q "https://github.com/evcc-io/evcc/releases/download/${RELEASE}/evcc_${RELEASE}_amd64.deb"
-  $STD dpkg -i evcc_${RELEASE}_amd64.deb
-  msg_ok "Updated Successfully"
-  
-  msg_info "Starting ${APP}"
-  systemctl start evcc
-  msg_ok "Started ${APP}"
-  
-  msg_info "Cleaning Up"
-  rm -rf evcc_${RELEASE}_amd64.deb
-  msg_ok "Cleaned"
-  msg_ok "Updated Successfully"
-else
-  msg_ok "No update required. ${APP} is already at ${RELEASE}"
-fi
+if [[ ! -f /etc/apt/sources.list.d/evcc-stable.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating ${APP} LXC"
+apt-get update &>/dev/null
+apt-get install -y evcc &>/dev/null
+msg_ok "Updated Successfully"
 exit
 }
 
