@@ -54,7 +54,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -f /etc/apt/sources.list.d/evcc-stable.list ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating ${APP} LXC"
+msg_info "Updating evcc LXC"
 apt update &>/dev/null
 apt install -y evcc &>/dev/null
 msg_ok "Updated Successfully"

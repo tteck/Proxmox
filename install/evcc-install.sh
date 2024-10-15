@@ -30,10 +30,10 @@ echo "deb [signed-by=/etc/apt/keyrings/evcc-stable.gpg] https://dl.evcc.io/publi
 $STD apt update
 msg_ok "evcc Repository setup sucessfully"
 
-msg_info "Installing ${APPLICATION}"
+msg_info "Installing evcc"
 $STD apt install -y evcc
 systemctl enable --now evcc.service
-msg_ok "Installed ${APPLICATION}"
+msg_ok "Installed evcc"
 
 motd_ssh
 customize
