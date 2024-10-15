@@ -32,7 +32,7 @@ msg_ok "evcc Repository setup sucessfully"
 
 msg_info "Installing evcc"
 $STD apt install -y evcc
-systemctl enable --now evcc.service
+systemctl enable -q --now evcc.service
 msg_ok "Installed evcc"
 
 motd_ssh
