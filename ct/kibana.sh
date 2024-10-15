@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/ELKozel/Proxmox/main/misc/build.func)
-# Copyright (c) 2024 ELKozel
-# Author: T.H. (ELKozel)
+# Copyright (c) 2021-2024 tteck
+# Author: tteck (tteckster)
+# Co-Author: T.H. (ELKozel)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -60,18 +61,10 @@ if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
   [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
 fi
 
-msg_info "Stopping ${APP}"
-systemctl stop Kibana
-msg_ok "Stopped ${APP}"
-
 msg_info "Updating ${APP} LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
 msg_ok "Updated ${APP} LXC"
-
-msg_info "Starting ${APP}"
-systemctl start Kibana
-msg_ok "Started ${APP}"
 
 msg_ok "Updated Successfully"
 exit
@@ -82,5 +75,7 @@ build_container
 description
 
 msg_ok "Completed Successfully!\n"
-echo -e "${APP} Setup should be reachable by going to the following URL.
+echo -e "${APP} is installed! For security purposes, ${APP} is only reachable from localhost.\n
+To access the ${APP} dashboard, please adjust ${BL}server.host${CL} in ${BL}/etc/kibana/kibana.yml${CL}.\n
+After that, ${APP} should bre reachable at
          ${BL}http://${IP}:5601${CL} \n"

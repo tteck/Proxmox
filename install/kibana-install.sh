@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2021-2024 tteck
-# Author: T.H. (ELKozel)
+# Author: tteck (tteckster)
+# Co-Author: T.H. (ELKozel)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
@@ -14,10 +15,6 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
-$STD apt-get install -y wget
-$STD apt-get install -y sudo
-$STD apt-get install -y mc
-$STD apt-get install -y ca-certificates
 $STD apt-get install -y apt-transport-https
 $STD apt-get install -y gnupg
 msg_ok "Installed Dependencies"
@@ -30,7 +27,7 @@ msg_ok "Set up Elastic Repository"
 
 msg_info "Installing Kibana"
 $STD apt-get update
-$STD apt-get install kibana
+$STD apt-get install -y kibana
 msg_ok "Installed Kibana"
 
 msg_info "Creating Service"
@@ -59,6 +56,7 @@ RestartSec=3
 
 StartLimitBurst=3
 StartLimitInterval=60
+
 
 WorkingDirectory=/usr/share/kibana
 
