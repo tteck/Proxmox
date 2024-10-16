@@ -60,7 +60,7 @@ if ! command -v pnpm &> /dev/null; then
     msg_error "pnpm not found. Installing..."
     npm install -g pnpm &>/dev/null
 else
-    msg_info "pnpm is already installed."
+    msg_ok "pnpm is already installed."
 fi
 msg_info "Updating $APP"
 systemctl stop jellyseerr
@@ -70,7 +70,6 @@ git pull &>/dev/null
 if echo "$output" | grep -q "Already up to date."
 then
   msg_ok " $APP is already up to date."
-  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
   systemctl start jellyseerr
   exit
 fi
