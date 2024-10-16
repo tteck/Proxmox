@@ -68,9 +68,9 @@ cd /opt/jellyseerr
 output=$(git pull)
 git pull &>/dev/null
 if echo "$output" | grep -q "Already up to date."
-msg_ok
 then
   msg_ok " $APP is already up to date."
+  if [ -n "$SPINNER_PID" ] && ps -p $SPINNER_PID > /dev/null; then kill $SPINNER_PID > /dev/null; fi
   systemctl start jellyseerr
   exit
 fi
