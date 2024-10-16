@@ -55,6 +55,13 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/jellyseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your Jellyseerr LXC to 4vcpu and 4096RAM for the build process before continuing" 10 75
+if ! command -v pnpm &> /dev/null; then
+    msg_error "pnpm not found. Installing..."
+    npm install -g pnpm &>/dev/null
+else
+    msg_info "pnpm is already installed."
+fi
 msg_info "Updating $APP"
 systemctl stop jellyseerr
 cd /opt/jellyseerr
@@ -66,8 +73,25 @@ then
   systemctl start jellyseerr
   exit
 fi
-CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000 &>/dev/null
-yarn build &>/dev/null
+export CYPRESS_INSTALL_BINARY=0 
+pnpm install --frozen-lockfile &>/dev/null
+export NODE_OPTIONS="--max-old-space-size=3072"
+pnpm build &>/dev/null
+cat <<EOF >/etc/systemd/system/jellyseerr.service
+[Unit]
+Description=jellyseerr Service
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/jellyseerr/jellyseerr.conf
+Environment=NODE_ENV=production
+Type=exec
+WorkingDirectory=/opt/jellyseerr
+ExecStart=/usr/bin/node dist/index.js
+
+[Install]
+WantedBy=multi-user.target
+EOF
 systemctl start jellyseerr
 msg_ok "Updated $APP"
 exit
