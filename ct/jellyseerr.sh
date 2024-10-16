@@ -69,7 +69,7 @@ output=$(git pull)
 git pull &>/dev/null
 if echo "$output" | grep -q "Already up to date."
 then
-  msg_ok " $APP is already up to date."
+  msg_ok "$APP is already up to date."
   systemctl start jellyseerr
   exit
 fi
