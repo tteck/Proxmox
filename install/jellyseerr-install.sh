@@ -33,23 +33,28 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Yarn"
+msg_info "Installing Yarn/pnpm"
 $STD npm install -g yarn
-msg_ok "Installed Yarn"
+$STD npm install -g pnpm
+msg_ok "Installed Yarn/pnpm"
 
 msg_info "Installing Jellyseerr (Patience)"
-git clone -q https://github.com/Fallenbagel/jellyseerr.git /opt/jellyseerr
+RELEASE=$(curl -s https://api.github.com/repos/Fallenbagel/jellyseerr/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+cd /opt
+wget -q "https://github.com/Fallenbagel/jellyseerr/archive/refs/tags/${RELEASE}.zip"
+unzip -q ${RELEASE}.zip 
+mv jellyseerr-${RELEASE:1} /opt/jellyseerr
+rm -R ${RELEASE}.zip 
 cd /opt/jellyseerr
-$STD git checkout main
-CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000 &>/dev/null
-$STD yarn install
+$STD pnpm install
 $STD yarn build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
 PORT=5055
 # HOST=0.0.0.0
-# JELLYFIN_TYPE=emby
+# FORCE_IPV4_FIRST=true
 EOF
+echo "${RELEASE}" >"/opt/${APPLICATION}_version.txt"
 msg_ok "Installed Jellyseerr"
 
 msg_info "Creating Service"
