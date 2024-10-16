@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="Jellyseerr"
 var_disk="8"
 var_cpu="2"
-var_ram="2048"
+var_ram="4096"
 var_os="debian"
 var_version="12"
 variables
@@ -76,7 +76,7 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   mv jellyseerr-${RELEASE:1} /opt/jellyseerr
   cd /opt/jellyseerr
   pnpm install &>/dev/null
-  yarn build &>/dev/null
+  pnpm build &>/dev/null
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP}"
 

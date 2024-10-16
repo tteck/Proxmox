@@ -33,10 +33,9 @@ $STD apt-get update
 $STD apt-get install -y nodejs
 msg_ok "Installed Node.js"
 
-msg_info "Installing Yarn/pnpm"
-$STD npm install -g yarn
+msg_info "Installing pnpm"
 $STD npm install -g pnpm
-msg_ok "Installed Yarn/pnpm"
+msg_ok "Installed pnpm"
 
 msg_info "Installing Jellyseerr (Patience)"
 RELEASE=$(curl -s https://api.github.com/repos/Fallenbagel/jellyseerr/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
@@ -47,7 +46,7 @@ mv jellyseerr-${RELEASE:1} /opt/jellyseerr
 rm -R ${RELEASE}.zip 
 cd /opt/jellyseerr
 $STD pnpm install
-$STD yarn build
+$STD pnpm build
 mkdir -p /etc/jellyseerr/
 cat <<EOF >/etc/jellyseerr/jellyseerr.conf
 PORT=5055
@@ -68,7 +67,7 @@ EnvironmentFile=/etc/jellyseerr/jellyseerr.conf
 Environment=NODE_ENV=production
 Type=exec
 WorkingDirectory=/opt/jellyseerr
-ExecStart=/usr/bin/yarn start
+ExecStart=/usr/bin/pnpm start
 
 [Install]
 WantedBy=multi-user.target
