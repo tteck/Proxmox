@@ -92,6 +92,7 @@ ExecStart=/usr/bin/node dist/index.js
 [Install]
 WantedBy=multi-user.target
 EOF
+systemctl daemon-reload
 systemctl start jellyseerr
 msg_ok "Updated $APP"
 exit
