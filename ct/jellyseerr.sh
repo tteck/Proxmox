@@ -64,14 +64,13 @@ else
 fi
 msg_info "Updating $APP"
 cd /opt/jellyseerr
-output=$(git pull --no-rebase)
+output=$(git pull --no-rebase &>/dev/null)
 if echo "$output" | grep -q "Already up to date."
 then
   msg_ok "$APP is already up to date."
   exit
 fi
 systemctl stop jellyseerr
-git pull --no-rebase &>/dev/null
 export CYPRESS_INSTALL_BINARY=0 
 pnpm install --frozen-lockfile &>/dev/null
 export NODE_OPTIONS="--max-old-space-size=3072"
