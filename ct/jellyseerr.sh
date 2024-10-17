@@ -63,16 +63,15 @@ else
     msg_ok "pnpm is already installed."
 fi
 msg_info "Updating $APP"
-systemctl stop jellyseerr
 cd /opt/jellyseerr
-output=$(git pull)
-git pull &>/dev/null
+output=$(git pull --no-rebase)
 if echo "$output" | grep -q "Already up to date."
 then
   msg_ok "$APP is already up to date."
-  systemctl start jellyseerr
   exit
 fi
+systemctl stop jellyseerr
+git pull --no-rebase &>/dev/null
 export CYPRESS_INSTALL_BINARY=0 
 pnpm install --frozen-lockfile &>/dev/null
 export NODE_OPTIONS="--max-old-space-size=3072"
