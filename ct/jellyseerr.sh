@@ -55,6 +55,10 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/jellyseerr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
+  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
+  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
+fi
 whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your Jellyseerr LXC to 4vcpu and 4096RAM for the build process before continuing" 10 75
 if ! command -v pnpm &> /dev/null; then
     msg_error "pnpm not found. Installing..."
