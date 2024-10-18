@@ -30,14 +30,10 @@ msg_ok "Set up Elastic Repository"
 msg_info "Installing Kibana"
 $STD apt-get update
 $STD apt-get install -y kibana
-
 echo 'export PATH=/usr/share/kibana/bin:$PATH' >>~/.bashrc
 export PATH=/usr/share/kibana/bin:$PATH
-msg_ok "Installed Kibana"
-
-msg_info "Configuring hostname"
 sed -i -E "s/#server.host: \"localhost\"/server.host: \"0.0.0.0\"/" /etc/kibana/kibana.yml
-msg_ok "Configured hostname"
+msg_ok "Installed Kibana"
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/Kibana.service
