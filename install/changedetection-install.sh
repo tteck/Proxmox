@@ -76,7 +76,9 @@ mkdir /opt/browserless
 $STD python3 -m pip install playwright
 $STD git clone https://github.com/browserless/chrome /opt/browserless
 $STD npm install --prefix /opt/browserless
+$STD /opt/browserless/node_modules/playwright-core/cli.js install --with-deps chrome chromium firefox webkit
 $STD npm run build --prefix /opt/browserless
+$STD npm run build:function --prefix /opt/browserless
 $STD npm prune production --prefix /opt/browserless
 msg_ok "Installed Browserless & Playwright"
 
@@ -124,7 +126,7 @@ Wants=browserless.service
 Type=simple
 WorkingDirectory=/opt/changedetection
 Environment=WEBDRIVER_URL=http://127.0.0.1:4444/wd/hub
-Environment=PLAYWRIGHT_DRIVER_URL=ws://browserless-chrome:3000/chrome?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
+Environment=PLAYWRIGHT_DRIVER_URL=ws://localhost:3000/chrome?launch={"defaultViewport":{"height":720,"width":1280},"headless":false,"stealth":true}&blockAds=true
 ExecStart=changedetection.io -d /opt/changedetection -p 5000
 [Install]
 WantedBy=multi-user.target
@@ -135,14 +137,6 @@ cat <<EOF >/etc/systemd/system/browserless.service
 Description=browserless service
 After=network.target
 [Service]
-Environment=APP_DIR=/opt/browserless
-Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/browserless
-Environment=CONNECTION_TIMEOUT=60000
-Environment=HOST=127.0.0.1
-Environment=LANG="C.UTF-8"
-Environment=NODE_ENV=production
-Environment=PORT=3000
-Environment=WORKSPACE_DIR=/opt/browserless/workspace
 WorkingDirectory=/opt/browserless
 ExecStart=/opt/browserless/scripts/start.sh
 SyslogIdentifier=browserless
