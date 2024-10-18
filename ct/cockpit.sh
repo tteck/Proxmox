@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
-# Author: havardthom
+# Author: tteck
+# Co-Author: havardthom
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"     
-   ______           __         _ __ 
+   ______           __         _ __
   / ____/___  _____/ /______  (_) /_
  / /   / __ \/ ___/ //_/ __ \/ / __/
-/ /___/ /_/ / /__/ ,< / /_/ / / /_  
-\____/\____/\___/_/|_/ .___/_/\__/  
-                    /_/             
+/ /___/ /_/ / /__/ ,< / /_/ / / /_
+\____/\____/\___/_/|_/ .___/_/\__/
+                    /_/
 EOF
 }
 header_info
