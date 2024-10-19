@@ -102,7 +102,7 @@ if [ "$UPD" == "3" ]; then
   curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash &>/dev/null
   filebrowser config init -a '0.0.0.0' &>/dev/null
   filebrowser config set -a '0.0.0.0' &>/dev/null
-  filebrowser users add admin changeme --perm.admin &>/dev/null
+  filebrowser users add admin helper-scripts.com --perm.admin &>/dev/null
   msg_ok "Installed FileBrowser"
 
   msg_info "Creating Service"
@@ -122,7 +122,7 @@ if [ "$UPD" == "3" ]; then
 
     msg_ok "Completed Successfully!\n"
     echo -e "FileBrowser should be reachable by going to the following URL.
-         ${BL}http://$IP:8080${CL}   admin|changeme\n"
+         ${BL}http://$IP:8080${CL}   admin|helper-scripts.com\n"
   exit
 fi
 if [ "$UPD" == "4" ]; then

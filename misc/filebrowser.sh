@@ -78,7 +78,7 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 else
   filebrowser config init -a '0.0.0.0' &>/dev/null
   filebrowser config set -a '0.0.0.0' &>/dev/null
-  filebrowser users add admin changeme --perm.admin &>/dev/null
+  filebrowser users add admin helper-scripts.com --perm.admin &>/dev/null
 fi
 msg_ok "Installed ${APP} on $hostname"
 
