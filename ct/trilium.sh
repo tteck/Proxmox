@@ -55,21 +55,21 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/trilium ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-RELEASE=$(curl -s https://api.github.com/repos/TriliumNext/Notes/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
+RELEASE=$(curl -s https://api.github.com/repos/TriliumNext/Notes/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
     
 msg_info "Stopping ${APP}"
 systemctl stop trilium.service
 sleep 1
 msg_ok "Stopped ${APP}"
 
-msg_info "Updating to v${RELEASE}"
-wget -q https://github.com/TriliumNext/Notes/releases/download/v$RELEASE/trilium-linux-x64-server-$RELEASE.tar.xz
-tar -xvf trilium-linux-x64-server-$RELEASE.tar.xz &>/dev/null
+msg_info "Updating to ${RELEASE}"
+wget -q https://github.com/TriliumNext/Notes/releases/download/${RELEASE}/TriliumNextNotes-${RELEASE}-server-linux-x64.tar.xz
+tar -xf TriliumNextNotes-${RELEASE}-server-linux-x64.tar.xz
 cp -r trilium-linux-x64-server/* /opt/trilium/
-msg_ok "Updated to v${RELEASE}"
+msg_ok "Updated to ${RELEASE}"
 
 msg_info "Cleaning up"
-rm -rf trilium-linux-x64-server-$RELEASE.tar.xz trilium-linux-x64-server
+rm -rf TriliumNextNotes-${RELEASE}-server-linux-x64.tar.xz trilium-linux-x64-server
 msg_ok "Cleaned"
 
 msg_info "Starting ${APP}"
