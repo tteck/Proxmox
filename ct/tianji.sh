@@ -55,32 +55,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/tianji ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
-  read -r -p "Warning: Storage is dangerously low, continue anyway? <y/N> " prompt
-  [[ ${prompt,,} =~ ^(y|yes)$ ]] || exit
-fi
-RELEASE=$(curl -s https://api.github.com/repos/msgbyte/tianji/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
-if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
-
-  msg_info "Stopping ${APP} Service"
-  systemctl stop tianji
-  msg_ok "Stopped ${APP} Service"
-
-  msg_info "Updating ${APP} to ${RELEASE}"
-  cd /opt/tianji
-  git checkout -f -q v${RELEASE}
-  cd src/server
-  pnpm db:migrate:apply >/dev/null 2>&1
-  echo "${RELEASE}" >/opt/${APP}_version.txt
-  msg_ok "Updated ${APP} to ${RELEASE}"
-
-  msg_info "Starting ${APP}"
-  systemctl start tianji
-  msg_ok "Started ${APP}"
-  msg_ok "Updated Successfully"
-else
-  msg_ok "No update required.  ${APP} is already at ${RELEASE}."
-fi
+msg_error "There is currently no update path available."
 exit
 }
 
