@@ -56,7 +56,7 @@ function update_script() {
 header_info
 if [[ ! -d /opt/pingvin-share ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Stopping Pingvin Share"
-pm2 stop pingvin-share-backend pingvin-share-frontend &>/dev/null
+systemctl stop pm2-root.service
 msg_ok "Stopped Pingvin Share"
 
 msg_info "Updating Pingvin Share"
@@ -72,7 +72,7 @@ npm run build &>/dev/null
 msg_ok "Updated Pingvin Share"
 
 msg_info "Starting Pingvin Share"
-pm2 start pingvin-share-backend pingvin-share-frontend &>/dev/null
+systemctl start pm2-root.service
 msg_ok "Started Pingvin Share"
 
 msg_ok "Updated Successfully"
