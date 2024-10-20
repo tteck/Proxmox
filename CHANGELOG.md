@@ -19,6 +19,8 @@ All LXC instances created using this repository come pre-installed with Midnight
 
 - **Cockpit LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/cockpit-install.sh)
   - NEW Script
+- **Neo4j LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/neo4j-install.sh)
+  - NEW Script
 
 ## 2024-10-18
 
