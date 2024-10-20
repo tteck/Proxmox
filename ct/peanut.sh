@@ -56,6 +56,7 @@ function default_settings() {
 function update_script() {
   header_info
   if [[ ! -f /etc/systemd/system/peanut.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+  whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your ${APP} LXC to ${var_cpu}vCPU and ${var_ram}RAM for the build process before continuing" 10 75
   RELEASE=$(curl -sL https://api.github.com/repos/Brandawg93/PeaNUT/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
   if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
     msg_info "Updating $APP to ${RELEASE}"
