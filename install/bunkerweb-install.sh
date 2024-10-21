@@ -26,7 +26,7 @@ msg_info "Installing Nginx"
 wget -qO- https://nginx.org/keys/nginx_signing.key | gpg --dearmor >/usr/share/keyrings/nginx-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian $(lsb_release -cs) nginx" >/etc/apt/sources.list.d/nginx.list
 $STD apt-get update
-$STD apt-get install -y nginx=1.26.1*
+$STD apt-get install -y nginx=1.26.2*
 msg_ok "Installed Nginx"
 
 RELEASE=$(curl -s https://api.github.com/repos/bunkerity/bunkerweb/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
