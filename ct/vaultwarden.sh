@@ -57,7 +57,7 @@ function update_script() {
     msg_error "No ${APP} Installation Found!"
     exit
   fi
-  whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your ${APP} LXC to ${var_cpu}vCPU and ${var_ram}RAM for the build process before continuing" 10 75
+ 
   VAULT=$(curl -s https://api.github.com/repos/dani-garcia/vaultwarden/releases/latest |
     grep "tag_name" |
     awk '{print substr($2, 2, length($2)-3) }')
@@ -73,7 +73,7 @@ function update_script() {
 
   header_info
   if [ "$UPD" == "1" ]; then
-    echo -e "\n ⚠️  Ensure you set 4vCPU & 4096MiB RAM minimum!!! \n"
+    whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your ${APP} LXC to ${var_cpu}vCPU and ${var_ram}RAM for the build process before continuing" 10 75
     msg_info "Stopping Vaultwarden"
     systemctl stop vaultwarden.service
     msg_ok "Stopped Vaultwarden"
