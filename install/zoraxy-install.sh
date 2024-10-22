@@ -20,7 +20,7 @@ $STD apt-get install -y mc
 $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
-RELEASE="$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases | ggrep -oP '"tag_name":\s*"\K[\d.]+?(?=")' | sort -V | tail -n1)"
+RELEASE="$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases | grep -oP '"tag_name":\s*"\K[\d.]+?(?=")' | sort -V | tail -n1)"
 msg_info "Installing Zoraxy v${RELEASE}"
 wget -q "https://github.com/tobychui/zoraxy/releases/download/${RELEASE}/zoraxy_linux_amd64"
 install zoraxy_linux_amd64 /usr/bin/zoraxy
