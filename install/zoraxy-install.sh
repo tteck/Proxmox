@@ -20,20 +20,11 @@ $STD apt-get install -y mc
 $STD apt-get install -y git
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Golang"
-set +o pipefail
-RELEASE=$(curl -s https://go.dev/dl/ | grep -o "go.*\linux-amd64.tar.gz" | head -n 1)
-wget -q https://golang.org/dl/$RELEASE
-$STD tar -xzf $RELEASE -C /usr/local
-$STD ln -s /usr/local/go/bin/go /usr/local/bin/go
-set -o pipefail
-msg_ok "Installed Golang"
-
-msg_info "Installing Zoraxy (Patience)"
-$STD git clone https://github.com/tobychui/zoraxy /opt/zoraxy
-cd /opt/zoraxy/src
-$STD go mod tidy
-$STD go build
+RELEASE="$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases | ggrep -oP '"tag_name":\s*"\K[\d.]+?(?=")' | sort -V | tail -n1)"
+msg_info "Installing Zoraxy v${RELEASE}"
+wget -q "https://github.com/tobychui/zoraxy/releases/download/${RELEASE}/zoraxy_linux_amd64"
+install zoraxy_linux_amd64 /usr/bin/zoraxy
+echo "${RELEASE}" > "/opt/${APPLICATION}_version.txt"
 msg_ok "Installed Zoraxy"
 
 msg_info "Creating Service"
@@ -43,8 +34,7 @@ Description=General purpose request proxy and forwarding tool
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/opt/zoraxy/src/./zoraxy
-WorkingDirectory=/opt/zoraxy/src/
+ExecStart=/usr/bin/zoraxy
 Restart=always
 
 [Install]
@@ -57,7 +47,6 @@ motd_ssh
 customize
 
 msg_info "Cleaning up"
-rm -rf $RELEASE
 $STD apt-get -y autoremove
 $STD apt-get -y autoclean
 msg_ok "Cleaned"
