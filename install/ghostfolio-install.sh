@@ -29,10 +29,10 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=ghostfolio-db
 POSTGRES_USER='postgres'
-POSTGRES_PASSWORD="$(base64 --wrap=0 /dev/random | head -c 32 | tr -dc 'a-zA-Z0-9')"
-ACCESS_TOKEN_SALT="$(base64 --wrap=0 /dev/random | head -c 16 | tr -dc 'a-zA-Z0-9')"
+POSTGRES_PASSWORD="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
+ACCESS_TOKEN_SALT="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?connect_timeout=300&sslmode=prefer"
-JWT_SECRET_KEY="$(base64 --wrap=0 /dev/random | head -c 16 | tr -dc 'a-zA-Z0-9')"
+JWT_SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 
 $STD apt-get install -y postgresql-15
 
@@ -62,7 +62,7 @@ msg_ok "Set up postgresql"
 msg_info "Setting up redis"
 REDIS_HOST=localhost
 REDIS_PORT=6379
-REDIS_PASSWORD="$(base64 --wrap=0 /dev/random | head -c 32 | tr -dc 'a-zA-Z0-9')"
+REDIS_PASSWORD="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 
 $STD apt-get install -y redis
 
