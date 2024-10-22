@@ -95,11 +95,10 @@ $STD apt-get install -y --no-install-suggests \
   git \
   make \
   openssl \
-  python3 \
-  jq
+  python3
 
 if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
-  $STD GHOSTFOLIO_VERSION=$(curl -s https://api.github.com/repos/ghostfolio/ghostfolio/releases/latest | jq -r '.tag_name')
+  GHOSTFOLIO_VERSION=$(curl -sL https://api.github.com/repos/ghostfolio/ghostfolio/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 fi
 
 # Get the realease
@@ -185,8 +184,8 @@ cat <<EOF >/etc/systemd/system/ghostfolio.service
 [Unit]
 Description=ghostfolio
 [Service]
-After=postgresql.servicei redis.service
-Require=postgresql.servicei redis.service
+After=postgresql.service redis.service
+Require=postgresql.service redis.service
 # Start Service
 ExecStart=/opt/ghostfolio/start.sh
 WorkingDirectory=/opt/ghostfolio/api/
