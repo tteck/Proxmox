@@ -103,7 +103,7 @@ $STD apt-get install -y --no-install-suggests \
   python3
  
 # Determine the latest version if needed
-if [[ $GHOSTFOLIO_VERSION == 'latest']]; then
+if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
   $STD version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ghostfolio/ghostfolio/releases/latest)
   $STD GHOSTFOLIO_VERSION=${version##*/}
 fi
