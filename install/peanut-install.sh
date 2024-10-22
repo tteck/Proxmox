@@ -45,14 +45,14 @@ $STD pnpm i
 $STD pnpm run build
 cp -r .next/static .next/standalone/.next/
 mkdir -p /opt/peanut/.next/standalone/config
-cat <<EOF >/opt/peanut/.next/standalone/config/settings.yml
+mkdir -p /etc/peanut/
+cat <<EOF >/etc/peanut/settings.yml
 WEB_HOST: 0.0.0.0
 WEB_PORT: 3000
 NUT_HOST: 0.0.0.0
 NUT_PORT: 3493
 EOF
-mkdir -p /etc/peanut
-ln -sf /opt/peanut/.next/standalone/config/settings.yml /etc/peanut/settings.yml
+ln -sf /etc/peanut/settings.yml /opt/peanut/.next/standalone/config/settings.yml
 msg_ok "Installed Peanut"
 
 msg_info "Creating Service"
