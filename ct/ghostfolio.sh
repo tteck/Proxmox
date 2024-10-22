@@ -29,6 +29,7 @@ variables
 color
 catch_errors
 
+# Install prequires at least 2GiB of RAM and 6GiB of disk space, both are lower to actually run the app
 function default_settings() {
   CT_TYPE="1"
   PW=""
@@ -50,13 +51,12 @@ function default_settings() {
   VLAN=""
   SSH="no"
   VERB="no"
-  INSTALL_ALL="yes"
   echo_default
 }
 
 function update_script() {
 header_info
-if [[ ! -d /etc/neo4j ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -d /opt/ghostfolio ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating OS"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
