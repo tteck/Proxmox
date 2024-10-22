@@ -15,12 +15,12 @@ network_check
 update_os
 
 msg_info "Installing Dependencies"
+$STD apt-get update
 $STD apt-get install -y \
-    curl \ 
+    curl \
     lsb-release \
     gpg
 msg_ok "Installed Dependencies"
-
 
 # POSTGRES =================================
 msg_info "Setting up postgresql"
