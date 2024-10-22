@@ -83,30 +83,24 @@ echo -e "ghostery Redis Password: \e[32m$REDIS_PASSWORD\e[0m" >>~/ghostery.creds
 
 # GHOSTFOLIO  =================================
 ## Setup Vars
+## default node to 20 (current required version, but determine from nvmrc later)
 NODE_VERSION=20
-GHOSTFOLIO_VERSION='2.117.0'
+## read this from the project in a way that doesnt break
+GHOSTFOLIO_VERSION='latest'
 
 cd /opt/
 
-# Set up nodejs 20 (project requires this version)
-$STD curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x -o nodesource_setup.sh
-$STD bash nodesource_setup.sh
-rm nodesource_setup.sh
-$STD apt-get update
-
 $STD apt-get install -y --no-install-suggests \
-  nodejs \
   g++ \
   git \
   make \
   openssl \
-  python3
- 
-# Determine the latest version if needed - find another way, this resolves correctly but throws: -bash: line 107: version=https://github.com/ghostfolio/ghostfolio/releases/tag/2.117.0: No such file or directory
-# if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
-#   $STD version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ghostfolio/ghostfolio/releases/latest)
-#   $STD GHOSTFOLIO_VERSION=${version##*/}
-# fi
+  python3 \
+  jq
+
+if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
+  $STD GHOSTFOLIO_VERSION=$(curl -s https://api.github.com/repos/ghostfolio/ghostfolio/releases/latest | jq -r '.tag_name')
+fi
 
 # Get the realease
 $STD curl -Ls -o ghostfolio-$GHOSTFOLIO_VERSION.tgz https://github.com/ghostfolio/ghostfolio/archive/refs/tags/$GHOSTFOLIO_VERSION.tar.gz
@@ -114,6 +108,13 @@ $STD tar xzf ghostfolio-$GHOSTFOLIO_VERSION.tgz
 $STD rm ghostfolio-$GHOSTFOLIO_VERSION.tgz
 
 cd /opt/ghostfolio-$GHOSTFOLIO_VERSION
+
+test -f .nvmrc && NODE_VERSION=$(sed 's/^v\([0-9]*\)[.]*.*/\1/g' .nvmrc) # get first digits after an v, excluding potential .minor.patch versions
+$STD curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x -o nodesource_setup.sh
+$STD bash nodesource_setup.sh
+rm nodesource_setup.sh
+$STD apt-get update
+$STD apt-get install -y --no-install-suggests nodejs
 
 # Build the project
 $STD npm install
@@ -127,7 +128,7 @@ mv /opt/ghostfolio-$GHOSTFOLIO_VERSION/package-lock.json /opt/ghostfolio-$GHOSTF
 
 cd /opt/ghostfolio-$GHOSTFOLIO_VERSION/dist/apps/api/
 $STD npm install
-mv -r /opt/ghostfolio-$GHOSTFOLIO_VERSION/prisma .
+mv /opt/ghostfolio-$GHOSTFOLIO_VERSION/prisma .
 
 # Overwrite the generated package.json with the original one to ensure having
 # all the scripts
