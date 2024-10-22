@@ -44,6 +44,15 @@ $STD npm install -g pnpm
 $STD pnpm i
 $STD pnpm run build
 cp -r .next/static .next/standalone/.next/
+mkdir -p /opt/peanut/.next/standalone/config
+cat <<EOF >/opt/peanut/.next/standalone/config/settings.yml
+WEB_HOST: 0.0.0.0
+WEB_PORT: 3000
+NUT_HOST: 0.0.0.0
+NUT_PORT: 3493
+EOF
+mkdir -p /etc/peanut
+ln -sf /opt/peanut/.next/standalone/config/settings.yml /etc/peanut/settings.yml
 msg_ok "Installed Peanut"
 
 msg_info "Creating Service"
@@ -57,10 +66,10 @@ Restart=always
 RestartSec=5
 Type=simple
 Environment="NODE_ENV=production"
-Environment="NUT_HOST=localhost"
-Environment="NUT_PORT=3493"
-Environment="WEB_HOST=0.0.0.0"
-Environment="WEB_PORT=3000"
+#Environment="NUT_HOST=localhost"
+#Environment="NUT_PORT=3493"
+#Environment="WEB_HOST=0.0.0.0"
+#Environment="WEB_PORT=3000"
 WorkingDirectory=/opt/peanut
 ExecStart=node /opt/peanut/.next/standalone/server.js
 TimeoutStopSec=30
