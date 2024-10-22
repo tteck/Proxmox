@@ -84,7 +84,7 @@ echo -e "ghostery Redis Password: \e[32m$REDIS_PASSWORD\e[0m" >>~/ghostery.creds
 # GHOSTFOLIO  =================================
 ## Setup Vars
 NODE_VERSION=20
-GHOSTFOLIO_VERSION='latest'
+GHOSTFOLIO_VERSION='2.117.0'
 
 cd /opt/
 
@@ -102,11 +102,11 @@ $STD apt-get install -y --no-install-suggests \
   openssl \
   python3
  
-# Determine the latest version if needed
-if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
-  $STD version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ghostfolio/ghostfolio/releases/latest)
-  $STD GHOSTFOLIO_VERSION=${version##*/}
-fi
+# Determine the latest version if needed - find another way, this resolves correctly but throws: -bash: line 107: version=https://github.com/ghostfolio/ghostfolio/releases/tag/2.117.0: No such file or directory
+# if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
+#   $STD version=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/ghostfolio/ghostfolio/releases/latest)
+#   $STD GHOSTFOLIO_VERSION=${version##*/}
+# fi
 
 # Get the realease
 $STD curl -Ls -o ghostfolio-$GHOSTFOLIO_VERSION.tgz https://github.com/ghostfolio/ghostfolio/archive/refs/tags/$GHOSTFOLIO_VERSION.tar.gz
