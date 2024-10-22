@@ -68,6 +68,7 @@ function update_script() {
     pnpm i &>/dev/null
     pnpm run build &>/dev/null
     cp -r .next/static .next/standalone/.next/
+    mkdir -p /opt/peanut/.next/standalone/config
     ln -sf /etc/peanut/settings.yml /opt/peanut/.next/standalone/config/settings.yml
     systemctl start peanut
     echo "${RELEASE}" >/opt/${APP}_version.txt
