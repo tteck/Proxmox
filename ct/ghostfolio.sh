@@ -29,7 +29,7 @@ variables
 color
 catch_errors
 
-# Install prequires at least 2GiB of RAM and 6GiB of disk space, both are lower to actually run the app
+# Install requires at least 2GiB of RAM and 6GiB of disk space, both requirements are lower to actually run the app
 function default_settings() {
   CT_TYPE="1"
   PW=""
