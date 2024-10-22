@@ -73,7 +73,7 @@ function update_script() {
 
   header_info
   if [ "$UPD" == "1" ]; then
-    echo -e "\n ⚠️  Ensure you set 4vCPU & 4096MiB RAM minimum!!! \n"
+    echo -e "\n ⚠️  Ensure you set 4vCPU & 5120MiB RAM minimum!!! \n"
     msg_info "Stopping Vaultwarden"
     systemctl stop vaultwarden.service
     msg_ok "Stopped Vaultwarden"
