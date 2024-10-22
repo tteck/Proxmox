@@ -44,6 +44,7 @@ $STD npm install -g pnpm
 $STD pnpm i
 $STD pnpm run build
 cp -r .next/static .next/standalone/.next/
+mkdir -p /opt/peanut/.next/standalone/config
 cat <<EOF >/opt/peanut/.next/standalone/config/settings.yml
 WEB_HOST: 0.0.0.0
 WEB_PORT: 3000
