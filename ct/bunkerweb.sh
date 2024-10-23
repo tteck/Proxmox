@@ -66,7 +66,7 @@ Pin: version ${RELEASE}
 Pin-Priority: 1001
 EOF
   apt-get update
-  apt-get install -y nginx=1.26.1*
+  apt-get install -y nginx=1.26.2*
   apt-get install -y bunkerweb=${RELEASE}
   echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated ${APP} to ${RELEASE}"
