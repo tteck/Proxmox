@@ -65,14 +65,14 @@ echo -e "Ghostfolio Database Password: \e[32m$POSTGRES_PASSWORD\e[0m" >>~/ghostf
 echo -e "Ghostfolio Database Name: \e[32m$POSTGRES_DB\e[0m" >>~/ghostfolio.creds
 msg_ok "Installed Postgresql"
 
-msg_info "Installed Redis"
+msg_info "Installing Redis"
 REDIS_HOST=localhost
 REDIS_PORT=6379
 REDIS_PASSWORD="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 
 $STD redis-cli CONFIG SET requirepass "$REDIS_PASSWORD"
 $STD redis-cli  -a "$REDIS_PASSWORD" CONFIG REWRITE
-$STD systemctl restart Redis
+$STD systemctl restart redis
 echo "" >>~/ghostfolio.creds
 echo "Ghostfolio Redis Credentials" >>~/ghostfolio.creds
 echo "" >>~/ghostfolio.creds
