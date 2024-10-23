@@ -14,21 +14,33 @@ setting_up_container
 network_check
 update_os
 
-## Following Ghostfolio's Dockerfile and docker-compose for versions/steps, but installing all postgres/redis on the same host
-#   - https://github.com/ghostfolio/ghostfolio/blob/main/Dockerfile
-#   - https://github.com/ghostfolio/ghostfolio/blob/main/docker/docker-compose.yml
-
 msg_info "Installing Dependencies"
 $STD apt-get update
 $STD apt-get install -y \
     curl \
     lsb-release \
-    gpg
+    gpg \
+    g++ \
+    git \
+    make \
+    openssl \
+    python3 \
+    postgresql-15 \
+    redis
 msg_ok "Installed Dependencies"
 
-# POSTGRES =================================
-msg_info "Setting up Postgresql"
+msg_info "Setting up Node.js Repository"
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" >/etc/apt/sources.list.d/nodesource.list
+msg_ok "Set up Node.js Repository"
 
+msg_info "Installing Node.js"
+$STD apt-get update
+$STD apt-get install -y --no-install-suggests nodejs
+msg_info "Installed Node.js"
+
+msg_info "Installing Postgresql"
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=ghostfolio-db
@@ -38,9 +50,6 @@ ACCESS_TOKEN_SALT="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?connect_timeout=300&sslmode=prefer"
 JWT_SECRET_KEY="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 
-$STD apt-get install -y postgresql-15
-
-# Setup postgres
 $STD su postgres <<EOSU
 psql -c "create database \"$POSTGRES_DB\";"
 psql -c "ALTER DATABASE \"$POSTGRES_DB\" OWNER TO \"$POSTGRES_USER\";"
@@ -48,111 +57,59 @@ psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO \"$POSTGRES_USER
 psql -c "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD '$POSTGRES_PASSWORD';"
 EOSU
 
-# Make sure postgres is working/reachable
-$STD pg_isready -d "$POSTGRES_DB" -U "$POSTGRES_USER"
-$STD psql -d "$DATABASE_URL" -c "select now()"
-
-# Store creds
 echo "" >~/ghostfolio.creds
 echo "Ghostfolio Database Credentials" >>~/ghostfolio.creds
 echo "" >>~/ghostfolio.creds
 echo -e "Ghostfolio Database User: \e[32m$POSTGRES_USER\e[0m" >>~/ghostfolio.creds
 echo -e "Ghostfolio Database Password: \e[32m$POSTGRES_PASSWORD\e[0m" >>~/ghostfolio.creds
 echo -e "Ghostfolio Database Name: \e[32m$POSTGRES_DB\e[0m" >>~/ghostfolio.creds
-msg_ok "Set up Postgresql"
-#-- END POSTGRES
+msg_ok "Installed Postgresql"
 
-# REDIS CACHE =================================
-msg_info "Setting up Redis"
+msg_info "Installed Redis"
 REDIS_HOST=localhost
 REDIS_PORT=6379
 REDIS_PASSWORD="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32)"
 
-$STD apt-get install -y redis
-
-## Configure Redis
 $STD redis-cli CONFIG SET requirepass "$REDIS_PASSWORD"
 $STD redis-cli  -a "$REDIS_PASSWORD" CONFIG REWRITE
-$STD systemctl restart redis
-
-# Test Redis with password auth
-$STD redis-cli -a "$REDIS_PASSWORD" ping
-
+$STD systemctl restart Redis
 echo "" >>~/ghostfolio.creds
 echo "Ghostfolio Redis Credentials" >>~/ghostfolio.creds
 echo "" >>~/ghostfolio.creds
 echo -e "Ghostfolio Redis Password: \e[32m$REDIS_PASSWORD\e[0m" >>~/ghostfolio.creds
+msg_ok "Installed Redis"
 
-msg_ok "Set up Redis"
-#-- END REDIS CACHE
-
-# GHOSTFOLIO  =================================
-msg_info "Set up Ghostfolio"
-## Setup Vars
-## default node to 20 (current required version, but determine from nvmrc later)
-NODE_VERSION=20
-GHOSTFOLIO_VERSION='latest' # tested with 2.117.0
+msg_info "Installing Ghostfolio (Patience)"
+RELEASE=$(curl -sL https://api.github.com/repos/ghostfolio/ghostfolio/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+echo "${RELEASE}" >/opt/${APPLICATION}_version.txt
 
 cd /opt/
+$STD curl -Ls -o ghostfolio-$RELEASE.tgz https://github.com/ghostfolio/ghostfolio/archive/refs/tags/$RELEASE.tar.gz
+$STD tar xzf ghostfolio-$RELEASE.tgz
+$STD rm ghostfolio-$RELEASE.tgz
 
-$STD apt-get install -y --no-install-suggests \
-  g++ \
-  git \
-  make \
-  openssl \
-  python3
+cp /opt/ghostfolio-$RELEASE/package.json /opt/package.json
+cp /opt/ghostfolio-$RELEASE/package-lock.json /opt/package-lock.json
 
-if [[ "$GHOSTFOLIO_VERSION" == "latest" ]]; then
-  GHOSTFOLIO_VERSION=$(curl -sL https://api.github.com/repos/ghostfolio/ghostfolio/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-fi
-
-# Get the realease
-$STD curl -Ls -o ghostfolio-$GHOSTFOLIO_VERSION.tgz https://github.com/ghostfolio/ghostfolio/archive/refs/tags/$GHOSTFOLIO_VERSION.tar.gz
-$STD tar xzf ghostfolio-$GHOSTFOLIO_VERSION.tgz
-$STD rm ghostfolio-$GHOSTFOLIO_VERSION.tgz
-
-cd /opt/ghostfolio-$GHOSTFOLIO_VERSION
-
-# Stash these so we have clean versions later
-cp /opt/ghostfolio-$GHOSTFOLIO_VERSION/package.json /opt/package.json.bak
-cp /opt/ghostfolio-$GHOSTFOLIO_VERSION/package-lock.json /opt/package-lock.json.bak
-
-# Get node version and install node
-test -f .nvmrc && NODE_VERSION=$(sed 's/^v\([0-9]*\)[.]*.*/\1/g' .nvmrc) # get first digits after an v, excluding potential .minor.patch versions
-$STD curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x -o nodesource_setup.sh
-$STD bash nodesource_setup.sh
-rm nodesource_setup.sh
-$STD apt-get update
-$STD apt-get install -y --no-install-suggests nodejs
-
-# Build the project
+cd /opt/ghostfolio-$RELEASE
 $STD npm install
 $STD npm run build:production
+mv /opt/package-lock.json /opt/ghostfolio-$RELEASE/package-lock.json
 
-# package.json was generated by the build process, however the original package-lock.json needs to be used to ensure the same versions
-mv /opt/package-lock.json.bak /opt/ghostfolio-$GHOSTFOLIO_VERSION/package-lock.json
-
-cd /opt/ghostfolio-$GHOSTFOLIO_VERSION/dist/apps/api/
+cd /opt/ghostfolio-$RELEASE/dist/apps/api/
 $STD npm install
-cp -r /opt/ghostfolio-$GHOSTFOLIO_VERSION/prisma .
-
-# Overwrite the generated package.json with the original one to ensure having all the scripts
-mv /opt/package.json.bak /opt/ghostfolio-$GHOSTFOLIO_VERSION/dist/apps/api/package.json
+cp -r /opt/ghostfolio-$RELEASE/prisma .
+mv /opt/package.json /opt/ghostfolio-$RELEASE/dist/apps/api/package.json
 $STD npm run database:generate-typings
 
-# Move the built project to /opt/ghostfolio
 cd /opt
-mv /opt/ghostfolio-$GHOSTFOLIO_VERSION/dist/apps /opt/ghostfolio
-mv /opt/ghostfolio-$GHOSTFOLIO_VERSION/docker/entrypoint.sh /opt/ghostfolio/
+mv /opt/ghostfolio-$RELEASE/dist/apps /opt/ghostfolio
+mv /opt/ghostfolio-$RELEASE/docker/entrypoint.sh /opt/ghostfolio/
 
-rm -rf /opt/ghostfolio-$GHOSTFOLIO_VERSION
-msg_ok "Set up Ghostfolio"
-# --- END GHOSTFOLIO
+rm -rf /opt/ghostfolio-$RELEASE
+msg_ok "Installed Ghostfolio"
 
-# SERVICE  =================================
-msg_info "Creating Startup Scripts"
-# Create env file
-msg_info "Creating Environment File"
+msg_info "Creating Service"
 cat <<EOF >/opt/ghostfolio/api/.env
 # CACHE
 REDIS_HOST=$REDIS_HOST
@@ -170,7 +127,6 @@ DATABASE_URL="$DATABASE_URL"
 JWT_SECRET_KEY=$JWT_SECRET_KEY
 EOF
 
-# Create startup script
 cat <<EOF >/opt/ghostfolio/start.sh
 #!/bin/bash
 # Source the environment vars and export them otherwise it wont get them properly
@@ -184,8 +140,7 @@ EOF
 
 chmod +x /opt/ghostfolio/start.sh
 
-msg_info "Creating Systemd Service Definition"
-# Create Systemd Service
+msg_info "Setup Service"
 cat <<EOF >/etc/systemd/system/ghostfolio.service
 [Unit]
 Description=ghostfolio
@@ -211,11 +166,14 @@ SyslogIdentifier=ghostfolio
 WantedBy=multi-user.target
 EOF
 
-# Make the service run on container startup
 systemctl enable ghostfolio
 systemctl start ghostfolio
-msg_ok "Created Startup Scripts"
-# -- END SERVICE
+msg_ok "Created Service"
 
 motd_ssh
 customize
+
+msg_info "Cleaning up"
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
+msg_ok "Cleaned"
