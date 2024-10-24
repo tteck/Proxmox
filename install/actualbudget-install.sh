@@ -35,6 +35,13 @@ msg_ok "Installed Node.js"
 
 msg_info "Installing Actual Budget"
 $STD git clone https://github.com/actualbudget/actual-server.git /opt/actualbudget
+mkdir -p /opt/actualbudget/server-files
+chown -R root:root /opt/actualbudget/server-files
+chmod 755 /opt/actualbudget/server-files
+cat <<EOF > /opt/actualbudget/.env
+ACTUAL_UPLOAD_DIR=/opt/actualbudget/server-files
+PORT=5006
+EOF
 cd /opt/actualbudget
 $STD yarn install
 msg_ok "Installed Actual Budget"
@@ -46,9 +53,14 @@ Description=Actual Budget Service
 After=network.target
 
 [Service]
-Type=exec
+Type=simple
+User=root
+Group=root
 WorkingDirectory=/opt/actualbudget
+EnvironmentFile=/opt/actualbudget/.env
 ExecStart=/usr/bin/yarn start
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
