@@ -19,6 +19,8 @@ All LXC instances created using this repository come pre-installed with Midnight
 
 - **Wallos LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/wallos-install.sh)
   - NEW Script
+- **Open WebUI LXC** [(View Source)](https://github.com/tteck/Proxmox/blob/main/install/openwebui-install.sh)
+  - NEW Script
 
 ## 2024-10-19
 
