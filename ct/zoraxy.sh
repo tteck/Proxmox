@@ -62,7 +62,7 @@ if [[ "${RELEASE}" != "$(cat "/opt/${APP}_version.txt")" ]] || [[ ! -f "/opt/${A
   install zoraxy_linux_amd64 /usr/bin/zoraxy
   rm zoraxy_linux_amd64
   echo "${RELEASE}" > "/opt/${APP}_version.txt"
-  systemctl restart traefik.service
+  systemctl restart zoraxy.service
   msg_ok "Updated ${APP} LXC"
 else
   msg_ok "No update required. ${APP} is already at ${RELEASE}"
