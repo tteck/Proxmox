@@ -40,7 +40,8 @@ $STD apt-get install -y --no-install-recommends \
   mc
 msg_ok "Installed Dependencies"
 
-msg_info "Installing Python3 Dependencies"
+msg_info "Installing Python3 Dependencies (Patience)"
+$STD python3 -m nltk.downloader all
 $STD apt-get install -y --no-install-recommends \
   python3 \
   python3-pip \
