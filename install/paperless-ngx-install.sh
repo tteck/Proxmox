@@ -46,9 +46,7 @@ $STD apt-get install -y --no-install-recommends \
   python3-pip \
   python3-dev \
   python3-setuptools \
-  python3-wheel \
-  nltk
-  $STD python3 -m nltk.downloader all
+  python3-wheel
 msg_ok "Installed Python3 Dependencies"
 
 msg_info "Installing OCR Dependencies (Patience)"
