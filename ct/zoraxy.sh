@@ -54,14 +54,13 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -f /etc/systemd/system/zoraxy.service ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ ! -f /etc/systemd/system/zoraxy.service ]] || [[ ! -x "/opt/zoraxy" ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 RELEASE="$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases | grep -oP '"tag_name":\s*"\K[\d.]+?(?=")' | sort -V | tail -n1)"
 msg_info "Updating ${APP} LXC to ${RELEASE}"
-if [[ "${RELEASE}" != "$(cat "/opt/${APP}_version.txt")" ]] || [[ ! -f "/opt/${APP}_version.txt" ]]; then
+if [[ "${RELEASE}" != "$(/opt/zoraxy --version | cut -d' ' -f4)" ]]; then
   wget -q "https://github.com/tobychui/zoraxy/releases/download/${RELEASE}/zoraxy_linux_amd64"
-  install zoraxy_linux_amd64 /usr/bin/zoraxy
+  install zoraxy_linux_amd64 /opt/zoraxy
   rm zoraxy_linux_amd64
-  echo "${RELEASE}" > "/opt/${APP}_version.txt"
   systemctl restart zoraxy.service
   msg_ok "Updated ${APP} LXC"
 else

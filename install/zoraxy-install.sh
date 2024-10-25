@@ -22,8 +22,8 @@ msg_ok "Installed Dependencies"
 RELEASE="$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases | grep -oP '"tag_name":\s*"\K[\d.]+?(?=")' | sort -V | tail -n1)"
 msg_info "Installing Zoraxy v${RELEASE}"
 wget -q "https://github.com/tobychui/zoraxy/releases/download/${RELEASE}/zoraxy_linux_amd64"
-install zoraxy_linux_amd64 /usr/bin/zoraxy
-echo "${RELEASE}" > "/opt/${APPLICATION}_version.txt"
+install zoraxy_linux_amd64 /opt/zoraxy
+rm zoraxy_linux_amd64
 msg_ok "Installed Zoraxy"
 
 msg_info "Creating Service"
@@ -33,7 +33,7 @@ Description=General purpose request proxy and forwarding tool
 After=syslog.target network-online.target
 
 [Service]
-ExecStart=/usr/bin/zoraxy
+ExecStart=/opt/zoraxy
 Restart=always
 
 [Install]
