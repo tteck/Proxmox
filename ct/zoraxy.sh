@@ -20,7 +20,7 @@ header_info
 echo -e "Loading..."
 APP="Zoraxy"
 var_disk="6"
-var_cpu="4"
+var_cpu="2"
 var_ram="2048"
 var_os="debian"
 var_version="12"
@@ -54,30 +54,28 @@ function default_settings() {
 
 function update_script() {
 header_info
-if [[ ! -d /opt/zoraxy/src ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your ${APP} LXC to ${var_cpu}vCPU and ${var_ram}RAM for the build process before continuing" 10 75
-msg_info "Updating $APP"
-systemctl stop zoraxy
-cd /opt/zoraxy/src
-systemctl stop zoraxy
-if git pull | grep -q 'Already up to date.'; then
-  msg_ok "Already up to date. No update required."
-else
-  go mod tidy
-  go build
+if [[ ! -d /opt/zoraxy/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+  msg_info "Updating $APP to ${RELEASE}"
+  systemctl stop zoraxy
+  RELEASE=$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases/latest  | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+  wget -q "https://github.com/tobychui/zoraxy/releases/download/${RELEASE}/zoraxy_linux_amd64"
+  rm /opt/zoraxy/zoraxy
+  mv zoraxy_linux_amd64 /opt/zoraxy/zoraxy
+  chmod +x /opt/zoraxy/zoraxy
+  systemctl start zoraxy
+  echo "${RELEASE}" >/opt/${APP}_version.txt
   msg_ok "Updated $APP"
-fi
-systemctl start zoraxy
-exit
+else
+  msg_ok "No update required. ${APP} is already at ${RELEASE}"
+ fi
+ exit
 }
 
 start
 build_container
 description
 
-msg_info "Setting Container to Normal Resources"
-pct set $CTID -cores 2
-msg_ok "Set Container to Normal Resources"
 msg_ok "Completed Successfully!\n"
 echo -e "${APP} should be reachable by going to the following URL.
          ${BL}http://${IP}:8000${CL} \n"
