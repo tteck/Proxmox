@@ -55,7 +55,7 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /opt/zoraxy/ ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] ; then
+if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
   RELEASE=$(curl -s https://api.github.com/repos/tobychui/zoraxy/releases/latest  | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
   msg_info "Updating $APP to ${RELEASE}"
   systemctl stop zoraxy
