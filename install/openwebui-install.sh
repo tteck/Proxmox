@@ -51,6 +51,7 @@ ENV=prod
 ENABLE_OLLAMA_API=false
 EOF
 $STD npm install
+export NODE_OPTIONS="--max-old-space-size=4096"
 $STD npm run build
 msg_ok "Installed Open WebUI"
 
