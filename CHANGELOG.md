@@ -13,6 +13,14 @@ Exercise vigilance regarding copycat or coat-tailing sites that seek to exploit 
 > [!NOTE]
 All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-10-25
+
+### Changed
+
+- **Zoraxy LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/468a5d367ded4cf453a1507452e112ac3e234e2a)
+  - Switch built from source to a pre-compiled binary version.
+  - Breaking Change
+
 ## 2024-10-23
 
 ### Changed
