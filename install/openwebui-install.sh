@@ -49,11 +49,39 @@ cp .env.example .env
 cat <<EOF >/opt/open-webui/.env
 ENV=prod
 ENABLE_OLLAMA_API=false
+OLLAMA_BASE_URL=http://0.0.0.0:11434
 EOF
 $STD npm install
 export NODE_OPTIONS="--max-old-space-size=4096"
 $STD npm run build
 msg_ok "Installed Open WebUI"
+
+read -r -p "Would you like to add Ollama? <y/N> " prompt
+if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  msg_info "Installing Ollama"
+  curl -fsSLO https://ollama.com/download/ollama-linux-amd64.tgz
+  tar -C /usr -xzf ollama-linux-amd64.tgz
+  rm -rf ollama-linux-amd64.tgz
+  cat <<EOF >/etc/systemd/system/ollama.service
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/ollama serve
+Environment=HOME=$HOME
+Environment=OLLAMA_HOST=0.0.0.0
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+  systemctl enable -q --now ollama.service
+  sed -i 's/ENABLE_OLLAMA_API=false/ENABLE_OLLAMA_API=true/g' /opt/open-webui/.env
+  msg_ok "Installed Ollama"
+fi
 
 msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/open-webui.service
