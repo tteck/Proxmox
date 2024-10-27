@@ -13,6 +13,13 @@ Exercise vigilance regarding copycat or coat-tailing sites that seek to exploit 
 > [!NOTE]
 All LXC instances created using this repository come pre-installed with Midnight Commander, which is a command-line tool (`mc`) that offers a user-friendly file and directory management interface for the terminal environment.
 
+## 2024-10-27
+
+### Changed
+
+- **Open WebUI LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/8a21f6e7f025a911865395d4c0fa9a001bd0d512)
+  - Refactor Script to add an option to add Ollama.
+
 ## 2024-10-26
 
 ### Changed
