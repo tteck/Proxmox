@@ -67,6 +67,7 @@ then
 fi
 systemctl stop open-webui.service
 npm install &>/dev/null
+export NODE_OPTIONS="--max-old-space-size=3584"
 npm run build &>/dev/null
 cd ./backend
 pip install -r requirements.txt -U &>/dev/null
