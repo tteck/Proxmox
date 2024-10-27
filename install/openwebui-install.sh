@@ -52,7 +52,7 @@ ENABLE_OLLAMA_API=false
 OLLAMA_BASE_URL=http://0.0.0.0:11434
 EOF
 $STD npm install
-export NODE_OPTIONS="--max-old-space-size=4096"
+export NODE_OPTIONS="--max-old-space-size=3584"
 $STD npm run build
 msg_ok "Installed Open WebUI"
 
