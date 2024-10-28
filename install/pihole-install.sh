@@ -49,7 +49,7 @@ if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
   cat <<EOF >/etc/unbound/unbound.conf.d/pi-hole.conf
 server:
   verbosity: 0
-  interface: 0.0.0.0
+  interface: 127.0.0.1
   port: 5335
   do-ip6: no
   do-ip4: yes
