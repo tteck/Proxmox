@@ -61,10 +61,7 @@ if (( $(df /boot | awk 'NR==2{gsub("%","",$5); print $5}') > 80 )); then
 fi
 RELEASE=$(curl -s https://api.github.com/repos/msgbyte/tianji/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
 if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]]; then
-  msg_info "Setting Container to Higher Resources"
-  pct set $CTID -memory 4096
-  pct set $CTID -cores 4
-  msg_ok "Set Container to Higher Resources"
+  whiptail --backtitle "Proxmox VE Helper Scripts" --msgbox --title "SET RESOURCES" "Please set the resources in your ${APP} LXC to ${var_cpu}vCPU and ${var_ram}RAM for the build process before continuing" 10 75
   msg_info "Stopping ${APP} Service"
   systemctl stop tianji
   msg_ok "Stopped ${APP} Service"
