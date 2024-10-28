@@ -71,7 +71,6 @@ if [[ ! -f /opt/${APP}_version.txt ]] || [[ "${RELEASE}" != "$(cat /opt/${APP}_v
   mv /opt/tianji /opt/tianji_bak
   wget -q "https://github.com/msgbyte/tianji/archive/refs/tags/v${RELEASE}.zip"
   unzip -q v${RELEASE}.zip
-  rm -R 
   mv tianji-${RELEASE} /opt/tianji
   cd tianji
   pnpm install --filter @tianji/client... --config.dedupe-peer-dependents=false --frozen-lockfile >/dev/null 2>&1
