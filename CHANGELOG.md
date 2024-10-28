@@ -18,7 +18,7 @@ All LXC instances created using this repository come pre-installed with Midnight
 ### Changed
 
 - **Open WebUI LXC** [(Commit)](https://github.com/tteck/Proxmox/commit/8a21f6e7f025a911865395d4c0fa9a001bd0d512)
-  - Refactor Script to add an option to add Ollama.
+  - Refactor Script to add an option to install Ollama.
 
 ## 2024-10-26
 
