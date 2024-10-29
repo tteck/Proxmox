@@ -63,7 +63,8 @@ fi
 pip3 install changedetection.io --upgrade &>/dev/null
 pip3 install playwright --upgrade &>/dev/null
 if [[ -f /etc/systemd/system/browserless.service ]]; then
-  git -C /opt/browserless/ pull &>/dev/null
+  git -C /opt/browserless/ fetch --all &>/dev/null
+  git -C /opt/browserless/ reset --hard origin/main &>/dev/null
   npm update --prefix /opt/browserless &>/dev/null
   npm run build --prefix /opt/browserless &>/dev/null
   npm run build:function --prefix /opt/browserless &>/dev/null
