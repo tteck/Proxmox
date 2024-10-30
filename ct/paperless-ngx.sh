@@ -67,6 +67,18 @@ function update_script() {
   header_info
   if [ "$UPD" == "1" ]; then
     if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
+	  if [[ "$(gs --version 2>/dev/null)" != "10.04.0" ]]; then
+        msg_info "Updating Ghostscript"
+        cd /tmp
+        wget -q https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.gz
+        tar -xzf ghostscript-10.04.0.tar.gz
+        cd ghostscript-10.04.0
+        ./configure &>/dev/null
+        make &>/dev/null
+        sudo make install &>/dev/null
+        rm -rf /tmp/ghostscript*
+        msg_ok "Ghostscript updated to 10.04.0"
+      fi
       msg_info "Stopping all Paperless-ngx Services"
       systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue.service
       msg_ok "Stopped all Paperless-ngx Services"
