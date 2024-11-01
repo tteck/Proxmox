@@ -58,6 +58,7 @@ if [[ ! -f /etc/zabbix/zabbix_server.conf ]]; then msg_error "No ${APP} Installa
 msg_info "Updating $APP LXC"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
+systemctl restart zabbix-server
 msg_ok "Updated $APP LXC"
 exit
 }
